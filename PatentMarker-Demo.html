@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PatentMarker 2007 · 全流程动态演示</title>
+<style>
+:root{
+  --bp:#0b1e33; --bp2:#0e2742; --line:rgba(126,178,222,.16); --line2:rgba(126,178,222,.34);
+  --ink:#dce9f5; --dim:#8aa8c2; --amber:#ffb454; --cyan:#5bd4de; --green:#4ec990; --red:#e5534b;
+  --f-disp:SimHei,"Microsoft YaHei",sans-serif;
+  --f-kai:KaiTi,"楷体","KaiTi_GB2312",serif;
+  --f-fs:FangSong,"仿宋","仿宋_GB2312",STFangsong,serif;
+  --f-mono:Consolas,"Courier New",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bp);color:var(--ink);font-family:var(--f-disp);overflow:hidden;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:28px 28px;}
+#app{height:100%;display:flex;flex-direction:column;border:1px solid var(--line2);outline:4px double rgba(126,178,222,.25);outline-offset:-10px}
+#hd{display:flex;align-items:stretch;border-bottom:1px solid var(--line2);background:linear-gradient(180deg,#0f2a47,#0b1e33);flex:0 0 auto}
+.hd-cell{padding:8px 16px;border-right:1px solid var(--line2);display:flex;flex-direction:column;justify-content:center}
+.hd-cell:last-child{border-right:none}
+.hd-title{flex:1}
+.hd-big{font-size:21px;letter-spacing:2px;color:#fff}
+.hd-big b{color:var(--amber)}
+.hd-sub{font-family:var(--f-kai);font-size:12.5px;color:var(--dim);margin-top:2px;letter-spacing:1px}
+.hd-cell .k{font-family:var(--f-kai);font-size:11px;color:var(--dim);letter-spacing:3px}
+.hd-cell .v{font-size:12.5px;color:var(--cyan);margin-top:2px;white-space:nowrap}
+#mid{flex:1;display:flex;min-height:0}
+#steps{width:168px;flex:0 0 auto;border-right:1px solid var(--line2);padding:10px 8px;overflow-y:auto;background:rgba(8,20,35,.55)}
+#steps h3{font-family:var(--f-kai);font-size:12px;color:var(--dim);letter-spacing:4px;margin:2px 4px 8px;border-bottom:1px dashed var(--line2);padding-bottom:6px}
+.step{display:flex;align-items:center;gap:8px;padding:7px 8px;margin-bottom:4px;border:1px solid transparent;cursor:pointer;transition:background .2s,border-color .2s}
+.step:hover{background:rgba(91,212,222,.08)}
+.step .no{width:20px;height:20px;flex:0 0 auto;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--dim);font-family:var(--f-mono)}
+.step .nm{font-family:var(--f-kai);font-size:13px;color:var(--dim);line-height:1.25}
+.step.active{border-color:var(--amber);background:rgba(255,180,84,.1)}
+.step.active .nm{color:var(--amber)}
+.step.active .no{border-color:var(--amber);color:var(--amber)}
+.step.done .no{border-color:var(--green);color:var(--green)}
+.step.done .nm{color:#a9c6dd}
+#stageOuter{flex:1;position:relative;min-width:0;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1180px;height:640px;transform-origin:0 0}
+#desktop{position:absolute;left:0;top:0;width:1180px;height:606px;overflow:hidden;
+  background:radial-gradient(900px 500px at 30% 20%,#1c3d63 0%,#122a47 45%,#0a1a2e 100%)}
+#taskbar{position:absolute;left:0;bottom:0;width:1180px;height:34px;z-index:500;display:flex;align-items:center;
+  background:linear-gradient(180deg,#41608a 0%,#20385a 10%,#152a44 50%,#10203a 100%);
+  border-top:1px solid rgba(160,200,240,.35)}
+#startOrb{width:30px;height:30px;margin:0 8px 0 4px;border-radius:50%;flex:0 0 auto;
+  background:radial-gradient(circle at 35% 30%,#7fb7ef,#2f6db3 55%,#173f70 100%);
+  border:1px solid rgba(190,225,255,.6);display:flex;align-items:center;justify-content:center;color:#eaf4ff;font-size:14px;box-shadow:0 0 8px rgba(90,160,240,.5)}
+.tbtn{height:26px;margin-right:4px;padding:0 10px;display:none;align-items:center;gap:6px;font-size:11.5px;color:#cfe2f5;
+  background:linear-gradient(180deg,rgba(120,170,220,.25),rgba(40,70,110,.35));border:1px solid rgba(150,190,230,.3);border-radius:3px;max-width:170px;overflow:hidden;white-space:nowrap}
+.tbtn.open{display:flex}
+.tbtn.active{background:linear-gradient(180deg,rgba(160,205,250,.45),rgba(70,110,160,.5));border-color:rgba(190,220,250,.6);color:#fff}
+.tbtn i{width:12px;height:12px;flex:0 0 auto;display:inline-block}
+.win{position:absolute;display:none;background:#f0f0f0;border:1px solid #29405c;box-shadow:0 10px 34px rgba(0,0,0,.55);color:#111}
+.win .tbar{height:26px;display:flex;align-items:center;gap:6px;padding:0 4px 0 8px;font:bold 12px var(--f-disp);color:#123252;
+  background:linear-gradient(180deg,#eaf4fd 0%,#cfe4f7 45%,#b5d3ee 46%,#d9ebfa 100%)}
+.win .tbar .ttl{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.win .wbtns{display:flex;gap:2px}
+.win .wbtns i{width:26px;height:15px;border:1px solid #6d8aa5;border-radius:2px;display:flex;align-items:center;justify-content:center;font:9px var(--f-mono);color:#33556f;background:linear-gradient(180deg,#fff,#cfe0ef)}
+.win .wbtns i.x{background:linear-gradient(180deg,#f7c9b8,#e2927a);border-color:#a5563e;color:#6b1f0d}
+.win.active .tbar{background:linear-gradient(180deg,#f2f9ff 0%,#d8ebfc 45%,#bcd9f3 46%,#e2f1fd 100%)}
+.win:not(.active) .tbar{background:linear-gradient(180deg,#eef1f4,#d7dde3);color:#5a6a78}
+.term{font:12px/1.55 var(--f-mono);padding:8px 10px;white-space:pre-wrap;word-break:break-all;overflow-y:auto;scrollbar-width:none}
+.term::-webkit-scrollbar{width:0;height:0;display:none}
+.term .tl{min-height:1em}
+.term .inp{font-weight:bold}
+.term .ok{color:#2e8b57}
+.term .warn{color:#b8860b}
+#win-ps{left:60px;top:52px;width:660px;height:440px}
+#win-ps .tbody{background:#012456;height:calc(100% - 26px)}
+#win-ps .term{color:#f2f2f2;height:100%}
+#win-vbe{left:110px;top:36px;width:830px;height:520px;background:#d4d0c8}
+#win-vbe .tbar{background:linear-gradient(180deg,#f4f2ee,#d9d5cc);color:#333;border-bottom:1px solid #a8a49a}
+#vbeMenu{height:22px;display:flex;align-items:center;padding:0 6px;font:12px var(--f-disp);color:#222;gap:10px;background:#ece9e0;border-bottom:1px solid #c6c2b8}
+#vbeTools{height:26px;background:#e6e2d8;border-bottom:1px solid #c6c2b8;display:flex;align-items:center;padding:0 6px;gap:3px}
+#vbeTools i{width:18px;height:18px;background:linear-gradient(180deg,#fdfdfb,#d8d4c8);border:1px solid #a8a49a;display:inline-block}
+#vbeBody{display:flex;height:calc(100% - 74px)}
+#vbeProj{width:250px;background:#fff;border-right:1px solid #b8b4aa;overflow:hidden}
+#vbeProj .ph{font:bold 11px var(--f-disp);background:#e6e2d8;padding:4px 8px;border-bottom:1px solid #c6c2b8;color:#333}
+#vbeTree{font:12px/1.9 "Courier New",monospace;padding:6px 8px;color:#111}
+#vbeTree .nd{display:none;white-space:pre}
+#vbeTree .nd.on{display:block}
+#vbeTree .root{display:block;font-weight:bold}
+#vbeCode{flex:1;background:#fff;overflow:hidden}
+#vbeCode .ch{font:bold 11px var(--f-disp);background:#e6e2d8;padding:4px 8px;border-bottom:1px solid #c6c2b8;color:#333}
+#vbeCodeBody{padding:8px 12px;font:12.5px/1.75 var(--f-mono);color:#111}
+#vbeCodeBody .cl{display:none;white-space:pre}
+#vbeCodeBody .cl.on{display:block}
+#vbeCodeBody .kw{color:#0000ff}
+#vbeCodeBody .cm{color:#008000}
+#vbeCodeBody .at{color:#808080}
+#vbeDrop{position:absolute;left:8px;top:48px;width:190px;background:#fff;border:1px solid #888;box-shadow:3px 3px 8px rgba(0,0,0,.3);display:none;z-index:20}
+#vbeDrop div{font:12px var(--f-disp);padding:4px 14px;color:#222}
+#vbeDrop div.hl{background:#316ac5;color:#fff}
+#win-word{left:120px;top:26px;width:710px;height:548px}
+#win-word .tbar{background:linear-gradient(180deg,#dbe9f7,#b7cde8);color:#1b3c66}
+#wordTabs{height:26px;display:flex;align-items:flex-end;padding:0 6px;background:linear-gradient(180deg,#e8f0fa,#c9dbee);gap:2px}
+#wordTabs .ob{width:22px;height:22px;border-radius:50% 50% 3px 3px;background:radial-gradient(circle at 35% 30%,#8db4e2,#3c6ea8 70%);margin-right:8px;margin-bottom:2px;border:1px solid #2c5488}
+#wordTabs span.t{font:12px var(--f-disp);padding:4px 12px;color:#274b72;cursor:default}
+#wordTabs span.t.on{background:#fff;border:1px solid #9db2cc;border-bottom:none;border-radius:3px 3px 0 0;font-weight:bold;color:#143a63}
+#wordTools{height:34px;background:#f2f6fb;border-bottom:1px solid #b9cbe0;display:flex;align-items:center;padding:0 10px;gap:8px}
+#wordTools .fx{font:11px var(--f-disp);border:1px solid #a9bdd6;background:#fff;padding:3px 8px;color:#333}
+#wordTools i{display:inline-block;height:16px;background:#d7e2f0;border:1px solid #a9bdd6}
+#wordBody{background:#8f969e;height:calc(100% - 26px - 26px - 34px - 24px);overflow:hidden;display:flex;justify-content:center;padding:16px 0}
+#wordPage{width:560px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.4);padding:36px 44px;font-family:var(--f-fs);color:#111}
+#wordPage h1{font:bold 17px SimHei,"Microsoft YaHei",sans-serif;text-align:center;letter-spacing:4px;margin-bottom:14px}
+#wordPage p{font-size:13.5px;line-height:2.05;text-indent:2em;color:#1a1a1a}
+#wordPage .mh{text-indent:0;font-weight:bold;margin-top:6px}
+#wordPage .ml{text-indent:0}
+#wordEdit{background:rgba(255,214,120,.0)}
+#wordEdit.typing{background:rgba(255,214,120,.55)}
+#wordCaret{display:none;width:1px;height:15px;background:#111;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+#wordStatus{height:24px;background:linear-gradient(180deg,#e8f0fa,#c9dbee);border-top:1px solid #b9cbe0;display:flex;align-items:center;padding:0 12px;font:11px var(--f-disp);color:#2c4d75;gap:18px}
+#win-exp{left:640px;top:70px;width:470px;height:400px}
+#expBar{height:30px;background:linear-gradient(180deg,#fbfcfd,#eef2f7);border-bottom:1px solid #d0d7e0;display:flex;align-items:center;padding:0 10px;gap:8px;font:11.5px var(--f-disp);color:#3a4a5c}
+#expAddr{flex:1;background:#fff;border:1px solid #a9bdd6;padding:3px 8px;font:11.5px var(--f-mono);color:#1a4a7a}
+#expHead{display:flex;font:bold 11px var(--f-disp);color:#4a5a6c;border-bottom:1px solid #e0e5ec;background:#fbfcfd;padding:4px 10px}
+#expHead span:nth-child(1){width:200px}
+#expHead span:nth-child(2){width:140px}
+.expRow{display:flex;align-items:center;padding:4px 10px;font:11.5px var(--f-disp);color:#222;border-bottom:1px solid #f0f3f7}
+.expRow i{width:16px;height:16px;margin-right:8px;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;font:bold 9px var(--f-mono);color:#fff;border-radius:2px}
+.expRow span:nth-child(2){width:192px;white-space:nowrap;overflow:hidden}
+.expRow span:nth-child(3){width:140px;color:#5a6a7c;font-family:var(--f-mono);font-size:10.5px}
+.expRow span:nth-child(4){color:#5a6a7c;font-family:var(--f-mono);font-size:10.5px}
+.expRow.hidden{display:none}
+.expRow.flash{animation:rowflash 1.4s ease}
+@keyframes rowflash{0%{background:rgba(255,180,84,.75)}100%{background:transparent}}
+#win-cad{left:170px;top:28px;width:800px;height:562px;background:#e8e4dc}
+#win-cad .tbar{background:linear-gradient(180deg,#f0efe9,#d3d0c5);color:#3a3a34;border-bottom:1px solid #a8a49a}
+#cadMenu{height:22px;display:flex;align-items:center;padding:0 8px;gap:11px;font:12px var(--f-disp);color:#1c1c18;background:#ece9e0;border-bottom:1px solid #c6c2b8}
+#cadTools{height:28px;background:#e6e2d8;border-bottom:1px solid #c6c2b8;display:flex;align-items:center;padding:0 8px;gap:3px}
+#cadTools i{width:19px;height:19px;border:1px solid #a8a49a;background:linear-gradient(180deg,#fdfdfb,#d8d4c8);display:inline-block;position:relative}
+#cadTools i::after{content:"";position:absolute;left:4px;top:4px;width:9px;height:9px;border-radius:1px}
+#cadTools i.c1::after{background:#c05040}#cadTools i.c2::after{background:#4080c0}#cadTools i.c3::after{background:#60a060}
+#cadTools i.c4::after{background:#d0a040}#cadTools i.c5::after{background:#8060b0}#cadTools i.c6::after{background:#409090}
+#viewport{position:relative;width:798px;height:414px;background:#000;border-bottom:1px solid #c6c2b8;overflow:hidden}
+#vpSvg{width:798px;height:414px;display:block}
+#palette{position:absolute;right:1px;top:75px;width:200px;height:414px;background:#ece9d8;border-left:1px solid #c6c2b8;display:none;flex-direction:column;font-family:var(--f-disp);z-index:5}
+#palTitle{font:bold 12.5px var(--f-disp);padding:6px 8px;background:linear-gradient(180deg,#f6f4ee,#ddd8c8);border-bottom:1px solid #c6c2b8;color:#26261f}
+#palInfo{font:11px var(--f-disp);color:#4a6a4a;padding:4px 8px;border-bottom:1px solid #d8d4c4;background:#f6f4ea}
+.palRow{display:flex;align-items:center;gap:6px;padding:4px 8px;font:11px var(--f-disp);color:#333}
+.palRow input{flex:1;border:1px solid #a8a49a;font:11px var(--f-disp);padding:2px 4px;background:#fff}
+.palNum{border:1px solid #a8a49a;background:#fff;padding:2px 8px;font-family:var(--f-mono);font-size:11px}
+.palMini{border:1px solid #a8a49a;background:linear-gradient(180deg,#fdfdfb,#ddd8c8);padding:2px 7px;font-size:10.5px;cursor:default}
+#palBtns{display:flex;gap:4px;padding:5px 8px;border-bottom:1px solid #d8d4c4}
+#palBtns span{flex:1;text-align:center;border:1px solid #a8a49a;background:linear-gradient(180deg,#fdfdfb,#ddd8c8);font-size:10.5px;padding:3px 0;color:#333}
+#palStatus{font:11px var(--f-disp);color:#1a4a7a;padding:4px 8px;border-bottom:1px solid #d8d4c4;background:#f6f4ea;min-height:21px}
+#palStatus.hot{color:#b06000;font-weight:bold}
+#palTable{flex:1;border-collapse:collapse;background:#fff;overflow:hidden}
+#palTable th{font:bold 10.5px var(--f-disp);background:#e6e2d8;border:1px solid #d0ccbc;padding:3px 4px;color:#444}
+#palTable td{font:11px var(--f-disp);border:1px solid #e8e4d8;padding:2.5px 6px;color:#222}
+#palTable td:first-child{text-align:center;font-family:var(--f-mono);width:38px}
+#palTable td:last-child{text-align:center;width:36px;color:#666}
+#palTable tr.newrow td{animation:rowflash 1.6s ease}
+#cmdline{height:72px;background:#fff;overflow:hidden}
+#cmdline .term{font:12px/1.5 SimSun,"MS Song",monospace;color:#111;padding:4px 8px;height:100%}
+#cmdline .term .inp{font-weight:bold;color:#000}
+.notepad .nmenu{height:20px;display:flex;align-items:center;gap:12px;padding:0 8px;font:12px var(--f-disp);color:#222;background:#f4f4f0;border-bottom:1px solid #d8d8d0}
+.notepad .term{background:#fff;color:#1a1a1a;height:calc(100% - 46px)}
+#win-log{left:24px;top:88px;width:430px;height:330px}
+#win-json{left:560px;top:64px;width:560px;height:430px}
+#win-report{left:580px;top:80px;width:520px;height:400px}
+.hl-line{background:rgba(78,201,144,.28);display:block}
+.overlay{position:absolute;left:0;top:0;width:1180px;height:606px;display:none;z-index:400;
+  background:radial-gradient(800px 480px at 50% 42%,rgba(13,32,54,.92),rgba(8,18,32,.97))}
+#ov0 .inner{position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);text-align:center}
+#ov0 h2{font-size:34px;letter-spacing:6px;color:#fff}
+#ov0 h2 b{color:var(--amber)}
+#ov0 .sub{font-family:var(--f-kai);color:var(--dim);font-size:15px;letter-spacing:3px;margin-top:8px}
+#flow{display:flex;align-items:center;justify-content:center;margin-top:44px;gap:0}
+.fnode{width:210px;padding:16px 10px;border:1px solid var(--line2);background:rgba(20,45,74,.85);opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.fnode.on{opacity:1;transform:none}
+.fnode .ft{font-size:15px;color:#fff;letter-spacing:1px}
+.fnode .fd{font-family:var(--f-mono);font-size:11px;color:var(--cyan);margin-top:6px}
+.farrow{width:120px;position:relative;opacity:0;transition:opacity .5s}
+.farrow.on{opacity:1}
+.farrow .fl{height:2px;background:repeating-linear-gradient(90deg,var(--cyan) 0 8px,transparent 8px 14px);animation:dashmove 1s linear infinite}
+@keyframes dashmove{to{background-position:14px 0}}
+.farrow .fa{position:absolute;right:-2px;top:-4px;border-left:9px solid var(--cyan);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.farrow .flb{position:absolute;left:0;right:0;top:-26px;font-family:var(--f-kai);font-size:12px;color:var(--amber);white-space:nowrap;text-align:center}
+#ov0 .note{margin-top:46px;font-family:var(--f-kai);font-size:14px;color:var(--green);letter-spacing:2px;opacity:0;transition:opacity .6s}
+#ov0 .note.on{opacity:1}
+#ovEnd .inner{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:760px}
+#ovEnd h2{font-size:30px;letter-spacing:8px;color:var(--green);text-align:center;margin-bottom:26px}
+#endList{display:grid;grid-template-columns:1fr 1fr;gap:9px 26px}
+.endItem{display:flex;gap:10px;align-items:baseline;border-left:2px solid var(--line2);padding:4px 0 4px 12px;opacity:0;transform:translateX(-10px);transition:opacity .45s,transform .45s}
+.endItem.on{opacity:1;transform:none}
+.endItem .ck{color:var(--green);font-weight:bold}
+.endItem .et{font-size:13.5px;color:#fff}
+.endItem .ed{font-family:var(--f-mono);font-size:11px;color:var(--dim);margin-top:2px}
+#endFiles{margin-top:24px;text-align:center;font-family:var(--f-mono);font-size:11.5px;color:var(--cyan);opacity:0;transition:opacity .6s}
+#endFiles.on{opacity:1}
+#endStamp{margin:22px auto 0;width:150px;height:44px;border:2px solid var(--red);color:var(--red);display:flex;align-items:center;justify-content:center;font-family:var(--f-kai);font-size:17px;letter-spacing:6px;transform:rotate(-6deg);opacity:0;transition:opacity .5s}
+#endStamp.on{opacity:.9}
+#cursorEl{position:absolute;left:590px;top:380px;z-index:900;pointer-events:none;filter:drop-shadow(1px 2px 2px rgba(0,0,0,.5))}
+.ripple{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border:2px solid var(--amber);border-radius:50%;z-index:890;pointer-events:none;animation:rip .55s ease-out forwards}
+.ripple.dbl{border-color:var(--cyan)}
+@keyframes rip{0%{transform:scale(.4);opacity:.95}100%{transform:scale(3.4);opacity:0}}
+.pickmark{position:absolute;width:8px;height:8px;margin:-4px 0 0 -4px;border:1.5px solid var(--red);z-index:60;pointer-events:none;animation:pick .8s ease-out forwards}
+@keyframes pick{0%{opacity:1;transform:scale(1)}70%{opacity:.9}100%{opacity:0;transform:scale(1.6)}}
+#keybadge{position:absolute;left:50%;top:64px;transform:translateX(-50%);z-index:800;display:none;align-items:center;gap:8px;
+  background:rgba(10,22,38,.92);border:1px solid var(--amber);padding:9px 16px;box-shadow:0 6px 20px rgba(0,0,0,.5)}
+#keybadge .key{font:bold 14px var(--f-mono);color:#fff;background:linear-gradient(180deg,#3a4c62,#22303f);border:1px solid #6d84a0;border-bottom-width:3px;border-radius:4px;padding:4px 11px}
+#keybadge .plus{color:var(--dim);font-size:13px}
+#ft{flex:0 0 auto;border-top:1px solid var(--line2);background:linear-gradient(180deg,#0f2a47,#0b1e33);padding:9px 14px;display:flex;align-items:center;gap:16px}
+#caption{flex:1;font-family:var(--f-kai);font-size:14px;color:var(--ink);line-height:1.5;min-height:21px;transition:opacity .25s}
+#caption .tag{color:var(--amber);margin-right:8px}
+#ctrl{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+#ctrl button{width:36px;height:36px;border:1px solid var(--line2);background:linear-gradient(180deg,#173350,#0e2440);color:var(--ink);font-size:13px;cursor:pointer;transition:background .15s,color .15s,transform .1s;font-family:var(--f-mono)}
+#ctrl button:hover{background:var(--amber);color:#14263c;border-color:var(--amber)}
+#ctrl button:active{transform:translateY(1px)}
+#bPlay{width:46px;height:46px;border-radius:50%;font-size:16px;border-color:var(--amber);color:var(--amber)}
+#bPlay:hover{color:#14263c}
+#prog{width:340px;height:14px;border:1px solid var(--line2);position:relative;cursor:pointer;background:rgba(10,25,42,.8)}
+#progFill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#2a6f8f,var(--cyan));transition:none}
+#prog .tick{position:absolute;top:0;bottom:0;width:1px;background:rgba(220,233,245,.4)}
+#clock{font-family:var(--f-mono);font-size:12px;color:var(--dim);min-width:96px;text-align:right}
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="hd">
+    <div class="hd-cell hd-title">
+      <div class="hd-big">PatentMarker <b>2007</b></div>
+      <div class="hd-sub">专利附图标记工具链 · 部署 / 配置 / 标注 / 同步 / 校验 全流程动态演示</div>
+    </div>
+    <div class="hd-cell"><span class="k">图 号</span><span class="v">PM-2007-V2</span></div>
+    <div class="hd-cell"><span class="k">日 期</span><span class="v">2026-07-21</span></div>
+    <div class="hd-cell"><span class="k">环 境</span><span class="v">Win7 · AutoCAD 2007 · .NET 2.0</span></div>
+    <div class="hd-cell"><span class="k">比 例</span><span class="v">1 : 1</span></div>
+  </header>
+  <div id="mid">
+    <nav id="steps"><h3>演示步骤</h3></nav>
+    <div id="stageOuter">
+      <div id="stage">
+        <div id="desktop">
+
+          <div class="win" id="win-ps">
+            <div class="tbar"><span class="ttl">Windows PowerShell</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div class="tbody"><div class="term" id="term-ps"></div></div>
+          </div>
+
+          <div class="win" id="win-vbe">
+            <div class="tbar"><span class="ttl">Microsoft Visual Basic - 测试样本 (工程)</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div id="vbeMenu"><span>文件(F)</span><span>编辑(E)</span><span>视图(V)</span><span>插入(I)</span><span>格式(O)</span><span>调试(D)</span><span>运行(R)</span><span>工具(T)</span><span>窗口(W)</span><span>帮助(H)</span></div>
+            <div id="vbeTools"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div id="vbeBody">
+              <div id="vbeProj">
+                <div class="ph">工程 - VBAProject</div>
+                <div id="vbeTree">
+                  <div class="nd root">⊟ 工程 - VBAProject</div>
+                  <div class="nd root">  ⊟ Microsoft Word 对象</div>
+                  <div class="nd root">      ThisDocument</div>
+                  <div class="nd root">  ⊟ 模块</div>
+                  <div class="nd" data-m="1">      Patterns</div>
+                  <div class="nd" data-m="2">      DictModel</div>
+                  <div class="nd" data-m="3">      JsonWriter</div>
+                  <div class="nd" data-m="4">      PatentExtractor</div>
+                  <div class="nd" data-m="5">      AutoExport</div>
+                  <div class="nd root">  ⊟ 类模块</div>
+                  <div class="nd" data-m="6">      clsSaveHook</div>
+                </div>
+              </div>
+              <div id="vbeCode">
+                <div class="ch">AutoExport.bas / clsSaveHook.cls（节选）</div>
+                <div id="vbeCodeBody">
+                  <div class="cl" data-c="1"><span class="at">Attribute VB_Name = "AutoExport"</span></div>
+                  <div class="cl" data-c="2"><span class="kw">Option Explicit</span></div>
+                  <div class="cl" data-c="3"> </div>
+                  <div class="cl" data-c="4"><span class="kw">Public Sub</span> AutoOpen()</div>
+                  <div class="cl" data-c="5">    EnableAutoExport</div>
+                  <div class="cl" data-c="6"><span class="kw">End Sub</span></div>
+                  <div class="cl" data-c="7"> </div>
+                  <div class="cl" data-c="8"><span class="kw">Public Sub</span> ExportDict(Optional ByVal doc <span class="kw">As</span> Document)</div>
+                  <div class="cl" data-c="9">    Set root = DictModel.BuildModel(doc.Content.Text, srcName, timestamp)</div>
+                  <div class="cl" data-c="10">    json = JsonWriter.Serialize(root)</div>
+                  <div class="cl" data-c="11">    JsonWriter.WriteToFile outPath, json</div>
+                  <div class="cl" data-c="12"><span class="kw">End Sub</span></div>
+                  <div class="cl" data-c="13"> </div>
+                  <div class="cl" data-c="14"><span class="cm">' ── clsSaveHook.cls ──</span></div>
+                  <div class="cl" data-c="15"><span class="kw">Private Sub</span> App_DocumentBeforeSave(ByVal Doc <span class="kw">As</span> Document, _</div>
+                  <div class="cl" data-c="16">        ByVal SaveAsUI <span class="kw">As Boolean</span>, Cancel <span class="kw">As Boolean</span>)</div>
+                  <div class="cl" data-c="17">    AutoExport.ExportDict Doc</div>
+                  <div class="cl" data-c="18"><span class="kw">End Sub</span></div>
+                </div>
+              </div>
+            </div>
+            <div id="vbeDrop">
+              <div>新建模块(N)</div>
+              <div>新建类模块(C)</div>
+              <div class="hl">导入文件(I)...</div>
+              <div>移除模块(R)</div>
+            </div>
+          </div>
+
+          <div class="win" id="win-word">
+            <div class="tbar"><span class="ttl">测试样本.docx - Microsoft Word</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div id="wordTabs"><span class="ob"></span><span class="t on">开始</span><span class="t">插入</span><span class="t">页面布局</span><span class="t">引用</span><span class="t">邮件</span><span class="t">审阅</span><span class="t">视图</span></div>
+            <div id="wordTools"><span class="fx">仿宋 ▾</span><span class="fx">小四 ▾</span><i style="width:20px"></i><i style="width:20px"></i><i style="width:20px"></i><i style="width:60px"></i><i style="width:44px"></i></div>
+            <div id="wordBody"><div id="wordPage">
+              <h1>机械传动装置</h1>
+              <p>本实用新型涉及一种机械传动装置，包括底座、支架、电机及齿轮传动机构，结构紧凑、传动平稳，适用于自动化装配线。</p>
+              <p class="mh">附图标记说明如下：</p>
+              <p class="ml">1底座；2支架；3电机；4齿轮；5轴承；<br>6弹簧；7外壳；8螺栓；9传感器；10传动轴；<span id="wordEdit"></span><span id="wordCaret"></span></p>
+            </div></div>
+            <div id="wordStatus"><span>第 1 页，共 1 页</span><span>字数: 96</span><span id="wordSaveState">中文(中国)</span></div>
+          </div>
+
+          <div class="win" id="win-exp">
+            <div class="tbar"><span class="ttl">PatentMarker</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div id="expBar"><span>组织 ▾</span><span id="expAddr">C:\PatentMarker</span></div>
+            <div id="expHead"><span>名称</span><span>修改日期</span><span>大小</span></div>
+            <div class="expRow"><i style="background:#7a5cc0">⚙</i><span>PatentMarker.dll</span><span>2026/7/21 9:10</span><span>28 KB</span></div>
+            <div class="expRow"><i style="background:#c08a2e">{}</i><span>config.json</span><span>2026/7/21 9:10</span><span>1 KB</span></div>
+            <div class="expRow"><i style="background:#b03a30">▦</i><span>test-sample.dwg</span><span>2026/7/21 9:11</span><span>86 KB</span></div>
+            <div class="expRow hidden" id="expDict"><i style="background:#2e8b57">{}</i><span>test-sample.dict.json</span><span id="expDictDate">2026/7/21 9:12</span><span>2 KB</span></div>
+            <div class="expRow hidden" id="expCheck"><i style="background:#5a7a9a">≡</i><span>test-sample.check.txt</span><span>2026/7/21 9:20</span><span>1 KB</span></div>
+          </div>
+
+          <div class="win" id="win-cad">
+            <div class="tbar"><span class="ttl">AutoCAD 2007 - [test-sample.dwg]</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div id="cadMenu"><span>文件(F)</span><span>编辑(E)</span><span>视图(V)</span><span>插入(I)</span><span>格式(O)</span><span>工具(T)</span><span>绘图(D)</span><span>标注(N)</span><span>修改(M)</span><span>窗口(W)</span><span>帮助(H)</span></div>
+            <div id="cadTools"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i></div>
+            <div id="viewport">
+              <svg id="vpSvg" viewBox="0 0 800 414" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#161616" stroke-width="1"/>
+                  </pattern>
+                </defs>
+                <rect x="0" y="0" width="800" height="414" fill="url(#grid)"/>
+                <g stroke="#e8e8e8" fill="none" stroke-width="1.3">
+                  <rect x="40" y="28" width="520" height="352"/>
+                  <rect x="440" y="340" width="120" height="40"/>
+                  <line x1="440" y1="356" x2="560" y2="356" stroke-width="0.8"/>
+                  <line x1="500" y1="340" x2="500" y2="380" stroke-width="0.8"/>
+                </g>
+                <g stroke="#dcdcdc" fill="none" stroke-width="1.2">
+                  <rect x="170" y="300" width="260" height="36"/>
+                  <rect x="200" y="210" width="18" height="90"/>
+                  <rect x="382" y="210" width="18" height="90"/>
+                  <rect x="230" y="150" width="140" height="80" rx="6"/>
+                  <rect x="248" y="166" width="60" height="48"/>
+                  <rect x="308" y="186" width="122" height="9"/>
+                  <circle cx="330" cy="250" r="26"/>
+                  <circle cx="368" cy="250" r="18"/>
+                  <circle cx="322" cy="190" r="8"/>
+                  <circle cx="416" cy="190" r="8"/>
+                  <polyline points="452,300 460,286 468,314 476,286 484,314 492,300"/>
+                  <rect x="288" y="136" width="24" height="14"/>
+                </g>
+                <g id="gSelBox" style="display:none">
+                  <rect id="selRect" x="100" y="80" width="0" height="0" fill="rgba(80,200,120,.08)" stroke="#4ec990" stroke-width="1" stroke-dasharray="5 4"/>
+                </g>
+                <g id="gLeaders" font-family="'Times New Roman',Times,serif" font-size="14" fill="#ffffff">
+                  <g id="ld0" style="display:none">
+                    <polygon id="ldA0" fill="#ffffff" stroke="none"/>
+                    <polyline id="ldP0" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+                    <text id="ldT0">1</text>
+                  </g>
+                  <g id="ld1" style="display:none">
+                    <polygon id="ldA1" fill="#ffffff" stroke="none"/>
+                    <polyline id="ldP1" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+                    <text id="ldT1">2</text>
+                  </g>
+                  <g id="ld2" style="display:none">
+                    <polygon id="ldA2" fill="#ffffff" stroke="none"/>
+                    <polyline id="ldP2" fill="none" stroke="#ffffff" stroke-width="1.3"/>
+                    <text id="ldT2">3</text>
+                  </g>
+                </g>
+                <g id="gCross" style="display:none" stroke="#3f6a8a" stroke-width="1">
+                  <line id="chV" x1="0" y1="0" x2="0" y2="414"/>
+                  <line id="chH" x1="0" y1="0" x2="800" y2="0"/>
+                </g>
+              </svg>
+            </div>
+            <div id="palette">
+              <div id="palTitle">PatentMarker 字典</div>
+              <div id="palInfo">未加载字典</div>
+              <div class="palRow"><span>搜索</span><input readonly value=""></div>
+              <div class="palRow"><span>字高:</span><span class="palNum">3.5</span><span class="palMini">重置</span></div>
+              <div id="palBtns"><span>重载</span><span>打开</span><span>冲突</span><span>删除引线</span></div>
+              <div id="palStatus">就绪。</div>
+              <table id="palTable"><thead><tr><th>编号</th><th>名称</th><th>次数</th></tr></thead><tbody id="palBody"></tbody></table>
+            </div>
+            <div id="cmdline"><div class="term" id="term-cmd"></div></div>
+          </div>
+
+          <div class="win notepad" id="win-log">
+            <div class="tbar"><span class="ttl">PatentMarker.log - 记事本</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div class="nmenu"><span>文件(F)</span><span>编辑(E)</span><span>格式(O)</span><span>查看(V)</span><span>帮助(H)</span></div>
+            <div class="term" id="term-log"></div>
+          </div>
+
+          <div class="win notepad" id="win-json">
+            <div class="tbar"><span class="ttl">test-sample.dict.json - 记事本</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div class="nmenu"><span>文件(F)</span><span>编辑(E)</span><span>格式(O)</span><span>查看(V)</span><span>帮助(H)</span></div>
+            <div class="term" id="term-json"></div>
+          </div>
+
+          <div class="win notepad" id="win-report">
+            <div class="tbar"><span class="ttl">test-sample.check.txt - 记事本</span><span class="wbtns"><i>─</i><i>□</i><i class="x">✕</i></span></div>
+            <div class="nmenu"><span>文件(F)</span><span>编辑(E)</span><span>格式(O)</span><span>查看(V)</span><span>帮助(H)</span></div>
+            <div class="term" id="term-report"></div>
+          </div>
+
+          <div class="overlay" id="ov0">
+            <div class="inner">
+              <h2>PatentMarker <b>2007</b></h2>
+              <div class="sub">专利附图标记工具链 —— Word 说明书 ⇄ CAD 图纸 自动同步</div>
+              <div id="flow">
+                <div class="fnode" id="fn1"><div class="ft">Word 专利说明书</div><div class="fd">测试样本.docx</div></div>
+                <div class="farrow" id="fa1"><div class="flb">VBA 保存钩子自动导出</div><div class="fl"></div><div class="fa"></div></div>
+                <div class="fnode" id="fn2"><div class="ft">字典 JSON</div><div class="fd">test-sample.dict.json</div></div>
+                <div class="farrow" id="fa2"><div class="flb">DictLoader 时间戳检测 ≤2s</div><div class="fl"></div><div class="fa"></div></div>
+                <div class="fnode" id="fn3"><div class="ft">AutoCAD 2007 图纸</div><div class="fd">test-sample.dwg</div></div>
+              </div>
+              <div class="note" id="ov0note">全程零手动 —— 保存即同步</div>
+            </div>
+          </div>
+
+          <div class="overlay" id="ovEnd">
+            <div class="inner">
+              <h2>演 示 完 成</h2>
+              <div id="endList">
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">部署安装</div><div class="ed">install-2007.ps1 → HKCU 注册表 LOADCTRLS=1</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">VBA 自动导出</div><div class="ed">AutoExport.bas + clsSaveHook.cls，保存即导出</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">字典面板</div><div class="ed">PATPALETTE → 10 条条目自动加载</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">引线标注</div><div class="ed">PATMARK → Leader + MText（PAT_DIM）</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">自动同步</div><div class="ed">时间戳缓存 + 2s Timer，面板自动刷新</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">一致性校验</div><div class="ed">PATCHECK 三类问题 + .check.txt 报告</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">引线对齐</div><div class="ed">PATALIGN 框边模式 margin=5.0</div></div></div>
+                <div class="endItem"><span class="ck">✓</span><div><div class="et">零外部依赖</div><div class="ed">SimpleJson 内置 · .NET 2.0 · 单 DLL 部署</div></div></div>
+              </div>
+              <div id="endFiles">PatentMarker.dll · config.json · test-sample.dwg · test-sample.dict.json · test-sample.check.txt</div>
+              <div id="endStamp">验证通过</div>
+            </div>
+          </div>
+
+          <div id="taskbar">
+            <div id="startOrb">⊞</div>
+            <div class="tbtn" id="tb-ps"><i style="background:#012456;border:1px solid #7aa0d0"></i>Windows PowerShell</div>
+            <div class="tbtn" id="tb-vbe"><i style="background:#8a8a5a"></i>Visual Basic</div>
+            <div class="tbtn" id="tb-word"><i style="background:#2b5aa0"></i>测试样本.docx</div>
+            <div class="tbtn" id="tb-exp"><i style="background:#d8b04a"></i>PatentMarker</div>
+            <div class="tbtn" id="tb-cad"><i style="background:#b03a30"></i>AutoCAD 2007</div>
+            <div class="tbtn" id="tb-note"><i style="background:#6a9ac4"></i>记事本</div>
+          </div>
+
+          <div id="keybadge"></div>
+          <div id="cursorEl">
+            <svg width="17" height="20" viewBox="0 0 17 20"><path d="M1,1 L1,15.5 L4.8,12.2 L7.3,17.6 L9.7,16.5 L7.2,11.2 L12,10.6 Z" fill="#ffffff" stroke="#111111" stroke-width="1.2"/></svg>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="ft">
+    <div id="caption"></div>
+    <div id="ctrl">
+      <button id="bReplay" title="重新播放">↻</button>
+      <button id="bPrev" title="上一步">|◀</button>
+      <button id="bPlay" title="播放 / 暂停">▶</button>
+      <button id="bNext" title="下一步">▶|</button>
+      <div id="prog"><div id="progFill"></div></div>
+      <div id="clock">00:00 / 00:00</div>
+    </div>
+  </footer>
+</div>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id)};
+var clamp=function(v,a,b){return v<a?a:(v>b?b:v)};
+var lerp=function(a,b,p){return a+(b-a)*p};
+var ease=function(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2};
+var fmt=function(ms){var s=Math.floor(ms/1000);var m=Math.floor(s/60);s=s%60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s};
+
+var DICT=[
+ {n:'1',name:'底座',occ:5},{n:'2',name:'支架',occ:3},{n:'3',name:'电机',occ:4},
+ {n:'4',name:'齿轮',occ:2},{n:'5',name:'轴承',occ:6},{n:'6',name:'弹簧',occ:1},
+ {n:'7',name:'外壳',occ:2},{n:'8',name:'螺栓',occ:8},{n:'9',name:'传感器',occ:3},
+ {n:'10',name:'传动轴',occ:4},{n:'11',name:'联轴器',occ:1}
+];
+
+var WINS=['win-ps','win-vbe','win-word','win-exp','win-cad','win-log','win-json','win-report'];
+var TBMAP={'win-ps':'tb-ps','win-vbe':'tb-vbe','win-word':'tb-word','win-exp':'tb-exp','win-cad':'tb-cad','win-log':'tb-note','win-json':'tb-note','win-report':'tb-note'};
+var zTop=10, activeWin=null, scaleCur=1;
+var VP={x:171,y:103,w:798,h:414};
+
+function showWin(id){var w=$(id);w.style.display='block';var tb=$(TBMAP[id]);if(tb)tb.classList.add('open')}
+function focusWin(id){
+  showWin(id);
+  var w=$(id);w.style.zIndex=(++zTop);
+  if(activeWin&&activeWin!==w)activeWin.classList.remove('active');
+  w.classList.add('active');activeWin=w;
+  var k;for(k in TBMAP){var b=$(TBMAP[k]);if(b)b.classList.remove('active')}
+  var tb=$(TBMAP[id]);if(tb)tb.classList.add('active');
+}
+function hideWin(id){$(id).style.display='none'}
+
+function Term(id){this.el=$(id);this.seq=0}
+Term.prototype.line=function(t,dur,text,cls){
+  var self=this,my=this.seq++;
+  return {t:t,dur:dur,run:function(p){
+    var el=self.el.children[my];
+    if(!el){el=document.createElement('div');el.className='tl'+(cls?' '+cls:'');self.el.appendChild(el)}
+    el.textContent=(p>=1)?text:text.slice(0,Math.floor(text.length*p));
+    self.el.scrollTop=self.el.scrollHeight;
+  }};
+};
+var tPS=new Term('term-ps'),tCmd=new Term('term-cmd'),tLog=new Term('term-log'),tJson=new Term('term-json'),tRep=new Term('term-report');
+var TERMS=[tPS,tCmd,tLog,tJson,tRep];
+
+var cursorEl=$('cursorEl'),keybadge=$('keybadge');
+var curX=590,curY=380;
+function setCursor(x,y){
+  curX=x;curY=y;
+  cursorEl.style.left=x+'px';cursorEl.style.top=y+'px';
+  var cadOn=$('win-cad').style.display==='block';
+  var inside=cadOn&&x>=VP.x&&x<=VP.x+VP.w&&y>=VP.y&&y<=VP.y+VP.h;
+  $('gCross').style.display=inside?'block':'none';
+  if(inside){
+    var sx=x-VP.x,sy=y-VP.y;
+    var v=$('chV');v.setAttribute('x1',sx);v.setAttribute('x2',sx);
+    var h=$('chH');h.setAttribute('y1',sy);h.setAttribute('y2',sy);
+  }
+}
+function ripple(x,y,dbl){
+  var r=document.createElement('div');
+  r.className='ripple'+(dbl?' dbl':'');
+  r.style.left=x+'px';r.style.top=y+'px';
+  $('desktop').appendChild(r);
+  setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},600);
+}
+function pickmark(x,y){
+  var r=document.createElement('div');
+  r.className='pickmark';
+  r.style.left=x+'px';r.style.top=y+'px';
+  $('desktop').appendChild(r);
+  setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},850);
+}
+function mkMove(t,dur,x,y){
+  return {t:t,dur:dur,kind:'move',x:x,y:y,fromX:curX,fromY:curY};
+}
+function mkClick(t,x,y,dbl,vp){
+  return {t:t,dur:0,run:function(){
+    if(this._f)return;this._f=true;
+    ripple(x,y,dbl);
+    if(vp)pickmark(x,y);
+  }};
+}
+function mkKey(t,keys,dur){
+  return {t:t,dur:dur,kind:'key',run:function(p,local){
+    if(local<0||local>=dur){if(this._own){keybadge.style.display='none';this._own=false}return}
+    if(!this._own){
+      var html='';
+      for(var i=0;i<keys.length;i++){if(i>0)html+='<span class="plus">+</span>';html+='<span class="key">'+keys[i]+'</span>'}
+      keybadge.innerHTML=html;keybadge.style.display='flex';this._own=true;
+    }
+  }};
+}
+function mkSet(t,fn){return {t:t,dur:0,run:function(){fn()}}}
+
+var LEAD=[
+ {a:[300,318],b:[350,352],tp:[364,356]},
+ {a:[209,250],b:[150,218],tp:[118,222]},
+ {a:[278,170],b:[330,108],tp:[346,112]}
+];
+var leadLen=[0,0,0],leadEnd=[[],[],[]];
+function initLeaders(){
+  for(var i=0;i<3;i++){
+    var L=LEAD[i];
+    var dx=L.tp[0]-L.b[0],dy=L.tp[1]-L.b[1],dl=Math.sqrt(dx*dx+dy*dy)||1;
+    var ex=L.tp[0]-dx/dl*5,ey=L.tp[1]-dy/dl*5;
+    leadEnd[i]=[ex,ey];
+    var pl=$('ldP'+i);
+    pl.setAttribute('points',L.a[0]+','+L.a[1]+' '+L.b[0]+','+L.b[1]+' '+ex+','+ey);
+    leadLen[i]=pl.getTotalLength();
+    pl.style.strokeDasharray=leadLen[i];
+    pl.style.strokeDashoffset=leadLen[i];
+    var ax=L.a[0],ay=L.a[1],bx=L.b[0],by=L.b[1];
+    var ddx=bx-ax,ddy=by-ay,ln=Math.sqrt(ddx*ddx+ddy*ddy)||1;ddx/=ln;ddy/=ln;
+    var px=-ddy,py=ddx,bx2=ax+ddx*10,by2=ay+ddy*10;
+    $('ldA'+i).setAttribute('points',ax+','+ay+' '+(bx2+px*3.4)+','+(by2+py*3.4)+' '+(bx2-px*3.4)+','+(by2-py*3.4));
+    var tx=$('ldT'+i);tx.setAttribute('x',L.tp[0]);tx.setAttribute('y',L.tp[1]+4);tx.style.opacity=0;
+  }
+}
+function drawLeader(i,p){
+  var g=$('ld'+i);g.style.display='block';
+  $('ldP'+i).style.strokeDashoffset=leadLen[i]*(1-p);
+  $('ldT'+i).style.opacity=p>0.82?1:0;
+}
+function mkDraw(t,dur,i){return {t:t,dur:dur,run:function(p){drawLeader(i,p)}}}
+function mkAlign(t,dur){
+  return {t:t,dur:dur,run:function(p){
+    var e=ease(p);
+    for(var i=0;i<3;i++){var tx=$('ldT'+i);tx.setAttribute('x',lerp(LEAD[i].tp[0],565,e))}
+  }};
+}
+
+function renderPalette(n,info,status,hot,isNew){
+  $('palette').style.display='flex';
+  $('palInfo').textContent=info;
+  var st=$('palStatus'); st.textContent=status; st.className=hot?'hot':'';
+  var tb=$('palBody'),sig=n+'|'+(isNew?1:0);
+  if(tb.dataset.sig!==sig){
+    var h='';
+    for(var i=0;i<n;i++){var d=DICT[i];var c=(isNew&&i===n-1)?' class="newrow"':'';h+='<tr'+c+'><td>'+d.n+'</td><td>'+d.name+'</td><td>'+d.occ+'</td></tr>';}
+    tb.innerHTML=h; tb.dataset.sig=sig;
+  }
+}
+function hidePalette(){$('palette').style.display='none';$('palBody').dataset.sig='';}
+
+function hideOverlays(){
+  $('ov0').style.display='none';$('ovEnd').style.display='none';
+  var i,ids=['fn1','fa1','fn2','fa2','fn3','ov0note'];
+  for(i=0;i<ids.length;i++)$(ids[i]).classList.remove('on');
+  var ei=document.querySelectorAll('.endItem');for(i=0;i<ei.length;i++)ei[i].classList.remove('on');
+  $('endFiles').classList.remove('on');$('endStamp').classList.remove('on');
+}
+function setWins(list,focusId){
+  var i,k;
+  for(i=0;i<WINS.length;i++)$(WINS[i]).style.display='none';
+  for(k in TBMAP){var b=$(TBMAP[k]);if(b){b.classList.remove('open');b.classList.remove('active');}}
+  hideOverlays();
+  for(i=0;i<list.length;i++)showWin(list[i]);
+  if(focusId)focusWin(focusId);
+}
+function resetLeaders(){
+  for(var i=0;i<3;i++){
+    $('ld'+i).style.display='none';
+    $('ldP'+i).style.strokeDashoffset=leadLen[i];
+    var tx=$('ldT'+i);tx.style.opacity=0;tx.setAttribute('x',LEAD[i].tp[0]);
+  }
+  $('gSelBox').style.display='none';
+}
+function showAllLeaders(){for(var i=0;i<3;i++)drawLeader(i,1);}
+function termClear(t){t.el.innerHTML='';}
+function onoff(el,on){if(on)el.classList.add('on');else el.classList.remove('on');}
+
+var _fired={},_kbKeys='';
+function resetFx(){_fired={};_kbKeys='';keybadge.style.display='none';}
+function ev(key,lt,t,fn){if(lt>=t&&!_fired[key]){_fired[key]=true;fn();}}
+function keyWin(lt,t0,t1,keys){
+  if(lt>=t0&&lt<=t1){
+    var sig=keys.join('+');
+    if(_kbKeys!==sig){var h='';for(var i=0;i<keys.length;i++){if(i>0)h+='<span class="plus">+</span>';h+='<span class="key">'+keys[i]+'</span>';}keybadge.innerHTML=h;_kbKeys=sig;}
+    keybadge.style.display='flex';
+  }else if(_kbKeys!==''){keybadge.style.display='none';_kbKeys='';}
+}
+function tl(term,idx,text,lt,t0,dur,cls){
+  var el=term.el.children[idx];
+  if(lt<t0){if(el)el.textContent='';return;}
+  if(!el){el=document.createElement('div');el.className='tl'+(cls?' '+cls:'');term.el.appendChild(el);}
+  var p=dur>0?clamp((lt-t0)/dur,0,1):1;
+  el.textContent=p>=1?text:text.slice(0,Math.max(0,Math.floor(text.length*p)));
+  term.el.scrollTop=term.el.scrollHeight;
+}
+function runLines(term,arr,lt){for(var i=0;i<arr.length;i++){var L=arr[i];tl(term,L[0],L[3],lt,L[1],L[2],L[4]);}}
+function curAt(lt,kf){
+  if(lt<=kf[0][0]){setCursor(kf[0][1],kf[0][2]);return;}
+  for(var i=0;i<kf.length-1;i++){
+    if(lt>=kf[i][0]&&lt<=kf[i+1][0]){
+      var span=(kf[i+1][0]-kf[i][0])||1;var p=ease((lt-kf[i][0])/span);
+      setCursor(lerp(kf[i][1],kf[i+1][1],p),lerp(kf[i][2],kf[i+1][2],p));return;
+    }
+  }
+  var L=kf[kf.length-1];setCursor(L[1],L[2]);
+}
+function leaderDraw(i,lt,t0,dur){
+  if(lt<t0){$('ld'+i).style.display='none';$('ldP'+i).style.strokeDashoffset=leadLen[i];$('ldT'+i).style.opacity=0;return;}
+  drawLeader(i,clamp((lt-t0)/dur,0,1));
+}
+function selBox(lt,t0,dur,x,y,w,h){
+  var g=$('gSelBox');
+  if(lt<t0){g.style.display='none';return;}
+  var p=clamp((lt-t0)/dur,0,1);g.style.display='block';
+  var r=$('selRect');r.setAttribute('x',x);r.setAttribute('y',y);
+  r.setAttribute('width',w*ease(p));r.setAttribute('height',h*ease(p));
+}
+function alignTexts(lt,t0,dur){
+  var p=lt<t0?0:clamp((lt-t0)/dur,0,1);var e=ease(p);
+  for(var i=0;i<3;i++)$('ldT'+i).setAttribute('x',lerp(LEAD[i].tp[0],565,e));
+}
+function wordType(lt,t0,dur,text){
+  var we=$('wordEdit');
+  if(lt<t0){we.textContent='';we.classList.remove('typing');$('wordCaret').style.display='none';return;}
+  var p=clamp((lt-t0)/dur,0,1);
+  we.textContent=p>=1?text:text.slice(0,Math.floor(text.length*p));
+  we.classList.add('typing');$('wordCaret').style.display='inline-block';
+}
+function resetWord(){$('wordEdit').textContent='';$('wordEdit').classList.remove('typing');$('wordCaret').style.display='none';$('wordSaveState').textContent='中文(中国)';$('wordSaveState').style.color='';}
+function saveFlash(lt,t0){var el=$('wordSaveState');if(lt>=t0&&lt<t0+1600){el.textContent='已保存 ✓';el.style.color='#1a7a3a';}else{el.textContent='中文(中国)';el.style.color='';}}
+function expDictShow(lt,t0,date){var r=$('expDict');if(lt>=t0){if(r.classList.contains('hidden')){r.classList.remove('hidden');r.classList.add('flash');}$('expDictDate').textContent=date;}else{r.classList.add('hidden');r.classList.remove('flash');}}
+function resetExp(){$('expDict').classList.add('hidden');$('expDict').classList.remove('flash');$('expCheck').classList.add('hidden');}
+
+var PS_LINES=[
+[0,200,500,"PS C:\\PatentMarker> .\\install-2007.ps1",'inp'],
+[1,900,260,"=== PatentMarker 2007 部署 ==="],
+[2,1300,300,"DLL 路径: C:\\PatentMarker\\PatentMarker.dll"],
+[3,1700,300,"产品代码: ACAD-5001:804"],
+[4,2100,500,"注册表键: HKCU:\\Software\\Autodesk\\AutoCAD\\R17.0\\ACAD-5001:804\\Applications\\PatentMarker"],
+[5,2800,80," "],
+[6,3100,260,"已创建注册表键",'ok'],
+[7,3500,80," "],
+[8,3800,260,"部署完成！",'ok'],
+[9,4200,360,"重启 AutoCAD 2007 后，插件将自动加载。",'ok'],
+[10,4800,80," "],
+[11,5100,200,"可用命令："],
+[12,5400,260,"  PATPALETTE  — 打开字典面板"],
+[13,5800,260,"  PATMARK     — 创建引线标注"],
+[14,6200,300,"  PATCHECK    — 校验图纸与字典一致性"],
+[15,6600,260,"  PATALIGN    — 对齐引线"],
+[16,7100,80," "],
+[17,7400,260,"=== 验证 ==="],
+[18,7800,360,"  DESCRIPTION: PatentMarker - 专利标注插件"],
+[19,8400,260,"  LOADCTRLS:   1"],
+[20,8800,260,"  MANAGED:     1"],
+[21,9200,460,"  LOADER:      C:\\PatentMarker\\PatentMarker.dll"],
+[22,10000,300,"PS C:\\PatentMarker> _",'inp']
+];
+var LOG_LINES=[
+[0,400,200,"[09:14:58.204] === PatentMarker Initialize START ==="],
+[1,900,260,"[09:14:58.205] NET Runtime: 2.0.50727.4959"],
+[2,1300,320,"[09:14:58.206] BaseDirectory: C:\\Program Files\\Autodesk\\AutoCAD 2007\\"],
+[3,1800,300,"[09:14:58.207]   Assembly 'acdbmgd': LOADED (17.0.0.0)"],
+[4,2300,300,"[09:14:58.208]   Assembly 'acmgd': LOADED (17.0.0.0)"],
+[5,2800,220,"[09:14:58.209] Loading config..."],
+[6,3200,300,"[09:14:58.210] Config loaded: defaultDictPath=''"],
+[7,3700,220,"[09:14:58.211] === PatentMarker Initialize END ==="]
+];
+var JSON10=[
+[0,3000,120,"{"],
+[1,3200,200,'  "metadata": {'],
+[2,3500,260,'    "source_file": "测试样本.docx",'],
+[3,3900,260,'    "extracted_at": "2026-07-21T09:12:00",'],
+[4,4300,180,'    "version": "1.0"'],
+[5,4600,120,"  },"],
+[6,4900,160,'  "entries": ['],
+[7,5200,320,'    { "number": "1", "name": "底座", "occurrences": 5, "conflicts": [] },'],
+[8,5700,320,'    { "number": "2", "name": "支架", "occurrences": 3, "conflicts": [] },'],
+[9,6200,320,'    { "number": "3", "name": "电机", "occurrences": 4, "conflicts": [] },'],
+[10,6700,260,"    …（4齿轮 5轴承 6弹簧 7外壳 8螺栓 9传感器 10传动轴，共 10 条）"],
+[11,7400,120,"  ],"],
+[12,7700,160,'  "warnings": []'],
+[13,8000,100,"}"]
+];
+var JSON11=[
+[0,4500,100,"{"],
+[1,4650,200,'  "metadata": { "source_file": "测试样本.docx",'],
+[2,4950,240,'    "extracted_at": "2026-07-21T09:18:00", "version": "1.0" },'],
+[3,5300,140,'  "entries": ['],
+[4,5550,300,'    { "number": "1", "name": "底座", "occurrences": 5, "conflicts": [] },'],
+[5,5950,260,"    …（2支架 3电机 4齿轮 5轴承 6弹簧 7外壳 8螺栓 9传感器 10传动轴）"],
+[6,6450,360,'    { "number": "11", "name": "联轴器", "occurrences": 1, "conflicts": [] }','hl-line'],
+[7,7050,120,"  ],"],
+[8,7300,160,'  "warnings": []'],
+[9,7600,100,"}"]
+];
+var S6_CMD=[
+[0,700,200,"已切换到 #1 底座"],
+[1,1200,260,"点击 [1 底座] 的标注点（Esc 取消）: "],
+[2,2400,160,"点击拐点: "],
+[3,3200,180,"点击文字位置: "],
+[4,4000,200,"  已创建引线: 1",'ok'],
+[5,5900,200,"已切换到 #2 支架"],
+[6,6300,260,"点击 [2 支架] 的标注点（Esc 取消）: "],
+[7,7400,160,"点击拐点: "],
+[8,8200,180,"点击文字位置: "],
+[9,9000,200,"  已创建引线: 2",'ok'],
+[10,10900,200,"已切换到 #3 电机"],
+[11,11300,260,"点击 [3 电机] 的标注点（Esc 取消）: "],
+[12,12400,160,"点击拐点: "],
+[13,13200,180,"点击文字位置: "],
+[14,14000,200,"  已创建引线: 3",'ok']
+];
+var S8_CMD=[
+[0,1200,180,"========== PATCHECK 结果 =========="],
+[1,1600,260,"字典条目: 11  |  图纸引线 (PAT_DIM): 3"],
+[2,2100,300,"(扫描 3 条 Leader，匹配 3 条 PAT_DIM，0 个文字错误)"],
+[3,2700,80," "],
+[4,3000,260,"--- 字典有，图纸缺失 (8) ---"],
+[5,3400,160,"  #10 (传动轴)"],
+[6,3700,160,"  #11 (联轴器)"],
+[7,4000,160,"  #4 (齿轮)"],
+[8,4300,160,"  #5 (轴承)"],
+[9,4600,160,"  #6 (弹簧)"],
+[10,4900,160,"  #7 (外壳)"],
+[11,5200,160,"  #8 (螺栓)"],
+[12,5500,160,"  #9 (传感器)"],
+[13,5900,80," "],
+[14,6200,160,"总问题数: 8"],
+[15,6600,160,"=========================================="],
+[16,7000,260,"保存报告到文件? [是(Y)/否(N)] <否>:"],
+[17,7600,120,"是",'inp'],
+[18,8000,300,"报告已保存到: C:\\PatentMarker\\test-sample.check.txt",'ok'],
+[19,13800,200,"PATALIGN",'inp'],
+[20,14300,260,"对齐模式: [选择(S)/框边(K)] <选择>:"],
+[21,14900,160,"框边",'inp'],
+[22,15400,200,"参考框第一角: "],
+[23,16200,120,"对角: "],
+[24,17000,260,"对齐到哪边? [左(L)/右(R)/上(T)/下(B)]:"],
+[25,17600,120,"右",'inp'],
+[26,18000,260,"选择要对齐的 PAT_DIM 引线: "],
+[27,19400,320,"对齐 3 条引线到右边（margin=5.0，跳过 0，错误 0）。",'ok']
+];
+var S8_REP=[
+[0,8800,240,"PATCHECK Report - 2026-07-21 09:20:15"],
+[1,9200,300,"Dict: 11 entries | Drawing: 3 Leaders (PAT_DIM)"],
+[2,9700,200,"============================================================"],
+[3,10100,120," "],
+[4,10400,300,"--- Dict has, drawing missing (8) ---"],
+[5,10800,180,"  #10 (传动轴)"],
+[6,11100,180,"  #11 (联轴器)"],
+[7,11400,180,"  #4 (齿轮)"],
+[8,11700,180,"  #5 (轴承)"],
+[9,12000,180,"  #6 (弹簧)"],
+[10,12300,180,"  #7 (外壳)"],
+[11,12600,180,"  #8 (螺栓)"],
+[12,12900,180,"  #9 (传感器)"]
+];
+
+var KF6=[
+[0,870,304],[300,870,304],
+[1800,471,422],[2400,471,422],
+[2800,521,456],[3200,521,456],
+[3600,535,460],[5000,535,460],
+[5500,870,324],[5600,870,324],
+[6900,380,354],[7400,380,354],
+[7800,321,322],[8200,321,322],
+[8600,289,326],[10000,289,326],
+[10500,870,344],[10600,870,344],
+[11900,449,274],[12400,449,274],
+[12800,501,212],[13200,501,212],
+[13600,517,216],[15500,517,216],
+[21000,590,380]
+];
+var KF8=[
+[0,300,555],[300,300,555],[7600,300,555],
+[8500,760,260],[13000,760,260],
+[13500,300,555],[13800,300,555],
+[15800,211,132],[16600,731,484],
+[18400,420,300],[22000,420,300]
+];
+
+var _vbeM=[],_vbeC=[];
+function cacheVbe(){
+  _vbeM=[];_vbeC=[];
+  for(var m=1;m<=6;m++)_vbeM[m]=document.querySelector('#vbeTree [data-m="'+m+'"]');
+  for(var c=1;c<=18;c++)_vbeC[c]=document.querySelector('#vbeCodeBody [data-c="'+c+'"]');
+}
+function vbeReset(){for(var m=1;m<=6;m++)if(_vbeM[m])_vbeM[m].classList.remove('on');for(var c=1;c<=18;c++)if(_vbeC[c])_vbeC[c].classList.remove('on');}
+function vbeReveal(lt){
+  for(var m=1;m<=6;m++){var t=1800+(m-1)*700;if(_vbeM[m])onoff(_vbeM[m],lt>=t);}
+  for(var c=1;c<=18;c++){var t2=6000+(c-1)*340;if(_vbeC[c])onoff(_vbeC[c],lt>=t2);}
+}
+
+var SCENES=[
+{nm:"概览 · 数据流",dur:7000,cap:"<span class='tag'>场景 0</span>PatentMarker 2007：Word 专利说明书经 VBA 保存钩子自动导出 dict.json，CAD 端 DictLoader 时间戳检测（≤2s）自动重载 —— 保存即同步，全程零手动。",
+ enter:function(){setWins([],null);},
+ frame:function(lt){
+   $('ov0').style.display='block';
+   onoff($('fn1'),lt>=300);onoff($('fa1'),lt>=1300);onoff($('fn2'),lt>=2200);onoff($('fa2'),lt>=3300);onoff($('fn3'),lt>=4200);onoff($('ov0note'),lt>=5400);
+   curAt(lt,[[0,360,470],[7000,820,300]]);
+ }},
+{nm:"部署安装",dur:13000,cap:"<span class='tag'>场景 1</span>以普通用户权限运行 install-2007.ps1，向 HKCU 注册表写入 LOADCTRLS=1 / MANAGED=1 / LOADER，AutoCAD 2007（R17.0 · ACAD-5001:804）启动时自动 NETLOAD 插件。",
+ enter:function(){setWins(['win-ps'],'win-ps');termClear(tPS);},
+ frame:function(lt){runLines(tPS,PS_LINES,lt);curAt(lt,[[0,300,180],[13000,300,180]]);ev('ps',lt,200,function(){ripple(300,180);});}},
+{nm:"导入 VBA 模块",dur:13000,cap:"<span class='tag'>场景 2</span>在 VBE 中导入 6 个模块：Patterns / DictModel / JsonWriter / PatentExtractor / AutoExport / clsSaveHook。AutoOpen 注册保存钩子，ExportDict 调用 JsonWriter 序列化导出。",
+ enter:function(){setWins(['win-vbe'],'win-vbe');cacheVbe();vbeReset();$('vbeDrop').style.display='none';},
+ frame:function(lt){
+   $('vbeDrop').style.display=(lt>=400&&lt<1500)?'block':'none';
+   vbeReveal(lt);
+   ev('rb',lt,400,function(){ripple(120,120);});
+   ev('imp',lt,1200,function(){ripple(213,149);});
+   curAt(lt,[[0,400,300],[400,120,120],[1200,213,149],[2000,430,300],[13000,430,300]]);
+ }},
+{nm:"Word 保存自动导出",dur:13000,cap:"<span class='tag'>场景 3</span>在 Word 中按 Ctrl+S，DocumentBeforeSave 钩子触发 AutoExport.ExportDict，经 JsonWriter 生成 test-sample.dict.json（10 条条目）并保存到 DWG 同目录。",
+ enter:function(){setWins(['win-word','win-exp','win-json'],'win-word');termClear(tJson);resetWord();resetExp();},
+ frame:function(lt){
+   keyWin(lt,1200,2200,['Ctrl','S']);
+   saveFlash(lt,2200);
+   expDictShow(lt,2600,"2026/7/21 9:12");
+   runLines(tJson,JSON10,lt);
+   if(lt>=3000){if(activeWin!==$('win-json'))focusWin('win-json');}
+   ev('we',lt,500,function(){ripple(500,352);});
+   curAt(lt,[[0,400,300],[500,500,352],[2600,500,352],[3000,820,260],[13000,820,260]]);
+ }},
+{nm:"CAD 加载插件",dur:9000,cap:"<span class='tag'>场景 4</span>启动 AutoCAD 2007，注册表自动加载插件，Initialize 写入 PatentMarker.log（.NET 2.0，引用 acdbmgd / acmgd）。PAT_DIM 标注样式在首次命令时懒创建。（运行时版本号与路径随实际环境而定）",
+ enter:function(){setWins(['win-cad','win-log'],'win-log');termClear(tLog);hidePalette();resetLeaders();},
+ frame:function(lt){runLines(tLog,LOG_LINES,lt);curAt(lt,[[0,200,200],[9000,200,200]]);}},
+{nm:"打开字典面板",dur:9000,cap:"<span class='tag'>场景 5</span>命令行输入 PATPALETTE，DictLoader 读取 test-sample.dict.json，面板按自然排序显示 10 条条目（编号 / 名称 / 次数），状态「字典已加载。」。",
+ enter:function(){setWins(['win-cad'],'win-cad');termClear(tCmd);hidePalette();resetLeaders();},
+ frame:function(lt){
+   tl(tCmd,0,"PATPALETTE",lt,600,400,'inp');
+   if(lt>=1500){
+     var n=lt<2000?0:Math.min(10,Math.floor((lt-2000)/380)+1);
+     renderPalette(n,n>=10?"10 条 | 0 警告 | 0 冲突":"未加载字典",n>=10?"字典已加载。":"就绪。",false,false);
+   }else hidePalette();
+   ev('cmd',lt,300,function(){ripple(300,555);});
+   curAt(lt,[[0,300,555],[300,300,555],[9000,300,555]]);
+ }},
+{nm:"引线标注 PATMARK",dur:21000,cap:"<span class='tag'>场景 6</span>双击面板条目装填编号（已切换到 #N），PATMARK 依次点击 标注点→拐点→文字位置，创建 Leader + MText（PAT_DIM 样式，字高 3.5）。共标注 #1 底座、#2 支架、#3 电机。",
+ enter:function(){setWins(['win-cad'],'win-cad');termClear(tCmd);resetLeaders();},
+ frame:function(lt){
+   runLines(tCmd,S6_CMD,lt);
+   leaderDraw(0,lt,4000,1000);leaderDraw(1,lt,9000,1000);leaderDraw(2,lt,14000,1000);
+   var st="字典已加载。";
+   if(lt>=700&&lt<5900)st="已装填: [1] — 请在图纸中点击";
+   else if(lt>=5900&&lt<10900)st="已装填: [2] — 请在图纸中点击";
+   else if(lt>=10900)st="已装填: [3] — 请在图纸中点击";
+   renderPalette(10,"10 条 | 0 警告 | 0 冲突",st,false,false);
+   keyWin(lt,15500,16300,['Esc']);
+   ev('r1',lt,300,function(){ripple(870,304,true);});
+   ev('a0',lt,1800,function(){ripple(471,422);pickmark(471,422);});
+   ev('b0',lt,2800,function(){ripple(521,456);pickmark(521,456);});
+   ev('t0',lt,3600,function(){ripple(535,460);pickmark(535,460);});
+   ev('r2',lt,5500,function(){ripple(870,324,true);});
+   ev('a1',lt,6900,function(){ripple(380,354);pickmark(380,354);});
+   ev('b1',lt,7800,function(){ripple(321,322);pickmark(321,322);});
+   ev('t1',lt,8600,function(){ripple(289,326);pickmark(289,326);});
+   ev('r3',lt,10500,function(){ripple(870,344,true);});
+   ev('a2',lt,11900,function(){ripple(449,274);pickmark(449,274);});
+   ev('b2',lt,12800,function(){ripple(501,212);pickmark(501,212);});
+   ev('t2',lt,13600,function(){ripple(517,216);pickmark(517,216);});
+   curAt(lt,KF6);
+ }},
+{nm:"修改并自动同步",dur:15000,cap:"<span class='tag'>场景 7</span>在 Word 末尾补入「11联轴器；」并 Ctrl+S，钩子重新导出 dict.json（11 条）。CAD 端 DictLoader 时间戳缓存检测到文件变化（≤2s Timer），面板自动刷新并高亮新增条目「字典已自动更新。」—— 全程零手动。",
+ enter:function(){setWins(['win-word','win-cad','win-json'],'win-word');termClear(tJson);resetWord();showAllLeaders();},
+ frame:function(lt){
+   wordType(lt,1000,1200,"11联轴器；");
+   keyWin(lt,2800,3600,['Ctrl','S']);
+   saveFlash(lt,3800);
+   runLines(tJson,JSON11,lt);
+   showAllLeaders();
+   if(lt>=4500&&lt<8000){if(activeWin!==$('win-json'))focusWin('win-json');}
+   if(lt>=8000){
+     if(activeWin!==$('win-cad'))focusWin('win-cad');
+     renderPalette(11,"11 条 | 0 警告 | 0 冲突","字典已自动更新。",true,true);
+   }else renderPalette(10,"10 条 | 0 警告 | 0 冲突","字典已加载。",false,false);
+   ev('we',lt,400,function(){ripple(560,352);});
+   curAt(lt,[[0,500,352],[400,560,352],[2800,560,352],[4500,820,260],[8000,870,300],[15000,870,300]]);
+ }},
+{nm:"校验与对齐",dur:22000,cap:"<span class='tag'>场景 8</span>PATCHECK 比对字典(11)与图纸引线(3)，列出 8 条「字典有、图纸缺失」并保存 .check.txt 报告；PATALIGN 框边模式将 3 条引线文字对齐到图框右边（margin=5.0）。",
+ enter:function(){setWins(['win-cad','win-report'],'win-cad');termClear(tCmd);termClear(tRep);showAllLeaders();},
+ frame:function(lt){
+   runLines(tCmd,S8_CMD,lt);
+   runLines(tRep,S8_REP,lt);
+   showAllLeaders();
+   if(lt>=8500&&lt<13500){if(activeWin!==$('win-report'))focusWin('win-report');}
+   else if(lt>=13500){if(activeWin!==$('win-cad'))focusWin('win-cad');}
+   renderPalette(11,"11 条 | 0 警告 | 0 冲突","字典已自动更新。",false,false);
+   selBox(lt,18400,800,100,90,300,290);
+   if(lt>19600)$('gSelBox').style.display='none';
+   alignTexts(lt,19800,1200);
+   ev('c1',lt,300,function(){ripple(300,555);});
+   ev('yes',lt,7600,function(){ripple(300,555);});
+   ev('c2',lt,13500,function(){ripple(300,555);});
+   ev('fc',lt,15800,function(){ripple(211,132);pickmark(211,132);});
+   ev('fc2',lt,16600,function(){ripple(731,484);pickmark(731,484);});
+   curAt(lt,KF8);
+ }},
+{nm:"演示完成",dur:8000,cap:"<span class='tag'>场景 9</span>部署 → 配置 → 导出 → 加载 → 面板 → 标注 → 同步 → 校验/对齐 全流程贯通。Word 保存即同步，零外部依赖（SimpleJson 内置，.NET 2.0 单 DLL 部署）。",
+ enter:function(){setWins([],null);},
+ frame:function(lt){
+   $('ovEnd').style.display='block';
+   var items=document.querySelectorAll('.endItem');
+   for(var i=0;i<items.length;i++)onoff(items[i],lt>=400+i*480);
+   onoff($('endFiles'),lt>=4600);onoff($('endStamp'),lt>=5600);
+   curAt(lt,[[0,590,560],[8000,590,560]]);
+ }}
+];
+
+var starts=[],total=0;
+for(var si=0;si<SCENES.length;si++){starts.push(total);total+=SCENES[si].dur;}
+var now=0,playing=false,lastTs=0,curIdx=-1,rafId=null;
+
+function sceneAt(t){
+  for(var i=0;i<SCENES.length;i++){if(t<starts[i]+SCENES[i].dur)return i;}
+  return SCENES.length-1;
+}
+function enterScene(idx){resetFx();SCENES[idx].enter();curIdx=idx;}
+function syncChrome(idx){
+  $('progFill').style.width=(now/total*100)+'%';
+  $('clock').textContent=fmt(now)+' / '+fmt(total);
+  $('caption').innerHTML=SCENES[idx].cap;
+  var steps=document.querySelectorAll('.step');
+  for(var i=0;i<steps.length;i++){
+    steps[i].classList.remove('active','done');
+    if(i===idx)steps[i].classList.add('active');
+    else if(i<idx)steps[i].classList.add('done');
+  }
+}
+function render(){
+  var idx=sceneAt(now);
+  if(idx!==curIdx)enterScene(idx);
+  SCENES[idx].frame(now-starts[idx]);
+  syncChrome(idx);
+}
+function updatePlay(){$('bPlay').innerHTML=playing?'❚❚':'▶';}
+function tick(ts){
+  if(!playing)return;
+  if(!lastTs)lastTs=ts;
+  var dt=ts-lastTs;lastTs=ts;now+=dt;
+  if(now>=total){now=total;render();pause();return;}
+  render();
+  rafId=requestAnimationFrame(tick);
+}
+function play(){if(now>=total){now=0;curIdx=-1;}playing=true;lastTs=0;updatePlay();rafId=requestAnimationFrame(tick);}
+function pause(){playing=false;updatePlay();if(rafId)cancelAnimationFrame(rafId);}
+function seek(ms){now=clamp(ms,0,total);render();}
+function next(){var i=sceneAt(now);if(i<SCENES.length-1)seek(starts[i+1]+1);else seek(total);}
+function prev(){var i=sceneAt(now);if(now-starts[i]>400)seek(starts[i]);else if(i>0)seek(starts[i-1]);else seek(0);}
+function replay(){pause();now=0;curIdx=-1;render();play();}
+function fit(){
+  var o=$('stageOuter'),ow=o.clientWidth,oh=o.clientHeight;
+  var s=Math.min(ow/1180,oh/640);
+  $('stage').style.transform='scale('+s+')';
+}
+function buildSteps(){
+  var nav=$('steps');
+  for(var i=0;i<SCENES.length;i++){
+    (function(idx){
+      var d=document.createElement('div');d.className='step';
+      d.innerHTML='<span class="no">'+idx+'</span><span class="nm">'+SCENES[idx].nm+'</span>';
+      d.onclick=function(){seek(starts[idx]+1);};
+      nav.appendChild(d);
+    })(i);
+  }
+}
+function buildTicks(){
+  var p=$('prog');
+  for(var i=1;i<SCENES.length;i++){
+    var t=document.createElement('div');t.className='tick';
+    t.style.left=(starts[i]/total*100)+'%';p.appendChild(t);
+  }
+}
+
+initLeaders();
+buildSteps();
+buildTicks();
+fit();
+window.addEventListener('resize',fit);
+$('bPlay').onclick=function(){playing?pause():play();};
+$('bPrev').onclick=prev;
+$('bNext').onclick=next;
+$('bReplay').onclick=replay;
+$('prog').onclick=function(e){
+  var r=$('prog').getBoundingClientRect();
+  var frac=(e.clientX-r.left)/r.width;
+  seek(frac*total);
+};
+document.addEventListener('keydown',function(e){
+  var k=e.keyCode;
+  if(k===32){e.preventDefault();playing?pause():play();}
+  else if(k===39)next();
+  else if(k===37)prev();
+  else if(k===36)replay();
+});
+var _hashT=-1;
+if(location.hash){var _hm=/at=(\d+)/.exec(location.hash);if(_hm)_hashT=parseInt(_hm[1],10);}
+enterScene(0);
+if(_hashT>=0){now=clamp(_hashT,0,total);render();}
+else{render();play();}
+})();
+</script>
+</body>
+</html>

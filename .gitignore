@@ -1,0 +1,41 @@
+# ============================================================
+# PatentMarker 2007 - .gitignore
+# ============================================================
+
+# ---- 构建产物 ----
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.dll
+*.pdb
+*.exe
+
+# ---- AutoCAD SDK 专有 DLL（Autodesk 版权，禁止提交） ----
+# acdbmgd.dll / acmgd.dll / probe.exe 由用户本机自备，放入 lib/
+cad-plugin-2007/PatentMarker/lib/*.dll
+cad-plugin-2007/PatentMarker/lib/*.exe
+
+# ---- 发布包 / 压缩包 ----
+*.zip
+PatentMarker-2007-v2*/
+
+# ---- 截图与本地环境探测（含本机隐私信息） ----
+shots-v2/
+2007 版本运行环境/
+
+# ---- IDE / 助手内部文件 ----
+.trae/
+.workbuddy/
+.vs/
+*.user
+*.suo
+
+# ---- 日志 ----
+*.log
+PatentMarker.log
+
+# ---- 临时文件 ----
+*.tmp
+*.bak
+~$*
