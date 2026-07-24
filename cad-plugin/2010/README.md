@@ -1,4 +1,4 @@
-# PatentMarker 2010 — AutoCAD 2010/2011/2012 适配版
+# PatentCAD-Annotator 2010 — AutoCAD 2010/2011/2012 适配版
 
 > **状态：规划中（TODO）**
 > 本目录尚未实现，源码将从 `cad-plugin/2007/` 派生。

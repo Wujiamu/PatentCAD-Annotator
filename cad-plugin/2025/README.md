@@ -1,4 +1,4 @@
-# PatentMarker 2025 — AutoCAD 2025/2026+ 适配版
+# PatentCAD-Annotator 2025 — AutoCAD 2025/2026+ 适配版
 
 > **状态：规划中（TODO）**
 > 本目录尚未实现。AutoCAD 2025 迁移到 .NET 8，不再支持 Win7。

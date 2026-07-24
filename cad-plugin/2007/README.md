@@ -1,4 +1,4 @@
-# PatentMarker 2007 — AutoCAD 2007 / Win7 适配版
+# PatentCAD-Annotator 2007 — AutoCAD 2007 / Win7 适配版
 
 > **状态：已完成（v2）** — 含样条曲线、无箭头、箭头尺寸、全选、字典比对等增强功能。
 

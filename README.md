@@ -1,4 +1,4 @@
-# PatentMarker
+# PatentCAD-Annotator
 
 **AutoCAD 专利图纸标注插件** — 从 Word 说明书提取附图标记，在 AutoCAD 图纸中一键标注并保持双向同步。
 
@@ -10,15 +10,17 @@
 
 ### 项目简介
 
-PatentMarker 解决专利图纸标注的三个痛点：
+PatentCAD-Annotator 解决专利图纸标注的三个痛点：
 
 1. **人工对照易错** — Word 说明书里的附图标记编号与图纸手动对照，容易漏标/错标
 2. **修改后不同步** — 说明书改了编号，图纸要逐个找出来改
 3. **格式不统一** — 不同人标注的引线样式、文字高度、对齐方式参差不齐
 
-PatentMarker 的工作流：Word 保存时自动提取编号字典 → CAD 端打开字典面板 → 点击编号即可创建标准引线标注 → 字典变更时自动高亮差异。
+PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CAD 端打开字典面板 → 点击编号即可创建标准引线标注 → 字典变更时自动高亮差异。
 
 ### 版本总览
+
+> **⚠️ 当前状态：仅 2007 版已完成并可用，其余 4 个版本仍在规划中。在所有版本完成前，本仓库保持 Private。**
 
 由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本：
 
@@ -64,15 +66,15 @@ PatentMarker 的工作流：Word 保存时自动提取编号字典 → CAD 端�
 ### 目录结构
 
 ```
-PatentMarker/
+PatentCAD-Annotator/
 ├── cad-plugin/
-│   ├── 2007/               # ✅ 已完成（Leader + MText，.NET 2.0）
+│   ├── 2007/               # 已完成（Leader + MText，.NET 2.0）
 │   │   ├── PatentMarker/    #   C# 源码 + csproj
 │   │   └── deploy/          #   安装脚本 + DLL + VBA 模块
-│   ├── 2010/               # 📋 规划中（从 2007 派生，.NET 3.5）
-│   ├── 2013/               # 📋 规划中（MLeader，.NET 4.0）
-│   ├── 2015/               # 📋 规划中（MLeader，.NET 4.5）
-│   └── 2025/               # 📋 规划中（MLeader，.NET 8.0）
+│   ├── 2010/               # 规划中（从 2007 派生，.NET 3.5）
+│   ├── 2013/               # 规划中（MLeader，.NET 4.0）
+│   ├── 2015/               # 规划中（MLeader，.NET 4.5）
+│   └── 2025/               # 规划中（MLeader，.NET 8.0）
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
 │   └── autocad-2007-downgrade-plan.md  # 2007 降级方案
@@ -92,7 +94,7 @@ PatentMarker/
 
 ### Overview
 
-PatentMarker solves three pain points in patent drawing annotation:
+PatentCAD-Annotator solves three pain points in patent drawing annotation:
 
 1. **Error-prone manual cross-reference** — matching reference numerals between Word specs and drawings by hand leads to missed/wrong labels
 2. **No sync after edits** — changing a numeral in the spec means hunting down every occurrence in the drawing
@@ -101,6 +103,8 @@ PatentMarker solves three pain points in patent drawing annotation:
 Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
 
 ### Versions
+
+> **⚠️ Current status: Only the 2007 version is complete and usable. The other 4 versions are still planned. This repository will remain Private until all versions are ready.**
 
 Because AutoCAD's managed API is tightly bound to the .NET runtime, a single source base cannot cover AutoCAD 2007—2026. The project is split into 5 versions along API boundaries:
 

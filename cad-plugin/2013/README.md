@@ -1,4 +1,4 @@
-# PatentMarker 2013 — AutoCAD 2013/2014 适配版
+# PatentCAD-Annotator 2013 — AutoCAD 2013/2014 适配版
 
 > **状态：规划中（TODO）**
 > 本目录尚未实现。AutoCAD 2013 首次引入 MLeader，源码需重大改写。

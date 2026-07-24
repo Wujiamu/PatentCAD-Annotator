@@ -1,4 +1,4 @@
-# PatentMarker 2015 — AutoCAD 2015—2024 适配版
+# PatentCAD-Annotator 2015 — AutoCAD 2015—2024 适配版
 
 > **状态：规划中（TODO）**
 > 本目录尚未实现，源码将从 `cad-plugin/2013/` 派生。
