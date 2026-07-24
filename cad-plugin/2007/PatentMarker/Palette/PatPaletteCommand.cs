@@ -2,6 +2,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Windows;
 using PatentMarker.IO;
+using PatentMarker.I18n;
 using System;
 using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 
@@ -49,7 +50,7 @@ namespace PatentMarker.Palette
                 _paletteSet.Visible = true;
 
                 _control = new DictPaletteControl();
-                _paletteSet.Add("字典", _control);
+                _paletteSet.Add(Strings.Palette_TabTitle, _control);
             }
             else
             {

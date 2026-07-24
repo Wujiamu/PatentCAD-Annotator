@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
+using PatentMarker.I18n;
 using System;
 using System.Collections.Generic;
 using Exception = System.Exception;
@@ -14,6 +15,7 @@ namespace PatentMarker.Commands
     ///
     /// 2007 无 MLeader，使用 Leader（继承 Dimension）+ 独立 MText 组合。
     /// v2：样条曲线引线（IsSplined）+ 无限拐点（循环采集）+ 默认无箭头（面板可切换）。
+    /// v2.3：中英双语支持。
     /// 交互流程：点击附着点 → 循环点击拐点（回车结束）→ 点击文字位置 → 循环。
     /// </summary>
     public class PatMarkCommand
@@ -44,11 +46,11 @@ namespace PatentMarker.Commands
                 }
                 else
                 {
-                    var numResult = ed.GetString("\n输入零件编号: ");
+                    var numResult = ed.GetString(Strings.PatMark_EnterNumber);
                     if (numResult.Status != PromptStatus.OK) return;
                     _currentNumber = numResult.StringResult;
 
-                    var nameResult = ed.GetString("\n输入零件名称（可选）: ");
+                    var nameResult = ed.GetString(Strings.PatMark_EnterName);
                     if (nameResult.Status == PromptStatus.OK)
                         _currentName = nameResult.StringResult;
                 }
@@ -56,7 +58,7 @@ namespace PatentMarker.Commands
 
             if (IsNullOrWhiteSpace(_currentNumber))
             {
-                ed.WriteMessage("\nPatentMarker: 未指定零件编号。\n");
+                ed.WriteMessage(Strings.PatMark_NoNumber);
                 return;
             }
 
@@ -66,7 +68,7 @@ namespace PatentMarker.Commands
                 ApplyPendingIfNeeded(ed);
 
                 string namePart = _currentName != null ? _currentName : "";
-                string prompt = "\n点击 [" + _currentNumber + " " + namePart + "] 的标注点（Esc 取消）: ";
+                string prompt = string.Format(Strings.PatMark_PromptAttachPoint, _currentNumber, namePart);
                 var ptResult = ed.GetPoint(prompt);
                 if (ptResult.Status != PromptStatus.OK) break;
 
@@ -81,8 +83,8 @@ namespace PatentMarker.Commands
                 {
                     var doglegOpts = new PromptPointOptions(
                         doglegPts.Count == 0
-                            ? "\n点击拐点（回车结束，至少1个）: "
-                            : "\n点击下一个拐点（回车结束）: ");
+                            ? Strings.PatMark_PromptFirstDogleg
+                            : Strings.PatMark_PromptNextDogleg);
                     doglegOpts.BasePoint = lastBase;
                     doglegOpts.UseBasePoint = true;
                     doglegOpts.AllowNone = true;
@@ -91,7 +93,7 @@ namespace PatentMarker.Commands
                     {
                         if (doglegPts.Count == 0)
                         {
-                            ed.WriteMessage("\n  至少需要1个拐点，请继续点击。\n");
+                            ed.WriteMessage(Strings.PatMark_NeedOneDogleg);
                             continue;
                         }
                         break;  // 正常结束拐点采集
@@ -110,7 +112,7 @@ namespace PatentMarker.Commands
                 if (doglegCancelled) continue;  // 重新选择附着点
 
                 // 文字位置：回车直接用最后拐点（符合 2007 原始标注习惯），或点击新位置
-                var textOpts = new PromptPointOptions("\n点击文字位置（回车=最后拐点）: ");
+                var textOpts = new PromptPointOptions(Strings.PatMark_PromptTextPos);
                 textOpts.BasePoint = lastBase;
                 textOpts.UseBasePoint = true;
                 textOpts.AllowNone = true;
@@ -135,11 +137,11 @@ namespace PatentMarker.Commands
                 try
                 {
                     CreateLeaderWithText(db, ptResult.Value, doglegPts, textPt, _currentNumber);
-                    ed.WriteMessage("\n  已创建引线: " + _currentNumber + "（" + (doglegPts.Count + 1) + " 个顶点）\n");
+                    ed.WriteMessage(string.Format(Strings.PatMark_Created, _currentNumber, doglegPts.Count + 1));
                 }
                 catch (Exception ex)
                 {
-                    ed.WriteMessage("\nPatentMarker 错误: " + ex.GetType().Name + ": " + ex.Message + "\n");
+                    ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
                     PatentMarkerApp.RawLog("CreateLeaderWithText EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
                 }
             }
@@ -230,7 +232,7 @@ namespace PatentMarker.Commands
             _currentName = Palette.PatPaletteCommand.PendingName;
             Palette.PatPaletteCommand.PendingNumber = null;
             Palette.PatPaletteCommand.PendingName = null;
-            ed.WriteMessage("\n  >> 已切换为: " + _currentNumber + "\n");
+            ed.WriteMessage(string.Format(Strings.PatMark_Switched, _currentNumber));
         }
     }
 }

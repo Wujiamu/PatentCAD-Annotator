@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
+using PatentMarker.I18n;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace PatentMarker.Commands
             var dict = IO.DictLoader.LoadForCurrentDrawing();
             if (dict == null)
             {
-                ed.WriteMessage("\nPatentMarker PATCHECK: 未加载字典。请将 <dwg名>.dict.json 放在 DWG 同目录。\n");
+                ed.WriteMessage(Strings.PatCheck_NoDict);
                 return;
             }
             PatentMarkerApp.RawLog("Dict loaded: " + dict.Entries.Count + " entries");
@@ -117,13 +118,13 @@ namespace PatentMarker.Commands
             duplicates.Sort(CompareByNumber);
 
             // 输出结果
-            ed.WriteMessage("\n========== PATCHECK 结果 ==========\n");
-            ed.WriteMessage("字典条目: " + dict.Entries.Count + "  |  图纸引线 (PAT_DIM): " + drawingNumbers.Count + "\n");
-            ed.WriteMessage("(扫描 " + totalLeaders + " 条 Leader，匹配 " + patCount + " 条 PAT_DIM，" + textErrors + " 个文字错误)\n");
+            ed.WriteMessage(Strings.PatCheck_ReportTitle);
+            ed.WriteMessage(string.Format(Strings.PatCheck_Summary, dict.Entries.Count, drawingNumbers.Count));
+            ed.WriteMessage(string.Format(Strings.PatCheck_ScanStats, totalLeaders, patCount, textErrors));
 
             if (drawingOnly.Count > 0)
             {
-                ed.WriteMessage("\n--- 图纸有，字典缺失 (" + drawingOnly.Count + ") ---\n");
+                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDrawingOnly, drawingOnly.Count));
                 foreach (string num in drawingOnly)
                 {
                     Point3d pos = drawingNumbers[num][0];
@@ -133,7 +134,7 @@ namespace PatentMarker.Commands
 
             if (dictOnly.Count > 0)
             {
-                ed.WriteMessage("\n--- 字典有，图纸缺失 (" + dictOnly.Count + ") ---\n");
+                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDictOnly, dictOnly.Count));
                 foreach (string num in dictOnly)
                 {
                     string name = FindEntryName(dict, num);
@@ -143,10 +144,10 @@ namespace PatentMarker.Commands
 
             if (duplicates.Count > 0)
             {
-                ed.WriteMessage("\n--- 图纸中重复 (" + duplicates.Count + ") ---\n");
+                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDuplicates, duplicates.Count));
                 foreach (var kv in duplicates)
                 {
-                    ed.WriteMessage("  #" + kv.Key + " 出现 " + kv.Value.Count + " 次:\n");
+                    ed.WriteMessage(string.Format(Strings.PatCheck_DuplicateDetail, kv.Key, kv.Value.Count));
                     for (int i = 0; i < kv.Value.Count; i++)
                     {
                         Point3d p = kv.Value[i];
@@ -157,13 +158,13 @@ namespace PatentMarker.Commands
 
             if (drawingOnly.Count == 0 && dictOnly.Count == 0 && duplicates.Count == 0)
             {
-                ed.WriteMessage("\n*** 全部一致 — 图纸与字典匹配 ***\n");
+                ed.WriteMessage(Strings.PatCheck_AllMatch);
                 PatentMarkerApp.RawLog("PATCHECK: ALL CLEAR");
             }
             else
             {
                 int totalIssues = drawingOnly.Count + dictOnly.Count + duplicates.Count;
-                ed.WriteMessage("\n总问题数: " + totalIssues + "\n");
+                ed.WriteMessage(string.Format(Strings.PatCheck_TotalIssues, totalIssues));
                 PatentMarkerApp.RawLog("PATCHECK: " + totalIssues + " issues");
             }
 
@@ -196,12 +197,12 @@ namespace PatentMarker.Commands
         {
             try
             {
-                var saveOpts = new PromptKeywordOptions("\n保存报告到文件?");
-                saveOpts.Keywords.Add("是");
-                saveOpts.Keywords.Add("否");
-                saveOpts.Keywords.Default = "否";
+                var saveOpts = new PromptKeywordOptions(Strings.PatCheck_SavePrompt);
+                saveOpts.Keywords.Add(Strings.PatCheck_KwYes);
+                saveOpts.Keywords.Add(Strings.PatCheck_KwNo);
+                saveOpts.Keywords.Default = Strings.PatCheck_KwNo;
                 var saveResult = ed.GetKeywords(saveOpts);
-                if (saveResult.Status != PromptStatus.OK || saveResult.StringResult != "是")
+                if (saveResult.Status != PromptStatus.OK || saveResult.StringResult != Strings.PatCheck_KwYes)
                     return;
 
                 string dwgDir = Path.GetDirectoryName(doc.Name);
@@ -252,7 +253,7 @@ namespace PatentMarker.Commands
                     }
                 }
 
-                ed.WriteMessage("\n报告已保存到: " + reportPath + "\n");
+                ed.WriteMessage(string.Format(Strings.PatCheck_ReportSaved, reportPath));
                 PatentMarkerApp.RawLog("Report saved: " + reportPath);
             }
             catch (Exception ex)

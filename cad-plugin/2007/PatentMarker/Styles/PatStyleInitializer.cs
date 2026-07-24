@@ -1,5 +1,6 @@
-﻿using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
+using PatentMarker.I18n;
 using System;
 
 namespace PatentMarker.Styles
@@ -60,7 +61,7 @@ namespace PatentMarker.Styles
             {
                 var doc = Application.DocumentManager.MdiActiveDocument;
                 if (doc != null)
-                    doc.Editor.WriteMessage("\nPatentMarker: 警告 - 无法完全配置 PAT_DIM: " + ex.Message + "\n");
+                    doc.Editor.WriteMessage(string.Format(Strings.StyleInit_Warning, ex.Message));
             }
         }
 

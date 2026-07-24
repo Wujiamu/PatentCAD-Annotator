@@ -2,6 +2,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
+using PatentMarker.I18n;
 using System;
 using Exception = System.Exception;
 
@@ -52,7 +53,7 @@ namespace PatentMarker.Commands
 
                 if (ids.Count == 0)
                 {
-                    ed.WriteMessage("\nPatentMarker: 未找到 PAT 引线。\n");
+                    ed.WriteMessage(Strings.PatSelectAll_None);
                     return;
                 }
 
@@ -60,11 +61,11 @@ namespace PatentMarker.Commands
                 ObjectId[] idArray = new ObjectId[ids.Count];
                 ids.CopyTo(idArray, 0);
                 ed.SetImpliedSelection(idArray);
-                ed.WriteMessage("\nPatentMarker: 已选中 " + ids.Count + " 个 PAT 实体（Leader + MText）。按 Ctrl+1 修改属性。\n");
+                ed.WriteMessage(string.Format(Strings.PatSelectAll_Result, ids.Count));
             }
             catch (Exception ex)
             {
-                ed.WriteMessage("\nPatentMarker 错误: " + ex.GetType().Name + ": " + ex.Message + "\n");
+                ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
                 PatentMarkerApp.RawLog("PatSelectAll EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
             }
         }

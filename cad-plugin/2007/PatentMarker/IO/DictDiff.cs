@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using PatentMarker.I18n;
 
 namespace PatentMarker.IO
 {
@@ -198,7 +199,7 @@ namespace PatentMarker.IO
                     case DiffStatus.BothChanged: bothChg++; break;
                 }
             }
-            return "新增 " + added + "，删除 " + removed + "，编号变 " + numChg + "，名称变 " + nameChg + "，无法匹配 " + bothChg;
+            return string.Format(Strings.Diff_Summary, added, removed, numChg, nameChg, bothChg);
         }
     }
 }

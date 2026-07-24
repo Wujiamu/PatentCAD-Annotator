@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using PatentMarker.I18n;
 
 namespace PatentMarker.IO
 {
@@ -12,6 +13,7 @@ namespace PatentMarker.IO
         public string DefaultDictPath = "";
         public PatStyleConfig PatStyle;
         public AlignConfig Align;
+        public Language Language = Language.Chinese;
     }
 
     public class PatStyleConfig
@@ -96,6 +98,16 @@ namespace PatentMarker.IO
                     config.Align = new AlignConfig();
                     if (al != null)
                         config.Align.MarginToFrame = SimpleJson.GetDouble(al, "marginToFrame", 5.0);
+
+                    // 读取语言偏好 | read language preference
+                    string langStr = SimpleJson.GetStr(root, "language");
+                    if (langStr != null && langStr.ToLower() == "english")
+                        config.Language = Language.English;
+                    else
+                        config.Language = Language.Chinese;
+
+                    // 同步到全局 Strings | sync to global Strings
+                    Strings.Lang = config.Language;
 
                     return config;
                 }

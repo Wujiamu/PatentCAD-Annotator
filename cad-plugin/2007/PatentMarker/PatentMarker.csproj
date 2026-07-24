@@ -51,5 +51,8 @@
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="Palette\PatPaletteCommand.cs" />
     <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="I18n\Language.cs" />
+    <Compile Include="I18n\Strings.cs" />
   </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,7 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
+using PatentMarker.I18n;
 using System;
 using Exception = System.Exception;
 
@@ -16,6 +17,7 @@ namespace PatentMarker.Commands
     ///   框边模式：选框边 → 选中引线 → 对齐到框边 + margin
     ///
     /// 2007 无 MLEADERALIGN 命令，全部手动实现对齐。
+    /// v2.3：中英双语支持。
     /// </summary>
     public class PatAlignCommand
     {
@@ -29,16 +31,16 @@ namespace PatentMarker.Commands
             if (doc == null) return;
             var ed = doc.Editor;
 
-            var options = new PromptKeywordOptions("\n对齐模式:");
-            options.Keywords.Add("选择");
-            options.Keywords.Add("框边");
-            options.Keywords.Default = "选择";
+            var options = new PromptKeywordOptions(Strings.PatAlign_ModePrompt);
+            options.Keywords.Add(Strings.PatAlign_KwSelect);
+            options.Keywords.Add(Strings.PatAlign_KwFrame);
+            options.Keywords.Default = Strings.PatAlign_KwSelect;
             var kwResult = ed.GetKeywords(options);
 
             if (kwResult.Status != PromptStatus.OK) return;
             PatentMarkerApp.RawLog("Mode: " + kwResult.StringResult);
 
-            if (kwResult.StringResult == "选择")
+            if (kwResult.StringResult == Strings.PatAlign_KwSelect)
                 AlignSelected(ed);
             else
                 AlignToFrame(ed);
@@ -51,20 +53,20 @@ namespace PatentMarker.Commands
         /// </summary>
         private void AlignSelected(Editor ed)
         {
-            ed.WriteMessage("\n选择要对齐的 PAT_DIM 引线: ");
+            ed.WriteMessage(Strings.PatAlign_PromptSelect);
             var selection = ed.GetSelection();
             if (selection.Status != PromptStatus.OK || selection.Value.Count == 0)
             {
-                ed.WriteMessage("\n未选择对象。\n");
+                ed.WriteMessage(Strings.PatAlign_NoSelection);
                 return;
             }
 
-            var refResult = ed.GetPoint("\n选择对齐参考点: ");
+            var refResult = ed.GetPoint(Strings.PatAlign_PromptRefPoint);
             if (refResult.Status != PromptStatus.OK) return;
 
-            var dirOpts = new PromptKeywordOptions("\n对齐方向?");
-            dirOpts.Keywords.Add("水平");
-            dirOpts.Keywords.Add("垂直");
+            var dirOpts = new PromptKeywordOptions(Strings.PatAlign_DirectionPrompt);
+            dirOpts.Keywords.Add(Strings.PatAlign_KwHorizontal);
+            dirOpts.Keywords.Add(Strings.PatAlign_KwVertical);
             var dirResult = ed.GetKeywords(dirOpts);
             if (dirResult.Status != PromptStatus.OK) return;
 
@@ -94,7 +96,7 @@ namespace PatentMarker.Commands
                         var mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForWrite);
                         Point3d pos = mt.Location;
 
-                        if (dirResult.StringResult == "水平")
+                        if (dirResult.StringResult == Strings.PatAlign_KwHorizontal)
                             pos = new Point3d(pos.X, refY, pos.Z);
                         else
                             pos = new Point3d(refX, pos.Y, pos.Z);
@@ -110,7 +112,7 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                ed.WriteMessage("\n对齐 " + aligned + " 条引线（跳过 " + skipped + "，错误 " + errors + "）。\n");
+                ed.WriteMessage(string.Format(Strings.PatAlign_ResultSelect, aligned, skipped, errors));
             }
         }
 
@@ -119,17 +121,17 @@ namespace PatentMarker.Commands
         /// </summary>
         private void AlignToFrame(Editor ed)
         {
-            var p1Result = ed.GetPoint("\n参考框第一角: ");
+            var p1Result = ed.GetPoint(Strings.PatAlign_PromptFrameCorner1);
             if (p1Result.Status != PromptStatus.OK) return;
 
-            var p2Result = ed.GetCorner("\n对角: ", p1Result.Value);
+            var p2Result = ed.GetCorner(Strings.PatAlign_PromptFrameCorner2, p1Result.Value);
             if (p2Result.Status != PromptStatus.OK) return;
 
-            var sideOpts = new PromptKeywordOptions("\n对齐到哪边?");
-            sideOpts.Keywords.Add("左");
-            sideOpts.Keywords.Add("右");
-            sideOpts.Keywords.Add("上");
-            sideOpts.Keywords.Add("下");
+            var sideOpts = new PromptKeywordOptions(Strings.PatAlign_SidePrompt);
+            sideOpts.Keywords.Add(Strings.PatAlign_KwLeft);
+            sideOpts.Keywords.Add(Strings.PatAlign_KwRight);
+            sideOpts.Keywords.Add(Strings.PatAlign_KwTop);
+            sideOpts.Keywords.Add(Strings.PatAlign_KwBottom);
             var sideResult = ed.GetKeywords(sideOpts);
             if (sideResult.Status != PromptStatus.OK) return;
 
@@ -137,11 +139,11 @@ namespace PatentMarker.Commands
             if (IO.ConfigLoader.Current != null && IO.ConfigLoader.Current.Align != null)
                 margin = IO.ConfigLoader.Current.Align.MarginToFrame;
 
-            ed.WriteMessage("\n选择要对齐的 PAT_DIM 引线: ");
+            ed.WriteMessage(Strings.PatAlign_PromptSelect);
             var selection = ed.GetSelection();
             if (selection.Status != PromptStatus.OK || selection.Value.Count == 0)
             {
-                ed.WriteMessage("\n未选择对象。\n");
+                ed.WriteMessage(Strings.PatAlign_NoSelection);
                 return;
             }
 
@@ -172,21 +174,14 @@ namespace PatentMarker.Commands
                         var mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForWrite);
                         Point3d pos = mt.Location;
 
-                        switch (sideResult.StringResult)
-                        {
-                            case "左":
-                                pos = new Point3d(minX - margin, pos.Y, pos.Z);
-                                break;
-                            case "右":
-                                pos = new Point3d(maxX + margin, pos.Y, pos.Z);
-                                break;
-                            case "上":
-                                pos = new Point3d(pos.X, maxY + margin, pos.Z);
-                                break;
-                            case "下":
-                                pos = new Point3d(pos.X, minY - margin, pos.Z);
-                                break;
-                        }
+                        if (sideResult.StringResult == Strings.PatAlign_KwLeft)
+                            pos = new Point3d(minX - margin, pos.Y, pos.Z);
+                        else if (sideResult.StringResult == Strings.PatAlign_KwRight)
+                            pos = new Point3d(maxX + margin, pos.Y, pos.Z);
+                        else if (sideResult.StringResult == Strings.PatAlign_KwTop)
+                            pos = new Point3d(pos.X, maxY + margin, pos.Z);
+                        else if (sideResult.StringResult == Strings.PatAlign_KwBottom)
+                            pos = new Point3d(pos.X, minY - margin, pos.Z);
 
                         mt.Location = pos;
                         aligned++;
@@ -199,8 +194,8 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                ed.WriteMessage("\n对齐 " + aligned + " 条引线到" + sideResult.StringResult +
-                    "边（margin=" + margin.ToString("F1") + "，跳过 " + skipped + "，错误 " + errors + "）。\n");
+                ed.WriteMessage(string.Format(Strings.PatAlign_ResultFrame,
+                    aligned, sideResult.StringResult, margin.ToString("F1"), skipped, errors));
             }
         }
     }
