@@ -1,63 +1,117 @@
 Attribute VB_Name = "Patterns"
 Option Explicit
 
-' 标号匹配正则规则集 — v1.0 重写
-'
-' 设计原则：仅提取「附图标记说明」段落的标号，避免全文误匹配。
-' 格式假设（用户确认的中国专利附图标记标准写法）：
-'   ① 段落前有标记头「附图标记说明如下：」（含变体）
-'   ② 每行格式：数字 + 中文名 + 可选后缀 + 分号（中/英）
-'   ③ 例：1底座； 2支架； 10传动轴A1； 123外壳B；
-'
-' 后缀（如 A1、B 等）合并进名称，不单独处理。
-' 数字范围：1~5 位（支持 4-5 位子编号）。
-'
-' 不再使用旧 P1-P4 全文扫描模式，以根除「图1」「步骤1」等误命中。
-
 Public Type Hit
     Number As String
     Name As String
-    Position As Long       ' 文档中的字符位置，用于排序和定位
+    Position As Long
 End Type
 
-' 调用方：传入全文（BuildModel 会先提取标记段落后再调用此函数）。
-' 返回所有匹配的 (number, name) 对。
 Public Function ExtractAll(ByVal text As String) As Variant
     Dim allHits As Collection
     Set allHits = New Collection
 
-    ' 核心模式：数字 + 名称(中文/英文/数字混合) + 分号
-    ' 例：1底座； → (1, 底座)
-    '     10传动轴A1； → (10, 传动轴A1)
-    '     2211连接段； → (2211, 连接段)  ← 支持4-5位子编号
-    ' 名称可含中文、英文、数字任意组合，以分号终止。
-    AddHits allHits, text, _
-        "(\d{1,5})\s*([\u4e00-\u9fa5A-Za-z0-9]+)\s*[；;]", False
-
-    ExtractAll = CollectionToArray(allHits)
-End Function
-
-Private Sub AddHits(ByRef hits As Collection, ByVal text As String, _
-                    ByVal pattern As String, ByVal nameFirst As Boolean)
     Dim re As Object
     Set re = CreateObject("VBScript.RegExp")
     re.Global = True
     re.IgnoreCase = False
-    re.pattern = pattern
 
-    Dim m As Object, h As Hit
-    For Each m In re.Execute(text)
-        If nameFirst Then
-            h.Name = m.SubMatches(0)
-            h.Number = m.SubMatches(1)
-        Else
-            h.Number = m.SubMatches(0)
-            h.Name = m.SubMatches(1)
-        End If
-        h.Position = m.FirstIndex
-        hits.Add Array(h.Number, h.Name, h.Position)
+    Dim sepLight As String
+    sepLight = ChrW(&H3001) & ChrW(&HFF0C) & ",;" & ChrW(&HFF1B) & "/\s-"
+
+    Dim sepHeavy As String
+    sepHeavy = ChrW(&H3001) & ChrW(&HFF1A) & ":" & ChrW(&HFF0E) & "." & ChrW(&HFF1B) & ";" & ChrW(&HFF0C) & "," & ChrW(&HFF0D) & ChrW(&H2014) & ChrW(&H2013) & "\s/-"
+
+    Dim cjk As String
+    cjk = ChrW(&H4E00) & "-" & ChrW(&H9FA5)
+
+    Dim nameChars As String
+    nameChars = cjk & "A-Za-z0-9" & ChrW(&HFF08) & ChrW(&HFF09) & "()"
+
+    re.pattern = "(\d{1,5}[A-Fa-f]?(?:[" & sepLight & "]*\d{1,5}[A-Fa-f]?)*)(?:[" & sepHeavy & "]*)([" & cjk & "A-Za-z][" & nameChars & "]*)"
+
+    Dim m As Object, match As Object
+    Set m = re.Execute(text)
+
+    Dim numbersPart As String
+    Dim name As String
+    Dim nums As Collection
+    Dim j As Long
+
+    For Each match In m
+        numbersPart = match.SubMatches(0)
+        name = match.SubMatches(1)
+
+        Set nums = SplitNumbers(numbersPart)
+
+        For j = 1 To nums.Count
+            allHits.Add Array(CStr(nums(j)), name, match.FirstIndex)
+        Next
     Next
-End Sub
+
+    Dim re2 As Object
+    Set re2 = CreateObject("VBScript.RegExp")
+    re2.Global = True
+    re2.IgnoreCase = False
+
+    Dim cnNums As String
+    cnNums = ChrW(&H4E8C) & ChrW(&H5341) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E5D) & "|" & _
+             ChrW(&H5341) & ChrW(&H516B) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E03) & "|" & _
+             ChrW(&H5341) & ChrW(&H516D) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E94) & "|" & _
+             ChrW(&H5341) & ChrW(&H56DB) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E09) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E8C) & "|" & _
+             ChrW(&H5341) & ChrW(&H4E00) & "|" & _
+             ChrW(&H5341) & "|" & _
+             ChrW(&H4E5D) & "|" & _
+             ChrW(&H516B) & "|" & _
+             ChrW(&H4E03) & "|" & _
+             ChrW(&H516D) & "|" & _
+             ChrW(&H4E94) & "|" & _
+             ChrW(&H56DB) & "|" & _
+             ChrW(&H4E09) & "|" & _
+             ChrW(&H4E8C) & "|" & _
+             ChrW(&H4E00)
+
+    Dim cnSep As String
+    cnSep = ChrW(&H3001) & ChrW(&HFF1A) & ":"
+
+    Dim cnStop As String
+    cnStop = "\n\r" & ChrW(&HFF0C) & "," & ChrW(&HFF1B) & ";" & ChrW(&H3002) & ChrW(&H3001)
+
+    re2.pattern = "(" & cnNums & ")[" & cnSep & "]\s*([" & "^" & cnStop & "]+)"
+
+    Dim m2 As Object, match2 As Object
+    Set m2 = re2.Execute(text)
+
+    For Each match2 In m2
+        allHits.Add Array(match2.SubMatches(0), Trim(match2.SubMatches(1)), match2.FirstIndex)
+    Next
+
+    ExtractAll = CollectionToArray(allHits)
+End Function
+
+Private Function SplitNumbers(ByVal numbersPart As String) As Collection
+    Dim result As Collection
+    Set result = New Collection
+
+    Dim re As Object
+    Set re = CreateObject("VBScript.RegExp")
+    re.Global = True
+    re.IgnoreCase = False
+    re.pattern = "\d{1,5}[A-Fa-f]?"
+
+    Dim m As Object, match As Object
+    Set m = re.Execute(numbersPart)
+    For Each match In m
+        result.Add match.Value
+    Next
+
+    Set SplitNumbers = result
+End Function
 
 Private Function CollectionToArray(col As Collection) As Variant
     If col.Count = 0 Then

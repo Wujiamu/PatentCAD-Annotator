@@ -1,13 +1,15 @@
-# PatentCAD-Annotator 2007 — AutoCAD 2007 / Win7 适配版
+# PatentCAD-Annotator 2007 — AutoCAD 2007~2009 / Win7 适配版
 
 > **状态：已完成（v2）** — 含样条曲线、无箭头、箭头尺寸、全选、字典比对等增强功能。
+>
+> **兼容性：本版本仅适用于 AutoCAD 2007 / 2008 / 2009，不可用于其他版本的 AutoCAD。**
 
 ## 目标环境
 
 | 项目 | 值 |
 |------|-----|
 | 操作系统 | Windows 7 SP1 (x86/x64) |
-| AutoCAD | 2007 (R17.0) |
+| AutoCAD | 2007, 2008, 2009 (R17.0—R17.2) |
 | .NET | 2.0 (CLR 2.0) |
 | Word | 2010（VBA 宏宿主） |
 | 编译器 | VS2010+ (C# 3.0 语法，无 LINQ) |

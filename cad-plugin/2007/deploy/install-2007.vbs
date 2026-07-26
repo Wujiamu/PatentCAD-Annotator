@@ -1,40 +1,32 @@
-' PatentMarker 2007 安装脚本 (VBScript)
-' 编码: GBK (Win7 中文系统兼容)
+' PatentMarker 2007 Installer (VBScript)
+' Encoding: ASCII (compatible with all Windows locales)
 '
-' 功能:
-'   - 自动检测 AutoCAD 2007 产品代码
-'   - 写入 HKCU 注册表 (并尝试 HKLM)
-'   - 每步写入后立即读回验证
-'   - 记录 HKLM 状态、系统信息、ACAD 路径
-'   - 生成 load-patent-marker.lsp 辅助加载文件
-'   - 详细日志输出到 install-2007.log
-'   - 所有消息累积, 最后一次性显示
+' Three-layer auto-load strategy:
+'   Layer 1: HKCU Applications registry key (LOADCTRLS=14)
+'   Layer 2: acad.lsp deployed to ACAD support path
+'   Layer 3: Manual LSP file for APPLOAD fallback
 
 Option Explicit
 
 Const HKCU = &H80000001
 Const HKLM = &H80000002
 Const ForAppending = 8
-Const CreateFlag = True
 Const ForWriting = 2
+Const ForReading = 1
 
 Dim fso, shell, reg
 Set fso = CreateObject("Scripting.FileSystemObject")
 Set shell = CreateObject("WScript.Shell")
 Set reg = GetObject("winmgmts:{impersonationLevel=impersonate}!\\.\root\default:StdRegProv")
 
-Dim scriptDir, logPath, logFile
+Dim scriptDir, logPath, logFile, output
 scriptDir = fso.GetParentFolderName(WScript.ScriptFullName)
 logPath = scriptDir & "\install-2007.log"
-Set logFile = fso.OpenTextFile(logPath, ForAppending, CreateFlag)
-
-Dim output
+Set logFile = fso.OpenTextFile(logPath, ForAppending, True)
 output = ""
 
 Sub LogMsg(msg)
-    Dim ts
-    ts = Now
-    logFile.WriteLine "[" & ts & "] " & msg
+    logFile.WriteLine "[" & Now & "] " & msg
     output = output & msg & vbCrLf
 End Sub
 
@@ -45,47 +37,83 @@ Sub QuitWithMsg(msg)
     WScript.Quit(1)
 End Sub
 
+Function IsAdmin()
+    On Error Resume Next
+    Dim testKey
+    testKey = "SOFTWARE\PMTest" & Int(Timer * 1000)
+    reg.CreateKey HKLM, testKey
+    If Err.Number = 0 Then
+        reg.DeleteKey HKLM, testKey
+        IsAdmin = True
+    Else
+        IsAdmin = False
+    End If
+    On Error GoTo 0
+End Function
+
+Function IIf(cond, trueVal, falseVal)
+    If cond Then
+        IIf = trueVal
+    Else
+        IIf = falseVal
+    End If
+End Function
+
+Function IsDirWritable(dPath)
+    On Error Resume Next
+    Dim tf
+    Set tf = fso.CreateTextFile(dPath & "\~pmtest.tmp", True)
+    If Err.Number = 0 Then
+        tf.Close
+        fso.DeleteFile dPath & "\~pmtest.tmp"
+        IsDirWritable = True
+    Else
+        IsDirWritable = False
+    End If
+    On Error GoTo 0
+End Function
+
 output = output & "========================================" & vbCrLf
-output = output & "PatentMarker 2007 安装程序" & vbCrLf
+output = output & "PatentMarker 2007 Installer" & vbCrLf
 output = output & "========================================" & vbCrLf
 
-' --- 0. 系统信息 ---
-LogMsg "--- 系统信息 ---"
+' --- 0. System info ---
+LogMsg "--- System Info ---"
 LogMsg "  OS: " & shell.ExpandEnvironmentStrings("%OS%")
-LogMsg "  用户名: " & shell.ExpandEnvironmentStrings("%USERNAME%")
-LogMsg "  计算机名: " & shell.ExpandEnvironmentStrings("%COMPUTERNAME%")
-LogMsg "  脚本目录: " & scriptDir
-LogMsg "  日志文件: " & logPath
+LogMsg "  User: " & shell.ExpandEnvironmentStrings("%USERNAME%")
+LogMsg "  Computer: " & shell.ExpandEnvironmentStrings("%COMPUTERNAME%")
+LogMsg "  Script Dir: " & scriptDir
+LogMsg "  Log: " & logPath
 
-' --- 1. 定位 DLL ---
+' --- 1. Locate DLL ---
 Dim dllPath
 dllPath = scriptDir & "\PatentMarker.dll"
-
 If Not fso.FileExists(dllPath) Then
-    QuitWithMsg "错误: 未找到 PatentMarker.dll" & vbCrLf & "路径: " & scriptDir & vbCrLf & "请把此脚本和 PatentMarker.dll 放在同一文件夹"
+    QuitWithMsg "ERROR: PatentMarker.dll not found" & vbCrLf & "Path: " & scriptDir
 End If
+LogMsg "DLL: " & dllPath & " (" & fso.GetFile(dllPath).Size & " bytes)"
 
-LogMsg "已找到 DLL: " & dllPath
-LogMsg "DLL 大小: " & fso.GetFile(dllPath).Size & " 字节"
+' --- 2. Privilege check ---
+Dim adminOk
+adminOk = IsAdmin()
+LogMsg "Privilege: " & IIf(adminOk, "Admin", "Non-admin (HKLM skipped)")
 
-' --- 2. 检测 AutoCAD 2007 产品代码 ---
+' --- 3. Scan registry for ACAD 2007 ---
 Dim acadBaseKey
 acadBaseKey = "Software\Autodesk\AutoCAD\R17.0"
 LogMsg ""
-LogMsg "--- 扫描注册表 ---"
-LogMsg "HKCU\" & acadBaseKey
+LogMsg "--- Scanning Registry ---"
 
 Dim subKeys
 reg.EnumKey HKCU, acadBaseKey, subKeys
-
 If IsNull(subKeys) Then
-    LogMsg "  HKCU 下无 R17.0 子键"
-    ' 也检查 HKLM
     reg.EnumKey HKLM, acadBaseKey, subKeys
     If IsNull(subKeys) Then
-        QuitWithMsg "错误: HKCU 和 HKLM 中均未找到 AutoCAD R17.0" & vbCrLf & "请至少启动一次 AutoCAD 2007 后再安装"
+        QuitWithMsg "ERROR: AutoCAD R17.0 not found in registry"
     End If
-    LogMsg "  HKLM 下找到 " & (UBound(subKeys)+1) & " 个子键"
+    LogMsg "  Found in HKLM"
+Else
+    LogMsg "  Found in HKCU"
 End If
 
 Dim productCodes()
@@ -96,7 +124,6 @@ productCount = 0
 Dim i, key
 For i = 0 To UBound(subKeys)
     key = subKeys(i)
-    LogMsg "  子键: " & key
     If Left(key, 5) = "ACAD-" Then
         ReDim Preserve productCodes(productCount)
         productCodes(productCount) = key
@@ -105,221 +132,299 @@ For i = 0 To UBound(subKeys)
 Next
 
 If productCount = 0 Then
-    QuitWithMsg "错误: 未找到 AutoCAD 2007 产品代码"
+    QuitWithMsg "ERROR: No ACAD- product code found"
 End If
+LogMsg "Products found: " & productCount
 
-LogMsg "检测到 " & productCount & " 个 AutoCAD 产品"
-
-' --- 3. 检测 ACAD 安装路径 ---
-Dim productName, acadCurVer
-acadCurVer = ""
-reg.GetStringValue HKCU, acadBaseKey, "CurVC", acadCurVer
-If IsNull(acadCurVer) Then acadCurVer = "(无)"
-LogMsg "ACAD CurVC: " & acadCurVer
+' --- 4. Read ACAD paths ---
+Dim acadPaths()
+ReDim acadPaths(productCount - 1)
 
 For i = 0 To productCount - 1
-    Dim prodKey
+    Dim prodKey, acadLocation
     prodKey = acadBaseKey & "\" & productCodes(i)
-    Dim acadLocation
     acadLocation = ""
     reg.GetStringValue HKCU, prodKey, "AcadLocation", acadLocation
     If IsNull(acadLocation) Or acadLocation = "" Then
         reg.GetStringValue HKLM, prodKey, "AcadLocation", acadLocation
     End If
-    If IsNull(acadLocation) Or acadLocation = "" Then acadLocation = "(未找到)"
-    LogMsg "  " & productCodes(i) & " 安装路径: " & acadLocation
-
-    Dim productName2
-    productName2 = ""
-    reg.GetStringValue HKLM, prodKey, "ProductName", productName2
-    If IsNull(productName2) Then productName2 = "(无)"
-    LogMsg "  " & productCodes(i) & " 产品名: " & productName2
-
-    ' 列出该产品下的所有子键
-    Dim prodSubKeys
-    reg.EnumKey HKCU, prodKey, prodSubKeys
-    If Not IsNull(prodSubKeys) Then
-        LogMsg "  HKCU 下子键列表:"
-        Dim k
-        For k = 0 To UBound(prodSubKeys)
-            LogMsg "    " & prodSubKeys(k)
-        Next
-    End If
+    If IsNull(acadLocation) Then acadLocation = ""
+    acadPaths(i) = acadLocation
+    LogMsg "  " & productCodes(i) & " -> " & acadLocation
 Next
 
-' --- 4. 写入 HKCU 注册表并验证 ---
+' --- 5. Write HKCU registry (Layer 1) ---
 LogMsg ""
-LogMsg "--- 写入 HKCU 注册表 ---"
+LogMsg "--- Layer 1: Write HKCU Registry ---"
 
-Dim j, productCode, appKey, installed
+Dim j, appKey, installed
 installed = 0
 
 For j = 0 To productCount - 1
-    productCode = productCodes(j)
-    appKey = acadBaseKey & "\" & productCode & "\Applications\PatentMarker"
-
-    LogMsg "目标: HKCU\" & appKey
-
+    appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
     reg.CreateKey HKCU, appKey
 
-    Dim writeOk
+    Dim writeOk, verifyVal, verifyDword
     writeOk = True
 
     reg.SetStringValue HKCU, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
-    Dim verifyVal
-    verifyVal = ""
-    reg.GetStringValue HKCU, appKey, "DESCRIPTION", verifyVal
-    If verifyVal = "PatentMarker - Patent Drawing Annotation Plugin" Then
-        LogMsg "  DESCRIPTION: 成功"
-    Else
-        LogMsg "  DESCRIPTION: 失败 (读回: '" & verifyVal & "')"
-        writeOk = False
-    End If
-
     reg.SetDWORDValue HKCU, appKey, "LOADCTRLS", 14
-    Dim verifyDword
-    verifyDword = -1
-    reg.GetDWORDValue HKCU, appKey, "LOADCTRLS", verifyDword
-    If verifyDword = 14 Then
-        LogMsg "  LOADCTRLS=14: 成功"
-    Else
-        LogMsg "  LOADCTRLS=14: 失败 (读回: " & verifyDword & ")"
-        writeOk = False
-    End If
-
     reg.SetDWORDValue HKCU, appKey, "MANAGED", 1
-    verifyDword = -1
-    reg.GetDWORDValue HKCU, appKey, "MANAGED", verifyDword
-    If verifyDword = 1 Then
-        LogMsg "  MANAGED=1: 成功"
-    Else
-        LogMsg "  MANAGED=1: 失败 (读回: " & verifyDword & ")"
-        writeOk = False
-    End If
-
     reg.SetStringValue HKCU, appKey, "LOADER", dllPath
+
     verifyVal = ""
     reg.GetStringValue HKCU, appKey, "LOADER", verifyVal
-    If verifyVal = dllPath Then
-        LogMsg "  LOADER: 成功"
+    verifyDword = -1
+    reg.GetDWORDValue HKCU, appKey, "LOADCTRLS", verifyDword
+
+    If verifyVal = dllPath And verifyDword = 14 Then
+        LogMsg "  " & productCodes(j) & ": OK"
+        installed = installed + 1
     Else
-        LogMsg "  LOADER: 失败 (读回: '" & verifyVal & "')"
+        LogMsg "  " & productCodes(j) & ": FAILED"
         writeOk = False
     End If
-
-    If writeOk Then
-        LogMsg "  >>> HKCU 写入验证通过"
-        installed = installed + 1
-    End If
 Next
 
-' --- 5. 尝试写入 HKLM (可能需要管理员权限) ---
-LogMsg ""
-LogMsg "--- 尝试写入 HKLM ---"
-
+' --- 6. Try HKLM (admin only) ---
 Dim hklmOk
 hklmOk = False
-For j = 0 To productCount - 1
-    productCode = productCodes(j)
-    appKey = acadBaseKey & "\" & productCode & "\Applications\PatentMarker"
 
-    On Error Resume Next
-    reg.CreateKey HKLM, appKey
-    If Err.Number <> 0 Then
-        LogMsg "  HKLM CreateKey 失败: " & Err.Description & " (0x" & Hex(Err.Number) & ")"
-        LogMsg "  >>> HKLM 不可写 (需要管理员权限)"
+If adminOk Then
+    LogMsg ""
+    LogMsg "--- Write HKLM ---"
+    For j = 0 To productCount - 1
+        appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+        On Error Resume Next
+        reg.CreateKey HKLM, appKey
+        If Err.Number = 0 Then
+            reg.SetStringValue HKLM, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
+            reg.SetDWORDValue HKLM, appKey, "LOADCTRLS", 14
+            reg.SetDWORDValue HKLM, appKey, "MANAGED", 1
+            reg.SetStringValue HKLM, appKey, "LOADER", dllPath
+            verifyVal = ""
+            reg.GetStringValue HKLM, appKey, "LOADER", verifyVal
+            If verifyVal = dllPath Then
+                LogMsg "  " & productCodes(j) & ": HKLM OK"
+                hklmOk = True
+            End If
+        Else
+            LogMsg "  " & productCodes(j) & ": HKLM failed - " & Err.Description
+            On Error GoTo 0
+            Exit For
+        End If
         On Error GoTo 0
-        Exit For
+    Next
+Else
+    LogMsg ""
+    LogMsg "--- HKLM skipped (non-admin) ---"
+End If
+
+' --- 7. Deploy LSP to ACAD support path (Layer 2) ---
+LogMsg ""
+LogMsg "--- Layer 2: Deploy LSP to ACAD Support Path ---"
+
+Dim lspDeployed
+lspDeployed = False
+
+Dim lspDllPath
+lspDllPath = Replace(dllPath, "\", "/")
+Dim lspLoadCmd
+lspLoadCmd = "(command ""NETLOAD"" """ & lspDllPath & """)"
+Dim lspPrinc
+lspPrinc = "(princ ""\nPatentMarker loaded. Type BZ for palette.\n"")(princ)"
+
+For j = 0 To productCount - 1
+    If lspDeployed Then Exit For
+
+    Dim productCode
+    productCode = productCodes(j)
+
+    ' Collect candidate support directories
+    Dim candidateDirs()
+    ReDim candidateDirs(0)
+    Dim candCount
+    candCount = 0
+
+    ' Source A: ACAD support path from registry
+    Dim supportKey, supportPath
+    supportKey = acadBaseKey & "\" & productCode & "\Fixed Profile\General\ACAD"
+    supportPath = ""
+    reg.GetStringValue HKCU, supportKey, "ACAD", supportPath
+
+    If Not IsNull(supportPath) And supportPath <> "" Then
+        LogMsg "  Support path found for " & productCode
+        Dim arrPaths, p, dirPath
+        arrPaths = Split(supportPath, ";")
+        For p = 0 To UBound(arrPaths)
+            dirPath = Trim(shell.ExpandEnvironmentStrings(arrPaths(p)))
+            If dirPath <> "" And fso.FolderExists(dirPath) Then
+                ReDim Preserve candidateDirs(candCount)
+                candidateDirs(candCount) = dirPath
+                candCount = candCount + 1
+            End If
+        Next
     End If
-    On Error GoTo 0
 
-    reg.SetStringValue HKLM, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
-    reg.SetDWORDValue HKLM, appKey, "LOADCTRLS", 14
-    reg.SetDWORDValue HKLM, appKey, "MANAGED", 1
-    reg.SetStringValue HKLM, appKey, "LOADER", dllPath
+    ' Source B: AcadLocation\Support
+    If acadPaths(j) <> "" Then
+        Dim acadSupport
+        acadSupport = acadPaths(j) & "\Support"
+        If fso.FolderExists(acadSupport) Then
+            ReDim Preserve candidateDirs(candCount)
+            candidateDirs(candCount) = acadSupport
+            candCount = candCount + 1
+        End If
+    End If
 
-    ' 验证 HKLM 写入
-    verifyVal = ""
-    reg.GetStringValue HKLM, appKey, "LOADER", verifyVal
-    If verifyVal = dllPath Then
-        LogMsg "  HKLM LOADER: 成功"
-        hklmOk = True
+    ' Source C: %APPDATA%\Autodesk\AutoCAD\R17.0\<product>\<lang>\Support
+    Dim langCode, langId
+    langCode = "enu"
+    If InStr(productCode, ":") > 0 Then
+        langId = Mid(productCode, InStr(productCode, ":") + 1)
+        Select Case langId
+            Case "804"
+                langCode = "chs"
+            Case "404"
+                langCode = "cht"
+            Case "409"
+                langCode = "enu"
+            Case Else
+                langCode = "enu"
+        End Select
+    End If
+
+    Dim appDataSupport
+    appDataSupport = shell.ExpandEnvironmentStrings("%APPDATA%") & "\Autodesk\AutoCAD\R17.0\" & productCode & "\" & langCode & "\Support"
+    If fso.FolderExists(appDataSupport) Then
+        ReDim Preserve candidateDirs(candCount)
+        candidateDirs(candCount) = appDataSupport
+        candCount = candCount + 1
+    End If
+
+    ' Find first writable dir and first writable acad.lsp
+    Dim firstWritable, writableLsp
+    firstWritable = ""
+    writableLsp = ""
+
+    For p = 0 To candCount - 1
+        dirPath = candidateDirs(p)
+        If IsDirWritable(dirPath) Then
+            If firstWritable = "" Then
+                firstWritable = dirPath
+                LogMsg "  Writable dir: " & dirPath
+            End If
+            Dim lspCheck
+            lspCheck = dirPath & "\acad.lsp"
+            If fso.FileExists(lspCheck) And writableLsp = "" Then
+                writableLsp = lspCheck
+            End If
+        End If
+    Next
+
+    If writableLsp <> "" Then
+        ' Append to existing acad.lsp
+        Dim lspContent, lf
+        Set lf = fso.OpenTextFile(writableLsp, ForReading, False)
+        lspContent = lf.ReadAll
+        lf.Close
+
+        If InStr(lspContent, "PatentMarker") > 0 Then
+            LogMsg "  acad.lsp already has PatentMarker: " & writableLsp
+        Else
+            lspContent = lspContent & vbCrLf & _
+                "; --- PatentMarker autoload ---" & vbCrLf & _
+                lspLoadCmd & vbCrLf & _
+                lspPrinc & vbCrLf
+            Set lf = fso.OpenTextFile(writableLsp, ForWriting, False)
+            lf.Write lspContent
+            lf.Close
+            LogMsg "  Appended to acad.lsp: " & writableLsp
+        End If
+        lspDeployed = True
+    ElseIf firstWritable <> "" Then
+        ' Create new acad.lsp in first writable support dir
+        Dim newLsp
+        newLsp = firstWritable & "\acad.lsp"
+        Dim nf
+        Set nf = fso.CreateTextFile(newLsp, True)
+        nf.Write "; --- PatentMarker autoload ---" & vbCrLf & _
+            lspLoadCmd & vbCrLf & _
+            lspPrinc & vbCrLf
+        nf.Close
+        LogMsg "  Created acad.lsp: " & newLsp
+        lspDeployed = True
     Else
-        LogMsg "  HKLM LOADER: 失败 (读回: '" & verifyVal & "')"
+        ' No writable support dir: create acad.lsp in install dir,
+        ' prepend install dir to support path
+        LogMsg "  No writable support dir, using install dir"
+
+        Dim installLsp
+        installLsp = scriptDir & "\acad.lsp"
+        Dim ilf
+        Set ilf = fso.CreateTextFile(installLsp, True)
+        ilf.Write "; --- PatentMarker autoload ---" & vbCrLf & _
+            lspLoadCmd & vbCrLf & _
+            lspPrinc & vbCrLf
+        ilf.Close
+
+        If Not IsNull(supportPath) And supportPath <> "" Then
+            If InStr(LCase(supportPath), LCase(scriptDir)) = 0 Then
+                reg.SetStringValue HKCU, supportKey, "ACAD", scriptDir & ";" & supportPath
+                LogMsg "  Added install dir to support path"
+            End If
+        End If
+        LogMsg "  Created acad.lsp: " & installLsp
+        lspDeployed = True
     End If
 Next
 
-' --- 6. 生成辅助 LSP 文件 ---
+' --- 8. Generate manual LSP fallback (Layer 3) ---
 LogMsg ""
-LogMsg "--- 生成辅助加载文件 ---"
-Dim lspPath
-lspPath = scriptDir & "\load-patent-marker.lsp"
-Dim lspContent
-' LSP 中路径需要用正斜杠或双反斜杠
-Dim lspDllPath
-lspDllPath = Replace(dllPath, "\", "/")
-lspContent = "; PatentMarker 自动加载脚本" & vbCrLf
-lspContent = lspContent & "; 用法: 在 AutoCAD 中用 APPLOAD 命令加载此文件" & vbCrLf
-lspContent = lspContent & "; 或把它加入启动套件 (Startup Suite) 实现自动加载" & vbCrLf
-lspContent = lspContent & "(command ""NETLOAD"" """ & lspDllPath & """)" & vbCrLf
-lspContent = lspContent & "(princ ""\nPatentMarker 已加载。输入 BZ 打开面板。\n"")" & vbCrLf
-lspContent = lspContent & "(princ)" & vbCrLf
+LogMsg "--- Layer 3: Manual LSP Fallback ---"
+Dim manualLspPath
+manualLspPath = scriptDir & "\load-patent-marker.lsp"
+Dim mlf
+Set mlf = fso.OpenTextFile(manualLspPath, ForWriting, True)
+mlf.Write "; PatentMarker manual load script" & vbCrLf & _
+    "; Usage: APPLOAD this file in AutoCAD" & vbCrLf & _
+    lspLoadCmd & vbCrLf & _
+    lspPrinc & vbCrLf
+mlf.Close
+LogMsg "Manual LSP: " & manualLspPath
 
-Dim lspFile
-Set lspFile = fso.OpenTextFile(lspPath, ForWriting, True)
-lspFile.Write lspContent
-lspFile.Close
-LogMsg "已生成: " & lspPath
-
-' --- 7. 总结 ---
+' --- 9. Summary ---
 LogMsg ""
-LogMsg "=== 安装结果 ==="
-LogMsg "DLL 路径: " & dllPath
-LogMsg "HKCU 写入: " & installed & " / " & productCount & " 成功"
-LogMsg "HKLM 写入: " & IIf(hklmOk, "成功", "失败 (权限不足)")
-LogMsg "辅助文件: " & lspPath
-LogMsg "日志文件: " & logPath
+LogMsg "=== Summary ==="
+LogMsg "DLL: " & dllPath
+LogMsg "Layer 1 HKCU: " & installed & "/" & productCount & IIf(installed > 0, " OK", " FAILED")
+LogMsg "Layer 1 HKLM: " & IIf(Not adminOk, "Skipped", IIf(hklmOk, "OK", "Failed"))
+LogMsg "Layer 2 LSP:  " & IIf(lspDeployed, "OK", "Failed")
+LogMsg "Layer 3 LSP:  " & manualLspPath
 
-If hklmOk Then
-    LogMsg ""
-    LogMsg "HKLM 写入成功, 重启 AutoCAD 2007 后插件将自动加载"
+LogMsg ""
+If lspDeployed Then
+    LogMsg ">>> Restart AutoCAD 2007."
+    LogMsg ">>> PatentMarker will auto-load via acad.lsp."
+    LogMsg ">>> Type BZ to open the palette."
 Else
-    LogMsg ""
-    LogMsg "警告: HKLM 不可写, ACAD 2007 可能只读 HKLM"
-    LogMsg "HKCU 注册表已写入, 但可能不生效 (ACAD 2007 已知问题)"
-    LogMsg ""
-    LogMsg ">>> 推荐方案: 用 APPLOAD 加载 LSP <<<"
-    LogMsg "  1. 打开 AutoCAD 2007"
-    LogMsg "  2. 输入 APPLOAD 命令"
-    LogMsg "  3. 点击 '启动套件' 下的 '内容'"
-    LogMsg "  4. 添加: " & lspPath
-    LogMsg "  5. 关闭对话框, 重启 AutoCAD"
-    LogMsg ""
-    LogMsg "或直接用 NETLOAD:"
-    LogMsg "  输入 NETLOAD, 选择: " & dllPath
+    LogMsg ">>> Auto-deploy failed. Manual steps:"
+    LogMsg "  A: APPLOAD -> " & manualLspPath
+    LogMsg "  B: NETLOAD -> " & dllPath
 End If
 
 LogMsg ""
-LogMsg "可用命令 (括号内为拼音别名):"
-LogMsg "  PATPALETTE (BIAOZHU / BZ)  - 打开字典面板"
-LogMsg "  PATMARK    (BZM)           - 创建引线标注"
-LogMsg "  PATCHECK   (BZC)           - 检查一致性"
-LogMsg "  PATALIGN   (BZA)           - 对齐引线"
-LogMsg "  PATSELECTALL (BZS)         - 全选标注实体"
+LogMsg "Commands:"
+LogMsg "  BZ   (PATPALETTE)    Palette"
+LogMsg "  BZM  (PATMARK)       Annotate"
+LogMsg "  BZC  (PATCHECK)      Check"
+LogMsg "  BZA  (PATALIGN)      Align"
+LogMsg "  BZS  (PATSELECTALL)  Select All"
 
 LogMsg ""
 LogMsg "========================================"
-LogMsg "安装结束"
+LogMsg "Done"
 LogMsg "========================================"
 
 WScript.Echo output
 logFile.Close
-
-' VBScript 没有 IIf 函数, 自己实现
-Function IIf(cond, trueVal, falseVal)
-    If cond Then
-        IIf = trueVal
-    Else
-        IIf = falseVal
-    End If
-End Function

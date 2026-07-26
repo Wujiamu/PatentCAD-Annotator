@@ -1,17 +1,21 @@
-' PatentMarker VBA 模块安装脚本 (VBScript)
-' 编码: GBK (Win7 中文系统兼容)
+' PatentMarker VBA Module Installer (VBScript)
 '
-' 功能:
-'   - 打开 Word 的 Normal.dotm 全局模板
-'   - 导入 6 个 VBA 模块到 Normal 工程
-'   - 所有 Word 文档都能使用这些宏
-'   - 详细日志输出到 install-vba.log
-'   - 所有消息累积, 最后一次性显示
+' Function:
+'   - Import 6 VBA modules into Word Normal.dotm global template
+'   - Available in all Word documents after install
+'   - Detailed log: install-vba.log
 '
-' 前提:
-'   Word 2010 需启用 "信任对 VBA 工程对象模型的访问":
-'     文件 > 选项 > 信任中心 > 信任中心设置 >
-'     宏设置 > 勾选 "信任对 VBA 工程对象模型的访问"
+' Known issue (file locking):
+'   Normal.dotm is a shared template. If Word is already running when this
+'   script creates a second hidden Word instance via COM, the first instance
+'   holds a file lock on Normal.dotm. The second instance opens it read-only,
+'   and any save attempt produces an unresponsive dialog or "file in use"
+'   error. The fix is to ensure NO Word processes are running before install.
+'
+' Prerequisite:
+'   Word 2010: Enable "Trust access to the VBA project object model"
+'     File > Options > Trust Center > Trust Center Settings >
+'     Macro Settings > Check "Trust access to the VBA project object model"
 
 Option Explicit
 
@@ -46,19 +50,19 @@ Sub QuitWithMsg(msg)
 End Sub
 
 output = output & "========================================" & vbCrLf
-output = output & "PatentMarker VBA 模块安装程序" & vbCrLf
-output = output & "(安装到 Normal 全局模板)" & vbCrLf
+output = output & "PatentMarker VBA Module Installer" & vbCrLf
+output = output & "(Install to Normal global template)" & vbCrLf
 output = output & "========================================" & vbCrLf
 
-' --- 0. 系统信息 ---
-LogMsg "--- 系统信息 ---"
-LogMsg "  用户名: " & shell.ExpandEnvironmentStrings("%USERNAME%")
-LogMsg "  脚本目录: " & scriptDir
+' --- 0. System info ---
+LogMsg "--- System Info ---"
+LogMsg "  User: " & shell.ExpandEnvironmentStrings("%USERNAME%")
+LogMsg "  Script dir: " & scriptDir
 
-' --- 1. 定位 VBA 文件 ---
+' --- 1. Locate VBA files ---
 Dim vbaDir
 vbaDir = scriptDir & "\vba"
-LogMsg "VBA 文件夹: " & vbaDir
+LogMsg "VBA dir: " & vbaDir
 
 Dim vbaFiles(5)
 vbaFiles(0) = "Patterns.bas"
@@ -72,27 +76,65 @@ Dim i, filePath
 For i = 0 To UBound(vbaFiles)
     filePath = vbaDir & "\" & vbaFiles(i)
     If Not fso.FileExists(filePath) Then
-        QuitWithMsg "错误: 未找到 VBA 文件: " & filePath & vbCrLf & "请确保 \vba\ 子文件夹包含全部 6 个模块"
+        QuitWithMsg "ERROR: VBA file not found: " & filePath & vbCrLf & "Ensure \vba\ contains all 6 modules"
     End If
 Next
 
-LogMsg "VBA 文件检查: 全部存在"
+LogMsg "VBA files: all present"
 
-' --- 2. 启动 Word ---
+' --- 1.5. Check for running Word processes ---
+LogMsg "--- Word Process Check ---"
+Dim wmiSvc, wordProcs, wmiOk
+wmiOk = True
+On Error Resume Next
+Set wmiSvc = GetObject("winmgmts:\\.\root\cimv2")
+If Err.Number <> 0 Then wmiOk = False
+On Error GoTo 0
+
+If wmiOk Then
+    Set wordProcs = wmiSvc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
+    If wordProcs.Count > 0 Then
+        LogMsg "  Found " & wordProcs.Count & " Word process(es) running"
+        Dim msgResult
+        msgResult = MsgBox("Found " & wordProcs.Count & " Word process(es) running." & vbCrLf & vbCrLf & _
+                           "Please close ALL Word windows, then click OK." & vbCrLf & _
+                           "(Click Cancel to abort installation)", _
+                           vbOKCancel + vbExclamation, "PatentMarker VBA Install")
+        If msgResult = vbCancel Then
+            QuitWithMsg "Aborted by user."
+        End If
+        WScript.Sleep 2000
+        Set wordProcs = wmiSvc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
+        If wordProcs.Count > 0 Then
+            QuitWithMsg "ERROR: Word is still running." & vbCrLf & "Please close all Word instances and retry."
+        End If
+        LogMsg "  All Word processes cleared"
+    Else
+        LogMsg "  No Word processes running"
+    End If
+Else
+    LogMsg "  WMI unavailable, skipping process check"
+End If
+
+' --- 2. Create Word ---
 Dim wordApp
 On Error Resume Next
 Set wordApp = CreateObject("Word.Application")
 If Err.Number <> 0 Then
-    QuitWithMsg "错误: 无法启动 Word" & vbCrLf & "原因: " & Err.Description
+    QuitWithMsg "ERROR: Cannot create Word" & vbCrLf & "Reason: " & Err.Description
 End If
 On Error GoTo 0
 
 wordApp.Visible = False
-wordApp.DisplayAlerts = False
+wordApp.DisplayAlerts = 0
 
-LogMsg "Word 已启动"
+On Error Resume Next
+wordApp.Options.SaveNormalPrompt = False
+On Error GoTo 0
 
-' --- 3. 获取 Normal.dotm 路径 ---
+LogMsg "Word created (hidden, alerts suppressed)"
+
+' --- 3. Get Normal.dotm path ---
 Dim normalPath
 On Error Resume Next
 normalPath = wordApp.NormalTemplate.FullName
@@ -101,18 +143,43 @@ If Err.Number <> 0 Or IsNull(normalPath) Or normalPath = "" Then
     normalErr = Err.Description
     On Error GoTo 0
     wordApp.Quit
-    QuitWithMsg "错误: 无法获取 Normal 模板路径" & vbCrLf & "原因: " & normalErr
+    QuitWithMsg "ERROR: Cannot get Normal template path" & vbCrLf & "Reason: " & normalErr
 End If
 On Error GoTo 0
 
-LogMsg "Normal 模板路径: " & normalPath
+LogMsg "Normal template path: " & normalPath
 
 If Not fso.FileExists(normalPath) Then
     wordApp.Quit
-    QuitWithMsg "错误: Normal 模板文件不存在: " & normalPath
+    QuitWithMsg "ERROR: Normal template file not found: " & normalPath
 End If
 
-' --- 4. 打开 Normal.dotm ---
+' --- 3.5. Safety check: remove read-only attribute if present ---
+' (The primary issue is file locking by another Word instance, not file
+'  attributes. This is just a safety net for edge cases.)
+Dim normalFile
+Set normalFile = fso.GetFile(normalPath)
+If (normalFile.Attributes And 1) Then
+    On Error Resume Next
+    normalFile.Attributes = normalFile.Attributes And Not 1
+    If Err.Number = 0 Then
+        LogMsg "  Removed read-only attribute from Normal.dotm"
+    Else
+        Dim roErr
+        roErr = Err.Description
+        On Error GoTo 0
+        wordApp.Quit
+        QuitWithMsg "ERROR: Cannot remove read-only attribute" & vbCrLf & _
+                    "Path: " & normalPath & vbCrLf & _
+                    "Reason: " & roErr & vbCrLf & _
+                    "Fix: Right-click file > Properties > uncheck Read-only"
+    End If
+    On Error GoTo 0
+Else
+    LogMsg "  Normal.dotm is writable (not read-only)"
+End If
+
+' --- 4. Open Normal.dotm ---
 Dim doc
 On Error Resume Next
 Set doc = wordApp.Documents.Open(normalPath, False, False, False)
@@ -121,27 +188,27 @@ If Err.Number <> 0 Then
     openErr = Err.Description
     On Error GoTo 0
     wordApp.Quit
-    QuitWithMsg "错误: 无法打开 Normal 模板" & vbCrLf & "原因: " & openErr
+    QuitWithMsg "ERROR: Cannot open Normal template" & vbCrLf & "Reason: " & openErr
 End If
 On Error GoTo 0
 
-LogMsg "Normal 模板已打开"
-LogMsg "  只读: " & doc.ReadOnly
-LogMsg "  保护: " & doc.ProtectionType
+LogMsg "Normal template opened"
+LogMsg "  ReadOnly: " & doc.ReadOnly
+LogMsg "  Protection: " & doc.ProtectionType
 
 If doc.ReadOnly Then
     doc.Close False
     wordApp.Quit
-    QuitWithMsg "错误: Normal 模板是只读状态" & vbCrLf & _
-                "可能原因:" & vbCrLf & _
-                "  - Word 正在运行 (Normal.dotm 被占用)" & vbCrLf & _
-                "  - 文件标记为只读" & vbCrLf & _
-                "解决方法:" & vbCrLf & _
-                "  - 关闭所有 Word 窗口后重试" & vbCrLf & _
-                "  - 右键文件 > 属性 > 取消只读"
+    QuitWithMsg "ERROR: Normal template is read-only" & vbCrLf & _
+                "Possible causes:" & vbCrLf & _
+                "  - Another Word instance is running (Normal.dotm locked)" & vbCrLf & _
+                "  - File attribute is read-only" & vbCrLf & _
+                "Fix:" & vbCrLf & _
+                "  - Close all Word windows and retry" & vbCrLf & _
+                "  - Right-click file > Properties > uncheck Read-only"
 End If
 
-' --- 5. 检查 VBA 工程访问 ---
+' --- 5. Access VBA project ---
 Dim vbProj
 On Error Resume Next
 Set vbProj = doc.VBProject
@@ -151,21 +218,21 @@ If Err.Number <> 0 Then
     On Error GoTo 0
     doc.Close False
     wordApp.Quit
-    QuitWithMsg "错误: 无法访问 VBA 工程" & vbCrLf & _
-                "原因: " & vbaErr & vbCrLf & vbCrLf & _
-                "请在 Word 中启用设置:" & vbCrLf & _
-                "  1. 文件 > 选项 > 信任中心" & vbCrLf & _
-                "  2. 信任中心设置 > 宏设置" & vbCrLf & _
-                "  3. 勾选: 信任对 VBA 工程对象模型的访问" & vbCrLf & _
-                "  4. 宏安全级别设为: 禁用所有宏并发出通知" & vbCrLf & _
-                "  5. 确定后关闭 Word, 重新运行此脚本"
+    QuitWithMsg "ERROR: Cannot access VBA project" & vbCrLf & _
+                "Reason: " & vbaErr & vbCrLf & vbCrLf & _
+                "Enable in Word:" & vbCrLf & _
+                "  1. File > Options > Trust Center" & vbCrLf & _
+                "  2. Trust Center Settings > Macro Settings" & vbCrLf & _
+                "  3. Check: Trust access to the VBA project object model" & vbCrLf & _
+                "  4. Set macro security to: Disable all macros with notification" & vbCrLf & _
+                "  5. Close Word, then re-run this script"
 End If
 On Error GoTo 0
 
-LogMsg "VBA 工程访问: 正常"
-LogMsg "VBA 工程名: " & vbProj.Name
+LogMsg "VBA project: accessible"
+LogMsg "VBA project name: " & vbProj.Name
 
-' --- 6. 删除旧模块 ---
+' --- 6. Delete old modules ---
 Dim moduleNames(5)
 moduleNames(0) = "Patterns"
 moduleNames(1) = "DictModel"
@@ -174,20 +241,20 @@ moduleNames(3) = "PatentExtractor"
 moduleNames(4) = "AutoExport"
 moduleNames(5) = "clsSaveHook"
 
-LogMsg "删除旧模块 (如有)..."
+LogMsg "Deleting old modules (if any)..."
 For i = 0 To UBound(moduleNames)
     On Error Resume Next
     vbProj.VBComponents.Remove vbProj.VBComponents.Item(moduleNames(i))
     If Err.Number = 0 Then
-        LogMsg "  已删除: " & moduleNames(i)
+        LogMsg "  Removed: " & moduleNames(i)
     Else
-        LogMsg "  (不存在): " & moduleNames(i)
+        LogMsg "  (not found): " & moduleNames(i)
     End If
     On Error GoTo 0
 Next
 
-' --- 7. 导入 VBA 模块 ---
-LogMsg "导入 VBA 模块..."
+' --- 7. Import VBA modules ---
+LogMsg "Importing VBA modules..."
 Dim imported
 imported = 0
 
@@ -201,88 +268,143 @@ For i = 0 To UBound(vbaFiles)
         On Error GoTo 0
         doc.Close False
         wordApp.Quit
-        QuitWithMsg "错误: 导入失败: " & vbaFiles(i) & vbCrLf & "原因: " & importErr
+        QuitWithMsg "ERROR: Import failed: " & vbaFiles(i) & vbCrLf & "Reason: " & importErr
     Else
-        LogMsg "  成功: " & vbaFiles(i)
+        LogMsg "  OK: " & vbaFiles(i)
         imported = imported + 1
     End If
     On Error GoTo 0
 Next
 
-LogMsg "已导入 " & imported & " / 6 个模块"
+LogMsg "Imported " & imported & " / 6 modules"
 
-' --- 8. 保存 Normal.dotm ---
-LogMsg "保存 Normal 模板..."
-Dim saveOk, saveErr
+' --- 8. Save Normal.dotm (3-level strategy) ---
+LogMsg "Saving Normal template..."
+Dim saveOk, saveErr, wordClosed
 saveOk = False
 saveErr = ""
+wordClosed = False
 
-' 策略1: doc.Save
+Dim beforeModTime
+beforeModTime = fso.GetFile(normalPath).DateLastModified
+LogMsg "  File time before save: " & beforeModTime
+
 On Error Resume Next
 doc.Save
 If Err.Number = 0 Then
     saveOk = True
-    LogMsg "  保存成功"
+    LogMsg "  Save OK (doc.Save)"
 Else
     saveErr = Err.Description & " (0x" & Hex(Err.Number) & ")"
-    LogMsg "  保存失败: " & saveErr
+    LogMsg "  doc.Save failed: " & saveErr
 End If
 On Error GoTo 0
 
-' 策略2: SaveAs (保留原格式)
 If Not saveOk Then
     On Error Resume Next
     doc.SaveAs normalPath, wdFormatTemplate
     If Err.Number = 0 Then
         saveOk = True
-        LogMsg "  SaveAs 成功"
+        LogMsg "  Save OK (SaveAs)"
     Else
         saveErr = Err.Description & " (0x" & Hex(Err.Number) & ")"
-        LogMsg "  SaveAs 失败: " & saveErr
+        LogMsg "  SaveAs failed: " & saveErr
     End If
     On Error GoTo 0
 End If
 
 If Not saveOk Then
-    LogMsg ""
-    LogMsg "错误: 无法保存 Normal 模板"
-    LogMsg "最后错误: " & saveErr
-    LogMsg ""
-    LogMsg "模块已导入但未保存。请手动保存:"
-    LogMsg "  1. 在弹出的 Word 窗口中按 Ctrl+S"
-    LogMsg "  2. 或 文件 > 保存"
-    wordApp.Visible = True
-    wordApp.DisplayAlerts = True
-    WScript.Echo output
-    logFile.Close
-    WScript.Quit(1)
+    Dim tempPath
+    tempPath = fso.GetSpecialFolder(2) & "\Normal_pm_temp.dotm"
+    On Error Resume Next
+    doc.SaveAs tempPath, wdFormatTemplate
+    If Err.Number = 0 Then
+        On Error GoTo 0
+        LogMsg "  Saved to temp: " & tempPath
+        doc.Close False
+        wordApp.Quit
+        Set doc = Nothing
+        Set wordApp = Nothing
+        wordClosed = True
+        WScript.Sleep 2000
+        On Error Resume Next
+        fso.CopyFile tempPath, normalPath, True
+        If Err.Number = 0 Then
+            saveOk = True
+            LogMsg "  Replaced Normal.dotm via temp file"
+        Else
+            saveErr = "CopyFile: " & Err.Description
+            LogMsg "  " & saveErr
+        End If
+        fso.DeleteFile tempPath, True
+        On Error GoTo 0
+    Else
+        saveErr = Err.Description & " (0x" & Hex(Err.Number) & ")"
+        LogMsg "  Temp save failed: " & saveErr
+        On Error GoTo 0
+    End If
 End If
 
-' --- 9. 关闭 ---
-doc.Close False
-wordApp.Quit
+If Not saveOk Then
+    On Error Resume Next
+    If Not wordClosed Then
+        doc.Close False
+        wordApp.Quit
+    End If
+    On Error GoTo 0
+    QuitWithMsg "ERROR: Cannot save Normal template." & vbCrLf & _
+                "Reason: " & saveErr & vbCrLf & _
+                "Please close all Word instances and retry."
+End If
 
-' --- 10. 总结 ---
+' --- 8.5. Verify save by checking file modification time ---
+WScript.Sleep 500
+Dim afterModTime, saveVerified
+afterModTime = fso.GetFile(normalPath).DateLastModified
+If afterModTime > beforeModTime Then
+    saveVerified = True
+    LogMsg "  Save VERIFIED: file updated (" & afterModTime & ")"
+Else
+    saveVerified = False
+    LogMsg "  WARNING: file time unchanged, save may not have persisted"
+    LogMsg "    Before: " & beforeModTime
+    LogMsg "    After:  " & afterModTime
+End If
+
+' --- 9. Close ---
+If Not wordClosed Then
+    doc.Close False
+    wordApp.Quit
+    Set doc = Nothing
+    Set wordApp = Nothing
+    WScript.Sleep 1000
+End If
+
+' --- 10. Summary ---
 LogMsg ""
-LogMsg "=== VBA 安装完成 ==="
-LogMsg "Normal 模板: " & normalPath
-LogMsg "已导入模块: " & imported & " / 6"
-LogMsg "已保存: 是"
+LogMsg "=== VBA Install Complete ==="
+LogMsg "Normal template: " & normalPath
+LogMsg "Modules imported: " & imported & " / 6"
+If saveVerified Then
+    LogMsg "Saved: Yes (verified)"
+Else
+    LogMsg "Saved: Reported OK but file time unchanged - please verify manually"
+End If
 LogMsg ""
-LogMsg "模块已安装到全局模板, 所有 Word 文档均可使用"
+LogMsg "Modules installed to global template, available in all Word documents"
 LogMsg ""
-LogMsg "后续步骤:"
-LogMsg "  1. 打开任意 Word 文档"
-LogMsg "  2. 按 Alt+F11, 在左侧 'Normal' 下查看模块"
-LogMsg "  3. 运行 EnableAutoExport 启用自动导出"
-LogMsg "     (或手动运行 ExtractDict)"
+LogMsg "Verification:"
+LogMsg "  1. Open a new Word document"
+LogMsg "  2. Press Alt+F11, check modules under 'Normal'"
+LogMsg "  3. Run EnableAutoExport to enable auto-export"
+LogMsg "     (or manually run ExtractDict)"
 LogMsg ""
-LogMsg "dict.json 将保存到 Word 文档同目录"
-LogMsg "CAD 插件会自动检测 (DWG 需在同一文件夹)"
+LogMsg "dict.json will be saved to Word document directory"
+LogMsg "CAD auto-export (DWG in same folder)"
 
 LogMsg ""
 LogMsg "========================================"
-LogMsg "安装结束"
+LogMsg "Installation complete"
 LogMsg "========================================"
 
 WScript.Echo output

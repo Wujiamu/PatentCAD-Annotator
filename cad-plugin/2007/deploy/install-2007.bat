@@ -63,7 +63,7 @@ exit /b 0
 set "APP_KEY=%REG_BASE%\%~1\Applications\PatentMarker"
 reg add "%APP_KEY%" /ve /f >nul 2>&1
 reg add "%APP_KEY%" /v DESCRIPTION /t REG_SZ /d "PatentMarker - Patent Drawing Annotation Plugin" /f >nul
-reg add "%APP_KEY%" /v LOADCTRLS /t REG_DWORD /d 1 /f >nul
+reg add "%APP_KEY%" /v LOADCTRLS /t REG_DWORD /d 14 /f >nul
 reg add "%APP_KEY%" /v MANAGED /t REG_DWORD /d 1 /f >nul
 reg add "%APP_KEY%" /v LOADER /t REG_SZ /d "%DLL_PATH%" /f >nul
 echo Installed for: %~1

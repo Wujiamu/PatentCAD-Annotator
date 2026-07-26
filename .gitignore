@@ -13,8 +13,11 @@
 
 # ---- AutoCAD SDK 专有 DLL（Autodesk 版权，禁止提交） ----
 # acdbmgd.dll / acmgd.dll / probe.exe 由用户本机自备，放入 lib/
-cad-plugin-2007/PatentMarker/lib/*.dll
-cad-plugin-2007/PatentMarker/lib/*.exe
+cad-plugin/*/PatentMarker/lib/*.dll
+cad-plugin/*/PatentMarker/lib/*.exe
+
+# ---- 测试用 VBS 脚本 ----
+*test*.vbs
 
 # ---- 发布包 / 压缩包 ----
 *.zip
@@ -39,3 +42,13 @@ PatentMarker.log
 *.tmp
 *.bak
 ~$*
+
+# ---- 测试产物 / 临时测试文件 ----
+test-single-export.vbs
+test-single-output.txt
+probe-results.rar
+批量测试.rar
+批量测试/
+test-results/
+MU26005942.2稿(1).docx
+MU26005942.dict.json

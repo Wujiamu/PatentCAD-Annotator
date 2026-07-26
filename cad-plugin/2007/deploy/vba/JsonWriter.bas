@@ -1,10 +1,6 @@
 Attribute VB_Name = "JsonWriter"
 Option Explicit
 
-' 极简 JSON 序列化。VBA 没有内置 JSON 库，引第三方又会增加分发负担，自己写。
-' 只支持 String、Long、Double、Boolean、Array、Dictionary、Nothing。
-' 输出格式带缩进，便于人工核对 dict.json。
-
 Public Function Serialize(ByVal v As Variant, Optional ByVal indent As Long = 0) As String
     Dim pad As String
     pad = String$(indent * 2, " ")
@@ -95,18 +91,14 @@ Private Function EscapeString(ByVal s As String) As String
 End Function
 
 Public Sub WriteToFile(ByVal path As String, ByVal content As String)
-    Dim fnum As Integer
-    fnum = FreeFile
-    ' UTF-8 BOM-less 输出（Word 默认 ANSI，但 C# 那边读 UTF-8）
     Dim stream As Object
     Set stream = CreateObject("ADODB.Stream")
-    stream.Type = 2 ' text
+    stream.Type = 2
     stream.Charset = "utf-8"
     stream.Open
     stream.WriteText content
     stream.Position = 0
-    stream.Type = 1 ' binary
-    ' 跳过 BOM
+    stream.Type = 1
     stream.Position = 3
     Dim bytes() As Byte
     bytes = stream.Read
@@ -117,6 +109,6 @@ Public Sub WriteToFile(ByVal path As String, ByVal content As String)
     outStream.Type = 1
     outStream.Open
     outStream.Write bytes
-    outStream.SaveToFile path, 2 ' overwrite
+    outStream.SaveToFile path, 2
     outStream.Close
 End Sub

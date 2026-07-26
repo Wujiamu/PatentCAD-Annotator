@@ -58,19 +58,21 @@ AutoCAD 2013（R19.0）首次引入 `MLeader` 类。在此之前只能用 `Leade
 
 | 版本 | 现状 |
 |---|---|
-| `cad-plugin/2007/` | 已完成，含自动同步（VBA 钩子 + DictLoader 时间戳检测） |
-| `cad-plugin/2010/` | **缺失**，需从 2007 源码派生 |
-| `cad-plugin/2013/` | 现有 `cad-plugin-2014` 目录，但 TargetFramework 为 `net45`，需降为 `net40` 并重命名 |
-| `cad-plugin/2015/` | **缺失**，需从 2013 源码派生 |
-| `cad-plugin/2025/` | 现有 `cad-plugin-2026`（zip），需解压纳入 |
+| `cad-plugin/2007/` | ✅ 已完成，含自动同步（VBA 钩子 + DictLoader 时间戳检测） |
+| `cad-plugin/2010/` | ✅ 已完成，从 2007 派生，.NET 3.5，Leader + MText |
+| `cad-plugin/2013/` | ✅ 已完成，MLeader 重写，.NET 4.0，Newtonsoft.Json |
+| `cad-plugin/2015/` | ✅ 已完成，从 2013 派生，.NET 4.5，覆盖 2015-2024 |
+| `cad-plugin/2025/` | ✅ 已完成，.NET 8，System.Text.Json，零外部依赖 |
 
 ### 待补项
 
-1. **创建 `cad-plugin/2010/`**：从 2007 源码复制，改 TargetFramework 为 `v3.5`，csproj 保持旧式格式
-2. **修正 `cad-plugin/2013/`**：将现有 `cad-plugin-2014` 的 TargetFramework 从 `net45-windows` 降为 `net40`，重命名目录
-3. **创建 `cad-plugin/2015/`**：从 2013 源码复制，改 TargetFramework 为 `net45-windows`
-4. **纳入 `cad-plugin/2025/`**：解压 `PatentMarker-2026-v2.zip`，核对源码完整性
-5. **同步自动同步改动**：2007 版本的 VBA 钩子 + DictLoader 时间戳检测在 2010/2013/2015/2025 中也应实现
+全部完成：
+
+1. ✅ **创建 `cad-plugin/2010/`**：从 2007 源码复制，TargetFramework v3.5，添加 System.Core
+2. ✅ **创建 `cad-plugin/2013/`**：MLeader 重写，.NET 4.0，Newtonsoft.Json，accoremgd
+3. ✅ **创建 `cad-plugin/2015/`**：从 2013 源码复制，TargetFramework v4.5
+4. ✅ **创建 `cad-plugin/2025/`**：.NET 8 SDK 风格，System.Text.Json，零依赖
+5. ✅ **自动同步功能**：全版本均已包含 DictLoader 时间戳检测 + 字典对比
 
 ## VBA 模块
 

@@ -20,17 +20,25 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 
 ### 版本总览
 
-> **⚠️ 当前状态：仅 2007 版已完成并可用，其余 4 个版本仍在规划中。在所有版本完成前，本仓库保持 Private。**
-
-由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本：
+由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本。**请根据你本机的 AutoCAD 年份选择对应版本：**
 
 | 目录 | 覆盖 AutoCAD | .NET | 最低 OS | 标注方式 | 状态 |
 |------|-------------|------|---------|----------|------|
-| [`cad-plugin/2007/`](cad-plugin/2007/) | 2007—2009 | 2.0 | Win7 | Leader + MText | **已完成 (v2)** |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | 2010—2012 | 3.5 | Win7 | Leader + MText | 规划中 |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | 2013—2014 | 4.0 | Win7 | MLeader | 规划中 |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | 2015—2024 | 4.5 | Win7 | MLeader | 规划中 |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | 2025—2026+ | 8.0 | Win10+ | MLeader | 规划中 |
+| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ 已完成 |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ 已完成 |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader | ✅ 已完成 |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader | ✅ 已完成 |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader | ✅ 已完成 |
+
+### 为什么分 5 个版本？能否交叉使用？
+
+**不能交叉使用。** 每个版本的 DLL 只能在其对应的 AutoCAD 年份区间内运行，原因：
+
+1. **.NET 运行时不兼容** — 2007~2009 的 CAD 只加载 .NET 2.0 程序集，2025+ 只加载 .NET 8，CLR 完全不同，DLL 无法被加载。
+2. **标注 API 断代** — AutoCAD 2013 引入 `MLeader`，之前的版本只有 `Leader` + `MText`；两套 API 的类名、方法签名完全不同。
+3. **程序集版本绑定** — 编译时引用的 `acdbmgd.dll` 内部接口随 CAD 版本变化，跨版本加载会抛 `MissingMethodException`。
+
+> 例：把 2007 版装到 AutoCAD 2026 → 无法加载（.NET 2.0 vs .NET 8）；把 2015 版装到 AutoCAD 2012 → 无法加载（.NET 4.5 vs .NET 3.5，且缺少 MLeader）。
 
 详细的分版理由见 [docs/version-plan.md](docs/version-plan.md)。
 
@@ -68,13 +76,13 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 ```
 PatentCAD-Annotator/
 ├── cad-plugin/
-│   ├── 2007/               # 已完成（Leader + MText，.NET 2.0）
+│   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   ├── PatentMarker/    #   C# 源码 + csproj
 │   │   └── deploy/          #   安装脚本 + DLL + VBA 模块
-│   ├── 2010/               # 规划中（从 2007 派生，.NET 3.5）
-│   ├── 2013/               # 规划中（MLeader，.NET 4.0）
-│   ├── 2015/               # 规划中（MLeader，.NET 4.5）
-│   └── 2025/               # 规划中（MLeader，.NET 8.0）
+│   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
+│   ├── 2013/               # AutoCAD 2013~2014（MLeader，.NET 4.0）
+│   ├── 2015/               # AutoCAD 2015~2024（MLeader，.NET 4.5）
+│   └── 2025/               # AutoCAD 2025~2026+（MLeader，.NET 8.0）
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
 │   └── autocad-2007-downgrade-plan.md  # 2007 降级方案
@@ -84,6 +92,7 @@ PatentCAD-Annotator/
 
 ### 文档
 
+- [docs/development-log.md](docs/development-log.md) — **开发日志与经验教训**（v2.10→v2.12 所有改动、踩坑记录、编码注意事项）
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/autocad-2007-downgrade-plan.md](docs/autocad-2007-downgrade-plan.md) — 2007 降级实现方案
 - [cad-plugin/2007/README.md](cad-plugin/2007/README.md) — 2007 版详细文档
@@ -104,19 +113,25 @@ Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palett
 
 ### Versions
 
-> **⚠️ Current status: Only the 2007 version is complete and usable. The other 4 versions are still planned. This repository will remain Private until all versions are ready.**
-
-Because AutoCAD's managed API is tightly bound to the .NET runtime, a single source base cannot cover AutoCAD 2007—2026. The project is split into 5 versions along API boundaries:
+Because AutoCAD's managed API is tightly bound to the .NET runtime, a single source base cannot cover AutoCAD 2007—2026. The project is split into 5 versions along API boundaries. **Choose the version matching your AutoCAD year:**
 
 | Directory | AutoCAD | .NET | Min OS | Annotation | Status |
 |-----------|---------|------|--------|------------|--------|
-| [`cad-plugin/2007/`](cad-plugin/2007/) | 2007—2009 | 2.0 | Win7 | Leader + MText | **Complete (v2)** |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | 2010—2012 | 3.5 | Win7 | Leader + MText | Planned |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | 2013—2014 | 4.0 | Win7 | MLeader | Planned |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | 2015—2024 | 4.5 | Win7 | MLeader | Planned |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | 2025—2026+ | 8.0 | Win10+ | MLeader | Planned |
+| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ Complete |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ Complete |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader | ✅ Complete |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader | ✅ Complete |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader | ✅ Complete |
 
-See [docs/version-plan.md](docs/version-plan.md) for the rationale.
+### Why 5 versions? Can I use one version on a different AutoCAD?
+
+**No cross-version usage.** Each DLL only works within its designated AutoCAD year range:
+
+1. **.NET runtime mismatch** — AutoCAD 2007–2009 loads .NET 2.0 only; 2025+ loads .NET 8 only. The CLR is entirely different.
+2. **Annotation API break** — `MLeader` was introduced in AutoCAD 2013; earlier versions only have `Leader` + `MText`.
+3. **Assembly binding** — `acdbmgd.dll` internal interfaces change per CAD version; loading a mismatched DLL throws `MissingMethodException`.
+
+See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 ### Quick Start (v2007)
 

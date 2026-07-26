@@ -1,0 +1,70 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D4E5F6A7-B8C9-7D8E-1F0A-2B3C4D5E6F7A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>PatentMarker</RootNamespace>
+    <AssemblyName>PatentMarker</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <!-- AutoCAD 2015-2024 managed DLLs (v20.x-v24.x) -->
+    <!-- 请从 AutoCAD 2015-2024 安装目录复制到 lib\ 目录 -->
+    <Reference Include="acdbmgd">
+      <HintPath>lib\acdbmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>lib\acmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="accoremgd">
+      <HintPath>lib\accoremgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Newtonsoft.Json via NuGet (packages.config) -->
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="PatentMarkerApp.cs" />
+    <Compile Include="IO\ConfigLoader.cs" />
+    <Compile Include="IO\DictEntry.cs" />
+    <Compile Include="IO\DictDiff.cs" />
+    <Compile Include="IO\PatEntityHelper.cs" />
+    <Compile Include="Styles\PatStyleInitializer.cs" />
+    <Compile Include="Commands\PatMarkCommand.cs" />
+    <Compile Include="Commands\PatCheckCommand.cs" />
+    <Compile Include="Commands\PatAlignCommand.cs" />
+    <Compile Include="Commands\PatSelectAllCommand.cs" />
+    <Compile Include="Palette\PatPaletteCommand.cs" />
+    <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="I18n\Language.cs" />
+    <Compile Include="I18n\Strings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

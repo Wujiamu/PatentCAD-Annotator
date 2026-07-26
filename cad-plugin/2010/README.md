@@ -1,7 +1,9 @@
-# PatentCAD-Annotator 2010 — AutoCAD 2010/2011/2012 适配版
+# PatentCAD-Annotator 2010 — AutoCAD 2010~2012 适配版
 
-> **状态：规划中（TODO）**
-> 本目录尚未实现，源码将从 `cad-plugin/2007/` 派生。
+> **状态：已完成**
+> 源码从 `cad-plugin/2007/` 派生，标注方式相同（Leader + MText）。
+>
+> **兼容性：本版本仅适用于 AutoCAD 2010 / 2011 / 2012，不可用于其他版本的 AutoCAD。**
 
 ## 目标环境
 
@@ -10,24 +12,46 @@
 | 操作系统 | Windows 7 (x86/x64) |
 | AutoCAD | 2010, 2011, 2012 (R18.0—R18.2) |
 | .NET | 3.5 (CLR 2.0 + System.Core) |
-| 编译器 | VS2010+ (C# 4.0 语法可用，但建议保守) |
+| 编译器 | VS2010+ (C# 4.0 语法可用) |
+| 托管程序集 | acdbmgd.dll + acmgd.dll（无 accoremgd） |
 
 ## 与 2007 版的差异
 
-| 特性 | 2007 版 | 2010 版（计划） |
-|------|---------|----------------|
+| 特性 | 2007 版 | 2010 版 |
+|------|---------|---------|
 | .NET | 2.0 | 3.5（可用 LINQ、`HashSet<T>`、`Action<T>`/`Func<T>`） |
-| 标注方式 | Leader + MText | Leader + MText（同 2007，MLeader 2013 才引入） |
+| 标注方式 | Leader + MText | Leader + MText（相同） |
 | JSON | SimpleJson（手写） | SimpleJson（手写，零依赖） |
-| 注册表 | R17.0 | R18.0 |
-| 部署 | HKCU | HKCU |
+| 注册表 | R17.0 | R18.0 / R18.1 / R18.2 |
+| 部署 | HKCU + LSP | HKCU + LSP（相同策略） |
 
-## 派生计划
+## 编译步骤
 
-1. 复制 `cad-plugin/2007/PatentMarker/` 全部源码
-2. 修改 `PatentMarker.csproj`：`<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>`
-3. 修改注册表基础键：`R17.0` → `R18.0`
-4. 修改 `lib/` 下 acdbmgd.dll / acmgd.dll 的 HintPath 指向 AutoCAD 2010 安装目录
-5. （可选）用 LINQ 重写手动循环，提升可读性
+1. 从 AutoCAD 2010/2011/2012 安装目录复制 `acdbmgd.dll` 和 `acmgd.dll` 到 `PatentMarker/lib/`
+2. 用 VS2010+ 打开 `PatentMarker/PatentMarker.csproj`
+3. 编译 Release|x86
+4. 输出：`PatentMarker/bin/Release/PatentMarker.dll`
+
+## 部署
+
+1. 将 `PatentMarker.dll` 复制到目标机器固定目录
+2. 双击运行 `deploy/install-2010.vbs`
+3. 重启 AutoCAD
+4. 命令行输入 `BZ` 验证
+
+## 命令清单
+
+| 命令 | 拼音别名 | 功能 |
+|------|---------|------|
+| `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板 |
+| `PATMARK` | `BZM` | 创建引线标注 |
+| `PATCHECK` | `BZC` | 校验一致性 |
+| `PATALIGN` | `BZA` | 对齐引线 |
+| `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |
+
+## 已知限制
+
+- Leader + MText 是分离实体，移动时需同时选中两者（用 `BZS` 全选）
+- 无 accoremgd，部分高版本 API 不可用
 
 详见 [docs/version-plan.md](../../docs/version-plan.md)。

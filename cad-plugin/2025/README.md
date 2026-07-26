@@ -1,7 +1,9 @@
-# PatentCAD-Annotator 2025 — AutoCAD 2025/2026+ 适配版
+# PatentCAD-Annotator 2025 — AutoCAD 2025~2026+ 适配版
 
-> **状态：规划中（TODO）**
-> 本目录尚未实现。AutoCAD 2025 迁移到 .NET 8，不再支持 Win7。
+> **状态：已完成**
+> AutoCAD 2025 迁移到 .NET 8，使用 System.Text.Json，零外部依赖。
+>
+> **兼容性：本版本仅适用于 AutoCAD 2025 及更高版本，不可用于其他版本的 AutoCAD。需要 Windows 10+。**
 
 ## 目标环境
 
@@ -11,23 +13,42 @@
 | AutoCAD | 2025, 2026+ (R25+) |
 | .NET | 8.0 (Core，脱离 .NET Framework) |
 | 编译器 | VS2022+ / .NET SDK 风格 csproj |
+| 托管程序集 | acdbmgd.dll + acmgd.dll + accoremgd.dll |
+| JSON | System.Text.Json（内置，零 NuGet 依赖） |
 
 ## 与 2015 版的差异
 
-| 特性 | 2015 版 | 2025 版（计划） |
-|------|---------|----------------|
+| 特性 | 2015 版 | 2025 版 |
+|------|---------|---------|
 | .NET | 4.5 (Framework) | 8.0 (Core) |
-| Win7 | 支持 | **不支持**（.NET 8 最低 Win10 1607） |
-| JSON | Newtonsoft.Json | System.Text.Json（内置，零 NuGet 依赖） |
-| csproj | 旧式或 SDK 风格 | SDK 风格 |
-| 标注方式 | MLeader | MLeader（同 2015） |
+| Win7 | 支持 | **不支持** |
+| JSON | Newtonsoft.Json | System.Text.Json（内置） |
+| csproj | 旧式 | SDK 风格 |
+| 外部依赖 | Newtonsoft.Json.dll | 无（单 DLL 部署） |
+| 标注方式 | MLeader | MLeader（相同） |
 
-## 实现计划
+## 编译步骤
 
-1. 新建 SDK 风格 csproj，TargetFramework = `net8.0-windows`
-2. 用 `System.Text.Json` 替代 Newtonsoft.Json
-3. 可用 C# 12+ 语法（record、pattern matching 等）
-4. 部署用 ApplicationPlugins bundle
-5. 同步全部功能（MLeader、样条曲线、字典比对、全选）
+1. 从 AutoCAD 2025+ 安装目录复制 `acdbmgd.dll`、`acmgd.dll`、`accoremgd.dll` 到 `PatentMarker/lib/`
+2. 确保已安装 .NET 8 SDK
+3. 在 `PatentMarker/` 目录执行：`dotnet build -c Release`
+4. 输出：`PatentMarker/bin/Release/net8.0-windows/PatentMarker.dll`
+
+## 部署
+
+1. 将 `PatentMarker.dll` 复制到目标机器固定目录（单文件，无其他依赖）
+2. 运行 `deploy/install-2025.ps1`（需 PowerShell）
+3. 重启 AutoCAD
+4. 命令行输入 `BZ` 验证
+
+## 命令清单
+
+| 命令 | 拼音别名 | 功能 |
+|------|---------|------|
+| `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板 |
+| `PATMARK` | `BZM` | 创建多重引线标注 |
+| `PATCHECK` | `BZC` | 校验一致性 |
+| `PATALIGN` | `BZA` | 对齐引线 |
+| `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |
 
 详见 [docs/version-plan.md](../../docs/version-plan.md)。

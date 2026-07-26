@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PatentMarker</RootNamespace>
+    <AssemblyName>PatentMarker</AssemblyName>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <!-- AutoCAD 2025+ 不需要复制输出 -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+
+  <!-- AutoCAD 2025/2026+ managed DLLs -->
+  <!-- 请从 AutoCAD 2025+ 安装目录复制到 lib\ 目录 -->
+  <ItemGroup>
+    <Reference Include="acdbmgd">
+      <HintPath>lib\acdbmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="acmgd">
+      <HintPath>lib\acmgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="accoremgd">
+      <HintPath>lib\accoremgd.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- System.Text.Json 内置于 .NET 8，无需额外 NuGet 包 -->
+
+</Project>
