@@ -104,15 +104,14 @@ PatentCAD-Annotator/
 ├── demo/                       # 动态演示页面
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
-│   └── autocad-2007-downgrade-plan.md  # 2007 降级方案
-└── README.md
+│   └── development-log.md   # 变更记录
+└── LICENSE
 ```
 
 ### 文档
 
-- [docs/development-log.md](docs/development-log.md) — **开发日志与经验教训**（所有改动、踩坑记录、编码注意事项）
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
-- [docs/autocad-2007-downgrade-plan.md](docs/autocad-2007-downgrade-plan.md) — 2007 降级实现方案
+- [docs/development-log.md](docs/development-log.md) — 变更记录
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
 
 ### 版本历史
@@ -179,4 +178,6 @@ Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 
 ### License
 
-This project is for internal use. The `acdbmgd.dll` / `acmgd.dll` referenced at build time are Autodesk SDK assemblies and are NOT included in this repository — users must supply them from their local AutoCAD installation.
+This project is licensed under the [MIT License](LICENSE).
+
+Note: The `acdbmgd.dll` / `acmgd.dll` / `accoremgd.dll` referenced at build time are Autodesk SDK assemblies and are NOT included in this repository — users must supply them from their local AutoCAD installation or [ObjectARX SDK](https://aps.autodesk.com/developer/overview/autocad-objectarx-sdk-downloads).
