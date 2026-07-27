@@ -138,6 +138,9 @@ body{
   font-family:var(--sans)}
 .pbtn.tgl-on{background:linear-gradient(180deg,#dff3f7,#b8e4ec);border-color:#4aa8b8;color:#0b5560}
 .pbtn.act{background:linear-gradient(180deg,#fff3cf,#f5dd9a);border-color:#c8a53c;color:#6b520a}
+.pbtn.cmd{background:linear-gradient(180deg,#e0ecff,#c5d8f8);border-color:#7baae0;color:#1a4e8a;font-weight:700;min-width:36px;text-align:center}
+.pbtn.cmd:hover{background:linear-gradient(180deg,#d0e2ff,#b0ccf0)}
+.pbtn.cmd.active{background:linear-gradient(180deg,#b8d4ff,#8bb8e8);border-color:#4a8cd0;color:#0d3a6b}
 .pbtn[disabled]{opacity:.45}
 .pal-btns{display:flex;flex-wrap:wrap;gap:4px;padding:5px 0}
 .pal-status{font-size:10.5px;color:#2f6b3a;background:#eef7ee;border:1px solid #cfe4cf;
@@ -256,16 +259,18 @@ body{
 #endStamp{margin-top:28px;font-family:var(--mono);font-size:11px;color:var(--dim);opacity:0;transition:.6s .4s}
 #endStamp.in{opacity:1}
 
-#caption{position:absolute;left:24px;top:14px;max-width:600px;z-index:40;
+#caption{position:absolute;left:24px;bottom:16px;max-width:520px;z-index:40;
   background:rgba(255,255,255,.96);backdrop-filter:blur(9px);
   border:1px solid rgba(0,0,0,.06);border-left:4px solid var(--cy);
   border-radius:10px;padding:10px 18px 11px;box-shadow:0 4px 20px rgba(0,0,0,.08);
-  opacity:0;transform:translateY(-14px);transition:.45s cubic-bezier(.2,.8,.3,1.1)}
+  opacity:0;transform:translateY(14px);transition:.45s cubic-bezier(.2,.8,.3,1.1);
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 #caption.show{opacity:1;transform:none}
 #caption .tag{display:inline-block;font-size:12px;letter-spacing:.14em;color:#fff;
   background:var(--cy);border-radius:999px;padding:2px 12px;font-weight:700;margin-bottom:6px}
 #caption .tag.am{background:var(--am);color:#fff}
-#caption p{font-size:14px;line-height:1.6;color:#1e293b}
+#caption p{font-size:14px;line-height:1.6;color:#1e293b;
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 #caption p b{color:var(--cy);font-weight:700}
 #caption p i{font-style:normal;color:var(--am);font-weight:700}
 #caption p code{font-family:var(--mono);font-size:12px;color:var(--cy);background:rgba(37,99,235,.08);
@@ -849,6 +854,12 @@ function renderPalette(){
   h+='<div class="pal-row"><span class="sin">'+esc(PAL.search)+(PAL.caret?'<span class="caret"></span>':'')+'</span></div>';
   h+='<div class="pal-row">装填 <span class="pal-num">'+(PAL.loaded||'—')+'</span></div>';
   h+='<div class="pal-btns">';
+  h+='<span class="pbtn cmd" id="cmdBZ">BZ</span>';
+  h+='<span class="pbtn cmd" id="cmdBZM">BZM</span>';
+  h+='<span class="pbtn cmd" id="cmdBZC">BZC</span>';
+  h+='<span class="pbtn cmd" id="cmdBZA">BZA</span>';
+  h+='<span class="pbtn cmd" id="cmdBZS">BZS</span>';
+  h+='<span style="flex-basis:100%;height:0"></span>';
   h+='<span class="pbtn">字高</span>';
   h+='<span class="pbtn'+(PAL.arrow?' tgl-on':'')+'">箭头:'+(PAL.arrow?'开':'关')+'</span>';
   h+='<span class="pbtn'+(PAL.spline?'':' tgl-on')+'">线型:'+(PAL.spline?'样条':'直线')+'</span>';
@@ -878,14 +889,17 @@ var PM=(function(){
   function rel(el){var r=el.getBoundingClientRect();return {x:r.left-sr.left+r.width/2,y:r.top-sr.top+r.height/2};}
   var rows=$('palBody').getElementsByClassName('pal-lr'),rw=[],i;
   for(i=0;i<3;i++)rw.push(rel(rows[i]));
-  var lineBtn=rel($('palBody').getElementsByClassName('pbtn')[2]);
+  var lineBtn=rel($('palBody').getElementsByClassName('pbtn')[7]);
   var search=rel($('palBody').getElementsByClassName('sin')[0]);
+  var cmdBZ=rel($('cmdBZ')),cmdBZM=rel($('cmdBZM')),cmdBZC=rel($('cmdBZC'));
+  var cmdBZA=rel($('cmdBZA')),cmdBZS=rel($('cmdBZS'));
   showWin('win-word',50,130,undefined,0.95);
   var wordM3=rel($('wordM3'));
   hideWin('win-word');
   pal.classList.remove('open');pal.style.transition='';
   PAL.open=so;renderPalette();
-  return {r1:rw[0],r2:rw[1],r3:rw[2],lineBtn:lineBtn,search:search,wordM3:wordM3};
+  return {r1:rw[0],r2:rw[1],r3:rw[2],lineBtn:lineBtn,search:search,wordM3:wordM3,
+    cmdBZ:cmdBZ,cmdBZM:cmdBZM,cmdBZC:cmdBZC,cmdBZA:cmdBZA,cmdBZS:cmdBZS};
 })();
 
 function resetStage(){
@@ -1062,23 +1076,24 @@ fin(new Scene('安装·VBA 模块',12.5)
   .add(5.8,function(){vbeReveal(6,true);})
   .cap(1.0,'安装 ②','双击 <code>install-vba.vbs</code>：6 个模块导入 <b>Normal.dotm</b> 全局模板，此后 Ctrl+S 保存即导出 dict.json。',true));
 
-fin(new Scene('加载·NETLOAD',8.5)
+fin(new Scene('后备·NETLOAD',8.5)
   .add(0,function(){showWin('win-cad',40,80);focusWin('win-cad');})
   .add(1.0,function(lt){if(!T3)T3=new Term($('cmdline'),{text:NETLOAD,cps:60,caretCls:'caret'});T3.render(lt);})
-  .cap(2.5,'加载','<code>NETLOAD</code> 加载 PatentMarker.dll；初始化日志写入 <i>PatentMarker.log</i>（演示中可视化到命令行）。',true));
+  .cap(2.5,'加载','<i>后备方案</i>：当 VBS 安装未能自动加载插件时，手动 <code>NETLOAD</code> 加载 PatentMarker.dll。',true));
 
 fin(new Scene('面板·BZ',11)
-  .add(0,function(){showWin('win-cad',40,80);focusWin('win-cad');setCmd('命令: BZ',true);})
+  .add(0,function(){showWin('win-cad',40,80);focusWin('win-cad');})
   .add(0.3,function(){PAL.open=true;renderPalette();$('palette').classList.add('open');})
-  .click(1.5,PM.search.x,PM.search.y)
-  .add(1.9,function(){PAL.caret=true;renderPalette();})
-  .add(2.1,function(){PAL.search='弹';renderPalette();})
-  .add(2.6,function(){PAL.search='弹簧';renderPalette();})
+  .click(1.0,PM.cmdBZ.x,PM.cmdBZ.y)
+  .click(2.0,PM.search.x,PM.search.y)
+  .add(2.4,function(){PAL.caret=true;renderPalette();})
+  .add(2.6,function(){PAL.search='弹';renderPalette();})
+  .add(3.1,function(){PAL.search='弹簧';renderPalette();})
   .add(4.5,function(){PAL.search='';renderPalette();})
   .click(6.0,PM.r1.x,PM.r1.y)
   .click(6.35,PM.r1.x,PM.r1.y)
   .add(6.8,function(){PAL.loaded='1';PAL.sel=0;PAL.status='已装填: [1] — 请在图纸中点击';renderPalette();})
-  .cap(1.0,'面板','<code>BZ</code> 打开字典面板：搜索过滤、装填编号、双击行上件。'));
+  .cap(1.0,'面板','点击 <b>BZ</b> 打开字典面板：搜索过滤、装填编号、双击行上件。'));
 
 var P2='命令: BZM\n点击 [1 底座] 的标注点（Esc 取消）: ';
 var P3=P2+'\n点击拐点（回车结束，至少1个）: ';
@@ -1105,10 +1120,12 @@ fin(s5
   .add(0,function(){
     showWin('win-cad',40,80);focusWin('win-cad');
     PAL.open=true;PAL.loaded='1';PAL.sel=0;PAL.status='已装填: [1] — 请在图纸中点击';
-    renderPalette();setCmd(P2,true);
+    renderPalette();
   })
   .add(0.3,function(){$('palette').classList.add('open');})
-  .click(2.0,p0a.x,p0a.y)
+  .click(1.0,PM.cmdBZM.x,PM.cmdBZM.y)
+  .add(1.4,function(){setCmd(P2,true);})
+  .click(2.5,p0a.x,p0a.y)
   .add(2.4,function(){setCmd(P3,true);})
   .anim(2.5,0.9,function(p){drawLeader(0,p*0.65);})
   .click(3.6,p0b.x,p0b.y)
@@ -1149,7 +1166,7 @@ fin(s5
   .click(20.8,p2c.x,p2c.y)
   .add(21.2,function(){drawLeader(2,1);})
   .add(21.25,function(){setCmd(R6,true);})
-  .cap(1.0,'标注','<code>BZM</code> 样条引线、无限拐点；命令中双击面板行 <i>热切换编号</i>，线型可随时切直线段。'));
+  .cap(1.0,'标注','点击 <b>BZM</b> 样条引线、无限拐点；命令中双击面板行 <i>热切换编号</i>，线型可随时切直线段。'));
 
 fin(new Scene('同步·Ctrl+S',14)
   .add(0,function(){
@@ -1189,8 +1206,9 @@ fin((function(){
       renderPalette();leadersAll(true);
     })
     .add(0.3,function(){$('palette').classList.add('open');})
-    .add(1.0,function(lt){if(!T7)T7=new Term($('cmdline'),{text:CHECK,cps:90,caretCls:'caret'});T7.render(lt);})
-    .cap(2.0,'检查','<code>BZC</code> 双向核对：图纸 3 条 vs 字典 11 条，<i>8 项缺失</i>，报告一键落盘。');
+    .click(1.0,PM.cmdBZC.x,PM.cmdBZC.y)
+    .add(1.4,function(lt){if(!T7)T7=new Term($('cmdline'),{text:CHECK,cps:90,caretCls:'caret'});T7.render(lt);})
+    .cap(2.0,'检查','点击 <b>BZC</b> 双向核对：图纸 3 条 vs 字典 11 条，<i>8 项缺失</i>，报告一键落盘。');
 })());
 
 var A2='命令: BZA\n对齐模式: 选择';
@@ -1209,11 +1227,12 @@ fin(s8
     showWin('win-cad',40,80);focusWin('win-cad');
     PAL.open=true;PAL.dict=DICT2;PAL.compare=true;PAL.diff={2:'lightblue'};
     PAL.loaded='';PAL.sel=-1;PAL.statusDiff=false;PAL.status='字典已加载。';
-    renderPalette();leadersAll(true);setCmd('命令: BZA',true);
+    renderPalette();leadersAll(true);
   })
   .add(0.3,function(){$('palette').classList.add('open');})
-  .add(1.0,function(){setCmd(A2,true);})
-  .add(1.5,function(){setCmd(A3,true);})
+  .click(1.0,PM.cmdBZA.x,PM.cmdBZA.y)
+  .add(1.4,function(){setCmd(A2,true);})
+  .add(1.8,function(){setCmd(A3,true);})
   .move(2.2,dA.x,dA.y,0.25)
   .move(2.5,dB.x,dB.y,0.7)
   .anim(2.5,0.7,function(p){selBox(250,95,160*p,300*p,true);})
@@ -1223,10 +1242,10 @@ fin(s8
   .anim(5.5,1.0,function(p){alignLd2(p);})
   .add(6.6,function(){setCmd(A6,true);})
   .add(7.0,function(){selBox(0,0,0,0,false);})
-  .add(8.0,function(){setCmd(B1,true);})
-  .add(9.0,function(){setCmd(B2,true);})
+  .click(8.0,PM.cmdBZS.x,PM.cmdBZS.y)
+  .add(8.4,function(){setCmd(B2,true);})
   .add(9.5,function(){selBox(130,85,290,310,true);})
-  .cap(1.0,'对齐','<code>BZA</code> 框选引线、指定参考点，文字水平对齐；<code>BZS</code> 全选 Leader + MText。'));
+  .cap(1.0,'对齐','点击 <b>BZA</b> 框选引线、指定参考点，文字水平对齐；点击 <b>BZS</b> 全选 Leader + MText。'));
 
 fin(new Scene('尾声·就绪',9.5)
   .add(0,function(){$('ovEnd').classList.add('show');})
@@ -1239,7 +1258,7 @@ fin(new Scene('尾声·就绪',9.5)
   .add(5.0,function(){endStep(6,true);})
   .add(5.7,function(){endStep(7,true);})
   .add(6.4,function(){$('endStamp').classList.add('in');})
-  .cap(7.0,'就绪','两步安装、五条命令 — <b>PatentMarker</b> 已就绪。'));
+  .cap(7.0,'就绪','安装 + 后备加载、五条命令 — <b>PatentMarker</b> 已就绪。'));
 
 (function(){
   var acc=0,i;
