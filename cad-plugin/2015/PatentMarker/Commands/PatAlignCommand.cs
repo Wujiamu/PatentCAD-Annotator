@@ -5,6 +5,7 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
+using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
@@ -82,14 +83,14 @@ namespace PatentMarker.Commands
 
                         var mleader = (MLeader)ent;
                         mleader.UpgradeOpen();
-                        Point3d pos = mleader.TextPosition;
+                        Point3d pos = mleader.TextLocation;
 
                         if (dirResult.StringResult == Strings.PatAlign_KwHorizontal)
                             pos = new Point3d(pos.X, refY, pos.Z);
                         else
                             pos = new Point3d(refX, pos.Y, pos.Z);
 
-                        mleader.TextPosition = pos;
+                        mleader.TextLocation = pos;
                         aligned++;
                     }
                     catch (Exception ex)
@@ -154,7 +155,7 @@ namespace PatentMarker.Commands
 
                         var mleader = (MLeader)ent;
                         mleader.UpgradeOpen();
-                        Point3d pos = mleader.TextPosition;
+                        Point3d pos = mleader.TextLocation;
 
                         if (sideResult.StringResult == Strings.PatAlign_KwLeft)
                             pos = new Point3d(minX - margin, pos.Y, pos.Z);
@@ -165,7 +166,7 @@ namespace PatentMarker.Commands
                         else if (sideResult.StringResult == Strings.PatAlign_KwBottom)
                             pos = new Point3d(pos.X, minY - margin, pos.Z);
 
-                        mleader.TextPosition = pos;
+                        mleader.TextLocation = pos;
                         aligned++;
                     }
                     catch (Exception ex)

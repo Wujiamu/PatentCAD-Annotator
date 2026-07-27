@@ -4,6 +4,8 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
+using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
+using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
@@ -17,7 +19,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZS", CommandFlags.Modal)]
         public void Run()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;

@@ -2,6 +2,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using PatentMarker.I18n;
 using System;
+using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 
 namespace PatentMarker.Styles
 {
@@ -22,7 +23,7 @@ namespace PatentMarker.Styles
         /// </summary>
         public static void EnsurePatStyle()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
             if (doc == null) return;
             using (Transaction tr = doc.TransactionManager.StartTransaction())
             {
@@ -50,11 +51,9 @@ namespace PatentMarker.Styles
             // 文字设置
             style.TextHeight = 3.5;
             style.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
-            style.TextLeftAttachmentType = TextAttachmentType.AttachmentMiddle;
-            style.TextRightAttachmentType = TextAttachmentType.AttachmentMiddle;
 
             // 引线设置
-            style.LeaderLineType = LeaderLineType.Splines;  // 默认样条曲线
+            style.LeaderLineType = LeaderType.SplineLeader;  // 默认样条曲线
             style.EnableDogleg = true;
             style.DoglegLength = 8.0;
 
@@ -82,7 +81,7 @@ namespace PatentMarker.Styles
                 db.MLeaderStyleDictionaryId, OpenMode.ForRead);
             if (mlDict.Contains(StyleName))
                 return mlDict.GetAt(StyleName);
-            return db.MLeaderStyle; // 回退到当前样式
+            return db.MLeaderstyle; // 回退到当前样式
         }
 
         /// <summary>

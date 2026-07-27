@@ -1,7 +1,66 @@
 # 开发日志与经验教训
 
-> 本文档记录 PatentCAD-Annotator 项目在 v2.10 → v2.12 迭代过程中的所有改动、遇到的问题及解决方案。
+> 本文档记录 PatentCAD-Annotator 项目的所有改动、遇到的问题及解决方案。
 > 目的是让后续接手的人或 AI 模型能快速了解项目历史，避免重复踩坑。
+
+---
+
+## 多版本适配（2010/2013/2015/2025）
+
+### 改动概述
+
+从已完成的 2007 版派生 4 个适配版本，覆盖 AutoCAD 2007—2026+ 全部版本：
+
+| 版本 | 标注 API | .NET | JSON | 编译验证 |
+|------|----------|------|------|----------|
+| 2010 | Leader + MText | 3.5 | SimpleJson | ✅ |
+| 2013 | MLeader | 4.0 | Newtonsoft.Json | ✅ |
+| 2015 | MLeader | 4.5 | Newtonsoft.Json | ✅ |
+| 2025 | MLeader | 8.0 | System.Text.Json | ✅ |
+
+### 经验教训（多版本适配）
+
+#### 9. MLeader API 名称与文档不一致
+
+**问题现象**：编译时报 CS1061（未包含定义）或 CS0246（类型未找到）。
+
+**根本原因**：AutoCAD .NET API 的实际名称与网上文档/示例常有不一致：
+
+| 误写 | 正确名称 |
+|------|----------|
+| `mleader.TextPosition` | `mleader.TextLocation` |
+| `mleader.AddVertex(idx, pt)` | `mleader.AddLastVertex(idx, pt)` |
+| `LeaderLineType.Splines` | `LeaderType.SplineLeader` |
+| `LeaderLineType.Straight` | `LeaderType.StraightLeader` |
+| `db.MLeaderStyle` | `db.MLeaderstyle`（小写 s） |
+| `mleader.GetLeaderLines()` | 不存在，用 `LeaderLineCount` + `GetLastVertex(0)` |
+| `style.TextLeftAttachmentType` | 不存在，只有 `TextAttachmentType` |
+
+**解决方案**：使用 `System.Reflection.MetadataLoadContext` 加载 acdbmgd.dll 元数据，反射探测真实 API。不要用 `Assembly.LoadFrom`（会因原生依赖报 FileNotFoundException）。
+
+#### 10. .NET 8 ImplicitUsings 导致命名空间冲突
+
+**问题现象**：2025 版编译报 CS0104（"Application"/"Exception" 歧义）。
+
+**根本原因**：.NET 8 SDK 风格 csproj 启用 `ImplicitUsings` + `UseWindowsForms` 后，`System.Windows.Forms.Application` 与 `Autodesk.AutoCAD.ApplicationServices.Application` 冲突；`Autodesk.AutoCAD.Runtime.Exception` 与 `System.Exception` 冲突。
+
+**解决方案**：在文件头添加别名：
+```csharp
+using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
+using Exception = System.Exception;
+```
+
+#### 11. ObjectARX SDK 是 DLL 的官方获取渠道
+
+编译不需要安装对应版本的 AutoCAD。从 [ObjectARX SDK](https://aps.autodesk.com/developer/overview/autocad-objectarx-sdk-downloads) 下载对应版本，解压后在 `inc/` 目录即可获取 acdbmgd.dll、acmgd.dll、accoremgd.dll。
+
+#### 12. PowerShell Set-Content 破坏文件编码
+
+**问题现象**：用 PowerShell 的 `-replace` + `Set-Content` 修改 .cs 文件后，中文注释变为乱码。
+
+**根本原因**：`Set-Content` 默认使用系统编码（GBK）写入，而原文件是 UTF-8。
+
+**解决方案**：始终使用 SearchReplace 工具修改文件，不要用 PowerShell 的 Set-Content。
 
 ---
 

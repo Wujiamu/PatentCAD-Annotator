@@ -6,6 +6,8 @@ using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
 using System.Collections.Generic;
+using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
+using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
@@ -25,7 +27,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZM", CommandFlags.UsePickSet | CommandFlags.Redraw)]
         public void Run()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;
@@ -176,7 +178,7 @@ namespace PatentMarker.Commands
                 int lineIndex = mleader.AddLeaderLine(attachPt);
                 foreach (Point3d p in doglegPts)
                 {
-                    mleader.AddVertex(lineIndex, p);
+                    mleader.AddLastVertex(lineIndex, p);
                 }
 
                 // 3. 设置文字
@@ -195,7 +197,7 @@ namespace PatentMarker.Commands
                     mt.TextStyleId = tnrId;
 
                 // 4. 设置文字位置
-                mleader.TextPosition = textPt;
+                mleader.TextLocation = textPt;
 
                 // 5. 设置样式
                 ObjectId styleId = Styles.PatStyleInitializer.GetPatStyleId(db, tr);
@@ -204,15 +206,18 @@ namespace PatentMarker.Commands
 
                 // 6. 覆盖引线类型和箭头（面板控制）
                 mleader.LeaderLineType = Palette.PatPaletteCommand.IsSplined
-                    ? LeaderLineType.Splines
-                    : LeaderLineType.Straight;
+                    ? LeaderType.SplineLeader
+                    : LeaderType.StraightLeader;
 
-                // 箭头控制：通过样式或直接属性
+                // 箭头控制
                 if (!Palette.PatPaletteCommand.HasArrowHead)
                 {
-                    // 无箭头：设置箭头符号为空
                     mleader.ArrowSymbolId = ObjectId.Null;
                 }
+                mleader.ArrowSize = Palette.PatPaletteCommand.ArrowSize;
+
+                // 文字高度同步到 MLeader 实例（覆盖样式默认值）
+                mleader.TextHeight = Palette.PatPaletteCommand.TextHeight;
 
                 // 7. 入库
                 btr.AppendEntity(mleader);

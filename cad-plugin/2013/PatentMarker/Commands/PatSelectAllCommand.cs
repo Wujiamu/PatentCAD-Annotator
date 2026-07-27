@@ -4,6 +4,7 @@ using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
+using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {

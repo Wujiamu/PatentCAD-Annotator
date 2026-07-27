@@ -50,6 +50,20 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
 
+### 编译说明
+
+各版本编译前需从对应 AutoCAD 安装目录（或 [ObjectARX SDK](https://aps.autodesk.com/developer/overview/autocad-objectarx-sdk-downloads)）获取 SDK DLL：
+
+| 版本 | 所需 DLL | 放置位置 |
+|------|---------|----------|
+| 2007/2010 | acdbmgd.dll, acmgd.dll | `PatentMarker/lib/` |
+| 2013/2015 | acdbmgd.dll, acmgd.dll, accoremgd.dll | `PatentMarker/lib/` |
+| 2025 | acdbmgd.dll, acmgd.dll, accoremgd.dll | `PatentMarker/lib/` |
+
+- 2013/2015 版额外需要 Newtonsoft.Json 13.0.3（NuGet 还原）
+- 2025 版零外部依赖（System.Text.Json 内置）
+- 全部 5 个版本均已通过编译验证
+
 ### 命令清单
 
 | 命令 | 别名 | 说明 |
@@ -92,10 +106,10 @@ PatentCAD-Annotator/
 
 ### 文档
 
-- [docs/development-log.md](docs/development-log.md) — **开发日志与经验教训**（v2.10→v2.12 所有改动、踩坑记录、编码注意事项）
+- [docs/development-log.md](docs/development-log.md) — **开发日志与经验教训**（所有改动、踩坑记录、编码注意事项）
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/autocad-2007-downgrade-plan.md](docs/autocad-2007-downgrade-plan.md) — 2007 降级实现方案
-- [cad-plugin/2007/README.md](cad-plugin/2007/README.md) — 2007 版详细文档
+- 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
 
 ---
 

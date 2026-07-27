@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
+using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
@@ -24,7 +26,7 @@ namespace PatentMarker.Commands
         {
             PatentMarkerApp.RawLog("=== PATCHECK START ===");
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;

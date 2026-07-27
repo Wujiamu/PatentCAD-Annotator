@@ -2,6 +2,7 @@ using Autodesk.AutoCAD.Runtime;
 using System;
 using System.IO;
 using System.Reflection;
+using Exception = System.Exception;
 
 namespace PatentMarker
 {

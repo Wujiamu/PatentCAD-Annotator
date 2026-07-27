@@ -58,7 +58,7 @@ namespace PatentMarker.IO
         {
             try
             {
-                Point3d tp = mleader.TextPosition;
+                Point3d tp = mleader.TextLocation;
                 if (tp.X != 0 || tp.Y != 0 || tp.Z != 0)
                     return tp;
             }
@@ -67,13 +67,9 @@ namespace PatentMarker.IO
             // 回退：取第一条引线的最后一个顶点
             try
             {
-                LeaderLineCollection lines = mleader.GetLeaderLines();
-                if (lines.Count > 0)
+                if (mleader.LeaderLineCount > 0)
                 {
-                    LeaderLine line = lines[0];
-                    Point3dCollection vertices = line.Vertices;
-                    if (vertices.Count > 0)
-                        return vertices[vertices.Count - 1];
+                    return mleader.GetLastVertex(0);
                 }
             }
             catch { }

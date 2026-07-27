@@ -15,6 +15,7 @@
 # acdbmgd.dll / acmgd.dll / probe.exe 由用户本机自备，放入 lib/
 cad-plugin/*/PatentMarker/lib/*.dll
 cad-plugin/*/PatentMarker/lib/*.exe
+DLL/
 
 # ---- 测试用 VBS 脚本 ----
 *test*.vbs

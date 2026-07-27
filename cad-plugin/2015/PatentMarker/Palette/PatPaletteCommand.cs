@@ -9,7 +9,7 @@ using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 namespace PatentMarker.Palette
 {
     /// <summary>
-    /// PATPALETTE — 可停靠侧面板 — AutoCAD 2015-2024 版本。
+    /// PATPALETTE — 可停靠侧面板 — AutoCAD 2013/2014 版本。
     /// </summary>
     public class PatPaletteCommand
     {

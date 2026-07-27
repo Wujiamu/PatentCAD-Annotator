@@ -34,7 +34,7 @@ namespace PatentMarker.Palette
         {
             PatentMarkerApp.RawLog("=== PATPALETTE START ===");
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
             if (doc == null) { PatentMarkerApp.RawLog("PATPALETTE ABORT: no active document"); return; }
 
             bool isNew = false;
