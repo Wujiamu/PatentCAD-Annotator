@@ -198,7 +198,11 @@ namespace PatentMarker.Commands
                 foreach (Point3d p in doglegPts)            // v2：循环追加所有拐点
                     leader.AppendVertex(p);
                 leader.IsSplined = Palette.PatPaletteCommand.IsSplined;   // v2.1：样条/直线，取自面板开关
-                leader.HasArrowHead = Palette.PatPaletteCommand.HasArrowHead;  // v2：默认 false，面板可切换
+                leader.HasArrowHead = Palette.PatPaletteCommand.HasArrowHead;
+
+                // v2.1：实例级同步箭头大小，确保修改后新建的引线立即生效
+                //（只改 DimStyle 不够，Leader 创建时已继承旧值，需强制覆盖实例属性）
+                leader.Dimasz = Palette.PatPaletteCommand.ArrowSize;
 
                 btr.AppendEntity(leader);
                 tr.AddNewlyCreatedDBObject(leader, true);

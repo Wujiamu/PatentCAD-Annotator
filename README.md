@@ -44,8 +44,8 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 
 ### 快速开始（2007 版）
 
-1. **Word 端**：导入 VBA 模块（[PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/) 6 个文件）到 Normal 模板
-2. **CAD 端**：部署 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 到非 C 盘目录，运行 `install-2007.vbs`
+1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 6 个 VBA 模块到 Normal 模板）
+2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
 3. **使用**：Word 保存 → 生成 `.dict.json` → CAD 中 `BZ` 打开面板 → `BZM` 标注
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
@@ -114,6 +114,14 @@ PatentCAD-Annotator/
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/autocad-2007-downgrade-plan.md](docs/autocad-2007-downgrade-plan.md) — 2007 降级实现方案
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
+
+### 版本历史
+
+| 版本 | 日期 | 主要变更 |
+|------|------|----------|
+| v2.5 | 2026-07-27 | 修复 Word 2010 无法导入 clsSaveHook.cls 的兼容性问题（改为代码注入）；修复 2007/2010 版箭头大小修改后不能立即生效；所有部署包补充 install-vba.vbs |
+| v2.4 | 2026-07-26 | 多版本适配完成（2010/2013/2015/2025），全部通过编译验证；动态复核修复 MLeader API 名称、ArrowSize/TextHeight 实例同步 |
+| v2.0 | 2026-07 | 2007 版完成：样条曲线引线 + 无限拐点 + 面板控制 + 字典自动刷新 |
 
 ---
 

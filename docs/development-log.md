@@ -5,6 +5,39 @@
 
 ---
 
+## 2007/2010 版实测修复（2026-07-26）
+
+### 13. Word 2010 无法正确导入 clsSaveHook.cls
+
+**问题现象**：在 Word 2010（Win7）上通过 VBA 编辑器“导入文件”安装 `clsSaveHook.cls` 后，`VERSION 1.0 CLASS` 和 `Attribute VB_Name` 等元数据行会显示在代码窗口中，编译时报错。
+
+**根本原因**：Word 2010 的类模块文件导入机制存在兼容性问题，无法识别 .cls 文件头部的 VERSION/Attribute 元数据，导致其被当作普通代码处理。
+
+**解决方案**：
+- 修改 `install-vba.vbs`，不再导入 `clsSaveHook.cls` 文件。
+- 通过 `VBComponents.Add(2)` 创建空白类模块，再用 `CodeModule.AddFromString()` 将代码注入。
+- 已同步更新所有部署包中的 `install-vba.vbs`。
+
+### 14. Leader 箭头大小修改后不能立即生效
+
+**问题现象**：在面板中修改箭头大小后，新建的引线仍使用修改前的大小，只有切换一次“显示/隐藏箭头”后才会更新。
+
+**根本原因**：创建 `Leader` 时从标注样式（DimStyle）继承了旧的 `Dimasz` 值；虽然代码会同步修改 `DimStyleTableRecord.Dimasz`，但已创建或新创建的 Leader 实例不会自动感知样式变化。
+
+**解决方案**：在 `CreateLeaderWithText` 中为新 Leader 直接设置实例属性：
+
+```csharp
+leader.Dimasz = Palette.PatPaletteCommand.ArrowSize;
+```
+
+**影响版本**：2007、2010（均使用 `Leader` + `MText` 方案）。
+
+**测试结果**：
+- VBA 端：Word 2010 保存文档可正常生成 `.dict.json`
+- CAD 端：AutoCAD 2007 标注、面板、字典刷新均正常
+
+---
+
 ## 多版本适配（2010/2013/2015/2025）
 
 ### 改动概述
