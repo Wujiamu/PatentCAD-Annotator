@@ -32,6 +32,27 @@ leader.Dimasz = Palette.PatPaletteCommand.ArrowSize;
 
 **影响版本**：2007、2010（均使用 `Leader` + `MText` 方案）。
 
+### 15. 编译目标框架必须匹配 AutoCAD 的 CLR 版本
+
+**问题现象**：安装脚本显示成功，注册表已写入，但 AutoCAD 2007 中命令无效（`BZ` 等命令不识别）。手动 `NETLOAD` 也无反应。
+
+**根本原因**：编译时使用了 `/p:TargetFrameworkVersion=v4.8`（因为本机缺少 .NET 2.0/3.5 目标包），导致 DLL 元数据中 CLR 版本为 `v4.0.30319`。AutoCAD 2007/2010 运行在 .NET 2.0 CLR 上，**拒绝加载**目标为 .NET 4.x 的程序集，且不会报任何错误。
+
+**解决方案**：
+- 2007 版：使用 `dotnet msbuild /p:TargetFrameworkVersion=v3.5 /p:FrameworkPathOverride="C:\Windows\Microsoft.NET\Framework\v2.0.50727"` 编译
+- 2010 版：同上（需先移除 csproj 中的 `System.Core` 引用，代码未使用）
+- 若无法直接编译，可用 v4.8 编译后二进制补丁 DLL 中的版本字符串（`v4.0.30319` → `v2.0.50727`）
+
+**核心规则**：
+
+| AutoCAD 版本 | CLR | DLL 必须目标 |
+|---|---|---|
+| 2007–2012 | v2.0.50727 | v2.0 或 v3.5 |
+| 2013–2024 | v4.0.30319 | v4.0–v4.8 |
+| 2025+ | .NET 8 | net8.0-windows |
+
+**验证方法**：检查 DLL 二进制中是否包含 `v2.0.50727` 或 `v4.0.30319` 字符串。
+
 **测试结果**：
 - VBA 端：Word 2010 保存文档可正常生成 `.dict.json`
 - CAD 端：AutoCAD 2007 标注、面板、字典刷新均正常

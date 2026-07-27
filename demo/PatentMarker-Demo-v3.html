@@ -66,7 +66,13 @@ body{
   border-radius:16px;border:1px solid rgba(0,0,0,.06);
   background:#e8ecf2;
   box-shadow:0 8px 32px rgba(0,0,0,.08);
-  transform-origin:top left}
+  transform-origin:top left;cursor:default}
+#stageDrag{position:absolute;top:0;left:0;right:0;height:22px;z-index:100;
+  cursor:grab;border-radius:16px 16px 0 0;background:rgba(0,0,0,.02);
+  display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
+#stageDrag:hover{opacity:1;background:rgba(0,0,0,.05)}
+#stageDrag::after{content:"\2630";font-size:11px;color:rgba(0,0,0,.25);letter-spacing:2px}
+#stageDrag.active{cursor:grabbing;opacity:1;background:rgba(37,99,235,.08)}
 #stageGrid{position:absolute;inset:0;pointer-events:none;
   background-image:
     linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),
@@ -331,6 +337,7 @@ body{
   <nav id="chapters"></nav>
   <main id="stageOuter">
     <div id="stage">
+      <div id="stageDrag"></div>
       <div id="stageGrid"></div><div id="stageFrame"></div>
 
       <div class="win" id="win-term">
@@ -882,6 +889,7 @@ var PM=(function(){
 })();
 
 function resetStage(){
+  dragOff.x=0;dragOff.y=0;
   var i;
   for(i=0;i<WINS.length;i++)hideWin(WINS[i]);
   hideOverlays();hideCap();
@@ -1007,10 +1015,25 @@ document.onkeydown=function(e){
 function fit(){
   var ow=$('stageOuter'),st=$('stage');
   var s=Math.min((ow.clientWidth-32)/1280,(ow.clientHeight-32)/720,1);
-  st.style.position='absolute';st.style.transformOrigin='top left';st.style.transform='scale('+s+')';
+  st.style.position='absolute';st.style.transformOrigin='top left';
+  st.style.transform='scale('+s+') translate('+dragOff.x+'px,'+dragOff.y+'px)';
   st.style.left=Math.max((ow.clientWidth-1280*s)/2,16)+'px';
   st.style.top=Math.max((ow.clientHeight-720*s)/2,16)+'px';
 }
+var dragOff={x:0,y:0},dragging=false,dragSX=0,dragSY=0;
+$('stageDrag').onmousedown=function(e){
+  dragging=true;dragSX=e.clientX-dragOff.x;dragSY=e.clientY-dragOff.y;
+  this.classList.add('active');e.preventDefault();
+};
+document.onmousemove=function(e){
+  if(!dragging)return;
+  dragOff.x=e.clientX-dragSX;dragOff.y=e.clientY-dragSY;
+  var st=$('stage'),s=parseFloat(st.style.transform.match(/scale\(([\d.]+)\)/)[1]);
+  st.style.transform='scale('+s+') translate('+(dragOff.x/s)+'px,'+(dragOff.y/s)+'px)';
+};
+document.onmouseup=function(){
+  if(dragging){dragging=false;$('stageDrag').classList.remove('active');}
+};
 window.onresize=fit;
 
 fin(new Scene('序章·数据流',8)
