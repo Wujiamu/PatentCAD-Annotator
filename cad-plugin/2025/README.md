@@ -36,8 +36,8 @@
 
 ## 部署
 
-1. 将 `PatentMarker.dll` 复制到目标机器固定目录（单文件，无其他依赖）
-2. 运行 `deploy/install-2025.ps1`（需 PowerShell）
+1. 将 `PatentMarker-2025-deploy/` 整个文件夹复制到目标机器固定目录
+2. 运行 `PatentMarker-2025-deploy/install-2025.ps1`（需 PowerShell）
 3. 重启 AutoCAD
 4. 命令行输入 `BZ` 验证
 

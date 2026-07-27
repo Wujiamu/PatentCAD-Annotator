@@ -49,9 +49,9 @@
 ## 部署
 
 ```powershell
-# 1. 拷贝 deploy/ 目录到非 C 盘固定位置
+# 1. 拷贝 PatentMarker-2007-deploy/ 目录到非 C 盘固定位置
 mkdir D:\PatentMarker
-copy deploy\* D:\PatentMarker\
+copy PatentMarker-2007-deploy\* D:\PatentMarker\
 
 # 2. 运行安装脚本（写入 HKCU 注册表）
 cd D:\PatentMarker
@@ -63,7 +63,7 @@ cd D:\PatentMarker
 
 若 HKCU 自动加载不生效（ACAD 2007 已知问题），用 APPLOAD 加载 `load-patent-marker.lsp` 或手动 NETLOAD。
 
-详见 [deploy/README.txt](deploy/README.txt)。
+详见 [PatentMarker-2007-deploy/README.txt](../../PatentMarker-2007-deploy/README.txt)。
 
 ## 可用命令
 
@@ -77,7 +77,7 @@ cd D:\PatentMarker
 
 ## 字典文件
 
-将 `<dwg文件名>.dict.json` 放在 DWG 同目录。由 `deploy/vba/` 下的 VBA 宏从 Word 说明书提取生成。
+将 `<dwg文件名>.dict.json` 放在 DWG 同目录。由 `PatentMarker-2007-deploy/vba/` 下的 VBA 宏从 Word 说明书提取生成。
 
 ## 配置
 

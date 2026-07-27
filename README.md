@@ -44,8 +44,8 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 
 ### 快速开始（2007 版）
 
-1. **Word 端**：导入 VBA 模块（[cad-plugin/2007/deploy/vba/](cad-plugin/2007/deploy/vba/) 6 个文件）到 Normal 模板
-2. **CAD 端**：部署 [cad-plugin/2007/deploy/](cad-plugin/2007/deploy/) 到非 C 盘目录，运行 `install-2007.vbs`
+1. **Word 端**：导入 VBA 模块（[PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/) 6 个文件）到 Normal 模板
+2. **CAD 端**：部署 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 到非 C 盘目录，运行 `install-2007.vbs`
 3. **使用**：Word 保存 → 生成 `.dict.json` → CAD 中 `BZ` 打开面板 → `BZM` 标注
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
@@ -91,16 +91,20 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取编号字典 → CA
 PatentCAD-Annotator/
 ├── cad-plugin/
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
-│   │   ├── PatentMarker/    #   C# 源码 + csproj
-│   │   └── deploy/          #   安装脚本 + DLL + VBA 模块
+│   │   └── PatentMarker/    #   C# 源码 + csproj
 │   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
 │   ├── 2013/               # AutoCAD 2013~2014（MLeader，.NET 4.0）
 │   ├── 2015/               # AutoCAD 2015~2024（MLeader，.NET 4.5）
 │   └── 2025/               # AutoCAD 2025~2026+（MLeader，.NET 8.0）
+├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
+├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
+├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
+├── PatentMarker-2015-deploy/   # 2015 版即装即用部署包
+├── PatentMarker-2025-deploy/   # 2025 版即装即用部署包
+├── demo/                       # 动态演示页面
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
 │   └── autocad-2007-downgrade-plan.md  # 2007 降级方案
-├── PatentMarker-Demo.html   # 动态演示（10 场景）
 └── README.md
 ```
 
@@ -149,8 +153,8 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 ### Quick Start (v2007)
 
-1. **Word side**: import the 6 VBA modules ([cad-plugin/2007/deploy/vba/](cad-plugin/2007/deploy/vba/)) into the Normal template
-2. **CAD side**: deploy [cad-plugin/2007/deploy/](cad-plugin/2007/deploy/) to a non-C-drive folder, run `install-2007.vbs`
+1. **Word side**: import the 6 VBA modules ([PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/)) into the Normal template
+2. **CAD side**: deploy [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) to a non-C-drive folder, run `install-2007.vbs`
 3. **Usage**: save Word → generates `.dict.json` → run `BZ` in CAD to open palette → `BZM` to annotate
 
 Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).

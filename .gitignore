@@ -11,6 +11,9 @@
 *.pdb
 *.exe
 
+# ---- 例外：部署包中的 PatentMarker.dll（用户需要此文件） ----
+!PatentMarker-*-deploy/PatentMarker.dll
+
 # ---- AutoCAD SDK 专有 DLL（Autodesk 版权，禁止提交） ----
 # acdbmgd.dll / acmgd.dll / probe.exe 由用户本机自备，放入 lib/
 cad-plugin/*/PatentMarker/lib/*.dll

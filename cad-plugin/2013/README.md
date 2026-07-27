@@ -36,8 +36,8 @@
 
 ## 部署
 
-1. 将 `PatentMarker.dll` 和 `Newtonsoft.Json.dll` 复制到目标机器同一目录
-2. 双击运行 `deploy/install-2013.vbs`
+1. 将 `PatentMarker-2013-deploy/` 整个文件夹复制到目标机器固定目录
+2. 双击运行 `PatentMarker-2013-deploy/install-2013.vbs`
 3. 重启 AutoCAD
 4. 命令行输入 `BZ` 验证
 
