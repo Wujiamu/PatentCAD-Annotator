@@ -129,7 +129,7 @@ PatentCAD-Annotator/
 
 ### Overview
 
-PatentCAD-Annotator solves three pain points in patent drawing annotation:
+PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing annotation:
 
 1. **Error-prone manual cross-reference** — matching reference numerals between Word specs and drawings by hand leads to missed/wrong labels
 2. **No sync after edits** — changing a numeral in the spec means hunting down every occurrence in the drawing
