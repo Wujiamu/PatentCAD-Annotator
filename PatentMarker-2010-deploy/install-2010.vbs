@@ -1,5 +1,5 @@
 ' PatentMarker 2010 Installer (VBScript)
-' Encoding: ASCII (compatible with all Windows locales)
+' Encoding: GBK (compatible with all Windows locales)
 '
 ' Three-layer auto-load strategy:
 '   Layer 1: HKCU Applications registry key (LOADCTRLS=14)
@@ -27,6 +27,67 @@ logPath = scriptDir & "\install-2010.log"
 Set logFile = fso.OpenTextFile(logPath, ForAppending, True)
 output = ""
 
+' === Internationalization (i18n) ===
+Function GetSysLang()
+    On Error Resume Next
+    Dim r
+    Set r = CreateObject("WScript.Shell")
+    Dim lid
+    lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\InstallLanguage")
+    If Err.Number <> 0 Then
+        lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\Default")
+    End If
+    If Err.Number <> 0 Then lid = "0804"
+    On Error GoTo 0
+    Select Case lid
+        Case "0804", "0404", "0C04", "1404", "7C04"
+            GetSysLang = "zh"
+        Case Else
+            GetSysLang = "en"
+    End Select
+End Function
+
+Function L(t)
+    Dim z
+    z = (GetSysLang() = "zh")
+    If Not z Then
+        L = t
+        Exit Function
+    End If
+    t = Replace(t, "PatentMarker 2010 Installer" & vbCrLf & _
+                           "(AutoCAD 2010/2011/2012)" & vbCrLf & _
+                           "========================================", _
+                           "PatentMarker 2010 安装程序" & vbCrLf & _
+                           "（AutoCAD 2010/2011/2012）" & vbCrLf & _
+                           "========================================")
+    t = Replace(t, "ERROR: PatentMarker.dll not found" & vbCrLf & "Path: ", _
+                           "错误：找不到 PatentMarker.dll" & vbCrLf & "路径：")
+    t = Replace(t, "ERROR: AutoCAD 2010/2011/2012 (R18.x) not found in registry", _
+                           "错误：注册表中未找到 AutoCAD 2010/2011/2012 (R18.x)")
+    t = Replace(t, "ERROR: No ACAD- product code found", "错误：未找到 ACAD- 产品代码")
+    t = Replace(t, ">>> Restart AutoCAD 2010/2011/2012.", ">>> 请重启 AutoCAD 2010/2011/2012。")
+    t = Replace(t, ">>> PatentMarker will auto-load.", ">>> PatentMarker 将自动加载。")
+    t = Replace(t, ">>> Type BZ to open the palette.", ">>> 输入 BZ 打开面板。")
+    t = Replace(t, ">>> Auto-deploy failed. Manual steps:", ">>> 自动部署失败，请手动操作：")
+    t = Replace(t, "  A: APPLOAD -> ", "  A：APPLOAD -> ")
+    t = Replace(t, "  B: NETLOAD -> ", "  B：NETLOAD -> ")
+    t = Replace(t, "Commands:" & vbCrLf & _
+        "  BZ   (PATPALETTE)    Palette" & vbCrLf & _
+        "  BZM  (PATMARK)       Annotate" & vbCrLf & _
+        "  BZC  (PATCHECK)      Check" & vbCrLf & _
+        "  BZA  (PATALIGN)      Align" & vbCrLf & _
+        "  BZS  (PATSELECTALL)  Select All", _
+        "命令：" & vbCrLf & _
+        "  BZ   (PATPALETTE)    标注面板" & vbCrLf & _
+        "  BZM  (PATMARK)       标注" & vbCrLf & _
+        "  BZC  (PATCHECK)      检查" & vbCrLf & _
+        "  BZA  (PATALIGN)      对齐" & vbCrLf & _
+        "  BZS  (PATSELECTALL)  全选")
+    t = Replace(t, vbCrLf & "Done" & vbCrLf, vbCrLf & "完成" & vbCrLf)
+    L = t
+End Function
+' === End i18n ===
+
 Sub LogMsg(msg)
     logFile.WriteLine "[" & Now & "] " & msg
     output = output & msg & vbCrLf
@@ -34,7 +95,7 @@ End Sub
 
 Sub QuitWithMsg(msg)
     LogMsg msg
-    WScript.Echo output
+    WScript.Echo L(output)
     logFile.Close
     WScript.Quit(1)
 End Sub
@@ -335,5 +396,5 @@ LogMsg "========================================"
 LogMsg "Done"
 LogMsg "========================================"
 
-WScript.Echo output
+WScript.Echo L(output)
 logFile.Close

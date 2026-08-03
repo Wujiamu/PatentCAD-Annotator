@@ -16,6 +16,53 @@ Dim scriptDir, output
 scriptDir = fso.GetParentFolderName(WScript.ScriptFullName)
 output = ""
 
+' === Internationalization (i18n) ===
+Function GetSysLang()
+    On Error Resume Next
+    Dim r
+    Set r = CreateObject("WScript.Shell")
+    Dim lid
+    lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\InstallLanguage")
+    If Err.Number <> 0 Then
+        lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\Default")
+    End If
+    If Err.Number <> 0 Then lid = "0804"
+    On Error GoTo 0
+    Select Case lid
+        Case "0804", "0404", "0C04", "1404", "7C04"
+            GetSysLang = "zh"
+        Case Else
+            GetSysLang = "en"
+    End Select
+End Function
+
+Function L(t)
+    Dim z
+    z = (GetSysLang() = "zh")
+    If Not z Then
+        L = t
+        Exit Function
+    End If
+    t = Replace(t, "PatentMarker 2015 Installer" & vbCrLf & _
+                           "(AutoCAD 2015-2024)" & vbCrLf & _
+                           "========================================", _
+                           "PatentMarker 2015 安装程序" & vbCrLf & _
+                           "（AutoCAD 2015-2024）" & vbCrLf & _
+                           "========================================")
+    t = Replace(t, "ERROR: PatentMarker.dll not found in ", "错误：找不到 PatentMarker.dll，路径：")
+    t = Replace(t, "WARNING: Newtonsoft.Json.dll not found.", "警告：找不到 Newtonsoft.Json.dll。")
+    t = Replace(t, "ERROR: AutoCAD 2015-2024 not found in registry", _
+                           "错误：注册表中未找到 AutoCAD 2015-2024")
+    t = Replace(t, ">>> Restart AutoCAD.", ">>> 请重启 AutoCAD。")
+    t = Replace(t, ">>> PatentMarker will auto-load.", ">>> PatentMarker 将自动加载。")
+    t = Replace(t, ">>> Type BZ to open the palette.", ">>> 输入 BZ 打开面板。")
+    t = Replace(t, ">>> Registry failed. Use NETLOAD manually:", ">>> 注册表写入失败，请手动 NETLOAD：")
+    t = Replace(t, "Commands: BZ BZM BZC BZA BZS", _
+        "命令：BZ(面板) BZM(标注) BZC(检查) BZA(对齐) BZS(全选)")
+    L = t
+End Function
+' === End i18n ===
+
 output = output & "========================================" & vbCrLf
 output = output & "PatentMarker 2015 Installer" & vbCrLf
 output = output & "(AutoCAD 2015-2024)" & vbCrLf
@@ -26,7 +73,7 @@ Dim dllPath
 dllPath = scriptDir & "\PatentMarker.dll"
 If Not fso.FileExists(dllPath) Then
     output = output & "ERROR: PatentMarker.dll not found in " & scriptDir & vbCrLf
-    WScript.Echo output
+    WScript.Echo L(output)
     WScript.Quit(1)
 End If
 output = output & "DLL: " & dllPath & vbCrLf
@@ -72,7 +119,7 @@ Next
 
 If acadBaseKey = "" Then
     output = output & "ERROR: AutoCAD 2015-2024 not found in registry" & vbCrLf
-    WScript.Echo output
+    WScript.Echo L(output)
     WScript.Quit(1)
 End If
 output = output & "Found: " & foundVersion & vbCrLf
@@ -118,4 +165,4 @@ output = output & vbCrLf
 output = output & "Commands: BZ BZM BZC BZA BZS" & vbCrLf
 output = output & "========================================" & vbCrLf
 
-WScript.Echo output
+WScript.Echo L(output)

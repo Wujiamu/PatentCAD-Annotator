@@ -35,6 +35,124 @@ Set logFile = fso.OpenTextFile(logPath, ForAppending, CreateFlag)
 Dim output
 output = ""
 
+' === Internationalization (i18n) ===
+Function GetSysLang()
+    On Error Resume Next
+    Dim r
+    Set r = CreateObject("WScript.Shell")
+    Dim lid
+    lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\InstallLanguage")
+    If Err.Number <> 0 Then
+        lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\Default")
+    End If
+    If Err.Number <> 0 Then lid = "0804"
+    On Error GoTo 0
+    Select Case lid
+        Case "0804", "0404", "0C04", "1404", "7C04"
+            GetSysLang = "zh"
+        Case Else
+            GetSysLang = "en"
+    End Select
+End Function
+
+Function L(t)
+    Dim z
+    z = (GetSysLang() = "zh")
+    If Not z Then
+        L = t
+        Exit Function
+    End If
+    t = Replace(t, "PatentMarker VBA Module Installer" & vbCrLf & _
+                           "(Install to Normal global template)", _
+                           "PatentMarker VBA 模块安装程序" & vbCrLf & _
+                           "（安装到 Normal 全局模板）")
+    t = Replace(t, "Please close ALL Word windows, then click OK." & vbCrLf & _
+                           "(Click Cancel to abort installation)", _
+                           "请关闭所有 Word 窗口，然后点击确定。" & vbCrLf & _
+                           "（点击取消中止安装）")
+    t = Replace(t, " Word process(es) running.", " 个 Word 进程正在运行。")
+    t = Replace(t, " Word process(es) running", " 个 Word 进程正在运行")
+    t = Replace(t, "Found ", "检测到 ")
+    t = Replace(t, "PatentMarker VBA Install", "PatentMarker VBA 安装")
+    t = Replace(t, "ERROR: VBA file not found: ", "错误：找不到 VBA 文件：")
+    t = Replace(t, "Ensure \vba\ contains all .bas modules", "请确保 \vba\ 目录包含所有 .bas 模块")
+    t = Replace(t, "Aborted by user.", "用户取消安装。")
+    t = Replace(t, "ERROR: Word is still running." & vbCrLf & "Please close all Word instances and retry.", _
+                           "错误：Word 仍在运行。" & vbCrLf & "请关闭所有 Word 实例后重试。")
+    t = Replace(t, "ERROR: Cannot create Word" & vbCrLf & "Reason: ", _
+                           "错误：无法启动 Word" & vbCrLf & "原因：")
+    t = Replace(t, "ERROR: Cannot get Normal template path" & vbCrLf & "Reason: ", _
+                           "错误：无法获取 Normal 模板路径" & vbCrLf & "原因：")
+    t = Replace(t, "ERROR: Normal template file not found: ", _
+                           "错误：找不到 Normal 模板文件：")
+    t = Replace(t, "ERROR: Cannot remove read-only attribute" & vbCrLf & _
+                    "Path: ", _
+                    "错误：无法移除只读属性" & vbCrLf & "路径：")
+    t = Replace(t, "Fix: Right-click file > Properties > uncheck Read-only", _
+                           "修复：右键文件 > 属性 > 取消只读")
+    t = Replace(t, "ERROR: Normal template is read-only" & vbCrLf & _
+                "Possible causes:" & vbCrLf & _
+                "  - Another Word instance is running (Normal.dotm locked)" & vbCrLf & _
+                "  - File attribute is read-only" & vbCrLf & _
+                "Fix:" & vbCrLf & _
+                "  - Close all Word windows and retry" & vbCrLf & _
+                "  - Right-click file > Properties > uncheck Read-only", _
+                "错误：Normal 模板为只读" & vbCrLf & _
+                "可能原因：" & vbCrLf & _
+                "  - 其他 Word 实例正在运行（Normal.dotm 被锁定）" & vbCrLf & _
+                "  - 文件属性为只读" & vbCrLf & _
+                "修复：" & vbCrLf & _
+                "  - 关闭所有 Word 窗口后重试" & vbCrLf & _
+                "  - 右键文件 > 属性 > 取消只读")
+    t = Replace(t, "ERROR: Cannot open Normal template" & vbCrLf & "Reason: ", _
+                           "错误：无法打开 Normal 模板" & vbCrLf & "原因：")
+    t = Replace(t, "ERROR: Cannot create class module" & vbCrLf & "Reason: ", _
+                           "错误：无法创建类模块" & vbCrLf & "原因：")
+    t = Replace(t, "ERROR: Cannot access VBA project" & vbCrLf & _
+                "Reason: " & vbCrLf & vbCrLf & _
+                "Enable in Word:" & vbCrLf & _
+                "  1. File > Options > Trust Center" & vbCrLf & _
+                "  2. Trust Center Settings > Macro Settings" & vbCrLf & _
+                "  3. Check: Trust access to the VBA project object model" & vbCrLf & _
+                "  4. Set macro security to: Disable all macros with notification" & vbCrLf & _
+                "  5. Close Word, then re-run this script", _
+                "错误：无法访问 VBA 项目" & vbCrLf & _
+                "原因：" & vbCrLf & vbCrLf & _
+                "请在 Word 中启用：" & vbCrLf & _
+                "  1. 文件 > 选项 > 信任中心" & vbCrLf & _
+                "  2. 信任中心设置 > 宏设置" & vbCrLf & _
+                "  3. 勾选：信任对 VBA 工程对象模型的访问" & vbCrLf & _
+                "  4. 宏安全性：禁用所有宏，并发出通知" & vbCrLf & _
+                "  5. 关闭 Word，重新运行此脚本")
+    t = Replace(t, "ERROR: Import failed: ", "错误：导入失败：")
+    t = Replace(t, "ERROR: Cannot save Normal template." & vbCrLf & _
+                "Reason: " & vbCrLf & _
+                "Please close all Word instances and retry.", _
+                "错误：无法保存 Normal 模板。" & vbCrLf & _
+                "原因：" & vbCrLf & _
+                "请关闭所有 Word 实例后重试。")
+    t = Replace(t, "=== VBA Install Complete ===", "=== VBA 安装完成 ===")
+    t = Replace(t, "Modules imported: ", "已导入模块：")
+    t = Replace(t, "Saved: Yes (verified)", "保存：是（已验证）")
+    t = Replace(t, "Saved: Reported OK but file time unchanged - please verify manually", _
+                           "保存：报告成功但文件时间未变 - 请手动验证")
+    t = Replace(t, "Modules installed to global template, available in all Word documents", _
+                           "模块已安装到全局模板，可在所有 Word 文档中使用")
+    t = Replace(t, "Verification:", "验证方法：")
+    t = Replace(t, "  1. Open a new Word document", "  1. 打开新的 Word 文档")
+    t = Replace(t, "  2. Press Alt+F11, check modules under 'Normal'", _
+                           "  2. 按 Alt+F11，检查 Normal 下的模块")
+    t = Replace(t, "  3. Run EnableAutoExport to enable auto-export", _
+                           "  3. 运行 EnableAutoExport 启用自动导出")
+    t = Replace(t, "     (or manually run ExtractDict)", "     （或手动运行 ExtractDict）")
+    t = Replace(t, "dict.json will be saved to Word document directory", _
+                           "dict.json 将保存到 Word 文档所在目录")
+    t = Replace(t, "CAD auto-export (DWG in same folder)", "CAD 自动导出（DWG 同目录）")
+    t = Replace(t, "Installation complete", "安装完成")
+    L = t
+End Function
+' === End i18n ===
+
 Sub LogMsg(msg)
     Dim ts
     ts = Now
@@ -44,7 +162,7 @@ End Sub
 
 Sub QuitWithMsg(msg)
     LogMsg msg
-    WScript.Echo output
+    WScript.Echo L(output)
     logFile.Close
     WScript.Quit(1)
 End Sub
@@ -97,11 +215,12 @@ If wmiOk Then
     Set wordProcs = wmiSvc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
     If wordProcs.Count > 0 Then
         LogMsg "  Found " & wordProcs.Count & " Word process(es) running"
-        Dim msgResult
-        msgResult = MsgBox("Found " & wordProcs.Count & " Word process(es) running." & vbCrLf & vbCrLf & _
-                           "Please close ALL Word windows, then click OK." & vbCrLf & _
-                           "(Click Cancel to abort installation)", _
-                           vbOKCancel + vbExclamation, "PatentMarker VBA Install")
+        Dim msgBody, msgTitle, msgResult
+        msgBody = "Found " & wordProcs.Count & " Word process(es) running." & vbCrLf & vbCrLf & _
+                  "Please close ALL Word windows, then click OK." & vbCrLf & _
+                  "(Click Cancel to abort installation)"
+        msgTitle = "PatentMarker VBA Install"
+        msgResult = MsgBox(L(msgBody), vbOKCancel + vbExclamation, L(msgTitle))
         If msgResult = vbCancel Then
             QuitWithMsg "Aborted by user."
         End If
@@ -453,5 +572,5 @@ LogMsg "========================================"
 LogMsg "Installation complete"
 LogMsg "========================================"
 
-WScript.Echo output
+WScript.Echo L(output)
 logFile.Close

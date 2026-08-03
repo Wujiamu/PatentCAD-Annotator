@@ -1,5 +1,5 @@
 ' PatentMarker 2007 Uninstaller (VBScript)
-' Encoding: ASCII
+' Encoding: GBK (compatible with all Windows locales)
 '
 ' Cleans up:
 '   - HKCU/HKLM Applications registry keys
@@ -27,6 +27,43 @@ logPath = scriptDir & "\uninstall-2007.log"
 Set logFile = fso.OpenTextFile(logPath, ForAppending, True)
 output = ""
 
+' === Internationalization (i18n) ===
+Function GetSysLang()
+    On Error Resume Next
+    Dim r
+    Set r = CreateObject("WScript.Shell")
+    Dim lid
+    lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\InstallLanguage")
+    If Err.Number <> 0 Then
+        lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\Default")
+    End If
+    If Err.Number <> 0 Then lid = "0804"
+    On Error GoTo 0
+    Select Case lid
+        Case "0804", "0404", "0C04", "1404", "7C04"
+            GetSysLang = "zh"
+        Case Else
+            GetSysLang = "en"
+    End Select
+End Function
+
+Function L(t)
+    Dim z
+    z = (GetSysLang() = "zh")
+    If Not z Then
+        L = t
+        Exit Function
+    End If
+    t = Replace(t, "PatentMarker 2007 Uninstaller" & vbCrLf & "========================================", _
+                           "PatentMarker 2007 卸载程序" & vbCrLf & "========================================")
+    t = Replace(t, "AutoCAD R17.0 not found, nothing to uninstall.", _
+                           "未找到 AutoCAD R17.0，无需卸载。")
+    t = Replace(t, "No ACAD- product code found.", "未找到 ACAD- 产品代码。")
+    t = Replace(t, "Uninstall Complete", "卸载完成")
+    L = t
+End Function
+' === End i18n ===
+
 Sub LogMsg(msg)
     logFile.WriteLine "[" & Now & "] " & msg
     output = output & msg & vbCrLf
@@ -45,7 +82,7 @@ reg.EnumKey HKCU, acadBaseKey, subKeys
 
 If IsNull(subKeys) Then
     output = output & "AutoCAD R17.0 not found, nothing to uninstall." & vbCrLf
-    WScript.Echo output
+    WScript.Echo L(output)
     logFile.Close
     WScript.Quit(0)
 End If
@@ -67,7 +104,7 @@ Next
 
 If productCount = 0 Then
     output = output & "No ACAD- product code found." & vbCrLf
-    WScript.Echo output
+    WScript.Echo L(output)
     logFile.Close
     WScript.Quit(0)
 End If
@@ -262,5 +299,6 @@ LogMsg "========================================"
 LogMsg "Uninstall Complete"
 LogMsg "========================================"
 
-WScript.Echo output
+WScript.Echo L(output)
 logFile.Close
+

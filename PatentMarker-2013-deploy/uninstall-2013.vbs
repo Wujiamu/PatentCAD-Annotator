@@ -11,6 +11,42 @@ Set fso = CreateObject("Scripting.FileSystemObject")
 Set reg = GetObject("winmgmts:{impersonationLevel=impersonate}!\\.\root\default:StdRegProv")
 output = ""
 
+' === Internationalization (i18n) ===
+Function GetSysLang()
+    On Error Resume Next
+    Dim r
+    Set r = CreateObject("WScript.Shell")
+    Dim lid
+    lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\InstallLanguage")
+    If Err.Number <> 0 Then
+        lid = r.RegRead("HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language\Default")
+    End If
+    If Err.Number <> 0 Then lid = "0804"
+    On Error GoTo 0
+    Select Case lid
+        Case "0804", "0404", "0C04", "1404", "7C04"
+            GetSysLang = "zh"
+        Case Else
+            GetSysLang = "en"
+    End Select
+End Function
+
+Function L(t)
+    Dim z
+    z = (GetSysLang() = "zh")
+    If Not z Then
+        L = t
+        Exit Function
+    End If
+    t = Replace(t, "PatentMarker 2013 Uninstaller" & vbCrLf & "========================================", _
+                           "PatentMarker 2013 卸载程序" & vbCrLf & "========================================")
+    t = Replace(t, "Done. Removed ", "完成。已移除 ")
+    t = Replace(t, " registry entries.", " 个注册表条目。")
+    t = Replace(t, "Done. No PatentMarker entries found.", "完成。未找到 PatentMarker 条目。")
+    L = t
+End Function
+' === End i18n ===
+
 output = output & "========================================" & vbCrLf
 output = output & "PatentMarker 2013 Uninstaller" & vbCrLf
 output = output & "========================================" & vbCrLf
@@ -61,4 +97,4 @@ Else
 End If
 output = output & "========================================" & vbCrLf
 
-WScript.Echo output
+WScript.Echo L(output)
