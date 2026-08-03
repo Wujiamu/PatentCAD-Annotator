@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cad-plugin", "cad-plugin", "{4CAE9FCB-50BC-4C09-A987-567519F77622}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2025", "2025", "{812980DC-71A0-45D4-9B36-9AEF270CE5BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatentMarker", "cad-plugin\2025\PatentMarker\PatentMarker.csproj", "{97875ECA-1529-49CB-81F2-968347FA0DD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{97875ECA-1529-49CB-81F2-968347FA0DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97875ECA-1529-49CB-81F2-968347FA0DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97875ECA-1529-49CB-81F2-968347FA0DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97875ECA-1529-49CB-81F2-968347FA0DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{812980DC-71A0-45D4-9B36-9AEF270CE5BC} = {4CAE9FCB-50BC-4C09-A987-567519F77622}
+		{97875ECA-1529-49CB-81F2-968347FA0DD4} = {812980DC-71A0-45D4-9B36-9AEF270CE5BC}
+	EndGlobalSection
+EndGlobal

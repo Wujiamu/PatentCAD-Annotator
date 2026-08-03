@@ -65,6 +65,16 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 - 2025 版零外部依赖（System.Text.Json 内置）
 - 全部 5 个版本均已通过编译验证
 
+可使用根目录 `build.ps1` 辅助构建与环境检查：
+
+```powershell
+.\build.ps1 -Check               # doctor：检查各版本 SDK DLL 与编译工具链
+.\build.ps1 -Version 2025        # 编译 2025 版（dotnet build）
+.\build.ps1 -Version all -Check  # 检查全部 5 个版本
+```
+
+> 2007/2010/2013/2015 为传统 MSBuild 工程，需 Visual Studio 或 Build Tools 的 MSBuild；2025 版为 SDK 风格工程，可直接用 `dotnet build`。
+
 ### 命令清单
 
 | 命令 | 别名 | 说明 |
@@ -119,6 +129,7 @@ PatentCAD-Annotator/
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v3.0 | 2026-08-03 | VBA v3.0 多格式识别（括号/连字符/英文标点/裸列表）；C# 取消 JSON 排序按原文顺序；全版本重新编译部署 |
 | v2.5 | 2026-07-27 | 修复 Word 2010 无法导入 clsSaveHook.cls 的兼容性问题（改为代码注入）；修复 2007/2010 版箭头大小修改后不能立即生效；所有部署包补充 install-vba.vbs |
 | v2.4 | 2026-07-26 | 多版本适配完成（2010/2013/2015/2025），全部通过编译验证；动态复核修复 MLeader API 名称、ArrowSize/TextHeight 实例同步 |
 | v2.0 | 2026-07 | 2007 版完成：样条曲线引线 + 无限拐点 + 面板控制 + 字典自动刷新 |

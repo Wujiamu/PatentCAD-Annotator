@@ -1,0 +1,47 @@
+# ============================================================================
+# build.yml - Structure integrity check for the CAD plugin source tree.
+#
+# Why not a full compile here?
+#   The AutoCAD SDK assemblies (acdbmgd.dll / acmgd.dll / accoremgd.dll) are
+#   Autodesk-licensed and are NOT committed to this repository. A clean CI
+#   checkout therefore cannot compile the plugin. Real compilation requires
+#   the SDK DLLs to be present locally; run `./build.ps1 -Check` on a dev
+#   machine for that.
+#
+# What this workflow DOES verify on every push / pull request:
+#   - All 5 edition csproj files exist and are parseable XML
+#   - Every <Compile Include> source file referenced by a legacy csproj exists
+#   - Each deploy package ships PatentMarker.dll and the 6 shared VBA modules
+# ============================================================================
+
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  structure-check:
+    name: Structure Integrity Check
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run structure check
+        shell: pwsh
+        run: ./build.ps1 -Structure
+
+      - name: Note on real compilation
+        shell: pwsh
+        run: |
+          Write-Host ""
+          Write-Host "AutoCAD SDK DLLs are not in the repo (Autodesk licensing)."
+          Write-Host "Real compilation needs local SDK DLLs. On a dev machine run:"
+          Write-Host "    ./build.ps1 -Check        # doctor: verify environment"
+          Write-Host "    ./build.ps1 -Version 2025 # build the .NET 8 edition"
