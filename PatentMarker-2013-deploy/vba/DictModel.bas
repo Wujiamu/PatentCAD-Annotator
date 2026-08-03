@@ -17,6 +17,30 @@ Public Function BuildModel(ByVal text As String, ByVal sourceName As String, _
     text = Replace(text, "<br />", vbCr)
     text = Replace(text, "<br>", vbCr)
 
+    ' === 表格预处理（v1.1 新增：支持 Word 表格形式的附图标记说明） ===
+    ' Word 表格在 Content.Text 中的文本流：单元格文本 + vbCr + Chr(7)（单元格结束），
+    ' 行尾为 vbCr + Chr(7)（行结束标记）。例如两列表格一行为：
+    '   "10" + vbCr + Chr(7) + "箱体结构" + vbCr + Chr(7) + vbCr + Chr(7)
+    ' 处理策略：
+    '   A. 编号单元格在前："10 vbCr Chr7 箱体结构" -> "箱体结构10、"
+    '   B. 名称单元格在前："箱体结构 vbCr Chr7 10" -> "箱体结构10、"
+    '   C. 残余 Chr(7) 统一转为顿号，使单列"名称+编号"单元格也能被标点模式识别
+    Dim reTbl As Object
+    Set reTbl = CreateObject("VBScript.RegExp")
+    reTbl.Global = True
+    reTbl.Multiline = True
+    reTbl.IgnoreCase = False
+    ' A. 编号单元格在前（两列表格：编号 | 名称）
+    reTbl.pattern = "(\d{1,5})" & vbCr & Chr(7) & _
+        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)" & vbCr & Chr(7)
+    text = reTbl.Replace(text, "$2$1、")
+    ' B. 名称单元格在前（两列表格：名称 | 编号）
+    reTbl.pattern = "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*?)" & vbCr & Chr(7) & _
+        "([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[a-z]?)" & vbCr & Chr(7)
+    text = reTbl.Replace(text, "$1$2、")
+    ' C. 残余单元格分隔符 -> 顿号
+    text = Replace(text, Chr(7), "、")
+
     ' === 第一步：定位并截取「附图标记说明」段落 ===
     Dim sectionText As String
     sectionText = ExtractMarkingSection(text)
