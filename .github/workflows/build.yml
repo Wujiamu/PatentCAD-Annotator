@@ -1,5 +1,5 @@
 # ============================================================================
-# build.yml - Structure integrity check for the CAD plugin source tree.
+# build.yml - CI quality gates for the CAD plugin source tree.
 #
 # Why not a full compile here?
 #   The AutoCAD SDK assemblies (acdbmgd.dll / acmgd.dll / accoremgd.dll) are
@@ -9,9 +9,15 @@
 #   machine for that.
 #
 # What this workflow DOES verify on every push / pull request:
-#   - All 5 edition csproj files exist and are parseable XML
-#   - Every <Compile Include> source file referenced by a legacy csproj exists
-#   - Each deploy package ships PatentMarker.dll and the 6 shared VBA modules
+#   Job 1 - Structure Integrity:
+#     - All 5 edition csproj files exist and are parseable XML
+#     - Every <Compile Include> source file referenced by a legacy csproj exists
+#     - Each deploy package ships PatentMarker.dll and the 6 shared VBA modules
+#   Job 2 - Static Analysis:
+#     - VBA modules are identical across all 5 deploy packages
+#     - csproj TargetFramework matches the version matrix
+#     - C# source files stay consistent within edition groups (Leader / MLeader)
+#     - Deploy packages ship version-specific dependencies (e.g. Newtonsoft.Json)
 # ============================================================================
 
 name: build
@@ -45,3 +51,15 @@ jobs:
           Write-Host "Real compilation needs local SDK DLLs. On a dev machine run:"
           Write-Host "    ./build.ps1 -Check        # doctor: verify environment"
           Write-Host "    ./build.ps1 -Version 2025 # build the .NET 8 edition"
+
+  static-analysis:
+    name: Static Analysis
+    runs-on: windows-latest
+    needs: structure-check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run static analysis
+        shell: pwsh
+        run: ./build.ps1 -Static

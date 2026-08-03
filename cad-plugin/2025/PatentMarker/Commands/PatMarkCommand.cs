@@ -16,6 +16,8 @@ namespace PatentMarker.Commands
     ///
     /// 2013 引入 MLeader（一体式：引线 + 文字 + 样式），无需 Leader + MText 拼合。
     /// v2：样条曲线引线 + 无限拐点 + 默认无箭头（面板可切换）。
+    /// v3.1：三点模式（面板开关）。开启后固定 3 点：附着点 → 1 个拐点 → 文字位置，
+    /// 第 3 点点击后自动创建，Esc/回车取消本次；关闭时保持无限拐点循环采集。
     /// 交互流程：点击附着点 → 循环点击拐点（回车结束）→ 点击文字位置 → 循环。
     /// </summary>
     public class PatMarkCommand
@@ -72,6 +74,40 @@ namespace PatentMarker.Commands
                 if (ptResult.Status != PromptStatus.OK) break;
 
                 ApplyPendingIfNeeded(ed);
+
+                // v3.1：三点模式 — 附着点(已点) → 1 个拐点 → 文字位置，第 3 点点击后自动创建
+                if (Palette.PatPaletteCommand.ThreePointMode)
+                {
+                    var doglegOpts3 = new PromptPointOptions(Strings.PatMark_PromptDogleg3);
+                    doglegOpts3.BasePoint = ptResult.Value;
+                    doglegOpts3.UseBasePoint = true;
+                    var doglegResult3 = ed.GetPoint(doglegOpts3);
+                    if (doglegResult3.Status != PromptStatus.OK) continue;  // Esc/回车：硬性三点，取消本次
+
+                    ApplyPendingIfNeeded(ed);
+
+                    var textOpts3 = new PromptPointOptions(Strings.PatMark_PromptTextPos3);
+                    textOpts3.BasePoint = doglegResult3.Value;
+                    textOpts3.UseBasePoint = true;
+                    var textResult3 = ed.GetPoint(textOpts3);
+                    if (textResult3.Status != PromptStatus.OK) continue;  // Esc/回车：硬性三点，取消本次
+
+                    ApplyPendingIfNeeded(ed);
+
+                    try
+                    {
+                        List<Point3d> doglegPts3 = new List<Point3d>();
+                        doglegPts3.Add(doglegResult3.Value);
+                        CreateMLeader(db, ptResult.Value, doglegPts3, textResult3.Value, _currentNumber);
+                        ed.WriteMessage(string.Format(Strings.PatMark_Created, _currentNumber, doglegPts3.Count + 1));
+                    }
+                    catch (Exception ex)
+                    {
+                        ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
+                        PatentMarkerApp.RawLog("CreateMLeader EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
+                    }
+                    continue;  // 进入下一个附着点选择
+                }
 
                 // 循环采集拐点（至少1个，回车/空格结束）
                 List<Point3d> doglegPts = new List<Point3d>();

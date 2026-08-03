@@ -81,6 +81,17 @@ namespace PatentMarker.I18n
             get { return En ? "\nClick text position (Enter = last vertex): " : "\n点击文字位置（回车=最后拐点）: "; }
         }
 
+        // v3.1：三点模式取点提示 | Three-point mode prompts
+        public static string PatMark_PromptDogleg3
+        {
+            get { return En ? "\n[3-point] Click vertex (point 2 of 3): " : "\n[三点模式] 点击拐点（第 2/3 点）: "; }
+        }
+
+        public static string PatMark_PromptTextPos3
+        {
+            get { return En ? "\n[3-point] Click text position (point 3 of 3, auto-create): " : "\n[三点模式] 点击文字位置（第 3/3 点，自动创建）: "; }
+        }
+
         /// <summary>0=number, 1=vertexCount | 已创建引线: num（N 个顶点）</summary>
         public static string PatMark_Created
         {
@@ -398,6 +409,17 @@ namespace PatentMarker.I18n
             get { return En ? "Line:Straight" : "线型:直线"; }
         }
 
+        // v3.1：点数模式按钮文本 | Point-count mode button text
+        public static string Palette_PointsUnlimited
+        {
+            get { return En ? "Points:Unlimited" : "点数:无限"; }
+        }
+
+        public static string Palette_PointsThree
+        {
+            get { return En ? "Points:Three" : "点数:三点"; }
+        }
+
         // ListView 列头 | Column headers
         public static string Col_Number
         {
@@ -477,6 +499,22 @@ namespace PatentMarker.I18n
         public static string Status_StraightDesc
         {
             get { return En ? "Straight" : "直线段"; }
+        }
+
+        /// <summary>0=点数模式描述 | v3.1：点数: 无限/三点（影响后续新建引线）</summary>
+        public static string Status_PointsToggled
+        {
+            get { return En ? "Point mode: {0} (affects new leaders)" : "点数模式: {0}（影响后续新建引线）"; }
+        }
+
+        public static string Status_PointsUnlimitedDesc
+        {
+            get { return En ? "Unlimited" : "无限点"; }
+        }
+
+        public static string Status_PointsThreeDesc
+        {
+            get { return En ? "Three-point" : "三点"; }
         }
 
         public static string Status_CompareShown

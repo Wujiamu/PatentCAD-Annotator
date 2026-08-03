@@ -27,6 +27,7 @@ namespace PatentMarker.Palette
         private Button _btnArrow;
         private NumericUpDown _numArrowSize;
         private Button _btnSpline;
+        private Button _btnPoints;   // v3.1：点数模式切换（无限/三点）
         private Button _btnSelectAll;
         private Button _btnCompare;
         private Button _btnLanguage;  // v2.3：语言切换
@@ -145,7 +146,7 @@ namespace PatentMarker.Palette
             // 样式栏 | Style bar
             FlowLayoutPanel stylePanel = new FlowLayoutPanel();
             stylePanel.Dock = DockStyle.Top;
-            stylePanel.Height = 30;
+            stylePanel.Height = 60;   // v3.1：容纳新增点数按钮，允许换行
             stylePanel.WrapContents = true;
             stylePanel.FlowDirection = FlowDirection.LeftToRight;
             stylePanel.Padding = new Padding(0, 2, 0, 2);
@@ -176,7 +177,13 @@ namespace PatentMarker.Palette
             _btnSpline.Click += new EventHandler(BtnSpline_Click);
             UpdateSplineButtonText();
 
-            stylePanel.Controls.AddRange(new Control[] { _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline });
+            // v3.1：点数模式按钮（无限/三点），与线型按钮正交
+            _btnPoints = new Button();
+            _btnPoints.AutoSize = true;
+            _btnPoints.Click += new EventHandler(BtnPoints_Click);
+            UpdatePointsButtonText();
+
+            stylePanel.Controls.AddRange(new Control[] { _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline, _btnPoints });
 
             // 按钮栏 | Button bar
             FlowLayoutPanel btnPanel = new FlowLayoutPanel();
@@ -307,6 +314,7 @@ namespace PatentMarker.Palette
             if (_colOldName != null) _colOldName.Text = Strings.Col_OldName;
             UpdateArrowButtonText();
             UpdateSplineButtonText();
+            UpdatePointsButtonText();
         }
 
         /// <summary>v2.3：切换语言 | Toggle language</summary>
@@ -547,6 +555,20 @@ namespace PatentMarker.Palette
         {
             if (_btnSpline != null)
                 _btnSpline.Text = PatPaletteCommand.IsSplined ? Strings.Palette_LineTypeSpline : Strings.Palette_LineTypeStraight;
+        }
+
+        private void BtnPoints_Click(object sender, EventArgs e)
+        {
+            PatPaletteCommand.ThreePointMode = !PatPaletteCommand.ThreePointMode;
+            UpdatePointsButtonText();
+            string desc = PatPaletteCommand.ThreePointMode ? Strings.Status_PointsThreeDesc : Strings.Status_PointsUnlimitedDesc;
+            _lblStatus.Text = string.Format(Strings.Status_PointsToggled, desc);
+        }
+
+        private void UpdatePointsButtonText()
+        {
+            if (_btnPoints != null)
+                _btnPoints.Text = PatPaletteCommand.ThreePointMode ? Strings.Palette_PointsThree : Strings.Palette_PointsUnlimited;
         }
 
         private void BtnSelectAll_Click(object sender, EventArgs e)

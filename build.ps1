@@ -18,7 +18,8 @@
 param(
     [string]$Version = "2025",
     [switch]$Check,
-    [switch]$Structure
+    [switch]$Structure,
+    [switch]$Static
 )
 
 $ErrorActionPreference = "Stop"
@@ -130,6 +131,195 @@ function Invoke-StructureCheck {
 }
 
 # ----------------------------------------------------------------------------
+# Static analysis check (CI; does NOT require SDK DLLs)
+# ----------------------------------------------------------------------------
+function Invoke-StaticCheck {
+    Write-Section "Static analysis check (no SDK DLL required)"
+    $failCount = 0
+    $warnCount = 0
+
+    # ---- 1. VBA cross-package consistency ----
+    Write-Host "`n  --- VBA cross-package consistency ---"
+    $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls")
+    $deployVersions = @("2007","2010","2013","2015","2025")
+    foreach ($vf in $vbaFiles) {
+        $hashes = @{}
+        foreach ($ver in $deployVersions) {
+            $fpath = Join-Path $root "PatentMarker-$ver-deploy\vba\$vf"
+            if (Test-Path $fpath) {
+                $h = (Get-FileHash $fpath -Algorithm SHA256).Hash
+                $hashes[$ver] = $h
+            } else {
+                Write-Err2 "VBA $vf missing in $ver deploy package"
+                $failCount++
+            }
+        }
+        $unique = $hashes.Values | Select-Object -Unique
+        if ($unique.Count -eq 1) {
+            Write-Ok "VBA $vf : identical across all $($hashes.Count) packages"
+        } elseif ($unique.Count -gt 1) {
+            Write-Err2 "VBA $vf : DIFFERS across packages!"
+            foreach ($ver in $hashes.Keys) {
+                Write-Host "         $ver = $($hashes[$ver].Substring(0,12))..." -ForegroundColor Yellow
+            }
+            $failCount++
+        }
+    }
+
+    # ---- 2. csproj TargetFramework validation ----
+    Write-Host "`n  --- csproj TargetFramework validation ---"
+    $expectedTf = @{
+        "2007" = "v3.5"
+        "2010" = "v3.5"
+        "2013" = "v4.0"
+        "2015" = "v4.5"
+        "2025" = "net8.0-windows"
+    }
+    foreach ($ver in $script:DllMap.Keys) {
+        $csproj = Join-Path (Get-ProjectDir $ver) "PatentMarker.csproj"
+        if (-not (Test-Path $csproj)) { continue }
+
+        if ($ver -eq "2025") {
+            # SDK-style csproj
+            try {
+                [xml]$xml = Get-Content $csproj -Raw
+                $tfNode = $xml.SelectSingleNode("//*[local-name()='TargetFramework']")
+                $tf = if ($tfNode) { $tfNode.InnerText } else { "NOT_FOUND" }
+                if ($tf -eq $expectedTf[$ver]) {
+                    Write-Ok "$ver : TargetFramework = $tf"
+                } else {
+                    Write-Err2 "$ver : TargetFramework = $tf (expected $($expectedTf[$ver]))"
+                    $failCount++
+                }
+            } catch {
+                Write-Err2 "$ver : csproj parse failed - $_"
+                $failCount++
+            }
+        } else {
+            # Legacy csproj
+            try {
+                [xml]$xml = Get-Content $csproj -Raw
+                $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+                $ns.AddNamespace("ms", "http://schemas.microsoft.com/developer/msbuild/2003")
+                $tfNode = $xml.SelectSingleNode("//ms:TargetFrameworkVersion", $ns)
+                $tf = if ($tfNode) { $tfNode.InnerText } else { "NOT_FOUND" }
+                if ($tf -eq $expectedTf[$ver]) {
+                    Write-Ok "$ver : TargetFramework = $tf"
+                } else {
+                    Write-Err2 "$ver : TargetFramework = $tf (expected $($expectedTf[$ver]))"
+                    $failCount++
+                }
+            } catch {
+                Write-Err2 "$ver : csproj parse failed - $_"
+                $failCount++
+            }
+        }
+    }
+
+    # ---- 3. C# cross-edition source consistency (within groups) ----
+    Write-Host "`n  --- C# cross-edition source consistency ---"
+    # Group A: 2013/2015/2025 (MLeader group, same file set)
+    $mleaderGroup = @("2013","2015","2025")
+    $sharedFiles = @(
+        "PatentMarkerApp.cs",
+        "Commands\PatMarkCommand.cs",
+        "Commands\PatCheckCommand.cs",
+        "Commands\PatAlignCommand.cs",
+        "Commands\PatSelectAllCommand.cs",
+        "Palette\PatPaletteCommand.cs",
+        "Palette\DictPaletteControl.cs",
+        "I18n\Language.cs",
+        "I18n\Strings.cs",
+        "Styles\PatStyleInitializer.cs",
+        "IO\ConfigLoader.cs",
+        "IO\DictEntry.cs",
+        "IO\DictDiff.cs",
+        "IO\PatEntityHelper.cs"
+    )
+    $driftCount = 0
+    foreach ($rel in $sharedFiles) {
+        $hashes = @{}
+        foreach ($ver in $mleaderGroup) {
+            $fpath = Join-Path (Get-ProjectDir $ver) $rel
+            if (Test-Path $fpath) {
+                $hashes[$ver] = (Get-FileHash $fpath -Algorithm SHA256).Hash
+            }
+        }
+        $unique = $hashes.Values | Select-Object -Unique
+        if ($unique.Count -gt 1) {
+            Write-Warn2 "DRIFT: $rel differs in MLeader group ($($hashes.Keys -join '/'))"
+            $driftCount++
+        }
+    }
+    if ($driftCount -eq 0) {
+        Write-Ok "MLeader group (2013/2015/2025): all $($sharedFiles.Count) shared files consistent"
+    } else {
+        Write-Warn2 "MLeader group: $driftCount file(s) differ across editions (review if intentional)"
+        $warnCount += $driftCount
+    }
+
+    # Group B: 2007/2010 (Leader group)
+    $leaderShared = @(
+        "PatentMarkerApp.cs",
+        "Commands\PatMarkCommand.cs",
+        "Commands\PatCheckCommand.cs",
+        "Commands\PatAlignCommand.cs",
+        "Commands\PatSelectAllCommand.cs",
+        "Palette\PatPaletteCommand.cs",
+        "Palette\DictPaletteControl.cs",
+        "I18n\Language.cs",
+        "I18n\Strings.cs",
+        "Styles\PatStyleInitializer.cs",
+        "IO\ConfigLoader.cs",
+        "IO\DictEntry.cs",
+        "IO\DictDiff.cs",
+        "IO\PatEntityHelper.cs"
+    )
+    $driftCount2 = 0
+    foreach ($rel in $leaderShared) {
+        $h1 = Join-Path (Get-ProjectDir "2007") $rel
+        $h2 = Join-Path (Get-ProjectDir "2010") $rel
+        if ((Test-Path $h1) -and (Test-Path $h2)) {
+            $hash1 = (Get-FileHash $h1 -Algorithm SHA256).Hash
+            $hash2 = (Get-FileHash $h2 -Algorithm SHA256).Hash
+            if ($hash1 -ne $hash2) { $driftCount2++ }
+        }
+    }
+    if ($driftCount2 -eq 0) {
+        Write-Ok "Leader group (2007/2010): all $($leaderShared.Count) shared files consistent"
+    } else {
+        Write-Warn2 "Leader group: $driftCount2 file(s) differ across editions (review if intentional)"
+        $warnCount += $driftCount2
+    }
+
+    # ---- 4. Deploy package version-specific checks ----
+    Write-Host "`n  --- Deploy package version-specific checks ---"
+    # 2013/2015 should ship Newtonsoft.Json.dll
+    foreach ($ver in @("2013","2015")) {
+        $nj = Join-Path $root "PatentMarker-$ver-deploy\Newtonsoft.Json.dll"
+        if (Test-Path $nj) { Write-Ok "$ver : Newtonsoft.Json.dll present in deploy" }
+        else { Write-Err2 "$ver : Newtonsoft.Json.dll MISSING in deploy package"; $failCount++ }
+    }
+    # 2025 should NOT need Newtonsoft.Json.dll
+    $nj25 = Join-Path $root "PatentMarker-2025-deploy\Newtonsoft.Json.dll"
+    if (-not (Test-Path $nj25)) { Write-Ok "2025 : No Newtonsoft.Json.dll (uses System.Text.Json)" }
+    else { Write-Warn2 "2025 : Newtonsoft.Json.dll found but should use System.Text.Json"; $warnCount++ }
+
+    # ---- Summary ----
+    Write-Section "Static check result"
+    if ($failCount -eq 0 -and $warnCount -eq 0) {
+        Write-Ok "All static checks passed."
+        exit 0
+    } elseif ($failCount -eq 0) {
+        Write-Ok "Static checks passed with $warnCount warning(s) (non-blocking)."
+        exit 0
+    } else {
+        Write-Err2 "Found $failCount error(s) and $warnCount warning(s). Fix errors and retry."
+        exit 1
+    }
+}
+
+# ----------------------------------------------------------------------------
 # Doctor mode: check environment readiness for one edition
 # ----------------------------------------------------------------------------
 function Invoke-Doctor($ver) {
@@ -227,6 +417,11 @@ function Invoke-BuildVersion($ver) {
 
 if ($Structure) {
     Invoke-StructureCheck
+    return
+}
+
+if ($Static) {
+    Invoke-StaticCheck
     return
 }
 
