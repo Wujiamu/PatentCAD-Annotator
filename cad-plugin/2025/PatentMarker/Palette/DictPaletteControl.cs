@@ -355,9 +355,7 @@ namespace PatentMarker.Palette
             _lstEntries.BeginUpdate();
             _lstEntries.Items.Clear();
 
-            List<DictEntry> sorted = new List<DictEntry>(dict.Entries);
-            sorted.Sort(delegate(DictEntry a, DictEntry b) { return NaturalCompare(a.Number, b.Number); });
-
+            // 保持 JSON 文件原始顺序，不排序（用户自定义顺序优先）
             Dictionary<DictEntry, DictDiffEntry> diffMap = new Dictionary<DictEntry, DictDiffEntry>();
             if (_currentDiff != null)
             {
@@ -367,7 +365,7 @@ namespace PatentMarker.Palette
                 }
             }
 
-            foreach (DictEntry e in sorted)
+            foreach (DictEntry e in dict.Entries)
             {
                 PaletteEntry pe = new PaletteEntry();
                 pe.Number = e.Number;
@@ -465,45 +463,6 @@ namespace PatentMarker.Palette
             _currentDict = null;
             _lblDictInfo.Text = Strings.Palette_DictNotLoaded;
             _lblStatus.Text = Strings.Status_PlaceDictHint;
-        }
-
-        private static int NaturalCompare(string a, string b)
-        {
-            if (a == null && b == null) return 0;
-            if (a == null) return -1;
-            if (b == null) return 1;
-
-            int i = 0, j = 0;
-            while (i < a.Length && j < b.Length)
-            {
-                char ca = a[i];
-                char cb = b[j];
-
-                if (char.IsDigit(ca) && char.IsDigit(cb))
-                {
-                    int startA = i;
-                    while (i < a.Length && char.IsDigit(a[i])) i++;
-                    int numA = 0;
-                    int.TryParse(a.Substring(startA, i - startA), out numA);
-
-                    int startB = j;
-                    while (j < b.Length && char.IsDigit(b[j])) j++;
-                    int numB = 0;
-                    int.TryParse(b.Substring(startB, j - startB), out numB);
-
-                    if (numA != numB) return numA.CompareTo(numB);
-                }
-                else
-                {
-                    if (ca != cb) return ca.CompareTo(cb);
-                    i++;
-                    j++;
-                }
-            }
-
-            if (i < a.Length) return 1;
-            if (j < b.Length) return -1;
-            return 0;
         }
 
         // ===== 事件 =====
