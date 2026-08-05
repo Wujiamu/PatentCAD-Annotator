@@ -22,6 +22,9 @@ namespace PatentMarker.Palette
         private TextBox _txtSearch;
         private Button _btnReload;
         private Button _btnOpen;
+        private Button _btnPaste;      // v4.0：粘贴识别
+        private Button _btnAddEntry;   // v4.0：新增条目
+        private Button _btnArbitrate;  // v4.0：冲突裁决（检测到 Word 覆盖时点亮）
         private Button _btnConflicts;
         private Button _btnDelete;
         private Button _btnArrow;
@@ -47,6 +50,9 @@ namespace PatentMarker.Palette
         private List<DictDiffEntry> _currentDiff;
         private bool _compareMode;
 
+        // v4.0：冲突裁决标记（状态栏已点亮提示时避免被其他操作覆盖）
+        private bool _conflictFlagged;
+
         public DictPaletteControl()
         {
             InitializeComponent();
@@ -61,6 +67,9 @@ namespace PatentMarker.Palette
         {
             try
             {
+                // v4.0：轮询检测 Word 备份冲突（不弹窗打断，仅状态栏提示 + 裁决按钮点亮）
+                CheckConflictState();
+
                 if (!DictLoader.IsFileChanged()) return;
                 var dict = DictLoader.LoadForCurrentDrawing();
                 if (dict != null)
@@ -203,6 +212,25 @@ namespace PatentMarker.Palette
             _btnOpen.AutoSize = true;
             _btnOpen.Margin = new Padding(0, 0, 4, 2);
 
+            // v4.0：粘贴识别入口 | Paste-recognize entry
+            _btnPaste = new Button();
+            _btnPaste.Text = Strings.Palette_PasteRecognize;
+            _btnPaste.AutoSize = true;
+            _btnPaste.Margin = new Padding(0, 0, 4, 2);
+
+            // v4.0：新增条目入口 | Add-entry entry
+            _btnAddEntry = new Button();
+            _btnAddEntry.Text = Strings.Palette_AddEntry;
+            _btnAddEntry.AutoSize = true;
+            _btnAddEntry.Margin = new Padding(0, 0, 4, 2);
+
+            // v4.0：冲突裁决入口（默认禁用，检测到 Word 备份后点亮）
+            _btnArbitrate = new Button();
+            _btnArbitrate.Text = Strings.Palette_Arbitrate;
+            _btnArbitrate.AutoSize = true;
+            _btnArbitrate.Margin = new Padding(0, 0, 4, 2);
+            _btnArbitrate.Enabled = false;
+
             _btnConflicts = new Button();
             _btnConflicts.Text = Strings.Palette_Conflicts;
             _btnConflicts.AutoSize = true;
@@ -232,11 +260,14 @@ namespace PatentMarker.Palette
             _btnLanguage.Click += new EventHandler(BtnLanguage_Click);
 
             btnPanel.Controls.AddRange(new Control[] {
-                _btnReload, _btnOpen, _btnConflicts, _btnDelete,
+                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnArbitrate, _btnConflicts, _btnDelete,
                 _btnSelectAll, _btnCompare, _btnLanguage
             });
             _btnReload.Click += new EventHandler(BtnReload_Click);
             _btnOpen.Click += new EventHandler(BtnOpen_Click);
+            _btnPaste.Click += new EventHandler(BtnPaste_Click);
+            _btnAddEntry.Click += new EventHandler(BtnAddEntry_Click);
+            _btnArbitrate.Click += new EventHandler(BtnArbitrate_Click);
             _btnConflicts.Click += new EventHandler(BtnConflicts_Click);
             _btnDelete.Click += new EventHandler(BtnDelete_Click);
             _btnSelectAll.Click += new EventHandler(BtnSelectAll_Click);
@@ -302,6 +333,9 @@ namespace PatentMarker.Palette
                 _lblStatus.Text = Strings.Status_Ready;
             if (_btnReload != null) _btnReload.Text = Strings.Palette_Reload;
             if (_btnOpen != null) _btnOpen.Text = Strings.Palette_Open;
+            if (_btnPaste != null) _btnPaste.Text = Strings.Palette_PasteRecognize;
+            if (_btnAddEntry != null) _btnAddEntry.Text = Strings.Palette_AddEntry;
+            if (_btnArbitrate != null) _btnArbitrate.Text = Strings.Palette_Arbitrate;
             if (_btnConflicts != null) _btnConflicts.Text = Strings.Palette_Conflicts;
             if (_btnDelete != null) _btnDelete.Text = Strings.Palette_DeleteLeader;
             if (_btnSelectAll != null) _btnSelectAll.Text = Strings.Palette_SelectAll;
@@ -315,6 +349,13 @@ namespace PatentMarker.Palette
             UpdateArrowButtonText();
             UpdateSplineButtonText();
             UpdatePointsButtonText();
+
+            // v4.0：语言切换后若冲突提示仍点亮，恢复冲突提示文本
+            if (_conflictFlagged && _lblStatus != null)
+            {
+                _lblStatus.Text = Strings.Conflict_StatusDetected;
+                _lblStatus.ForeColor = Color.DarkOrange;
+            }
         }
 
         /// <summary>v2.3：切换语言 | Toggle language</summary>
@@ -598,17 +639,114 @@ namespace PatentMarker.Palette
             PaletteEntry entry = _lstEntries.SelectedItems[0].Tag as PaletteEntry;
             if (entry == null) return;
 
-            PatPaletteCommand.PendingNumber = entry.Number;
-            PatPaletteCommand.PendingName = entry.Name != null ? entry.Name : "";
-            _lblStatus.Text = string.Format(Strings.Status_Loaded, entry.Number);
-
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
-            if (doc != null)
+            // v4.0：双击改为打开编辑对话框（改 number/name、删除）。
+            // 原「双击装填创建引线」交互移至对话框「保存并标注」按钮。
+            if (_currentDict == null)
             {
-                doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
-                    PatPaletteCommand.PendingNumber, PatPaletteCommand.PendingName));
-                doc.SendStringToExecute("PATMARK ", false, false, false);
+                _lblStatus.Text = Strings.Palette_DictNotLoaded;
+                return;
             }
+            string dictPath = DictLoader.CurrentPath ?? DictLoader.ResolveDictPath();
+            if (dictPath == null)
+            {
+                _lblStatus.Text = Strings.Status_NoDictFile;
+                return;
+            }
+
+            DictEntry target = null;
+            foreach (DictEntry de in _currentDict.Entries)
+            {
+                if (de.Number == entry.Number) { target = de; break; }
+            }
+            if (target == null)
+            {
+                _lblStatus.Text = string.Format(Strings.Status_LoadFailed, Strings.Edit_DeleteFailed);
+                return;
+            }
+
+            string oldNumber = target.Number;
+
+            using (EditEntryDialog dlg = new EditEntryDialog(_currentDict, target, dictPath))
+            {
+                DialogResult r = dlg.ShowDialog(this);
+                if (r == DialogResult.OK || r == DialogResult.Abort)
+                {
+                    // 保存 / 删除：刷新面板
+                    var dict = DictLoader.LoadForCurrentDrawing();
+                    if (dict != null) LoadDict(dict);
+                    else ShowNoDict();
+                    _lblStatus.Text = Strings.Status_DictAutoUpdated;
+
+                    // v4.0：编号变更 → 同步图纸标注文字（多条同号全改）+ Regen
+                    if (r == DialogResult.OK && target.Number != oldNumber)
+                    {
+                        RenameLeadersInDrawing(oldNumber, target.Number);
+                    }
+                }
+                else if (r == DialogResult.Yes)
+                {
+                    // 保存并标注：写回已由对话框完成，装填编号后进入创建引线流程
+                    var dict = DictLoader.LoadForCurrentDrawing();
+                    if (dict != null) LoadDict(dict);
+                    else ShowNoDict();
+
+                    // v4.0：编号变更 → 同步图纸标注文字 + Regen
+                    if (target.Number != oldNumber)
+                    {
+                        RenameLeadersInDrawing(oldNumber, target.Number);
+                    }
+
+                    PatPaletteCommand.PendingNumber = target.Number;
+                    PatPaletteCommand.PendingName = target.Name != null ? target.Name : "";
+                    _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
+
+                    var doc = AppAcad.DocumentManager.MdiActiveDocument;
+                    if (doc != null)
+                    {
+                        doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
+                            PatPaletteCommand.PendingNumber, PatPaletteCommand.PendingName));
+                        doc.SendStringToExecute("PATMARK ", false, false, false);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// v4.0：编号变更后同步图纸标注文字（PAT_STYLE 引线文字 oldNumber → newNumber），
+        /// 修改后 Regen 刷新显示。返回修改条数。
+        /// </summary>
+        private int RenameLeadersInDrawing(string oldNumber, string newNumber)
+        {
+            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            if (doc == null) return 0;
+            var db = doc.Database;
+
+            int changed = 0;
+            try
+            {
+                using (Autodesk.AutoCAD.ApplicationServices.DocumentLock docLock = doc.LockDocument())
+                using (AcDb.Transaction tr = db.TransactionManager.StartTransaction())
+                {
+                    AcDb.BlockTable bt = (AcDb.BlockTable)tr.GetObject(db.BlockTableId, AcDb.OpenMode.ForRead);
+                    AcDb.BlockTableRecord btr = (AcDb.BlockTableRecord)tr.GetObject(
+                        bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForRead);
+                    changed = PatEntityHelper.RenameNumberInModelSpace(tr, btr, oldNumber, newNumber);
+                    tr.Commit();
+                }
+
+                if (changed > 0)
+                {
+                    doc.Editor.Regen();
+                    doc.Editor.WriteMessage(string.Format(Strings.Status_NumberSyncedCmd, changed, oldNumber, newNumber));
+                }
+                _lblStatus.Text = string.Format(Strings.Status_NumberSynced, changed, oldNumber, newNumber);
+            }
+            catch (System.Exception ex)
+            {
+                PatentMarkerApp.RawLog("RenameLeadersInDrawing error: " + ex.Message);
+                _lblStatus.Text = string.Format(Strings.Status_NumberSyncFailed, ex.Message);
+            }
+            return changed;
         }
 
         private void BtnReload_Click(object sender, EventArgs e)
@@ -628,6 +766,158 @@ namespace PatentMarker.Palette
             catch (System.Exception ex)
             {
                 _lblStatus.Text = string.Format(Strings.Status_LoadFailed, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.0：打开粘贴识别对话框；写回成功后刷新面板列表。
+        /// </summary>
+        private void BtnPaste_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                using (PasteRecognizeDialog dlg = new PasteRecognizeDialog())
+                {
+                    DialogResult r = dlg.ShowDialog(this);
+                    if (r == DialogResult.OK)
+                    {
+                        var dict = DictLoader.LoadForCurrentDrawing();
+                        if (dict != null) LoadDict(dict);
+                        else ShowNoDict();
+                        _lblStatus.Text = Strings.Status_DictAutoUpdated;
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                _lblStatus.Text = string.Format(Strings.Status_LoadFailed, ex.Message);
+                PatentMarkerApp.RawLog("BtnPaste error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.0：打开新增条目对话框；写回成功后刷新面板列表。
+        /// </summary>
+        private void BtnAddEntry_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_currentDict == null)
+                {
+                    _lblStatus.Text = Strings.Palette_DictNotLoaded;
+                    return;
+                }
+                string dictPath = DictLoader.CurrentPath ?? DictLoader.ResolveDictPath();
+                if (dictPath == null)
+                {
+                    _lblStatus.Text = Strings.Status_NoDictFile;
+                    return;
+                }
+
+                using (EditEntryDialog dlg = new EditEntryDialog(_currentDict, null, dictPath))
+                {
+                    DialogResult r = dlg.ShowDialog(this);
+                    if (r == DialogResult.OK)
+                    {
+                        var dict = DictLoader.LoadForCurrentDrawing();
+                        if (dict != null) LoadDict(dict);
+                        else ShowNoDict();
+                        _lblStatus.Text = Strings.Status_DictAutoUpdated;
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                _lblStatus.Text = string.Format(Strings.Status_LoadFailed, ex.Message);
+                PatentMarkerApp.RawLog("BtnAddEntry error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.0：轮询检测冲突待裁决状态（2s 定时器驱动，不弹窗打断）。
+        /// 检测到 Word 备份且当前 JSON 无 CAD 标记时：点亮裁决按钮 + 状态栏橙色提示；
+        /// 冲突解除（裁决完成或用户已在 Word 端处理）后熄灭按钮并复位状态栏。
+        /// </summary>
+        private void CheckConflictState()
+        {
+            try
+            {
+                string dictPath = DictLoader.CurrentPath ?? DictLoader.ResolveDictPath();
+                bool pending = DictConflict.IsPendingConflict(_currentDict, dictPath);
+
+                if (pending && !_conflictFlagged)
+                {
+                    _conflictFlagged = true;
+                    _btnArbitrate.Enabled = true;
+                    _lblStatus.Text = Strings.Conflict_StatusDetected;
+                    _lblStatus.ForeColor = Color.DarkOrange;
+                }
+                else if (!pending && _conflictFlagged)
+                {
+                    _conflictFlagged = false;
+                    _btnArbitrate.Enabled = false;
+                    _lblStatus.Text = Strings.Status_Ready;
+                    _lblStatus.ForeColor = SystemColors.ControlText;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                PatentMarkerApp.RawLog("CheckConflictState error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// v4.0：打开冲突裁决对话框（采用 Word 版 / 恢复 CAD 版 / 稍后再说）。
+        /// 裁决动作由 DictConflict 完成（文件操作），本方法负责刷新面板。
+        /// </summary>
+        private void BtnArbitrate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string dictPath = DictLoader.CurrentPath ?? DictLoader.ResolveDictPath();
+                if (dictPath == null)
+                {
+                    _lblStatus.Text = Strings.Status_NoDictFile;
+                    return;
+                }
+                if (!DictConflict.IsPendingConflict(_currentDict, dictPath))
+                {
+                    _conflictFlagged = false;
+                    _btnArbitrate.Enabled = false;
+                    return;
+                }
+
+                using (ArbitrateDialog dlg = new ArbitrateDialog(dictPath))
+                {
+                    DialogResult r = dlg.ShowDialog(this);
+                    if (r == DialogResult.OK)
+                    {
+                        // 采用 Word 版：备份已删，刷新面板显示 Word 最新导出
+                        var dict = DictLoader.LoadForCurrentDrawing();
+                        if (dict != null) LoadDict(dict);
+                        else ShowNoDict();
+                        _lblStatus.Text = Strings.Conflict_KeepWordOk;
+                        _lblStatus.ForeColor = SystemColors.ControlText;
+                    }
+                    else if (r == DialogResult.Yes)
+                    {
+                        // 恢复 CAD 版：dict.json 已恢复为 CAD 版并清除标记
+                        var dict = DictLoader.LoadForCurrentDrawing();
+                        if (dict != null) LoadDict(dict);
+                        else ShowNoDict();
+                        _lblStatus.Text = Strings.Conflict_RestoreOk;
+                        _lblStatus.ForeColor = SystemColors.ControlText;
+                    }
+                    // Cancel = 稍后再说：保持现状，下次轮询继续提示
+                }
+
+                _conflictFlagged = false;
+                _btnArbitrate.Enabled = false;
+            }
+            catch (System.Exception ex)
+            {
+                _lblStatus.Text = string.Format(Strings.Conflict_Failed, ex.Message);
+                PatentMarkerApp.RawLog("BtnArbitrate error: " + ex.Message);
             }
         }
 

@@ -52,8 +52,6 @@ Function L(t)
                            "（AutoCAD 2013/2014）" & vbCrLf & _
                            "========================================")
     t = Replace(t, "ERROR: PatentMarker.dll not found in ", "错误：找不到 PatentMarker.dll，路径：")
-    t = Replace(t, "WARNING: Newtonsoft.Json.dll not found. Copy it from packages folder.", _
-                           "警告：找不到 Newtonsoft.Json.dll，请从 packages 目录复制。")
     t = Replace(t, "ERROR: AutoCAD 2013/2014 (R19.x) not found in registry", _
                            "错误：注册表中未找到 AutoCAD 2013/2014 (R19.x)")
     t = Replace(t, ">>> Restart AutoCAD 2013/2014.", ">>> 请重启 AutoCAD 2013/2014。")
@@ -91,12 +89,7 @@ If Not fso.FileExists(dllPath) Then
 End If
 output = output & "DLL: " & dllPath & vbCrLf
 
-' Also check Newtonsoft.Json.dll
-Dim jsonDll
-jsonDll = scriptDir & "\Newtonsoft.Json.dll"
-If Not fso.FileExists(jsonDll) Then
-    output = output & "WARNING: Newtonsoft.Json.dll not found. Copy it from packages folder." & vbCrLf
-End If
+' Newtonsoft.Json merged into PatentMarker.dll via ILRepack (single-file deploy), no extra DLL needed.
 
 ' --- 2. Scan registry for ACAD 2013/2014 ---
 Dim versionCandidates(1)

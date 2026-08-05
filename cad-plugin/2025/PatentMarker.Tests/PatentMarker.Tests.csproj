@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- 直接包含 2025 版源码文件进行测试（避免引用 AutoCAD SDK DLL） -->
+  <ItemGroup>
+    <Compile Include="..\PatentMarker\IO\DictEntry.cs" Link="IO\DictEntry.cs" />
+    <Compile Include="..\PatentMarker\IO\DictDiff.cs" Link="IO\DictDiff.cs" />
+    <Compile Include="..\PatentMarker\IO\MarkingTextParser.cs" Link="IO\MarkingTextParser.cs" />
+    <Compile Include="..\PatentMarker\IO\DictWriter.cs" Link="IO\DictWriter.cs" />
+    <Compile Include="..\PatentMarker\IO\DictConflict.cs" Link="IO\DictConflict.cs" />
+    <Compile Include="..\PatentMarker\I18n\Language.cs" Link="I18n\Language.cs" />
+    <Compile Include="..\PatentMarker\I18n\Strings.cs" Link="I18n\Strings.cs" />
+  </ItemGroup>
+
+</Project>

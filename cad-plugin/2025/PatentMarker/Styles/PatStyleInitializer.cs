@@ -43,6 +43,14 @@ namespace PatentMarker.Styles
 
             mlDict.UpgradeOpen();
             MLeaderStyle style = new MLeaderStyle();
+
+            // 修复 eOwnerNotSet：必须先入库（SetAt + AddNewlyCreatedDBObject）再设置属性，
+            // 未入库对象设置 Name 等属性会抛 Autodesk.AutoCAD.Runtime.Exception: eOwnerNotSet。
+            // 注意：2013 SDK 的 MLeaderStyle 无公开 SetDatabaseDefaults，且属性均显式赋值，
+            // 故不调用（2013/2015/2025 三版保持一致）。
+            mlDict.SetAt(StyleName, style);
+            tr.AddNewlyCreatedDBObject(style, true);
+
             style.Name = StyleName;
 
             // 内容类型：MText
@@ -66,9 +74,6 @@ namespace PatentMarker.Styles
             ObjectId tsId = GetOrCreateTimesRoman(db, tr);
             if (!tsId.IsNull)
                 style.TextStyleId = tsId;
-
-            mlDict.SetAt(StyleName, style);
-            tr.AddNewlyCreatedDBObject(style, true);
         }
 
         /// <summary>

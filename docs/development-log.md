@@ -4,6 +4,40 @@
 
 ---
 
+## v4.0 (2026-08-04)
+
+- Verification and hardening (2026-08-05): added 93 automated tests; all five edition projects compile locally. `DictWriter` now clones merge inputs, repairs null model collections, and uses atomic replacement for existing dictionary files; `DictLoader` normalizes explicit null/nested values before UI use. Backup names now require the documented timestamp format, and CAD restore validates a backup before replacing the current dictionary. Edit/delete dialogs roll back in-memory changes when disk write-back fails. The 2007 project target is aligned to .NET 2.0. Deployment DLLs were rebuilt for all five editions, with Newtonsoft.Json re-merged for 2013/2015. AutoCAD in-process workflow still requires manual validation in each installed AutoCAD year.
+
+- VBA live verification (2026-08-05): Word COM opened the prepared `MU26005942.2稿(1).docx`, imported and executed the six actual VBA modules from all five deployment packages, and produced valid UTF-8 JSON. Fixed Word's CR-only paragraph separators not being recognized when locating the marking section; fixed uppercase suffixes such as `1342A`/`1342B` being lost or misclassified. The prepared document now exports 24 entries with 0 warnings/conflicts; CAD `MarkingTextParser` and all VBA copies are synchronized, with regression tests for CR-only sections and uppercase suffixes. A local eight-document corpus baseline was regenerated from the actual VBA modules; the 2025 test suite passes 95/95.
+
+- 新增 CAD 端字典编辑闭环（全部 5 个版本同步）：
+  - **粘贴识别**：面板新增「粘贴识别」按钮，从 Word 说明书粘贴附图标记段落，C# 移植 VBA 识别引擎（`MarkingTextParser`：段落定位 + 表格预处理 + 多格式解析），预览表格可编辑，支持「覆盖整个字典 / 按编号合并」两种写回方式
+  - **编辑对话框**：双击面板条目打开，支持改编号 / 改名称 / 新增 / 删除，编号冲突（忽略大小写）即时校验；「保存并标注」保存后直接创建引线
+  - **实体联动**：改号后自动更新图纸内旧编号的 PAT 引线文字（2013/2015/2025 走 MLeader，2007/2010 走 Leader 的 MText/DBText 两种 annotation）并 `Regen`
+  - **冲突裁决**：Word 端导出前检测旧字典的 `modified_by: cad` 标记，若 CAD 曾修改则备份为 `<主名>.dict.json.word-<时间戳>.bak`（只保留最新一个）；CAD 面板轮询检测到 Word 已覆盖时状态栏提示并点亮「裁决」按钮，弹窗三选：采用 Word 版（删备份）/ 恢复 CAD 版（备份覆盖回 + 清 CAD 标记）/ 稍后再说
+- 字典格式 v4.0：metadata 新增可选 `modified_by` / `modified_at`（CAD 手动修改标记），旧字典文件完全兼容
+- 写回通道：CAD 端 `DictWriter` 输出与 VBA `JsonWriter` 逐字符兼容（2 空格缩进、\r\n、UTF-8 无 BOM、键顺序固定）；2007/2010 因 SimpleJson 仅解析不序列化，手写实现同格式序列化器
+- 2007/2010 平移要点：目标 .NET 3.5 无 LINQ；降级 `out int` 内联声明与自动属性初始化器；编译用 `MSBuild /tv:4.0`（否则回退 C# 2.0 编译器）；2010 版 csproj 额外引用 PresentationCore（SDK 的 PaletteSet 依赖 WPF IWin32Window）
+- 验证：2025 版识别器单测 61 项全过 + 9 份真实语料 C# vs VBA 预期一致；2013/2015/2010/2007 本地 MSBuild 编译通过；2013/2015 重新 ILRepack 合并 Newtonsoft.Json 并更新部署包；2007/2010 组内共享文件 SHA256 一致
+- 5 套部署包同步：`PatentMarker.dll` 全部替换为 v4.0 编译产物；6 个 VBA 模块跨包 SHA256 一致（`AutoExport.bas` 新增导出前备份逻辑）
+- 新增内部实施计划文档 `docs/v4.0-cad-edit-plan.md`（阶段任务跟踪，与 development-log / version-plan 配套）
+
+---
+
+## v3.2 (2026-08-04)
+
+- 修复 2013/2015/2025 创建 MLeaderStyle 时未入库先设属性的 `eOwnerNotSet` 异常（`PatStyleInitializer` 改为先 `SetAt` + `AddNewlyCreatedDBObject` 再设置属性），双击字典面板条目触发 PATMARK 不再中断
+- 2013/2015 改为单文件部署：编译后经 ILRepack 将 Newtonsoft.Json 13.0.3 合并进 `PatentMarker.dll`，安装不再要求/附带 `Newtonsoft.Json.dll`（移除 `install-2013.vbs`、`install-2015.vbs` 的依赖检查，删除两套部署包中的旧 DLL）
+- 修复 VBA `Patterns.bas` 模式 1 分隔符类缺全角分号 `；` 的问题：分号/逗号混用（如 `3叶片，31第一叶片，…；4环状部；5沟槽。`）时仅识别逗号条目；补 `；` 后 18 条示例全部命中
+- 验证“附图标记说明如下：”冒号前带前缀文字（如“在附图1-7中，附图标记说明如下：”）的段落定位与提取正确
+- 5 套部署包 `vba/Patterns.bas` 同步更新（GBK 编码、SHA256 一致）；2013/2015 部署包 `PatentMarker.dll` 替换为 ILRepack 合并版
+- 2013/2015 部署包 `README.txt` 重写为 UTF-8：移除 `Newtonsoft.Json.dll` 依赖说明，注明单文件部署
+- `build.ps1` 静态检查更新：2013/2015/2025 部署包不得再含外部 `Newtonsoft.Json.dll`
+- 本地编译验证：2013（.NET 4.0 / MSB3274 规避：HintPath 改 `lib/net35`）、2015（.NET 4.5）、2025（net8.0）全部通过；ILRepack 合并后程序集不再引用外部 Newtonsoft.Json（类型已内嵌）
+- 修正 2013/2015 `PatentMarker.csproj` 的 `Newtonsoft.Json` HintPath（`..\packages` → `..\..\packages`，此前命令行 MSBuild 无法解析引用）
+
+---
+
 ## v3.1 (2026-08-03)
 
 - 新增三点模式：面板新增「点数:无限/三点」切换按钮，与线型开关正交

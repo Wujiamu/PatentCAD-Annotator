@@ -50,7 +50,6 @@ Function L(t)
                            "（AutoCAD 2015-2024）" & vbCrLf & _
                            "========================================")
     t = Replace(t, "ERROR: PatentMarker.dll not found in ", "错误：找不到 PatentMarker.dll，路径：")
-    t = Replace(t, "WARNING: Newtonsoft.Json.dll not found.", "警告：找不到 Newtonsoft.Json.dll。")
     t = Replace(t, "ERROR: AutoCAD 2015-2024 not found in registry", _
                            "错误：注册表中未找到 AutoCAD 2015-2024")
     t = Replace(t, ">>> Restart AutoCAD.", ">>> 请重启 AutoCAD。")
@@ -78,11 +77,7 @@ If Not fso.FileExists(dllPath) Then
 End If
 output = output & "DLL: " & dllPath & vbCrLf
 
-Dim jsonDll
-jsonDll = scriptDir & "\Newtonsoft.Json.dll"
-If Not fso.FileExists(jsonDll) Then
-    output = output & "WARNING: Newtonsoft.Json.dll not found." & vbCrLf
-End If
+' Newtonsoft.Json merged into PatentMarker.dll via ILRepack (single-file deploy), no extra DLL needed.
 
 ' --- 2. Scan registry for ACAD 2015-2024 (R20.x - R24.x) ---
 Dim versionCandidates(9)

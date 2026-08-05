@@ -12,8 +12,8 @@ PatentCAD-Annotator 面向 AutoCAD 2007 至 2026+ 全部版本，需覆盖 Win7 
 |---|---|---|---|---|---|
 | `cad-plugin/2007/` | 2007, 2008, 2009 | 2.0 | Win7 | Leader + MText | SimpleJson（零依赖） |
 | `cad-plugin/2010/` | 2010, 2011, 2012 | 3.5 | Win7 | Leader + MText | SimpleJson（零依赖） |
-| `cad-plugin/2013/` | 2013, 2014 | 4.0 | Win7 | MLeader | Newtonsoft.Json |
-| `cad-plugin/2015/` | 2015—2024 | 4.5 | Win7 | MLeader | Newtonsoft.Json |
+| `cad-plugin/2013/` | 2013, 2014 | 4.0 | Win7 | MLeader | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2015/` | 2015—2024 | 4.5 | Win7 | MLeader | Newtonsoft.Json（ILRepack 合并） |
 | `cad-plugin/2025/` | 2025, 2026+ | 8.0 | Win10+ | MLeader | System.Text.Json（内置） |
 
 ## 分版理由

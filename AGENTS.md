@@ -14,8 +14,8 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 |------|-------------|------|---------|---------|
 | `cad-plugin/2007/` | 2007 ~ 2009 | 2.0（无 LINQ） | Leader + MText | SimpleJson（零依赖） |
 | `cad-plugin/2010/` | 2010 ~ 2012 | 3.5 | Leader + MText | SimpleJson（零依赖） |
-| `cad-plugin/2013/` | 2013 ~ 2014 | 4.0 | MLeader | Newtonsoft.Json |
-| `cad-plugin/2015/` | 2015 ~ 2024 | 4.5 | MLeader | Newtonsoft.Json |
+| `cad-plugin/2013/` | 2013 ~ 2014 | 4.0 | MLeader | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2015/` | 2015 ~ 2024 | 4.5 | MLeader | Newtonsoft.Json（ILRepack 合并） |
 | `cad-plugin/2025/` | 2025 ~ 2026+ | 8.0（Win10+） | MLeader | System.Text.Json（内置） |
 
 **每个版本的 DLL 只能在其对应 AutoCAD 年份区间内运行。** 跨版本混装会因 CLR 不兼容、API 缺失或 `MissingMethodException` 无法加载。修改任一版本代码前，先确认该版本的 .NET 目标框架与标注 API 类型。
@@ -36,8 +36,8 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 |------|---------|---------|---------|
 | 2007 | `install-2007.bat` + `install-2007.vbs` | `uninstall-2007.vbs` | 无 |
 | 2010 | `install-2010.vbs` | `uninstall-2010.vbs` | 无 |
-| 2013 | `install-2013.vbs` | `uninstall-2013.vbs` | `Newtonsoft.Json.dll` |
-| 2015 | `install-2015.vbs` | 无 | `Newtonsoft.Json.dll` |
+| 2013 | `install-2013.vbs` | `uninstall-2013.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
+| 2015 | `install-2015.vbs` | 无 | 无（Newtonsoft.Json 已合并进 DLL） |
 | 2025 | `install-2025.ps1`（PowerShell） | 无 | 无（System.Text.Json 内置） |
 
 - 修改任一部署包脚本时，评估是否需同步到其他 4 套；2025 版用 `.ps1`，其余用 `.vbs`，脚本语法不通用
@@ -74,7 +74,10 @@ API 名称不确定时，用 `System.Reflection.MetadataLoadContext` 加载 `Pat
 ## 7. 编译与验证
 
 - 各版本编译前需将 SDK DLL 放入 `PatentMarker/lib/`：2007/2010 需 `acdbmgd.dll`、`acmgd.dll`；2013/2015/2025 另需 `accoremgd.dll`
-- 2013/2015 版额外依赖 NuGet 包 Newtonsoft.Json 13.0.3；2025 版零外部依赖
+- 2013/2015 版依赖 NuGet 包 Newtonsoft.Json 13.0.3（编译时引用），**发布前必须用 ILRepack 合并进 `PatentMarker.dll`**（单文件部署，安装脚本不再检查/要求外部 DLL）；2025 版零外部依赖
+  - 合并命令示例：`ILRepack.exe /out:PatentMarker.merged.dll /target:library /internalize /lib:lib PatentMarker.dll ..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll`（2013 用 net35 版，2015 用 net45 版；`/lib` 指向 SDK DLL 目录）
+  - 2013 目标 v4.0：13.0.x 包 `lib/net40` 的 DLL 实际 TFM 为 v4.5，编译会报 MSB3274，必须引用 `lib/net35`（无 TFM 标记、CLR4 兼容）；HintPath 为 `..\..\packages\...`（packages 在 `cad-plugin/packages`）
+  - 合并后必须确认程序集不再引用外部 Newtonsoft.Json（`GetReferencedAssemblies()` 无该条目）
 - **项目无自动化测试与 CI 编译检查**：验证手段为本地编译 + 在对应 AutoCAD 版本中实测（`NETLOAD` 加载 DLL）
 - 不得声称"已通过 CI/测试验证"；只报告实际执行的编译或实测结果
 
