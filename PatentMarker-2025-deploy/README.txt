@@ -10,6 +10,14 @@ PatentMarker 2025 部署说明
   2. 运行 install-2025.ps1（右键 → 使用 PowerShell 运行）
   3. 重启 AutoCAD
 
+安装脚本说明：
+  - 脚本会优先写入当前用户 HKCU 注册表，不需要管理员权限
+  - 脚本会在部署目录生成 load-patent-marker.lsp 兜底文件
+  - 如果窗口闪退，请从 PowerShell 运行：
+      powershell.exe -ExecutionPolicy Bypass -File .\install-2025.ps1
+    脚本会停在最后显示错误；日志保存在 install-2025.log
+  - 也可以使用 -NoPause 供批处理或自动化调用
+
 方式 B：ApplicationPlugins Bundle
   1. 将 PatentMarker.dll 复制到 PatentMarker.bundle\Contents\ 目录
   2. 将整个 PatentMarker.bundle 文件夹复制到：
@@ -23,6 +31,8 @@ PatentMarker 2025 部署说明
   - .NET 8 不支持 Win7，最低要求 Windows 10 1607
   - PatentMarker.dll 是单文件部署，无其他依赖
   - Bundle 方式支持自动更新（替换 DLL 即可）
+  - 注册表自动加载未生效时，在 AutoCAD 中运行 APPLOAD，选择 load-patent-marker.lsp；
+    或直接运行 NETLOAD，选择 PatentMarker.dll
 
 命令：
   BZ   (PATPALETTE)    打开字典面板
