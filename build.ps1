@@ -7,6 +7,8 @@
 #   .\build.ps1 -Version all           Check/build all 5 editions
 #   .\build.ps1 -Check                 Doctor mode: check environment only
 #   .\build.ps1 -Structure             Structure integrity check (CI, no SDK DLL needed)
+#   .\build.ps1 -Simulation            Run simulated host contract tests for 2010/2013/2015
+#   .\check-autocad-host.ps1            Read-only AutoCAD/COM/licensing prerequisite inventory
 #
 # Notes:
 #   - AutoCAD SDK DLLs (acdbmgd.dll etc.) are NOT in the repo (licensing).
@@ -19,7 +21,8 @@ param(
     [string]$Version = "2025",
     [switch]$Check,
     [switch]$Structure,
-    [switch]$Static
+    [switch]$Static,
+    [switch]$Simulation
 )
 
 $ErrorActionPreference = "Stop"
@@ -65,6 +68,39 @@ function Get-MissingDlls($ver) {
 
 function Test-CommandExists($cmd) {
     return [bool](Get-Command $cmd -ErrorAction SilentlyContinue)
+}
+
+# Locate MSBuild even when Visual Studio Build Tools is installed without
+# adding MSBuild.exe to PATH. Keep the fallback explicit so legacy editions
+# remain buildable from a plain PowerShell prompt.
+function Get-MSBuildPath {
+    $command = Get-Command msbuild -ErrorAction SilentlyContinue
+    if ($command -and $command.Source) {
+        return $command.Source
+    }
+
+    $vswhereCandidates = @(
+        (Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"),
+        (Join-Path $env:ProgramFiles "Microsoft Visual Studio\Installer\vswhere.exe")
+    )
+    foreach ($vswhere in $vswhereCandidates) {
+        if (-not (Test-Path -LiteralPath $vswhere)) { continue }
+        $installPath = & $vswhere -latest -products * -requires Microsoft.Component.MSBuild -property installationPath 2>$null
+        if ($LASTEXITCODE -eq 0 -and $installPath) {
+            $candidate = Join-Path ($installPath | Select-Object -First 1) "MSBuild\Current\Bin\MSBuild.exe"
+            if (Test-Path -LiteralPath $candidate) { return $candidate }
+        }
+    }
+
+    $knownCandidates = @(
+        "C:\BuildTools\MSBuild\Current\Bin\MSBuild.exe",
+        "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe",
+        "C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\MSBuild.exe"
+    )
+    foreach ($candidate in $knownCandidates) {
+        if (Test-Path -LiteralPath $candidate) { return $candidate }
+    }
+    return $null
 }
 
 # ----------------------------------------------------------------------------
@@ -116,8 +152,14 @@ function Invoke-StructureCheck {
         }
 
         if ($missingSrc -eq 0) { Write-Ok "$ver : csproj parseable, source refs complete" } else { $failCount += $missingSrc }
-        if (-not (Test-Path $deployDll)) { Write-Warn2 "$ver : deploy package missing PatentMarker.dll" }
-        if ($missingVba.Count -gt 0) { Write-Warn2 "$ver : deploy package missing VBA modules - $($missingVba -join ', ')" }
+        if (-not (Test-Path $deployDll)) {
+            Write-Err2 "$ver : deploy package missing PatentMarker.dll"
+            $failCount++
+        }
+        if ($missingVba.Count -gt 0) {
+            Write-Err2 "$ver : deploy package missing VBA modules - $($missingVba -join ', ')"
+            $failCount += $missingVba.Count
+        }
     }
 
     Write-Section "Structure check result"
@@ -232,6 +274,9 @@ function Invoke-StaticCheck {
         "I18n\Strings.cs",
         "Styles\PatStyleInitializer.cs",
         "IO\ConfigLoader.cs",
+        "IO\NumberIdentity.cs",
+        "IO\PatSettings.cs",
+        "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
         "IO\DictDiff.cs",
         "IO\PatEntityHelper.cs"
@@ -271,6 +316,9 @@ function Invoke-StaticCheck {
         "I18n\Strings.cs",
         "Styles\PatStyleInitializer.cs",
         "IO\ConfigLoader.cs",
+        "IO\NumberIdentity.cs",
+        "IO\PatSettings.cs",
+        "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
         "IO\DictDiff.cs",
         "IO\PatEntityHelper.cs"
@@ -292,6 +340,25 @@ function Invoke-StaticCheck {
         $warnCount += $driftCount2
     }
 
+    # ---- 3b. Active-document host boundary ----
+    Write-Host "`n  --- Active-document host boundary ---"
+    $boundaryViolations = 0
+    foreach ($ver in $script:DllMap.Keys) {
+        $sourceFiles = Get-ChildItem -LiteralPath (Get-ProjectDir $ver) -Recurse -File -Filter "*.cs" |
+            Where-Object { $_.Name -ne "RuntimeHost.cs" }
+        $directReads = $sourceFiles | Select-String -Pattern "\bMdiActiveDocument\b" -AllMatches -ErrorAction SilentlyContinue
+        if ($directReads) {
+            Write-Err2 "$ver : direct MdiActiveDocument read found outside IO\\RuntimeHost.cs"
+            $directReads | ForEach-Object { Write-Host "         $($_.Path):$($_.LineNumber)" }
+            $boundaryViolations++
+        }
+    }
+    if ($boundaryViolations -eq 0) {
+        Write-Ok "All editions route active-document reads through IO/RuntimeHost.cs"
+    } else {
+        $failCount += $boundaryViolations
+    }
+
     # ---- 4. Deploy package version-specific checks ----
     Write-Host "`n  --- Deploy package version-specific checks ---"
     # 2013/2015/2025: Newtonsoft.Json must be merged into PatentMarker.dll (single-file deploy)
@@ -299,8 +366,8 @@ function Invoke-StaticCheck {
     foreach ($ver in @("2013","2015","2025")) {
         $nj = Join-Path $root "PatentMarker-$ver-deploy\Newtonsoft.Json.dll"
         if (Test-Path $nj) {
-            Write-Warn2 "$ver : Newtonsoft.Json.dll found but must be merged into PatentMarker.dll (single-file deploy)"
-            $warnCount++
+            Write-Err2 "$ver : Newtonsoft.Json.dll found but must be merged into PatentMarker.dll (single-file deploy)"
+            $failCount++
         } else {
             Write-Ok "$ver : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)"
         }
@@ -318,6 +385,40 @@ function Invoke-StaticCheck {
         Write-Err2 "Found $failCount error(s) and $warnCount warning(s). Fix errors and retry."
         exit 1
     }
+}
+
+# ----------------------------------------------------------------------------
+# Simulated host contract tests (no Autodesk SDK DLL required)
+# ----------------------------------------------------------------------------
+function Invoke-SimulationTests {
+    Write-Section "Simulated host contract tests"
+    $testRoot = Join-Path $root "cad-plugin\RuntimeContract.Tests"
+    if (-not (Test-Path -LiteralPath $testRoot)) {
+        Write-Err2 "Simulation test directory not found: $testRoot"
+        exit 1
+    }
+
+    $projects = Get-ChildItem -LiteralPath $testRoot -Filter "*.Tests.csproj" -File |
+        Sort-Object Name
+    if ($projects.Count -eq 0) {
+        Write-Err2 "No simulated contract test projects found."
+        exit 1
+    }
+
+    $allOk = $true
+    foreach ($project in $projects) {
+        Write-Host "`n--- $($project.BaseName) ---"
+        & dotnet test $project.FullName --configuration Release --nologo -v minimal
+        if ($LASTEXITCODE -ne 0) { $allOk = $false }
+    }
+
+    if ($allOk) {
+        Write-Ok "All simulated host contract tests passed"
+        exit 0
+    }
+
+    Write-Err2 "One or more simulated host contract test projects failed."
+    exit 1
 }
 
 # ----------------------------------------------------------------------------
@@ -356,8 +457,9 @@ function Invoke-Doctor($ver) {
             return $false
         }
     } else {
-        if (Test-CommandExists "msbuild") {
-            Write-Ok "MSBuild available"
+        $msbuildPath = Get-MSBuildPath
+        if ($msbuildPath) {
+            Write-Ok "MSBuild available ($msbuildPath)"
         } else {
             Write-Warn2 "MSBuild not found. Edition $ver uses a legacy csproj and needs MSBuild from Visual Studio or Build Tools."
             return $false
@@ -391,24 +493,32 @@ function Invoke-BuildVersion($ver) {
         }
         Push-Location $projDir
         try {
-            dotnet build -c Release --nologo -v minimal
-            $ok = ($LASTEXITCODE -eq 0)
+            $buildOutput = dotnet build -c Release --nologo -v minimal 2>&1
+            $buildExit = $LASTEXITCODE
+            $buildOutput | ForEach-Object { Write-Host $_ }
+            $ok = ($buildExit -eq 0)
         } finally {
             Pop-Location
         }
         if ($ok) { Write-Ok "Edition $ver built successfully"; return $true }
-        else { Write-Err2 "Edition $ver build failed (exit $LASTEXITCODE)"; return $false }
+        else { Write-Err2 "Edition $ver build failed (exit $buildExit)"; return $false }
     } else {
-        if (-not (Test-CommandExists "msbuild")) {
+        $msbuildPath = Get-MSBuildPath
+        if (-not $msbuildPath) {
             Write-Warn2 "MSBuild not found; cannot auto-build edition $ver (legacy csproj)."
             Write-Host "         Open cad-plugin\$ver\PatentMarker\PatentMarker.csproj in Visual Studio to build manually." -ForegroundColor Yellow
             return $false
         }
         $csproj = Join-Path $projDir "PatentMarker.csproj"
-        & msbuild $csproj /t:Build /p:Configuration=Release /v:minimal /nologo
-        $ok = ($LASTEXITCODE -eq 0)
+        # These legacy projects use packages.config/direct assembly references;
+        # do not let stale SDK-style project.assets.json files trigger NuGet
+        # runtime-identifier validation during a plain MSBuild build.
+        $buildOutput = & $msbuildPath $csproj /t:Build /p:Configuration=Release /p:ResolveNuGetPackages=false /v:minimal /nologo 2>&1
+        $buildExit = $LASTEXITCODE
+        $buildOutput | ForEach-Object { Write-Host $_ }
+        $ok = ($buildExit -eq 0)
         if ($ok) { Write-Ok "Edition $ver built successfully"; return $true }
-        else { Write-Err2 "Edition $ver build failed (exit $LASTEXITCODE)"; return $false }
+        else { Write-Err2 "Edition $ver build failed (exit $buildExit)"; return $false }
     }
 }
 
@@ -423,6 +533,11 @@ if ($Structure) {
 
 if ($Static) {
     Invoke-StaticCheck
+    return
+}
+
+if ($Simulation) {
+    Invoke-SimulationTests
     return
 }
 

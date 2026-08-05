@@ -55,16 +55,59 @@ namespace PatentMarker.IO
         private static DateTime _cachedTime = DateTime.MinValue;
         // v2.2：上一次的字典快照（文件变化时由当前缓存转入）。null 表示无对比基线。
         private static DictModel _previousModel;
+        private static readonly Dictionary<string, DictModel> _modelsByPath = new Dictionary<string, DictModel>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, DateTime> _timesByPath = new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, DictModel> _previousByPath = new Dictionary<string, DictModel>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, string> _dictPathByDrawing = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        private static string _activeKey;
+
+        private static string CacheKey(string path)
+        {
+            try { return Path.GetFullPath(path); }
+            catch { return path; }
+        }
+
+        private static void ClearActive()
+        {
+            _cachedModel = null;
+            _cachedPath = null;
+            _cachedTime = DateTime.MinValue;
+            _previousModel = null;
+            _activeKey = null;
+        }
+
+        private static void Activate(string path)
+        {
+            string key = CacheKey(path);
+            _activeKey = key;
+            _cachedPath = path;
+            DictModel model;
+            if (_modelsByPath.TryGetValue(key, out model))
+            {
+                _cachedModel = model;
+                _cachedTime = _timesByPath[key];
+                _previousByPath.TryGetValue(key, out _previousModel);
+            }
+            else
+            {
+                _cachedModel = null;
+                _cachedTime = DateTime.MinValue;
+                _previousModel = null;
+            }
+        }
 
         public static bool HasCache { get { return _cachedModel != null; } }
         public static DictModel PreviousModel { get { return _previousModel; } }
 
         public static void InvalidateCache()
         {
-            _cachedModel = null;
-            _cachedPath = null;
-            _cachedTime = DateTime.MinValue;
-            _previousModel = null;
+            if (_activeKey != null)
+            {
+                _modelsByPath.Remove(_activeKey);
+                _timesByPath.Remove(_activeKey);
+                _previousByPath.Remove(_activeKey);
+            }
+            ClearActive();
         }
 
         /// <summary>
@@ -72,6 +115,8 @@ namespace PatentMarker.IO
         /// </summary>
         public static void ClearPrevious()
         {
+            if (_activeKey != null)
+                _previousByPath.Remove(_activeKey);
             _previousModel = null;
         }
 
@@ -91,11 +136,14 @@ namespace PatentMarker.IO
         /// </summary>
         public static void NotifySelfWrite(DictModel model, string path)
         {
-            _cachedModel = model;
-            _cachedPath = path;
-            try { _cachedTime = File.GetLastWriteTime(path); }
-            catch { _cachedTime = DateTime.Now; }
-            _previousModel = null;
+            string key = CacheKey(path);
+            DateTime writeTime;
+            try { writeTime = File.GetLastWriteTime(path); }
+            catch { writeTime = DateTime.Now; }
+            _modelsByPath[key] = model;
+            _timesByPath[key] = writeTime;
+            _previousByPath.Remove(key);
+            Activate(path);
         }
 
         public static bool IsFileChanged()
@@ -103,12 +151,14 @@ namespace PatentMarker.IO
             string path = ResolveDictPath();
             if (path == null) return _cachedModel != null;
             if (!File.Exists(path)) return _cachedModel != null;
-            if (_cachedPath == null || !_cachedPath.Equals(path, StringComparison.OrdinalIgnoreCase))
+            string key = CacheKey(path);
+            DateTime cachedTime;
+            if (!_timesByPath.TryGetValue(key, out cachedTime))
                 return true;
             try
             {
                 DateTime wt = File.GetLastWriteTime(path);
-                return wt != _cachedTime;
+                return wt != cachedTime;
             }
             catch
             {
@@ -116,55 +166,57 @@ namespace PatentMarker.IO
             }
         }
 
-        public static DictModel LoadForCurrentDrawing()
+        private static DictModel LoadForCurrentDrawingPerPath()
         {
             string path = ResolveDictPath();
             if (path == null)
             {
-                InvalidateCache();
+                ClearActive();
                 return null;
             }
-
             if (!File.Exists(path))
             {
                 PatentMarkerApp.RawLog("Dict file not found at: " + path);
-                InvalidateCache();
+                ClearActive();
                 return null;
             }
 
             try
             {
+                string key = CacheKey(path);
                 DateTime wt = File.GetLastWriteTime(path);
-                if (_cachedModel != null && _cachedPath != null &&
-                    _cachedPath.Equals(path, StringComparison.OrdinalIgnoreCase) &&
-                    wt == _cachedTime)
+                DictModel cached;
+                DateTime cachedTime;
+                if (_modelsByPath.TryGetValue(key, out cached) &&
+                    _timesByPath.TryGetValue(key, out cachedTime) && wt == cachedTime)
                 {
-                    return _cachedModel;
+                    Activate(path);
+                    return cached;
                 }
 
                 PatentMarkerApp.RawLog("Dict file changed, reloading: " + path);
                 DictModel model = Load(path);
                 if (model != null)
                 {
-                    // v2.2：保留旧版作为对比基线（仅当当前缓存非空时）
-                    if (_cachedModel != null)
-                        _previousModel = _cachedModel;
-                    _cachedModel = model;
-                    _cachedPath = path;
-                    _cachedTime = wt;
+                    DictModel oldModel;
+                    if (_modelsByPath.TryGetValue(key, out oldModel))
+                        _previousByPath[key] = oldModel;
+                    else
+                        _previousByPath.Remove(key);
+                    _modelsByPath[key] = model;
+                    _timesByPath[key] = wt;
+                    Activate(path);
                     return model;
                 }
-                else
+
+                DictModel cachedModel;
+                if (_modelsByPath.TryGetValue(key, out cachedModel))
                 {
-                    if (_cachedModel != null && _cachedPath != null &&
-                        _cachedPath.Equals(path, StringComparison.OrdinalIgnoreCase))
-                    {
-                        PatentMarkerApp.RawLog("Reload failed (file locked?), keeping previous cache");
-                        return _cachedModel;
-                    }
-                    InvalidateCache();
-                    return null;
+                    Activate(path);
+                    return cachedModel;
                 }
+                ClearActive();
+                return null;
             }
             catch (Exception ex)
             {
@@ -173,12 +225,50 @@ namespace PatentMarker.IO
             }
         }
 
+        public static DictModel LoadForCurrentDrawing()
+        {
+            DictModel result = LoadForCurrentDrawingPerPath();
+            var doc = RuntimeHost.ActiveDocument;
+            string drawingPath = doc != null ? doc.Name : null;
+            string dictPath = ResolveDictPath();
+            if (drawingPath != null && drawingPath.Length > 0 && dictPath != null)
+                _dictPathByDrawing[CacheKey(drawingPath)] = CacheKey(dictPath);
+            return result;
+        }
+
+        /// <summary>图纸关闭时释放该图纸关联的字典缓存和 Diff 基线。</summary>
+        public static void ReleaseForDrawing(string drawingPath)
+        {
+            if (drawingPath == null || drawingPath.Length == 0) return;
+            string drawingKey = CacheKey(drawingPath);
+            string dictKey;
+            if (!_dictPathByDrawing.TryGetValue(drawingKey, out dictKey)) return;
+            _dictPathByDrawing.Remove(drawingKey);
+
+            bool stillUsed = false;
+            foreach (string value in _dictPathByDrawing.Values)
+            {
+                if (StringComparer.OrdinalIgnoreCase.Equals(value, dictKey))
+                {
+                    stillUsed = true;
+                    break;
+                }
+            }
+            if (!stillUsed)
+            {
+                _modelsByPath.Remove(dictKey);
+                _timesByPath.Remove(dictKey);
+                _previousByPath.Remove(dictKey);
+            }
+            if (_activeKey == dictKey) ClearActive();
+        }
+
         /// <summary>
         /// v4.0：解析当前应使用的 dict.json 路径（原私有方法公开，供写回/备份使用）。
         /// </summary>
         public static string ResolveDictPath()
         {
-            var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+            var doc = RuntimeHost.ActiveDocument;
             if (doc != null && doc.Name != null && doc.Name.Length > 0)
             {
                 string dwgDir = Path.GetDirectoryName(doc.Name);

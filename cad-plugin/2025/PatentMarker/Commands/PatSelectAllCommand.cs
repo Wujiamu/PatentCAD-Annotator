@@ -19,7 +19,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZS", CommandFlags.Modal)]
         public void Run()
         {
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;

@@ -21,6 +21,18 @@ namespace PatentMarker.IO
     public class PatConfig
     {
         public string DefaultDictPath { get; set; } = "";
+        public PatStyleConfig PatStyle { get; set; } = new PatStyleConfig();
+        public AlignConfig Align { get; set; } = new AlignConfig();
+    }
+
+    public class PatStyleConfig
+    {
+        public double TextHeight { get; set; } = 3.5;
+    }
+
+    public class AlignConfig
+    {
+        public double MarginToFrame { get; set; } = 5.0;
     }
 
     public static class ConfigLoader

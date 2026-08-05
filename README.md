@@ -73,6 +73,9 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 .\build.ps1 -Check               # doctor：检查各版本 SDK DLL 与编译工具链
 .\build.ps1 -Version 2025        # 编译 2025 版（dotnet build）
 .\build.ps1 -Version all -Check  # 检查全部 5 个版本
+.\build.ps1 -Simulation           # 运行 2010/2013/2015 主机契约模拟测试
+.\check-api-contract.ps1 -Version all # 检查各版本 AutoCAD SDK API 表面
+.\check-autocad-host.ps1          # 只读检查本机 AutoCAD/COM/许可服务前置条件
 ```
 
 > 2007/2010/2013/2015 为传统 MSBuild 工程，需 Visual Studio 或 Build Tools 的 MSBuild；2025 版为 SDK 风格工程，可直接用 `dotnet build`。

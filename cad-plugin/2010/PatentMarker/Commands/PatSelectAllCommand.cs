@@ -18,7 +18,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZS", CommandFlags.Modal)]   // 拼音别名：标注-选中
         public void Run()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;

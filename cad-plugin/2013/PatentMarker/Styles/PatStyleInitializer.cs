@@ -22,7 +22,7 @@ namespace PatentMarker.Styles
         /// </summary>
         public static void EnsurePatStyle()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             using (Transaction tr = doc.TransactionManager.StartTransaction())
             {
@@ -56,7 +56,7 @@ namespace PatentMarker.Styles
             style.ContentType = ContentType.MTextContent;
 
             // 文字设置
-            style.TextHeight = 3.5;
+            style.TextHeight = IO.PatSettingsStore.Current.TextHeight;
             style.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
 
             // 引线设置
@@ -65,7 +65,7 @@ namespace PatentMarker.Styles
             style.DoglegLength = 8.0;
 
             // 箭头设置
-            style.ArrowSize = 2.5;
+            style.ArrowSize = IO.PatSettingsStore.Current.ArrowSize;
             // 默认无箭头：设置箭头符号为无（通过 ArrowSymbolId = ObjectId.Null）
             style.ArrowSymbolId = ObjectId.Null;
 

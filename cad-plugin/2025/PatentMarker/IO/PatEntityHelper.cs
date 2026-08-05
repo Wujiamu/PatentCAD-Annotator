@@ -60,7 +60,7 @@ namespace PatentMarker.IO
             {
                 MText mt = mleader.MText;
                 if (mt == null) return false;
-                if (string.Equals(mt.Contents, newNumber, StringComparison.Ordinal)) return false;
+                if (NumberIdentity.AreEqual(mt.Contents, newNumber)) return false;
                 mt.Contents = newNumber;
                 return true;
             }
@@ -86,7 +86,7 @@ namespace PatentMarker.IO
 
                 string number = GetMLeaderNumber(mleader);
                 if (number.Length == 0) continue;
-                if (!string.Equals(number, oldNumber, StringComparison.OrdinalIgnoreCase)) continue;
+                if (!NumberIdentity.AreEqual(number, oldNumber)) continue;
 
                 mleader.UpgradeOpen();
                 if (SetMLeaderNumber(mleader, newNumber)) changed++;

@@ -51,10 +51,6 @@
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <!-- .NET Framework 4.0 引用程序集（本机未装 Developer Pack 时从 NuGet 离线还原） -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Include="PatentMarkerApp.cs" />
     <Compile Include="IO\ConfigLoader.cs" />
@@ -62,6 +58,9 @@
     <Compile Include="IO\DictDiff.cs" />
     <Compile Include="IO\DictWriter.cs" />
     <Compile Include="IO\DictConflict.cs" />
+    <Compile Include="IO\NumberIdentity.cs" />
+    <Compile Include="IO\PatSettings.cs" />
+    <Compile Include="IO\RuntimeHost.cs" />
     <Compile Include="IO\MarkingTextParser.cs" />
     <Compile Include="IO\PatEntityHelper.cs" />
     <Compile Include="Styles\PatStyleInitializer.cs" />
@@ -71,6 +70,7 @@
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="Palette\PatPaletteCommand.cs" />
     <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="Palette\DictPaletteSession.cs" />
     <Compile Include="Palette\PasteRecognizeDialog.cs" />
     <Compile Include="Palette\EditEntryDialog.cs" />
     <Compile Include="Palette\ArbitrateDialog.cs" />

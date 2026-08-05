@@ -19,16 +19,16 @@ namespace PatentMarker.Palette
         // 修复 D1：使用静态字段而非自动属性初始化器（C# 3.0 不支持 = 3.5）
         public static string PendingNumber;
         public static string PendingName;
-        public static double TextHeight = 3.5;
+        public static double TextHeight { get { return PatSettingsStore.Current.TextHeight; } set { PatSettingsStore.Current.TextHeight = value; } }
         // v2：箭头开关，默认无箭头（专利标注惯例）。由面板按钮切换，影响后续新建引线。
-        public static bool HasArrowHead = false;
+        public static bool HasArrowHead { get { return PatSettingsStore.Current.HasArrowHead; } set { PatSettingsStore.Current.HasArrowHead = value; } }
         // v2.1：箭头大小，由面板 NumericUpDown 调节。创建引线时同步到 PAT_STYLE 样式。
-        public static double ArrowSize = 2.5;
+        public static double ArrowSize { get { return PatSettingsStore.Current.ArrowSize; } set { PatSettingsStore.Current.ArrowSize = value; } }
         // v2.1：样条曲线开关，默认样条曲线。由面板按钮切换，影响后续新建引线。
-        public static bool IsSplined = true;
+        public static bool IsSplined { get { return PatSettingsStore.Current.IsSplined; } set { PatSettingsStore.Current.IsSplined = value; } }
         // v3.1：三点模式开关，默认关闭（无限拐点）。开启后引线固定 3 点：
         // 附着点 → 1 个拐点 → 文字位置，第 3 点点击后自动创建。与线型开关正交。
-        public static bool ThreePointMode = false;
+        public static bool ThreePointMode { get { return PatSettingsStore.Current.ThreePointMode; } set { PatSettingsStore.Current.ThreePointMode = value; } }
 
         [CommandMethod("PATPALETTE")]
         [CommandMethod("BIAOZHU")]   // 拼音别名：标注
@@ -37,7 +37,7 @@ namespace PatentMarker.Palette
         {
             PatentMarkerApp.RawLog("=== PATPALETTE START ===");
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) { PatentMarkerApp.RawLog("PATPALETTE ABORT: no active document"); return; }
 
             bool isNew = false;
@@ -60,10 +60,13 @@ namespace PatentMarker.Palette
                 _paletteSet.Visible = true;
             }
 
+            ReloadRuntimeSettingsForCurrentDrawing();
             LoadDictForCurrentDrawing();
 
             AppAcad.DocumentManager.DocumentActivated -= DocManager_DocumentActivated;
             AppAcad.DocumentManager.DocumentActivated += DocManager_DocumentActivated;
+            AppAcad.DocumentManager.DocumentToBeDestroyed -= DocManager_DocumentToBeDestroyed;
+            AppAcad.DocumentManager.DocumentToBeDestroyed += DocManager_DocumentToBeDestroyed;
 
             PatentMarkerApp.RawLog("PATPALETTE: palette " + (isNew ? "created" : "shown"));
         }
@@ -72,7 +75,30 @@ namespace PatentMarker.Palette
         {
             // 修复 B6：事件处理器中加 null 守卫，防止 Terminate 后崩溃
             if (_control == null) return;
+            ReloadRuntimeSettingsForCurrentDrawing();
             LoadDictForCurrentDrawing();
+        }
+
+        private static void ReloadRuntimeSettingsForCurrentDrawing()
+        {
+            Document activeDocument = IO.RuntimeHost.ActiveDocument;
+            string drawingPath = activeDocument != null ? activeDocument.Name : "";
+            IO.PatSettingsStore.Activate(drawingPath);
+            IO.PatSettingsStore.ResetConfigDefaults();
+            IO.ConfigLoader.Current = IO.ConfigLoader.ActivateForDrawing(drawingPath);
+            if (IO.ConfigLoader.Current != null)
+                IO.PatSettingsStore.Apply(IO.ConfigLoader.Current);
+            if (_control != null)
+                _control.ApplyRuntimeSettings();
+        }
+
+        private static void DocManager_DocumentToBeDestroyed(object sender, DocumentCollectionEventArgs e)
+        {
+            Document closing = e != null ? e.Document : null;
+            string drawingPath = closing != null ? closing.Name : "";
+            IO.DictLoader.ReleaseForDrawing(drawingPath);
+            IO.PatSettingsStore.Release(drawingPath);
+            IO.ConfigLoader.ReleaseDrawing(drawingPath);
         }
 
         public static void LoadDictForCurrentDrawing()
@@ -89,7 +115,7 @@ namespace PatentMarker.Palette
             }
             catch (System.Exception ex)
             {
-                var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc != null)
                     doc.Editor.WriteMessage("\nPatentMarker: dict load error: " + ex.Message + "\n");
                 if (_control != null)
@@ -100,6 +126,7 @@ namespace PatentMarker.Palette
         public static void DisposePalette()
         {
             AppAcad.DocumentManager.DocumentActivated -= DocManager_DocumentActivated;
+            AppAcad.DocumentManager.DocumentToBeDestroyed -= DocManager_DocumentToBeDestroyed;
             if (_control != null)
             {
                 _control.Dispose();

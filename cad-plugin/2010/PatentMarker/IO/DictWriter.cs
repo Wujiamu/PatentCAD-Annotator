@@ -191,7 +191,11 @@ namespace PatentMarker.IO
             {
                 foreach (DictWriteRow r in rows)
                 {
-                    newModel.Entries.Add(new DictEntry { Number = r.Number, Name = r.Name });
+                    newModel.Entries.Add(new DictEntry
+                    {
+                        Number = NumberIdentity.Normalize(r.Number),
+                        Name = r.Name
+                    });
                 }
                 return newModel;
             }
@@ -199,15 +203,16 @@ namespace PatentMarker.IO
             // 合并：按 number 匹配（忽略大小写，与 BZC 编号比较逻辑一致）
             // 顺序 = 原 JSON 顺序（更新过 name 的条目原地保留）+ 新编号追加尾部
             Dictionary<string, DictEntry> byNumber =
-                new Dictionary<string, DictEntry>(StringComparer.OrdinalIgnoreCase);
+                new Dictionary<string, DictEntry>(NumberIdentity.Comparer);
             List<DictEntry> ordered = new List<DictEntry>();
             if (current.Entries != null)
             {
                 foreach (DictEntry e in current.Entries)
                 {
                     if (e == null) continue;
-                    if (byNumber.ContainsKey(e.Number)) continue;
                     DictEntry copy = CloneEntry(e);
+                    copy.Number = NumberIdentity.Normalize(copy.Number);
+                    if (byNumber.ContainsKey(copy.Number)) continue;
                     byNumber[copy.Number] = copy;
                     ordered.Add(copy);
                 }
@@ -215,16 +220,17 @@ namespace PatentMarker.IO
 
             foreach (DictWriteRow r in rows)
             {
+                string number = NumberIdentity.Normalize(r.Number);
                 DictEntry existing;
-                if (byNumber.TryGetValue(r.Number, out existing))
+                if (byNumber.TryGetValue(number, out existing))
                 {
                     if (!string.Equals(existing.Name, r.Name, StringComparison.Ordinal))
                         existing.Name = r.Name;
                 }
                 else
                 {
-                    DictEntry ne = new DictEntry { Number = r.Number, Name = r.Name };
-                    byNumber[r.Number] = ne;
+                    DictEntry ne = new DictEntry { Number = number, Name = r.Name };
+                    byNumber[number] = ne;
                     ordered.Add(ne);
                 }
             }
@@ -255,7 +261,7 @@ namespace PatentMarker.IO
             {
                 if (e == null) continue;
                 if (!object.ReferenceEquals(e, entry) &&
-                    string.Equals(e.Number, num, StringComparison.OrdinalIgnoreCase))
+                    NumberIdentity.AreEqual(e.Number, num))
                 {
                     conflictNumber = e.Number;
                     return false;

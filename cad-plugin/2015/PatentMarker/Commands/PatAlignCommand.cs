@@ -24,7 +24,7 @@ namespace PatentMarker.Commands
         {
             PatentMarkerApp.RawLog("=== PATALIGN START ===");
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
 
@@ -63,7 +63,7 @@ namespace PatentMarker.Commands
             var dirResult = ed.GetKeywords(dirOpts);
             if (dirResult.Status != PromptStatus.OK) return;
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var db = doc.Database;
 
@@ -121,9 +121,7 @@ namespace PatentMarker.Commands
             var sideResult = ed.GetKeywords(sideOpts);
             if (sideResult.Status != PromptStatus.OK) return;
 
-            double margin = 5.0;
-            if (IO.ConfigLoader.Current != null && IO.ConfigLoader.Current.Align != null)
-                margin = IO.ConfigLoader.Current.Align.MarginToFrame;
+            double margin = IO.PatSettingsStore.Current.MarginToFrame;
 
             ed.WriteMessage(Strings.PatAlign_PromptSelect);
             var selection = ed.GetSelection();
@@ -133,7 +131,7 @@ namespace PatentMarker.Commands
                 return;
             }
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var db = doc.Database;
 

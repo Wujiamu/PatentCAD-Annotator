@@ -28,7 +28,7 @@ namespace PatentMarker.Commands
         {
             PatentMarkerApp.RawLog("=== PATCHECK START ===");
 
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) { PatentMarkerApp.RawLog("PATCHECK ABORT: no active document"); return; }
             var ed = doc.Editor;
             var db = doc.Database;
@@ -43,7 +43,7 @@ namespace PatentMarker.Commands
             PatentMarkerApp.RawLog("Dict loaded: " + dict.Entries.Count + " entries");
 
             // 收集图纸中的 PAT 编号
-            var drawingNumbers = new Dictionary<string, List<Point3d>>();
+            var drawingNumbers = new Dictionary<string, List<Point3d>>(IO.NumberIdentity.Comparer);
             int totalLeaders = 0;
             int patCount = 0;
             int textErrors = 0;
@@ -78,6 +78,7 @@ namespace PatentMarker.Commands
                     }
 
                     if (number == null || number.Length == 0) continue;
+                    number = IO.NumberIdentity.Normalize(number);
 
                     Point3d pos = IO.PatEntityHelper.GetLeaderTextPos(leader, tr);
 
@@ -92,9 +93,9 @@ namespace PatentMarker.Commands
                 ", numbers=" + drawingNumbers.Count + ", errors=" + textErrors);
 
             // 构建字典编号集合（手动循环，无 LINQ）
-            var dictNumbers = new Dictionary<string, bool>();
+            var dictNumbers = new Dictionary<string, bool>(IO.NumberIdentity.Comparer);
             foreach (var e in dict.Entries)
-                dictNumbers[e.Number] = true;
+                dictNumbers[IO.NumberIdentity.Normalize(e.Number)] = true;
 
             // 检查 1：图纸有但字典没有
             var drawingOnly = new List<string>();
@@ -179,7 +180,7 @@ namespace PatentMarker.Commands
         private static string FindEntryName(IO.DictModel dict, string num)
         {
             foreach (var e in dict.Entries)
-                if (e.Number == num) return e.Name;
+                if (IO.NumberIdentity.AreEqual(e.Number, num)) return e.Name;
             return "?";
         }
 

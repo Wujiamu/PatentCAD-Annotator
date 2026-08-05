@@ -22,7 +22,7 @@ namespace PatentMarker.Styles
         /// </summary>
         public static void EnsurePatDimStyle()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             using (Transaction tr = doc.TransactionManager.StartTransaction())
             {
@@ -56,10 +56,12 @@ namespace PatentMarker.Styles
                 ObjectId tsId = GetOrCreateTimesRoman(db, tr);
                 if (!tsId.IsNull)
                     dsr.Dimtxsty = tsId;
+                dsr.Dimasz = IO.PatSettingsStore.Current.ArrowSize;
+                dsr.Dimtxt = IO.PatSettingsStore.Current.TextHeight;
             }
             catch (Exception ex)
             {
-                var doc = Application.DocumentManager.MdiActiveDocument;
+                var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc != null)
                     doc.Editor.WriteMessage(string.Format(Strings.StyleInit_Warning, ex.Message));
             }

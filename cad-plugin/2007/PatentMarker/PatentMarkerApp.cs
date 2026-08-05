@@ -48,10 +48,15 @@ namespace PatentMarker
                 try
                 {
                     RawLog("Loading config...");
-                    var config = IO.ConfigLoader.Load(null);
+                    Autodesk.AutoCAD.ApplicationServices.Document activeDocument =
+                        IO.RuntimeHost.ActiveDocument;
+                    IO.PatSettingsStore.Activate(activeDocument != null ? activeDocument.Name : "");
+                    IO.PatSettingsStore.ResetConfigDefaults();
+                    var config = IO.ConfigLoader.ActivateForDrawing(activeDocument != null ? activeDocument.Name : "");
                     if (config != null)
                     {
                         IO.ConfigLoader.Current = config;
+                        IO.PatSettingsStore.Apply(config);
                         RawLog("Config loaded: defaultDictPath='" + config.DefaultDictPath + "'");
                     }
                 }

@@ -26,7 +26,7 @@ namespace PatentMarker.Commands
         {
             PatentMarkerApp.RawLog("=== PATCHECK START ===");
 
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;
@@ -40,7 +40,7 @@ namespace PatentMarker.Commands
             PatentMarkerApp.RawLog("Dict loaded: " + dict.Entries.Count + " entries");
 
             // 收集图纸中的 PAT 编号
-            var drawingNumbers = new Dictionary<string, List<Point3d>>();
+            var drawingNumbers = new Dictionary<string, List<Point3d>>(IO.NumberIdentity.Comparer);
             int totalMLeaders = 0;
             int patCount = 0;
             int textErrors = 0;
@@ -74,6 +74,7 @@ namespace PatentMarker.Commands
                     }
 
                     if (string.IsNullOrWhiteSpace(number)) continue;
+                    number = IO.NumberIdentity.Normalize(number);
 
                     Point3d pos = IO.PatEntityHelper.GetMLeaderTextPos(mleader);
 
@@ -88,7 +89,9 @@ namespace PatentMarker.Commands
                 ", numbers=" + drawingNumbers.Count + ", errors=" + textErrors);
 
             // 构建字典编号集合
-            var dictNumbers = new HashSet<string>(dict.Entries.Select(e => e.Number));
+            var dictNumbers = new HashSet<string>(
+                dict.Entries.Select(e => IO.NumberIdentity.Normalize(e.Number)),
+                IO.NumberIdentity.Comparer);
 
             // 检查 1：图纸有但字典没有
             var drawingOnly = drawingNumbers.Keys.Where(n => !dictNumbers.Contains(n)).OrderBy(n => n).ToList();
@@ -120,7 +123,8 @@ namespace PatentMarker.Commands
                 ed.WriteMessage(string.Format(Strings.PatCheck_SectionDictOnly, dictOnly.Count));
                 foreach (string num in dictOnly)
                 {
-                    string name = dict.Entries.FirstOrDefault(e => e.Number == num)?.Name ?? "?";
+                    string name = dict.Entries
+                        .FirstOrDefault(e => IO.NumberIdentity.AreEqual(e.Number, num))?.Name ?? "?";
                     ed.WriteMessage("  #" + num + " (" + name + ")\n");
                 }
             }
@@ -198,7 +202,7 @@ namespace PatentMarker.Commands
                         sw.WriteLine("\n--- Dict has, drawing missing (" + dictOnly.Count + ") ---");
                         foreach (string num in dictOnly)
                         {
-                            string name = dict.Entries.FirstOrDefault(e => e.Number == num)?.Name ?? "?";
+                            string name = dict.Entries.FirstOrDefault(e => IO.NumberIdentity.AreEqual(e.Number, num))?.Name ?? "?";
                             sw.WriteLine("  #" + num + " (" + name + ")");
                         }
                     }

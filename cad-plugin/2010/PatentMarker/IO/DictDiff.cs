@@ -75,11 +75,6 @@ namespace PatentMarker.IO
             }
 
             // 1. 按 Number 匹配
-            Dictionary<string, DictEntry> oldByNumber = new Dictionary<string, DictEntry>();
-            foreach (DictEntry e in oldDict.Entries)
-                if (!oldByNumber.ContainsKey(e.Number))
-                    oldByNumber[e.Number] = e;
-
             List<DictEntry> oldUnmatched = new List<DictEntry>();  // 旧版未按编号匹配上的
             foreach (DictEntry oldE in oldDict.Entries)
             {
@@ -87,7 +82,7 @@ namespace PatentMarker.IO
                 DictEntry matchedNew = null;
                 foreach (DictEntry newE in newDict.Entries)
                 {
-                    if (newE.Number == oldE.Number)
+                    if (NumberIdentity.AreEqual(newE.Number, oldE.Number))
                     {
                         matchedNew = newE;
                         break;
@@ -158,7 +153,7 @@ namespace PatentMarker.IO
             d.OldEntry = oldE;
             d.NewEntry = newE;
             // 如果两者都变（理论上不会到这里，因为能匹配说明至少一项相同），保险起见标 BothChanged
-            if (status == DiffStatus.Unchanged && oldE.Number != newE.Number && oldE.Name != newE.Name)
+            if (status == DiffStatus.Unchanged && !NumberIdentity.AreEqual(oldE.Number, newE.Number) && oldE.Name != newE.Name)
                 status = DiffStatus.BothChanged;
             d.Status = status;
             return d;

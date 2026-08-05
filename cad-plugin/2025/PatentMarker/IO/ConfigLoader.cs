@@ -50,6 +50,8 @@ namespace PatentMarker.IO
     public static class ConfigLoader
     {
         public static PatConfig? Current;
+        private static readonly Dictionary<string, PatConfig> ConfigsByDrawing = new(StringComparer.OrdinalIgnoreCase);
+        private static string? ActiveDrawingKey;
 
         private static readonly JsonSerializerOptions JsonOpts = new()
         {
@@ -58,13 +60,77 @@ namespace PatentMarker.IO
             AllowTrailingCommas = true
         };
 
+        private static string DrawingKey(string? drawingPath)
+        {
+            if (string.IsNullOrEmpty(drawingPath)) return "<default>";
+            try { return Path.GetFullPath(drawingPath); }
+            catch { return drawingPath; }
+        }
+
+        private static string? ResolveConfigPathForDrawing(string? drawingPath)
+        {
+            string? filePath = null;
+            if (!string.IsNullOrEmpty(drawingPath))
+            {
+                string? dwgDir = Path.GetDirectoryName(drawingPath);
+                if (dwgDir is not null)
+                {
+                    string localCfg = Path.Combine(dwgDir, "config.local.json");
+                    if (File.Exists(localCfg)) filePath = localCfg;
+                    else
+                    {
+                        string dwgCfg = Path.Combine(dwgDir, "config.json");
+                        if (File.Exists(dwgCfg)) filePath = dwgCfg;
+                    }
+                }
+            }
+            if (filePath is null)
+            {
+                string? dllDir = null;
+                try { dllDir = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location); }
+                catch { }
+                if (dllDir is not null)
+                {
+                    string dllCfg = Path.Combine(dllDir, "config.json");
+                    if (File.Exists(dllCfg)) filePath = dllCfg;
+                }
+            }
+            return filePath;
+        }
+
+        /// <summary>按图纸显式激活配置，避免依赖上一次 MDI 活动文档。</summary>
+        public static PatConfig ActivateForDrawing(string? drawingPath)
+        {
+            string key = DrawingKey(drawingPath);
+            string? configPath = ResolveConfigPathForDrawing(drawingPath);
+            PatConfig config = Load(configPath ?? "");
+            ConfigsByDrawing[key] = config;
+            ActiveDrawingKey = key;
+            Current = config;
+            Strings.Lang = config.Language;
+            return config;
+        }
+
+        /// <summary>图纸关闭时释放该图纸的配置快照。</summary>
+        public static void ReleaseDrawing(string? drawingPath)
+        {
+            string key = DrawingKey(drawingPath);
+            ConfigsByDrawing.Remove(key);
+            if (ActiveDrawingKey == key)
+            {
+                ActiveDrawingKey = null;
+                Current = null;
+                Strings.Lang = Language.Chinese;
+            }
+        }
+
         public static PatConfig Load(string? path)
         {
             string? filePath = path;
 
             if (filePath is null)
             {
-                var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                var doc = RuntimeHost.ActiveDocument;
                 if (doc is not null && !string.IsNullOrEmpty(doc.Name))
                 {
                     string? dwgDir = Path.GetDirectoryName(doc.Name);
@@ -112,7 +178,7 @@ namespace PatentMarker.IO
                 }
                 catch (Exception ex)
                 {
-                    var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+                    var doc = RuntimeHost.ActiveDocument;
                     doc?.Editor.WriteMessage($"\nPatentMarker: config load error: {ex.Message}\n");
                 }
             }

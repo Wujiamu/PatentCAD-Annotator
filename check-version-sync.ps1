@@ -78,6 +78,31 @@ $versionOnly    = @()
 
 $sortedPaths = $allRelPaths | Sort-Object
 
+# These files are deliberately C# 2-compatible and must remain byte-identical
+# across all editions. They are the shared contracts for identity and settings.
+$criticalSyncFailures = 0
+$criticalSharedFiles = @("IO\NumberIdentity.cs", "IO\PatSettings.cs")
+Write-Host "-- Critical shared contracts --" -ForegroundColor Cyan
+foreach ($critical in $criticalSharedFiles) {
+    $criticalHashes = @()
+    $criticalMissing = @()
+    foreach ($v in $versions) {
+        if ($allMaps[$v].ContainsKey($critical)) {
+            $criticalHashes += Get-FileHashCached $allMaps[$v][$critical]
+        } else {
+            $criticalMissing += $v
+        }
+    }
+    $uniqueCritical = $criticalHashes | Select-Object -Unique
+    if ($criticalMissing.Count -gt 0 -or $uniqueCritical.Count -ne 1) {
+        Write-Host "  [FAIL] $critical must exist identically in all editions (missing: $($criticalMissing -join ', '))" -ForegroundColor Red
+        $criticalSyncFailures++
+    } else {
+        Write-Host "  [OK]   $critical identical across all five editions" -ForegroundColor Green
+    }
+}
+Write-Host ""
+
 foreach ($rel in $sortedPaths) {
     $present = @()
     $absent  = @()
@@ -258,3 +283,6 @@ if ($needAction -eq 0) {
 
 Write-Host ""
 Write-Host "Check complete." -ForegroundColor Cyan
+if ($criticalSyncFailures -gt 0) {
+    exit 1
+}

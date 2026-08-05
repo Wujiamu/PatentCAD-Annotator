@@ -43,11 +43,11 @@ namespace PatentMarker.Palette
         private ColumnHeader _colOldNumber;
         private ColumnHeader _colOldName;
 
-        private List<PaletteEntry> _allEntries = new List<PaletteEntry>();
-        private DictModel _currentDict;
+        private readonly DictPaletteSession _session = new DictPaletteSession();
+        private DictModel _currentDict { get { return _session.CurrentDict; } }
         private System.Windows.Forms.Timer _autoRefreshTimer;
 
-        private List<DictDiffEntry> _currentDiff;
+        private List<DictDiffEntry> _currentDiff { get { return _session.CurrentDiff; } }
         private bool _compareMode;
 
         // v4.0：冲突裁决标记（状态栏已点亮提示时避免被其他操作覆盖）
@@ -139,7 +139,7 @@ namespace PatentMarker.Palette
             _numTextHeight.Width = 55;
             _numTextHeight.Minimum = 0m;
             _numTextHeight.Maximum = decimal.MaxValue;
-            _numTextHeight.Value = 3.5m;
+            _numTextHeight.Value = (decimal)PatSettingsStore.Current.TextHeight;
             _numTextHeight.DecimalPlaces = 2;
             _numTextHeight.Increment = 0.5m;
             _numTextHeight.ReadOnly = false;
@@ -148,7 +148,7 @@ namespace PatentMarker.Palette
             Button heightReset = new Button();
             heightReset.Text = Strings.Palette_Reset;
             heightReset.AutoSize = true;
-            heightReset.Click += delegate(object s, EventArgs ev) { _numTextHeight.Value = 3.5m; };
+            heightReset.Click += delegate(object s, EventArgs ev) { _numTextHeight.Value = (decimal)PatSettingsStore.DefaultTextHeight; };
 
             heightPanel.Controls.AddRange(new Control[] { heightLbl, _numTextHeight, heightReset });
 
@@ -175,7 +175,7 @@ namespace PatentMarker.Palette
             // v2.4：去除上下限，允许手动输入（与字体大小框一致）
             _numArrowSize.Minimum = 0m;
             _numArrowSize.Maximum = decimal.MaxValue;
-            _numArrowSize.Value = 2.5m;
+            _numArrowSize.Value = (decimal)PatSettingsStore.Current.ArrowSize;
             _numArrowSize.DecimalPlaces = 1;
             _numArrowSize.Increment = 0.5m;
             _numArrowSize.ReadOnly = false;
@@ -384,23 +384,18 @@ namespace PatentMarker.Palette
         public void LoadDict(DictModel dict)
         {
             if (dict == null) { ShowNoDict(); return; }
-            _currentDict = dict;
-
-            DictModel prevDict = DictLoader.PreviousModel;
-            if (prevDict != null)
+            _session.Load(dict, DictLoader.PreviousModel);
+            if (_currentDiff != null)
             {
-                _currentDiff = DictDiff.Compute(prevDict, dict);
                 _btnCompare.Enabled = true;
             }
             else
             {
-                _currentDiff = null;
                 _btnCompare.Enabled = false;
                 _compareMode = false;
                 UpdateCompareColumns();
             }
 
-            _allEntries.Clear();
             _lstEntries.BeginUpdate();
             _lstEntries.Items.Clear();
 
@@ -420,8 +415,6 @@ namespace PatentMarker.Palette
                 pe.Number = e.Number;
                 pe.Name = e.Name;
                 pe.Occurrences = e.Occurrences;
-                _allEntries.Add(pe);
-
                 ListViewItem item = new ListViewItem(pe.Number);
                 item.SubItems.Add(pe.Name != null ? pe.Name : "");
                 item.SubItems.Add(pe.Occurrences.ToString());
@@ -444,10 +437,8 @@ namespace PatentMarker.Palette
             }
             _lstEntries.EndUpdate();
 
-            int warnCount = dict.Warnings != null ? dict.Warnings.Count : 0;
-            int conflictCount = 0;
-            foreach (DictEntry e in dict.Entries)
-                conflictCount += (e.Conflicts != null ? e.Conflicts.Count : 0);
+            int warnCount = _session.WarningCount;
+            int conflictCount = _session.ConflictCount;
 
             _lblDictInfo.Text = string.Format(Strings.Palette_DictInfo,
                 dict.Entries.Count, warnCount, conflictCount);
@@ -463,6 +454,17 @@ namespace PatentMarker.Palette
                 _lblStatus.Text = Strings.Status_DictLoaded;
                 _lblStatus.ForeColor = SystemColors.ControlText;
             }
+        }
+
+        public void ApplyRuntimeSettings()
+        {
+            if (_numTextHeight != null)
+                _numTextHeight.Value = (decimal)PatSettingsStore.Current.TextHeight;
+            if (_numArrowSize != null)
+                _numArrowSize.Value = (decimal)PatSettingsStore.Current.ArrowSize;
+            UpdateArrowButtonText();
+            UpdateSplineButtonText();
+            UpdatePointsButtonText();
         }
 
         private void ApplyDiffHighlight(ListViewItem item, DiffStatus status)
@@ -507,9 +509,8 @@ namespace PatentMarker.Palette
 
         public void ShowNoDict()
         {
-            _allEntries.Clear();
+            _session.Clear();
             _lstEntries.Items.Clear();
-            _currentDict = null;
             _lblDictInfo.Text = Strings.Palette_DictNotLoaded;
             _lblStatus.Text = Strings.Status_PlaceDictHint;
         }
@@ -522,27 +523,13 @@ namespace PatentMarker.Palette
             _lstEntries.BeginUpdate();
             _lstEntries.Items.Clear();
 
-            foreach (PaletteEntry entry in _allEntries)
+            foreach (PaletteEntry entry in _session.Filter(keyword))
             {
-                bool match = false;
-                if (keyword.Length == 0)
-                    match = true;
-                else
-                {
-                    string numLower = entry.Number.ToLowerInvariant();
-                    string nameLower = entry.Name != null ? entry.Name.ToLowerInvariant() : "";
-                    if (numLower.IndexOf(keyword) >= 0 || nameLower.IndexOf(keyword) >= 0)
-                        match = true;
-                }
-
-                if (match)
-                {
-                    ListViewItem item = new ListViewItem(entry.Number);
-                    item.SubItems.Add(entry.Name != null ? entry.Name : "");
-                    item.SubItems.Add(entry.Occurrences.ToString());
-                    item.Tag = entry;
-                    _lstEntries.Items.Add(item);
-                }
+                ListViewItem item = new ListViewItem(entry.Number);
+                item.SubItems.Add(entry.Name != null ? entry.Name : "");
+                item.SubItems.Add(entry.Occurrences.ToString());
+                item.Tag = entry;
+                _lstEntries.Items.Add(item);
             }
             _lstEntries.EndUpdate();
         }
@@ -616,7 +603,7 @@ namespace PatentMarker.Palette
         {
             try
             {
-                var doc = AppAcad.DocumentManager.MdiActiveDocument;
+                var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc != null)
                     doc.SendStringToExecute("PATSELECTALL\n", true, false, false);
             }
@@ -656,7 +643,7 @@ namespace PatentMarker.Palette
             DictEntry target = null;
             foreach (DictEntry de in _currentDict.Entries)
             {
-                if (de.Number == entry.Number) { target = de; break; }
+                if (NumberIdentity.AreEqual(de.Number, entry.Number)) { target = de; break; }
             }
             if (target == null)
             {
@@ -678,7 +665,7 @@ namespace PatentMarker.Palette
                     _lblStatus.Text = Strings.Status_DictAutoUpdated;
 
                     // v4.0：编号变更 → 同步图纸标注文字（多条同号全改）+ Regen
-                    if (r == DialogResult.OK && target.Number != oldNumber)
+                    if (r == DialogResult.OK && !NumberIdentity.AreEqual(target.Number, oldNumber))
                     {
                         RenameLeadersInDrawing(oldNumber, target.Number);
                     }
@@ -691,7 +678,7 @@ namespace PatentMarker.Palette
                     else ShowNoDict();
 
                     // v4.0：编号变更 → 同步图纸标注文字 + Regen
-                    if (target.Number != oldNumber)
+                    if (!NumberIdentity.AreEqual(target.Number, oldNumber))
                     {
                         RenameLeadersInDrawing(oldNumber, target.Number);
                     }
@@ -700,7 +687,7 @@ namespace PatentMarker.Palette
                     PatPaletteCommand.PendingName = target.Name != null ? target.Name : "";
                     _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
 
-                    var doc = AppAcad.DocumentManager.MdiActiveDocument;
+                    var doc = IO.RuntimeHost.ActiveDocument;
                     if (doc != null)
                     {
                         doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
@@ -717,7 +704,7 @@ namespace PatentMarker.Palette
         /// </summary>
         private int RenameLeadersInDrawing(string oldNumber, string newNumber)
         {
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return 0;
             var db = doc.Database;
 
@@ -925,7 +912,7 @@ namespace PatentMarker.Palette
         {
             try
             {
-                var doc = AppAcad.DocumentManager.MdiActiveDocument;
+                var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc == null) return;
                 string dwgDir = System.IO.Path.GetDirectoryName(doc.Name);
                 if (dwgDir == null) dwgDir = "";
@@ -984,7 +971,7 @@ namespace PatentMarker.Palette
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var db = doc.Database;
 
@@ -1041,11 +1028,4 @@ namespace PatentMarker.Palette
         }
     }
 
-    /// <summary>面板列表项数据模型</summary>
-    public class PaletteEntry
-    {
-        public string Number = "";
-        public string Name = "";
-        public int Occurrences;
-    }
 }

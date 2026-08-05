@@ -18,6 +18,9 @@
 #     - csproj TargetFramework matches the version matrix
 #     - C# source files stay consistent within edition groups (Leader / MLeader)
 #     - Deploy packages ship version-specific dependencies (e.g. Newtonsoft.Json)
+#   Job 3 - Simulated host contracts:
+#     - Replays real PATMARK command orchestration for Leader and MLeader editions
+#       against strict fake editor/database/transaction hosts.
 # ============================================================================
 
 name: build
@@ -63,3 +66,37 @@ jobs:
       - name: Run static analysis
         shell: pwsh
         run: ./build.ps1 -Static
+
+  tests:
+    name: Portable unit tests
+    runs-on: windows-latest
+    needs: structure-check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run portable tests
+        shell: pwsh
+        run: dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
+
+  simulated-host-contracts:
+    name: Simulated host contract tests
+    runs-on: windows-latest
+    needs: structure-check
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Run simulated edition contracts
+        shell: pwsh
+        run: ./build.ps1 -Simulation

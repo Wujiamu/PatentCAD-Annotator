@@ -25,8 +25,16 @@
     <Compile Include="..\PatentMarker\IO\MarkingTextParser.cs" Link="IO\MarkingTextParser.cs" />
     <Compile Include="..\PatentMarker\IO\DictWriter.cs" Link="IO\DictWriter.cs" />
     <Compile Include="..\PatentMarker\IO\DictConflict.cs" Link="IO\DictConflict.cs" />
+    <Compile Include="..\PatentMarker\IO\NumberIdentity.cs" Link="IO\NumberIdentity.cs" />
+    <Compile Include="..\PatentMarker\IO\PatSettings.cs" Link="IO\PatSettings.cs" />
+    <Compile Include="..\PatentMarker\IO\RuntimeHost.cs" Link="IO\RuntimeHost.cs" />
+    <Compile Include="..\PatentMarker\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
     <Compile Include="..\PatentMarker\I18n\Language.cs" Link="I18n\Language.cs" />
     <Compile Include="..\PatentMarker\I18n\Strings.cs" Link="I18n\Strings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Fixtures\parser-contract.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,68 @@
+[
+  {
+    "id": "number-first",
+    "text": "附图标记说明：1底座，2支架；",
+    "hits": [
+      { "number": "1", "name": "底座" },
+      { "number": "2", "name": "支架" }
+    ]
+  },
+  {
+    "id": "name-first",
+    "text": "附图标记说明如下：箱体结构10、第一空间S1、隔板131a。后续段落不应进入结果。",
+    "hits": [
+      { "number": "10", "name": "箱体结构" },
+      { "number": "S1", "name": "第一空间" },
+      { "number": "131a", "name": "隔板" }
+    ]
+  },
+  {
+    "id": "parenthesized-number",
+    "text": "附图标记说明：加热器(1)、泵体（2）；",
+    "hits": [
+      { "number": "1", "name": "加热器" },
+      { "number": "2", "name": "泵体" }
+    ]
+  },
+  {
+    "id": "hyphenated-number",
+    "text": "附图标记说明：安装座10-1、支板10-2；",
+    "hits": [
+      { "number": "10-1", "name": "安装座" },
+      { "number": "10-2", "name": "支板" }
+    ]
+  },
+  {
+    "id": "letter-suffix",
+    "text": "附图标记说明：过渡连接板部1342A、凹陷板部1342B；",
+    "hits": [
+      { "number": "1342A", "name": "过渡连接板部" },
+      { "number": "1342B", "name": "凹陷板部" }
+    ]
+  },
+  {
+    "id": "table-stream",
+    "text": "附图标记说明：10\r\u0007箱体结构\r\u000711\r\u0007支架\r\u0007",
+    "hits": [
+      { "number": "10", "name": "箱体结构" },
+      { "number": "11", "name": "支架" }
+    ]
+  },
+  {
+    "id": "bare-lines",
+    "text": "附图标记说明：\n箱体结构 10\n箱壁 1\n底架 S1\n",
+    "hits": [
+      { "number": "10", "name": "箱体结构" },
+      { "number": "1", "name": "箱壁" },
+      { "number": "S1", "name": "底架" }
+    ]
+  },
+  {
+    "id": "html-breaks-and-dedupe",
+    "text": "附图标记说明：<br/>1底座，1底座、2支架，<br/>",
+    "hits": [
+      { "number": "1", "name": "底座" },
+      { "number": "2", "name": "支架" }
+    ]
+  }
+]

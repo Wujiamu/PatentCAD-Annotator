@@ -29,7 +29,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZM", CommandFlags.UsePickSet | CommandFlags.Redraw)]   // 拼音别名：标注-标记
         public void Run()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;
@@ -78,7 +78,7 @@ namespace PatentMarker.Commands
                 ApplyPendingIfNeeded(ed);
 
                 // v3.1：三点模式 — 附着点(已点) → 1 个拐点 → 文字位置，第 3 点点击后自动创建
-                if (Palette.PatPaletteCommand.ThreePointMode)
+                if (IO.PatSettingsStore.Current.ThreePointMode)
                 {
                     var doglegOpts3 = new PromptPointOptions(Strings.PatMark_PromptDogleg3);
                     doglegOpts3.BasePoint = ptResult.Value;
@@ -201,7 +201,7 @@ namespace PatentMarker.Commands
         /// </summary>
         private void CreateLeaderWithText(Database db, Point3d attachPt, List<Point3d> doglegPts, Point3d textPt, string number)
         {
-            PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number + ", vertices=" + (doglegPts.Count + 1) + ", arrow=" + Palette.PatPaletteCommand.HasArrowHead + ") ===");
+            PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number + ", vertices=" + (doglegPts.Count + 1) + ", arrow=" + IO.PatSettingsStore.Current.HasArrowHead + ") ===");
 
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
@@ -218,7 +218,7 @@ namespace PatentMarker.Commands
                 MText mt = new MText();
                 mt.SetDatabaseDefaults(db);
                 mt.Contents = number;
-                mt.TextHeight = Palette.PatPaletteCommand.TextHeight;
+                mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
                 mt.Location = textPt;
 
                 btr.AppendEntity(mt);
@@ -233,12 +233,12 @@ namespace PatentMarker.Commands
                 leader.AppendVertex(attachPt);              // 起点（箭头端）
                 foreach (Point3d p in doglegPts)            // v2：循环追加所有拐点
                     leader.AppendVertex(p);
-                leader.IsSplined = Palette.PatPaletteCommand.IsSplined;   // v2.1：样条/直线，取自面板开关
-                leader.HasArrowHead = Palette.PatPaletteCommand.HasArrowHead;
+                leader.IsSplined = IO.PatSettingsStore.Current.IsSplined;   // v2.1：样条/直线，取自面板开关
+                leader.HasArrowHead = IO.PatSettingsStore.Current.HasArrowHead;
 
                 // v2.1：实例级同步箭头大小，确保修改后新建的引线立即生效
                 //（只改 DimStyle 不够，Leader 创建时已继承旧值，需强制覆盖实例属性）
-                leader.Dimasz = Palette.PatPaletteCommand.ArrowSize;
+                leader.Dimasz = IO.PatSettingsStore.Current.ArrowSize;
 
                 btr.AppendEntity(leader);
                 tr.AddNewlyCreatedDBObject(leader, true);
@@ -253,7 +253,7 @@ namespace PatentMarker.Commands
                     leader.DimensionStyle = dimId;
                     // v2.1：同步箭头大小到 DimStyle（影响所有 PAT 引线，专利标注统一规格）
                     DimStyleTableRecord dsr = (DimStyleTableRecord)tr.GetObject(dimId, OpenMode.ForWrite);
-                    dsr.Dimasz = Palette.PatPaletteCommand.ArrowSize;
+                    dsr.Dimasz = IO.PatSettingsStore.Current.ArrowSize;
                 }
 
                 tr.Commit();

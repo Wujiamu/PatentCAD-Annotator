@@ -29,7 +29,7 @@ namespace PatentMarker.Commands
         [CommandMethod("BZM", CommandFlags.UsePickSet | CommandFlags.Redraw)]
         public void Run()
         {
-            var doc = AppAcad.DocumentManager.MdiActiveDocument;
+            var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;
@@ -76,7 +76,7 @@ namespace PatentMarker.Commands
                 ApplyPendingIfNeeded(ed);
 
                 // v3.1：三点模式 — 附着点(已点) → 1 个拐点 → 文字位置，第 3 点点击后自动创建
-                if (Palette.PatPaletteCommand.ThreePointMode)
+                if (IO.PatSettingsStore.Current.ThreePointMode)
                 {
                     var doglegOpts3 = new PromptPointOptions(Strings.PatMark_PromptDogleg3);
                     doglegOpts3.BasePoint = ptResult.Value;
@@ -216,21 +216,21 @@ namespace PatentMarker.Commands
                     mleader.MLeaderStyle = styleId;
 
                 // 6. 覆盖引线类型和箭头（面板控制）
-                mleader.LeaderLineType = Palette.PatPaletteCommand.IsSplined
+                mleader.LeaderLineType = IO.PatSettingsStore.Current.IsSplined
                     ? LeaderType.SplineLeader
                     : LeaderType.StraightLeader;
 
                 // 箭头控制
-                if (!Palette.PatPaletteCommand.HasArrowHead)
+                if (!IO.PatSettingsStore.Current.HasArrowHead)
                 {
                     mleader.ArrowSymbolId = ObjectId.Null;
                 }
-                mleader.ArrowSize = Palette.PatPaletteCommand.ArrowSize;
+                mleader.ArrowSize = IO.PatSettingsStore.Current.ArrowSize;
 
                 MText mt = new MText();
                 mt.SetDatabaseDefaults(db);
                 mt.Contents = number;
-                mt.TextHeight = Palette.PatPaletteCommand.TextHeight;
+                mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
                 if (!tnrId.IsNull)
                     mt.TextStyleId = tnrId;
                 mt.Location = textPt;
@@ -238,7 +238,7 @@ namespace PatentMarker.Commands
                 mleader.TextLocation = textPt;
 
                 // 文字高度同步到 MLeader 实例（覆盖样式默认值）
-                mleader.TextHeight = Palette.PatPaletteCommand.TextHeight;
+                mleader.TextHeight = IO.PatSettingsStore.Current.TextHeight;
 
                 // 3. 最后添加引线：从附着点开始，经过所有拐点
                 // AddLeaderLine(Point3d) 返回引线索引，后续用 AddLastVertex 追加顶点。
