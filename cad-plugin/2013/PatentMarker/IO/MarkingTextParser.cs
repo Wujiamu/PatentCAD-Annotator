@@ -82,8 +82,11 @@ namespace PatentMarker.IO
             "标号说明[：:]\\s*"
         };
 
-        /// <summary>截取到下一个段落空行（两连换行）或文末。</summary>
+        /// <summary>在未找到句号边界时，截取到下一个段落空行或文末。</summary>
         private static readonly Regex ReSectionEnd = new Regex(@"[\s\S]*?(\r\n\s*\r\n|\n\s*\n|\r\s*\r|\Z)");
+
+        /// <summary>专利文档中的附图标记说明以中文句号结束。</summary>
+        private static readonly Regex ReSectionSentenceEnd = new Regex(@"。", RegexOptions.Compiled);
 
         // ================================================================
         // 表格预处理（DictModel.bas v1.1 表格支持移植）
@@ -105,7 +108,7 @@ namespace PatentMarker.IO
         /// <summary>
         /// 定位并截取「附图标记说明」段落。
         /// 匹配常见标记头（附图标记说明如下：/ 附图标记说明：/ 标记说明如下：/ 标号说明：）。
-        /// 截取从标记头之后、到下一个段落空行或文末的内容。
+        /// 截取从标记头之后、到句号或空段落中更早的边界；没有边界时取到文末。
         /// 未找到任何标记头时返回全文（HeaderFound=false，调用方应提示回退全文扫描）。
         /// </summary>
         public static MarkingSectionResult ExtractMarkingSection(string text)
@@ -148,14 +151,18 @@ namespace PatentMarker.IO
                 after = text.Substring(startPos);
 
             Match endMatch = ReSectionEnd.Match(after);
-            if (endMatch.Success)
+            int boundaryLength = after.Length;
+            if (endMatch.Success && endMatch.Index + endMatch.Length < boundaryLength)
             {
-                result.SectionText = endMatch.Value;
-                result.HeaderFound = true;
-                return result;
+                boundaryLength = endMatch.Index + endMatch.Length;
+            }
+            Match sentenceEndMatch = ReSectionSentenceEnd.Match(after);
+            if (sentenceEndMatch.Success && sentenceEndMatch.Index + sentenceEndMatch.Length < boundaryLength)
+            {
+                boundaryLength = sentenceEndMatch.Index + sentenceEndMatch.Length;
             }
 
-            result.SectionText = after;
+            result.SectionText = after.Substring(0, boundaryLength);
             result.HeaderFound = true;
             return result;
         }

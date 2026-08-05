@@ -179,7 +179,7 @@ namespace PatentMarker.Tests
         [Fact]
         public void ExtractSection_WithHeader_ReturnsSectionText()
         {
-            string text = "本发明涉及一种设备。\n附图标记说明如下：\n1底座， 2支架；\n\n以上仅为本发明实施例。";
+            string text = "本发明涉及一种设备。\n附图标记说明如下：\n1底座， 2支架。\n\n以上仅为本发明实施例。";
             var result = MarkingTextParser.ExtractMarkingSection(text);
             Assert.True(result.HeaderFound);
             Assert.Contains("1底座", result.SectionText);
@@ -308,13 +308,28 @@ namespace PatentMarker.Tests
         }
 
         [Fact]
-        public void ExtractSection_WordCrOnly_StopsAtBlankParagraph()
+        public void ExtractSection_WordCrOnly_StopsAtSentenceEnd()
         {
-            string text = "正文\r附图标记说明如下：\r100板式换热器；\r110板片；\r\r具体实施方式\r图1所示板式换热器100。";
+            string text = "正文\r附图标记说明如下：\r100板式换热器；\r110板片。\r具体实施方式\r图1所示板式换热器100。";
             var section = MarkingTextParser.ExtractMarkingSection(text);
 
             Assert.True(section.HeaderFound);
-            Assert.Equal("100板式换热器；\r110板片；\r\r", section.SectionText);
+            Assert.Equal("100板式换热器；\r110板片。", section.SectionText);
+            Assert.Equal(2, MarkingTextParser.ExtractAll(section.SectionText).Count);
+        }
+
+        [Fact]
+        public void ExtractSection_StopsAtSentenceEndBeforeFollowingBody()
+        {
+            string text = "正文\r附图标记说明如下：\r100板式换热器；\r110板片。\r具体实施方式\r图1所示板式换热器100，200控制器。";
+            var section = MarkingTextParser.ExtractMarkingSection(text);
+
+            Assert.True(section.HeaderFound);
+            Assert.Contains("100板式换热器", section.SectionText);
+            Assert.Contains("110板片", section.SectionText);
+            Assert.EndsWith("。", section.SectionText);
+            Assert.DoesNotContain("具体实施方式", section.SectionText);
+            Assert.DoesNotContain("200控制器", section.SectionText);
             Assert.Equal(2, MarkingTextParser.ExtractAll(section.SectionText).Count);
         }
     }

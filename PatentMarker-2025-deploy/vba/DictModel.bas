@@ -177,9 +177,23 @@ Private Function ExtractMarkingSection(ByVal text As String) As String
     Dim after As String
     after = Mid$(text, startPos + 1)
 
+    ' Valid documents end this section at the first Chinese full stop.
+
+    Dim sentenceEndPos As Long
+    sentenceEndPos = InStr(1, after, ChrW(&H3002), vbBinaryCompare)
+
     ' 截断到下一个段落空行（两连换行）或文本末尾
     re.pattern = "[\s\S]*?(\r\n\s*\r\n|\n\s*\n|\r\s*\r|\Z)"
     Set m = re.Execute(after)
+    If sentenceEndPos > 0 Then
+        If m.Count = 0 Then
+            ExtractMarkingSection = Left$(after, sentenceEndPos)
+            Exit Function
+        ElseIf sentenceEndPos < m(0).Length Then
+            ExtractMarkingSection = Left$(after, sentenceEndPos)
+            Exit Function
+        End If
+    End If
     If m.Count > 0 Then
         ExtractMarkingSection = m(0).Value
     Else
