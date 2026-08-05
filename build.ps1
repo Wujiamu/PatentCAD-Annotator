@@ -169,7 +169,7 @@ function Invoke-StaticCheck {
     # ---- 2. csproj TargetFramework validation ----
     Write-Host "`n  --- csproj TargetFramework validation ---"
     $expectedTf = @{
-        "2007" = "v3.5"
+        "2007" = "v2.0"
         "2010" = "v3.5"
         "2013" = "v4.0"
         "2015" = "v4.5"
@@ -294,16 +294,17 @@ function Invoke-StaticCheck {
 
     # ---- 4. Deploy package version-specific checks ----
     Write-Host "`n  --- Deploy package version-specific checks ---"
-    # 2013/2015 should ship Newtonsoft.Json.dll
-    foreach ($ver in @("2013","2015")) {
+    # 2013/2015/2025: Newtonsoft.Json must be merged into PatentMarker.dll (single-file deploy)
+    # since v1.7: 2013/2015 ship no external Newtonsoft.Json.dll (ILRepack-merged at build time)
+    foreach ($ver in @("2013","2015","2025")) {
         $nj = Join-Path $root "PatentMarker-$ver-deploy\Newtonsoft.Json.dll"
-        if (Test-Path $nj) { Write-Ok "$ver : Newtonsoft.Json.dll present in deploy" }
-        else { Write-Err2 "$ver : Newtonsoft.Json.dll MISSING in deploy package"; $failCount++ }
+        if (Test-Path $nj) {
+            Write-Warn2 "$ver : Newtonsoft.Json.dll found but must be merged into PatentMarker.dll (single-file deploy)"
+            $warnCount++
+        } else {
+            Write-Ok "$ver : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)"
+        }
     }
-    # 2025 should NOT need Newtonsoft.Json.dll
-    $nj25 = Join-Path $root "PatentMarker-2025-deploy\Newtonsoft.Json.dll"
-    if (-not (Test-Path $nj25)) { Write-Ok "2025 : No Newtonsoft.Json.dll (uses System.Text.Json)" }
-    else { Write-Warn2 "2025 : Newtonsoft.Json.dll found but should use System.Text.Json"; $warnCount++ }
 
     # ---- Summary ----
     Write-Section "Static check result"

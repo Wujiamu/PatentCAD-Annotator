@@ -20,6 +20,10 @@ namespace PatentMarker.IO
         public string SourceFile = "";
         public string ExtractedAt = "";
         public string Version = "";
+        // v4.0：CAD 端手动修改标记（Word 导出前检测此字段决定是否备份）
+        public string ModifiedBy;
+        // v4.0：CAD 端手动修改时间（yyyy-MM-ddTHH:mm:ss）
+        public string ModifiedAt;
     }
 
     public class DictEntry
@@ -68,6 +72,29 @@ namespace PatentMarker.IO
         /// </summary>
         public static void ClearPrevious()
         {
+            _previousModel = null;
+        }
+
+        /// <summary>
+        /// v4.0：当前已缓存字典的文件路径（无缓存时为 null）。
+        /// 供写回 / 备份检测使用。
+        /// </summary>
+        public static string CurrentPath
+        {
+            get { return _cachedPath; }
+        }
+
+        /// <summary>
+        /// v4.0：CAD 端写回 dict.json 后调用，同步缓存状态。
+        /// 避免 2s 轮询把自身写入当作外部变更触发假 Diff 高亮；
+        /// 同时清除对比基线（用户自己的修改不应被标成新增/变更）。
+        /// </summary>
+        public static void NotifySelfWrite(DictModel model, string path)
+        {
+            _cachedModel = model;
+            _cachedPath = path;
+            try { _cachedTime = File.GetLastWriteTime(path); }
+            catch { _cachedTime = DateTime.Now; }
             _previousModel = null;
         }
 
@@ -146,7 +173,10 @@ namespace PatentMarker.IO
             }
         }
 
-        private static string ResolveDictPath()
+        /// <summary>
+        /// v4.0：解析当前应使用的 dict.json 路径（原私有方法公开，供写回/备份使用）。
+        /// </summary>
+        public static string ResolveDictPath()
         {
             var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             if (doc != null && doc.Name != null && doc.Name.Length > 0)
@@ -186,6 +216,9 @@ namespace PatentMarker.IO
                     dict.Metadata.SourceFile = SimpleJson.GetStr(meta, "source_file");
                     dict.Metadata.ExtractedAt = SimpleJson.GetStr(meta, "extracted_at");
                     dict.Metadata.Version = SimpleJson.GetStr(meta, "version");
+                    // v4.0：CAD 修改标记
+                    dict.Metadata.ModifiedBy = SimpleJson.GetStr(meta, "modified_by");
+                    dict.Metadata.ModifiedAt = SimpleJson.GetStr(meta, "modified_at");
                 }
 
                 // Entries

@@ -40,6 +40,9 @@ Public Sub ExportDict(Optional ByVal doc As Document)
     Dim json As String
     json = JsonWriter.Serialize(root)
 
+    ' v4.0ï¼šå¯¼å‡ºå‰å¤‡ä»½è¢« CAD ç«¯ä¿®æ”¹è¿‡çš„æ—§å­—å…¸ï¼Œé˜²æ­¢ Word é™é»˜è¦†ç›–
+    BackupIfCadModified outPath
+
     JsonWriter.WriteToFile outPath, json
 
     Exit Sub
@@ -52,14 +55,14 @@ errHandler:
 End Sub
 
 ' ======================================================================
-' È·¶¨Êä³öÂ·¾¶£ºÓÅÏÈÊ¹ÓÃÍ¬Ä¿Â¼ÏÂµÄ DWG ÎÄ¼şÃû
+' È·ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Í¬Ä¿Â¼ï¿½Âµï¿½ DWG ï¿½Ä¼ï¿½ï¿½ï¿½
 '
-' ²éÕÒ²ßÂÔ£º
-'   1. É¨Ãè Word ÎÄµµËùÔÚÄ¿Â¼ÖĞµÄ .dwg ÎÄ¼ş
-'   2. Èç¹ûÖ»ÓĞÒ»¸ö DWG£¬Ö±½ÓÊ¹ÓÃÆäÃû³Æ
-'   3. Èç¹ûÓĞ¶à¸ö DWG£¬³¢ÊÔÓë Word ÎÄµµÃûÆ¥Åä£¨°üº¬¹ØÏµ£©
-'   4. Èç¹ûÎŞ·¨Æ¥Åä£¬Ê¹ÓÃ×î½üĞŞ¸ÄµÄ DWG
-'   5. Èç¹ûÃ»ÓĞ DWG£¬»ØÍËµ½ Word ÎÄµµÃû
+' ï¿½ï¿½ï¿½Ò²ï¿½ï¿½Ô£ï¿½
+'   1. É¨ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½Ğµï¿½ .dwg ï¿½Ä¼ï¿½
+'   2. ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ DWGï¿½ï¿½Ö±ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+'   3. ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½Æ¥ï¿½ä£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
+'   4. ï¿½ï¿½ï¿½ï¿½Ş·ï¿½Æ¥ï¿½ä£¬Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Äµï¿½ DWG
+'   5. ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ Word ï¿½Äµï¿½ï¿½ï¿½
 ' ======================================================================
 Private Function GetOutputPath(ByVal doc As Document) As String
     Dim dir As String
@@ -72,7 +75,7 @@ Private Function GetOutputPath(ByVal doc As Document) As String
     Dim baseName As String
     baseName = FindDwgBaseName(dir, doc.Name)
 
-    ' Èç¹ûÃ»ÕÒµ½ DWG£¬»ØÍËµ½ Word ÎÄµµÃû
+    ' ï¿½ï¿½ï¿½Ã»ï¿½Òµï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ Word ï¿½Äµï¿½ï¿½ï¿½
     If baseName = "" Then
         baseName = doc.Name
         Dim dotPos As Long
@@ -84,7 +87,7 @@ Private Function GetOutputPath(ByVal doc As Document) As String
 End Function
 
 ' ======================================================================
-' ÔÚÖ¸¶¨Ä¿Â¼ÖĞ²éÕÒ DWG ÎÄ¼ş£¬·µ»ØÆä»ù´¡Ãû£¨²»º¬À©Õ¹Ãû£©
+' ï¿½ï¿½Ö¸ï¿½ï¿½Ä¿Â¼ï¿½Ğ²ï¿½ï¿½ï¿½ DWG ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½
 ' ======================================================================
 Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String) As String
     On Error GoTo errHandler
@@ -106,7 +109,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     ReDim dwgNames(0 To 99)
     ReDim dwgDates(0 To 99)
 
-    ' ÊÕ¼¯ËùÓĞ .dwg ÎÄ¼ş
+    ' ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ .dwg ï¿½Ä¼ï¿½
     Dim f As Object
     For Each f In folder.Files
         If LCase(fso.GetExtensionName(f.Name)) = "dwg" Then
@@ -123,13 +126,13 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
         Exit Function
     End If
 
-    ' Ö»ÓĞÒ»¸ö DWG£¬Ö±½ÓÊ¹ÓÃ
+    ' Ö»ï¿½ï¿½Ò»ï¿½ï¿½ DWGï¿½ï¿½Ö±ï¿½ï¿½Ê¹ï¿½ï¿½
     If dwgCount = 1 Then
         FindDwgBaseName = RemoveExt(dwgNames(0))
         Exit Function
     End If
 
-    ' ¶à¸ö DWG£º³¢ÊÔÓë Word ÎÄµµÃûÆ¥Åä
+    ' ï¿½ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
     Dim wordBase As String
     wordBase = RemoveExt(wordDocName)
 
@@ -137,7 +140,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     For i = 0 To dwgCount - 1
         Dim dwgBase As String
         dwgBase = RemoveExt(dwgNames(i))
-        ' Ë«Ïò°üº¬Æ¥Åä
+        ' Ë«ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
         If InStr(1, LCase(wordBase), LCase(dwgBase), vbTextCompare) > 0 Or _
            InStr(1, LCase(dwgBase), LCase(wordBase), vbTextCompare) > 0 Then
             FindDwgBaseName = dwgBase
@@ -145,7 +148,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
         End If
     Next
 
-    ' ÎŞ·¨Æ¥Åä£ºÊ¹ÓÃ×î½üĞŞ¸ÄµÄ DWG
+    ' ï¿½Ş·ï¿½Æ¥ï¿½ä£ºÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Äµï¿½ DWG
     Dim newest As Long: newest = 0
     For i = 1 To dwgCount - 1
         If dwgDates(i) > dwgDates(newest) Then newest = i
@@ -177,4 +180,73 @@ Private Function GetOutputDir(ByVal doc As Document) As String
     End If
     On Error GoTo 0
     GetOutputDir = p
+End Function
+
+' ======================================================================
+' v4.0ï¼šå¯¼å‡ºå‰å¤‡ä»½è¢« CAD ç«¯ä¿®æ”¹è¿‡çš„æ—§å­—å…¸ï¼Œé˜²æ­¢ Word é™é»˜è¦†ç›–ã€‚
+'
+' æ£€æµ‹ï¼šæ—§ dict.json å†…å®¹å« "modified_by": "cad"ï¼ˆCAD ç«¯ DictWriter å†™å…¥çš„æ ‡è®°ï¼‰ã€‚
+' å¤‡ä»½ï¼š<ä¸»å>.dict.json.word-<yyyymmdd-hhnnss>.bakï¼Œåªä¿ç•™æœ€æ–°ä¸€ä¸ªï¼›
+'       CAD ç«¯ DictConflict.FindWordBackup ä¾èµ–æ­¤å‘½åçº¦å®šåšå†²çªæ£€æµ‹ã€‚
+' ä»»ä½•å¤±è´¥éƒ½ä¸é˜»æ–­å¯¼å‡ºï¼ˆå¤‡ä»½æ˜¯å°½åŠ›è€Œä¸ºï¼‰ã€‚
+' ======================================================================
+Private Sub BackupIfCadModified(ByVal dictPath As String)
+    On Error GoTo done
+
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FileExists(dictPath) Then Exit Sub
+
+    ' è¯»æ—§æ–‡ä»¶ï¼ˆUTF-8ï¼‰ï¼Œæ£€æŸ¥ CAD ä¿®æ”¹æ ‡è®°
+    Dim content As String
+    content = ReadUtf8File(dictPath)
+    If InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Sub
+
+    Dim bakDir As String
+    bakDir = fso.GetParentFolderName(dictPath)
+    If bakDir = "" Then Exit Sub
+    Dim fileName As String
+    fileName = fso.GetFileName(dictPath)
+
+    ' åˆ é™¤æ—§å¤‡ä»½ï¼ˆåªä¿ç•™æœ€æ–°ä¸€ä¸ªï¼‰
+    Dim oldBak As String
+    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak")
+    Do While oldBak <> ""
+        On Error Resume Next
+        Kill bakDir & "\" & oldBak
+        On Error GoTo done
+        oldBak = Dir()
+    Loop
+
+    ' ç”Ÿæˆæ–°å¤‡ä»½ï¼ˆåŒä¸€ç§’å†…é‡å¤å¯¼å‡ºæ—¶å…ˆåˆ åå¤åˆ¶ï¼‰
+    Dim stamp As String
+    stamp = Format(Now, "yyyymmdd-hhnnss")
+    Dim bakPath As String
+    bakPath = bakDir & "\" & fileName & ".word-" & stamp & ".bak"
+    If fso.FileExists(bakPath) Then
+        On Error Resume Next
+        Kill bakPath
+        On Error GoTo done
+    End If
+    FileCopy dictPath, bakPath
+
+done:
+End Sub
+
+' ä»¥ UTF-8 è¯»å–æ•´ä¸ªæ–‡ä»¶å†…å®¹ï¼ˆå¤±è´¥è¿”å›ç©ºä¸²ï¼‰
+Private Function ReadUtf8File(ByVal path As String) As String
+    On Error GoTo errHandler
+    Dim stream As Object
+    Set stream = CreateObject("ADODB.Stream")
+    stream.Type = 2
+    stream.Charset = "utf-8"
+    stream.Open
+    stream.LoadFromFile path
+    ReadUtf8File = stream.ReadText(-1)
+    stream.Close
+    Exit Function
+errHandler:
+    On Error Resume Next
+    If Not stream Is Nothing Then stream.Close
+    ReadUtf8File = ""
 End Function

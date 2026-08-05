@@ -1,20 +1,25 @@
-﻿PatentMarker 2015 部署说明
+PatentMarker 2015 部署说明
 ===========================
 
 目标环境：AutoCAD 2015-2024 (R20.x-R24.x)，Windows 7 SP1+
 
 文件说明：
-  PatentMarker.dll     - CAD 插件主文件
-  Newtonsoft.Json.dll  - JSON 解析库（必须与 PatentMarker.dll 同目录）
+  PatentMarker.dll     - CAD 插件主文件（单文件部署，已内置 JSON 解析）
   install-2015.vbs     - 安装脚本
   vba/                 - Word VBA 模块（6个文件）
 
 安装步骤：
-  1. 将 PatentMarker.dll 和 Newtonsoft.Json.dll 放到同一固定目录
+  1. 将 PatentMarker.dll 放到固定目录（如 C:\PatentMarker\）
   2. 将 install-2015.vbs 也放到同一目录
   3. 双击 install-2015.vbs
   4. 重启 AutoCAD
   5. 命令行输入 BZ 验证
+
+注意事项：
+  - 单文件部署：无需 Newtonsoft.Json.dll（已合并进 PatentMarker.dll）
+  - 脚本会自动检测 R20.x-R24.x
+  - DLL 路径不能含中文（部分环境不兼容）
+  - 如果注册表方式不生效，可用 NETLOAD 手动加载
 
 Word 端：
   将 vba/ 下的 6 个模块导入 Word Normal 模板

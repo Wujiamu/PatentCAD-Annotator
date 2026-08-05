@@ -19,6 +19,8 @@ PatentCAD-Annotator 的目的在于减少专利图纸标注中的机械操作，
 
 PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保存为字典（.dict.json文件） → CAD 端打开字典面板 → 点击编号即可创建标准引线标注 → 字典变更时自动高亮差异。
 
+v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、双击条目改号/改名、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
+
 ### 版本总览
 
 由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本。**请根据你本机的 AutoCAD 年份选择对应版本：**
@@ -61,7 +63,7 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 | 2013/2015 | acdbmgd.dll, acmgd.dll, accoremgd.dll | `PatentMarker/lib/` |
 | 2025 | acdbmgd.dll, acmgd.dll, accoremgd.dll | `PatentMarker/lib/` |
 
-- 2013/2015 版额外需要 Newtonsoft.Json 13.0.3（NuGet 还原）
+- 2013/2015 版使用 Newtonsoft.Json 13.0.3（NuGet 还原），发布时经 ILRepack 合并进 `PatentMarker.dll`（单文件部署，安装无需额外 DLL）
 - 2025 版零外部依赖（System.Text.Json 内置）
 - 全部 5 个版本均已通过编译验证
 
@@ -129,6 +131,8 @@ PatentCAD-Annotator/
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v4.0 | 2026-08-04 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决（Word 覆盖 CAD 修改时备份+三选一裁决）；全部 5 版本同步 |
+| v3.2 | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
 | v3.1 | 2026-08-03 | 新增三点模式（面板切换按钮）：固定 3 点采集引线，与线型开关正交；全 5 版本同步 |
 | v3.0 | 2026-08-03 | VBA v3.0 多格式识别（括号/连字符/英文标点/裸列表）；C# 取消 JSON 排序按原文顺序；全版本重新编译部署 |
 | v2.5 | 2026-07-27 | 修复 Word 2010 无法导入 clsSaveHook.cls 的兼容性问题（改为代码注入）；修复 2007/2010 版箭头大小修改后不能立即生效；所有部署包补充 install-vba.vbs |
@@ -148,6 +152,8 @@ PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing
 3. **Inconsistent formatting** — different annotators produce different leader styles, text heights, and alignments
 
 Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
+
+Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, double-click an entry to renumber/rename, add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
 
 ### Versions
 

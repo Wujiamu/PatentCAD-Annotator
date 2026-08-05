@@ -4,7 +4,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProjectGuid>{A1B2C3D4-E5F6-4A5B-8C7D-9E0F1A2B3C4D}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <RootNamespace>PatentMarker</RootNamespace>
     <AssemblyName>PatentMarker</AssemblyName>
   </PropertyGroup>
@@ -43,6 +43,9 @@
     <Compile Include="IO\ConfigLoader.cs" />
     <Compile Include="IO\DictEntry.cs" />
     <Compile Include="IO\DictDiff.cs" />
+    <Compile Include="IO\DictWriter.cs" />
+    <Compile Include="IO\DictConflict.cs" />
+    <Compile Include="IO\MarkingTextParser.cs" />
     <Compile Include="IO\PatEntityHelper.cs" />
     <Compile Include="Styles\PatStyleInitializer.cs" />
     <Compile Include="Commands\PatMarkCommand.cs" />
@@ -51,6 +54,9 @@
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="Palette\PatPaletteCommand.cs" />
     <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="Palette\PasteRecognizeDialog.cs" />
+    <Compile Include="Palette\EditEntryDialog.cs" />
+    <Compile Include="Palette\ArbitrateDialog.cs" />
     <Compile Include="I18n\Language.cs" />
     <Compile Include="I18n\Strings.cs" />
   </ItemGroup>

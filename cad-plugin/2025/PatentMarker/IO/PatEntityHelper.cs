@@ -51,6 +51,50 @@ namespace PatentMarker.IO
         }
 
         /// <summary>
+        /// v4.0：设置 PAT 多重引线的文字为新编号（mleader 需已按 ForWrite 打开）。
+        /// 文字未变化时返回 false（不计入修改数）。
+        /// </summary>
+        public static bool SetMLeaderNumber(MLeader mleader, string newNumber)
+        {
+            try
+            {
+                MText mt = mleader.MText;
+                if (mt == null) return false;
+                if (string.Equals(mt.Contents, newNumber, StringComparison.Ordinal)) return false;
+                mt.Contents = newNumber;
+                return true;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>
+        /// v4.0：在模型空间内扫描 PAT 引线，把编号（trim 后忽略大小写）等于 oldNumber
+        /// 的文字改为 newNumber。返回实际修改条数。调用方负责事务开启与提交。
+        /// 与 BZC 的文字匹配口径一致（GetMLeaderNumber）。
+        /// </summary>
+        public static int RenameNumberInModelSpace(Transaction tr,
+            BlockTableRecord modelSpace, string oldNumber, string newNumber)
+        {
+            if (string.IsNullOrEmpty(oldNumber) || string.IsNullOrEmpty(newNumber)) return 0;
+            int changed = 0;
+            foreach (ObjectId entId in modelSpace)
+            {
+                Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
+                MLeader mleader = ent as MLeader;
+                if (mleader == null) continue;
+                if (!IsPatEntity(mleader, tr)) continue;
+
+                string number = GetMLeaderNumber(mleader);
+                if (number.Length == 0) continue;
+                if (!string.Equals(number, oldNumber, StringComparison.OrdinalIgnoreCase)) continue;
+
+                mleader.UpgradeOpen();
+                if (SetMLeaderNumber(mleader, newNumber)) changed++;
+            }
+            return changed;
+        }
+
+        /// <summary>
         /// 获取 PAT 多重引线的文字位置。
         /// 优先使用 TextLocation，回退到最后一个引线顶点。
         /// </summary>

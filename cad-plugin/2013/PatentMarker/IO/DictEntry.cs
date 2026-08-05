@@ -32,6 +32,14 @@ namespace PatentMarker.IO
 
         [JsonProperty("version")]
         public string Version { get; set; } = "";
+
+        // v4.0：CAD 端手动修改标记（Word 导出前检测此字段决定是否备份）
+        [JsonProperty("modified_by")]
+        public string ModifiedBy { get; set; }
+
+        // v4.0：CAD 端手动修改时间（yyyy-MM-ddTHH:mm:ss）
+        [JsonProperty("modified_at")]
+        public string ModifiedAt { get; set; }
     }
 
     public class DictEntry
@@ -82,6 +90,29 @@ namespace PatentMarker.IO
 
         public static void ClearPrevious()
         {
+            _previousModel = null;
+        }
+
+        /// <summary>
+        /// v4.0：当前已缓存字典的文件路径（无缓存时为 null）。
+        /// 供写回 / 备份检测使用。
+        /// </summary>
+        public static string CurrentPath
+        {
+            get { return _cachedPath; }
+        }
+
+        /// <summary>
+        /// v4.0：CAD 端写回 dict.json 后调用，同步缓存状态。
+        /// 避免 2s 轮询把自身写入当作外部变更触发假 Diff 高亮；
+        /// 同时清除对比基线（用户自己的修改不应被标成新增/变更）。
+        /// </summary>
+        public static void NotifySelfWrite(DictModel model, string path)
+        {
+            _cachedModel = model;
+            _cachedPath = path;
+            try { _cachedTime = File.GetLastWriteTime(path); }
+            catch { _cachedTime = DateTime.Now; }
             _previousModel = null;
         }
 
@@ -158,7 +189,10 @@ namespace PatentMarker.IO
             }
         }
 
-        private static string ResolveDictPath()
+        /// <summary>
+        /// v4.0：解析当前应使用的 dict.json 路径（原私有方法公开，供写回/备份使用）。
+        /// </summary>
+        public static string ResolveDictPath()
         {
             var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             if (doc != null && !string.IsNullOrEmpty(doc.Name))
@@ -193,6 +227,7 @@ namespace PatentMarker.IO
                 if (dict.Entries == null) dict.Entries = new List<DictEntry>();
                 if (dict.Warnings == null) dict.Warnings = new List<string>();
                 if (dict.Metadata == null) dict.Metadata = new DictMetadata();
+                NormalizeNestedValues(dict);
 
                 PatentMarkerApp.RawLog("DictLoader.Load OK: " + path + " -> " + dict.Entries.Count + " entries");
                 return dict;
@@ -201,6 +236,43 @@ namespace PatentMarker.IO
             {
                 PatentMarkerApp.RawLog("DictLoader.Load FAILED: " + path + " -> " + ex.GetType().Name + ": " + ex.Message);
                 return null;
+            }
+        }
+
+        private static void NormalizeNestedValues(DictModel dict)
+        {
+            for (int i = dict.Entries.Count - 1; i >= 0; i--)
+            {
+                DictEntry entry = dict.Entries[i];
+                if (entry == null)
+                {
+                    dict.Entries.RemoveAt(i);
+                    continue;
+                }
+                if (entry.Number == null) entry.Number = "";
+                if (entry.Name == null) entry.Name = "";
+                if (entry.Conflicts == null) entry.Conflicts = new List<ConflictInfo>();
+                for (int j = entry.Conflicts.Count - 1; j >= 0; j--)
+                {
+                    ConflictInfo conflict = entry.Conflicts[j];
+                    if (conflict == null)
+                    {
+                        entry.Conflicts.RemoveAt(j);
+                        continue;
+                    }
+                    if (conflict.Number == null) conflict.Number = "";
+                    if (conflict.Candidates == null) conflict.Candidates = new List<string>();
+                    for (int k = conflict.Candidates.Count - 1; k >= 0; k--)
+                    {
+                        if (conflict.Candidates[k] == null)
+                            conflict.Candidates.RemoveAt(k);
+                    }
+                }
+            }
+            for (int i = dict.Warnings.Count - 1; i >= 0; i--)
+            {
+                if (dict.Warnings[i] == null)
+                    dict.Warnings.RemoveAt(i);
             }
         }
     }

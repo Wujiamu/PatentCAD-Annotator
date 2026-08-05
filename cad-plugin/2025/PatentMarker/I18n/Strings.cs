@@ -376,6 +376,259 @@ namespace PatentMarker.I18n
             get { return En ? "Compare" : "对照"; }
         }
 
+        // v4.0：粘贴识别入口 | Paste-recognize entry
+        public static string Palette_PasteRecognize
+        {
+            get { return En ? "Paste" : "粘贴识别"; }
+        }
+
+        // v4.0：新增条目入口 | Add-entry entry
+        public static string Palette_AddEntry
+        {
+            get { return En ? "Add" : "新增"; }
+        }
+
+        // ================================================================
+        // PasteRecognizeDialog — v4.0 粘贴识别对话框
+        // ================================================================
+
+        public static string Paste_Title
+        {
+            get { return En ? "Paste & Recognize" : "粘贴识别"; }
+        }
+
+        public static string Paste_InputHint
+        {
+            get { return En ? "Paste the marking description text below:" : "请粘贴附图标记说明文本（可从 Word 说明书复制）:"; }
+        }
+
+        public static string Paste_BtnRecognize
+        {
+            get { return En ? "Recognize" : "识别"; }
+        }
+
+        public static string Paste_NoInput
+        {
+            get { return En ? "Input is empty." : "输入为空。"; }
+        }
+
+        /// <summary>0=count | 识别到 N 条</summary>
+        public static string Paste_ResultInfo
+        {
+            get { return En ? "Recognized {0} item(s)." : "识别到 {0} 条。"; }
+        }
+
+        /// <summary>0=section length | 已定位段落，长度 N 字符</summary>
+        public static string Paste_SectionFound
+        {
+            get { return En ? "Section located ({0} chars)." : "已定位「附图标记说明」段落（{0} 字符）。"; }
+        }
+
+        public static string Paste_SectionFallback
+        {
+            get { return En ? "Section header not found — full-text scan." : "未找到标记段落头 — 已回退全文扫描。"; }
+        }
+
+        /// <summary>0=error message</summary>
+        public static string Paste_RecognizeFailed
+        {
+            get { return En ? "Recognition failed: {0}" : "识别失败: {0}"; }
+        }
+
+        public static string Paste_NoRows
+        {
+            get { return En ? "No valid rows to write (number and name required)." : "没有可写回的有效行（编号和名称不能为空）。"; }
+        }
+
+        public static string Paste_NoDict
+        {
+            get { return En ? "Dictionary not loaded. Click Reload first." : "未加载字典，请先点击「重载」。"; }
+        }
+
+        public static string Paste_GridNumber
+        {
+            get { return En ? "Number" : "编号"; }
+        }
+
+        public static string Paste_GridName
+        {
+            get { return En ? "Name" : "名称"; }
+        }
+
+        public static string Paste_BtnConfirm
+        {
+            get { return En ? "Write Back" : "确认写回"; }
+        }
+
+        public static string Paste_BtnCancel
+        {
+            get { return En ? "Cancel" : "取消"; }
+        }
+
+        public static string Paste_ConfirmTitle
+        {
+            get { return En ? "Write Mode" : "写回方式"; }
+        }
+
+        public static string Paste_ConfirmMsg
+        {
+            get { return En ? "Choose write mode:\n\nYes = Overwrite the whole dictionary\nNo = Merge (update existing entries by number, append new numbers)\nCancel = do not write"
+                            : "选择写回方式:\n\n是(Y) = 覆盖当前整个字典\n否(N) = 合并（按编号更新已有条目，新编号追加到末尾）\n取消 = 不写回"; }
+        }
+
+        /// <summary>0=count, 1=path | 已写回 N 条到 path</summary>
+        public static string Paste_WriteOk
+        {
+            get { return En ? "Written {0} entries to:\n{1}" : "已写回 {0} 条到:\n{1}"; }
+        }
+
+        /// <summary>0=error message</summary>
+        public static string Paste_WriteFail
+        {
+            get { return En ? "Write failed: {0}" : "写回失败: {0}"; }
+        }
+
+        // ================================================================
+        // EditEntryDialog — v4.0 单条目编辑对话框
+        // ================================================================
+
+        public static string Edit_TitleEdit
+        {
+            get { return En ? "Edit Entry" : "编辑条目"; }
+        }
+
+        public static string Edit_TitleAdd
+        {
+            get { return En ? "Add Entry" : "新增条目"; }
+        }
+
+        public static string Edit_Number
+        {
+            get { return En ? "Number:" : "编号:"; }
+        }
+
+        public static string Edit_Name
+        {
+            get { return En ? "Name:" : "名称:"; }
+        }
+
+        public static string Edit_BtnSave
+        {
+            get { return En ? "Save" : "保存"; }
+        }
+
+        public static string Edit_BtnSaveAndMark
+        {
+            get { return En ? "Save & Mark" : "保存并标注"; }
+        }
+
+        public static string Edit_BtnDelete
+        {
+            get { return En ? "Delete" : "删除"; }
+        }
+
+        public static string Edit_EmptyField
+        {
+            get { return En ? "Number and name are required." : "编号和名称不能为空。"; }
+        }
+
+        /// <summary>0=number | 编号重复</summary>
+        public static string Edit_NumberConflict
+        {
+            get { return En ? "Number already exists: {0}" : "编号已存在: {0}"; }
+        }
+
+        public static string Edit_DeleteConfirm
+        {
+            get { return En ? "Delete this entry from the dictionary?\n(Leaders in the drawing are NOT deleted.)"
+                            : "确定从字典删除该条目？\n（图纸中的引线不会被删除。）"; }
+        }
+
+        public static string Edit_DeleteFailed
+        {
+            get { return En ? "Delete failed: entry not found." : "删除失败: 未找到该条目。"; }
+        }
+
+        // ================================================================
+        // ArbitrateDialog — v4.0 双端冲突裁决
+        // ================================================================
+
+        // 面板裁决入口 | Palette arbitrate entry
+        public static string Palette_Arbitrate
+        {
+            get { return En ? "Arbitrate" : "裁决"; }
+        }
+
+        /// <summary>状态栏：检测到 Word 已覆盖 CAD 修改</summary>
+        public static string Conflict_StatusDetected
+        {
+            get { return En ? "Word has overwritten CAD edits — click Arbitrate" : "检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理"; }
+        }
+
+        public static string Conflict_Title
+        {
+            get { return En ? "Resolve Conflict" : "冲突裁决"; }
+        }
+
+        /// <summary>0=backup file name | 冲突说明（含备份文件名）</summary>
+        public static string Conflict_Msg
+        {
+            get { return En ? "Word has overwritten CAD edits. The CAD version was backed up to:\n{0}\n\nChoose which version to keep:"
+                            : "Word 端已覆盖 CAD 的修改。CAD 原版已备份为:\n{0}\n\n请选择保留哪一版:"; }
+        }
+
+        public static string Conflict_BtnKeepWord
+        {
+            get { return En ? "Keep Word version" : "采用 Word 版"; }
+        }
+
+        public static string Conflict_BtnRestoreCad
+        {
+            get { return En ? "Restore CAD version" : "恢复 CAD 版"; }
+        }
+
+        public static string Conflict_BtnLater
+        {
+            get { return En ? "Later" : "稍后再说"; }
+        }
+
+        /// <summary>状态栏：采用 Word 版结果</summary>
+        public static string Conflict_KeepWordOk
+        {
+            get { return En ? "Word version kept (backup cleaned)." : "已采用 Word 版（备份已清理）。"; }
+        }
+
+        /// <summary>状态栏：恢复 CAD 版结果</summary>
+        public static string Conflict_RestoreOk
+        {
+            get { return En ? "CAD version restored (mark cleared)." : "已恢复 CAD 版（CAD 标记已清除）。"; }
+        }
+
+        /// <summary>0=error message | 裁决失败</summary>
+        public static string Conflict_Failed
+        {
+            get { return En ? "Arbitration failed: {0}" : "裁决失败: {0}"; }
+        }
+
+        // v4.0：改号同步图纸 | Renumber sync to drawing
+        /// <summary>0=changed, 1=oldNumber, 2=newNumber | 已同步 N 条图纸标注: old → new</summary>
+        public static string Status_NumberSynced
+        {
+            get { return En ? "Synced {0} leader(s) to drawing: {1} → {2}" : "已同步 {0} 条图纸标注: {1} → {2}"; }
+        }
+
+        /// <summary>0=changed, 1=oldNumber, 2=newNumber | 命令行同步结果</summary>
+        public static string Status_NumberSyncedCmd
+        {
+            get { return En ? "\nSynced {0} PAT leader(s) text: {1} → {2}\n" : "\n已同步 {0} 条 PAT 引线文字: {1} → {2}\n"; }
+        }
+
+        /// <summary>0=error message</summary>
+        public static string Status_NumberSyncFailed
+        {
+            get { return En ? "Drawing sync failed: {0}" : "图纸同步失败: {0}"; }
+        }
+
         // 语言切换按钮 | Language toggle button
         public static string Palette_Language
         {

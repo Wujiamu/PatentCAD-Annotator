@@ -43,15 +43,26 @@
       <Private>false</Private>
     </Reference>
     <!-- Newtonsoft.Json via NuGet (packages.config) -->
-    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <!-- 注意：13.0.x 包中 lib\net40 目录的 DLL 实际标记 TargetFramework=v4.5，
+         在 v4.0 目标下编译会报 MSB3274；lib\net35 无 TFM 标记且 CLR4 兼容，
+         发布时经 ILRepack 合并进 PatentMarker.dll（单文件部署）。
+         HintPath 必须用 ..\..\packages（packages 在 cad-plugin\packages，与各版本平级）。 -->
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <!-- .NET Framework 4.0 引用程序集（本机未装 Developer Pack 时从 NuGet 离线还原） -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PatentMarkerApp.cs" />
     <Compile Include="IO\ConfigLoader.cs" />
     <Compile Include="IO\DictEntry.cs" />
     <Compile Include="IO\DictDiff.cs" />
+    <Compile Include="IO\DictWriter.cs" />
+    <Compile Include="IO\DictConflict.cs" />
+    <Compile Include="IO\MarkingTextParser.cs" />
     <Compile Include="IO\PatEntityHelper.cs" />
     <Compile Include="Styles\PatStyleInitializer.cs" />
     <Compile Include="Commands\PatMarkCommand.cs" />
@@ -60,6 +71,9 @@
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="Palette\PatPaletteCommand.cs" />
     <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="Palette\PasteRecognizeDialog.cs" />
+    <Compile Include="Palette\EditEntryDialog.cs" />
+    <Compile Include="Palette\ArbitrateDialog.cs" />
     <Compile Include="I18n\Language.cs" />
     <Compile Include="I18n\Strings.cs" />
   </ItemGroup>
