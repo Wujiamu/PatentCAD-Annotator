@@ -215,6 +215,17 @@ namespace PatentMarker.Commands
                 if (!styleId.IsNull)
                     mleader.MLeaderStyle = styleId;
 
+                // 禁用 MLeader 自动 dogleg/landing，几何只保留用户点击的顶点。
+                // 同时强制文字水平，避免移动文字后沿最后一段引线倾斜。
+                mleader.EnableDogleg = false;
+                mleader.EnableLanding = false;
+                mleader.ExtendLeaderToText = false;
+                mleader.DoglegLength = 0.0;
+                mleader.LandingGap = 0.0;
+                mleader.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
+                mleader.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
+                mleader.TextAngleType = TextAngleType.HorizontalAngle;
+
                 // 6. 覆盖引线类型和箭头（面板控制）
                 mleader.LeaderLineType = IO.PatSettingsStore.Current.IsSplined
                     ? LeaderType.SplineLeader
@@ -233,6 +244,7 @@ namespace PatentMarker.Commands
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
                 if (!tnrId.IsNull)
                     mt.TextStyleId = tnrId;
+                mt.Rotation = 0.0;
                 mt.Location = textPt;
                 mleader.MText = mt;
                 mleader.TextLocation = textPt;

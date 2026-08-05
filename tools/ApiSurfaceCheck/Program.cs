@@ -187,10 +187,24 @@ else if (edition is "2013" or "2015" or "2025")
     RequireProperty($"{db}.MLeader", "MText");
     RequireProperty($"{db}.MLeader", "TextLocation");
     RequireProperty($"{db}.MLeader", "LeaderLineType");
+    RequireProperty($"{db}.MLeader", "EnableDogleg");
+    RequireProperty($"{db}.MLeader", "EnableLanding");
+    RequireProperty($"{db}.MLeader", "ExtendLeaderToText");
+    RequireProperty($"{db}.MLeader", "TextAttachmentDirection");
+    RequireProperty($"{db}.MLeader", "TextAttachmentType");
+    RequireProperty($"{db}.MLeader", "TextAngleType");
+    RequireProperty($"{db}.MText", "Rotation");
+    RequireProperty($"{db}.MLeaderStyle", "EnableDogleg");
+    RequireProperty($"{db}.MLeaderStyle", "EnableLanding");
+    RequireProperty($"{db}.MLeaderStyle", "ExtendLeaderToText");
+    RequireProperty($"{db}.MLeaderStyle", "TextAngleType");
     RequireMethod($"{db}.MLeader", "AddLeaderLine", 1);
     RequireMethod($"{db}.MLeader", "AddLastVertex", 2);
     RequireEnumValue($"{db}.LeaderType", "StraightLeader");
     RequireEnumValue($"{db}.LeaderType", "SplineLeader");
+    RequireEnumValue($"{db}.TextAngleType", "HorizontalAngle");
+    RequireEnumValue($"{db}.TextAttachmentDirection", "AttachmentHorizontal");
+    RequireEnumValue($"{db}.TextAttachmentType", "AttachmentMiddle");
     RequireType($"{geo}.Point3d");
 }
 else

@@ -44,9 +44,14 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.Equal(LeaderType.StraightLeader, leader.LeaderLineType);
                 Assert.Equal(3.25, leader.ArrowSize);
                 Assert.Equal(4.25, leader.TextHeight);
+                Assert.False(leader.EnableDogleg);
+                Assert.False(leader.EnableLanding);
+                Assert.False(leader.ExtendLeaderToText);
+                Assert.Equal(TextAngleType.HorizontalAngle, leader.TextAngleType);
                 Assert.Equal(new Point3d(5, 6, 0), leader.TextLocation);
                 Assert.NotNull(leader.MText);
                 Assert.Equal("1342A", leader.MText.Contents);
+                Assert.Equal(0.0, leader.MText.Rotation);
 #endif
             }
         }

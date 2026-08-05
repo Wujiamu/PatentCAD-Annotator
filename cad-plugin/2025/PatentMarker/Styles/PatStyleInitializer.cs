@@ -39,7 +39,21 @@ namespace PatentMarker.Styles
         {
             DBDictionary mlDict = (DBDictionary)tr.GetObject(
                 db.MLeaderStyleDictionaryId, OpenMode.ForRead);
-            if (mlDict.Contains(StyleName)) return;
+            if (mlDict.Contains(StyleName))
+            {
+                // 旧版本可能已经创建过 PAT_STYLE；每次使用前同步几何和文字约束，
+                // 避免旧样式继续注入自动 dogleg 或让文字跟随引线倾斜。
+                ObjectId existingId = mlDict.GetAt(StyleName);
+                MLeaderStyle existingStyle = (MLeaderStyle)tr.GetObject(existingId, OpenMode.ForWrite);
+                existingStyle.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
+                existingStyle.TextAngleType = TextAngleType.HorizontalAngle;
+                existingStyle.EnableDogleg = false;
+                existingStyle.EnableLanding = false;
+                existingStyle.ExtendLeaderToText = false;
+                existingStyle.DoglegLength = 0.0;
+                existingStyle.LandingGap = 0.0;
+                return;
+            }
 
             mlDict.UpgradeOpen();
             MLeaderStyle style = new MLeaderStyle();
@@ -59,11 +73,18 @@ namespace PatentMarker.Styles
             // 文字设置
             style.TextHeight = IO.PatSettingsStore.Current.TextHeight;
             style.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
+            style.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
+            style.TextAngleType = TextAngleType.HorizontalAngle;
 
             // 引线设置
             style.LeaderLineType = LeaderType.SplineLeader;  // 默认样条曲线
-            style.EnableDogleg = true;
-            style.DoglegLength = 8.0;
+            // MLeader 的默认 dogleg/landing 会在用户最后一点与文字之间
+            // 自动插入额外顶点，导致三点模式出现第四个“吸附点”。
+            style.EnableDogleg = false;
+            style.EnableLanding = false;
+            style.ExtendLeaderToText = false;
+            style.DoglegLength = 0.0;
+            style.LandingGap = 0.0;
 
             // 箭头设置
             style.ArrowSize = IO.PatSettingsStore.Current.ArrowSize;

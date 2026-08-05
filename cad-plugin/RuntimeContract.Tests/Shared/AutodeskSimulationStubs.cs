@@ -234,6 +234,24 @@ namespace Autodesk.AutoCAD.DatabaseServices
         SplineLeader
     }
 
+    public enum TextAngleType
+    {
+        InsertAngle,
+        HorizontalAngle,
+        AlwaysRightReadingAngle
+    }
+
+    public enum TextAttachmentDirection
+    {
+        AttachmentHorizontal,
+        AttachmentVertical
+    }
+
+    public enum TextAttachmentType
+    {
+        AttachmentMiddle
+    }
+
     public struct ObjectId : IEquatable<ObjectId>
     {
         public ObjectId(int value)
@@ -272,6 +290,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public string Contents { get; set; } = "";
         public double TextHeight { get; set; }
         public Point3d Location { get; set; }
+        public double Rotation { get; set; }
         public ObjectId TextStyleId { get; set; }
     }
 
@@ -322,6 +341,14 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public ObjectId ArrowSymbolId { get; set; }
         public double ArrowSize { get; set; }
         public double TextHeight { get; set; }
+        public bool EnableDogleg { get; set; }
+        public bool EnableLanding { get; set; }
+        public bool ExtendLeaderToText { get; set; }
+        public double DoglegLength { get; set; }
+        public double LandingGap { get; set; }
+        public TextAttachmentDirection TextAttachmentDirection { get; set; }
+        public TextAttachmentType TextAttachmentType { get; set; }
+        public TextAngleType TextAngleType { get; set; }
         public Point3d TextLocation { get; set; }
         public MText MText
         {
