@@ -187,12 +187,10 @@ namespace PatentMarker.Commands
         /// MLeader 是一体式对象：引线 + 文字 + 样式统一管理。
         /// 顺序：
         ///  1. 创建 MLeader，设置 ContentType = MTextContent
-        ///  2. 添加引线和顶点
-        ///  3. 设置 MText 内容和高度
-        ///  4. 设置 TextPosition
-        ///  5. 设置 MLeaderStyle = PAT_STYLE
-        ///  6. 设置引线类型（样条/直线）和箭头
-        ///  7. AppendEntity + Commit
+        ///  2. 设置 MLeaderStyle、MText 内容和文字位置
+        ///  3. 设置引线类型（样条/直线）和箭头
+        ///  4. 添加引线和顶点
+        ///  5. AppendEntity + Commit
         /// </summary>
         private void CreateMLeader(Database db, Point3d attachPt, List<Point3d> doglegPts, Point3d textPt, string number)
         {
@@ -204,38 +202,15 @@ namespace PatentMarker.Commands
                 BlockTableRecord btr = (BlockTableRecord)tr.GetObject(
                     bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
 
-                // 1. 创建 MLeader
+                // 1. 创建 MLeader 并先准备内容。
+                // AutoCAD 2013 对空内容的 MLeader 调用 AddLeaderLine 较严格；
+                // 必须先挂载有效的 MText 和 MLeaderStyle，再添加引线顶点。
                 MLeader mleader = new MLeader();
                 mleader.SetDatabaseDefaults(db);
                 mleader.ContentType = ContentType.MTextContent;
 
-                // 2. 添加引线：从附着点开始，经过所有拐点
-                // AddLeaderLine 返回引线索引，后续用 AddVertex(index, point) 追加顶点
-                int lineIndex = mleader.AddLeaderLine(attachPt);
-                foreach (Point3d p in doglegPts)
-                {
-                    mleader.AddLastVertex(lineIndex, p);
-                }
-
-                // 3. 设置文字
-                MText mt = mleader.MText;
-                if (mt == null)
-                {
-                    mt = new MText();
-                    mleader.MText = mt;
-                }
-                mt.Contents = number;
-                mt.TextHeight = Palette.PatPaletteCommand.TextHeight;
-
-                // 设置文字样式
+                // 2. 设置样式和文字
                 ObjectId tnrId = Styles.PatStyleInitializer.GetOrCreateTimesRoman(db, tr);
-                if (!tnrId.IsNull)
-                    mt.TextStyleId = tnrId;
-
-                // 4. 设置文字位置
-                mleader.TextLocation = textPt;
-
-                // 5. 设置样式
                 ObjectId styleId = Styles.PatStyleInitializer.GetPatStyleId(db, tr);
                 if (!styleId.IsNull)
                     mleader.MLeaderStyle = styleId;
@@ -252,10 +227,28 @@ namespace PatentMarker.Commands
                 }
                 mleader.ArrowSize = Palette.PatPaletteCommand.ArrowSize;
 
+                MText mt = new MText();
+                mt.SetDatabaseDefaults(db);
+                mt.Contents = number;
+                mt.TextHeight = Palette.PatPaletteCommand.TextHeight;
+                if (!tnrId.IsNull)
+                    mt.TextStyleId = tnrId;
+                mt.Location = textPt;
+                mleader.MText = mt;
+                mleader.TextLocation = textPt;
+
                 // 文字高度同步到 MLeader 实例（覆盖样式默认值）
                 mleader.TextHeight = Palette.PatPaletteCommand.TextHeight;
 
-                // 7. 入库
+                // 3. 最后添加引线：从附着点开始，经过所有拐点
+                // AddLeaderLine(Point3d) 返回引线索引，后续用 AddLastVertex 追加顶点。
+                int lineIndex = mleader.AddLeaderLine(attachPt);
+                foreach (Point3d p in doglegPts)
+                {
+                    mleader.AddLastVertex(lineIndex, p);
+                }
+
+                // 4. 入库
                 btr.AppendEntity(mleader);
                 tr.AddNewlyCreatedDBObject(mleader, true);
 
