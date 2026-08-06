@@ -249,7 +249,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public enum TextAttachmentType
     {
-        AttachmentMiddle
+        AttachmentMiddle,
+        AttachmentCenter
     }
 
     public struct ObjectId : IEquatable<ObjectId>
@@ -350,6 +351,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public TextAttachmentType TextAttachmentType { get; set; }
         public TextAngleType TextAngleType { get; set; }
         public Point3d TextLocation { get; set; }
+        public int LeaderLineCount { get { return _leaderStarted ? 1 : 0; } }
         public MText MText
         {
             get { return _mtext; }
@@ -377,6 +379,13 @@ namespace Autodesk.AutoCAD.DatabaseServices
                 throw new InvalidOperationException("MLeader vertex appended before a leader line exists.");
             _vertices.Add(point);
             if (Database != null) Database.Trace.Add("mleader.vertex");
+        }
+
+        public Point3d GetLastVertex(int lineIndex)
+        {
+            if (!_leaderStarted || lineIndex != 0 || _vertices.Count == 0)
+                throw new InvalidOperationException("MLeader has no vertices for the requested leader line.");
+            return _vertices[_vertices.Count - 1];
         }
     }
 

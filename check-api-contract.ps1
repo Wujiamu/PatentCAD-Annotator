@@ -31,13 +31,13 @@ foreach ($ver in $versions) {
         }
         Write-Host "[OK] 2010 source profile excludes MLeader command types" -ForegroundColor Green
     }
-    elseif ($ver -in @("2013", "2015")) {
-        $forbidden = Select-String -LiteralPath $commandSource -Pattern "\bnew\s+Leader\b" -AllMatches -ErrorAction SilentlyContinue
+    elseif ($ver -in @("2013", "2015", "2025")) {
+        $forbidden = Select-String -LiteralPath $commandSource -Pattern "\bMLeader\b" -AllMatches -ErrorAction SilentlyContinue
         if ($forbidden) {
-            Write-Error "$ver command source contains a legacy Leader construction: $commandSource"
+            Write-Error "$ver command source still contains an MLeader reference: $commandSource"
             exit 1
         }
-        Write-Host "[OK] $ver source profile uses the MLeader construction path" -ForegroundColor Green
+        Write-Host "[OK] $ver source profile uses the Leader + MText construction path" -ForegroundColor Green
     }
 
     $directDocumentReads = Get-ChildItem -LiteralPath (Join-Path $root "cad-plugin\$ver\PatentMarker") -Recurse -File -Filter "*.cs" |

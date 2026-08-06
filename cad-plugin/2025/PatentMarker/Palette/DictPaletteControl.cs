@@ -995,29 +995,45 @@ namespace PatentMarker.Palette
                     int deleted = 0;
                     int skipped = 0;
                     List<AcDb.ObjectId> toDelete = new List<AcDb.ObjectId>();
+                    List<AcDb.ObjectId> mtextToDelete = new List<AcDb.ObjectId>();
 
                     foreach (AcDb.ObjectId entId in btr)
                     {
                         AcDb.Entity ent = (AcDb.Entity)tr.GetObject(entId, AcDb.OpenMode.ForRead);
-                        AcDb.MLeader mleader = ent as AcDb.MLeader;
-                        if (mleader == null) continue;
+                        AcDb.Leader leader = ent as AcDb.Leader;
+                        if (leader == null) continue;
 
-                        if (!PatEntityHelper.IsPatEntity(mleader, tr)) { skipped++; continue; }
+                        if (!PatEntityHelper.IsPatEntity(leader, tr)) { skipped++; continue; }
 
                         toDelete.Add(entId);
+                        if (!leader.Annotation.IsNull)
+                            mtextToDelete.Add(leader.Annotation);
                     }
 
                     foreach (AcDb.ObjectId id in toDelete)
                     {
                         try
                         {
-                            AcDb.MLeader mleader = (AcDb.MLeader)tr.GetObject(id, AcDb.OpenMode.ForWrite);
-                            mleader.Erase(true);
+                            AcDb.Leader leader = (AcDb.Leader)tr.GetObject(id, AcDb.OpenMode.ForWrite);
+                            leader.Erase(true);
                             deleted++;
                         }
                         catch (System.Exception ex)
                         {
-                            PatentMarkerApp.RawLog("BtnDelete mleader error: " + ex.Message);
+                            PatentMarkerApp.RawLog("BtnDelete leader error: " + ex.Message);
+                        }
+                    }
+
+                    foreach (AcDb.ObjectId id in mtextToDelete)
+                    {
+                        try
+                        {
+                            AcDb.MText mt = (AcDb.MText)tr.GetObject(id, AcDb.OpenMode.ForWrite);
+                            mt.Erase(true);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            PatentMarkerApp.RawLog("BtnDelete mtext error: " + ex.Message);
                         }
                     }
 

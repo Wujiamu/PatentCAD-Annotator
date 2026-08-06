@@ -1,7 +1,7 @@
 # PatentCAD-Annotator 2015 — AutoCAD 2015~2024 适配版
 
 > **状态：已完成**
-> 源码从 `cad-plugin/2013/` 派生，标注方式相同（MLeader）。
+> 源码从 `cad-plugin/2013/` 派生，标注方式相同（Leader + MText）。
 >
 > **兼容性：本版本仅适用于 AutoCAD 2015 ~ 2024，不可用于其他版本的 AutoCAD。**
 
@@ -21,7 +21,7 @@
 | 特性 | 2013 版 | 2015 版 |
 |------|---------|---------|
 | .NET | 4.0 | 4.5 |
-| 标注方式 | MLeader | MLeader（相同） |
+| 标注方式 | Leader + MText | Leader + MText（相同） |
 | JSON | Newtonsoft.Json | Newtonsoft.Json（相同） |
 | 覆盖范围 | 2013-2014 | 2015-2024（覆盖最广） |
 | 部署 | HKCU 注册表 | HKCU 注册表 |
@@ -46,7 +46,7 @@
 | 命令 | 拼音别名 | 功能 |
 |------|---------|------|
 | `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板 |
-| `PATMARK` | `BZM` | 创建多重引线标注 |
+| `PATMARK` | `BZM` | 创建 Leader + MText 引线标注 |
 | `PATCHECK` | `BZC` | 校验一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |

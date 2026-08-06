@@ -14,9 +14,9 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 |------|-------------|------|---------|---------|
 | `cad-plugin/2007/` | 2007 ~ 2009 | 2.0（无 LINQ） | Leader + MText | SimpleJson（零依赖） |
 | `cad-plugin/2010/` | 2010 ~ 2012 | 3.5 | Leader + MText | SimpleJson（零依赖） |
-| `cad-plugin/2013/` | 2013 ~ 2014 | 4.0 | MLeader | Newtonsoft.Json（ILRepack 合并） |
-| `cad-plugin/2015/` | 2015 ~ 2024 | 4.5 | MLeader | Newtonsoft.Json（ILRepack 合并） |
-| `cad-plugin/2025/` | 2025 ~ 2026+ | 8.0（Win10+） | MLeader | System.Text.Json（内置） |
+| `cad-plugin/2013/` | 2013 ~ 2014 | 4.0 | Leader + MText | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2015/` | 2015 ~ 2024 | 4.5 | Leader + MText | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2025/` | 2025 ~ 2026+ | 8.0（Win10+） | Leader + MText | System.Text.Json（内置） |
 
 **每个版本的 DLL 只能在其对应 AutoCAD 年份区间内运行。** 跨版本混装会因 CLR 不兼容、API 缺失或 `MissingMethodException` 无法加载。修改任一版本代码前，先确认该版本的 .NET 目标框架与标注 API 类型。
 
@@ -47,10 +47,12 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 
 - **先判断变更是否影响其他版本**：功能逻辑、标注样式、字典格式、面板行为类变更通常需要同步到全部 5 个版本；仅针对特定版本 API 的适配（如 MLeader vs Leader）不必同步
 - 修改共享行为时，在交付说明中列出**已同步版本清单**和**未同步原因**
-- 同组版本（2007/2010 同用 Leader，2013/2015/2025 同用 MLeader）代码逻辑应保持一致，仅允许版本特有差异
+- 同组版本（五个版本的新建标注均使用 Leader + MText）代码逻辑应保持一致，仅允许 .NET/SDK 和 JSON 库的版本特有差异
 - 修改部署包脚本或 VBA 模块时，需同步全部 5 套部署包（或逐套说明差异）
 
-## 5. MLeader API 陷阱速查表（2013 / 2015 / 2025）
+## 5. MLeader API 兼容说明（旧图纸）
+
+2013/2015/2025 的新建标注不再使用 MLeader；以下内容仅供处理旧图纸或历史代码时参考。
 
 AutoCAD SDK 中 MLeader 相关 API 名称与常见误写不一致，编译报 CS1061/CS0246 时优先核对：
 
@@ -65,11 +67,11 @@ AutoCAD SDK 中 MLeader 相关 API 名称与常见误写不一致，编译报 CS
 
 API 名称不确定时，用 `System.Reflection.MetadataLoadContext` 加载 `PatentMarker/lib/acdbmgd.dll` 元数据探测真实名称（`Assembly.LoadFrom` 会因原生依赖抛 FileNotFoundException，不要用）。
 
-## 6. Leader + MText 注意（2007 / 2010）
+## 6. Leader + MText 注意（全部版本）
 
 - 箭头大小属性名为 `Dimasz`（不是 `DimensionArrowSize`）
-- 2007/2010 版 DLL 必须目标 .NET 2.0 CLR，代码中不得使用 LINQ 等 2.0 不支持的特性（2010 版可用 LINQ）
-- 引线由 `Leader` + `MText` 两个对象拼合，无 MLeader 相关 API
+- 2007/2010 版 DLL 必须目标 .NET 2.0 CLR，代码中不得使用 LINQ 等 2.0 不支持的特性（2010 版可用 LINQ）；2013/2015/2025 也使用同一 Leader + MText 标注模型
+- 引线由 `Leader` + `MText` 两个对象拼合，不要在新建路径引入 MLeader 自动文字附着行为
 
 ## 7. 编译与验证
 

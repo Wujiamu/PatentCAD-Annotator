@@ -5,18 +5,10 @@ using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
-using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
-    /// <summary>
-    /// PATALIGN — PAT_STYLE 多重引线对齐 — AutoCAD 2013/2014 版本。
-    ///
-    /// 两种模式：
-    ///   选择模式：选中引线 → 选参考点 → 水平/垂直对齐文字
-    ///   框边模式：选框边 → 选中引线 → 对齐到框边 + margin
-    /// </summary>
     public class PatAlignCommand
     {
         [CommandMethod("PATALIGN", CommandFlags.UsePickSet)]
@@ -24,7 +16,6 @@ namespace PatentMarker.Commands
         public void Run()
         {
             PatentMarkerApp.RawLog("=== PATALIGN START ===");
-
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
@@ -33,65 +24,77 @@ namespace PatentMarker.Commands
             options.Keywords.Add(Strings.PatAlign_KwSelect);
             options.Keywords.Add(Strings.PatAlign_KwFrame);
             options.Keywords.Default = Strings.PatAlign_KwSelect;
-            var kwResult = ed.GetKeywords(options);
+            var keyword = ed.GetKeywords(options);
+            if (keyword.Status != PromptStatus.OK) return;
 
-            if (kwResult.Status != PromptStatus.OK) return;
-
-            if (kwResult.StringResult == Strings.PatAlign_KwSelect)
+            if (keyword.StringResult == Strings.PatAlign_KwSelect)
                 AlignSelected(ed);
             else
                 AlignToFrame(ed);
 
             PatentMarkerApp.RawLog("=== PATALIGN END ===");
-        }
-
+}
         private void AlignSelected(Editor ed)
         {
             ed.WriteMessage(Strings.PatAlign_PromptSelect);
             var selection = ed.GetSelection();
-            if (selection.Status != PromptStatus.OK || selection.Value.Count == 0)
+            if (selection.Status != PromptStatus.OK ||
+                selection.Value.Count == 0)
             {
                 ed.WriteMessage(Strings.PatAlign_NoSelection);
                 return;
             }
 
-            var refResult = ed.GetPoint(Strings.PatAlign_PromptRefPoint);
-            if (refResult.Status != PromptStatus.OK) return;
+            var reference = ed.GetPoint(Strings.PatAlign_PromptRefPoint);
+            if (reference.Status != PromptStatus.OK) return;
 
-            var dirOpts = new PromptKeywordOptions(Strings.PatAlign_DirectionPrompt);
-            dirOpts.Keywords.Add(Strings.PatAlign_KwHorizontal);
-            dirOpts.Keywords.Add(Strings.PatAlign_KwVertical);
-            var dirResult = ed.GetKeywords(dirOpts);
-            if (dirResult.Status != PromptStatus.OK) return;
+            var direction = new PromptKeywordOptions(
+                Strings.PatAlign_DirectionPrompt);
+            direction.Keywords.Add(Strings.PatAlign_KwHorizontal);
+            direction.Keywords.Add(Strings.PatAlign_KwVertical);
+            var directionResult = ed.GetKeywords(direction);
+            if (directionResult.Status != PromptStatus.OK) return;
 
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var db = doc.Database;
 
-            double refX = refResult.Value.X;
-            double refY = refResult.Value.Y;
-
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
-                int aligned = 0, skipped = 0, errors = 0;
+                int aligned = 0;
+                int skipped = 0;
+                int errors = 0;
 
-                foreach (SelectedObject selObj in selection.Value)
+                foreach (SelectedObject selected in selection.Value)
                 {
                     try
                     {
-                        var ent = (Entity)tr.GetObject(selObj.ObjectId, OpenMode.ForRead);
-                        if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
+                        Entity entity = (Entity)tr.GetObject(
+                            selected.ObjectId, OpenMode.ForRead);
+                        if (!IO.PatEntityHelper.IsPatEntity(entity, tr))
+                        {
+                            skipped++;
+                            continue;
+                        }
 
-                        var mleader = (MLeader)ent;
-                        mleader.UpgradeOpen();
-                        Point3d pos = mleader.TextLocation;
+                        Leader leader = (Leader)entity;
+                        if (leader.Annotation.IsNull)
+                        {
+                            skipped++;
+                            continue;
+                        }
 
-                        if (dirResult.StringResult == Strings.PatAlign_KwHorizontal)
-                            pos = new Point3d(pos.X, refY, pos.Z);
+                        MText text = (MText)tr.GetObject(
+                            leader.Annotation, OpenMode.ForWrite);
+                        Point3d position = text.Location;
+                        if (directionResult.StringResult ==
+                            Strings.PatAlign_KwHorizontal)
+                            position = new Point3d(
+                                position.X, reference.Value.Y, position.Z);
                         else
-                            pos = new Point3d(refX, pos.Y, pos.Z);
-
-                        mleader.TextLocation = pos;
+                            position = new Point3d(
+                                reference.Value.X, position.Y, position.Z);
+                        text.Location = position;
                         aligned++;
                     }
                     catch (Exception ex)
@@ -102,31 +105,32 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                ed.WriteMessage(string.Format(Strings.PatAlign_ResultSelect, aligned, skipped, errors));
+                ed.WriteMessage(string.Format(
+                    Strings.PatAlign_ResultSelect, aligned, skipped, errors));
             }
         }
 
         private void AlignToFrame(Editor ed)
         {
-            var p1Result = ed.GetPoint(Strings.PatAlign_PromptFrameCorner1);
-            if (p1Result.Status != PromptStatus.OK) return;
+            var first = ed.GetPoint(Strings.PatAlign_PromptFrameCorner1);
+            if (first.Status != PromptStatus.OK) return;
+            var second = ed.GetCorner(
+                Strings.PatAlign_PromptFrameCorner2, first.Value);
+            if (second.Status != PromptStatus.OK) return;
 
-            var p2Result = ed.GetCorner(Strings.PatAlign_PromptFrameCorner2, p1Result.Value);
-            if (p2Result.Status != PromptStatus.OK) return;
-
-            var sideOpts = new PromptKeywordOptions(Strings.PatAlign_SidePrompt);
-            sideOpts.Keywords.Add(Strings.PatAlign_KwLeft);
-            sideOpts.Keywords.Add(Strings.PatAlign_KwRight);
-            sideOpts.Keywords.Add(Strings.PatAlign_KwTop);
-            sideOpts.Keywords.Add(Strings.PatAlign_KwBottom);
-            var sideResult = ed.GetKeywords(sideOpts);
+            var side = new PromptKeywordOptions(Strings.PatAlign_SidePrompt);
+            side.Keywords.Add(Strings.PatAlign_KwLeft);
+            side.Keywords.Add(Strings.PatAlign_KwRight);
+            side.Keywords.Add(Strings.PatAlign_KwTop);
+            side.Keywords.Add(Strings.PatAlign_KwBottom);
+            var sideResult = ed.GetKeywords(side);
             if (sideResult.Status != PromptStatus.OK) return;
 
             double margin = IO.PatSettingsStore.Current.MarginToFrame;
-
             ed.WriteMessage(Strings.PatAlign_PromptSelect);
             var selection = ed.GetSelection();
-            if (selection.Status != PromptStatus.OK || selection.Value.Count == 0)
+            if (selection.Status != PromptStatus.OK ||
+                selection.Value.Count == 0)
             {
                 ed.WriteMessage(Strings.PatAlign_NoSelection);
                 return;
@@ -135,37 +139,54 @@ namespace PatentMarker.Commands
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var db = doc.Database;
-
-            double minX = Math.Min(p1Result.Value.X, p2Result.Value.X);
-            double maxX = Math.Max(p1Result.Value.X, p2Result.Value.X);
-            double minY = Math.Min(p1Result.Value.Y, p2Result.Value.Y);
-            double maxY = Math.Max(p1Result.Value.Y, p2Result.Value.Y);
+            double minX = Math.Min(first.Value.X, second.Value.X);
+            double maxX = Math.Max(first.Value.X, second.Value.X);
+            double minY = Math.Min(first.Value.Y, second.Value.Y);
+            double maxY = Math.Max(first.Value.Y, second.Value.Y);
 
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
-                int aligned = 0, skipped = 0, errors = 0;
+                int aligned = 0;
+                int skipped = 0;
+                int errors = 0;
 
-                foreach (SelectedObject selObj in selection.Value)
+                foreach (SelectedObject selected in selection.Value)
                 {
                     try
                     {
-                        var ent = (Entity)tr.GetObject(selObj.ObjectId, OpenMode.ForRead);
-                        if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
+                        Entity entity = (Entity)tr.GetObject(
+                            selected.ObjectId, OpenMode.ForRead);
+                        if (!IO.PatEntityHelper.IsPatEntity(entity, tr))
+                        {
+                            skipped++;
+                            continue;
+                        }
 
-                        var mleader = (MLeader)ent;
-                        mleader.UpgradeOpen();
-                        Point3d pos = mleader.TextLocation;
+                        Leader leader = (Leader)entity;
+                        if (leader.Annotation.IsNull)
+                        {
+                            skipped++;
+                            continue;
+                        }
 
+                        MText text = (MText)tr.GetObject(
+                            leader.Annotation, OpenMode.ForWrite);
+                        Point3d position = text.Location;
                         if (sideResult.StringResult == Strings.PatAlign_KwLeft)
-                            pos = new Point3d(minX - margin, pos.Y, pos.Z);
-                        else if (sideResult.StringResult == Strings.PatAlign_KwRight)
-                            pos = new Point3d(maxX + margin, pos.Y, pos.Z);
-                        else if (sideResult.StringResult == Strings.PatAlign_KwTop)
-                            pos = new Point3d(pos.X, maxY + margin, pos.Z);
-                        else if (sideResult.StringResult == Strings.PatAlign_KwBottom)
-                            pos = new Point3d(pos.X, minY - margin, pos.Z);
-
-                        mleader.TextLocation = pos;
+                            position = new Point3d(
+                                minX - margin, position.Y, position.Z);
+                        else if (sideResult.StringResult ==
+                            Strings.PatAlign_KwRight)
+                            position = new Point3d(
+                                maxX + margin, position.Y, position.Z);
+                        else if (sideResult.StringResult ==
+                            Strings.PatAlign_KwTop)
+                            position = new Point3d(
+                                position.X, maxY + margin, position.Z);
+                        else
+                            position = new Point3d(
+                                position.X, minY - margin, position.Z);
+                        text.Location = position;
                         aligned++;
                     }
                     catch (Exception ex)
@@ -176,8 +197,10 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                ed.WriteMessage(string.Format(Strings.PatAlign_ResultFrame,
-                    aligned, sideResult.StringResult, margin.ToString("F1"), skipped, errors));
+                ed.WriteMessage(string.Format(
+                    Strings.PatAlign_ResultFrame, aligned,
+                    sideResult.StringResult, margin.ToString("F1"),
+                    skipped, errors));
             }
         }
     }

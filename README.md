@@ -29,9 +29,9 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 |------|-------------|------|---------|----------|------|
 | [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ 已完成 |
 | [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader | ✅ 已完成 |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader | ✅ 已完成 |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader | ✅ 已完成 |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | Leader + MText | ✅ 已完成 |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | Leader + MText | ✅ 已完成 |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | Leader + MText | ✅ 已完成 |
 
 ### 为什么分 5 个版本？能否交叉使用？
 
@@ -109,9 +109,9 @@ PatentCAD-Annotator/
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   └── PatentMarker/    #   C# 源码 + csproj
 │   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
-│   ├── 2013/               # AutoCAD 2013~2014（MLeader，.NET 4.0）
-│   ├── 2015/               # AutoCAD 2015~2024（MLeader，.NET 4.5）
-│   └── 2025/               # AutoCAD 2025~2026+（MLeader，.NET 8.0）
+│   ├── 2013/               # AutoCAD 2013~2014（Leader + MText，.NET 4.0）
+│   ├── 2015/               # AutoCAD 2015~2024（Leader + MText，.NET 4.5）
+│   └── 2025/               # AutoCAD 2025~2026+（Leader + MText，.NET 8.0）
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -166,16 +166,16 @@ Because AutoCAD's managed API is tightly bound to the .NET runtime, a single sou
 |-----------|---------|------|--------|------------|--------|
 | [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ Complete |
 | [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader | ✅ Complete |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader | ✅ Complete |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader | ✅ Complete |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | Leader + MText | ✅ Complete |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | Leader + MText | ✅ Complete |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | Leader + MText | ✅ Complete |
 
 ### Why 5 versions? Can I use one version on a different AutoCAD?
 
 **No cross-version usage.** Each DLL only works within its designated AutoCAD year range:
 
 1. **.NET runtime mismatch** — AutoCAD 2007–2009 loads .NET 2.0 only; 2025+ loads .NET 8 only. The CLR is entirely different.
-2. **Annotation API break** — `MLeader` was introduced in AutoCAD 2013; earlier versions only have `Leader` + `MText`.
+2. **Annotation implementation profile** — AutoCAD 2013 and later expose `MLeader`, but all five editions intentionally use the stable `Leader` + `MText` pair to avoid the MLeader content-attachment grip. Separate .NET targets and SDK DLLs are still required.
 3. **Assembly binding** — `acdbmgd.dll` internal interfaces change per CAD version; loading a mismatched DLL throws `MissingMethodException`.
 
 See [docs/version-plan.md](docs/version-plan.md) for full rationale.

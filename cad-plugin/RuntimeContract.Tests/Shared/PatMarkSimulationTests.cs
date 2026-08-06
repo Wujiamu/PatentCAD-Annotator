@@ -47,7 +47,11 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.False(leader.EnableDogleg);
                 Assert.False(leader.EnableLanding);
                 Assert.False(leader.ExtendLeaderToText);
+                Assert.Equal(TextAttachmentDirection.AttachmentVertical, leader.TextAttachmentDirection);
+                Assert.Equal(TextAttachmentType.AttachmentCenter, leader.TextAttachmentType);
                 Assert.Equal(TextAngleType.HorizontalAngle, leader.TextAngleType);
+                Assert.Equal(1, leader.LeaderLineCount);
+                Assert.Equal(new Point3d(3, 4, 0), leader.GetLastVertex(0));
                 Assert.Equal(new Point3d(5, 6, 0), leader.TextLocation);
                 Assert.NotNull(leader.MText);
                 Assert.Equal("1342A", leader.MText.Contents);

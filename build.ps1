@@ -260,8 +260,8 @@ function Invoke-StaticCheck {
 
     # ---- 3. C# cross-edition source consistency (within groups) ----
     Write-Host "`n  --- C# cross-edition source consistency ---"
-    # Group A: 2013/2015/2025 (MLeader group, same file set)
-    $mleaderGroup = @("2013","2015","2025")
+    # Group A: 2013/2015/2025 (Leader + MText group, same file set)
+    $annotationGroup = @("2013","2015","2025")
     $sharedFiles = @(
         "PatentMarkerApp.cs",
         "Commands\PatMarkCommand.cs",
@@ -284,7 +284,7 @@ function Invoke-StaticCheck {
     $driftCount = 0
     foreach ($rel in $sharedFiles) {
         $hashes = @{}
-        foreach ($ver in $mleaderGroup) {
+        foreach ($ver in $annotationGroup) {
             $fpath = Join-Path (Get-ProjectDir $ver) $rel
             if (Test-Path $fpath) {
                 $hashes[$ver] = (Get-FileHash $fpath -Algorithm SHA256).Hash
@@ -292,14 +292,14 @@ function Invoke-StaticCheck {
         }
         $unique = $hashes.Values | Select-Object -Unique
         if ($unique.Count -gt 1) {
-            Write-Warn2 "DRIFT: $rel differs in MLeader group ($($hashes.Keys -join '/'))"
+            Write-Warn2 "DRIFT: $rel differs in Leader + MText group ($($hashes.Keys -join '/'))"
             $driftCount++
         }
     }
     if ($driftCount -eq 0) {
-        Write-Ok "MLeader group (2013/2015/2025): all $($sharedFiles.Count) shared files consistent"
+        Write-Ok "Leader + MText group (2013/2015/2025): all $($sharedFiles.Count) shared files consistent"
     } else {
-        Write-Warn2 "MLeader group: $driftCount file(s) differ across editions (review if intentional)"
+        Write-Warn2 "Leader + MText group: $driftCount file(s) differ across editions (review if intentional)"
         $warnCount += $driftCount
     }
 

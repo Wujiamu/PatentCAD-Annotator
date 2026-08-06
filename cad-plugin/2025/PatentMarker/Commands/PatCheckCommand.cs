@@ -7,17 +7,10 @@ using PatentMarker.I18n;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
-    /// <summary>
-    /// PATCHECK — 双向一致性校验 — AutoCAD 2025+ 版本。
-    ///
-    /// 扫描所有 PAT_STYLE MLeader 实体，与 dict.json 进行比对。
-    /// </summary>
     public class PatCheckCommand
     {
         [CommandMethod("PATCHECK", CommandFlags.Modal)]
@@ -25,207 +18,246 @@ namespace PatentMarker.Commands
         public void Run()
         {
             PatentMarkerApp.RawLog("=== PATCHECK START ===");
-
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
             var ed = doc.Editor;
             var db = doc.Database;
 
-            var dict = IO.DictLoader.LoadForCurrentDrawing();
+            IO.DictModel dict = IO.DictLoader.LoadForCurrentDrawing();
             if (dict == null)
             {
                 ed.WriteMessage(Strings.PatCheck_NoDict);
                 return;
-            }
-            PatentMarkerApp.RawLog("Dict loaded: " + dict.Entries.Count + " entries");
-
-            // 收集图纸中的 PAT 编号
-            var drawingNumbers = new Dictionary<string, List<Point3d>>(IO.NumberIdentity.Comparer);
-            int totalMLeaders = 0;
+}
+            var drawingNumbers = new Dictionary<string, List<Point3d>>(
+                IO.NumberIdentity.Comparer);
+            int totalLeaders = 0;
             int patCount = 0;
             int textErrors = 0;
 
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
-                BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+                BlockTable bt = (BlockTable)tr.GetObject(
+                    db.BlockTableId, OpenMode.ForRead);
                 BlockTableRecord btr = (BlockTableRecord)tr.GetObject(
                     bt[BlockTableRecord.ModelSpace], OpenMode.ForRead);
 
                 foreach (ObjectId entId in btr)
                 {
                     Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
-                    MLeader mleader = ent as MLeader;
-                    if (mleader == null) continue;
-                    totalMLeaders++;
-
-                    if (!IO.PatEntityHelper.IsPatEntity(mleader, tr)) continue;
+                    Leader leader = ent as Leader;
+                    if (leader == null) continue;
+                    totalLeaders++;
+                    if (!IO.PatEntityHelper.IsPatEntity(leader, tr)) continue;
                     patCount++;
 
-                    string number = null;
+                    string number;
                     try
                     {
-                        number = IO.PatEntityHelper.GetMLeaderNumber(mleader);
+                        number = IO.PatEntityHelper.GetLeaderNumber(leader, tr);
                     }
                     catch (Exception ex)
                     {
                         textErrors++;
-                        PatentMarkerApp.RawLog("  Text access error: " + ex.Message);
+                        PatentMarkerApp.RawLog("Text access error: " + ex.Message);
                         continue;
                     }
 
-                    if (string.IsNullOrWhiteSpace(number)) continue;
+                    if (number == null || number.Trim().Length == 0) continue;
                     number = IO.NumberIdentity.Normalize(number);
-
-                    Point3d pos = IO.PatEntityHelper.GetMLeaderTextPos(mleader);
-
+                    Point3d position = IO.PatEntityHelper.GetLeaderTextPos(leader, tr);
                     if (!drawingNumbers.ContainsKey(number))
                         drawingNumbers[number] = new List<Point3d>();
-                    drawingNumbers[number].Add(pos);
+                    drawingNumbers[number].Add(position);
                 }
                 tr.Commit();
             }
 
-            PatentMarkerApp.RawLog("Scan: total=" + totalMLeaders + ", pat=" + patCount +
-                ", numbers=" + drawingNumbers.Count + ", errors=" + textErrors);
-
-            // 构建字典编号集合
-            var dictNumbers = new HashSet<string>(
-                dict.Entries.Select(e => IO.NumberIdentity.Normalize(e.Number)),
+            var dictNumbers = new Dictionary<string, bool>(
                 IO.NumberIdentity.Comparer);
+            foreach (IO.DictEntry entry in dict.Entries)
+                dictNumbers[IO.NumberIdentity.Normalize(entry.Number)] = true;
 
-            // 检查 1：图纸有但字典没有
-            var drawingOnly = drawingNumbers.Keys.Where(n => !dictNumbers.Contains(n)).OrderBy(n => n).ToList();
+            var drawingOnly = new List<string>();
+            foreach (string number in drawingNumbers.Keys)
+                if (!dictNumbers.ContainsKey(number)) drawingOnly.Add(number);
+            drawingOnly.Sort();
 
-            // 检查 2：字典有但图纸没有
-            var dictOnly = dictNumbers.Where(n => !drawingNumbers.ContainsKey(n)).OrderBy(n => n).ToList();
+            var dictOnly = new List<string>();
+            foreach (string number in dictNumbers.Keys)
+                if (!drawingNumbers.ContainsKey(number)) dictOnly.Add(number);
+            dictOnly.Sort();
 
-            // 检查 3：图纸中重复
-            var duplicates = drawingNumbers.Where(kv => kv.Value.Count > 1)
-                .OrderBy(kv => kv.Key).ToList();
+            var duplicates = new List<KeyValuePair<string, List<Point3d>>>();
+            foreach (KeyValuePair<string, List<Point3d>> item in drawingNumbers)
+                if (item.Value.Count > 1) duplicates.Add(item);
+            duplicates.Sort(CompareByNumber);
 
-            // 输出结果
             ed.WriteMessage(Strings.PatCheck_ReportTitle);
-            ed.WriteMessage(string.Format(Strings.PatCheck_Summary, dict.Entries.Count, drawingNumbers.Count));
-            ed.WriteMessage(string.Format(Strings.PatCheck_ScanStats, totalMLeaders, patCount, textErrors));
+            ed.WriteMessage(string.Format(Strings.PatCheck_Summary,
+                dict.Entries.Count, drawingNumbers.Count));
+            ed.WriteMessage(string.Format(Strings.PatCheck_ScanStats,
+                totalLeaders, patCount, textErrors));
 
             if (drawingOnly.Count > 0)
             {
-                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDrawingOnly, drawingOnly.Count));
-                foreach (string num in drawingOnly)
+                ed.WriteMessage(string.Format(
+                    Strings.PatCheck_SectionDrawingOnly, drawingOnly.Count));
+                foreach (string number in drawingOnly)
                 {
-                    Point3d pos = drawingNumbers[num][0];
-                    ed.WriteMessage("  #" + num + " at (" + pos.X.ToString("F2") + ", " + pos.Y.ToString("F2") + ")\n");
+                    Point3d position = drawingNumbers[number][0];
+                    ed.WriteMessage("  #" + number + " at (" +
+                        position.X.ToString("F2") + ", " +
+                        position.Y.ToString("F2") + ")\n");
                 }
             }
 
             if (dictOnly.Count > 0)
             {
-                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDictOnly, dictOnly.Count));
-                foreach (string num in dictOnly)
-                {
-                    string name = dict.Entries
-                        .FirstOrDefault(e => IO.NumberIdentity.AreEqual(e.Number, num))?.Name ?? "?";
-                    ed.WriteMessage("  #" + num + " (" + name + ")\n");
-                }
+                ed.WriteMessage(string.Format(
+                    Strings.PatCheck_SectionDictOnly, dictOnly.Count));
+                foreach (string number in dictOnly)
+                    ed.WriteMessage("  #" + number + " (" +
+                        FindEntryName(dict, number) + ")\n");
             }
 
             if (duplicates.Count > 0)
             {
-                ed.WriteMessage(string.Format(Strings.PatCheck_SectionDuplicates, duplicates.Count));
-                foreach (var kv in duplicates)
+                ed.WriteMessage(string.Format(
+                    Strings.PatCheck_SectionDuplicates, duplicates.Count));
+                foreach (KeyValuePair<string, List<Point3d>> item in duplicates)
                 {
-                    ed.WriteMessage(string.Format(Strings.PatCheck_DuplicateDetail, kv.Key, kv.Value.Count));
-                    for (int i = 0; i < kv.Value.Count; i++)
+                    ed.WriteMessage(string.Format(
+                        Strings.PatCheck_DuplicateDetail,
+                        item.Key, item.Value.Count));
+                    for (int i = 0; i < item.Value.Count; i++)
                     {
-                        Point3d p = kv.Value[i];
-                        ed.WriteMessage("    " + (i + 1) + ". (" + p.X.ToString("F2") + ", " + p.Y.ToString("F2") + ")\n");
+                        Point3d position = item.Value[i];
+                        ed.WriteMessage("    " + (i + 1) + ". (" +
+                            position.X.ToString("F2") + ", " +
+                            position.Y.ToString("F2") + ")\n");
                     }
                 }
             }
 
-            if (drawingOnly.Count == 0 && dictOnly.Count == 0 && duplicates.Count == 0)
+            if (drawingOnly.Count == 0 && dictOnly.Count == 0 &&
+                duplicates.Count == 0)
             {
                 ed.WriteMessage(Strings.PatCheck_AllMatch);
                 PatentMarkerApp.RawLog("PATCHECK: ALL CLEAR");
             }
             else
             {
-                int totalIssues = drawingOnly.Count + dictOnly.Count + duplicates.Count;
-                ed.WriteMessage(string.Format(Strings.PatCheck_TotalIssues, totalIssues));
+                int totalIssues = drawingOnly.Count + dictOnly.Count +
+                    duplicates.Count;
+                ed.WriteMessage(string.Format(
+                    Strings.PatCheck_TotalIssues, totalIssues));
                 PatentMarkerApp.RawLog("PATCHECK: " + totalIssues + " issues");
             }
 
             ed.WriteMessage("==========================================\n");
-
-            SaveReport(doc, dict, drawingNumbers, drawingOnly, dictOnly, duplicates, ed);
+            SaveReport(doc, dict, drawingNumbers, drawingOnly, dictOnly,
+                duplicates, ed);
             PatentMarkerApp.RawLog("=== PATCHECK END ===");
         }
 
+        private static string FindEntryName(IO.DictModel dict, string number)
+        {
+            foreach (IO.DictEntry entry in dict.Entries)
+                if (IO.NumberIdentity.AreEqual(entry.Number, number))
+                    return entry.Name;
+            return "?";
+        }
+
+        private static int CompareByNumber(
+            KeyValuePair<string, List<Point3d>> left,
+            KeyValuePair<string, List<Point3d>> right)
+        {
+            return left.Key.CompareTo(right.Key);
+        }
+
         private void SaveReport(
-            Document doc, IO.DictModel dict,
+            Document doc,
+            IO.DictModel dict,
             Dictionary<string, List<Point3d>> drawingNumbers,
-            List<string> drawingOnly, List<string> dictOnly,
+            List<string> drawingOnly,
+            List<string> dictOnly,
             List<KeyValuePair<string, List<Point3d>>> duplicates,
             Editor ed)
         {
             try
             {
-                var saveOpts = new PromptKeywordOptions(Strings.PatCheck_SavePrompt);
-                saveOpts.Keywords.Add(Strings.PatCheck_KwYes);
-                saveOpts.Keywords.Add(Strings.PatCheck_KwNo);
-                saveOpts.Keywords.Default = Strings.PatCheck_KwNo;
-                var saveResult = ed.GetKeywords(saveOpts);
-                if (saveResult.Status != PromptStatus.OK || saveResult.StringResult != Strings.PatCheck_KwYes)
+                var options = new PromptKeywordOptions(Strings.PatCheck_SavePrompt);
+                options.Keywords.Add(Strings.PatCheck_KwYes);
+                options.Keywords.Add(Strings.PatCheck_KwNo);
+                options.Keywords.Default = Strings.PatCheck_KwNo;
+                var result = ed.GetKeywords(options);
+                if (result.Status != PromptStatus.OK ||
+                    result.StringResult != Strings.PatCheck_KwYes)
                     return;
 
-                string dwgDir = Path.GetDirectoryName(doc.Name) ?? "";
-                string dwgBase = Path.GetFileNameWithoutExtension(doc.Name);
-                string reportPath = Path.Combine(dwgDir, dwgBase + ".check.txt");
+                string directory = Path.GetDirectoryName(doc.Name) ?? "";
+                string baseName = Path.GetFileNameWithoutExtension(doc.Name);
+                string reportPath = Path.Combine(directory, baseName + ".check.txt");
 
-                using (StreamWriter sw = new StreamWriter(reportPath, false, System.Text.Encoding.UTF8))
+                using (StreamWriter writer = new StreamWriter(
+                    reportPath, false, System.Text.Encoding.UTF8))
                 {
-                    sw.WriteLine("PATCHECK Report - " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
-                    sw.WriteLine("Dict: " + dict.Entries.Count + " entries | Drawing: " + drawingNumbers.Count + " MLeaders (PAT_STYLE)");
-                    sw.WriteLine(new string('=', 60));
+                    writer.WriteLine("PATCHECK Report - " +
+                        DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                    writer.WriteLine("Dict: " + dict.Entries.Count +
+                        " entries | Drawing: " + drawingNumbers.Count +
+                        " Leaders (PAT_DIM)");
+                    writer.WriteLine(new string('=', 60));
 
                     if (drawingOnly.Count > 0)
                     {
-                        sw.WriteLine("\n--- Drawing has, dict missing (" + drawingOnly.Count + ") ---");
-                        foreach (string num in drawingOnly)
+                        writer.WriteLine("\n--- Drawing has, dict missing (" +
+                            drawingOnly.Count + ") ---");
+                        foreach (string number in drawingOnly)
                         {
-                            Point3d pos = drawingNumbers[num][0];
-                            sw.WriteLine("  #" + num + " at (" + pos.X.ToString("F2") + ", " + pos.Y.ToString("F2") + ")");
+                            Point3d position = drawingNumbers[number][0];
+                            writer.WriteLine("  #" + number + " at (" +
+                                position.X.ToString("F2") + ", " +
+                                position.Y.ToString("F2") + ")");
                         }
                     }
+
                     if (dictOnly.Count > 0)
                     {
-                        sw.WriteLine("\n--- Dict has, drawing missing (" + dictOnly.Count + ") ---");
-                        foreach (string num in dictOnly)
-                        {
-                            string name = dict.Entries.FirstOrDefault(e => IO.NumberIdentity.AreEqual(e.Number, num))?.Name ?? "?";
-                            sw.WriteLine("  #" + num + " (" + name + ")");
-                        }
+                        writer.WriteLine("\n--- Dict has, drawing missing (" +
+                            dictOnly.Count + ") ---");
+                        foreach (string number in dictOnly)
+                            writer.WriteLine("  #" + number + " (" +
+                                FindEntryName(dict, number) + ")");
                     }
+
                     if (duplicates.Count > 0)
                     {
-                        sw.WriteLine("\n--- Duplicates in drawing (" + duplicates.Count + ") ---");
-                        foreach (var kv in duplicates)
+                        writer.WriteLine("\n--- Duplicates in drawing (" +
+                            duplicates.Count + ") ---");
+                        foreach (KeyValuePair<string, List<Point3d>> item in duplicates)
                         {
-                            sw.WriteLine("  #" + kv.Key + " appears " + kv.Value.Count + " times:");
-                            for (int i = 0; i < kv.Value.Count; i++)
+                            writer.WriteLine("  #" + item.Key + " appears " +
+                                item.Value.Count + " times:");
+                            for (int i = 0; i < item.Value.Count; i++)
                             {
-                                Point3d p = kv.Value[i];
-                                sw.WriteLine("    " + (i + 1) + ". (" + p.X.ToString("F2") + ", " + p.Y.ToString("F2") + ")");
+                                Point3d position = item.Value[i];
+                                writer.WriteLine("    " + (i + 1) + ". (" +
+                                    position.X.ToString("F2") + ", " +
+                                    position.Y.ToString("F2") + ")");
                             }
                         }
                     }
-                    if (drawingOnly.Count == 0 && dictOnly.Count == 0 && duplicates.Count == 0)
-                    {
-                        sw.WriteLine("\n*** ALL CLEAR - Drawing and dict are consistent. ***");
-                    }
+
+                    if (drawingOnly.Count == 0 && dictOnly.Count == 0 &&
+                        duplicates.Count == 0)
+                        writer.WriteLine(
+                            "\n*** ALL CLEAR - Drawing and dict are consistent. ***");
                 }
 
-                ed.WriteMessage(string.Format(Strings.PatCheck_ReportSaved, reportPath));
+                ed.WriteMessage(string.Format(
+                    Strings.PatCheck_ReportSaved, reportPath));
                 PatentMarkerApp.RawLog("Report saved: " + reportPath);
             }
             catch (Exception ex)

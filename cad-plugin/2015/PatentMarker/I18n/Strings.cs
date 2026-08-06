@@ -308,8 +308,8 @@ namespace PatentMarker.I18n
         /// <summary>0=count</summary>
         public static string PatSelectAll_Result
         {
-            get { return En ? "\nPatentMarker: selected {0} PAT entities (MLeader). Press Ctrl+1 to modify properties.\n"
-                            : "\nPatentMarker: 已选中 {0} 个 PAT 实体（MLeader）。按 Ctrl+1 修改属性。\n"; }
+            get { return En ? "\nPatentMarker: selected {0} PAT Leader/MText entities. Press Ctrl+1 to modify properties.\n"
+                            : "\nPatentMarker: 已选中 {0} 个 PAT Leader/MText 实体。按 Ctrl+1 修改属性。\n"; }
         }
 
         // ================================================================

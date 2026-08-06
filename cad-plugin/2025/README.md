@@ -25,7 +25,7 @@
 | JSON | Newtonsoft.Json | System.Text.Json（内置） |
 | csproj | 旧式 | SDK 风格 |
 | 外部依赖 | Newtonsoft.Json.dll | 无（单 DLL 部署） |
-| 标注方式 | MLeader | MLeader（相同） |
+| 标注方式 | Leader + MText | Leader + MText（相同） |
 
 ## 编译步骤
 
@@ -46,7 +46,7 @@
 | 命令 | 拼音别名 | 功能 |
 |------|---------|------|
 | `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板 |
-| `PATMARK` | `BZM` | 创建多重引线标注 |
+| `PATMARK` | `BZM` | 创建 Leader + MText 引线标注 |
 | `PATCHECK` | `BZC` | 校验一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |

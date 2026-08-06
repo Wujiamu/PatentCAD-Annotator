@@ -220,6 +220,7 @@ namespace PatentMarker.Commands
                 mt.Contents = number;
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
                 mt.Location = textPt;
+                mt.Rotation = 0.0;
 
                 btr.AppendEntity(mt);
                 tr.AddNewlyCreatedDBObject(mt, true);

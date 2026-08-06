@@ -1,7 +1,7 @@
 # PatentCAD-Annotator 2013 — AutoCAD 2013~2014 适配版
 
 > **状态：已完成**
-> AutoCAD 2013 首次引入 MLeader，源码基于 MLeader API 重写。
+> AutoCAD 2013 虽然提供 MLeader，但本版本的新标注使用稳定的 Leader + MText 组合，避免 MLeader 文字附着控制点。
 >
 > **兼容性：本版本仅适用于 AutoCAD 2013 / 2014，不可用于其他版本的 AutoCAD。**
 
@@ -16,12 +16,12 @@
 | 托管程序集 | acdbmgd.dll + acmgd.dll + accoremgd.dll |
 | JSON | Newtonsoft.Json 13.0.3 |
 
-## 与 2007 版的核心差异：MLeader
+## 与 2007 版的核心差异：运行时与 JSON
 
 | 特性 | 2007 版 | 2013 版 |
 |------|---------|---------|
-| 标注方式 | Leader + MText（分离实体） | MLeader（一体式） |
-| 样式管理 | DimStyle (PAT_DIM) | MLeaderStyle (PAT_STYLE) |
+| 标注方式 | Leader + MText（分离实体） | Leader + MText（相同） |
+| 样式管理 | DimStyle (PAT_DIM) | DimStyle (PAT_DIM) |
 | JSON | SimpleJson（手写） | Newtonsoft.Json 13.x |
 | LINQ | 不可用 | 可用 |
 | accoremgd | 无 | 有 |
@@ -46,7 +46,7 @@
 | 命令 | 拼音别名 | 功能 |
 |------|---------|------|
 | `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板 |
-| `PATMARK` | `BZM` | 创建多重引线标注 |
+| `PATMARK` | `BZM` | 创建 Leader + MText 引线标注 |
 | `PATCHECK` | `BZC` | 校验一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |

@@ -8,10 +8,6 @@ using Exception = System.Exception;
 
 namespace PatentMarker.Commands
 {
-    /// <summary>
-    /// PATSELECTALL / BZS — 选中所有 PAT 多重引线。
-    /// 用户可用 Ctrl+1 统一修改属性。
-    /// </summary>
     public class PatSelectAllCommand
     {
         [CommandMethod("PATSELECTALL", CommandFlags.Modal)]
@@ -26,41 +22,46 @@ namespace PatentMarker.Commands
             try
             {
                 ObjectIdCollection ids = new ObjectIdCollection();
-
                 using (Transaction tr = db.TransactionManager.StartTransaction())
                 {
-                    BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+                    BlockTable bt = (BlockTable)tr.GetObject(
+                        db.BlockTableId, OpenMode.ForRead);
                     BlockTableRecord btr = (BlockTableRecord)tr.GetObject(
                         bt[BlockTableRecord.ModelSpace], OpenMode.ForRead);
 
                     foreach (ObjectId id in btr)
                     {
-                        Entity ent = (Entity)tr.GetObject(id, OpenMode.ForRead);
-                        MLeader mleader = ent as MLeader;
-                        if (mleader == null) continue;
-
-                        if (!IO.PatEntityHelper.IsPatEntity(mleader, tr)) continue;
+                        Entity entity = (Entity)tr.GetObject(id, OpenMode.ForRead);
+                        Leader leader = entity as Leader;
+                        if (leader == null ||
+                            !IO.PatEntityHelper.IsPatEntity(leader, tr))
+                            continue;
 
                         ids.Add(id);
+                        if (!leader.Annotation.IsNull)
+                            ids.Add(leader.Annotation);
                     }
                     tr.Commit();
-                }
-
+}
                 if (ids.Count == 0)
                 {
                     ed.WriteMessage(Strings.PatSelectAll_None);
                     return;
                 }
 
-                ObjectId[] idArray = new ObjectId[ids.Count];
-                ids.CopyTo(idArray, 0);
-                ed.SetImpliedSelection(idArray);
-                ed.WriteMessage(string.Format(Strings.PatSelectAll_Result, ids.Count));
+                ObjectId[] selected = new ObjectId[ids.Count];
+                ids.CopyTo(selected, 0);
+                ed.SetImpliedSelection(selected);
+                ed.WriteMessage(string.Format(
+                    Strings.PatSelectAll_Result, ids.Count));
             }
             catch (Exception ex)
             {
-                ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
-                PatentMarkerApp.RawLog("PatSelectAll EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
+                ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name +
+                    ": " + ex.Message + "\n");
+                PatentMarkerApp.RawLog(
+                    "PatSelectAll EXCEPTION: " + ex.GetType().FullName +
+                    ": " + ex.Message);
             }
         }
     }
