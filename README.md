@@ -21,6 +21,15 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 
 v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、双击条目改号/改名、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
 
+### 当前标注实现（v4.0）
+
+- 五个版本统一使用 `Leader + MText` 创建标注。2013/2015/2025 虽然提供 MLeader API，但 MLeader 的文字内容附着机制会产生无法稳定关闭的额外附着点或连接线，因此当前版本不再用 MLeader 创建新标注。
+- 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
+- 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
+- 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
+
+问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
+
 ### 版本总览
 
 由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本。**请根据你本机的 AutoCAD 年份选择对应版本：**
@@ -38,10 +47,10 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 **不能交叉使用。** 每个版本的 DLL 只能在其对应的 AutoCAD 年份区间内运行，原因：
 
 1. **.NET 运行时不兼容** — 2007~2009 的 CAD 只加载 .NET 2.0 程序集，2025+ 只加载 .NET 8，CLR 完全不同，DLL 无法被加载。
-2. **标注 API 断代** — AutoCAD 2013 引入 `MLeader`，之前的版本只有 `Leader` + `MText`；两套 API 的类名、方法签名完全不同。
+2. **托管 API 断代** — AutoCAD 2013 及以后虽然提供 `MLeader`，但当前项目为避免 MLeader 文字附着夹点，所有版本统一使用 `Leader` + `MText`；各版本引用的 API 程序集和方法签名仍然不同。
 3. **程序集版本绑定** — 编译时引用的 `acdbmgd.dll` 内部接口随 CAD 版本变化，跨版本加载会抛 `MissingMethodException`。
 
-> 例：把 2007 版装到 AutoCAD 2026 → 无法加载（.NET 2.0 vs .NET 8）；把 2015 版装到 AutoCAD 2012 → 无法加载（.NET 4.5 vs .NET 3.5，且缺少 MLeader）。
+> 例：把 2007 版装到 AutoCAD 2026 → 无法加载（.NET 2.0 vs .NET 8）；把 2015 版装到 AutoCAD 2012 → 无法加载（.NET 4.5 vs .NET 3.5，且 SDK 程序集版本不匹配）。
 
 详细的分版理由见 [docs/version-plan.md](docs/version-plan.md)。
 
@@ -65,7 +74,26 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 - 2013/2015 版使用 Newtonsoft.Json 13.0.3（NuGet 还原），发布时经 ILRepack 合并进 `PatentMarker.dll`（单文件部署，安装无需额外 DLL）
 - 2025 版零外部依赖（System.Text.Json 内置）
-- 全部 5 个版本均已通过编译验证
+
+### 部署包
+
+| 版本 | 安装入口 | 说明 |
+|------|----------|------|
+| 2007 | `install-2007.bat` / `install-2007.vbs` | 适用于 AutoCAD 2007~2009 |
+| 2010 | `install-2010.vbs` | 适用于 AutoCAD 2010~2012 |
+| 2013 | `install-2013.vbs` | 适用于 AutoCAD 2013~2014，DLL 已内嵌 Newtonsoft.Json |
+| 2015 | `install-2015.vbs` | 适用于 AutoCAD 2015~2024，DLL 已内嵌 Newtonsoft.Json |
+| 2025 | `install-2025.ps1` | 适用于 AutoCAD 2025 及以后；若 PowerShell 安装受本机策略影响，脚本会生成 LSP fallback 供 APPLOAD/NETLOAD 手动加载 |
+
+五套部署包都包含对应版本的 `PatentMarker.dll` 和全套 VBA 模块。不要把不同 AutoCAD 年份的 DLL 混用。
+
+### 本地验证状态
+
+- 五个版本均已完成本地编译；
+- 2010、2013、2015 主机契约模拟测试均为 5/5；
+- 2025 测试套件为 106/106；
+- 五个版本的 API 契约、结构和静态同步检查通过；
+- 本地没有完整替代真实 AutoCAD 界面交互的自动化测试，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
 
 可使用根目录 `build.ps1` 辅助构建与环境检查：
 
@@ -120,7 +148,8 @@ PatentCAD-Annotator/
 ├── demo/                       # 动态演示页面
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
-│   └── development-log.md   # 变更记录
+│   ├── development-log.md   # 变更记录
+│   └── mleader-attachment-grip-incident.md # MLeader 附着点问题总结
 └── LICENSE
 ```
 
@@ -128,13 +157,14 @@ PatentCAD-Annotator/
 
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
+- [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题、舍弃原因与替代方案
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
 
 ### 版本历史
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
-| v4.0 | 2026-08-04 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决（Word 覆盖 CAD 修改时备份+三选一裁决）；全部 5 版本同步 |
+| v4.0 | 2026-08-06 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决；修复 MLeader 额外附着点问题，五个版本统一使用 Leader + MText 并重新编译部署 |
 | v3.2 | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
 | v3.1 | 2026-08-03 | 新增三点模式（面板切换按钮）：固定 3 点采集引线，与线型开关正交；全 5 版本同步 |
 | v3.0 | 2026-08-03 | VBA v3.0 多格式识别（括号/连字符/英文标点/裸列表）；C# 取消 JSON 排序按原文顺序；全版本重新编译部署 |
@@ -157,6 +187,15 @@ PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing
 Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
 
 Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, double-click an entry to renumber/rename, add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
+
+### Current annotation implementation (v4.0)
+
+- All five editions create annotations with `Leader + MText`. AutoCAD 2013/2015/2025 expose MLeader, but its text-content attachment geometry can create an extra grip or connection segment that cannot be reliably disabled across supported hosts.
+- The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
+- Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
+- `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
+
+See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.
 
 ### Versions
 
@@ -188,6 +227,18 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 
+### Deployment packages
+
+| Edition | Installer | Notes |
+|---------|-----------|-------|
+| 2007 | `install-2007.bat` / `install-2007.vbs` | AutoCAD 2007~2009 |
+| 2010 | `install-2010.vbs` | AutoCAD 2010~2012 |
+| 2013 | `install-2013.vbs` | AutoCAD 2013~2014; Newtonsoft.Json is merged into the DLL |
+| 2015 | `install-2015.vbs` | AutoCAD 2015~2024; Newtonsoft.Json is merged into the DLL |
+| 2025 | `install-2025.ps1` | AutoCAD 2025+; generates an LSP fallback if the PowerShell installation cannot complete |
+
+Each package contains the matching `PatentMarker.dll` and the six shared VBA modules. Do not mix DLLs between AutoCAD year ranges.
+
 ### Commands
 
 | Command | Alias | Description |
@@ -197,6 +248,14 @@ Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 | `PATCHECK` | `BZC` | Validate numeral consistency |
 | `PATALIGN` | `BZA` | Align leaders |
 | `PATSELECTALL` | `BZS` | Select all annotation entities |
+
+### Local verification status
+
+- All five editions compile locally.
+- Runtime contract simulations pass 5/5 for 2010, 2013 and 2015.
+- The 2025 test suite passes 106/106.
+- API-contract, structure and static synchronization checks pass for all five editions.
+- These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
 
 ### License
 
