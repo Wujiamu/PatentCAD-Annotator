@@ -19,12 +19,14 @@ PatentCAD-Annotator 的目的在于减少专利图纸标注中的机械操作，
 
 PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保存为字典（.dict.json文件） → CAD 端打开字典面板 → 点击编号即可创建标准引线标注 → 字典变更时自动高亮差异。
 
-v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、双击条目改号/改名、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
+v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、右键或按 `F2` 编辑条目、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
 
 ### 当前标注实现（v4.0）
 
 - 五个版本统一使用 `Leader + MText` 创建标注。2013/2015/2025 虽然提供 MLeader API，但 MLeader 的文字内容附着机制会产生无法稳定关闭的额外附着点或连接线，因此当前版本不再用 MLeader 创建新标注。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
+- 点数模式默认是三点；点击“点数”按钮后才切换为无限点，设置按当前图纸会话保留。
+- 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
 
@@ -131,9 +133,12 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 ### 目录结构
 
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层，当前包含编号、设置、字典差异/冲突、粘贴识别、语言枚举，以及已验证的面板工作流、会话状态和 Leader/MText 实体服务。各版本项目通过源码链接编译；CLR、JSON 库和 WinForms 适配仍保留在对应版本目录，AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。
+
 ```
 PatentCAD-Annotator/
 ├── cad-plugin/
+│   ├── Shared/              # 五版本共用的纯 C# 源码（按项目链接编译，不合并 CLR）
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   └── PatentMarker/    #   C# 源码 + csproj
 │   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
@@ -186,12 +191,14 @@ PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing
 
 Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
 
-Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, double-click an entry to renumber/rename, add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
+Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
 
 ### Current annotation implementation (v4.0)
 
 - All five editions create annotations with `Leader + MText`. AutoCAD 2013/2015/2025 expose MLeader, but its text-content attachment geometry can create an extra grip or connection segment that cannot be reliably disabled across supported hosts.
 - The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
+- Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
+- Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
 

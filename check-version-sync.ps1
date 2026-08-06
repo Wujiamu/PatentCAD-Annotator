@@ -14,6 +14,7 @@ param(
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $pluginRoot = Join-Path $root "cad-plugin"
+$sharedRoot = Join-Path $pluginRoot "Shared"
 
 $versions = @("2007", "2010", "2013", "2015", "2025")
 
@@ -78,27 +79,72 @@ $versionOnly    = @()
 
 $sortedPaths = $allRelPaths | Sort-Object
 
-# These files are deliberately C# 2-compatible and must remain byte-identical
-# across all editions. They are the shared contracts for identity and settings.
+# These files are deliberately C# 2-compatible and are compiled from one
+# canonical source tree. They must not be copied back into each edition.
 $criticalSyncFailures = 0
-$criticalSharedFiles = @("IO\NumberIdentity.cs", "IO\PatSettings.cs")
-Write-Host "-- Critical shared contracts --" -ForegroundColor Cyan
-foreach ($critical in $criticalSharedFiles) {
-    $criticalHashes = @()
-    $criticalMissing = @()
+$sharedSourceFiles = @(
+    "IO\NumberIdentity.cs",
+    "IO\PatSettings.cs",
+    "IO\DictDiff.cs",
+    "IO\DictConflict.cs",
+    "IO\MarkingTextParser.cs",
+    "I18n\Language.cs",
+    "Cad\PatEntityHelper.cs",
+    "Palette\DictPaletteCadService.cs",
+    "Palette\DictPaletteWorkflow.cs",
+    "Palette\DictPaletteSession.cs"
+)
+Write-Host "-- Canonical shared source layer --" -ForegroundColor Cyan
+function Get-SharedSourcePath {
+    param([string]$RelativePath)
+    return Join-Path $sharedRoot $RelativePath
+}
+
+foreach ($shared in $sharedSourceFiles) {
+    $sharedPath = Get-SharedSourcePath $shared
+    if (-not (Test-Path -LiteralPath $sharedPath)) {
+        Write-Host "  [FAIL] missing canonical source: cad-plugin/Shared/$shared" -ForegroundColor Red
+        $criticalSyncFailures++
+        continue
+    }
+
+    $missingRefs = @()
+    $relativeInclude = "..\..\Shared\$shared"
     foreach ($v in $versions) {
-        if ($allMaps[$v].ContainsKey($critical)) {
-            $criticalHashes += Get-FileHashCached $allMaps[$v][$critical]
-        } else {
-            $criticalMissing += $v
+        $csproj = Join-Path $pluginRoot "$v\PatentMarker\PatentMarker.csproj"
+        if (-not (Test-Path -LiteralPath $csproj)) {
+            $missingRefs += "$v (csproj missing)"
+            continue
+        }
+        $projectText = Get-Content -LiteralPath $csproj -Raw
+        if ($projectText -notmatch [regex]::Escape($relativeInclude)) {
+            $missingRefs += $v
+        }
+        $localPath = Join-Path $pluginRoot "$v\PatentMarker\$shared"
+        if (Test-Path -LiteralPath $localPath) {
+            Write-Host "  [FAIL] duplicate local source: $v/$shared (use cad-plugin/Shared/$shared)" -ForegroundColor Red
+            $criticalSyncFailures++
         }
     }
-    $uniqueCritical = $criticalHashes | Select-Object -Unique
-    if ($criticalMissing.Count -gt 0 -or $uniqueCritical.Count -ne 1) {
-        Write-Host "  [FAIL] $critical must exist identically in all editions (missing: $($criticalMissing -join ', '))" -ForegroundColor Red
+
+    if ($missingRefs.Count -gt 0) {
+        Write-Host "  [FAIL] $shared is not linked by: $($missingRefs -join ', ')" -ForegroundColor Red
         $criticalSyncFailures++
     } else {
-        Write-Host "  [OK]   $critical identical across all five editions" -ForegroundColor Green
+        Write-Host "  [OK]   $shared canonical and linked by all five editions" -ForegroundColor Green
+    }
+}
+Write-Host ""
+
+# Backward-compatible alias used by older output consumers.
+$criticalSharedFiles = @("IO\NumberIdentity.cs", "IO\PatSettings.cs")
+Write-Host "-- Critical shared contract aliases --" -ForegroundColor Cyan
+foreach ($critical in $criticalSharedFiles) {
+    if (Test-Path -LiteralPath (Get-SharedSourcePath $critical)) {
+        Write-Host "  [OK]   $critical is covered by the canonical shared layer" -ForegroundColor Green
+    } else {
+        Write-Host "  [FAIL] $critical is missing from the canonical shared layer" -ForegroundColor Red
+        $criticalSyncFailures++
     }
 }
 Write-Host ""

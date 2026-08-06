@@ -26,8 +26,8 @@ namespace PatentMarker.Palette
         public static double ArrowSize { get { return PatSettingsStore.Current.ArrowSize; } set { PatSettingsStore.Current.ArrowSize = value; } }
         // v2.1：样条曲线开关，默认样条曲线。由面板按钮切换，影响后续新建引线。
         public static bool IsSplined { get { return PatSettingsStore.Current.IsSplined; } set { PatSettingsStore.Current.IsSplined = value; } }
-        // v3.1：三点模式开关，默认关闭（无限拐点）。开启后引线固定 3 点：
-        // 附着点 → 1 个拐点 → 文字位置，第 3 点点击后自动创建。与线型开关正交。
+        // v3.1：三点模式开关，默认开启。点击点数按钮后切换到无限拐点模式。
+        // 三点模式固定采集：附着点 → 1 个拐点 → 文字位置，第 3 点点击后自动创建。
         public static bool ThreePointMode { get { return PatSettingsStore.Current.ThreePointMode; } set { PatSettingsStore.Current.ThreePointMode = value; } }
 
         [CommandMethod("PATPALETTE")]

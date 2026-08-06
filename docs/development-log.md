@@ -6,6 +6,12 @@
 
 ## v4.0 (2026-08-04)
 
+- Shared source layer (2026-08-06): added `cad-plugin/Shared/` as the canonical source for six AutoCAD-independent modules (`NumberIdentity`, `PatSettings`, `DictDiff`, `DictConflict`, `MarkingTextParser`, `Language`). All five edition projects link these files at compile time; the old 30 copied files were removed after being backed up locally. `build.ps1 -Static` and `check-version-sync.ps1` now enforce the shared link and reject local duplicates. Five-edition compilation, 2025 unit tests (106/106) and 2010/2013/2015 simulated host contracts (15/15) pass.
+
+- Palette boundary extraction (2026-08-06): added shared `DictPaletteWorkflow`, `DictPaletteCadService`, `DictPaletteSession`, and `Cad/PatEntityHelper` source links across all five editions. `DictPaletteControl` now delegates dictionary/cache/conflict coordination and CAD transactions to those services; the five duplicated session/helper implementations were removed after incremental backups. Final verification: five-edition build, 21/21 simulated host tests, 108/108 2025 unit tests, structure/static/sync/API checks, and `git diff --check` all pass. The remaining WinForms view lifecycle stays version-local until an interactive AutoCAD/WinForms host is available.
+
+- Palette interaction simplification (2026-08-06): changed the shared runtime default to three-point mode; the existing point-count button now switches to unlimited mode only when clicked. Across all five version-local WinForms views, double-clicking a dictionary entry now starts `PATMARK` directly, while right-clicking an entry or pressing `F2` opens the edit dialog. Removed the redundant “Save & Mark” dialog action; editing now only saves, deletes or cancels. No shared dictionary/CAD service logic was duplicated or changed.
+
 - Leader fallback for MLeader attachment-grip bug (2026-08-06): the supplied `PatentMarker.log` showed that every requested final dogleg point was preserved as the actual MLeader last vertex; the remaining extra point was MLeader's text-content attachment geometry, not an extra `AddLastVertex` call. Since the grip could not be removed reliably, 2013/2015/2025 now use the 2007/2010 `Leader + MText` construction for PATMARK, PATCHECK, PATALIGN, PATSELECTALL, palette deletion and dictionary rename synchronization. Styles, API checks, runtime simulations and README/version-plan entries were synchronized.
 
 - Runtime contract hardening (2026-08-05): 2025 版的版本矩阵明确覆盖 AutoCAD 2025–2026+；新增五版 `IO/RuntimeHost.cs` 主机边界并将 `PATMARK` 接入，新增 2010/2013/2015 严格 CAD/事务模拟测试（各 5/5，共 15/15），直接驱动对应版本生产命令。新增 `check-api-contract.ps1` 与 `tools/ApiSurfaceCheck/`，通过本机 2010 Leader、2013/2015/2025 MLeader SDK 元数据检查。AutoCAD 2026 COM 自动化返回 `80080005 (CO_E_SERVER_EXEC_FAILURE)`；Core Console 对 2025 DLL 的 `NETLOAD`/`PATCHECK` 脚本退出码为 0，但因无交互面板和独立业务断言，仅记录为部分冒烟，不替代完整主机回归。最终验证：2025 测试 106/106、模拟测试 15/15、五版编译、结构/静态/API 检查和发布暂存均通过。
@@ -30,7 +36,7 @@
 
 - 新增 CAD 端字典编辑闭环（全部 5 个版本同步）：
   - **粘贴识别**：面板新增「粘贴识别」按钮，从 Word 说明书粘贴附图标记段落，C# 移植 VBA 识别引擎（`MarkingTextParser`：段落定位 + 表格预处理 + 多格式解析），预览表格可编辑，支持「覆盖整个字典 / 按编号合并」两种写回方式
-  - **编辑对话框**：双击面板条目打开，支持改编号 / 改名称 / 新增 / 删除，编号冲突（忽略大小写）即时校验；「保存并标注」保存后直接创建引线
+  - **编辑对话框**：右键或按 `F2` 打开，支持改编号 / 改名称 / 新增 / 删除，编号冲突（忽略大小写）即时校验；标注由列表双击直接触发
   - **实体联动**：改号后自动更新图纸内旧编号的 PAT 引线文字（2013/2015/2025 走 MLeader，2007/2010 走 Leader 的 MText/DBText 两种 annotation）并 `Regen`
   - **冲突裁决**：Word 端导出前检测旧字典的 `modified_by: cad` 标记，若 CAD 曾修改则备份为 `<主名>.dict.json.word-<时间戳>.bak`（只保留最新一个）；CAD 面板轮询检测到 Word 已覆盖时状态栏提示并点亮「裁决」按钮，弹窗三选：采用 Word 版（删备份）/ 恢复 CAD 版（备份覆盖回 + 清 CAD 标记）/ 稍后再说
 - 字典格式 v4.0：metadata 新增可选 `modified_by` / `modified_at`（CAD 手动修改标记），旧字典文件完全兼容

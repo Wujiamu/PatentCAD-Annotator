@@ -87,6 +87,16 @@ namespace Autodesk.AutoCAD.ApplicationServices
         public string Name { get; set; } = "simulation.dwg";
         public Editor Editor { get; set; } = new Editor();
         public Database Database { get; set; } = new Database();
+
+        public DocumentLock LockDocument()
+        {
+            return new DocumentLock();
+        }
+    }
+
+    public sealed class DocumentLock : IDisposable
+    {
+        public void Dispose() { }
     }
 }
 
@@ -280,9 +290,17 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public class Entity : DBObject
     {
+        public bool IsErased { get; private set; }
+
         public virtual void SetDatabaseDefaults(Database db)
         {
             Database = db;
+        }
+
+        public virtual void Erase(bool erasing)
+        {
+            IsErased = true;
+            if (Database != null) Database.Trace.Add("erase:" + GetType().Name);
         }
     }
 
@@ -295,12 +313,18 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public ObjectId TextStyleId { get; set; }
     }
 
+    public sealed class DBText : Entity
+    {
+        public string TextString { get; set; } = "";
+    }
+
     public sealed class Leader : Entity
     {
         private readonly List<Point3d> _vertices = new List<Point3d>();
         private ObjectId _annotation;
 
         public IReadOnlyList<Point3d> Vertices { get { return _vertices; } }
+        public int NumVertices { get { return _vertices.Count; } }
         public bool IsSplined { get; set; }
         public bool HasArrowHead { get; set; }
         public double Dimasz { get; set; }
@@ -322,6 +346,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
         {
             _vertices.Add(point);
             if (Database != null) Database.Trace.Add("leader.vertex");
+        }
+
+        public Point3d VertexAt(int index)
+        {
+            return _vertices[index];
         }
     }
 
@@ -468,6 +497,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
                 throw new InvalidOperationException("Simulated transaction commit failure.");
             Trace.Add("transaction.commit");
             CommittedEntities.AddRange(_pending);
+            foreach (Entity entity in _pending)
+                ModelSpace.AddCommitted(entity.ObjectId);
             _pending.Clear();
         }
 
@@ -527,12 +558,28 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public ObjectId this[string name] { get { return new ObjectId(3); } }
     }
 
-    public sealed class BlockTableRecord : DBObject
+    public sealed class BlockTableRecord : DBObject, IEnumerable<ObjectId>
     {
         private readonly Database _database;
+        private readonly List<ObjectId> _entityIds = new List<ObjectId>();
         internal BlockTableRecord(Database database) { _database = database; }
         public static string ModelSpace { get { return "*Model_Space"; } }
         public void AppendEntity(Entity entity) { _database.AddPending(entity); }
+
+        internal void AddCommitted(ObjectId id)
+        {
+            if (!_entityIds.Contains(id)) _entityIds.Add(id);
+        }
+
+        public IEnumerator<ObjectId> GetEnumerator()
+        {
+            return _entityIds.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
     public sealed class TextStyleTable : DBObject
@@ -559,6 +606,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public sealed class DimStyleTableRecord : DBObject
     {
+        public string Name { get; set; }
         public double Dimasz { get; set; }
     }
 }

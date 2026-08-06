@@ -30,6 +30,28 @@
     </Reference>
   </ItemGroup>
 
+  <!-- Framework-neutral source shared by all five edition projects. -->
+  <ItemGroup>
+    <Compile Remove="IO\NumberIdentity.cs" />
+    <Compile Remove="IO\PatSettings.cs" />
+    <Compile Remove="IO\DictDiff.cs" />
+    <Compile Remove="IO\DictConflict.cs" />
+    <Compile Remove="IO\MarkingTextParser.cs" />
+    <Compile Remove="I18n\Language.cs" />
+    <Compile Remove="IO\PatEntityHelper.cs" />
+    <Compile Remove="Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\IO\NumberIdentity.cs" Link="IO\NumberIdentity.cs" />
+    <Compile Include="..\..\Shared\IO\PatSettings.cs" Link="IO\PatSettings.cs" />
+    <Compile Include="..\..\Shared\IO\DictDiff.cs" Link="IO\DictDiff.cs" />
+    <Compile Include="..\..\Shared\IO\DictConflict.cs" Link="IO\DictConflict.cs" />
+    <Compile Include="..\..\Shared\IO\MarkingTextParser.cs" Link="IO\MarkingTextParser.cs" />
+    <Compile Include="..\..\Shared\I18n\Language.cs" Link="I18n\Language.cs" />
+    <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" Link="IO\PatEntityHelper.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" Link="Palette\DictPaletteCadService.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
+  </ItemGroup>
+
   <!-- System.Text.Json 内置于 .NET 8，无需额外 NuGet 包 -->
 
 </Project>

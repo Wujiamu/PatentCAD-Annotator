@@ -1,12 +1,9 @@
-using Autodesk.AutoCAD.ApplicationServices;
-using AcDb = Autodesk.AutoCAD.DatabaseServices;
 using PatentMarker.IO;
 using PatentMarker.I18n;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using AppAcad = Autodesk.AutoCAD.ApplicationServices.Application;
 
 namespace PatentMarker.Palette
 {
@@ -44,6 +41,7 @@ namespace PatentMarker.Palette
         private ColumnHeader _colOldName;
 
         private readonly DictPaletteSession _session = new DictPaletteSession();
+        private readonly DictPaletteWorkflow _workflow = new DictPaletteWorkflow();
         private DictModel _currentDict { get { return _session.CurrentDict; } }
         private System.Windows.Forms.Timer _autoRefreshTimer;
 
@@ -70,8 +68,8 @@ namespace PatentMarker.Palette
                 // v4.0：轮询检测 Word 备份冲突（不弹窗打断，仅状态栏提示 + 裁决按钮点亮）
                 CheckConflictState();
 
-                if (!DictLoader.IsFileChanged()) return;
-                var dict = DictLoader.LoadForCurrentDrawing();
+                if (!_workflow.IsFileChanged()) return;
+                var dict = _workflow.LoadCurrent();
                 if (dict != null)
                 {
                     LoadDict(dict);
@@ -306,6 +304,13 @@ namespace PatentMarker.Palette
             _lstEntries.Columns.AddRange(new ColumnHeader[] { _colNumber, _colName, _colOcc, _colOldNumber, _colOldName });
             _lstEntries.SelectedIndexChanged += new EventHandler(LstEntries_SelectedIndexChanged);
             _lstEntries.DoubleClick += new EventHandler(LstEntries_DoubleClick);
+            _lstEntries.MouseDown += new MouseEventHandler(LstEntries_MouseDown);
+            _lstEntries.KeyDown += new KeyEventHandler(LstEntries_KeyDown);
+            ContextMenuStrip entryContextMenu = new ContextMenuStrip();
+            ToolStripMenuItem editEntryMenuItem = new ToolStripMenuItem(Strings.Edit_TitleEdit);
+            editEntryMenuItem.Click += new EventHandler(LstEntries_EditRequested);
+            entryContextMenu.Items.Add(editEntryMenuItem);
+            _lstEntries.ContextMenuStrip = entryContextMenu;
 
             this.Controls.Add(_lstEntries);
             this.Controls.Add(_lblStatus);
@@ -384,7 +389,7 @@ namespace PatentMarker.Palette
         public void LoadDict(DictModel dict)
         {
             if (dict == null) { ShowNoDict(); return; }
-            _session.Load(dict, DictLoader.PreviousModel);
+            _session.Load(dict, _workflow.PreviousModel);
             if (_currentDiff != null)
             {
                 _btnCompare.Enabled = true;
@@ -622,29 +627,86 @@ namespace PatentMarker.Palette
 
         private void LstEntries_DoubleClick(object sender, EventArgs e)
         {
+            MarkSelectedEntry();
+        }
+
+        private void LstEntries_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Right) return;
+            ListViewHitTestInfo hit = _lstEntries.HitTest(e.Location);
+            if (hit.Item == null) return;
+
+            _lstEntries.SelectedItems.Clear();
+            hit.Item.Selected = true;
+            hit.Item.Focused = true;
+            _lstEntries.Focus();
+        }
+
+        private void LstEntries_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.F2) return;
+            e.Handled = true;
+            EditSelectedEntry();
+        }
+
+        private void LstEntries_EditRequested(object sender, EventArgs e)
+        {
+            EditSelectedEntry();
+        }
+
+        /// <summary>默认交互：双击条目直接进入 PATMARK，不再打开编辑对话框。</summary>
+        private void MarkSelectedEntry()
+        {
             if (_lstEntries.SelectedItems.Count == 0) return;
             PaletteEntry entry = _lstEntries.SelectedItems[0].Tag as PaletteEntry;
             if (entry == null) return;
 
-            // v4.0：双击改为打开编辑对话框（改 number/name、删除）。
-            // 原「双击装填创建引线」交互移至对话框「保存并标注」按钮。
             if (_currentDict == null)
             {
                 _lblStatus.Text = Strings.Palette_DictNotLoaded;
                 return;
             }
-            string dictPath = DictLoader.CurrentPath != null ? DictLoader.CurrentPath : DictLoader.ResolveDictPath();
+
+            DictEntry target = _workflow.FindEntry(_currentDict, entry.Number);
+            if (target == null)
+            {
+                _lblStatus.Text = string.Format(Strings.Status_LoadFailed, Strings.Palette_DictNotLoaded);
+                return;
+            }
+
+            PatPaletteCommand.PendingNumber = target.Number;
+            PatPaletteCommand.PendingName = target.Name != null ? target.Name : "";
+            _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
+
+            var doc = IO.RuntimeHost.ActiveDocument;
+            if (doc != null)
+            {
+                doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
+                    PatPaletteCommand.PendingNumber, PatPaletteCommand.PendingName));
+                doc.SendStringToExecute("PATMARK ", false, false, false);
+            }
+        }
+
+        /// <summary>编辑入口：右键菜单或 F2 打开单条目编辑对话框。</summary>
+        private void EditSelectedEntry()
+        {
+            if (_lstEntries.SelectedItems.Count == 0) return;
+            PaletteEntry entry = _lstEntries.SelectedItems[0].Tag as PaletteEntry;
+            if (entry == null) return;
+
+            if (_currentDict == null)
+            {
+                _lblStatus.Text = Strings.Palette_DictNotLoaded;
+                return;
+            }
+            string dictPath = _workflow.ResolveDictPath();
             if (dictPath == null)
             {
                 _lblStatus.Text = Strings.Status_NoDictFile;
                 return;
             }
 
-            DictEntry target = null;
-            foreach (DictEntry de in _currentDict.Entries)
-            {
-                if (NumberIdentity.AreEqual(de.Number, entry.Number)) { target = de; break; }
-            }
+            DictEntry target = _workflow.FindEntry(_currentDict, entry.Number);
             if (target == null)
             {
                 _lblStatus.Text = string.Format(Strings.Status_LoadFailed, Strings.Edit_DeleteFailed);
@@ -659,7 +721,7 @@ namespace PatentMarker.Palette
                 if (r == DialogResult.OK || r == DialogResult.Abort)
                 {
                     // 保存 / 删除：刷新面板
-                    var dict = DictLoader.LoadForCurrentDrawing();
+                    var dict = _workflow.LoadCurrent();
                     if (dict != null) LoadDict(dict);
                     else ShowNoDict();
                     _lblStatus.Text = Strings.Status_DictAutoUpdated;
@@ -668,31 +730,6 @@ namespace PatentMarker.Palette
                     if (r == DialogResult.OK && !NumberIdentity.AreEqual(target.Number, oldNumber))
                     {
                         RenameLeadersInDrawing(oldNumber, target.Number);
-                    }
-                }
-                else if (r == DialogResult.Yes)
-                {
-                    // 保存并标注：写回已由对话框完成，装填编号后进入创建引线流程
-                    var dict = DictLoader.LoadForCurrentDrawing();
-                    if (dict != null) LoadDict(dict);
-                    else ShowNoDict();
-
-                    // v4.0：编号变更 → 同步图纸标注文字 + Regen
-                    if (!NumberIdentity.AreEqual(target.Number, oldNumber))
-                    {
-                        RenameLeadersInDrawing(oldNumber, target.Number);
-                    }
-
-                    PatPaletteCommand.PendingNumber = target.Number;
-                    PatPaletteCommand.PendingName = target.Name != null ? target.Name : "";
-                    _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
-
-                    var doc = IO.RuntimeHost.ActiveDocument;
-                    if (doc != null)
-                    {
-                        doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
-                            PatPaletteCommand.PendingNumber, PatPaletteCommand.PendingName));
-                        doc.SendStringToExecute("PATMARK ", false, false, false);
                     }
                 }
             }
@@ -706,20 +743,11 @@ namespace PatentMarker.Palette
         {
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return 0;
-            var db = doc.Database;
 
             int changed = 0;
             try
             {
-                using (Autodesk.AutoCAD.ApplicationServices.DocumentLock docLock = doc.LockDocument())
-                using (AcDb.Transaction tr = db.TransactionManager.StartTransaction())
-                {
-                    AcDb.BlockTable bt = (AcDb.BlockTable)tr.GetObject(db.BlockTableId, AcDb.OpenMode.ForRead);
-                    AcDb.BlockTableRecord btr = (AcDb.BlockTableRecord)tr.GetObject(
-                        bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForRead);
-                    changed = PatEntityHelper.RenameNumberInModelSpace(tr, btr, oldNumber, newNumber);
-                    tr.Commit();
-                }
+                changed = DictPaletteCadService.RenameNumber(doc, oldNumber, newNumber);
 
                 if (changed > 0)
                 {
@@ -740,8 +768,7 @@ namespace PatentMarker.Palette
         {
             try
             {
-                DictLoader.InvalidateCache();
-                var dict = DictLoader.LoadForCurrentDrawing();
+                var dict = _workflow.ReloadCurrent();
                 if (dict != null)
                 {
                     LoadDict(dict);
@@ -768,7 +795,7 @@ namespace PatentMarker.Palette
                     DialogResult r = dlg.ShowDialog(this);
                     if (r == DialogResult.OK)
                     {
-                        var dict = DictLoader.LoadForCurrentDrawing();
+                        var dict = _workflow.LoadCurrent();
                         if (dict != null) LoadDict(dict);
                         else ShowNoDict();
                         _lblStatus.Text = Strings.Status_DictAutoUpdated;
@@ -794,7 +821,7 @@ namespace PatentMarker.Palette
                     _lblStatus.Text = Strings.Palette_DictNotLoaded;
                     return;
                 }
-                string dictPath = DictLoader.CurrentPath != null ? DictLoader.CurrentPath : DictLoader.ResolveDictPath();
+                string dictPath = _workflow.ResolveDictPath();
                 if (dictPath == null)
                 {
                     _lblStatus.Text = Strings.Status_NoDictFile;
@@ -806,7 +833,7 @@ namespace PatentMarker.Palette
                     DialogResult r = dlg.ShowDialog(this);
                     if (r == DialogResult.OK)
                     {
-                        var dict = DictLoader.LoadForCurrentDrawing();
+                        var dict = _workflow.LoadCurrent();
                         if (dict != null) LoadDict(dict);
                         else ShowNoDict();
                         _lblStatus.Text = Strings.Status_DictAutoUpdated;
@@ -829,8 +856,8 @@ namespace PatentMarker.Palette
         {
             try
             {
-                string dictPath = DictLoader.CurrentPath != null ? DictLoader.CurrentPath : DictLoader.ResolveDictPath();
-                bool pending = DictConflict.IsPendingConflict(_currentDict, dictPath);
+                string dictPath = _workflow.ResolveDictPath();
+                bool pending = _workflow.IsPendingConflict(_currentDict, dictPath);
 
                 if (pending && !_conflictFlagged)
                 {
@@ -861,13 +888,13 @@ namespace PatentMarker.Palette
         {
             try
             {
-                string dictPath = DictLoader.CurrentPath != null ? DictLoader.CurrentPath : DictLoader.ResolveDictPath();
+                string dictPath = _workflow.ResolveDictPath();
                 if (dictPath == null)
                 {
                     _lblStatus.Text = Strings.Status_NoDictFile;
                     return;
                 }
-                if (!DictConflict.IsPendingConflict(_currentDict, dictPath))
+                if (!_workflow.IsPendingConflict(_currentDict, dictPath))
                 {
                     _conflictFlagged = false;
                     _btnArbitrate.Enabled = false;
@@ -880,7 +907,7 @@ namespace PatentMarker.Palette
                     if (r == DialogResult.OK)
                     {
                         // 采用 Word 版：备份已删，刷新面板显示 Word 最新导出
-                        var dict = DictLoader.LoadForCurrentDrawing();
+                        var dict = _workflow.LoadCurrent();
                         if (dict != null) LoadDict(dict);
                         else ShowNoDict();
                         _lblStatus.Text = Strings.Conflict_KeepWordOk;
@@ -889,7 +916,7 @@ namespace PatentMarker.Palette
                     else if (r == DialogResult.Yes)
                     {
                         // 恢复 CAD 版：dict.json 已恢复为 CAD 版并清除标记
-                        var dict = DictLoader.LoadForCurrentDrawing();
+                        var dict = _workflow.LoadCurrent();
                         if (dict != null) LoadDict(dict);
                         else ShowNoDict();
                         _lblStatus.Text = Strings.Conflict_RestoreOk;
@@ -973,7 +1000,6 @@ namespace PatentMarker.Palette
         {
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
-            var db = doc.Database;
 
             PatentMarkerApp.RawLog("BtnDelete: starting...");
 
@@ -982,65 +1008,10 @@ namespace PatentMarker.Palette
                 Strings.Msg_DeleteTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm != DialogResult.Yes) return;
 
-            using (Autodesk.AutoCAD.ApplicationServices.DocumentLock docLock = doc.LockDocument())
-            {
-                using (AcDb.Transaction tr = db.TransactionManager.StartTransaction())
-                {
-                    AcDb.BlockTable bt = (AcDb.BlockTable)tr.GetObject(db.BlockTableId, AcDb.OpenMode.ForRead);
-                    AcDb.BlockTableRecord btr = (AcDb.BlockTableRecord)tr.GetObject(
-                        bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForWrite);
-
-                    int deleted = 0;
-                    int skipped = 0;
-                    List<AcDb.ObjectId> toDelete = new List<AcDb.ObjectId>();
-                    List<AcDb.ObjectId> mtextToDelete = new List<AcDb.ObjectId>();
-
-                    foreach (AcDb.ObjectId entId in btr)
-                    {
-                        AcDb.Entity ent = (AcDb.Entity)tr.GetObject(entId, AcDb.OpenMode.ForRead);
-                        AcDb.Leader leader = ent as AcDb.Leader;
-                        if (leader == null) continue;
-
-                        if (!PatEntityHelper.IsPatEntity(leader, tr)) { skipped++; continue; }
-
-                        toDelete.Add(entId);
-                        if (!leader.Annotation.IsNull)
-                            mtextToDelete.Add(leader.Annotation);
-                    }
-
-                    foreach (AcDb.ObjectId id in toDelete)
-                    {
-                        try
-                        {
-                            AcDb.Leader leader = (AcDb.Leader)tr.GetObject(id, AcDb.OpenMode.ForWrite);
-                            leader.Erase(true);
-                            deleted++;
-                        }
-                        catch (System.Exception ex)
-                        {
-                            PatentMarkerApp.RawLog("BtnDelete leader error: " + ex.Message);
-                        }
-                    }
-
-                    foreach (AcDb.ObjectId id in mtextToDelete)
-                    {
-                        try
-                        {
-                            AcDb.MText mt = (AcDb.MText)tr.GetObject(id, AcDb.OpenMode.ForWrite);
-                            mt.Erase(true);
-                        }
-                        catch (System.Exception ex)
-                        {
-                            PatentMarkerApp.RawLog("BtnDelete mtext error: " + ex.Message);
-                        }
-                    }
-
-                    tr.Commit();
-                    _lblStatus.Text = string.Format(Strings.Status_Deleted, deleted, skipped);
-                    doc.Editor.WriteMessage(string.Format(Strings.Status_DeletedCmd, deleted, skipped));
-                    PatentMarkerApp.RawLog("BtnDelete: done, deleted=" + deleted + ", skipped=" + skipped);
-                }
-            }
+            DictPaletteDeleteResult result = DictPaletteCadService.DeleteAll(doc);
+            _lblStatus.Text = string.Format(Strings.Status_Deleted, result.Deleted, result.Skipped);
+            doc.Editor.WriteMessage(string.Format(Strings.Status_DeletedCmd, result.Deleted, result.Skipped));
+            PatentMarkerApp.RawLog("BtnDelete: done, deleted=" + result.Deleted + ", skipped=" + result.Skipped);
         }
     }
 

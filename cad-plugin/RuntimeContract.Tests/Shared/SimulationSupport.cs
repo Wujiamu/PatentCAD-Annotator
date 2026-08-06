@@ -2,6 +2,9 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace PatentMarker
 {
@@ -24,6 +27,7 @@ namespace PatentMarker.Styles
 {
     internal static class PatStyleInitializer
     {
+        internal const string DimStyleName = "PAT_DIM";
         internal static void EnsurePatDimStyle() { }
         internal static void EnsurePatStyle() { }
         internal static ObjectId GetPatDimStyleId(Database db, Transaction tr) { return ObjectId.Null; }

@@ -18,7 +18,7 @@
 
 | 特性 | 2013+ 版 | 2007 版 |
 |------|----------|---------|
-| 引线类型 | MLeader（一体式） | Leader + MText（组合） |
+| 引线类型 | Leader + MText（组合） | Leader + MText（组合） |
 | 样式管理 | MLeaderStyle (PAT_STYLE) | DimStyle (PAT_DIM) |
 | JSON | Newtonsoft.Json | 内置 SimpleJson（~200 行，零依赖） |
 | LINQ | 可用 | 不可用（手动循环 + List.Sort） |
@@ -33,6 +33,7 @@
 | 默认无箭头 | `Leader.HasArrowHead = false`，面板 'Arrow: Off/On' 切换 |
 | 箭头尺寸可调 | NumericUpDown 控件（0.5—20.0，步进 0.5，默认 2.5），同步 PAT_DIM 的 Dimasz |
 | 无限拐点 | 循环采集点击直到 Enter/Space 结束 |
+| 点数模式 | 默认三点；点击点数按钮切换为无限点 |
 | 全选标注 | `PATSELECTALL` / `BZS` 命令，一键选中全部 PAT 引线及文字 |
 | 字典比对 | `.dict.json` 变更时高亮：绿(新增)/红(删除)/黄(编号变)/蓝(名称变)/珊瑚(两者变) |
 | 自动同步 | 面板 2 秒 Timer 检测 `.dict.json` 变更，自动刷新；'Reload' 按钮强制重载 |
@@ -74,6 +75,13 @@ cd D:\PatentMarker
 | `PATCHECK` | `BZC` | 校验图纸编号与字典的一致性 |
 | `PATALIGN` | `BZA` | 对齐引线（选择模式 / 框边模式） |
 | `PATSELECTALL` | `BZS` | 选中所有 PAT 引线及文字（配合 Ctrl+1 改属性） |
+
+## 面板交互
+
+- 默认点数模式为三点；点击“点数”按钮后切换为无限点。
+- 单击条目只选择，双击条目直接进入 `PATMARK` 标注。
+- 右键条目选择“编辑条目”，或选中后按 `F2` 修改编号/名称；编辑窗口只负责保存、删除或取消。
+- 新增条目仍通过面板“新增条目”按钮进入编辑窗口。
 
 ## 字典文件
 

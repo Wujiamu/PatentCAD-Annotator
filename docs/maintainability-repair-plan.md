@@ -260,11 +260,11 @@
 
 ### 第 6 步：同步五版本并完成编译闭环
 
-按“2025 行为验证 → 2013/2015 MLeader/依赖适配 → 2007/2010 Leader/旧 CLR 适配”同步共享逻辑。每批修改后运行五版本编译；2013/2015 同时执行 ILRepack，并确认合并程序集不再引用外部 Newtonsoft.Json。
+按“2025 行为验证 → 2013/2015/2025 Leader + MText/依赖适配 → 2007/2010 Leader/旧 CLR 适配”同步共享逻辑。每批修改后运行五版本编译；2013/2015 同时执行 ILRepack，并确认合并程序集不再引用外部 Newtonsoft.Json。
 
 ### 第 7 步：执行 2007/2025 实机回归
 
-在对应 AutoCAD 中覆盖 `NETLOAD`、`BZ`、`BZM`、`BZC`、`BZA`、文档切换、字典更新和关闭重开；2007 重点验证 Leader + MText/CLR 2.0，2025 重点验证 MLeader/.NET 8 和面板事件。
+在对应 AutoCAD 中覆盖 `NETLOAD`、`BZ`、`BZM`、`BZC`、`BZA`、文档切换、字典更新和关闭重开；2007 重点验证 Leader + MText/CLR 2.0，2025 重点验证 Leader + MText/.NET 8 和面板事件。
 
 ### 第 8 步：封存无法完成的运行时验证
 
@@ -322,13 +322,13 @@
 2. 保留并扩大五版共用的 `IO/NumberIdentity.cs`，统一编号 trim、大小写不敏感比较，覆盖写回、Diff、校验、改号和面板查找。
 3. 将 `DictLoader`、`ConfigLoader`、`PatSettings` 和文档关闭事件改为按图纸路径显式激活/释放；`Current` 仍作为兼容投影保留，实际 AutoCAD 多文档切换尚待主机回归。
 4. 将配置、面板、标注创建、样式初始化和对齐命令接入同一运行时设置，并按图纸路径隔离面板开关。
-5. 从五版 `DictPaletteControl` 抽出 `Palette/DictPaletteSession.cs`，集中字典列表、过滤、Diff 和计数逻辑，并加入单元测试；CAD 事务、实体操作和冲突裁决仍留在大控制类中，未冒险进行第二层拆分。
+5. 从五版 `DictPaletteControl` 抽出 `Palette/DictPaletteSession.cs`，集中字典列表、过滤、Diff 和计数逻辑，并加入单元测试；后续已继续抽出共用的字典工作流、CAD 事务服务和实体辅助层，WinForms 视图生命周期仍留在版本目录中。
 6. 修正 `build.ps1` 的 MSBuild 发现和失败码传播；清理 2013/2015 旧 NuGet 资产导致的 RID 误报；五版编译均通过。新增 `package.ps1`，默认在临时目录生成五版发布暂存，校验 VBA 同步及 Newtonsoft.Json 合并引用。
 7. VBA 与 C# 仍是两套解析实现；本轮固化了 8 个脱敏 C# 解析契约样例，但干净克隆环境中的 Word COM/VBA 完整对照仍待确认。
 
 8. 在五个版本新增 `IO/RuntimeHost.cs` 主机边界，并将命令、样式初始化、配置/字典读取和面板中的活动文档读取统一接入；文档事件订阅仍保留原生 `DocumentManager`，避免改变事件生命周期。静态检查现在会阻止新增绕过边界的 `MdiActiveDocument` 读取。
 9. 新增 `cad-plugin/RuntimeContract.Tests/`：使用严格的 Editor/Database/Transaction 模拟约束，直接链接 2010/2013/2015 的 `PatMarkCommand`，覆盖三点输入、取消、自由模式、事务回滚和跨文档设置隔离；三版各 5/5，共 15/15 通过。
-10. 新增 `check-api-contract.ps1` 与 `tools/ApiSurfaceCheck/`，以 `MetadataLoadContext` 检查 2010 Leader 及 2013/2015/2025 MLeader 的实际 SDK 类型、属性、方法和枚举；本机 SDK API 表面检查全部通过。
+10. 新增 `check-api-contract.ps1` 与 `tools/ApiSurfaceCheck/`，以 `MetadataLoadContext` 检查五版当前 Leader + MText 所需的实际 SDK 类型、属性和方法；高版本 MLeader 仅作为历史兼容面保留，不进入新建标注路径；本机 SDK API 表面检查全部通过。
 11. AutoCAD 2026 Core Console 已对编译后的 2025 DLL 执行一次非交互脚本冒烟：进程退出码为 0，输出包含 `_.NETLOAD` 和 `_.PATCHECK`；由于 Core Console 不提供面板交互，且该次输出没有可独立确认的业务结果，记录为“部分冒烟证据”，不计作完整 2025 UI/实体回归。
 12. 新增 `check-autocad-host.ps1` 只读诊断：检查 AutoCAD/Core Console 文件、`AdskLicensingService` 和 COM 注册，不启动 AutoCAD、不改注册表/服务/安全设置；当前报告为主机文件、服务和 COM 前置条件存在，但仍不能证明账号授权有效。
 
@@ -364,7 +364,31 @@
 
 - 交互式 COM：尝试 `AutoCAD.Application.25.1`、`AutoCAD.Application.25` 和基础 ProgID，均返回 `80080005 (CO_E_SERVER_EXEC_FAILURE)`；未留下运行中的 AutoCAD 进程。
 - Core Console：使用本地样例 DWG 和临时脚本加载 `cad-plugin/2025/PatentMarker/bin/Release/net8.0-windows/PatentMarker.dll`，脚本包含 `_.NETLOAD`、`_.PATCHECK`、`_.QUIT`，进程退出码为 0。输出能确认命令脚本被送入 Core Console，但没有可独立读取的面板/实体业务断言，所以仅标记为“部分冒烟”。
-- 主机边界与动态模拟：五个版本的命令、面板、样式初始化、配置/字典读取统一通过 `IO/RuntimeHost.cs` 获取活动文档；严格模拟 MLeader/Leader 的创建前置条件、点拾取取消、自由模式末点、事务提交失败回滚和按文档隔离设置；这些测试直接使用对应版本的生产 `PatMarkCommand`，不是复制一份测试实现。
-- API 约束：`check-api-contract.ps1 -Version all` 通过 2010 Leader 以及 2013/2015/2025 MLeader 的元数据检查，避免用错误的 API 名称或跨代标注类型编译。
+- 主机边界与动态模拟：五个版本的命令、面板、样式初始化、配置/字典读取统一通过 `IO/RuntimeHost.cs` 获取活动文档；严格模拟 Leader + MText 的创建前置条件、点拾取取消、自由模式末点、事务提交失败回滚和按文档隔离设置；这些测试直接使用对应版本的生产 `PatMarkCommand`，不是复制一份测试实现。
+- API 约束：`check-api-contract.ps1 -Version all` 通过 2010/2013/2015/2025 Leader + MText 所需元数据检查，并确认新建命令不引用 MLeader，避免用错误的 API 名称或跨代标注类型编译。
 
 后续真正解除剩余阻碍的顺序保持不变：先取得可交互的 AutoCAD 2025/2026 主机完成 `BZ/BZM/BZC/BZA/BZS` 和多文档回归，再在有对应旧版主机时执行 2010/2013/2015 的安装加载回归；在此之前，不把模拟测试或 Core Console 冒烟升级为完整运行时通过。
+
+## 11. 2026-08-06 共享源码层执行记录
+
+按本计划“先降低复制、再扩大拆分”的顺序，完成了第一批跨版本源码收敛：
+
+- 新增 `cad-plugin/Shared/` 作为唯一共享源，收纳 `NumberIdentity`、`PatSettings`、`DictDiff`、`DictConflict`、`MarkingTextParser` 和 `Language` 六个不依赖 AutoCAD 实体的模块；五个 `PatentMarker.csproj` 通过链接编译，仍保留各自 .NET/AutoCAD SDK 边界，没有把五版合并成一个 DLL。
+- 删除五个版本目录中的 30 份旧副本；删除前已备份到 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-shared-source-backup-20260806-151835`。2025 单元测试和 2010/2013/2015 模拟测试项目同步改为链接共享源。
+- `build.ps1 -Static` 新增共享层存在性、五版项目链接和“禁止本地重复副本”检查；`check-version-sync.ps1` 改为校验共享源，而不是要求同名文件复制到五个版本目录。构建脚本的版本信息也同步为五版 Leader + MText。
+- 本轮实际验证：`build.ps1 -Structure` 通过；`build.ps1 -Static` 通过（7 条既有版本差异警告）；五版 `build.ps1 -Version all` 通过；2025 单元测试 106/106 通过；2010/2013/2015 模拟测试各 5/5，共 15/15；`check-version-sync.ps1` 共享层检查通过。
+
+这一步只解决“同一纯逻辑多份维护”的结构性阻碍；`RuntimeHost`、`DictPaletteControl`、AutoCAD 事务和版本特有 JSON/UI 代码仍按计划保留在各版，待主机验证后再继续拆分。
+
+## 12. 2026-08-06 面板职责拆分执行记录
+
+在动态模拟基线通过并建立增量备份后，继续按“先非 UI、再宿主边界”的顺序拆分：
+
+- 新增 `Shared/Palette/DictPaletteWorkflow.cs`，集中处理字典路径、缓存失效、当前字典加载、冲突判断和编号查找；`DictPaletteControl` 不再直接编排这些文件状态操作。
+- 新增 `Shared/Palette/DictPaletteCadService.cs`，集中处理文档锁、事务、Leader/MText 编号同步和批量删除；面板只负责确认、状态提示和刷新。
+- 新增 `Shared/Cad/PatEntityHelper.cs`，收敛五个版本重复的 Leader/MText/DBText 识别与文字更新辅助代码。
+- 新增 `Shared/Palette/DictPaletteSession.cs`，收敛五个版本重复的当前字典、Diff 基线、筛选结果及统计逻辑；删除五个版本中的本地副本。
+- 当前拆分的增量回滚备份为 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-palette-split-backup-20260806-20260806-160731` 和 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-session-split-backup-20260806-162727`；前一批共享层备份仍保留。
+- 本轮最终复核：五版本 `build.ps1 -Version all` 通过；模拟宿主测试 2010/2013/2015 各 7/7，共 21/21；2025 单元测试 108/108；`build.ps1 -Structure`、`build.ps1 -Static`、`check-version-sync.ps1`、`check-api-contract.ps1 -Version all` 和 `git diff --check` 均通过。2025 构建仍有既有 WindowsBase/可空性警告，无错误。
+
+至此，字典会话、字典工作流和 CAD 实体事务已经形成可独立复核的边界。剩余 `DictPaletteControl` 的纯 WinForms 视图布局与事件生命周期仍需要交互式 AutoCAD/WinForms 主机验证；在缺少该主机时不继续做高风险的视图对象拆分，也不把本轮结果表述为完整 UI 重构。

@@ -21,15 +21,16 @@
   <!-- 直接包含 2025 版源码文件进行测试（避免引用 AutoCAD SDK DLL） -->
   <ItemGroup>
     <Compile Include="..\PatentMarker\IO\DictEntry.cs" Link="IO\DictEntry.cs" />
-    <Compile Include="..\PatentMarker\IO\DictDiff.cs" Link="IO\DictDiff.cs" />
-    <Compile Include="..\PatentMarker\IO\MarkingTextParser.cs" Link="IO\MarkingTextParser.cs" />
+    <Compile Include="..\..\Shared\IO\DictDiff.cs" Link="IO\DictDiff.cs" />
+    <Compile Include="..\..\Shared\IO\MarkingTextParser.cs" Link="IO\MarkingTextParser.cs" />
     <Compile Include="..\PatentMarker\IO\DictWriter.cs" Link="IO\DictWriter.cs" />
-    <Compile Include="..\PatentMarker\IO\DictConflict.cs" Link="IO\DictConflict.cs" />
-    <Compile Include="..\PatentMarker\IO\NumberIdentity.cs" Link="IO\NumberIdentity.cs" />
-    <Compile Include="..\PatentMarker\IO\PatSettings.cs" Link="IO\PatSettings.cs" />
+    <Compile Include="..\..\Shared\IO\DictConflict.cs" Link="IO\DictConflict.cs" />
+    <Compile Include="..\..\Shared\IO\NumberIdentity.cs" Link="IO\NumberIdentity.cs" />
+    <Compile Include="..\..\Shared\IO\PatSettings.cs" Link="IO\PatSettings.cs" />
     <Compile Include="..\PatentMarker\IO\RuntimeHost.cs" Link="IO\RuntimeHost.cs" />
-    <Compile Include="..\PatentMarker\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
-    <Compile Include="..\PatentMarker\I18n\Language.cs" Link="I18n\Language.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="..\..\Shared\I18n\Language.cs" Link="I18n\Language.cs" />
     <Compile Include="..\PatentMarker\I18n\Strings.cs" Link="I18n\Strings.cs" />
   </ItemGroup>
 

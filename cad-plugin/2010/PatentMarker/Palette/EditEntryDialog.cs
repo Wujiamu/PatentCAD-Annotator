@@ -8,11 +8,10 @@ using System.Windows.Forms;
 namespace PatentMarker.Palette
 {
     /// <summary>
-    /// v4.0 功能 2：单条目编辑对话框（双击条目或「新增」按钮打开）。
+    /// v4.0 功能 2：单条目编辑对话框（右键/F2 编辑或「新增」按钮打开）。
     /// 可改 number/name；新增条目；删除条目（确认框）。
     /// 交互约定：
     ///   DialogResult.OK   = 已保存（写回 dict.json）
-    ///   DialogResult.Yes  = 保存并标注（关闭后由面板装填 PATMARK 创建引线）
     ///   DialogResult.Abort = 已删除
     /// </summary>
     public class EditEntryDialog : Form
@@ -20,7 +19,6 @@ namespace PatentMarker.Palette
         private TextBox _txtNumber = null;
         private TextBox _txtName = null;
         private Button _btnSave = null;
-        private Button _btnSaveAndMark = null;
         private Button _btnDelete = null;
         private Button _btnCancel = null;
         private Label _lblError = null;
@@ -76,25 +74,18 @@ namespace PatentMarker.Palette
             _btnSave.SetBounds(14, 150, 90, 28);
             _btnSave.Click += new EventHandler(BtnSave_Click);
 
-            _btnSaveAndMark = new Button();
-            _btnSaveAndMark.Text = Strings.Edit_BtnSaveAndMark;
-            _btnSaveAndMark.SetBounds(110, 150, 110, 28);
-            _btnSaveAndMark.Click += new EventHandler(BtnSaveAndMark_Click);
-            if (_entry == null) _btnSaveAndMark.Enabled = false;
-
             _btnDelete = new Button();
             _btnDelete.Text = Strings.Edit_BtnDelete;
-            _btnDelete.SetBounds(226, 150, 60, 28);
+            _btnDelete.SetBounds(110, 150, 90, 28);
             _btnDelete.Click += new EventHandler(BtnDelete_Click);
             if (_entry == null) _btnDelete.Enabled = false;
 
             _btnCancel = new Button();
             _btnCancel.Text = Strings.Paste_BtnCancel;
-            _btnCancel.SetBounds(292, 150, 28, 28);
-            _btnCancel.Width = 40;
+            _btnCancel.SetBounds(210, 150, 90, 28);
             _btnCancel.DialogResult = DialogResult.Cancel;
 
-            this.Controls.AddRange(new Control[] { lblNumber, _txtNumber, lblName, _txtName, _lblError, _btnSave, _btnSaveAndMark, _btnDelete, _btnCancel });
+            this.Controls.AddRange(new Control[] { lblNumber, _txtNumber, lblName, _txtName, _lblError, _btnSave, _btnDelete, _btnCancel });
             this.AcceptButton = _btnSave;
             this.CancelButton = _btnCancel;
         }
@@ -105,12 +96,6 @@ namespace PatentMarker.Palette
         {
             if (ApplyAndWrite())
                 this.DialogResult = DialogResult.OK;
-        }
-
-        private void BtnSaveAndMark_Click(object sender, EventArgs e)
-        {
-            if (ApplyAndWrite())
-                this.DialogResult = DialogResult.Yes;
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)

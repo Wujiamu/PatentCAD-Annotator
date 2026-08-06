@@ -14,7 +14,8 @@ namespace PatentMarker.IO
         public bool HasArrowHead = false;
         public double ArrowSize = 2.5;
         public bool IsSplined = true;
-        public bool ThreePointMode = false;
+        // 默认使用三点模式；用户点击点数按钮后才切换到无限点模式。
+        public bool ThreePointMode = true;
         public double MarginToFrame = 5.0;
     }
 

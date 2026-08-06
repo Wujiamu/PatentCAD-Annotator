@@ -55,14 +55,14 @@
     <Compile Include="PatentMarkerApp.cs" />
     <Compile Include="IO\ConfigLoader.cs" />
     <Compile Include="IO\DictEntry.cs" />
-    <Compile Include="IO\DictDiff.cs" />
+    <Compile Include="..\..\Shared\IO\DictDiff.cs" />
     <Compile Include="IO\DictWriter.cs" />
-    <Compile Include="IO\DictConflict.cs" />
-    <Compile Include="IO\NumberIdentity.cs" />
-    <Compile Include="IO\PatSettings.cs" />
+    <Compile Include="..\..\Shared\IO\DictConflict.cs" />
+    <Compile Include="..\..\Shared\IO\NumberIdentity.cs" />
+    <Compile Include="..\..\Shared\IO\PatSettings.cs" />
     <Compile Include="IO\RuntimeHost.cs" />
-    <Compile Include="IO\MarkingTextParser.cs" />
-    <Compile Include="IO\PatEntityHelper.cs" />
+    <Compile Include="..\..\Shared\IO\MarkingTextParser.cs" />
+    <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" />
     <Compile Include="Styles\PatStyleInitializer.cs" />
     <Compile Include="Commands\PatMarkCommand.cs" />
     <Compile Include="Commands\PatCheckCommand.cs" />
@@ -70,11 +70,13 @@
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="Palette\PatPaletteCommand.cs" />
     <Compile Include="Palette\DictPaletteControl.cs" />
-    <Compile Include="Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" />
     <Compile Include="Palette\PasteRecognizeDialog.cs" />
     <Compile Include="Palette\EditEntryDialog.cs" />
     <Compile Include="Palette\ArbitrateDialog.cs" />
-    <Compile Include="I18n\Language.cs" />
+    <Compile Include="..\..\Shared\I18n\Language.cs" />
     <Compile Include="I18n\Strings.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -517,11 +517,6 @@ namespace PatentMarker.I18n
             get { return En ? "Save" : "保存"; }
         }
 
-        public static string Edit_BtnSaveAndMark
-        {
-            get { return En ? "Save & Mark" : "保存并标注"; }
-        }
-
         public static string Edit_BtnDelete
         {
             get { return En ? "Delete" : "删除"; }

@@ -21,10 +21,14 @@
     <Compile Include="Shared\AutodeskSimulationStubs.cs" />
     <Compile Include="Shared\SimulationSupport.cs" />
     <Compile Include="Shared\PatMarkSimulationTests.cs" />
+    <Compile Include="Shared\DictPaletteCadServiceTests.cs" />
     <Compile Include="..\2013\PatentMarker\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
-    <Compile Include="..\2013\PatentMarker\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />
+    <Compile Include="..\Shared\Cad\PatEntityHelper.cs" Link="Edition\IO\PatEntityHelper.cs" />
+    <Compile Include="..\Shared\IO\NumberIdentity.cs" Link="Edition\IO\NumberIdentity.cs" />
+    <Compile Include="..\Shared\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />
     <Compile Include="..\2013\PatentMarker\IO\RuntimeHost.cs" Link="Edition\IO\RuntimeHost.cs" />
-    <Compile Include="..\2013\PatentMarker\I18n\Language.cs" Link="Edition\I18n\Language.cs" />
+    <Compile Include="..\Shared\I18n\Language.cs" Link="Edition\I18n\Language.cs" />
     <Compile Include="..\2013\PatentMarker\I18n\Strings.cs" Link="Edition\I18n\Strings.cs" />
+    <Compile Include="..\Shared\Palette\DictPaletteCadService.cs" Link="Edition\Palette\DictPaletteCadService.cs" />
   </ItemGroup>
 </Project>

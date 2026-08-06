@@ -34,7 +34,7 @@ namespace PatentMarker.Tests
 
             PatSettingsStore.Activate("C:\\PatentMarkerTests\\drawing-b.dwg");
             Assert.False(PatSettingsStore.Current.HasArrowHead);
-            Assert.False(PatSettingsStore.Current.ThreePointMode);
+            Assert.True(PatSettingsStore.Current.ThreePointMode);
 
             PatSettingsStore.Activate("C:\\PatentMarkerTests\\drawing-a.dwg");
             Assert.True(PatSettingsStore.Current.HasArrowHead);

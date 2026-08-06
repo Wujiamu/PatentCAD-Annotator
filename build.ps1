@@ -41,9 +41,9 @@ $script:DllMap = [ordered]@{
 $script:VersionInfo = [ordered]@{
     "2007" = @{ Net = ".NET 2.0"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2007-2009 install dir" }
     "2010" = @{ Net = ".NET 3.5"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2010-2012 install dir" }
-    "2013" = @{ Net = ".NET 4.0"; Api = "MLeader";        Tool = "MSBuild"; DllNote = "AutoCAD 2013-2014 install dir" }
-    "2015" = @{ Net = ".NET 4.5"; Api = "MLeader";        Tool = "MSBuild"; DllNote = "AutoCAD 2015-2024 install dir" }
-    "2025" = @{ Net = ".NET 8.0"; Api = "MLeader";        Tool = "dotnet";  DllNote = "AutoCAD 2025+ install dir" }
+    "2013" = @{ Net = ".NET 4.0"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2013-2014 install dir" }
+    "2015" = @{ Net = ".NET 4.5"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2015-2024 install dir" }
+    "2025" = @{ Net = ".NET 8.0"; Api = "Leader + MText"; Tool = "dotnet";  DllNote = "AutoCAD 2025+ install dir" }
 }
 
 function Write-Section($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
@@ -258,7 +258,58 @@ function Invoke-StaticCheck {
         }
     }
 
-    # ---- 3. C# cross-edition source consistency (within groups) ----
+    # ---- 3. Canonical shared source layer ----
+    Write-Host "`n  --- Canonical shared source layer ---"
+    $canonicalShared = @(
+        "IO\NumberIdentity.cs",
+        "IO\PatSettings.cs",
+        "IO\DictDiff.cs",
+        "IO\DictConflict.cs",
+        "IO\MarkingTextParser.cs",
+        "I18n\Language.cs",
+        "Cad\PatEntityHelper.cs",
+        "Palette\DictPaletteCadService.cs",
+        "Palette\DictPaletteWorkflow.cs",
+        "Palette\DictPaletteSession.cs"
+    )
+    foreach ($rel in $canonicalShared) {
+        $sharedPath = Join-Path $root "cad-plugin\Shared\$rel"
+        if (-not (Test-Path -LiteralPath $sharedPath)) {
+            Write-Err2 "Shared source missing: cad-plugin/Shared/$rel"
+            $failCount++
+            continue
+        }
+
+        $localDuplicates = @()
+        $missingLinks = @()
+        foreach ($ver in $script:DllMap.Keys) {
+            $localPath = Join-Path (Get-ProjectDir $ver) $rel
+            if (Test-Path -LiteralPath $localPath) { $localDuplicates += $ver }
+
+            $csproj = Join-Path (Get-ProjectDir $ver) "PatentMarker.csproj"
+            if (-not (Test-Path -LiteralPath $csproj)) {
+                $missingLinks += "$ver (csproj missing)"
+                continue
+            }
+            $include = "..\..\Shared\$rel"
+            $projectText = Get-Content -LiteralPath $csproj -Raw
+            if ($projectText -notmatch [regex]::Escape($include)) { $missingLinks += $ver }
+        }
+
+        if ($localDuplicates.Count -gt 0) {
+            Write-Err2 "$rel`: local duplicate exists in $($localDuplicates -join ', '); use cad-plugin/Shared"
+            $failCount++
+        }
+        if ($missingLinks.Count -gt 0) {
+            Write-Err2 "$rel`: shared link missing in $($missingLinks -join ', ')"
+            $failCount++
+        }
+        if ($localDuplicates.Count -eq 0 -and $missingLinks.Count -eq 0) {
+            Write-Ok "$rel`: canonical source linked by all five editions"
+        }
+    }
+
+    # ---- 4. C# cross-edition source consistency (within groups) ----
     Write-Host "`n  --- C# cross-edition source consistency ---"
     # Group A: 2013/2015/2025 (Leader + MText group, same file set)
     $annotationGroup = @("2013","2015","2025")
@@ -270,15 +321,11 @@ function Invoke-StaticCheck {
         "Commands\PatSelectAllCommand.cs",
         "Palette\PatPaletteCommand.cs",
         "Palette\DictPaletteControl.cs",
-        "I18n\Language.cs",
         "I18n\Strings.cs",
         "Styles\PatStyleInitializer.cs",
         "IO\ConfigLoader.cs",
-        "IO\NumberIdentity.cs",
-        "IO\PatSettings.cs",
         "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
-        "IO\DictDiff.cs",
         "IO\PatEntityHelper.cs"
     )
     $driftCount = 0
@@ -312,15 +359,11 @@ function Invoke-StaticCheck {
         "Commands\PatSelectAllCommand.cs",
         "Palette\PatPaletteCommand.cs",
         "Palette\DictPaletteControl.cs",
-        "I18n\Language.cs",
         "I18n\Strings.cs",
         "Styles\PatStyleInitializer.cs",
         "IO\ConfigLoader.cs",
-        "IO\NumberIdentity.cs",
-        "IO\PatSettings.cs",
         "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
-        "IO\DictDiff.cs",
         "IO\PatEntityHelper.cs"
     )
     $driftCount2 = 0
@@ -340,7 +383,7 @@ function Invoke-StaticCheck {
         $warnCount += $driftCount2
     }
 
-    # ---- 3b. Active-document host boundary ----
+    # ---- 4b. Active-document host boundary ----
     Write-Host "`n  --- Active-document host boundary ---"
     $boundaryViolations = 0
     foreach ($ver in $script:DllMap.Keys) {
@@ -359,7 +402,7 @@ function Invoke-StaticCheck {
         $failCount += $boundaryViolations
     }
 
-    # ---- 4. Deploy package version-specific checks ----
+    # ---- 5. Deploy package version-specific checks ----
     Write-Host "`n  --- Deploy package version-specific checks ---"
     # 2013/2015/2025: Newtonsoft.Json must be merged into PatentMarker.dll (single-file deploy)
     # since v1.7: 2013/2015 ship no external Newtonsoft.Json.dll (ILRepack-merged at build time)
