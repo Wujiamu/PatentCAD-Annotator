@@ -63,6 +63,7 @@
     <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" />
     <Compile Include="Styles\PatStyleInitializer.cs" />
     <Compile Include="Commands\PatMarkCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="Commands\PatCheckCommand.cs" />
     <Compile Include="Commands\PatAlignCommand.cs" />
     <Compile Include="Commands\PatSelectAllCommand.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" />
     <Compile Include="Palette\PasteRecognizeDialog.cs" />
     <Compile Include="Palette\EditEntryDialog.cs" />
     <Compile Include="Palette\ArbitrateDialog.cs" />

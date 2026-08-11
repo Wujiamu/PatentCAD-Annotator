@@ -89,10 +89,12 @@ $sharedSourceFiles = @(
     "IO\DictConflict.cs",
     "IO\MarkingTextParser.cs",
     "I18n\Language.cs",
+    "Commands\PatLeaderTextAttachment.cs",
     "Cad\PatEntityHelper.cs",
     "Palette\DictPaletteCadService.cs",
     "Palette\DictPaletteWorkflow.cs",
-    "Palette\DictPaletteSession.cs"
+    "Palette\DictPaletteSession.cs",
+    "Palette\DictPaletteViewRenderer.cs"
 )
 Write-Host "-- Canonical shared source layer --" -ForegroundColor Cyan
 function Get-SharedSourcePath {

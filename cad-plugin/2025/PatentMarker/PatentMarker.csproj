@@ -50,6 +50,8 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" Link="Palette\DictPaletteCadService.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" Link="Palette\DictPaletteWorkflow.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" Link="Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Commands\PatLeaderTextAttachment.cs" />
   </ItemGroup>
 
   <!-- System.Text.Json 内置于 .NET 8，无需额外 NuGet 包 -->

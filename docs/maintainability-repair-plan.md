@@ -392,3 +392,11 @@
 - 本轮最终复核：五版本 `build.ps1 -Version all` 通过；模拟宿主测试 2010/2013/2015 各 7/7，共 21/21；2025 单元测试 108/108；`build.ps1 -Structure`、`build.ps1 -Static`、`check-version-sync.ps1`、`check-api-contract.ps1 -Version all` 和 `git diff --check` 均通过。2025 构建仍有既有 WindowsBase/可空性警告，无错误。
 
 至此，字典会话、字典工作流和 CAD 实体事务已经形成可独立复核的边界。剩余 `DictPaletteControl` 的纯 WinForms 视图布局与事件生命周期仍需要交互式 AutoCAD/WinForms 主机验证；在缺少该主机时不继续做高风险的视图对象拆分，也不把本轮结果表述为完整 UI 重构。
+
+## 13. 2026-08-06 视图渲染拆分与人工校验入口
+
+- 新增 `Shared/Palette/DictPaletteViewRenderer.cs`，集中列表行创建、Diff 高亮、比较列宽、筛选结果和空字典状态；五个版本通过源码链接编译，`DictPaletteControl` 保留计时器、事件、对话框和 AutoCAD 宿主交互。
+- 本批拆分前已建立回滚备份 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-view-split-backup-20260806-184712`（16 个文件）。
+- 自动复核已通过：五版本构建、2010/2013/2015 模拟测试各 7/7（共 21/21）、2025 单元测试 108/108、Structure/Static/Sync/API 检查及 `git diff --check`。
+- 已准备临时人工校验目录 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-manual-check-2025-20260806-185637`，包含构建后的 2025 DLL、两份黄金字典和 `load-and-check-2025.scr`。由于 Core Console 从模板创建空 DWG 未在限定时间内返回，未把空 DWG 生成标记为成功；人工校验时应在 AutoCAD 2026 中新建空图，另存为 `refactor-smoke-2025.dwg`，并把对应字典放在同一目录。
+- 当前已到人工校验入口，尚未声称交互式 AutoCAD/WinForms 通过。人工校验应只使用临时副本，重点覆盖 `BZ` 生命周期、`BZM` 三点/无限点、字典刷新/Diff、改号同步、PAT 删除不误伤非 PAT、多文档切换和关闭重开。

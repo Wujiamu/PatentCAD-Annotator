@@ -267,10 +267,12 @@ function Invoke-StaticCheck {
         "IO\DictConflict.cs",
         "IO\MarkingTextParser.cs",
         "I18n\Language.cs",
+        "Commands\PatLeaderTextAttachment.cs",
         "Cad\PatEntityHelper.cs",
         "Palette\DictPaletteCadService.cs",
         "Palette\DictPaletteWorkflow.cs",
-        "Palette\DictPaletteSession.cs"
+        "Palette\DictPaletteSession.cs",
+        "Palette\DictPaletteViewRenderer.cs"
     )
     foreach ($rel in $canonicalShared) {
         $sharedPath = Join-Path $root "cad-plugin\Shared\$rel"

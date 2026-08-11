@@ -172,6 +172,7 @@ if (edition == "2010")
     RequireType($"{db}.Leader");
     RequireType($"{db}.MText");
     RequireProperty($"{db}.Leader", "Annotation");
+    RequireProperty($"{db}.MText", "Attachment");
     RequireProperty($"{db}.Leader", "Dimasz");
     RequireProperty($"{db}.Leader", "IsSplined");
     RequireProperty($"{db}.Leader", "HasArrowHead");
@@ -183,6 +184,7 @@ else if (edition is "2013" or "2015" or "2025")
     RequireType($"{db}.Leader");
     RequireType($"{db}.MText");
     RequireProperty($"{db}.Leader", "Annotation");
+    RequireProperty($"{db}.MText", "Attachment");
     RequireProperty($"{db}.Leader", "DimensionStyle");
     RequireProperty($"{db}.Leader", "Dimasz");
     RequireProperty($"{db}.Leader", "IsSplined");

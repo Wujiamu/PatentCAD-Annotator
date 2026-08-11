@@ -28,6 +28,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 点数模式默认是三点；点击“点数”按钮后才切换为无限点，设置按当前图纸会话保留。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
+- 文字附着点按最后一个引线拐点自动判断左右：文字在引线右侧时连接文字左侧中部，文字在引线左侧时连接文字右侧中部。
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
 
 问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
@@ -92,8 +93,8 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 ### 本地验证状态
 
 - 五个版本均已完成本地编译；
-- 2010、2013、2015 主机契约模拟测试均为 5/5；
-- 2025 测试套件为 106/106；
+- 2010、2013、2015 主机契约模拟测试均为 7/7（共 21/21）；
+- 2025 测试套件为 108/108；
 - 五个版本的 API 契约、结构和静态同步检查通过；
 - 本地没有完整替代真实 AutoCAD 界面交互的自动化测试，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
 
@@ -133,7 +134,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层，当前包含编号、设置、字典差异/冲突、粘贴识别、语言枚举，以及已验证的面板工作流、会话状态和 Leader/MText 实体服务。各版本项目通过源码链接编译；CLR、JSON 库和 WinForms 适配仍保留在对应版本目录，AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层，当前包含编号、设置、字典差异/冲突、粘贴识别、语言枚举，以及已验证的面板工作流、会话状态、WinForms 列表渲染和 Leader/MText 实体服务。各版本项目通过源码链接编译；CLR、JSON 库和面板生命周期仍保留在对应版本目录，AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。
 
 ```
 PatentCAD-Annotator/
@@ -150,7 +151,7 @@ PatentCAD-Annotator/
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
 ├── PatentMarker-2015-deploy/   # 2015 版即装即用部署包
 ├── PatentMarker-2025-deploy/   # 2025 版即装即用部署包
-├── demo/                       # 动态演示页面
+├── demo/                       # 动态演示页面（最新：PatentMarker-Demo-v5.html）
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
 │   ├── development-log.md   # 变更记录
@@ -200,6 +201,7 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
 - Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
+- The text attachment side is selected from the final leader vertex: text on the right uses its middle-left point, and text on the left uses its middle-right point.
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.

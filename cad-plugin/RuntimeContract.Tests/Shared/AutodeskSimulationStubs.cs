@@ -232,6 +232,22 @@ namespace Autodesk.AutoCAD.DatabaseServices
         ForWrite
     }
 
+    public enum AttachmentPoint
+    {
+        TopLeft,
+        TopCenter,
+        TopRight,
+        MiddleLeft,
+        MiddleCenter,
+        MiddleRight,
+        BottomLeft,
+        BottomCenter,
+        BottomRight,
+        BaseLeft,
+        BaseCenter,
+        BaseRight
+    }
+
     public enum ContentType
     {
         None,
@@ -310,6 +326,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public double TextHeight { get; set; }
         public Point3d Location { get; set; }
         public double Rotation { get; set; }
+        public AttachmentPoint Attachment { get; set; }
         public ObjectId TextStyleId { get; set; }
     }
 

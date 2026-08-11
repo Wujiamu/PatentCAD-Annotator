@@ -6,9 +6,15 @@
 
 ## v4.0 (2026-08-04)
 
+- Leader/MText 文字侧面附着修正（2026-08-11）：新增共用附着点判断。文字位于最后一个引线拐点右侧时使用 `MiddleLeft`，位于左侧时使用 `MiddleRight`，使引线连接文字左右侧的垂直中部，不再统一落到左上角；五个版本同步并补充左右侧运行契约测试。
+
+- Demo v5 (2026-08-06): based on the previous single-file dynamic demo, added complete scenes for CAD paste recognition and merge write-back, F2/right-click entry editing with drawing leader renumber synchronization, Word/CAD backup arbitration, the new default three-point workflow, and double-click-to-mark. The original v4 demo remains unchanged; the new deliverable is `demo/PatentMarker-Demo-v5.html`.
+
 - Shared source layer (2026-08-06): added `cad-plugin/Shared/` as the canonical source for six AutoCAD-independent modules (`NumberIdentity`, `PatSettings`, `DictDiff`, `DictConflict`, `MarkingTextParser`, `Language`). All five edition projects link these files at compile time; the old 30 copied files were removed after being backed up locally. `build.ps1 -Static` and `check-version-sync.ps1` now enforce the shared link and reject local duplicates. Five-edition compilation, 2025 unit tests (106/106) and 2010/2013/2015 simulated host contracts (15/15) pass.
 
 - Palette boundary extraction (2026-08-06): added shared `DictPaletteWorkflow`, `DictPaletteCadService`, `DictPaletteSession`, and `Cad/PatEntityHelper` source links across all five editions. `DictPaletteControl` now delegates dictionary/cache/conflict coordination and CAD transactions to those services; the five duplicated session/helper implementations were removed after incremental backups. Final verification: five-edition build, 21/21 simulated host tests, 108/108 2025 unit tests, structure/static/sync/API checks, and `git diff --check` all pass. The remaining WinForms view lifecycle stays version-local until an interactive AutoCAD/WinForms host is available.
+
+- View rendering boundary extraction (2026-08-06): added shared `Palette/DictPaletteViewRenderer.cs` for dictionary list rendering, Diff colors, compare columns, filtering and empty-state presentation. All five editions link the same C# 2-compatible source; `DictPaletteControl` retains event coordination, timer lifetime and AutoCAD/dialog interactions. Automated gates pass after the extraction; interactive 2025/2026 verification is the next step.
 
 - Palette interaction simplification (2026-08-06): changed the shared runtime default to three-point mode; the existing point-count button now switches to unlimited mode only when clicked. Across all five version-local WinForms views, double-clicking a dictionary entry now starts `PATMARK` directly, while right-clicking an entry or pressing `F2` opens the edit dialog. Removed the redundant “Save & Mark” dialog action; editing now only saves, deletes or cancels. No shared dictionary/CAD service logic was duplicated or changed.
 
@@ -37,7 +43,7 @@
 - 新增 CAD 端字典编辑闭环（全部 5 个版本同步）：
   - **粘贴识别**：面板新增「粘贴识别」按钮，从 Word 说明书粘贴附图标记段落，C# 移植 VBA 识别引擎（`MarkingTextParser`：段落定位 + 表格预处理 + 多格式解析），预览表格可编辑，支持「覆盖整个字典 / 按编号合并」两种写回方式
   - **编辑对话框**：右键或按 `F2` 打开，支持改编号 / 改名称 / 新增 / 删除，编号冲突（忽略大小写）即时校验；标注由列表双击直接触发
-  - **实体联动**：改号后自动更新图纸内旧编号的 PAT 引线文字（2013/2015/2025 走 MLeader，2007/2010 走 Leader 的 MText/DBText 两种 annotation）并 `Regen`
+  - **实体联动**：改号后自动更新图纸内旧编号的 PAT 引线文字（五个版本统一走 Leader + MText/DBText annotation）并 `Regen`
   - **冲突裁决**：Word 端导出前检测旧字典的 `modified_by: cad` 标记，若 CAD 曾修改则备份为 `<主名>.dict.json.word-<时间戳>.bak`（只保留最新一个）；CAD 面板轮询检测到 Word 已覆盖时状态栏提示并点亮「裁决」按钮，弹窗三选：采用 Word 版（删备份）/ 恢复 CAD 版（备份覆盖回 + 清 CAD 标记）/ 稍后再说
 - 字典格式 v4.0：metadata 新增可选 `modified_by` / `modified_at`（CAD 手动修改标记），旧字典文件完全兼容
 - 写回通道：CAD 端 `DictWriter` 输出与 VBA `JsonWriter` 逐字符兼容（2 空格缩进、\r\n、UTF-8 无 BOM、键顺序固定）；2007/2010 因 SimpleJson 仅解析不序列化，手写实现同格式序列化器

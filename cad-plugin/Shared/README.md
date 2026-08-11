@@ -1,6 +1,10 @@
 # Shared source layer
 
+`Commands/PatLeaderTextAttachment.cs` is the canonical Leader/MText text-side attachment rule: it selects `MiddleLeft` or `MiddleRight` from the final leader vertex and is linked into all five edition projects.
+
 `Palette/DictPaletteSession.cs` is also compiled from the canonical shared source tree; it owns palette dictionary state, diff baseline, filtering, and counters.
+
+`Palette/DictPaletteViewRenderer.cs` is the WinForms rendering boundary for list rows, Diff highlighting, compare columns, and empty/filter states. It does not access AutoCAD documents or commands.
 
 该目录保存五个 AutoCAD 版本共用、且不依赖具体 AutoCAD 实体 API 的 C# 源码。
 

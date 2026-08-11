@@ -42,6 +42,7 @@ namespace PatentMarker.Palette
 
         private readonly DictPaletteSession _session = new DictPaletteSession();
         private readonly DictPaletteWorkflow _workflow = new DictPaletteWorkflow();
+        private readonly DictPaletteViewRenderer _view;
         private DictModel _currentDict { get { return _session.CurrentDict; } }
         private System.Windows.Forms.Timer _autoRefreshTimer;
 
@@ -54,6 +55,7 @@ namespace PatentMarker.Palette
         public DictPaletteControl()
         {
             InitializeComponent();
+            _view = new DictPaletteViewRenderer(_lstEntries, _lblDictInfo, _lblStatus, _colOldNumber, _colOldName);
             ApplyLanguage();
             _autoRefreshTimer = new System.Windows.Forms.Timer();
             _autoRefreshTimer.Interval = 2000;
@@ -390,75 +392,9 @@ namespace PatentMarker.Palette
         {
             if (dict == null) { ShowNoDict(); return; }
             _session.Load(dict, _workflow.PreviousModel);
-            if (_currentDiff != null)
-            {
-                _btnCompare.Enabled = true;
-            }
-            else
-            {
-                _btnCompare.Enabled = false;
-                _compareMode = false;
-                UpdateCompareColumns();
-            }
-
-            _lstEntries.BeginUpdate();
-            _lstEntries.Items.Clear();
-
-            // 保持 JSON 文件原始顺序，不排序（用户自定义顺序优先）
-            Dictionary<DictEntry, DictDiffEntry> diffMap = new Dictionary<DictEntry, DictDiffEntry>();
-            if (_currentDiff != null)
-            {
-                foreach (DictDiffEntry d in _currentDiff)
-                {
-                    if (d.NewEntry != null) diffMap[d.NewEntry] = d;
-                }
-            }
-
-            foreach (DictEntry e in dict.Entries)
-            {
-                PaletteEntry pe = new PaletteEntry();
-                pe.Number = e.Number;
-                pe.Name = e.Name;
-                pe.Occurrences = e.Occurrences;
-                ListViewItem item = new ListViewItem(pe.Number);
-                item.SubItems.Add(pe.Name != null ? pe.Name : "");
-                item.SubItems.Add(pe.Occurrences.ToString());
-                item.Tag = pe;
-
-                DictDiffEntry diff = null;
-                if (diffMap.TryGetValue(e, out diff))
-                {
-                    item.SubItems.Add(diff.OldNumber);
-                    item.SubItems.Add(diff.OldName);
-                    ApplyDiffHighlight(item, diff.Status);
-                }
-                else
-                {
-                    item.SubItems.Add("");
-                    item.SubItems.Add("");
-                }
-
-                _lstEntries.Items.Add(item);
-            }
-            _lstEntries.EndUpdate();
-
-            int warnCount = _session.WarningCount;
-            int conflictCount = _session.ConflictCount;
-
-            _lblDictInfo.Text = string.Format(Strings.Palette_DictInfo,
-                dict.Entries.Count, warnCount, conflictCount);
-
-            if (_currentDiff != null)
-            {
-                string summary = DictDiff.Summarize(_currentDiff);
-                _lblStatus.Text = string.Format(Strings.Status_DictUpdated, summary);
-                _lblStatus.ForeColor = SystemColors.Highlight;
-            }
-            else
-            {
-                _lblStatus.Text = Strings.Status_DictLoaded;
-                _lblStatus.ForeColor = SystemColors.ControlText;
-            }
+            _btnCompare.Enabled = _currentDiff != null;
+            if (_currentDiff == null) _compareMode = false;
+            _view.RenderDictionary(dict, _session, _compareMode);
         }
 
         public void ApplyRuntimeSettings()
@@ -472,52 +408,10 @@ namespace PatentMarker.Palette
             UpdatePointsButtonText();
         }
 
-        private void ApplyDiffHighlight(ListViewItem item, DiffStatus status)
-        {
-            switch (status)
-            {
-                case DiffStatus.Added:
-                    item.BackColor = Color.LightGreen;
-                    break;
-                case DiffStatus.Removed:
-                    item.BackColor = Color.LightPink;
-                    break;
-                case DiffStatus.NumberChanged:
-                    item.BackColor = Color.LightYellow;
-                    break;
-                case DiffStatus.NameChanged:
-                    item.BackColor = Color.LightBlue;
-                    break;
-                case DiffStatus.BothChanged:
-                    item.BackColor = Color.LightCoral;
-                    break;
-                case DiffStatus.Unchanged:
-                default:
-                    break;
-            }
-        }
-
-        private void UpdateCompareColumns()
-        {
-            if (_colOldNumber == null || _colOldName == null) return;
-            if (_compareMode)
-            {
-                _colOldNumber.Width = 55;
-                _colOldName.Width = 120;
-            }
-            else
-            {
-                _colOldNumber.Width = 0;
-                _colOldName.Width = 0;
-            }
-        }
-
         public void ShowNoDict()
         {
             _session.Clear();
-            _lstEntries.Items.Clear();
-            _lblDictInfo.Text = Strings.Palette_DictNotLoaded;
-            _lblStatus.Text = Strings.Status_PlaceDictHint;
+            _view.ShowNoDictionary();
         }
 
         // ===== 事件 =====
@@ -525,18 +419,7 @@ namespace PatentMarker.Palette
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
             string keyword = _txtSearch.Text.Trim().ToLowerInvariant();
-            _lstEntries.BeginUpdate();
-            _lstEntries.Items.Clear();
-
-            foreach (PaletteEntry entry in _session.Filter(keyword))
-            {
-                ListViewItem item = new ListViewItem(entry.Number);
-                item.SubItems.Add(entry.Name != null ? entry.Name : "");
-                item.SubItems.Add(entry.Occurrences.ToString());
-                item.Tag = entry;
-                _lstEntries.Items.Add(item);
-            }
-            _lstEntries.EndUpdate();
+            _view.RenderFiltered(_session.Filter(keyword));
         }
 
         private void LstEntries_SelectedIndexChanged(object sender, EventArgs e)
@@ -621,7 +504,7 @@ namespace PatentMarker.Palette
         private void BtnCompare_Click(object sender, EventArgs e)
         {
             _compareMode = !_compareMode;
-            UpdateCompareColumns();
+            _view.SetCompareMode(_compareMode);
             _lblStatus.Text = _compareMode ? Strings.Status_CompareShown : Strings.Status_CompareHidden;
         }
 

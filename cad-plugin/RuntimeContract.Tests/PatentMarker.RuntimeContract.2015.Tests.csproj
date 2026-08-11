@@ -23,6 +23,7 @@
     <Compile Include="Shared\PatMarkSimulationTests.cs" />
     <Compile Include="Shared\DictPaletteCadServiceTests.cs" />
     <Compile Include="..\2015\PatentMarker\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
+    <Compile Include="..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Edition\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\Shared\Cad\PatEntityHelper.cs" Link="Edition\IO\PatEntityHelper.cs" />
     <Compile Include="..\Shared\IO\NumberIdentity.cs" Link="Edition\IO\NumberIdentity.cs" />
     <Compile Include="..\Shared\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />

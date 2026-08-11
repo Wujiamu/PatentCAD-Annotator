@@ -61,6 +61,42 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
+        public void TextToTheRightUsesMiddleLeftAttachment()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointAnnotation("right", new Point3d(1, 1, 0),
+                    new Point3d(5, 1, 0), new Point3d(8, 3, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.MiddleLeft, annotation.Attachment);
+#endif
+            }
+        }
+
+        [Fact]
+        public void TextToTheLeftUsesMiddleRightAttachment()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointAnnotation("left", new Point3d(8, 1, 0),
+                    new Point3d(5, 1, 0), new Point3d(2, 3, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.MiddleRight, annotation.Attachment);
+#endif
+            }
+        }
+
+        [Fact]
         public void CancellationBeforeTextDoesNotCommitPartialAnnotation()
         {
             using (SimulationFixture fixture = new SimulationFixture())
