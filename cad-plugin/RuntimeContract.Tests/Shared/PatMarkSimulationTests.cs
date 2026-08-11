@@ -97,15 +97,13 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void UpperLeftFirstLeaderPointUsesTopLeftAttachment()
+        public void UpperLeftLastLeaderPointUsesTopLeftAttachment()
         {
             using (SimulationFixture fixture = new SimulationFixture())
             {
                 IO.PatSettingsStore.Current.ThreePointMode = true;
-                // The dogleg is deliberately below the text: the attachment
-                // quadrant must follow the first (arrow-side) leader point.
-                fixture.QueueThreePointAnnotation("upper-left", new Point3d(1, 6, 0),
-                    new Point3d(5, 1, 0), new Point3d(8, 3, 0));
+                fixture.QueueThreePointAnnotation("upper-left", new Point3d(1, 1, 0),
+                    new Point3d(5, 6, 0), new Point3d(8, 3, 0));
 
                 new PatMarkCommand().Run();
 
@@ -117,15 +115,13 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void UpperRightFirstLeaderPointUsesTopRightAttachment()
+        public void UpperRightLastLeaderPointUsesTopRightAttachment()
         {
             using (SimulationFixture fixture = new SimulationFixture())
             {
                 IO.PatSettingsStore.Current.ThreePointMode = true;
-                // The dogleg is deliberately below the text: the attachment
-                // quadrant must follow the first (arrow-side) leader point.
-                fixture.QueueThreePointAnnotation("upper-right", new Point3d(8, 6, 0),
-                    new Point3d(5, 1, 0), new Point3d(1, 3, 0));
+                fixture.QueueThreePointAnnotation("upper-right", new Point3d(8, 1, 0),
+                    new Point3d(5, 6, 0), new Point3d(1, 3, 0));
 
                 new PatMarkCommand().Run();
 

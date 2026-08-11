@@ -219,13 +219,16 @@ namespace PatentMarker.Commands
                 mt.SetDatabaseDefaults(db);
                 mt.Contents = number;
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
+                Point3d lastLeaderPoint = doglegPts.Count > 0
+                    ? doglegPts[doglegPts.Count - 1]
+                    : attachPt;
                 AttachmentPoint textAttachment = PatLeaderTextAttachment.Get(
-                    attachPt, textPt);
+                    lastLeaderPoint, textPt);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
                 mt.Rotation = 0.0;
                 PatentMarkerApp.RawLog("Text attachment=" + textAttachment
-                    + ", firstLeaderPoint=" + attachPt
+                    + ", lastLeaderPoint=" + lastLeaderPoint
                     + ", textPoint=" + textPt);
 
                 btr.AppendEntity(mt);
@@ -252,6 +255,14 @@ namespace PatentMarker.Commands
 
                 // 3. 关联 MText（Leader 已在数据库中）
                 leader.Annotation = mt.ObjectId;
+
+                // AutoCAD 2007/2010 may normalize the MText attachment while
+                // the associative Leader is created. Re-apply both values
+                // after association so the requested quadrant is retained.
+                mt.Attachment = textAttachment;
+                mt.Location = textPt;
+                PatentMarkerApp.RawLog("Text attachment after association=" + mt.Attachment
+                    + ", location=" + mt.Location);
 
                 // 4. 设置标注样式（同步箭头大小到 PAT_DIM）
                 ObjectId dimId = Styles.PatStyleInitializer.GetPatDimStyleId(db, tr);

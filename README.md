@@ -28,7 +28,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 点数模式默认是三点；点击“点数”按钮后才切换为无限点，设置按当前图纸会话保留。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
-- 文字附着点按引线首点相对文字的位置自动判断四个象限：左上/左下分别连接文字左上/左下，右上/右下分别连接文字右上/右下；同高时仍连接对应侧的中部。
+- 文字附着点按靠近文字的最后一个引线拐点相对文字的位置自动判断四个象限：左上/左下分别连接文字左上/左下，右上/右下分别连接文字右上/右下；同高时仍连接对应侧的中部。
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
 
 问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
@@ -204,7 +204,7 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
 - Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
-- The text attachment point is selected from the first leader vertex relative to the text: upper-left/lower-left use the text's top-left/bottom-left, upper-right/lower-right use top-right/bottom-right, and same-height leaders retain the corresponding middle-side attachment.
+- The text attachment point is selected from the last leader vertex nearest the text: upper-left/lower-left use the text's top-left/bottom-left, upper-right/lower-right use top-right/bottom-right, and same-height leaders retain the corresponding middle-side attachment.
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.

@@ -1,6 +1,6 @@
 # Shared source layer
 
-`Commands/PatLeaderTextAttachment.cs` is the canonical Leader/MText text-side attachment rule: it selects the text corner or middle-side attachment from the first leader vertex relative to the text and is linked into all five edition projects.
+`Commands/PatLeaderTextAttachment.cs` is the canonical Leader/MText text-side attachment rule: it selects the text corner or middle-side attachment from the last leader vertex nearest the text and is linked into all five edition projects.
 
 `Palette/DictPaletteSession.cs` is also compiled from the canonical shared source tree; it owns palette dictionary state, diff baseline, filtering, and counters.
 

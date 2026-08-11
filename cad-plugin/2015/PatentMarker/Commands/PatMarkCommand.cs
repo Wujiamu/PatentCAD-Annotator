@@ -179,13 +179,16 @@ namespace PatentMarker.Commands
                 mt.SetDatabaseDefaults(db);
                 mt.Contents = number;
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
+                Point3d lastLeaderPoint = doglegPts.Count > 0
+                    ? doglegPts[doglegPts.Count - 1]
+                    : attachPt;
                 AttachmentPoint textAttachment = PatLeaderTextAttachment.Get(
-                    attachPt, textPt);
+                    lastLeaderPoint, textPt);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
                 mt.Rotation = 0.0;
                 PatentMarkerApp.RawLog("Text attachment=" + textAttachment
-                    + ", firstLeaderPoint=" + attachPt
+                    + ", lastLeaderPoint=" + lastLeaderPoint
                     + ", textPoint=" + textPt);
                 btr.AppendEntity(mt);
                 tr.AddNewlyCreatedDBObject(mt, true);
@@ -203,6 +206,10 @@ namespace PatentMarker.Commands
                 tr.AddNewlyCreatedDBObject(leader, true);
 
                 leader.Annotation = mt.ObjectId;
+                mt.Attachment = textAttachment;
+                mt.Location = textPt;
+                PatentMarkerApp.RawLog("Text attachment after association=" + mt.Attachment
+                    + ", location=" + mt.Location);
                 ObjectId dimId = Styles.PatStyleInitializer.GetPatDimStyleId(db, tr);
                 if (!dimId.IsNull)
                 {
