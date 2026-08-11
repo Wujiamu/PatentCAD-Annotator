@@ -55,6 +55,9 @@
     <Compile Include="Styles\PatStyleInitializer.cs" />
     <Compile Include="Commands\PatMarkCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" />
     <Compile Include="Commands\PatCheckCommand.cs" />
     <Compile Include="Commands\PatAlignCommand.cs" />
     <Compile Include="Commands\PatSelectAllCommand.cs" />

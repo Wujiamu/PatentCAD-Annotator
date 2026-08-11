@@ -75,6 +75,8 @@ cd D:\PatentMarker
 | `PATCHECK` | `BZC` | 校验图纸编号与字典的一致性 |
 | `PATALIGN` | `BZA` | 对齐引线（选择模式 / 框边模式） |
 | `PATSELECTALL` | `BZS` | 选中所有 PAT 引线及文字（配合 Ctrl+1 改属性） |
+| `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
+| `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
 
 ## 面板交互
 
@@ -86,6 +88,7 @@ cd D:\PatentMarker
 - 创建时不设置原生 `Leader.Annotation`，而是把文字附着点作为最后一个 Leader 顶点，并用扩展字典保存 MText 关系，避免 AutoCAD 自动生成 hook line。
 - 提交后会重新打开 MText 复写附着点并读回实际值；`PatentMarker.log` 同时记录实际加载 DLL 路径和提交后的 Leader 顶点列表，便于核对 2007 宿主是否加载了旧部署包或产生了额外顶点。
 - 新增条目仍通过面板“新增条目”按钮进入编辑窗口。
+- 面板“Brace/大括号”按钮启动 `PATBRACE`；`PATBRACEEDIT` 可重新点选控制点，也可直接输入高度和宽度。大括号是独立 Polyline，不参与 Leader/MText 关联。
 
 ## 字典文件
 
@@ -113,3 +116,4 @@ DLL 旁自动生成 `PatentMarker.log`。
 - PaletteSet 样式标志少于高版本（无 NameEditable / ShowPropertiesMenu）
 - 无 LINQ，列表过滤/排序性能略低（对专利标注场景无影响）
 - ACAD 2007 可能不读 HKCU 自动加载，需 APPLOAD 或 NETLOAD 兜底
+- 矢量大括号第一版通过 `PATBRACEEDIT` 命令调整，不依赖原生自定义夹点；尺寸输入适合需要精确高度/宽度的场景

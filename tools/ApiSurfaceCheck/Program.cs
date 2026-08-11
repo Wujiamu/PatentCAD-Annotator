@@ -166,6 +166,7 @@ foreach (string path in sdkPaths.OrderBy(p => p, StringComparer.OrdinalIgnoreCas
 
 const string db = "Autodesk.AutoCAD.DatabaseServices";
 const string geo = "Autodesk.AutoCAD.Geometry";
+const string input = "Autodesk.AutoCAD.EditorInput";
 
 void RequireDetachedLeaderApi()
 {
@@ -182,6 +183,21 @@ void RequireDetachedLeaderApi()
     RequireType($"{db}.ResultBuffer");
 }
 
+void RequireBraceApi()
+{
+    RequireType($"{db}.Polyline");
+    RequireProperty($"{db}.Polyline", "Elevation");
+    RequireProperty($"{db}.Polyline", "NumberOfVertices");
+    RequireMethod($"{db}.Polyline", "AddVertexAt", 5);
+    RequireMethod($"{db}.Polyline", "RemoveVertexAt", 1);
+    RequireMethod($"{db}.Polyline", "UpgradeOpen", 0);
+    RequireType($"{geo}.Point2d");
+    RequireType($"{input}.PromptDoubleOptions");
+    RequireProperty($"{input}.PromptDoubleOptions", "AllowNone");
+    RequireProperty($"{input}.PromptDoubleOptions", "DefaultValue");
+    RequireMethod($"{input}.Editor", "GetDouble", 1);
+}
+
 if (edition == "2010")
 {
     RequireType($"{db}.Leader");
@@ -193,6 +209,7 @@ if (edition == "2010")
     RequireProperty($"{db}.Leader", "HasArrowHead");
     RequireMethod($"{db}.Leader", "AppendVertex", 1);
     RequireDetachedLeaderApi();
+    RequireBraceApi();
     RequireAbsent($"{db}.MLeader");
 }
 else if (edition is "2013" or "2015" or "2025")
@@ -209,6 +226,7 @@ else if (edition is "2013" or "2015" or "2025")
     RequireMethod($"{db}.Leader", "AppendVertex", 1);
     RequireMethod($"{db}.Leader", "VertexAt", 1);
     RequireDetachedLeaderApi();
+    RequireBraceApi();
     RequireType($"{geo}.Point3d");
 }
 else

@@ -50,6 +50,8 @@
 | `PATCHECK` | `BZC` | 校验一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选 PAT 标注实体 |
+| `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
+| `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
 
 ## 面板交互
 
@@ -61,5 +63,6 @@
 - 创建时不设置原生 `Leader.Annotation`，而是把文字附着点作为最后一个 Leader 顶点，并用扩展字典保存 MText 关系，避免 AutoCAD 自动生成 hook line。
 - 提交后会重新打开 MText 复写附着点并读回实际值；`PatentMarker.log` 同时记录实际加载 DLL 路径和提交后的 Leader 顶点列表，便于核对宿主是否加载了旧部署包或产生了额外顶点。
 - 新增条目仍通过面板“新增条目”按钮进入编辑窗口。
+- 面板“Brace/大括号”按钮启动 `PATBRACE`；`PATBRACEEDIT` 可重新点选控制点，也可直接输入高度和宽度。大括号是独立 Polyline，不参与 Leader/MText 关联。
 
 详见 [docs/version-plan.md](../../docs/version-plan.md)。

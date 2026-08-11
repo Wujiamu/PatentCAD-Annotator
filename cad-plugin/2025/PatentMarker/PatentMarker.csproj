@@ -52,6 +52,9 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" Link="Palette\DictPaletteViewRenderer.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Commands\PatLeaderTextAttachment.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" Link="Commands\PatBraceGeometry.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" Link="Commands\PatBraceEntity.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" Link="Commands\PatBraceCommand.cs" />
   </ItemGroup>
 
   <!-- System.Text.Json 内置于 .NET 8，无需额外 NuGet 包 -->

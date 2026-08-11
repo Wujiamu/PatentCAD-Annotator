@@ -93,6 +93,87 @@ namespace PatentMarker.I18n
         }
 
         /// <summary>0=number, 1=vertexCount | 已创建引线: num（N 个顶点）</summary>
+        // PATBRACE / PATBRACEEDIT — 参数化矢量大括号
+        public static string PatBrace_PromptTop
+        {
+            get { return En ? "\nBrace top point: " : "\n大括号顶部: "; }
+        }
+
+        public static string PatBrace_PromptBottom
+        {
+            get { return En ? "\nBrace bottom point: " : "\n大括号底部: "; }
+        }
+
+        public static string PatBrace_PromptWidth
+        {
+            get { return En ? "\nClick brace width direction: " : "\n点击大括号宽度方向: "; }
+        }
+
+        public static string PatBrace_Created
+        {
+            get { return En ? "\nBrace created (height={0:F2}, width={1:F2}).\n" : "\n已创建大括号（高度={0:F2}，宽度={1:F2}）。\n"; }
+        }
+
+        public static string PatBrace_PromptSelect
+        {
+            get { return En ? "\nSelect a PAT brace: " : "\n选择一个大括号: "; }
+        }
+
+        public static string PatBrace_NotSelected
+        {
+            get { return En ? "\nNo brace selected.\n" : "\n未选择大括号。\n"; }
+        }
+
+        public static string PatBrace_NotFound
+        {
+            get { return En ? "\nNo PAT brace found in the selection.\n" : "\n选择集中未找到大括号。\n"; }
+        }
+
+        public static string PatBrace_EditModePrompt
+        {
+            get { return En ? "\nEdit mode:" : "\n编辑方式:"; }
+        }
+
+        public static string PatBrace_EditPoints
+        {
+            get { return En ? "Points" : "控制点"; }
+        }
+
+        public static string PatBrace_EditSize
+        {
+            get { return En ? "Size" : "尺寸"; }
+        }
+
+        public static string PatBrace_EditTop
+        {
+            get { return En ? "\nNew top point (Enter=keep): " : "\n新顶部（回车保持原值）: "; }
+        }
+
+        public static string PatBrace_EditBottom
+        {
+            get { return En ? "\nNew bottom point (Enter=keep): " : "\n新底部（回车保持原值）: "; }
+        }
+
+        public static string PatBrace_EditWidth
+        {
+            get { return En ? "\nNew width point (Enter=keep): " : "\n新宽度点（回车保持原值）: "; }
+        }
+
+        public static string PatBrace_EditHeight
+        {
+            get { return En ? "\nHeight <{0:F2}>: " : "\n高度 <{0:F2}>: "; }
+        }
+
+        public static string PatBrace_EditWidthValue
+        {
+            get { return En ? "\nWidth <{0:F2}>: " : "\n宽度 <{0:F2}>: "; }
+        }
+
+        public static string PatBrace_Updated
+        {
+            get { return En ? "\nBrace updated (height={0:F2}, width={1:F2}).\n" : "\n已更新大括号（高度={0:F2}，宽度={1:F2}）。\n"; }
+        }
+
         public static string PatMark_Created
         {
             get { return En ? "\n  Leader created: {0} ({1} vertices)\n" : "\n  已创建引线: {0}（{1} 个顶点）\n"; }
@@ -669,6 +750,11 @@ namespace PatentMarker.I18n
         }
 
         // ListView 列头 | Column headers
+        public static string Palette_Brace
+        {
+            get { return En ? "Brace" : "大括号"; }
+        }
+
         public static string Col_Number
         {
             get { return En ? "Number" : "编号"; }

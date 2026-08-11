@@ -28,6 +28,7 @@ namespace PatentMarker.Palette
         private NumericUpDown _numArrowSize;
         private Button _btnSpline;
         private Button _btnPoints;   // v3.1：点数模式切换（无限/三点）
+        private Button _btnBrace;    // v4.1：参数化矢量大括号
         private Button _btnSelectAll;
         private Button _btnCompare;
         private Button _btnLanguage;  // v2.3：语言切换
@@ -155,7 +156,7 @@ namespace PatentMarker.Palette
             // 样式栏 | Style bar
             FlowLayoutPanel stylePanel = new FlowLayoutPanel();
             stylePanel.Dock = DockStyle.Top;
-            stylePanel.Height = 60;   // v3.1：容纳新增点数按钮，允许换行
+            stylePanel.Height = 80;   // v4.1：容纳大括号按钮
             stylePanel.WrapContents = true;
             stylePanel.FlowDirection = FlowDirection.LeftToRight;
             stylePanel.Padding = new Padding(0, 2, 0, 2);
@@ -192,7 +193,12 @@ namespace PatentMarker.Palette
             _btnPoints.Click += new EventHandler(BtnPoints_Click);
             UpdatePointsButtonText();
 
-            stylePanel.Controls.AddRange(new Control[] { _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline, _btnPoints });
+            _btnBrace = new Button();
+            _btnBrace.AutoSize = true;
+            _btnBrace.Click += new EventHandler(BtnBrace_Click);
+            _btnBrace.Text = Strings.Palette_Brace;
+
+            stylePanel.Controls.AddRange(new Control[] { _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline, _btnPoints, _btnBrace });
 
             // 按钮栏 | Button bar
             FlowLayoutPanel btnPanel = new FlowLayoutPanel();
@@ -348,6 +354,7 @@ namespace PatentMarker.Palette
             if (_btnSelectAll != null) _btnSelectAll.Text = Strings.Palette_SelectAll;
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
             if (_btnLanguage != null) _btnLanguage.Text = Strings.Palette_Language;
+            if (_btnBrace != null) _btnBrace.Text = Strings.Palette_Brace;
             if (_colNumber != null) _colNumber.Text = Strings.Col_Number;
             if (_colName != null) _colName.Text = Strings.Col_Name;
             if (_colOcc != null) _colOcc.Text = Strings.Col_Occ;
@@ -485,6 +492,20 @@ namespace PatentMarker.Palette
         {
             if (_btnPoints != null)
                 _btnPoints.Text = PatPaletteCommand.ThreePointMode ? Strings.Palette_PointsThree : Strings.Palette_PointsUnlimited;
+        }
+
+        private void BtnBrace_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var doc = IO.RuntimeHost.ActiveDocument;
+                if (doc != null)
+                    doc.SendStringToExecute("PATBRACE\n", false, false, false);
+            }
+            catch (System.Exception ex)
+            {
+                PatentMarkerApp.RawLog("BtnBrace error: " + ex.Message);
+            }
         }
 
         private void BtnSelectAll_Click(object sender, EventArgs e)

@@ -29,4 +29,6 @@ PatentMarker 2013 部署说明
 Word 端：
   将 vba/ 下的 6 个模块导入 Word Normal 模板
 
-命令：BZ BZM BZC BZA BZS
+命令：BZ BZM BZC BZA BZS DAGUOHAO PATBRACE PATBRACEEDIT
+
+`PATBRACE` / `DAGUOHAO` 通过顶部、底部和宽度方向三点创建独立矢量大括号；`PATBRACEEDIT` 支持重新点选控制点或输入高度/宽度调整。

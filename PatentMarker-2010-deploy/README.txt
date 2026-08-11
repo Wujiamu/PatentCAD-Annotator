@@ -22,3 +22,12 @@ PatentMarker 2010 部署说明
   - 脚本会自动检测 R18.0/R18.1/R18.2（2010/2011/2012）
   - DLL 路径不能含中文（部分环境不兼容）
   - 如果注册表方式不生效，可用 NETLOAD 手动加载
+
+命令：
+  BZ / PATPALETTE        打开字典面板
+  BZM / PATMARK          创建引线标注
+  BZC / PATCHECK         校验一致性
+  BZA / PATALIGN         对齐引线
+  BZS / PATSELECTALL     全选 PAT 标注实体
+  DAGUOHAO / PATBRACE    三点创建矢量大括号
+  PATBRACEEDIT           通过控制点或输入高度/宽度调整大括号

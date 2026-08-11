@@ -40,3 +40,5 @@ PatentMarker 2025 部署说明
   BZC  (PATCHECK)      校验一致性
   BZA  (PATALIGN)      对齐引线
   BZS  (PATSELECTALL)  全选 PAT 标注
+  DAGUOHAO (PATBRACE)  三点创建独立矢量大括号
+  PATBRACEEDIT         通过控制点或输入高度/宽度调整大括号

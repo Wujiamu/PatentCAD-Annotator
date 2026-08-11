@@ -21,7 +21,7 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 
 v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、右键或按 `F2` 编辑条目、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
 
-### 当前标注实现（v4.0）
+### 当前标注实现（v4.1）
 
 - 五个版本统一使用 `Leader + MText` 创建标注。2013/2015/2025 虽然提供 MLeader API，但 MLeader 的文字内容附着机制会产生无法稳定关闭的额外附着点或连接线，因此当前版本不再用 MLeader 创建新标注。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
@@ -32,6 +32,8 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 为消除 AutoCAD `Leader.Annotation` 自动生成的 hook line，创建时把文字附着点直接作为 Leader 的最后一个用户顶点；MText 通过扩展字典保存内部关联，不再使用原生文字附着关联。
 - 事务提交后会重新打开 MText 复写并读回附着点；日志还会记录实际加载的 DLL 路径和提交后的 Leader 顶点数量，便于核对现场是否加载了旧部署包或产生了额外顶点。
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
+- 面板新增“Brace/大括号”按钮，对应 `PATBRACE`（别名 `DAGUOHAO`）：依次指定顶部、底部和宽度方向三点，创建独立的参数化矢量大括号；它不是文字字符，也不加入 Leader/MText 标注关联。
+- `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
 
 问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
 
@@ -123,6 +125,8 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 | `PATCHECK` | `BZC` | 校验编号一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选标注实体 |
+| `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
+| `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
 
 ### VBA 模块（Word 端，全版本共享）
 
@@ -175,6 +179,7 @@ PatentCAD-Annotator/
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v4.1 | 2026-08-11 | 新增独立参数化矢量大括号：三点创建、控制点交互调整和高度/宽度输入；五个版本及部署包同步 |
 | v4.0 | 2026-08-06 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决；修复 MLeader 额外附着点问题，五个版本统一使用 Leader + MText 并重新编译部署 |
 | v3.2 | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
 | v3.1 | 2026-08-03 | 新增三点模式（面板切换按钮）：固定 3 点采集引线，与线型开关正交；全 5 版本同步 |
@@ -199,7 +204,7 @@ Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palett
 
 Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
 
-### Current annotation implementation (v4.0)
+### Current annotation implementation (v4.1)
 
 - All five editions create annotations with `Leader + MText`. AutoCAD 2013/2015/2025 expose MLeader, but its text-content attachment geometry can create an extra grip or connection segment that cannot be reliably disabled across supported hosts.
 - The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
@@ -210,6 +215,8 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - To remove AutoCAD's automatic `Leader.Annotation` hook line, creation appends the text attachment point as the final user-selected Leader vertex. MText is linked through the Leader extension dictionary instead of native annotation association.
 - After the first transaction commits, the plug-in reopens MText, reapplies and reads back the attachment. The log also records the loaded DLL path and committed Leader vertex list so an old deployment package can be distinguished from a real extra vertex.
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
+- The palette adds a `Brace` button for `PATBRACE` (alias `DAGUOHAO`). Pick the top, bottom and width-direction points to create an independent parameterized vector brace; it is not a text glyph and is not part of the Leader/MText relationship.
+- `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.
 
@@ -264,12 +271,14 @@ Each package contains the matching `PatentMarker.dll` and the six shared VBA mod
 | `PATCHECK` | `BZC` | Validate numeral consistency |
 | `PATALIGN` | `BZA` | Align leaders |
 | `PATSELECTALL` | `BZS` | Select all annotation entities |
+| `PATBRACE` | `DAGUOHAO` | Create an independent parameterized vector brace from three points |
+| `PATBRACEEDIT` | — | Adjust a brace by control points or exact height/width |
 
 ### Local verification status
 
 - All five editions compile locally.
-- Runtime contract simulations pass 5/5 for 2010, 2013 and 2015.
-- The 2025 test suite passes 106/106.
+- Runtime contract simulations pass 15/15 for 2010, 2013 and 2015 (including shared brace geometry).
+- The 2025 test suite passes 112/112.
 - API-contract, structure and static synchronization checks pass for all five editions.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
 
