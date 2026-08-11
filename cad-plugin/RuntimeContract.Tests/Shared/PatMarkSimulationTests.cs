@@ -61,7 +61,7 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void TextToTheRightUsesMiddleLeftAttachment()
+        public void LowerLeftLeaderUsesBottomLeftAttachment()
         {
             using (SimulationFixture fixture = new SimulationFixture())
             {
@@ -73,13 +73,13 @@ namespace PatentMarker.RuntimeContractTests
 
 #if SIM_LEADER
                 MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
-                Assert.Equal(AttachmentPoint.MiddleLeft, annotation.Attachment);
+                Assert.Equal(AttachmentPoint.BottomLeft, annotation.Attachment);
 #endif
             }
         }
 
         [Fact]
-        public void TextToTheLeftUsesMiddleRightAttachment()
+        public void LowerRightLeaderUsesBottomRightAttachment()
         {
             using (SimulationFixture fixture = new SimulationFixture())
             {
@@ -91,7 +91,47 @@ namespace PatentMarker.RuntimeContractTests
 
 #if SIM_LEADER
                 MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
-                Assert.Equal(AttachmentPoint.MiddleRight, annotation.Attachment);
+                Assert.Equal(AttachmentPoint.BottomRight, annotation.Attachment);
+#endif
+            }
+        }
+
+        [Fact]
+        public void UpperLeftFirstLeaderPointUsesTopLeftAttachment()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                // The dogleg is deliberately below the text: the attachment
+                // quadrant must follow the first (arrow-side) leader point.
+                fixture.QueueThreePointAnnotation("upper-left", new Point3d(1, 6, 0),
+                    new Point3d(5, 1, 0), new Point3d(8, 3, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.TopLeft, annotation.Attachment);
+#endif
+            }
+        }
+
+        [Fact]
+        public void UpperRightFirstLeaderPointUsesTopRightAttachment()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                // The dogleg is deliberately below the text: the attachment
+                // quadrant must follow the first (arrow-side) leader point.
+                fixture.QueueThreePointAnnotation("upper-right", new Point3d(8, 6, 0),
+                    new Point3d(5, 1, 0), new Point3d(1, 3, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.TopRight, annotation.Attachment);
 #endif
             }
         }

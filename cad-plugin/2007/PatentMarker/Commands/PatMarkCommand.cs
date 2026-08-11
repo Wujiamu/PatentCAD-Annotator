@@ -219,16 +219,13 @@ namespace PatentMarker.Commands
                 mt.SetDatabaseDefaults(db);
                 mt.Contents = number;
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
-                Point3d lastLeaderPoint = doglegPts.Count > 0
-                    ? doglegPts[doglegPts.Count - 1]
-                    : attachPt;
                 AttachmentPoint textAttachment = PatLeaderTextAttachment.Get(
-                    lastLeaderPoint, textPt);
+                    attachPt, textPt);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
                 mt.Rotation = 0.0;
                 PatentMarkerApp.RawLog("Text attachment=" + textAttachment
-                    + ", lastLeaderPoint=" + lastLeaderPoint
+                    + ", firstLeaderPoint=" + attachPt
                     + ", textPoint=" + textPt);
 
                 btr.AppendEntity(mt);
