@@ -91,9 +91,10 @@ namespace PatentMarker.Commands
                         if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
 
                         var leader = (Leader)ent;
-                        if (leader.Annotation.IsNull) { skipped++; continue; }
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (annotationId.IsNull) { skipped++; continue; }
 
-                        var mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForWrite);
+                        var mt = (MText)tr.GetObject(annotationId, OpenMode.ForWrite);
                         Point3d pos = mt.Location;
 
                         if (dirResult.StringResult == Strings.PatAlign_KwHorizontal)
@@ -102,6 +103,8 @@ namespace PatentMarker.Commands
                             pos = new Point3d(refX, pos.Y, pos.Z);
 
                         mt.Location = pos;
+                        if (leader.Annotation.IsNull)
+                            PatLeaderTextAttachment.SetTextEndpoint(leader, pos);
                         aligned++;
                     }
                     catch (Exception ex)
@@ -167,9 +170,10 @@ namespace PatentMarker.Commands
                         if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
 
                         var leader = (Leader)ent;
-                        if (leader.Annotation.IsNull) { skipped++; continue; }
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (annotationId.IsNull) { skipped++; continue; }
 
-                        var mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForWrite);
+                        var mt = (MText)tr.GetObject(annotationId, OpenMode.ForWrite);
                         Point3d pos = mt.Location;
 
                         if (sideResult.StringResult == Strings.PatAlign_KwLeft)
@@ -182,6 +186,8 @@ namespace PatentMarker.Commands
                             pos = new Point3d(pos.X, minY - margin, pos.Z);
 
                         mt.Location = pos;
+                        if (leader.Annotation.IsNull)
+                            PatLeaderTextAttachment.SetTextEndpoint(leader, pos);
                         aligned++;
                     }
                     catch (Exception ex)

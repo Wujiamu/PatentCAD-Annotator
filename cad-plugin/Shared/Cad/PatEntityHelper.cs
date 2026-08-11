@@ -1,6 +1,7 @@
 using System;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
+using PatentMarker.Commands;
 using PatentMarker.Styles;
 
 namespace PatentMarker.IO
@@ -30,11 +31,12 @@ namespace PatentMarker.IO
 
         public static string GetLeaderNumber(Leader leader, Transaction tr)
         {
+            ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
             try
             {
-                if (!leader.Annotation.IsNull)
+                if (!annotationId.IsNull)
                 {
-                    MText mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForRead);
+                    MText mt = (MText)tr.GetObject(annotationId, OpenMode.ForRead);
                     string text = mt.Contents;
                     if (text != null) text = text.Trim();
                     if (text != null && text.Length > 0) return text;
@@ -42,11 +44,11 @@ namespace PatentMarker.IO
             }
             catch { }
 
-            if (leader.Annotation != ObjectId.Null)
+            if (!annotationId.IsNull)
             {
-                DBText textEnt = tr.GetObject(leader.Annotation, OpenMode.ForRead) as DBText;
+                DBText textEnt = tr.GetObject(annotationId, OpenMode.ForRead) as DBText;
                 if (textEnt != null) return textEnt.TextString != null ? textEnt.TextString.Trim() : textEnt.TextString;
-                MText mtextEnt = tr.GetObject(leader.Annotation, OpenMode.ForRead) as MText;
+                MText mtextEnt = tr.GetObject(annotationId, OpenMode.ForRead) as MText;
                 if (mtextEnt != null) return mtextEnt.Contents != null ? mtextEnt.Contents.Trim() : mtextEnt.Contents;
             }
             return "";
@@ -54,11 +56,12 @@ namespace PatentMarker.IO
 
         public static Point3d GetLeaderTextPos(Leader leader, Transaction tr)
         {
+            ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
             try
             {
-                if (!leader.Annotation.IsNull)
+                if (!annotationId.IsNull)
                 {
-                    MText mt = (MText)tr.GetObject(leader.Annotation, OpenMode.ForRead);
+                    MText mt = (MText)tr.GetObject(annotationId, OpenMode.ForRead);
                     return mt.Location;
                 }
             }
@@ -109,10 +112,11 @@ namespace PatentMarker.IO
                 if (number == null || number.Length == 0) continue;
                 if (!NumberIdentity.AreEqual(number, oldNumber)) continue;
 
-                if (leader.Annotation.IsNull) continue;
+                ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                if (annotationId.IsNull) continue;
                 try
                 {
-                    Entity ann = (Entity)tr.GetObject(leader.Annotation, OpenMode.ForWrite);
+                    Entity ann = (Entity)tr.GetObject(annotationId, OpenMode.ForWrite);
                     if (SetLeaderNumber(ann, newNumber)) changed++;
                 }
                 catch { }

@@ -167,6 +167,21 @@ foreach (string path in sdkPaths.OrderBy(p => p, StringComparer.OrdinalIgnoreCas
 const string db = "Autodesk.AutoCAD.DatabaseServices";
 const string geo = "Autodesk.AutoCAD.Geometry";
 
+void RequireDetachedLeaderApi()
+{
+    RequireProperty($"{db}.Leader", "ExtensionDictionary");
+    RequireMethod($"{db}.Leader", "CreateExtensionDictionary", 0);
+    RequireMethod($"{db}.Leader", "SetVertexAt", 2);
+    RequireType($"{db}.DBDictionary");
+    RequireMethod($"{db}.DBDictionary", "Contains", 1);
+    RequireMethod($"{db}.DBDictionary", "GetAt", 1);
+    RequireMethod($"{db}.DBDictionary", "SetAt", 2);
+    RequireType($"{db}.Xrecord");
+    RequireProperty($"{db}.Xrecord", "Data");
+    RequireType($"{db}.TypedValue");
+    RequireType($"{db}.ResultBuffer");
+}
+
 if (edition == "2010")
 {
     RequireType($"{db}.Leader");
@@ -177,6 +192,7 @@ if (edition == "2010")
     RequireProperty($"{db}.Leader", "IsSplined");
     RequireProperty($"{db}.Leader", "HasArrowHead");
     RequireMethod($"{db}.Leader", "AppendVertex", 1);
+    RequireDetachedLeaderApi();
     RequireAbsent($"{db}.MLeader");
 }
 else if (edition is "2013" or "2015" or "2025")
@@ -192,6 +208,7 @@ else if (edition is "2013" or "2015" or "2025")
     RequireProperty($"{db}.Leader", "NumVertices");
     RequireMethod($"{db}.Leader", "AppendVertex", 1);
     RequireMethod($"{db}.Leader", "VertexAt", 1);
+    RequireDetachedLeaderApi();
     RequireType($"{geo}.Point3d");
 }
 else

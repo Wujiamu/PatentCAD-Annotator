@@ -67,10 +67,11 @@ MLeader 把引线、文字内容和文字附着关系封装在一个对象中。
 
 `Leader + MText` 将引线和文字拆成两个普通实体：
 
-- `Leader` 只保存用户指定的引线点；
+- `Leader` 只保存用户指定的引线点，其中最后一个点就是文字附着点；
 - `MText` 单独保存文字位置和内容；
+- Leader 与 MText 的内部关系保存在 Leader 扩展字典中，不使用 `Leader.Annotation`，因此不会触发 AutoCAD 自动生成的 hook line；
 - 文字旋转角可以明确设为 0；
-- 不存在 MLeader 的文字内容附着夹点；
+- 不存在 MLeader 或原生 Leader.Annotation 的文字内容附着夹点；
 - 2007 至 2026 可以采用一致的几何语义。
 
 在当前需求下，稳定性和可预测性比使用单一的 MLeader 对象更重要，因此选择回退到这个方案。
@@ -80,8 +81,9 @@ MLeader 把引线、文字内容和文字附着关系封装在一个对象中。
 2013、2015、2025 版本已经同步完成以下调整：
 
 - `PATMARK` 使用 `Leader + MText` 创建三点和无限点标注；
+- `PATMARK` 不设置原生 `Leader.Annotation`，而是将象限计算得到的文字附着点追加为最后一个 Leader 顶点，并用扩展字典保存 MText 关系；
 - `PATCHECK` 识别 `Leader` 及其关联的 `MText`；
-- `PATALIGN` 只调整关联文字的 `MText.Location`；
+- `PATALIGN` 调整 MText.Location 时同步调整 detached Leader 的最后一个顶点；
 - `PATSELECTALL` 同时选择引线和关联文字；
 - 字典面板删除标注时同时删除 `Leader` 和 `MText`；
 - 字典编号重命名时同步更新关联 `MText`；
@@ -101,8 +103,8 @@ VBA、Word 附图标记识别逻辑和 JSON 格式没有因为本问题而改变
 本地已完成以下验证：
 
 - 2007、2010、2013、2015、2025 五个版本均成功编译；
-- 2010、2013、2015 运行时模拟测试均为 5/5；
-- 2025 测试套件为 106/106；
+- 2010、2013、2015 运行时模拟测试均为 12/12，包含 detached Leader 顶点和扩展字典关联回归；
+- 2025 测试套件为 112/112；
 - 五个版本的 AutoCAD API 契约检查通过；
 - 版本结构和静态同步检查通过；
 - 2013、2015、2025 源码中已不再使用 MLeader 创建路径。

@@ -45,8 +45,9 @@ namespace PatentMarker.Commands
                         ids.Add(id);
 
                         // 同时选中关联的 MText（用户改字高/样式时一并应用）
-                        if (!leader.Annotation.IsNull)
-                            ids.Add(leader.Annotation);
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (!annotationId.IsNull)
+                            ids.Add(annotationId);
                     }
                     tr.Commit();
                 }

@@ -13,6 +13,7 @@ namespace PatentMarker.RuntimeContractTests
                 Leader patLeader;
                 MText patText;
                 AddLeader(fixture, "old", "PAT_DIM", out patLeader, out patText);
+                Assert.True(patLeader.Annotation.IsNull);
 
                 int changed = Palette.DictPaletteCadService.RenameNumber(
                     fixture.Document, "OLD", "new");
@@ -32,6 +33,7 @@ namespace PatentMarker.RuntimeContractTests
                 Leader patLeader;
                 MText patText;
                 AddLeader(fixture, "pat", "PAT_DIM", out patLeader, out patText);
+                Assert.True(patLeader.Annotation.IsNull);
 
                 Leader otherLeader;
                 MText otherText;
@@ -67,7 +69,10 @@ namespace PatentMarker.RuntimeContractTests
 
                 leader = new Leader { DimensionStyle = styleId };
                 fixture.Database.ModelSpace.AppendEntity(leader);
-                leader.Annotation = text.ObjectId;
+                if (styleName == "PAT_DIM")
+                    PatentMarker.Commands.PatLeaderTextAttachment.LinkText(leader, text, tr);
+                else
+                    leader.Annotation = text.ObjectId;
 
                 tr.Commit();
             }

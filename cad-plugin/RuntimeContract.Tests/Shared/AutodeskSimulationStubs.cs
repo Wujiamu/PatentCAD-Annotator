@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Autodesk.AutoCAD.Geometry
@@ -302,6 +303,70 @@ namespace Autodesk.AutoCAD.DatabaseServices
     {
         internal Database Database { get; set; }
         public ObjectId ObjectId { get; internal set; }
+        public ObjectId ExtensionDictionary { get; internal set; }
+    }
+
+    public sealed class DBDictionary : DBObject
+    {
+        private readonly Dictionary<string, ObjectId> _entries =
+            new Dictionary<string, ObjectId>(StringComparer.Ordinal);
+
+        public bool Contains(string name)
+        {
+            return _entries.ContainsKey(name);
+        }
+
+        public ObjectId GetAt(string name)
+        {
+            return _entries[name];
+        }
+
+        public ObjectId SetAt(string name, DBObject value)
+        {
+            if (value.ObjectId.IsNull)
+                Database.AllocateId(value);
+            _entries[name] = value.ObjectId;
+            return value.ObjectId;
+        }
+    }
+
+    public sealed class Xrecord : DBObject
+    {
+        public ResultBuffer Data { get; set; }
+    }
+
+    public struct TypedValue
+    {
+        public TypedValue(int typeCode, object value)
+        {
+            TypeCode = (short)typeCode;
+            Value = value;
+        }
+
+        public short TypeCode { get; private set; }
+        public object Value { get; private set; }
+    }
+
+    public sealed class ResultBuffer : IEnumerable<TypedValue>, IDisposable
+    {
+        private readonly TypedValue[] _values;
+
+        public ResultBuffer(params TypedValue[] values)
+        {
+            _values = values ?? new TypedValue[0];
+        }
+
+        public IEnumerator<TypedValue> GetEnumerator()
+        {
+            return ((IEnumerable<TypedValue>)_values).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return _values.GetEnumerator();
+        }
+
+        public void Dispose() { }
     }
 
     public class Entity : DBObject
@@ -311,6 +376,12 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public virtual void SetDatabaseDefaults(Database db)
         {
             Database = db;
+        }
+
+        public void CreateExtensionDictionary()
+        {
+            if (ExtensionDictionary.IsNull && Database != null)
+                ExtensionDictionary = Database.EnsureExtensionDictionary(this);
         }
 
         public virtual void Erase(bool erasing)
@@ -368,6 +439,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public Point3d VertexAt(int index)
         {
             return _vertices[index];
+        }
+
+        public void SetVertexAt(int index, Point3d point)
+        {
+            _vertices[index] = point;
         }
     }
 
@@ -466,6 +542,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public List<string> Trace { get; } = new List<string>();
         public List<Entity> CommittedEntities { get; } = new List<Entity>();
         public bool FailOnCommit { get; set; }
+        public bool NormalizeAttachmentOnFirstCommit { get; set; }
+        private bool _attachmentWasNormalized;
 
         internal ObjectId AllocateId(DBObject obj)
         {
@@ -473,6 +551,14 @@ namespace Autodesk.AutoCAD.DatabaseServices
             obj.ObjectId = id;
             Register(id, obj);
             return id;
+        }
+
+        internal ObjectId EnsureExtensionDictionary(DBObject owner)
+        {
+            DBDictionary dictionary = new DBDictionary();
+            AllocateId(dictionary);
+            owner.ExtensionDictionary = dictionary.ObjectId;
+            return dictionary.ObjectId;
         }
 
         internal void Register(ObjectId id, DBObject obj)
@@ -514,6 +600,31 @@ namespace Autodesk.AutoCAD.DatabaseServices
                 throw new InvalidOperationException("Simulated transaction commit failure.");
             Trace.Add("transaction.commit");
             CommittedEntities.AddRange(_pending);
+            if (NormalizeAttachmentOnFirstCommit && !_attachmentWasNormalized)
+            {
+                _attachmentWasNormalized = true;
+                foreach (Entity entity in _pending)
+                {
+                    Leader leader = entity as Leader;
+                    if (leader == null || leader.Vertices.Count == 0)
+                        continue;
+
+                    MText text = null;
+                    foreach (Entity candidate in _pending)
+                    {
+                        text = candidate as MText;
+                        if (text != null) break;
+                    }
+                    if (text == null)
+                        continue;
+
+                    text.Attachment = text.Attachment == AttachmentPoint.TopRight ||
+                        text.Attachment == AttachmentPoint.MiddleRight ||
+                        text.Attachment == AttachmentPoint.BottomRight
+                        ? AttachmentPoint.BottomRight
+                        : AttachmentPoint.BottomLeft;
+                }
+            }
             foreach (Entity entity in _pending)
                 ModelSpace.AddCommitted(entity.ObjectId);
             _pending.Clear();

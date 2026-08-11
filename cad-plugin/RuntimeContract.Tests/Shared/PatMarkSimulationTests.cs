@@ -27,11 +27,12 @@ namespace PatentMarker.RuntimeContractTests
 #if SIM_LEADER
                 Assert.Equal(2, fixture.Database.CommittedEntities.Count);
                 Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
-                Assert.Equal(2, leader.Vertices.Count);
+                Assert.Equal(3, leader.Vertices.Count);
+                Assert.Equal(new Point3d(5, 6, 0), leader.VertexAt(2));
                 Assert.True(leader.HasArrowHead);
                 Assert.False(leader.IsSplined);
                 Assert.Equal(3.25, leader.Dimasz);
-                Assert.False(leader.Annotation.IsNull);
+                Assert.True(leader.Annotation.IsNull);
                 MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal("1342A", annotation.Contents);
                 Assert.Equal(4.25, annotation.TextHeight);
@@ -133,6 +134,28 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
+        public void PostCommitReapplyRestoresUpperQuadrantAfterLegacyNormalization()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                fixture.Database.NormalizeAttachmentOnFirstCommit = true;
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointAnnotation("post-commit", new Point3d(1, 1, 0),
+                    new Point3d(5, 6, 0), new Point3d(8, 3, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.TopLeft, annotation.Attachment);
+                Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
+                Assert.Equal(3, leader.Vertices.Count);
+                Assert.True(leader.Annotation.IsNull);
+#endif
+            }
+        }
+
+        [Fact]
         public void CancellationBeforeTextDoesNotCommitPartialAnnotation()
         {
             using (SimulationFixture fixture = new SimulationFixture())
@@ -167,6 +190,9 @@ namespace PatentMarker.RuntimeContractTests
 #if SIM_LEADER
                 MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(new Point3d(2, 2, 0), annotation.Location);
+                Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
+                Assert.Equal(2, leader.Vertices.Count);
+                Assert.True(leader.Annotation.IsNull);
 #else
                 MLeader leader = Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(new Point3d(2, 2, 0), leader.TextLocation);

@@ -15,6 +15,7 @@ namespace PatentMarker
         public void Initialize()
         {
             RawLog("=== PatentMarker Initialize START ===");
+            RawLog("Assembly: " + typeof(PatentMarkerApp).Assembly.Location);
             RawLog("NET Runtime: " + Environment.Version.ToString());
             RawLog("BaseDirectory: " + AppDomain.CurrentDomain.BaseDirectory);
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.AutoCAD.ApplicationServices;
 using AcDb = Autodesk.AutoCAD.DatabaseServices;
+using PatentMarker.Commands;
 using PatentMarker.IO;
 
 namespace PatentMarker.Palette
@@ -79,8 +80,9 @@ namespace PatentMarker.Palette
                     }
 
                     leadersToDelete.Add(entId);
-                    if (!leader.Annotation.IsNull)
-                        annotationsToDelete.Add(leader.Annotation);
+                    AcDb.ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                    if (!annotationId.IsNull)
+                        annotationsToDelete.Add(annotationId);
                 }
 
                 foreach (AcDb.ObjectId id in leadersToDelete)

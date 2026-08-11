@@ -194,15 +194,18 @@ namespace PatentMarker.Commands
         /// 顺序（修复 B3）：
         ///  1. 创建 MText → AppendEntity → 获得有效 ObjectId
         ///  2. 创建 Leader → AppendVertex（起点 + 所有拐点）→ AppendEntity → AddNewlyCreatedDBObject
-        ///  3. 设置 leader.Annotation = mt.ObjectId（Leader 已在数据库中）
+        ///  3. 将文字附着点作为 Leader 最后一个顶点，不设置 leader.Annotation
         ///  4. 设置 leader.DimensionStyle = PAT_DIM
         ///  5. 设置 IsSplined = true、HasArrowHead = PatPaletteCommand.HasArrowHead
         ///  6. Commit
         /// </summary>
         private void CreateLeaderWithText(Database db, Point3d attachPt, List<Point3d> doglegPts, Point3d textPt, string number)
         {
-            PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number + ", vertices=" + (doglegPts.Count + 1) + ", arrow=" + IO.PatSettingsStore.Current.HasArrowHead + ") ===");
+            PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number + ", doglegPoints=" + doglegPts.Count + ", arrow=" + IO.PatSettingsStore.Current.HasArrowHead + ") ===");
 
+            ObjectId annotationId = ObjectId.Null;
+            ObjectId leaderId = ObjectId.Null;
+            AttachmentPoint textAttachment = AttachmentPoint.MiddleLeft;
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
                 BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
@@ -222,7 +225,7 @@ namespace PatentMarker.Commands
                 Point3d lastLeaderPoint = doglegPts.Count > 0
                     ? doglegPts[doglegPts.Count - 1]
                     : attachPt;
-                AttachmentPoint textAttachment = PatLeaderTextAttachment.Get(
+                textAttachment = PatLeaderTextAttachment.Get(
                     lastLeaderPoint, textPt);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
@@ -243,6 +246,7 @@ namespace PatentMarker.Commands
                 leader.AppendVertex(attachPt);              // 起点（箭头端）
                 foreach (Point3d p in doglegPts)            // v2：循环追加所有拐点
                     leader.AppendVertex(p);
+                PatLeaderTextAttachment.AppendTextEndpoint(leader, textPt);
                 leader.IsSplined = IO.PatSettingsStore.Current.IsSplined;   // v2.1：样条/直线，取自面板开关
                 leader.HasArrowHead = IO.PatSettingsStore.Current.HasArrowHead;
 
@@ -252,16 +256,17 @@ namespace PatentMarker.Commands
 
                 btr.AppendEntity(leader);
                 tr.AddNewlyCreatedDBObject(leader, true);
+                leaderId = leader.ObjectId;
 
-                // 3. 关联 MText（Leader 已在数据库中）
-                leader.Annotation = mt.ObjectId;
+                // 3. 保存 MText 关系但不设置 AutoCAD 原生 Annotation hook
+                annotationId = mt.ObjectId;
+                PatLeaderTextAttachment.LinkText(leader, mt, tr);
 
-                // AutoCAD 2007/2010 may normalize the MText attachment while
-                // the associative Leader is created. Re-apply both values
-                // after association so the requested quadrant is retained.
+                // Re-apply both values after storing the detached link so the
+                // requested quadrant is retained after host regeneration.
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
-                PatentMarkerApp.RawLog("Text attachment after association=" + mt.Attachment
+                PatentMarkerApp.RawLog("Text attachment after link=" + mt.Attachment
                     + ", location=" + mt.Location);
 
                 // 4. 设置标注样式（同步箭头大小到 PAT_DIM）
@@ -275,8 +280,14 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                PatentMarkerApp.RawLog("=== CreateLeaderWithText END (success) ===");
             }
+
+            AttachmentPoint committedAttachment = PatLeaderTextAttachment.ReapplyAfterCommit(
+                db, annotationId, textAttachment, textPt);
+            PatentMarkerApp.RawLog("Text attachment after commit=" + committedAttachment
+                + ", location=" + textPt);
+            PatentMarkerApp.RawLog(PatLeaderTextAttachment.DescribeLeader(db, leaderId));
+            PatentMarkerApp.RawLog("=== CreateLeaderWithText END (success) ===");
         }
 
         /// <summary>

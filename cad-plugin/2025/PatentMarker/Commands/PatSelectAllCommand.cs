@@ -38,8 +38,9 @@ namespace PatentMarker.Commands
                             continue;
 
                         ids.Add(id);
-                        if (!leader.Annotation.IsNull)
-                            ids.Add(leader.Annotation);
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (!annotationId.IsNull)
+                            ids.Add(annotationId);
                     }
                     tr.Commit();
 }

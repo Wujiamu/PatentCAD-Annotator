@@ -162,9 +162,12 @@ namespace PatentMarker.Commands
             List<Point3d> doglegPts, Point3d textPt, string number)
         {
             PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number
-                + ", vertices=" + (doglegPts.Count + 1) + ", arrow="
+                + ", doglegPoints=" + doglegPts.Count + ", arrow="
                 + IO.PatSettingsStore.Current.HasArrowHead + ") ===");
 
+            ObjectId annotationId = ObjectId.Null;
+            ObjectId leaderId = ObjectId.Null;
+            AttachmentPoint textAttachment = AttachmentPoint.MiddleLeft;
             using (Transaction tr = db.TransactionManager.StartTransaction())
             {
                 BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
@@ -182,7 +185,7 @@ namespace PatentMarker.Commands
                 Point3d lastLeaderPoint = doglegPts.Count > 0
                     ? doglegPts[doglegPts.Count - 1]
                     : attachPt;
-                AttachmentPoint textAttachment = PatLeaderTextAttachment.Get(
+                textAttachment = PatLeaderTextAttachment.Get(
                     lastLeaderPoint, textPt);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
@@ -199,16 +202,19 @@ namespace PatentMarker.Commands
                 leader.AppendVertex(attachPt);
                 foreach (Point3d point in doglegPts)
                     leader.AppendVertex(point);
+                PatLeaderTextAttachment.AppendTextEndpoint(leader, textPt);
                 leader.IsSplined = IO.PatSettingsStore.Current.IsSplined;
                 leader.HasArrowHead = IO.PatSettingsStore.Current.HasArrowHead;
                 leader.Dimasz = IO.PatSettingsStore.Current.ArrowSize;
                 btr.AppendEntity(leader);
                 tr.AddNewlyCreatedDBObject(leader, true);
+                leaderId = leader.ObjectId;
 
-                leader.Annotation = mt.ObjectId;
+                annotationId = mt.ObjectId;
+                PatLeaderTextAttachment.LinkText(leader, mt, tr);
                 mt.Attachment = textAttachment;
                 mt.Location = textPt;
-                PatentMarkerApp.RawLog("Text attachment after association=" + mt.Attachment
+                PatentMarkerApp.RawLog("Text attachment after link=" + mt.Attachment
                     + ", location=" + mt.Location);
                 ObjectId dimId = Styles.PatStyleInitializer.GetPatDimStyleId(db, tr);
                 if (!dimId.IsNull)
@@ -220,8 +226,14 @@ namespace PatentMarker.Commands
                 }
 
                 tr.Commit();
-                PatentMarkerApp.RawLog("=== CreateLeaderWithText END (success) ===");
             }
+
+            AttachmentPoint committedAttachment = PatLeaderTextAttachment.ReapplyAfterCommit(
+                db, annotationId, textAttachment, textPt);
+            PatentMarkerApp.RawLog("Text attachment after commit=" + committedAttachment
+                + ", location=" + textPt);
+            PatentMarkerApp.RawLog(PatLeaderTextAttachment.DescribeLeader(db, leaderId));
+            PatentMarkerApp.RawLog("=== CreateLeaderWithText END (success) ===");
         }
 
         private static ObjectId GetOrCreateTextStyleId(Database db, Transaction tr)

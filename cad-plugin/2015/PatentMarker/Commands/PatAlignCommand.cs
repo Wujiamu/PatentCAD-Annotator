@@ -78,14 +78,15 @@ namespace PatentMarker.Commands
                         }
 
                         Leader leader = (Leader)entity;
-                        if (leader.Annotation.IsNull)
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (annotationId.IsNull)
                         {
                             skipped++;
                             continue;
                         }
 
                         MText text = (MText)tr.GetObject(
-                            leader.Annotation, OpenMode.ForWrite);
+                            annotationId, OpenMode.ForWrite);
                         Point3d position = text.Location;
                         if (directionResult.StringResult ==
                             Strings.PatAlign_KwHorizontal)
@@ -95,6 +96,8 @@ namespace PatentMarker.Commands
                             position = new Point3d(
                                 reference.Value.X, position.Y, position.Z);
                         text.Location = position;
+                        if (leader.Annotation.IsNull)
+                            PatLeaderTextAttachment.SetTextEndpoint(leader, position);
                         aligned++;
                     }
                     catch (Exception ex)
@@ -163,14 +166,15 @@ namespace PatentMarker.Commands
                         }
 
                         Leader leader = (Leader)entity;
-                        if (leader.Annotation.IsNull)
+                        ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
+                        if (annotationId.IsNull)
                         {
                             skipped++;
                             continue;
                         }
 
                         MText text = (MText)tr.GetObject(
-                            leader.Annotation, OpenMode.ForWrite);
+                            annotationId, OpenMode.ForWrite);
                         Point3d position = text.Location;
                         if (sideResult.StringResult == Strings.PatAlign_KwLeft)
                             position = new Point3d(
@@ -187,6 +191,8 @@ namespace PatentMarker.Commands
                             position = new Point3d(
                                 position.X, minY - margin, position.Z);
                         text.Location = position;
+                        if (leader.Annotation.IsNull)
+                            PatLeaderTextAttachment.SetTextEndpoint(leader, position);
                         aligned++;
                     }
                     catch (Exception ex)
