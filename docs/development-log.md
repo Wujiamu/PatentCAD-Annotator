@@ -6,6 +6,8 @@
 
 ## v4.0 (2026-08-04)
 
+- VBA 编号后缀数字修复（2026-08-11）：Patterns.bas 与 DictModel.bas 的五套部署副本支持 123A1、123A2 等“数字 + 字母 + 数字”编号；纯数字仍保持最多 5 位，编号只在现有逗号、顿号、分号、句号等分隔标点处结束。同步更新 cad-plugin/Shared/IO/MarkingTextParser.cs 及表格预处理规则；同时修复相邻候选条目区间终点计算错误，避免无空格时第二条记录被过滤。检查当前仓库 fixture、实际 Word 样例、8 份批量语料及 v4 期望输出，未发现与该边界规则冲突的样例。五套 VBA 均通过 Word COM 批量回归和 123A1/123A2 → JSON 端到端验证，C# 测试为 112/112。
+
 - Leader/MText 文字侧面附着修正（2026-08-11）：新增共用附着点判断。文字位于最后一个引线拐点右侧时使用 `MiddleLeft`，位于左侧时使用 `MiddleRight`，使引线连接文字左右侧的垂直中部，不再统一落到左上角；五个版本同步并补充左右侧运行契约测试。
 
 - Demo v5 (2026-08-06): based on the previous single-file dynamic demo, added complete scenes for CAD paste recognition and merge write-back, F2/right-click entry editing with drawing leader renumber synchronization, Word/CAD backup arbitration, the new default three-point workflow, and double-click-to-mark. The original v4 demo remains unchanged; the new deliverable is `demo/PatentMarker-Demo-v5.html`.

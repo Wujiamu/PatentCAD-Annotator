@@ -33,7 +33,8 @@ namespace PatentMarker.IO
     ///   [括号变体] 名称(编号) / 编号(名称)   加热器(1)、 1(底座)、
     ///   [裸列表] 每行一条，名称 编号   箱体结构 10&lt;换行&gt;箱壁 1
     ///
-    /// 编号形式：纯数字(10)、字母前缀(S1)、字母后缀(131a)、连字符子编号(10-1)
+    /// 编号形式：纯数字(10)、字母前缀(S1)、字母后缀(131a/123A1)、连字符子编号(10-1)
+    /// 字母后可继续数字，但必须在既有分隔符处结束（例如 123A1、123A2）
     /// 分隔符  ：中文逗号/顿号/分号/句号、英文逗号/分号
     ///
     /// 防误匹配策略（与 VBA 一致）：
@@ -49,23 +50,23 @@ namespace PatentMarker.IO
 
         /// <summary>模式 1：编号 + 名称 + 分隔符（旧格式）1底座， 2支架； 10外壳A1，</summary>
         private static readonly Regex RePattern1 = new Regex(
-            @"(\d{1,5}[A-Za-z]?)\s*([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\s*[，；;,、。.]");
+            @"(\d{1,5}(?:[A-Za-z]\d*)?)\s*([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\s*[，；;,、。.]");
 
         /// <summary>模式 B：编号 + 括号名称 + 分隔符 1(底座)、 10（泵体）；</summary>
         private static readonly Regex RePatternB = new Regex(
-            @"(\d{1,5}[A-Za-z]?)\s*[（(]([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)[）)]\s*[，;；,、。.]");
+            @"(\d{1,5}(?:[A-Za-z]\d*)?)\s*[（(]([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)[）)]\s*[，;；,、。.]");
 
         /// <summary>模式 2：名称 + 编号 + 分隔符（新格式）箱体结构10、 第一空间S1、 液体3000。</summary>
         private static readonly Regex RePattern2 = new Regex(
-            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)\s*[、；。，;,.]");
+            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)\s*[、；。，;,.]");
 
         /// <summary>模式 A：名称 + 括号编号 + 分隔符 加热器(1)、 泵体（2）；</summary>
         private static readonly Regex RePatternA = new Regex(
-            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*[（(]([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)[）)]\s*[、；。，;,.]");
+            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*[（(]([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)[）)]\s*[、；。，;,.]");
 
         /// <summary>模式 3：裸列表（每行 名称 编号，行内无标点）箱体结构 10&lt;换行&gt;箱壁 1</summary>
         private static readonly Regex RePattern3 = new Regex(
-            @"^\s*([\u4e00-\u9fa5A-Za-z ]+?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)\s*$",
+            @"^\s*([\u4e00-\u9fa5A-Za-z ]+?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)\s*$",
             RegexOptions.Multiline);
 
         // ================================================================
@@ -95,11 +96,11 @@ namespace PatentMarker.IO
 
         /// <summary>表格模式 A：编号单元格在前 "10" + vbCr + Chr(7) + "箱体结构" + vbCr + Chr(7) → 箱体结构10、</summary>
         private static readonly Regex ReTableA = new Regex(
-            @"(\d{1,5}[A-Za-z]?)\r\x07([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\r\x07");
+            @"(\d{1,5}(?:[A-Za-z]\d*)?)\r\x07([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\r\x07");
 
         /// <summary>表格模式 B：名称单元格在前 "箱体结构" + vbCr + Chr(7) + "10" + vbCr + Chr(7) → 箱体结构10、</summary>
         private static readonly Regex ReTableB = new Regex(
-            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*?)\r\x07([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)\r\x07");
+            @"([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*?)\r\x07([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)\r\x07");
 
         // ================================================================
         // 公开入口
@@ -227,9 +228,8 @@ namespace PatentMarker.IO
                 if (!Overlaps(ch, keepRanges))
                 {
                     allHits.Add(ch);
-                    // 复刻 VBA 原样：keepRanges.Add Array(ch(2), ch(3)) = [position, length]
-                    // （VBA 此处未换算为 [start, end]，为保证行为一致原样保留）
-                    keepRanges.Add(new int[] { ch.Position, ch.Length });
+                    // 与第一梯队一致，范围保存为 [start, end]，允许分隔符紧邻下一条命中。
+                    keepRanges.Add(new int[] { ch.Position, ch.Position + ch.Length - 1 });
                 }
             }
 

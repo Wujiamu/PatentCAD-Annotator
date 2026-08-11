@@ -31,12 +31,12 @@ Public Function BuildModel(ByVal text As String, ByVal sourceName As String, _
     reTbl.Multiline = True
     reTbl.IgnoreCase = False
     ' A. 编号单元格在前（两列表格：编号 | 名称）
-    reTbl.pattern = "(\d{1,5}[A-Za-z]?)" & vbCr & Chr(7) & _
+    reTbl.pattern = "(\d{1,5}(?:[A-Za-z]\d*)?)" & vbCr & Chr(7) & _
         "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)" & vbCr & Chr(7)
     text = reTbl.Replace(text, "$2$1、")
     ' B. 名称单元格在前（两列表格：名称 | 编号）
     reTbl.pattern = "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*?)" & vbCr & Chr(7) & _
-        "([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)" & vbCr & Chr(7)
+        "([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)" & vbCr & Chr(7)
     text = reTbl.Replace(text, "$1$2、")
     ' C. 残余单元格分隔符 -> 顿号
     text = Replace(text, Chr(7), "、")

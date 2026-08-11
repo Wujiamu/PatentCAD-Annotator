@@ -37,6 +37,18 @@ namespace PatentMarker.Tests
             Assert.Equal("底座", hits[0].Name);
         }
 
+        [Fact]
+        public void Pattern1_LetterDigitSuffix_StopsAtDelimiter()
+        {
+            var hits = MarkingTextParser.ExtractAll(
+                "123A1\u7b2c\u4e00\u652f\u8def\uFF0C123A2\u7b2c\u4e8c\u652f\u8def\uFF1B");
+            Assert.Equal(2, hits.Count);
+            Assert.Equal("123A1", hits[0].Number);
+            Assert.Equal("\u7b2c\u4e00\u652f\u8def", hits[0].Name);
+            Assert.Equal("123A2", hits[1].Number);
+            Assert.Equal("\u7b2c\u4e8c\u652f\u8def", hits[1].Name);
+        }
+
         // ================================================================
         // 模式 B：编号 + 括号名称 + 分隔符
         // ================================================================
@@ -91,6 +103,18 @@ namespace PatentMarker.Tests
             Assert.Equal("凹陷板部", hits[1].Name);
         }
 
+        [Fact]
+        public void Pattern2_LetterDigitSuffix_StopsAtDelimiter()
+        {
+            var hits = MarkingTextParser.ExtractAll(
+                "\u7b2c\u4e00\u652f\u8def123A1\u3001\u7b2c\u4e8c\u652f\u8def123A2\uFF1B");
+            Assert.Equal(2, hits.Count);
+            Assert.Equal("\u7b2c\u4e00\u652f\u8def", hits[0].Name);
+            Assert.Equal("123A1", hits[0].Number);
+            Assert.Equal("\u7b2c\u4e8c\u652f\u8def", hits[1].Name);
+            Assert.Equal("123A2", hits[1].Number);
+        }
+
         // ================================================================
         // 模式 A：名称 + 括号编号 + 分隔符
         // ================================================================
@@ -121,6 +145,18 @@ namespace PatentMarker.Tests
             Assert.Equal("1", hits[1].Number);
             Assert.Equal("底架", hits[2].Name);
             Assert.Equal("S1", hits[2].Number);
+        }
+
+        [Fact]
+        public void Pattern3_LetterDigitSuffix()
+        {
+            var hits = MarkingTextParser.ExtractAll(
+                "\u7b2c\u4e00\u652f\u8def 123A1\n\u7b2c\u4e8c\u652f\u8def 123A2\n");
+            Assert.Equal(2, hits.Count);
+            Assert.Equal("\u7b2c\u4e00\u652f\u8def", hits[0].Name);
+            Assert.Equal("123A1", hits[0].Number);
+            Assert.Equal("\u7b2c\u4e8c\u652f\u8def", hits[1].Name);
+            Assert.Equal("123A2", hits[1].Number);
         }
 
         // ================================================================
@@ -282,6 +318,14 @@ namespace PatentMarker.Tests
         {
             string pre = MarkingTextParser.Preprocess("箱体结构\r\u000710\r\u0007\r\u0007");
             Assert.Equal("箱体结构10、\r、", pre);
+        }
+
+        [Fact]
+        public void TablePreprocess_LetterDigitSuffix()
+        {
+            string pre = MarkingTextParser.Preprocess(
+                "箱体结构\r\u0007123A1\r\u0007\r\u0007");
+            Assert.Equal("箱体结构123A1、\r、", pre);
         }
 
         [Fact]

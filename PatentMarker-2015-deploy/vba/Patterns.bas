@@ -42,11 +42,11 @@ Public Function ExtractAll(ByVal text As String) As Variant
     ' 模式 1：编号 + 名称 + 分隔符(，；;,、。.)
     '   1底座， 2支架； 10外壳A1， 1底座。 2支架、
     CollectHits allHits, keepRanges, text, _
-        "(\d{1,5}[A-Za-z]?)\s*([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\s*[，；;,、。.]", False
+        "(\d{1,5}(?:[A-Za-z]\d*)?)\s*([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)\s*[，；;,、。.]", False
     ' 模式 B：编号 + 括号名称 + 分隔符
     '   1(底座)、 10（泵体）；
     CollectHits allHits, keepRanges, text, _
-        "(\d{1,5}[A-Za-z]?)\s*[（(]([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)[）)]\s*[，;；,、。.]", False
+        "(\d{1,5}(?:[A-Za-z]\d*)?)\s*[（(]([\u4e00-\u9fa5A-Za-z0-9]*[\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)[）)]\s*[，;；,、。.]", False
 
     ' === 第二梯队：新格式（名称在前），与第一梯队重叠则丢弃 ===
     Dim candHits As Collection
@@ -57,18 +57,18 @@ Public Function ExtractAll(ByVal text As String) As Variant
     '   箱体结构10、 第一空间S1、 第一开口131a、 液体3000。
     '   外壳 主体 10、 子板10-1、
     CollectHits candHits, candRanges, text, _
-        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)\s*[、；。，;,.]", True
+        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)\s*[、；。，;,.]", True
     ' 模式 A：名称 + 括号编号 + 分隔符
     '   加热器(1)、 泵体（2）；
     CollectHits candHits, candRanges, text, _
-        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*[（(]([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)[）)]\s*[、；。，;,.]", True
+        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9 ]*?)\s*[（(]([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)[）)]\s*[、；。，;,.]", True
 
     Dim ci As Long, ch As Variant
     For ci = 1 To candHits.Count
         ch = candHits(ci)
         If Not Overlaps(ch, keepRanges) Then
             allHits.Add ch
-            keepRanges.Add Array(ch(2), ch(3))
+            keepRanges.Add Array(ch(2), ch(2) + ch(3) - 1)
         End If
     Next
 
@@ -78,7 +78,7 @@ Public Function ExtractAll(ByVal text As String) As Variant
     re3.Global = True
     re3.Multiline = True
     re3.IgnoreCase = False
-    re3.pattern = "^\s*([\u4e00-\u9fa5A-Za-z ]+?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?[A-Za-z]?)\s*$"
+    re3.pattern = "^\s*([\u4e00-\u9fa5A-Za-z ]+?)\s*([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)\s*$"
     Dim m3 As Object, h3 As Hit
     For Each m3 In re3.Execute(text)
         h3.Name = m3.SubMatches(0)
