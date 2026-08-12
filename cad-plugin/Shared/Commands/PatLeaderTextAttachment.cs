@@ -17,10 +17,12 @@ namespace PatentMarker.Commands
         private const int HardPointerIdCode = 340;
 
         /// <summary>
-        /// Selects the text corner facing the last leader vertex. A point
-        /// above the text uses a top attachment, a point below uses a bottom
-        /// attachment, and a point on the same horizontal level keeps the
-        /// existing middle attachment behavior.
+        /// Selects the text corner facing the last leader vertex. The result
+        /// is always one of the four corners. This is important when unlimited
+        /// mode accepts Enter for the text point: the displayed text location
+        /// can then coincide with the final dogleg, so the preceding segment
+        /// direction is used to break the tie instead of falling back to the
+        /// left-side midpoint.
         /// </summary>
         public static AttachmentPoint Get(Point3d lastLeaderPoint, Point3d textPoint)
         {
@@ -38,7 +40,7 @@ namespace PatentMarker.Commands
                 return useLeftSide ? AttachmentPoint.BottomLeft : AttachmentPoint.BottomRight;
             }
 
-            return useLeftSide ? AttachmentPoint.MiddleLeft : AttachmentPoint.MiddleRight;
+            return useLeftSide ? AttachmentPoint.TopLeft : AttachmentPoint.TopRight;
         }
 
         /// <summary>

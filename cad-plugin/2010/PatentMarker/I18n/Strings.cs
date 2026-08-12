@@ -725,12 +725,12 @@ namespace PatentMarker.I18n
 
         public static string Palette_LeaderOnOff
         {
-            get { return En ? "Leader:{0}" : "Leader:{0}"; }
+            get { return En ? "Leader:{0}" : "引线:{0}"; }
         }
 
         public static string Palette_UnderlineOnOff
         {
-            get { return En ? "Underline:{0}" : "Underline:{0}"; }
+            get { return En ? "Underline:{0}" : "下划线:{0}"; }
         }
 
         public static string Palette_On
@@ -837,12 +837,12 @@ namespace PatentMarker.I18n
         /// <summary>0=线型描述 | 线型: 样条曲线/直线段（影响后续新建引线）</summary>
         public static string Status_LeaderToggled
         {
-            get { return En ? "Leader: {0} (affects new annotations)" : "Leader: {0} (affects new annotations)"; }
+            get { return En ? "Leader: {0} (affects new annotations)" : "引线: {0}（影响后续新建标注）"; }
         }
 
         public static string Status_UnderlineToggled
         {
-            get { return En ? "Underline: {0} (affects new text)" : "Underline: {0} (affects new text)"; }
+            get { return En ? "Underline: {0} (affects new text)" : "下划线: {0}（影响后续新建文字）"; }
         }
 
         public static string Status_SplineToggled

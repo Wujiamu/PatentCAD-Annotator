@@ -6,9 +6,12 @@
 
 ## v4.4 (2026-08-12)
 
+- Corrected the unlimited-point tie case so it always resolves to a text corner instead of the left/right middle attachment, and added a free-mode regression assertion for the selected corner.
+- Localized the new palette switches: Chinese mode now displays `引线` and `下划线`, while English mode continues to display `Leader` and `Underline`.
+- Rebuilt the five edition deployment DLLs after verification so field installations receive the source fixes rather than continuing to load the older packaged binaries.
 - Unified unlimited-point Leader/MText attachment selection with the four-corner rule used by three-point mode. When the unlimited-point text position uses the last dogleg, the preceding segment now supplies the directional reference instead of collapsing to the left middle attachment.
 - Removed the unused palette entries for deleting leaders, selecting all, and conflict handling from all five editions. The underlying commands and data services remain available for compatibility.
-- Per the current handoff request, detection and automated verification were intentionally skipped for this change.
+- After the follow-up verification request, simulation, unit, structure, static, full-edition build, and API-surface checks were run before publishing.
 - Reworked the shared brace profile around the PPT right-brace baseline: the selected side is reserved for the single center cusp, while the endpoint shoulders and straight stems stay on the opposite side; the cusp remains one explicit shared Polyline vertex.
 
 ---

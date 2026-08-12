@@ -231,12 +231,51 @@ namespace PatentMarker.RuntimeContractTests
 #if SIM_LEADER
                 MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(new Point3d(2, 2, 0), annotation.Location);
+                Assert.Equal(AttachmentPoint.BottomLeft, annotation.Attachment);
                 Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
                 Assert.Equal(2, leader.Vertices.Count);
                 Assert.True(leader.Annotation.IsNull);
 #else
                 MLeader leader = Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(new Point3d(2, 2, 0), leader.TextLocation);
+#endif
+            }
+        }
+
+        [Fact]
+        public void FreeModeExplicitTextPointUsesTheFacingCorner()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                Palette.PatPaletteCommand.PendingNumber = "free-corner";
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(10, 10, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(5, 6, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(2, 3, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.TopRight, annotation.Attachment);
+#endif
+            }
+        }
+
+        [Fact]
+        public void FreeModeHorizontalTieUsesACornerInsteadOfMiddleSide()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                fixture.QueueFreeModeAnnotation("free-horizontal",
+                    new Point3d(1, 2, 0), new Point3d(3, 2, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                MText annotation = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(AttachmentPoint.TopLeft, annotation.Attachment);
 #endif
             }
         }
