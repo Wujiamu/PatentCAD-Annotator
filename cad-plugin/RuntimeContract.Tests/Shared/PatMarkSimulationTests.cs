@@ -80,6 +80,47 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
+        public void LeaderOffCreatesStandaloneUnderlinedText()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.HasLeader = false;
+                IO.PatSettingsStore.Current.UnderlineText = true;
+                Palette.PatPaletteCommand.PendingNumber = "COMP-A";
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(7, 8, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
+
+                new PatMarkCommand().Run();
+
+                Assert.Single(fixture.Database.CommittedEntities);
+                MText text = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal("\\LCOMP-A\\l", text.Contents);
+                Assert.Equal(AttachmentPoint.MiddleCenter, text.Attachment);
+                Assert.Equal(new Point3d(7, 8, 0), text.Location);
+                using (Transaction tr = fixture.Database.TransactionManager.StartTransaction())
+                    Assert.True(IO.PatEntityHelper.IsStandaloneText(text, tr));
+            }
+        }
+
+        [Fact]
+        public void UnderlineSwitchAlsoFormatsLeaderText()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.UnderlineText = true;
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointAnnotation("1342B", new Point3d(1, 2, 0),
+                    new Point3d(3, 4, 0), new Point3d(5, 6, 0));
+
+                new PatMarkCommand().Run();
+
+                MText text = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal("\\L1342B\\l", text.Contents);
+                Assert.Equal("1342B", IO.PatEntityHelper.GetTextNumber(text));
+            }
+        }
+
+        [Fact]
         public void LowerRightLeaderUsesBottomRightAttachment()
         {
             using (SimulationFixture fixture = new SimulationFixture())

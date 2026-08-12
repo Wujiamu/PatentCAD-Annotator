@@ -25,6 +25,8 @@ namespace PatentMarker.Palette
         private Button _btnConflicts;
         private Button _btnDelete;
         private Button _btnArrow;
+        private Button _btnLeader;
+        private Button _btnUnderline;
         private NumericUpDown _numArrowSize;
         private Button _btnSpline;
         private Button _btnPoints;   // v3.1：点数模式切换（无限/三点）
@@ -156,7 +158,7 @@ namespace PatentMarker.Palette
             // 样式栏 | Style bar
             FlowLayoutPanel stylePanel = new FlowLayoutPanel();
             stylePanel.Dock = DockStyle.Top;
-            stylePanel.Height = 80;   // v4.1：容纳大括号按钮
+            stylePanel.Height = 105;   // leader/underline switches plus style controls
             stylePanel.WrapContents = true;
             stylePanel.FlowDirection = FlowDirection.LeftToRight;
             stylePanel.Padding = new Padding(0, 2, 0, 2);
@@ -165,6 +167,16 @@ namespace PatentMarker.Palette
             _btnArrow.AutoSize = true;
             _btnArrow.Click += new EventHandler(BtnArrow_Click);
             UpdateArrowButtonText();
+
+            _btnLeader = new Button();
+            _btnLeader.AutoSize = true;
+            _btnLeader.Click += new EventHandler(BtnLeader_Click);
+            UpdateLeaderButtonText();
+
+            _btnUnderline = new Button();
+            _btnUnderline.AutoSize = true;
+            _btnUnderline.Click += new EventHandler(BtnUnderline_Click);
+            UpdateUnderlineButtonText();
 
             Label arrowSizeLbl = new Label();
             arrowSizeLbl.Text = Strings.Palette_ArrowSize;
@@ -198,7 +210,7 @@ namespace PatentMarker.Palette
             _btnBrace.Click += new EventHandler(BtnBrace_Click);
             _btnBrace.Text = Strings.Palette_Brace;
 
-            stylePanel.Controls.AddRange(new Control[] { _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline, _btnPoints, _btnBrace });
+            stylePanel.Controls.AddRange(new Control[] { _btnLeader, _btnUnderline, _btnArrow, arrowSizeLbl, _numArrowSize, _btnSpline, _btnPoints, _btnBrace });
 
             // 按钮栏 | Button bar
             FlowLayoutPanel btnPanel = new FlowLayoutPanel();
@@ -355,6 +367,8 @@ namespace PatentMarker.Palette
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
             if (_btnLanguage != null) _btnLanguage.Text = Strings.Palette_Language;
             if (_btnBrace != null) _btnBrace.Text = Strings.Palette_Brace;
+            UpdateLeaderButtonText();
+            UpdateUnderlineButtonText();
             if (_colNumber != null) _colNumber.Text = Strings.Col_Number;
             if (_colName != null) _colName.Text = Strings.Col_Name;
             if (_colOcc != null) _colOcc.Text = Strings.Col_Occ;
@@ -411,6 +425,8 @@ namespace PatentMarker.Palette
             if (_numArrowSize != null)
                 _numArrowSize.Value = (decimal)PatSettingsStore.Current.ArrowSize;
             UpdateArrowButtonText();
+            UpdateLeaderButtonText();
+            UpdateUnderlineButtonText();
             UpdateSplineButtonText();
             UpdatePointsButtonText();
         }
@@ -492,6 +508,40 @@ namespace PatentMarker.Palette
         {
             if (_btnPoints != null)
                 _btnPoints.Text = PatPaletteCommand.ThreePointMode ? Strings.Palette_PointsThree : Strings.Palette_PointsUnlimited;
+        }
+
+        private void BtnLeader_Click(object sender, EventArgs e)
+        {
+            PatPaletteCommand.HasLeader = !PatPaletteCommand.HasLeader;
+            UpdateLeaderButtonText();
+            string state = PatPaletteCommand.HasLeader ? Strings.Palette_On : Strings.Palette_Off;
+            _lblStatus.Text = string.Format(Strings.Status_LeaderToggled, state);
+        }
+
+        private void UpdateLeaderButtonText()
+        {
+            if (_btnLeader != null)
+            {
+                string state = PatPaletteCommand.HasLeader ? Strings.Palette_On : Strings.Palette_Off;
+                _btnLeader.Text = string.Format(Strings.Palette_LeaderOnOff, state);
+            }
+        }
+
+        private void BtnUnderline_Click(object sender, EventArgs e)
+        {
+            PatPaletteCommand.UnderlineText = !PatPaletteCommand.UnderlineText;
+            UpdateUnderlineButtonText();
+            string state = PatPaletteCommand.UnderlineText ? Strings.Palette_On : Strings.Palette_Off;
+            _lblStatus.Text = string.Format(Strings.Status_UnderlineToggled, state);
+        }
+
+        private void UpdateUnderlineButtonText()
+        {
+            if (_btnUnderline != null)
+            {
+                string state = PatPaletteCommand.UnderlineText ? Strings.Palette_On : Strings.Palette_Off;
+                _btnUnderline.Text = string.Format(Strings.Palette_UnderlineOnOff, state);
+            }
         }
 
         private void BtnBrace_Click(object sender, EventArgs e)

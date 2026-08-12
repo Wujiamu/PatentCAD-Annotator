@@ -46,8 +46,9 @@ namespace PatentMarker.Palette
         }
 
         /// <summary>
-        /// Deletes all PAT Leader entities and their associated MText objects.
-        /// Non-PAT leaders are retained and counted as skipped.
+        /// Deletes all PAT Leader entities, their associated MText objects,
+        /// and standalone PAT MText objects. Non-PAT leaders are retained and
+        /// counted as skipped.
         /// </summary>
         public static DictPaletteDeleteResult DeleteAll(Document doc)
         {
@@ -65,13 +66,21 @@ namespace PatentMarker.Palette
 
                 List<AcDb.ObjectId> leadersToDelete = new List<AcDb.ObjectId>();
                 List<AcDb.ObjectId> annotationsToDelete = new List<AcDb.ObjectId>();
+                List<AcDb.ObjectId> standaloneTextsToDelete = new List<AcDb.ObjectId>();
 
                 foreach (AcDb.ObjectId entId in btr)
                 {
                     AcDb.Entity ent = (AcDb.Entity)tr.GetObject(
                         entId, AcDb.OpenMode.ForRead);
                     AcDb.Leader leader = ent as AcDb.Leader;
-                    if (leader == null) continue;
+                    if (leader == null)
+                    {
+                        AcDb.MText standaloneText = ent as AcDb.MText;
+                        if (standaloneText != null &&
+                            PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                            standaloneTextsToDelete.Add(entId);
+                        continue;
+                    }
 
                     if (!PatEntityHelper.IsPatEntity(leader, tr))
                     {
@@ -113,6 +122,22 @@ namespace PatentMarker.Palette
                     {
                         PatentMarkerApp.RawLog(
                             "DictPaletteCadService mtext delete error: " + ex.Message);
+                    }
+                }
+
+                foreach (AcDb.ObjectId id in standaloneTextsToDelete)
+                {
+                    try
+                    {
+                        AcDb.MText mtext = (AcDb.MText)tr.GetObject(
+                            id, AcDb.OpenMode.ForWrite);
+                        mtext.Erase(true);
+                        result.Deleted++;
+                    }
+                    catch (Exception ex)
+                    {
+                        PatentMarkerApp.RawLog(
+                            "DictPaletteCadService standalone mtext delete error: " + ex.Message);
                     }
                 }
 

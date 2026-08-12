@@ -52,6 +52,31 @@ namespace PatentMarker.RuntimeContractTests
             }
         }
 
+        [Fact]
+        public void RenameAndDeleteIncludeStandalonePatText()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                MText text;
+                using (Transaction tr = fixture.Database.TransactionManager.StartTransaction())
+                {
+                    text = new MText { Contents = "\\Lstandalone\\l" };
+                    fixture.Database.ModelSpace.AppendEntity(text);
+                    PatentMarker.IO.PatEntityHelper.MarkStandaloneText(text, tr);
+                    tr.Commit();
+                }
+
+                Assert.Equal(1, Palette.DictPaletteCadService.RenameNumber(
+                    fixture.Document, "standalone", "renamed"));
+                Assert.Equal("\\Lrenamed\\l", text.Contents);
+
+                Palette.DictPaletteDeleteResult result =
+                    Palette.DictPaletteCadService.DeleteAll(fixture.Document);
+                Assert.Equal(1, result.Deleted);
+                Assert.True(text.IsErased);
+            }
+        }
+
         private static void AddLeader(
             SimulationFixture fixture,
             string number,

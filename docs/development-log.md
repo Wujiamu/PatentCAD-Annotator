@@ -4,6 +4,13 @@
 
 ---
 
+## v4.3 (2026-08-12)
+
+- Added synchronized Leader and Underline switches to all five palette editions. With Leader off, PATMARK creates a marked standalone MText at the single picked position; Underline uses AutoCAD MText inline formatting and remains compatible with dictionary checks, renaming, alignment, selection, and bulk deletion.
+- Added runtime-contract coverage for standalone underlined text, leader text underline formatting, and standalone entity lifecycle operations. AutoCAD in-process verification is still required for final host rendering confirmation.
+
+---
+
 ## v4.2 (2026-08-12)
 
 - 重做共享矢量大括号几何：废弃旧的固定 `ShapeX/ShapeT` 折线采样，改为基于 PPT `Right Brace` 轮廓的参数化曲线；端部肩部平滑过渡，直干保持在同一侧，中部使用真正尖锐的折角，不再生成 W 型或圆头尖点。五个版本继续链接同一份共享几何源码。

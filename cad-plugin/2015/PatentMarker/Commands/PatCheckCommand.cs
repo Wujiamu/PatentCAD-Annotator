@@ -46,7 +46,20 @@ namespace PatentMarker.Commands
                 {
                     Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
                     Leader leader = ent as Leader;
-                    if (leader == null) continue;
+                    if (leader == null)
+                    {
+                        MText standaloneText = ent as MText;
+                        if (standaloneText == null || !IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                            continue;
+                        patCount++;
+                        string standaloneNumber = IO.PatEntityHelper.GetTextNumber(standaloneText);
+                        if (standaloneNumber == null || standaloneNumber.Trim().Length == 0) continue;
+                        standaloneNumber = IO.NumberIdentity.Normalize(standaloneNumber);
+                        if (!drawingNumbers.ContainsKey(standaloneNumber))
+                            drawingNumbers[standaloneNumber] = new List<Point3d>();
+                        drawingNumbers[standaloneNumber].Add(standaloneText.Location);
+                        continue;
+                    }
                     totalLeaders++;
                     if (!IO.PatEntityHelper.IsPatEntity(leader, tr)) continue;
                     patCount++;

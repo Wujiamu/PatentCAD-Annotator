@@ -94,6 +94,11 @@ namespace PatentMarker.I18n
 
         /// <summary>0=number, 1=vertexCount | 已创建引线: num（N 个顶点）</summary>
         // PATBRACE / PATBRACEEDIT — 参数化矢量大括号
+        public static string PatMark_PromptTextOnly
+        {
+            get { return En ? "\\nClick standalone text position (Esc to cancel): " : "\\nStandalone text position (Esc to cancel): "; }
+        }
+
         public static string PatBrace_PromptTop
         {
             get { return En ? "\nBrace top point: " : "\n大括号顶部: "; }
@@ -718,6 +723,16 @@ namespace PatentMarker.I18n
             get { return En ? "Arrow:{0}" : "箭头:{0}"; }
         }
 
+        public static string Palette_LeaderOnOff
+        {
+            get { return En ? "Leader:{0}" : "Leader:{0}"; }
+        }
+
+        public static string Palette_UnderlineOnOff
+        {
+            get { return En ? "Underline:{0}" : "Underline:{0}"; }
+        }
+
         public static string Palette_On
         {
             get { return En ? "On" : "开"; }
@@ -820,6 +835,16 @@ namespace PatentMarker.I18n
         }
 
         /// <summary>0=线型描述 | 线型: 样条曲线/直线段（影响后续新建引线）</summary>
+        public static string Status_LeaderToggled
+        {
+            get { return En ? "Leader: {0} (affects new annotations)" : "Leader: {0} (affects new annotations)"; }
+        }
+
+        public static string Status_UnderlineToggled
+        {
+            get { return En ? "Underline: {0} (affects new text)" : "Underline: {0} (affects new text)"; }
+        }
+
         public static string Status_SplineToggled
         {
             get { return En ? "Line type: {0} (affects new leaders)" : "线型: {0}（影响后续新建引线）"; }

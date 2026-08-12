@@ -77,6 +77,18 @@ namespace PatentMarker.Commands
                             continue;
                         }
 
+                        MText standaloneText = entity as MText;
+                        if (standaloneText != null && IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                        {
+                            MText textOnly = (MText)tr.GetObject(standaloneText.ObjectId, OpenMode.ForWrite);
+                            Point3d posOnly = textOnly.Location;
+                            posOnly = directionResult.StringResult == Strings.PatAlign_KwHorizontal
+                                ? new Point3d(posOnly.X, reference.Value.Y, posOnly.Z)
+                                : new Point3d(reference.Value.X, posOnly.Y, posOnly.Z);
+                            textOnly.Location = posOnly;
+                            aligned++;
+                            continue;
+                        }
                         Leader leader = (Leader)entity;
                         ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                         if (annotationId.IsNull)
@@ -165,6 +177,23 @@ namespace PatentMarker.Commands
                             continue;
                         }
 
+                        MText standaloneText = entity as MText;
+                        if (standaloneText != null && IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                        {
+                            MText textOnly = (MText)tr.GetObject(standaloneText.ObjectId, OpenMode.ForWrite);
+                            Point3d posOnly = textOnly.Location;
+                            if (sideResult.StringResult == Strings.PatAlign_KwLeft)
+                                posOnly = new Point3d(minX - margin, posOnly.Y, posOnly.Z);
+                            else if (sideResult.StringResult == Strings.PatAlign_KwRight)
+                                posOnly = new Point3d(maxX + margin, posOnly.Y, posOnly.Z);
+                            else if (sideResult.StringResult == Strings.PatAlign_KwTop)
+                                posOnly = new Point3d(posOnly.X, maxY + margin, posOnly.Z);
+                            else
+                                posOnly = new Point3d(posOnly.X, minY - margin, posOnly.Z);
+                            textOnly.Location = posOnly;
+                            aligned++;
+                            continue;
+                        }
                         Leader leader = (Leader)entity;
                         ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                         if (annotationId.IsNull)

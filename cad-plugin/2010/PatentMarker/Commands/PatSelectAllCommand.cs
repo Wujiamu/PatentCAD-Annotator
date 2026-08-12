@@ -37,7 +37,13 @@ namespace PatentMarker.Commands
                     {
                         Entity ent = (Entity)tr.GetObject(id, OpenMode.ForRead);
                         Leader leader = ent as Leader;
-                        if (leader == null) continue;
+                        if (leader == null)
+                        {
+                            MText standaloneText = ent as MText;
+                            if (standaloneText != null && IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                                ids.Add(id);
+                            continue;
+                        }
 
                         if (!IO.PatEntityHelper.IsPatEntity(leader, tr)) continue;
 

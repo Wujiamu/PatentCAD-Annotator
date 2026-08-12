@@ -90,6 +90,16 @@ namespace PatentMarker.Commands
                         // 统一使用 PatEntityHelper 识别（修复 S3）
                         if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
 
+                        MText standaloneText = ent as MText;
+                        if (standaloneText != null && IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                        {
+                            MText mtStandalone = (MText)tr.GetObject(standaloneText.ObjectId, OpenMode.ForWrite);
+                            mtStandalone.Location = dirResult.StringResult == Strings.PatAlign_KwHorizontal
+                                ? new Point3d(mtStandalone.Location.X, refY, mtStandalone.Location.Z)
+                                : new Point3d(refX, mtStandalone.Location.Y, mtStandalone.Location.Z);
+                            aligned++;
+                            continue;
+                        }
                         var leader = (Leader)ent;
                         ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                         if (annotationId.IsNull) { skipped++; continue; }
@@ -169,6 +179,23 @@ namespace PatentMarker.Commands
 
                         if (!IO.PatEntityHelper.IsPatEntity(ent, tr)) { skipped++; continue; }
 
+                        MText standaloneText = ent as MText;
+                        if (standaloneText != null && IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
+                        {
+                            MText mtStandalone = (MText)tr.GetObject(standaloneText.ObjectId, OpenMode.ForWrite);
+                            Point3d standalonePos = mtStandalone.Location;
+                            if (sideResult.StringResult == Strings.PatAlign_KwLeft)
+                                standalonePos = new Point3d(minX - margin, standalonePos.Y, standalonePos.Z);
+                            else if (sideResult.StringResult == Strings.PatAlign_KwRight)
+                                standalonePos = new Point3d(maxX + margin, standalonePos.Y, standalonePos.Z);
+                            else if (sideResult.StringResult == Strings.PatAlign_KwTop)
+                                standalonePos = new Point3d(standalonePos.X, maxY + margin, standalonePos.Z);
+                            else
+                                standalonePos = new Point3d(standalonePos.X, minY - margin, standalonePos.Z);
+                            mtStandalone.Location = standalonePos;
+                            aligned++;
+                            continue;
+                        }
                         var leader = (Leader)ent;
                         ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                         if (annotationId.IsNull) { skipped++; continue; }

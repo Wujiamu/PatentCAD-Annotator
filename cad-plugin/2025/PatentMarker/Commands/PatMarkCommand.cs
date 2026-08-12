@@ -56,6 +56,24 @@ namespace PatentMarker.Commands
             while (true)
             {
                 ApplyPendingIfNeeded(ed);
+                if (!IO.PatSettingsStore.Current.HasLeader)
+                {
+                    var textOnlyResult = ed.GetPoint(Strings.PatMark_PromptTextOnly);
+                    if (textOnlyResult.Status != PromptStatus.OK) break;
+                    ApplyPendingIfNeeded(ed);
+                    try
+                    {
+                        CreateTextOnly(db, textOnlyResult.Value, _currentNumber);
+                        ed.WriteMessage(string.Format(Strings.PatMark_Created,
+                            _currentNumber, 0));
+                    }
+                    catch (Exception ex)
+                    {
+                        ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
+                        PatentMarkerApp.RawLog("CreateTextOnly EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
+                    }
+                    continue;
+                }
                 string namePart = _currentName != null ? _currentName : "";
                 var ptResult = ed.GetPoint(string.Format(
                     Strings.PatMark_PromptAttachPoint, _currentNumber, namePart));
@@ -158,6 +176,35 @@ namespace PatentMarker.Commands
             _currentName = null;
         }
 
+        private void CreateTextOnly(Database db, Point3d textPt, string number)
+        {
+            PatentMarkerApp.RawLog("=== CreateTextOnly START (number=" + number + ") ===");
+            using (Transaction tr = db.TransactionManager.StartTransaction())
+            {
+                BlockTable bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
+                BlockTableRecord btr = (BlockTableRecord)tr.GetObject(
+                    bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+                ObjectId textStyleId = GetOrCreateTextStyleId(db, tr);
+                ObjectId originalTextStyle = db.Textstyle;
+                db.Textstyle = textStyleId;
+
+                MText mt = new MText();
+                mt.SetDatabaseDefaults(db);
+                mt.Contents = IO.PatEntityHelper.FormatText(
+                    number, IO.PatSettingsStore.Current.UnderlineText);
+                mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
+                mt.Attachment = AttachmentPoint.MiddleCenter;
+                mt.Location = textPt;
+                mt.Rotation = 0.0;
+                btr.AppendEntity(mt);
+                tr.AddNewlyCreatedDBObject(mt, true);
+                IO.PatEntityHelper.MarkStandaloneText(mt, tr);
+                db.Textstyle = originalTextStyle;
+                tr.Commit();
+            }
+            PatentMarkerApp.RawLog("=== CreateTextOnly END (success) ===");
+        }
+
         private void CreateLeaderWithText(Database db, Point3d attachPt,
             List<Point3d> doglegPts, Point3d textPt, string number)
         {
@@ -180,7 +227,8 @@ namespace PatentMarker.Commands
 
                 MText mt = new MText();
                 mt.SetDatabaseDefaults(db);
-                mt.Contents = number;
+                mt.Contents = IO.PatEntityHelper.FormatText(
+                    number, IO.PatSettingsStore.Current.UnderlineText);
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
                 Point3d lastLeaderPoint = doglegPts.Count > 0
                     ? doglegPts[doglegPts.Count - 1]

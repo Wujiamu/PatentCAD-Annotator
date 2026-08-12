@@ -22,6 +22,8 @@ namespace PatentMarker.Palette
         public static double TextHeight { get { return PatSettingsStore.Current.TextHeight; } set { PatSettingsStore.Current.TextHeight = value; } }
         // v2：箭头开关，默认无箭头（专利标注惯例）。由面板按钮切换，影响后续新建引线。
         public static bool HasArrowHead { get { return PatSettingsStore.Current.HasArrowHead; } set { PatSettingsStore.Current.HasArrowHead = value; } }
+        public static bool HasLeader { get { return PatSettingsStore.Current.HasLeader; } set { PatSettingsStore.Current.HasLeader = value; } }
+        public static bool UnderlineText { get { return PatSettingsStore.Current.UnderlineText; } set { PatSettingsStore.Current.UnderlineText = value; } }
         // v2.1：箭头大小，由面板 NumericUpDown 调节。创建引线时同步到 PAT_DIM 样式。
         public static double ArrowSize { get { return PatSettingsStore.Current.ArrowSize; } set { PatSettingsStore.Current.ArrowSize = value; } }
         // v2.1：样条曲线开关，默认样条曲线。由面板按钮切换，影响后续新建引线。

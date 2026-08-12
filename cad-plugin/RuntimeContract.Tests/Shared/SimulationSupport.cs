@@ -69,6 +69,8 @@ namespace PatentMarker.RuntimeContractTests
             Palette.PatPaletteCommand.PendingName = null;
             IO.PatSettingsStore.Activate(Document.Name);
             IO.PatSettingsStore.ResetConfigDefaults();
+            IO.PatSettingsStore.Current.HasLeader = true;
+            IO.PatSettingsStore.Current.UnderlineText = false;
             IO.PatSettingsStore.Current.HasArrowHead = false;
             IO.PatSettingsStore.Current.ArrowSize = IO.PatSettingsStore.DefaultArrowSize;
             IO.PatSettingsStore.Current.IsSplined = true;

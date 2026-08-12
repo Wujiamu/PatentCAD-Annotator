@@ -11,6 +11,9 @@ namespace PatentMarker.IO
     public class PatRuntimeSettings
     {
         public double TextHeight = 3.5;
+        // Keep the historical behavior by default: new annotations use a leader.
+        public bool HasLeader = true;
+        public bool UnderlineText = false;
         public bool HasArrowHead = false;
         public double ArrowSize = 2.5;
         public bool IsSplined = true;
