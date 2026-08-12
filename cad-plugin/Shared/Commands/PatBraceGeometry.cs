@@ -7,9 +7,9 @@ namespace PatentMarker.Commands
     /// <summary>
     /// Parametric definition of one two-dimensional curly brace.
     /// Top and Bottom are the two endpoints. Width is the distance from the
-    /// endpoint axis to the widest part of the profile, and Side is the
-    /// signed side of that axis (+1 or -1). The center tip is on Side; the
-    /// outer shoulders are on the opposite side.
+    /// endpoint axis to the sharp center tip, and Side is the signed side of
+    /// that axis (+1 or -1). The straight stems sit halfway between the axis
+    /// and the center tip.
     /// </summary>
     public sealed class PatBraceDefinition
     {
@@ -46,22 +46,31 @@ namespace PatentMarker.Commands
         private const double Epsilon = 0.000000001;
         private const double DefaultWidthRatio = 0.22;
 
-        // Endpoints are at x=0. The center tip points toward the selected
-        // width side, while the two outer shoulders point to the opposite
-        // side. This is the PPT-style curly-brace profile.
-        private static readonly double[] ShapeX = new double[]
-        {
-            0.00, -0.18, -0.42, -0.70, -0.92, -1.00, -0.98, -0.82,
-            -0.54, 1.00, -0.54, -0.82, -0.98, -1.00, -0.92, -0.70,
-            -0.42, -0.18, 0.00
-        };
+        // The profile follows the PowerPoint rightBrace proportions. Width
+        // is the endpoint-axis-to-tip distance; the visible stems are at
+        // half that distance. The center tip is intentionally a cusp: the
+        // two center curves meet at one point with different transverse
+        // tangent directions, so the generated Polyline keeps a sharp
+        // folded corner.
+        private const double CenterT = 0.48341;
+        private const double ShoulderDepthRatio = 1.0 / 12.0;
+        private const double CenterControlOffsetRatio = 0.28;
+        private const double CenterControlAlongRatio = 0.37;
+        private const double CenterTipControlOffsetRatio = 0.22;
+        private const double CubicKappa = 0.5522847498307936;
+        private const int CurveSamples = 8;
 
-        private static readonly double[] ShapeT = new double[]
+        private struct LocalPoint
         {
-            0.00, 0.02, 0.07, 0.15, 0.25, 0.33, 0.39, 0.44,
-            0.48, 0.50, 0.52, 0.56, 0.61, 0.67, 0.75, 0.85,
-            0.93, 0.98, 1.00
-        };
+            public double Along;
+            public double Offset;
+
+            public LocalPoint(double along, double offset)
+            {
+                Along = along;
+                Offset = offset;
+            }
+        }
 
         public static PatBraceDefinition FromPoints(
             Point3d top, Point3d bottom, Point3d widthPoint)
@@ -154,23 +163,127 @@ namespace PatentMarker.Commands
             double axisY = dy / height;
             double perpX = -axisY;
             double perpY = axisX;
-            double signedWidth = definition.Width * definition.Side;
             List<Point3d> points = new List<Point3d>();
 
-            for (int i = 0; i < ShapeX.Length; i++)
-            {
-                double along = height * ShapeT[i];
-                double offset = signedWidth * ShapeX[i];
-                points.Add(new Point3d(
-                    definition.Top.X + axisX * along + perpX * offset,
-                    definition.Top.Y + axisY * along + perpY * offset,
-                    definition.Top.Z + (definition.Bottom.Z - definition.Top.Z) * ShapeT[i]));
-            }
+            double tipOffset = definition.Width;
+            double stemOffset = tipOffset * 0.5;
+            double shoulderDepth = tipOffset * ShoulderDepthRatio;
+            double centerAlong = height * CenterT;
+            double upperStemAlong = centerAlong - shoulderDepth;
+            double lowerStemAlong = centerAlong + shoulderDepth;
+            double bottomShoulderAlong = height - shoulderDepth;
+
+            LocalPoint top = new LocalPoint(0.0, 0.0);
+            LocalPoint topStem = new LocalPoint(shoulderDepth, stemOffset);
+            LocalPoint upperCenter = new LocalPoint(upperStemAlong, stemOffset);
+            LocalPoint tip = new LocalPoint(centerAlong, tipOffset);
+            LocalPoint lowerCenter = new LocalPoint(lowerStemAlong, stemOffset);
+            LocalPoint bottomStem = new LocalPoint(bottomShoulderAlong, stemOffset);
+            LocalPoint bottom = new LocalPoint(height, 0.0);
+
+            // Endpoint shoulder: horizontal tangent at the endpoint and
+            // vertical tangent where it joins the straight stem.
+            AppendCubic(points, top,
+                new LocalPoint(0.0, stemOffset * CubicKappa),
+                new LocalPoint(shoulderDepth * (1.0 - CubicKappa),
+                    stemOffset),
+                topStem, axisX, axisY, perpX, perpY,
+                definition, height, false);
+
+            AddLocalPoint(points, upperCenter, axisX, axisY, perpX, perpY,
+                definition, height);
+
+            // The two center curves meet at one point with different
+            // transverse tangent directions. That tangent discontinuity is
+            // the intentional sharp fold from the reference brace.
+            AppendCubic(points, upperCenter,
+                new LocalPoint(upperStemAlong,
+                    stemOffset + stemOffset * CenterControlOffsetRatio),
+                new LocalPoint(
+                    centerAlong - shoulderDepth * CenterControlAlongRatio,
+                    tipOffset - stemOffset * CenterTipControlOffsetRatio),
+                tip, axisX, axisY, perpX, perpY,
+                definition, height, true);
+            AppendCubic(points, tip,
+                new LocalPoint(
+                    centerAlong + shoulderDepth * CenterControlAlongRatio,
+                    tipOffset - stemOffset * CenterTipControlOffsetRatio),
+                new LocalPoint(lowerStemAlong,
+                    stemOffset + stemOffset * CenterControlOffsetRatio),
+                lowerCenter, axisX, axisY, perpX, perpY,
+                definition, height, true);
+
+            AddLocalPoint(points, bottomStem, axisX, axisY, perpX, perpY,
+                definition, height);
+
+            // Bottom shoulder mirrors the top shoulder: vertical tangent at
+            // the stem and horizontal tangent at the endpoint.
+            AppendCubic(points, bottomStem,
+                new LocalPoint(bottomShoulderAlong
+                    + shoulderDepth * CubicKappa, stemOffset),
+                new LocalPoint(height,
+                    stemOffset * (1.0 - CubicKappa)),
+                bottom, axisX, axisY, perpX, perpY,
+                definition, height, true);
 
             // Keep the endpoints exact even if the shape table changes later.
             points[0] = definition.Top;
             points[points.Count - 1] = definition.Bottom;
             return points;
+        }
+
+        private static void AppendCubic(
+            List<Point3d> points,
+            LocalPoint p0,
+            LocalPoint p1,
+            LocalPoint p2,
+            LocalPoint p3,
+            double axisX,
+            double axisY,
+            double perpX,
+            double perpY,
+            PatBraceDefinition definition,
+            double height,
+            bool skipFirst)
+        {
+            int start = skipFirst ? 1 : 0;
+            for (int i = start; i <= CurveSamples; i++)
+            {
+                double t = (double)i / (double)CurveSamples;
+                double oneMinusT = 1.0 - t;
+                double b0 = oneMinusT * oneMinusT * oneMinusT;
+                double b1 = 3.0 * oneMinusT * oneMinusT * t;
+                double b2 = 3.0 * oneMinusT * t * t;
+                double b3 = t * t * t;
+                LocalPoint point = new LocalPoint(
+                    b0 * p0.Along + b1 * p1.Along
+                        + b2 * p2.Along + b3 * p3.Along,
+                    b0 * p0.Offset + b1 * p1.Offset
+                        + b2 * p2.Offset + b3 * p3.Offset);
+                AddLocalPoint(points, point, axisX, axisY, perpX, perpY,
+                    definition, height);
+            }
+        }
+
+        private static void AddLocalPoint(
+            List<Point3d> points,
+            LocalPoint point,
+            double axisX,
+            double axisY,
+            double perpX,
+            double perpY,
+            PatBraceDefinition definition,
+            double height)
+        {
+            double t = point.Along / height;
+            double signedOffset = point.Offset * definition.Side;
+            points.Add(new Point3d(
+                definition.Top.X + axisX * point.Along
+                    + perpX * signedOffset,
+                definition.Top.Y + axisY * point.Along
+                    + perpY * signedOffset,
+                definition.Top.Z
+                    + (definition.Bottom.Z - definition.Top.Z) * t));
         }
     }
 }
