@@ -34,8 +34,8 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
 - 面板新增“Brace/大括号”按钮，对应 `PATBRACE`（别名 `DAGUOHAO`）：依次指定顶部、底部和宽度方向三点，创建独立的参数化矢量大括号；它不是文字字符，也不加入 Leader/MText 标注关联。
 - `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
-- 第三点决定中部尖点的朝向：竖向大括号可向左/向右，横向大括号可向上/向下；两端肩部平滑过渡到同侧直干，形成 PPT 风格的曲线轮廓。
-- 大括号轮廓以 PPT `Right Brace` 为视觉基准：端部是平滑肩部，中段保持同侧直干，中心是单一真正尖锐的折角，不使用圆弧尖点或 W 型轮廓。
+- 第三点决定中部尖点的朝向：竖向大括号可向左/向右，横向大括号可向上/向下；两端肩部平滑过渡到尖点相反侧的直干，形成 PPT 风格的曲线轮廓。
+- 大括号轮廓以 PPT `Right Brace` 为视觉基准：端部是平滑肩部，中段直干位于尖点相反侧，中心是单一真正尖锐的折角，不使用圆弧尖点或 W 型轮廓。
 
 问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
 
@@ -219,8 +219,8 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
 - The palette adds a `Brace` button for `PATBRACE` (alias `DAGUOHAO`). Pick the top, bottom and width-direction points to create an independent parameterized vector brace; it is not a text glyph and is not part of the Leader/MText relationship.
 - `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
-- The third point controls the center-tip direction: vertical braces can point left or right, and horizontal braces can point up or down. The endpoint shoulders curve smoothly into same-side straight stems to form the PPT-style profile.
-- The brace profile is based on the PPT `Right Brace`: smooth endpoint shoulders, straight same-side stems, and one genuinely sharp center fold; it does not use a rounded tip or a W-shaped outline.
+- The third point controls the center-tip direction: vertical braces can point left or right, and horizontal braces can point up or down. The endpoint shoulders curve smoothly into straight stems on the side opposite the tip to form the PPT-style profile.
+- The brace profile is based on the PPT `Right Brace`: smooth endpoint shoulders, opposite-side straight stems, and one genuinely sharp center fold; it does not use a rounded tip or a W-shaped outline.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.
 

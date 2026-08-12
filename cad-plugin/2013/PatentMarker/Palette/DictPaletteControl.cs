@@ -21,9 +21,6 @@ namespace PatentMarker.Palette
         private Button _btnOpen;
         private Button _btnPaste;      // v4.0：粘贴识别
         private Button _btnAddEntry;   // v4.0：新增条目
-        private Button _btnArbitrate;  // v4.0：冲突裁决（检测到 Word 覆盖时点亮）
-        private Button _btnConflicts;
-        private Button _btnDelete;
         private Button _btnArrow;
         private Button _btnLeader;
         private Button _btnUnderline;
@@ -31,7 +28,6 @@ namespace PatentMarker.Palette
         private Button _btnSpline;
         private Button _btnPoints;   // v3.1：点数模式切换（无限/三点）
         private Button _btnBrace;    // v4.1：参数化矢量大括号
-        private Button _btnSelectAll;
         private Button _btnCompare;
         private Button _btnLanguage;  // v2.3：语言切换
         private Label _lblStatus;
@@ -52,9 +48,6 @@ namespace PatentMarker.Palette
         private List<DictDiffEntry> _currentDiff { get { return _session.CurrentDiff; } }
         private bool _compareMode;
 
-        // v4.0：冲突裁决标记（状态栏已点亮提示时避免被其他操作覆盖）
-        private bool _conflictFlagged;
-
         public DictPaletteControl()
         {
             InitializeComponent();
@@ -70,9 +63,6 @@ namespace PatentMarker.Palette
         {
             try
             {
-                // v4.0：轮询检测 Word 备份冲突（不弹窗打断，仅状态栏提示 + 裁决按钮点亮）
-                CheckConflictState();
-
                 if (!_workflow.IsFileChanged()) return;
                 var dict = _workflow.LoadCurrent();
                 if (dict != null)
@@ -242,28 +232,6 @@ namespace PatentMarker.Palette
             _btnAddEntry.AutoSize = true;
             _btnAddEntry.Margin = new Padding(0, 0, 4, 2);
 
-            // v4.0：冲突裁决入口（默认禁用，检测到 Word 备份后点亮）
-            _btnArbitrate = new Button();
-            _btnArbitrate.Text = Strings.Palette_Arbitrate;
-            _btnArbitrate.AutoSize = true;
-            _btnArbitrate.Margin = new Padding(0, 0, 4, 2);
-            _btnArbitrate.Enabled = false;
-
-            _btnConflicts = new Button();
-            _btnConflicts.Text = Strings.Palette_Conflicts;
-            _btnConflicts.AutoSize = true;
-            _btnConflicts.Margin = new Padding(0, 0, 4, 2);
-
-            _btnDelete = new Button();
-            _btnDelete.Text = Strings.Palette_DeleteLeader;
-            _btnDelete.AutoSize = true;
-            _btnDelete.Margin = new Padding(0, 0, 4, 2);
-
-            _btnSelectAll = new Button();
-            _btnSelectAll.Text = Strings.Palette_SelectAll;
-            _btnSelectAll.AutoSize = true;
-            _btnSelectAll.Margin = new Padding(0, 0, 4, 2);
-
             _btnCompare = new Button();
             _btnCompare.Text = Strings.Palette_Compare;
             _btnCompare.AutoSize = true;
@@ -278,17 +246,12 @@ namespace PatentMarker.Palette
             _btnLanguage.Click += new EventHandler(BtnLanguage_Click);
 
             btnPanel.Controls.AddRange(new Control[] {
-                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnArbitrate, _btnConflicts, _btnDelete,
-                _btnSelectAll, _btnCompare, _btnLanguage
+                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnCompare, _btnLanguage
             });
             _btnReload.Click += new EventHandler(BtnReload_Click);
             _btnOpen.Click += new EventHandler(BtnOpen_Click);
             _btnPaste.Click += new EventHandler(BtnPaste_Click);
             _btnAddEntry.Click += new EventHandler(BtnAddEntry_Click);
-            _btnArbitrate.Click += new EventHandler(BtnArbitrate_Click);
-            _btnConflicts.Click += new EventHandler(BtnConflicts_Click);
-            _btnDelete.Click += new EventHandler(BtnDelete_Click);
-            _btnSelectAll.Click += new EventHandler(BtnSelectAll_Click);
             _btnCompare.Click += new EventHandler(BtnCompare_Click);
 
             _lblStatus = new Label();
@@ -360,10 +323,6 @@ namespace PatentMarker.Palette
             if (_btnOpen != null) _btnOpen.Text = Strings.Palette_Open;
             if (_btnPaste != null) _btnPaste.Text = Strings.Palette_PasteRecognize;
             if (_btnAddEntry != null) _btnAddEntry.Text = Strings.Palette_AddEntry;
-            if (_btnArbitrate != null) _btnArbitrate.Text = Strings.Palette_Arbitrate;
-            if (_btnConflicts != null) _btnConflicts.Text = Strings.Palette_Conflicts;
-            if (_btnDelete != null) _btnDelete.Text = Strings.Palette_DeleteLeader;
-            if (_btnSelectAll != null) _btnSelectAll.Text = Strings.Palette_SelectAll;
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
             if (_btnLanguage != null) _btnLanguage.Text = Strings.Palette_Language;
             if (_btnBrace != null) _btnBrace.Text = Strings.Palette_Brace;
@@ -378,12 +337,6 @@ namespace PatentMarker.Palette
             UpdateSplineButtonText();
             UpdatePointsButtonText();
 
-            // v4.0：语言切换后若冲突提示仍点亮，恢复冲突提示文本
-            if (_conflictFlagged && _lblStatus != null)
-            {
-                _lblStatus.Text = Strings.Conflict_StatusDetected;
-                _lblStatus.ForeColor = Color.DarkOrange;
-            }
         }
 
         /// <summary>v2.3：切换语言 | Toggle language</summary>
@@ -555,20 +508,6 @@ namespace PatentMarker.Palette
             catch (System.Exception ex)
             {
                 PatentMarkerApp.RawLog("BtnBrace error: " + ex.Message);
-            }
-        }
-
-        private void BtnSelectAll_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var doc = IO.RuntimeHost.ActiveDocument;
-                if (doc != null)
-                    doc.SendStringToExecute("PATSELECTALL\n", true, false, false);
-            }
-            catch (System.Exception ex)
-            {
-                PatentMarkerApp.RawLog("BtnSelectAll error: " + ex.Message);
             }
         }
 
@@ -801,94 +740,6 @@ namespace PatentMarker.Palette
             }
         }
 
-        /// <summary>
-        /// v4.0：轮询检测冲突待裁决状态（2s 定时器驱动，不弹窗打断）。
-        /// 检测到 Word 备份且当前 JSON 无 CAD 标记时：点亮裁决按钮 + 状态栏橙色提示；
-        /// 冲突解除（裁决完成或用户已在 Word 端处理）后熄灭按钮并复位状态栏。
-        /// </summary>
-        private void CheckConflictState()
-        {
-            try
-            {
-                string dictPath = _workflow.ResolveDictPath();
-                bool pending = _workflow.IsPendingConflict(_currentDict, dictPath);
-
-                if (pending && !_conflictFlagged)
-                {
-                    _conflictFlagged = true;
-                    _btnArbitrate.Enabled = true;
-                    _lblStatus.Text = Strings.Conflict_StatusDetected;
-                    _lblStatus.ForeColor = Color.DarkOrange;
-                }
-                else if (!pending && _conflictFlagged)
-                {
-                    _conflictFlagged = false;
-                    _btnArbitrate.Enabled = false;
-                    _lblStatus.Text = Strings.Status_Ready;
-                    _lblStatus.ForeColor = SystemColors.ControlText;
-                }
-            }
-            catch (System.Exception ex)
-            {
-                PatentMarkerApp.RawLog("CheckConflictState error: " + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// v4.0：打开冲突裁决对话框（采用 Word 版 / 恢复 CAD 版 / 稍后再说）。
-        /// 裁决动作由 DictConflict 完成（文件操作），本方法负责刷新面板。
-        /// </summary>
-        private void BtnArbitrate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string dictPath = _workflow.ResolveDictPath();
-                if (dictPath == null)
-                {
-                    _lblStatus.Text = Strings.Status_NoDictFile;
-                    return;
-                }
-                if (!_workflow.IsPendingConflict(_currentDict, dictPath))
-                {
-                    _conflictFlagged = false;
-                    _btnArbitrate.Enabled = false;
-                    return;
-                }
-
-                using (ArbitrateDialog dlg = new ArbitrateDialog(dictPath))
-                {
-                    DialogResult r = dlg.ShowDialog(this);
-                    if (r == DialogResult.OK)
-                    {
-                        // 采用 Word 版：备份已删，刷新面板显示 Word 最新导出
-                        var dict = _workflow.LoadCurrent();
-                        if (dict != null) LoadDict(dict);
-                        else ShowNoDict();
-                        _lblStatus.Text = Strings.Conflict_KeepWordOk;
-                        _lblStatus.ForeColor = SystemColors.ControlText;
-                    }
-                    else if (r == DialogResult.Yes)
-                    {
-                        // 恢复 CAD 版：dict.json 已恢复为 CAD 版并清除标记
-                        var dict = _workflow.LoadCurrent();
-                        if (dict != null) LoadDict(dict);
-                        else ShowNoDict();
-                        _lblStatus.Text = Strings.Conflict_RestoreOk;
-                        _lblStatus.ForeColor = SystemColors.ControlText;
-                    }
-                    // Cancel = 稍后再说：保持现状，下次轮询继续提示
-                }
-
-                _conflictFlagged = false;
-                _btnArbitrate.Enabled = false;
-            }
-            catch (System.Exception ex)
-            {
-                _lblStatus.Text = string.Format(Strings.Conflict_Failed, ex.Message);
-                PatentMarkerApp.RawLog("BtnArbitrate error: " + ex.Message);
-            }
-        }
-
         private void BtnOpen_Click(object sender, EventArgs e)
         {
             try
@@ -912,61 +763,6 @@ namespace PatentMarker.Palette
             }
         }
 
-        private void BtnConflicts_Click(object sender, EventArgs e)
-        {
-            if (_currentDict == null) { _lblStatus.Text = Strings.Palette_DictNotLoaded; return; }
-
-            int warnCount = _currentDict.Warnings != null ? _currentDict.Warnings.Count : 0;
-            int conflictCount = 0;
-            foreach (DictEntry ent in _currentDict.Entries)
-                conflictCount += (ent.Conflicts != null ? ent.Conflicts.Count : 0);
-
-            if (warnCount == 0 && conflictCount == 0)
-            {
-                MessageBox.Show(Strings.Msg_NoConflicts, Strings.Msg_ConflictTitle);
-                return;
-            }
-
-            string msg = "";
-            if (warnCount > 0)
-            {
-                msg += Strings.Msg_WarningsSection;
-                foreach (string w in _currentDict.Warnings)
-                    msg += "  * " + w + "\r\n";
-            }
-            if (conflictCount > 0)
-            {
-                msg += Strings.Msg_ConflictsSection;
-                foreach (DictEntry ent in _currentDict.Entries)
-                {
-                    if (ent.Conflicts == null || ent.Conflicts.Count == 0) continue;
-                    foreach (ConflictInfo c in ent.Conflicts)
-                    {
-                        string cands = string.Join(" vs ", c.Candidates.ToArray());
-                        msg += "  #" + c.Number + ": " + cands + "\r\n";
-                    }
-                }
-            }
-            MessageBox.Show(msg, Strings.Msg_ConflictTitle);
-        }
-
-        private void BtnDelete_Click(object sender, EventArgs e)
-        {
-            var doc = IO.RuntimeHost.ActiveDocument;
-            if (doc == null) return;
-
-            PatentMarkerApp.RawLog("BtnDelete: starting...");
-
-            DialogResult confirm = MessageBox.Show(
-                Strings.Msg_DeleteConfirm,
-                Strings.Msg_DeleteTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (confirm != DialogResult.Yes) return;
-
-            DictPaletteDeleteResult result = DictPaletteCadService.DeleteAll(doc);
-            _lblStatus.Text = string.Format(Strings.Status_Deleted, result.Deleted, result.Skipped);
-            doc.Editor.WriteMessage(string.Format(Strings.Status_DeletedCmd, result.Deleted, result.Skipped));
-            PatentMarkerApp.RawLog("BtnDelete: done, deleted=" + result.Deleted + ", skipped=" + result.Skipped);
-        }
     }
 
 }

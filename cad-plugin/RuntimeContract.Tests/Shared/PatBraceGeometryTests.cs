@@ -74,7 +74,7 @@ namespace PatentMarker.RuntimeContractTests
 
             Assert.Equal(1, rightTip.Side);
             Assert.True(rightPoints.Count > 19);
-            Assert.True(rightPoints[8].X > 0.0);
+            Assert.True(rightPoints[8].X < 0.0);
             Assert.True(rightPoints[rightPoints.Count / 2].X > rightPoints[8].X);
 
             PatBraceDefinition leftTip = PatBraceGeometry.FromPoints(
@@ -85,7 +85,7 @@ namespace PatentMarker.RuntimeContractTests
 
             Assert.Equal(-1, leftTip.Side);
             Assert.True(leftPoints.Count > 19);
-            Assert.True(leftPoints[8].X < 0.0);
+            Assert.True(leftPoints[8].X > 0.0);
             Assert.True(leftPoints[leftPoints.Count / 2].X < leftPoints[8].X);
         }
 
@@ -110,7 +110,7 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void CenterTipIsSharpAndStemsStayOnOneSideOfAxis()
+        public void CenterTipIsSharpAndStemsStayOppositeTheTip()
         {
             PatBraceDefinition definition = PatBraceGeometry.Create(
                 new Point3d(0, 100, 0),
@@ -136,12 +136,18 @@ namespace PatentMarker.RuntimeContractTests
             double outgoingY = points[tipIndex + 1].Y - points[tipIndex].Y;
             double cross = incomingX * outgoingY - incomingY * outgoingX;
             Assert.True(Math.Abs(cross) > 0.0001);
+            bool hasOppositeSideShoulder = false;
             for (int i = 0; i < points.Count; i++)
             {
                 if (i != tipIndex)
-                    Assert.True(points[i].X >= -0.000001
+                {
+                    Assert.True(points[i].X >= -20.000001
                         && points[i].X <= 20.000001);
+                    if (points[i].X < -0.000001)
+                        hasOppositeSideShoulder = true;
+                }
             }
+            Assert.True(hasOppositeSideShoulder);
         }
     }
 }

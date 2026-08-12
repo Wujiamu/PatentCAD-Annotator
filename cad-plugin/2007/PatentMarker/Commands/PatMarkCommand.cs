@@ -118,7 +118,8 @@ namespace PatentMarker.Commands
                     {
                         List<Point3d> doglegPts3 = new List<Point3d>();
                         doglegPts3.Add(doglegResult3.Value);
-                        CreateLeaderWithText(db, ptResult.Value, doglegPts3, textResult3.Value, _currentNumber);
+                        CreateLeaderWithText(db, ptResult.Value, doglegPts3,
+                            textResult3.Value, _currentNumber, doglegResult3.Value);
                         ed.WriteMessage(string.Format(Strings.PatMark_Created, _currentNumber, doglegPts3.Count + 1));
                     }
                     catch (Exception ex)
@@ -185,12 +186,17 @@ namespace PatentMarker.Commands
                     textPt = textResult.Value;
                 }
 
+                Point3d attachmentReference = textResult.Status == PromptStatus.None
+                    ? (doglegPts.Count > 1 ? doglegPts[doglegPts.Count - 2] : ptResult.Value)
+                    : doglegPts[doglegPts.Count - 1];
+
                 // 文字位置返回后最后一次检查（确保创建标注用的是最新编号）
                 ApplyPendingIfNeeded(ed);
 
                 try
                 {
-                    CreateLeaderWithText(db, ptResult.Value, doglegPts, textPt, _currentNumber);
+                    CreateLeaderWithText(db, ptResult.Value, doglegPts, textPt,
+                        _currentNumber, attachmentReference);
                     ed.WriteMessage(string.Format(Strings.PatMark_Created, _currentNumber, doglegPts.Count + 1));
                 }
                 catch (Exception ex)
@@ -246,7 +252,9 @@ namespace PatentMarker.Commands
             PatentMarkerApp.RawLog("=== CreateTextOnly END (success) ===");
         }
 
-        private void CreateLeaderWithText(Database db, Point3d attachPt, List<Point3d> doglegPts, Point3d textPt, string number)
+        private void CreateLeaderWithText(Database db, Point3d attachPt,
+            List<Point3d> doglegPts, Point3d textPt, string number,
+            Point3d attachmentReference)
         {
             PatentMarkerApp.RawLog("=== CreateLeaderWithText START (number=" + number + ", doglegPoints=" + doglegPts.Count + ", arrow=" + IO.PatSettingsStore.Current.HasArrowHead + ") ===");
 
@@ -270,9 +278,7 @@ namespace PatentMarker.Commands
                 mt.Contents = IO.PatEntityHelper.FormatText(number,
                     IO.PatSettingsStore.Current.UnderlineText);
                 mt.TextHeight = IO.PatSettingsStore.Current.TextHeight;
-                Point3d lastLeaderPoint = doglegPts.Count > 0
-                    ? doglegPts[doglegPts.Count - 1]
-                    : attachPt;
+                Point3d lastLeaderPoint = attachmentReference;
                 textAttachment = PatLeaderTextAttachment.Get(
                     lastLeaderPoint, textPt);
                 mt.Attachment = textAttachment;

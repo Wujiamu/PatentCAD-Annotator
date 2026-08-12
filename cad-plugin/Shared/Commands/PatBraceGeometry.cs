@@ -8,8 +8,8 @@ namespace PatentMarker.Commands
     /// Parametric definition of one two-dimensional curly brace.
     /// Top and Bottom are the two endpoints. Width is the distance from the
     /// endpoint axis to the sharp center tip, and Side is the signed side of
-    /// that axis (+1 or -1). The straight stems sit halfway between the axis
-    /// and the center tip.
+    /// that axis (+1 or -1). The outer shoulders and stems sit on the side
+    /// opposite the center tip, matching the PPT right-brace silhouette.
     /// </summary>
     public sealed class PatBraceDefinition
     {
@@ -46,16 +46,16 @@ namespace PatentMarker.Commands
         private const double Epsilon = 0.000000001;
         private const double DefaultWidthRatio = 0.22;
 
-        // The profile follows the PowerPoint rightBrace proportions. Width
-        // is the endpoint-axis-to-tip distance; the visible stems are at
-        // half that distance. The center tip is intentionally a cusp: the
-        // two center curves meet at one point with different transverse
-        // tangent directions, so the generated Polyline keeps a sharp
-        // folded corner.
-        private const double CenterT = 0.48341;
-        private const double ShoulderDepthRatio = 1.0 / 12.0;
-        private const double CenterControlOffsetRatio = 0.28;
-        private const double CenterControlAlongRatio = 0.37;
+        // The profile follows the PowerPoint rightBrace silhouette. The
+        // selected side is used only by the center cusp; the endpoint
+        // shoulders and straight stems remain on the opposite side. Keeping
+        // these stations explicit avoids the old W-shaped fixed point table.
+        private const double CenterT = 0.5;
+        private const double StemOffsetRatio = 0.42;
+        private const double ShoulderAlongRatio = 0.12;
+        private const double UpperStemAlongRatio = 0.32;
+        private const double LowerStemAlongRatio = 0.68;
+        private const double CenterControlAlongRatio = 0.10;
         private const double CenterTipControlOffsetRatio = 0.22;
         private const double CubicKappa = 0.5522847498307936;
         private const int CurveSamples = 8;
@@ -166,61 +166,68 @@ namespace PatentMarker.Commands
             List<Point3d> points = new List<Point3d>();
 
             double tipOffset = definition.Width;
-            double stemOffset = tipOffset * 0.5;
-            double shoulderDepth = tipOffset * ShoulderDepthRatio;
+            double stemOffset = -tipOffset * StemOffsetRatio;
+            double shoulderAlong = height * ShoulderAlongRatio;
             double centerAlong = height * CenterT;
-            double upperStemAlong = centerAlong - shoulderDepth;
-            double lowerStemAlong = centerAlong + shoulderDepth;
-            double bottomShoulderAlong = height - shoulderDepth;
+            double upperStemAlong = height * UpperStemAlongRatio;
+            double lowerStemAlong = height * LowerStemAlongRatio;
+            double bottomShoulderAlong = height * (1.0 - ShoulderAlongRatio);
 
             LocalPoint top = new LocalPoint(0.0, 0.0);
-            LocalPoint topStem = new LocalPoint(shoulderDepth, stemOffset);
-            LocalPoint upperCenter = new LocalPoint(upperStemAlong, stemOffset);
+            LocalPoint topShoulder = new LocalPoint(shoulderAlong, stemOffset);
+            LocalPoint upperStem = new LocalPoint(upperStemAlong, stemOffset);
             LocalPoint tip = new LocalPoint(centerAlong, tipOffset);
-            LocalPoint lowerCenter = new LocalPoint(lowerStemAlong, stemOffset);
-            LocalPoint bottomStem = new LocalPoint(bottomShoulderAlong, stemOffset);
+            LocalPoint lowerStem = new LocalPoint(lowerStemAlong, stemOffset);
+            LocalPoint bottomShoulder = new LocalPoint(bottomShoulderAlong, stemOffset);
             LocalPoint bottom = new LocalPoint(height, 0.0);
 
-            // Endpoint shoulder: horizontal tangent at the endpoint and
-            // vertical tangent where it joins the straight stem.
+            // Endpoint shoulder: leave the endpoint on the axis, sweep to
+            // the opposite-side shoulder, then keep a straight outer stem.
             AppendCubic(points, top,
                 new LocalPoint(0.0, stemOffset * CubicKappa),
-                new LocalPoint(shoulderDepth * (1.0 - CubicKappa),
+                new LocalPoint(shoulderAlong * (1.0 - CubicKappa),
                     stemOffset),
-                topStem, axisX, axisY, perpX, perpY,
+                topShoulder, axisX, axisY, perpX, perpY,
                 definition, height, false);
 
-            AddLocalPoint(points, upperCenter, axisX, axisY, perpX, perpY,
+            AddLocalPoint(points, upperStem, axisX, axisY, perpX, perpY,
                 definition, height);
 
-            // The two center curves meet at one point with different
-            // transverse tangent directions. That tangent discontinuity is
-            // the intentional sharp fold from the reference brace.
-            AppendCubic(points, upperCenter,
-                new LocalPoint(upperStemAlong,
-                    stemOffset + stemOffset * CenterControlOffsetRatio),
+            // The two center curves meet at one shared vertex. Their control
+            // points leave that vertex in different directions, so the
+            // Polyline preserves a genuinely sharp folded corner rather
+            // than drawing a rounded arc through it.
+            double upperCenterSpan = centerAlong - upperStemAlong;
+            double lowerCenterSpan = lowerStemAlong - centerAlong;
+            AppendCubic(points, upperStem,
+                new LocalPoint(upperStemAlong
+                    + upperCenterSpan * (1.0 - CenterControlAlongRatio),
+                    stemOffset),
                 new LocalPoint(
-                    centerAlong - shoulderDepth * CenterControlAlongRatio,
-                    tipOffset - stemOffset * CenterTipControlOffsetRatio),
+                    centerAlong - upperCenterSpan * CenterControlAlongRatio,
+                    tipOffset - (tipOffset - stemOffset)
+                        * CenterTipControlOffsetRatio),
                 tip, axisX, axisY, perpX, perpY,
                 definition, height, true);
             AppendCubic(points, tip,
                 new LocalPoint(
-                    centerAlong + shoulderDepth * CenterControlAlongRatio,
-                    tipOffset - stemOffset * CenterTipControlOffsetRatio),
-                new LocalPoint(lowerStemAlong,
-                    stemOffset + stemOffset * CenterControlOffsetRatio),
-                lowerCenter, axisX, axisY, perpX, perpY,
+                    centerAlong + lowerCenterSpan * CenterControlAlongRatio,
+                    tipOffset - (tipOffset - stemOffset)
+                        * CenterTipControlOffsetRatio),
+                new LocalPoint(lowerStemAlong
+                    - lowerCenterSpan * (1.0 - CenterControlAlongRatio),
+                    stemOffset),
+                lowerStem, axisX, axisY, perpX, perpY,
                 definition, height, true);
 
-            AddLocalPoint(points, bottomStem, axisX, axisY, perpX, perpY,
+            AddLocalPoint(points, bottomShoulder, axisX, axisY, perpX, perpY,
                 definition, height);
 
-            // Bottom shoulder mirrors the top shoulder: vertical tangent at
-            // the stem and horizontal tangent at the endpoint.
-            AppendCubic(points, bottomStem,
+            // Mirror the endpoint shoulder at the bottom.
+            AppendCubic(points, bottomShoulder,
                 new LocalPoint(bottomShoulderAlong
-                    + shoulderDepth * CubicKappa, stemOffset),
+                    + (height - bottomShoulderAlong) * CubicKappa,
+                    stemOffset),
                 new LocalPoint(height,
                     stemOffset * (1.0 - CubicKappa)),
                 bottom, axisX, axisY, perpX, perpY,

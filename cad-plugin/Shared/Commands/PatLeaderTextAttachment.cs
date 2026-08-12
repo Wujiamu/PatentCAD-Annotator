@@ -9,6 +9,7 @@ namespace PatentMarker.Commands
     /// Selects the MText attachment point for a Leader + MText callout.
     /// The leader meets the side and vertical level facing the last
     /// user-selected leader vertex instead of MText's default top-left side.
+    /// The same rule is used by both three-point and unlimited-point modes.
     /// </summary>
     public static class PatLeaderTextAttachment
     {
