@@ -32,3 +32,4 @@ Word 端：
 命令：BZ BZM BZC BZA BZS DAGUOHAO PATBRACE PATBRACEEDIT
 
 `PATBRACE` / `DAGUOHAO` 通过顶部、底部和宽度方向三点创建独立矢量大括号；`PATBRACEEDIT` 支持重新点选控制点或输入高度/宽度调整。
+第三点决定中部尖点方向：竖向左/右、横向上/下；外侧肩部位于相反侧。

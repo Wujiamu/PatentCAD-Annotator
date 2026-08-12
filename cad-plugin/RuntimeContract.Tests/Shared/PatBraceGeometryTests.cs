@@ -62,5 +62,51 @@ namespace PatentMarker.RuntimeContractTests
             Assert.Equal(updated.Bottom,
                 PatBraceGeometry.BuildPoints(updated)[18]);
         }
+
+        [Fact]
+        public void WidthPointControlsCenterTipAndOppositeOuterShoulders()
+        {
+            PatBraceDefinition rightTip = PatBraceGeometry.FromPoints(
+                new Point3d(0, 10, 0),
+                new Point3d(0, 0, 0),
+                new Point3d(4, 5, 0));
+            var rightPoints = PatBraceGeometry.BuildPoints(rightTip);
+
+            Assert.Equal(1, rightTip.Side);
+            Assert.True(rightPoints[9].X > 0.0);
+            Assert.True(rightPoints[5].X < 0.0);
+            Assert.True(rightPoints[13].X < 0.0);
+
+            PatBraceDefinition leftTip = PatBraceGeometry.FromPoints(
+                new Point3d(0, 10, 0),
+                new Point3d(0, 0, 0),
+                new Point3d(-4, 5, 0));
+            var leftPoints = PatBraceGeometry.BuildPoints(leftTip);
+
+            Assert.Equal(-1, leftTip.Side);
+            Assert.True(leftPoints[9].X < 0.0);
+            Assert.True(leftPoints[5].X > 0.0);
+            Assert.True(leftPoints[13].X > 0.0);
+        }
+
+        [Fact]
+        public void HorizontalEndpointsSupportUpAndDownCenterTips()
+        {
+            PatBraceDefinition upTip = PatBraceGeometry.FromPoints(
+                new Point3d(0, 0, 0),
+                new Point3d(10, 0, 0),
+                new Point3d(5, 4, 0));
+            var upPoints = PatBraceGeometry.BuildPoints(upTip);
+            Assert.True(upPoints[9].Y > 0.0);
+            Assert.True(upPoints[5].Y < 0.0);
+
+            PatBraceDefinition downTip = PatBraceGeometry.FromPoints(
+                new Point3d(0, 0, 0),
+                new Point3d(10, 0, 0),
+                new Point3d(5, -4, 0));
+            var downPoints = PatBraceGeometry.BuildPoints(downTip);
+            Assert.True(downPoints[9].Y < 0.0);
+            Assert.True(downPoints[5].Y > 0.0);
+        }
     }
 }

@@ -7,8 +7,9 @@ namespace PatentMarker.Commands
     /// <summary>
     /// Parametric definition of one two-dimensional curly brace.
     /// Top and Bottom are the two endpoints. Width is the distance from the
-    /// endpoint axis to the outer lobe, and Side is the signed side of that
-    /// axis (+1 or -1).
+    /// endpoint axis to the widest part of the profile, and Side is the
+    /// signed side of that axis (+1 or -1). The center tip is on Side; the
+    /// outer shoulders are on the opposite side.
     /// </summary>
     public sealed class PatBraceDefinition
     {
@@ -45,13 +46,14 @@ namespace PatentMarker.Commands
         private const double Epsilon = 0.000000001;
         private const double DefaultWidthRatio = 0.22;
 
-        // Endpoints are at x=0. The two lobes extend toward x=1 and the
-        // center pinch returns toward the endpoint axis.
+        // Endpoints are at x=0. The center tip points toward the selected
+        // width side, while the two outer shoulders point to the opposite
+        // side. This is the PPT-style curly-brace profile.
         private static readonly double[] ShapeX = new double[]
         {
-            0.00, 0.18, 0.42, 0.70, 0.92, 1.00, 0.98, 0.82,
-            0.54, 0.20, 0.54, 0.82, 0.98, 1.00, 0.92, 0.70,
-            0.42, 0.18, 0.00
+            0.00, -0.18, -0.42, -0.70, -0.92, -1.00, -0.98, -0.82,
+            -0.54, 1.00, -0.54, -0.82, -0.98, -1.00, -0.92, -0.70,
+            -0.42, -0.18, 0.00
         };
 
         private static readonly double[] ShapeT = new double[]

@@ -42,3 +42,4 @@ PatentMarker 2025 部署说明
   BZS  (PATSELECTALL)  全选 PAT 标注
   DAGUOHAO (PATBRACE)  三点创建独立矢量大括号
   PATBRACEEDIT         通过控制点或输入高度/宽度调整大括号
+  第三点决定中部尖点方向：竖向左/右、横向上/下；外侧肩部位于相反侧

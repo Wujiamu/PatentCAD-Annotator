@@ -34,6 +34,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
 - 面板新增“Brace/大括号”按钮，对应 `PATBRACE`（别名 `DAGUOHAO`）：依次指定顶部、底部和宽度方向三点，创建独立的参数化矢量大括号；它不是文字字符，也不加入 Leader/MText 标注关联。
 - `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
+- 第三点决定中部尖点的朝向：竖向大括号可向左/向右，横向大括号可向上/向下；外侧两个肩部自动位于相反侧，形成 PPT 风格的曲线轮廓。
 
 问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
 
@@ -217,6 +218,7 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
 - The palette adds a `Brace` button for `PATBRACE` (alias `DAGUOHAO`). Pick the top, bottom and width-direction points to create an independent parameterized vector brace; it is not a text glyph and is not part of the Leader/MText relationship.
 - `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
+- The third point controls the center-tip direction: vertical braces can point left or right, and horizontal braces can point up or down. The two outer shoulders are placed on the opposite side to form a PPT-style curly profile.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.
 
@@ -277,7 +279,7 @@ Each package contains the matching `PatentMarker.dll` and the six shared VBA mod
 ### Local verification status
 
 - All five editions compile locally.
-- Runtime contract simulations pass 15/15 for 2010, 2013 and 2015 (including shared brace geometry).
+- Runtime contract simulations pass 17/17 for 2010, 2013 and 2015 (including shared brace geometry and four-direction brace checks).
 - The 2025 test suite passes 112/112.
 - API-contract, structure and static synchronization checks pass for all five editions.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
