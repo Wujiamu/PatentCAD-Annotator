@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -31,6 +31,8 @@
   </ItemGroup>
 
   <!-- Framework-neutral source shared by all five edition projects. -->
+  <!-- 复线差异：PatMarkCommand / PatSelectAllCommand 改用本目录 Commands\ 下
+       的版本本地文件（MLeader F 方案），不再链接 Shared 版本。 -->
   <ItemGroup>
     <Compile Remove="IO\NumberIdentity.cs" />
     <Compile Remove="IO\PatSettings.cs" />
@@ -58,10 +60,8 @@
     <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" Link="Diagnostics\PatDiagnostics.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" Link="Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" Link="Diagnostics\PatDoctorCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatMarkCommand.cs" Link="Commands\PatMarkCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" Link="Commands\PatCheckCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" Link="Commands\PatAlignCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatSelectAllCommand.cs" Link="Commands\PatSelectAllCommand.cs" />
     <Compile Include="..\..\Shared\I18n\Strings.cs" Link="I18n\Strings.cs" />
     <Compile Include="..\..\Shared\Palette\ArbitrateDialog.cs" Link="Palette\ArbitrateDialog.cs" />
     <Compile Include="..\..\Shared\Palette\EditEntryDialog.cs" Link="Palette\EditEntryDialog.cs" />
