@@ -126,8 +126,8 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 |------|------|------|
 | `PATPALETTE` | `BZ` / `BIAOZHU` | 打开字典面板 |
 | `PATMARK` | `BZM` | 创建引线标注 |
-| `PATCHECK` | `BZC` | 校验编号一致性 |
-| `PATALIGN` | `BZA` | 对齐引线 |
+| `PATCHECK` | `BZC` | 漏标检测：报告"字典有 · 图纸未标注"清单并在面板高亮 |
+| `PATALIGN` | `BZA` | 对齐标注文字（先选标注，再选线/框基准；空间不足时自动延伸排列） |
 | `PATSELECTALL` | `BZS` | 全选标注实体 |
 | `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
 | `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
@@ -284,8 +284,8 @@ Each package contains the matching `PatentMarker.dll` and the seven shared VBA f
 |---------|-------|-------------|
 | `PATPALETTE` | `BZ` / `BIAOZHU` | Open dictionary palette |
 | `PATMARK` | `BZM` | Create leader annotation |
-| `PATCHECK` | `BZC` | Validate numeral consistency |
-| `PATALIGN` | `BZA` | Align leaders |
+| `PATCHECK` | `BZC` | Unmarked check: report "in dict but not annotated" list and highlight in palette |
+| `PATALIGN` | `BZA` | Align annotation texts (select annotations first, then a line/frame reference; auto-extend when space is short) |
 | `PATSELECTALL` | `BZS` | Select all annotation entities |
 | `PATBRACE` | `DAGUOHAO` | Create an independent parameterized vector brace from three points |
 | `PATBRACEEDIT` | — | Adjust a brace by control points or exact height/width |

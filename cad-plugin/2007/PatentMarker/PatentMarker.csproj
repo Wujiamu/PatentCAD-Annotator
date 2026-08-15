@@ -60,6 +60,7 @@
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" />
     <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatSelectAllCommand.cs" />
     <Compile Include="..\..\Shared\Palette\PatPaletteCommand.cs" />

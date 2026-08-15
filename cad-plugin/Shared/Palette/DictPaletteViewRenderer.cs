@@ -136,7 +136,14 @@ namespace PatentMarker.Palette
 
         private static ListViewItem CreateItem(PaletteEntry entry)
         {
-            ListViewItem item = new ListViewItem(entry.Number);
+            // v5.1：PATCHECK 之后未标注的条目以橙色 + △ 前缀标示
+            // （前景色，不与对照模式的 diff 背景色冲突）
+            bool unmarked = Commands.PatCheckResult.HasResult &&
+                Commands.PatCheckResult.IsUnmarked(
+                    IO.NumberIdentity.Normalize(entry.Number));
+            ListViewItem item = new ListViewItem(
+                unmarked ? "△ " + entry.Number : entry.Number);
+            if (unmarked) item.ForeColor = Color.DarkOrange;
             item.SubItems.Add(entry.Name != null ? entry.Name : "");
             item.SubItems.Add(entry.Occurrences.ToString());
             item.Tag = entry;

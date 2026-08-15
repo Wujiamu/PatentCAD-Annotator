@@ -242,6 +242,19 @@ namespace PatentMarker.Commands
             return points;
         }
 
+        /// <summary>PATALIGN 移动文字后同步记录链的末点（否则 PATMLVERIFY
+        /// 的 C3 检查会失败）。链不足 3 点（异常数据）时静默跳过。</summary>
+        public static void UpdateChainTextPoint(MLeader ml, Transaction tr,
+            Point3d newTextPt)
+        {
+            bool hasArrow, isSplined;
+            List<Point3d> chain = ReadChain(ml, tr, out hasArrow, out isSplined);
+            if (chain.Count < 3) return;
+            Point3d attach = chain[0];
+            List<Point3d> doglegs = chain.GetRange(1, chain.Count - 2);
+            Mark(ml, tr, attach, doglegs, newTextPt, hasArrow, isSplined);
+        }
+
         /// <summary>ExtendLeaderToText 为 2014+ SDK 属性（2010-2012 无此成员），
         /// 反射设置以维持单源码覆盖全版本；不支持时静默跳过（其默认行为即不延伸）。</summary>
         public static void SetExtendLeaderToText(object target, bool value)

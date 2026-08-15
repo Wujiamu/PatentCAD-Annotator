@@ -288,6 +288,53 @@ namespace PatentMarker.I18n
             get { return En ? "Bottom" : "下"; }
         }
 
+        // ---- v5.1 PATALIGN v2（选集先行 → 线/框基准 → 溢出延伸）----
+
+        public static string PatAlign_ModePrompt2
+        {
+            get { return En ? "\nAlign to [Line/Frame]?" : "\n对齐基准 [线(L)/框(F)]?"; }
+        }
+
+        /// <summary>关键字 | Keyword: 线 / Line</summary>
+        public static string PatAlign_KwLine
+        {
+            get { return En ? "Line" : "线"; }
+        }
+
+        public static string PatAlign_PromptLineP1
+        {
+            get { return En ? "\nBaseline start point: " : "\n基准线起点: "; }
+        }
+
+        public static string PatAlign_PromptLineP2
+        {
+            get { return En ? "\nBaseline end point: " : "\n基准线终点: "; }
+        }
+
+        public static string PatAlign_Degenerate
+        {
+            get { return En ? "\nBaseline points coincide — nothing to align.\n" : "\n基准线两点重合，无法对齐。\n"; }
+        }
+
+        /// <summary>0=count（非 PAT 实体被跳过）</summary>
+        public static string PatAlign_Skipped
+        {
+            get { return En ? "\nSkipped {0} non-PAT objects.\n" : "\n跳过 {0} 个非 PAT 对象。\n"; }
+        }
+
+        /// <summary>0=aligned, 1=failed</summary>
+        public static string PatAlign_Result
+        {
+            get { return En ? "\nAligned {0} annotations ({1} failed).\n" : "\n对齐 {0} 个标注（{1} 个失败）。\n"; }
+        }
+
+        /// <summary>0=aligned, 1=failed, 2=extraColumns（溢出补列数）</summary>
+        public static string PatAlign_ResultOverflow
+        {
+            get { return En ? "\nAligned {0} annotations ({1} failed); space was insufficient, overflowed into {2} extra column(s).\n"
+                            : "\n对齐 {0} 个标注（{1} 个失败）；空间不足，已延伸 {2} 个补充列。\n"; }
+        }
+
         /// <summary>0=aligned, 1=side, 2=margin, 3=skipped, 4=errors</summary>
         public static string PatAlign_ResultFrame
         {
@@ -382,6 +429,24 @@ namespace PatentMarker.I18n
             get { return En ? "\nReport saved to: {0}\n" : "\n报告已保存到: {0}\n"; }
         }
 
+        // ---- v5.1 简化版（只报漏标清单）----
+
+        /// <summary>0=count</summary>
+        public static string PatCheck_SectionUnmarked
+        {
+            get { return En ? "\n--- Dict entries not yet annotated ({0}) ---\n" : "\n--- 未标注的字典条目 ({0}) ---\n"; }
+        }
+
+        public static string PatCheck_AllMarked
+        {
+            get { return En ? "\n*** All dict entries are annotated ***\n" : "\n*** 全部字典条目均已标注 ***\n"; }
+        }
+
+        public static string PatCheck_PaletteHint
+        {
+            get { return En ? "Unmarked entries are highlighted in the palette.\n" : "面板中已高亮未标注条目。\n"; }
+        }
+
         // ================================================================
         // PatSelectAllCommand
         // ================================================================
@@ -455,6 +520,18 @@ namespace PatentMarker.I18n
         public static string Palette_SelectAll
         {
             get { return En ? "Select All" : "全选"; }
+        }
+
+        // v5.1：检测（PATCHECK 漏标检测）| Check (PATCHECK unmarked scan)
+        public static string Palette_Check
+        {
+            get { return En ? "Check" : "检测"; }
+        }
+
+        // v5.1：对齐（PATALIGN）| Align (PATALIGN)
+        public static string Palette_Align
+        {
+            get { return En ? "Align" : "对齐"; }
         }
 
         public static string Palette_Compare

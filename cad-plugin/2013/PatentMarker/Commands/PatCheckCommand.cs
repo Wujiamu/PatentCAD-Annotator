@@ -1,7 +1,14 @@
+// ============================================================================
+// 复线（mleader 分支）版本本地文件 — 仅 MLeader 复线版本编译
+//（2010/2013/2015/2025；2007 无 MLeader API，用 Shared 版本）。
+// PATCHECK v2（简化版）：只报告"字典有 · 图纸未标注"清单（漏标检测）。
+// 旧版的三类检测中，"图纸有·字典无"在纯插件流程下不可能出现（编号只能
+// 来自字典面板），"同号重复"是合法用法（同一部件多处标同号），均已删除。
+// 结果同时写入 PatCheckResult 供面板高亮未标注条目。
+// ============================================================================
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Runtime;
 using PatentMarker.I18n;
 using System;
@@ -9,13 +16,6 @@ using System.Collections.Generic;
 
 namespace PatentMarker.Commands
 {
-    /// <summary>
-    /// PATCHECK v2（简化版，2007 Leader+MText 扫描）：只报告
-    /// "字典有 · 图纸未标注"清单。旧版三类检测中，"图纸有·字典无"在
-    /// 纯插件流程下不可能出现（编号只能来自字典面板），"同号重复"是
-    /// 合法用法（同一部件多处标同号），均已删除。结果写入 PatCheckResult
-    /// 供面板高亮未标注条目（与 MLeader 版行为一致）。
-    /// </summary>
     public class PatCheckCommand
     {
         [CommandMethod("PATCHECK", CommandFlags.Modal)]
@@ -35,6 +35,7 @@ namespace PatentMarker.Commands
                 return;
             }
 
+            // 图纸上已标注的编号集合（归一化）
             var marked = new Dictionary<string, bool>(IO.NumberIdentity.Comparer);
             int patCount = 0;
 
@@ -48,24 +49,40 @@ namespace PatentMarker.Commands
                 foreach (ObjectId entId in btr)
                 {
                     Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
-                    Leader leader = ent as Leader;
-                    if (leader == null)
+
+                    // 1) 新 MLeader 标注（F 方案）
+                    MLeader mleader = ent as MLeader;
+                    if (mleader != null)
                     {
-                        MText standaloneText = ent as MText;
-                        if (standaloneText == null ||
-                            !IO.PatEntityHelper.IsStandaloneText(standaloneText, tr))
-                            continue;
+                        if (!PatMLeaderCreator.IsPatMLeader(mleader, tr)) continue;
                         patCount++;
-                        AddMarked(marked, IO.PatEntityHelper.GetTextNumber(standaloneText));
+                        string number = IO.PatEntityHelper.GetTextNumber(mleader.MText);
+                        AddMarked(marked, number);
                         continue;
                     }
-                    if (!IO.PatEntityHelper.IsPatEntity(leader, tr)) continue;
-                    patCount++;
-                    AddMarked(marked, IO.PatEntityHelper.GetLeaderNumber(leader, tr));
+
+                    // 2) 纯文字模式（无引线独立 MText）
+                    MText standalone = ent as MText;
+                    if (standalone != null)
+                    {
+                        if (!IO.PatEntityHelper.IsStandaloneText(standalone, tr)) continue;
+                        patCount++;
+                        AddMarked(marked, IO.PatEntityHelper.GetTextNumber(standalone));
+                        continue;
+                    }
+
+                    // 3) 旧图纸 Leader 标注（兼容历史 DWG）
+                    Leader leader = ent as Leader;
+                    if (leader != null && IO.PatEntityHelper.IsPatEntity(leader, tr))
+                    {
+                        patCount++;
+                        AddMarked(marked, IO.PatEntityHelper.GetLeaderNumber(leader, tr));
+                    }
                 }
                 tr.Commit();
             }
 
+            // 漏标清单：保持字典顺序
             var unmarked = new List<string>();
             var unmarkedNames = new List<string>();
             foreach (IO.DictEntry entry in dict.Entries)

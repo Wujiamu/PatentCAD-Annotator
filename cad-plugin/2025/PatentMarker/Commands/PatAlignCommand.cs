@@ -1,12 +1,13 @@
-// ============================================================================
-// PATALIGN v2（Shared 版，2007 Leader+MText 引擎）：
-// 选择集先行 → 线/框两种基准模式 → 溢出时默认延伸。
-// 与 MLeader 组版本（2010/2013/2015/2025 本地 Commands）逻辑一致，仅
-// 标注实体类型不同：本版只处理旧 Leader 标注与独立文字（无 MLeader API）。
+﻿// ============================================================================
+// 复线（mleader 分支）版本本地文件 — 仅 MLeader 复线版本编译
+//（2010/2013/2015/2025；2007 无 MLeader API，用 Shared 旧版）。
+// PATALIGN v2：选择集先行 → 线/框两种基准模式 → 溢出时默认延伸。
 //
 // v2 与 v1 的差异：
 //   1. 选集先行（一 DWG 多附图时各附图可分别对齐，互不影响）。
-//   2. 线模式：文字投影到 P1→P2 基准线；框模式：文字推到框边外侧 margin。
+//   2. 文字移动走 ml.TextLocation（探针实证：末顶点自动跟随，dogleg/
+//      landing 不被重置），移动后 ResyncChain 同步 Xrecord 点链，
+//      使 PATMLVERIFY 保持可用。
 //   3. 溢出规则（空间不足时的默认延伸）：
 //      - 线模式：沿 P1→P2 方向紧凑排列，排到线端后继续沿线延伸；
 //      - 框模式：第一列沿框边排满后，剩余文字放第二列（沿远离框方向
@@ -284,7 +285,7 @@ namespace PatentMarker.Commands
         }
 
         // =====================================================================
-        // 目标收集与移动（2007：独立文字 + 旧 Leader 标注）
+        // 目标收集与移动
         // =====================================================================
 
         private class Target
@@ -294,10 +295,11 @@ namespace PatentMarker.Commands
             public double TextHeight = 3.5;
             public double Width;        // 文字占位宽（沿排列方向）
             public double Projection;   // 沿基准方向的投影参数
+            public bool IsMLeader;      // 新 MLeader 标注
             public bool IsStandalone;   // 纯文字
         }
 
-        /// <summary>过滤选集：只保留 PAT 标注（独立文字 / 旧 Leader）。</summary>
+        /// <summary>过滤选集：只保留 PAT 标注（MLeader / 纯文字 / 旧 Leader）。</summary>
         private static List<Target> CollectTargets(Transaction tr, SelectionSet ss,
             Editor ed)
         {
@@ -310,15 +312,29 @@ namespace PatentMarker.Commands
                     Entity ent = (Entity)tr.GetObject(so.ObjectId, OpenMode.ForRead);
                     Target t = null;
 
-                    MText standalone = ent as MText;
-                    if (standalone != null &&
-                        IO.PatEntityHelper.IsStandaloneText(standalone, tr))
+                    MLeader ml = ent as MLeader;
+                    if (ml != null && PatMLeaderCreator.IsPatMLeader(ml, tr))
                     {
                         t = new Target();
-                        t.EntityId = standalone.ObjectId;
-                        t.TextLocation = standalone.Location;
-                        t.TextHeight = standalone.TextHeight;
-                        t.IsStandalone = true;
+                        t.EntityId = ml.ObjectId;
+                        t.TextLocation = ml.TextLocation;
+                        t.TextHeight = ml.MText != null && ml.MText.TextHeight > 0
+                            ? ml.MText.TextHeight : ml.TextHeight;
+                        t.IsMLeader = true;
+                    }
+
+                    if (t == null)
+                    {
+                        MText standalone = ent as MText;
+                        if (standalone != null &&
+                            IO.PatEntityHelper.IsStandaloneText(standalone, tr))
+                        {
+                            t = new Target();
+                            t.EntityId = standalone.ObjectId;
+                            t.TextLocation = standalone.Location;
+                            t.TextHeight = standalone.TextHeight;
+                            t.IsStandalone = true;
+                        }
                     }
 
                     if (t == null)
@@ -351,18 +367,28 @@ namespace PatentMarker.Commands
         {
             try
             {
-                if (t.IsStandalone)
+                Entity ent = (Entity)tr.GetObject(t.EntityId, OpenMode.ForRead);
+                MText mt = null;
+                if (t.IsMLeader)
                 {
-                    MText mt = (MText)tr.GetObject(t.EntityId, OpenMode.ForRead);
-                    if (mt.ActualWidth > 0)
-                    {
-                        t.Width = mt.ActualWidth;
-                        return true;
-                    }
+                    MLeader ml = (MLeader)ent;
+                    mt = ml.MText;
+                }
+                else if (t.IsStandalone)
+                {
+                    mt = (MText)ent;
+                }
+                if (mt != null && mt.ActualWidth > 0)
+                {
+                    t.Width = mt.ActualWidth;
+                    return true;
+                }
+                if (mt != null)
+                {
                     t.Width = (mt.Contents ?? "").Length * 0.7 * t.TextHeight;
                     return true;
                 }
-                // 旧 Leader：无内嵌 MText 宽度可读，按当前编号文本估宽
+                // 旧 Leader：无内嵌 MText，按当前编号文本估宽
                 t.Width = t.TextHeight * 2.0;
                 return true;
             }
@@ -378,18 +404,27 @@ namespace PatentMarker.Commands
             return a.Projection.CompareTo(b.Projection);
         }
 
-        /// <summary>移动单个标注的文字到新位置（Leader 路径沿用 v1：
-        /// 移动关联 MText + 重写文字端点）。</summary>
+        /// <summary>移动单个标注的文字到新位置；MLeader 走 TextLocation
+        /// （末顶点自动跟随，探针实证）并同步 Xrecord 点链。</summary>
         private static bool MoveTarget(Transaction tr, Target t, Point3d newPos)
         {
             try
             {
+                if (t.IsMLeader)
+                {
+                    MLeader ml = (MLeader)tr.GetObject(t.EntityId, OpenMode.ForWrite);
+                    ml.TextLocation = newPos;
+                    if (ml.MText != null) ml.MText.Location = newPos;
+                    PatMLeaderCreator.UpdateChainTextPoint(ml, tr, newPos);
+                    return true;
+                }
                 if (t.IsStandalone)
                 {
                     MText mt = (MText)tr.GetObject(t.EntityId, OpenMode.ForWrite);
                     mt.Location = newPos;
                     return true;
                 }
+                // 旧 Leader：沿用 v1 路径（移动关联 MText + 重写文字端点）
                 Leader leader = (Leader)tr.GetObject(t.EntityId, OpenMode.ForWrite);
                 ObjectId annId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                 if (annId.IsNull) return false;

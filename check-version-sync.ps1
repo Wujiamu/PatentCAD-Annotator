@@ -94,8 +94,7 @@ $sharedSourceFiles = @(
     "Commands\PatBraceGeometry.cs",
     "Commands\PatBraceEntity.cs",
     "Commands\PatBraceCommand.cs",
-    "Commands\PatCheckCommand.cs",
-    "Commands\PatAlignCommand.cs",
+    "Commands\PatCheckResult.cs",
     "Cad\PatEntityHelper.cs",
     "Palette\DictPaletteCadService.cs",
     "Palette\DictPaletteWorkflow.cs",
@@ -156,13 +155,16 @@ Write-Host ""
 # ── MLeader fork (F方案) local commands ─────────────────────
 # 2010/2013/2015/2025 compile identical version-local MLeader command
 # files (Plan-F three-point vertex chain). 2007 has no MLeader API and
-# keeps the Shared Leader+MText implementation for these two commands.
+# keeps the Shared Leader+MText implementation (PatMarkCommand /
+# PatCheckCommand / PatSelectAllCommand; PatAlignCommand stays v1).
 $mleaderEditions = @("2010", "2013", "2015", "2025")
 $mleaderLocalFiles = @(
     "Commands\PatMarkCommand.cs",
     "Commands\PatMLeaderCreator.cs",
     "Commands\PatMLeaderSetCommand.cs",
     "Commands\PatMLeaderVerifyCommand.cs",
+    "Commands\PatCheckCommand.cs",
+    "Commands\PatAlignCommand.cs",
     "Commands\PatSelectAllCommand.cs"
 )
 Write-Host "-- MLeader fork local commands (2010/2013/2015/2025) --" -ForegroundColor Cyan
@@ -203,7 +205,7 @@ foreach ($mleaderFile in $mleaderLocalFiles) {
         Write-Host "  [OK]   $mleaderFile identical and compiled in $($mleaderEditions -join '/')" -ForegroundColor Green
     }
 }
-foreach ($legacyShared in @("Commands\PatMarkCommand.cs", "Commands\PatSelectAllCommand.cs")) {
+foreach ($legacyShared in @("Commands\PatMarkCommand.cs", "Commands\PatCheckCommand.cs", "Commands\PatAlignCommand.cs", "Commands\PatSelectAllCommand.cs")) {
     $csproj2007 = Join-Path $pluginRoot "2007\PatentMarker\PatentMarker.csproj"
     if (Test-Path -LiteralPath $csproj2007) {
         $projectText = Get-Content -LiteralPath $csproj2007 -Raw

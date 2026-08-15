@@ -29,6 +29,9 @@ namespace PatentMarker.Palette
         private Button _btnPoints;   // v3.1：点数模式切换（无限/三点）
         private Button _btnBrace;    // v4.1：参数化矢量大括号
         private Button _btnCompare;
+        private Button _btnCheck;
+        private Button _btnAlign;
+        private int _lastCheckVersion = -1;
         private Button _btnLanguage;  // v2.3：语言切换
         private Label _lblStatus;
         private NumericUpDown _numTextHeight;
@@ -63,6 +66,13 @@ namespace PatentMarker.Palette
         {
             try
             {
+                // v5.1：PATCHECK 完成后重渲染列表（未标注条目高亮）
+                if (Commands.PatCheckResult.Version != _lastCheckVersion)
+                {
+                    _lastCheckVersion = Commands.PatCheckResult.Version;
+                    RefreshListRendering();
+                    return;
+                }
                 if (!_workflow.IsFileChanged()) return;
                 var dict = _workflow.LoadCurrent();
                 if (dict != null)
@@ -79,6 +89,14 @@ namespace PatentMarker.Palette
             {
                 PatentMarkerApp.RawLog("AutoRefresh error: " + ex.Message);
             }
+        }
+
+        /// <summary>按当前搜索关键字重渲染列表（保留未标注高亮）。</summary>
+        private void RefreshListRendering()
+        {
+            if (_currentDict == null) return;
+            string keyword = _txtSearch.Text.Trim().ToLowerInvariant();
+            _view.RenderFiltered(_session.Filter(keyword));
         }
 
         private void InitializeComponent()
@@ -238,6 +256,17 @@ namespace PatentMarker.Palette
             _btnCompare.Margin = new Padding(0, 0, 4, 2);
             _btnCompare.Enabled = false;
 
+            // v5.1：检测（PATCHECK 漏标）与对齐（PATALIGN）入口
+            _btnCheck = new Button();
+            _btnCheck.Text = Strings.Palette_Check;
+            _btnCheck.AutoSize = true;
+            _btnCheck.Margin = new Padding(0, 0, 4, 2);
+
+            _btnAlign = new Button();
+            _btnAlign.Text = Strings.Palette_Align;
+            _btnAlign.AutoSize = true;
+            _btnAlign.Margin = new Padding(0, 0, 4, 2);
+
             // v2.3：语言切换按钮 | Language toggle button
             _btnLanguage = new Button();
             _btnLanguage.Text = Strings.Palette_Language;
@@ -246,13 +275,16 @@ namespace PatentMarker.Palette
             _btnLanguage.Click += new EventHandler(BtnLanguage_Click);
 
             btnPanel.Controls.AddRange(new Control[] {
-                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnCompare, _btnLanguage
+                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnCompare,
+                _btnCheck, _btnAlign, _btnLanguage
             });
             _btnReload.Click += new EventHandler(BtnReload_Click);
             _btnOpen.Click += new EventHandler(BtnOpen_Click);
             _btnPaste.Click += new EventHandler(BtnPaste_Click);
             _btnAddEntry.Click += new EventHandler(BtnAddEntry_Click);
             _btnCompare.Click += new EventHandler(BtnCompare_Click);
+            _btnCheck.Click += new EventHandler(BtnCheck_Click);
+            _btnAlign.Click += new EventHandler(BtnAlign_Click);
 
             _lblStatus = new Label();
             _lblStatus.Text = Strings.Status_Ready;
@@ -324,6 +356,8 @@ namespace PatentMarker.Palette
             if (_btnPaste != null) _btnPaste.Text = Strings.Palette_PasteRecognize;
             if (_btnAddEntry != null) _btnAddEntry.Text = Strings.Palette_AddEntry;
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
+            if (_btnCheck != null) _btnCheck.Text = Strings.Palette_Check;
+            if (_btnAlign != null) _btnAlign.Text = Strings.Palette_Align;
             if (_btnLanguage != null) _btnLanguage.Text = Strings.Palette_Language;
             if (_btnBrace != null) _btnBrace.Text = Strings.Palette_Brace;
             UpdateLeaderButtonText();
@@ -516,6 +550,22 @@ namespace PatentMarker.Palette
             _compareMode = !_compareMode;
             _view.SetCompareMode(_compareMode);
             _lblStatus.Text = _compareMode ? Strings.Status_CompareShown : Strings.Status_CompareHidden;
+        }
+
+        // v5.1：检测（PATCHECK 漏标清单，完成后本面板高亮未标注条目）
+        private void BtnCheck_Click(object sender, EventArgs e)
+        {
+            var doc = IO.RuntimeHost.ActiveDocument;
+            if (doc == null) return;
+            doc.SendStringToExecute("PATCHECK\n", false, false, false);
+        }
+
+        // v5.1：对齐（PATALIGN v2：先选中标注再点击本按钮）
+        private void BtnAlign_Click(object sender, EventArgs e)
+        {
+            var doc = IO.RuntimeHost.ActiveDocument;
+            if (doc == null) return;
+            doc.SendStringToExecute("PATALIGN\n", false, false, false);
         }
 
         private void LstEntries_DoubleClick(object sender, EventArgs e)

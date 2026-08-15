@@ -69,6 +69,9 @@
     <Compile Include="Commands\PatMLeaderCreator.cs" />
     <Compile Include="Commands\PatMLeaderSetCommand.cs" />
     <Compile Include="Commands\PatMLeaderVerifyCommand.cs" />
+    <Compile Include="Commands\PatCheckCommand.cs" />
+    <Compile Include="Commands\PatAlignCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" />
@@ -76,8 +79,6 @@
     <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" />
     <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="..\..\Shared\Palette\PatPaletteCommand.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteControl.cs" />

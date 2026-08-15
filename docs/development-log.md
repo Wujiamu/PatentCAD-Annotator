@@ -4,6 +4,27 @@
 
 ---
 
+## v5.1 (2026-08-16)
+
+**PATCHECK 简化 + PATALIGN v2 重做**。PATCHECK 从三类检测收缩为单一"漏标检测"（字典有 · 图纸未标注）；PATALIGN 从"参考点 + 水平/垂直方向"重做为"选择集先行 → 线/框基准 → 空间不足时默认延伸"。
+
+- **PATCHECK v2**（MLeader 组版 `Commands/PatCheckCommand.cs` + Shared 2007 版同步简化）：删除"图纸有·字典无"（纯插件流程下编号只能来自字典面板，不可能出现）与"同号重复"（同一部件多处标同号是合法用法）两类检测；结果列表写入 `Shared/Commands/PatCheckResult.cs`（静态类，原子引用交换 + Version 计数供面板 Timer 轮询），命令行输出漏标清单（保持字典顺序）。
+- **面板"检测"按钮**：`BtnCheck_Click` 经 `SendStringToExecute("PATCHECK\n")` 触发；`AutoRefreshTimer` 比对 `PatCheckResult.Version` 变化后重渲染列表——未标注条目以橙色（DarkOrange）+ `△` 前缀标示（前景色，不与对照模式 diff 背景色冲突）。
+- **PATALIGN v2 选型探针**（`tools/MLeaderRepro/MLeaderAlignProbe.cs`，AutoCAD 2026 实测）：A 路径（`TextLocation` setter）移动文字 (-20,+5) 时末顶点同步等量平移（相对差值恒 1.79），dogleg/landing/lineType 不被重置 → **采用**；B（MoveGripPointsAt 文字夹点）效果同 A 但实现复杂 → 备用；C（原生 MLEADERALIGN 经 `ed.Command` 发送）抛 ArgumentException → 弃用。文字宽度测量确认用 `MText.ActualWidth`（10 字符实测 26.43，与字高 3.5 成比例），`GeometricExtents` 含引线不可用。
+- **PATALIGN v2**（MLeader 组版 + Shared 2007 版逻辑同步，实体分支不同）：
+  - 选集先行（`CommandFlags.UsePickSet` + `SelectImplied`）：pickfirst 预选集优先（`PATSELECTALL`/`BZS` 建立），否则提示选择——一 DWG 多附图时各附图可分别对齐；
+  - 线模式：文字投影到 P1→P2 基准线垂足（空间足够，保持原间距）；线长不足时沿 P1→P2 紧凑排列并越过线端延伸；
+  - 框模式：文字推到指定边（左/右/上/下）外侧 margin（config.json `align.marginToFrame`，默认 5）；边长不足时按列溢出——第一列沿边排满，后续列沿远离框方向退一列（列距 = 列内最大占位宽 + 2×字高），不按各边延伸散开（避免交叉重叠）；
+  - 排列顺序一律为投影顺序（线模式沿线方向、框模式沿边方向），**不按编号大小/层级关系重排**；文字占位测量失败时退化为纯投影（v1 行为）；
+  - MLeader 移动原语：`TextLocation` setter（末顶点自动跟随，探针实证）+ `MText.Location` 同步 + `PatMLeaderCreator.UpdateChainTextPoint` 重写 Xrecord 点链文字端，保证对齐后 `PATMLVERIFY` 仍可通过；2007 Leader 路径沿用 v1（移动关联 MText + `SetTextEndpoint` 重写文字端点）；
+  - 修复：溢出判定误用 `GetNormal()` 后的单位向量长度（恒 1）导致长线也走紧凑排列——在归一化前保存线长参与判定。
+- **check-version-sync.ps1**：MLeader 组清单从 5 文件扩到 7 文件（新增 `PatCheckCommand.cs`、`PatAlignCommand.cs`，四版本字节级一致）；`PatCheckCommand.cs`/`PatAlignCommand.cs` 移出 Shared 强制清单，2007 必须链接 Shared 版本（legacy 校验）。
+- **部署包**：`package.ps1 -Apply` 重打包五套（2013/2015 经 ILRepack 合并 Newtonsoft.Json，合并后 `GetReferencedAssemblies()` 无外部引用）。
+- 验证（全部本地实际执行）：五版本编译通过；`build.ps1 -Structure` / `-Static` 通过（含 7 文件 MLeader 组 + Shared legacy 校验）；**AutoCAD 2026 批处理实测**（accoreconsole `/s` + SCR，英文 config.local.json，测试字典 `Drawing1.dict.json` 5 条目）——PATCHECK 漏标清单正确（标注 3/5，报 `#40 Bearing`、`#50 Cover`）；PATALIGN 线模式长线投影（`Aligned 3 (0 failed)` 无溢出文案）+ 短线紧凑延伸（`overflowed` 提示）；框模式宽边投影 + 窄边溢出 5 列（`4 extra column(s)`）；两种模式对齐后 `PATMLVERIFY` 全过（Run A 3/3、Run B 5/5，recorded 点链与实体状态一致）。
+- 实测备注：accoreconsole 2026 的 SCR 参数为 `/s <script>`（绝对路径），非旧版 `/b`；SCR 中窗口选择对 MLeader 实测失效（完全包含仍 0 命中），改用 `ALL` 关键字选集。
+
+---
+
 ## v5.0 (2026-08-16)
 
 **标注引擎切换为 MLeader（F 方案）**：2010/2013/2015/2025 四个版本的新建标注统一改为单个 MLeader 实体（自持 MText 文字）；2007 无 MLeader API，保持 `Leader + MText`。这是 v4.0"放弃 MLeader"决策的正式回归——形态探针（`tools/MLeaderRepro`）证实当年鱼钩形态的根因是顶点链不完整（只给 attach→dogleg），F 方案把文字点补为最后一个顶点后问题消除。

@@ -60,8 +60,7 @@
     <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" Link="Diagnostics\PatDiagnostics.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" Link="Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" Link="Diagnostics\PatDoctorCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" Link="Commands\PatCheckCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" Link="Commands\PatAlignCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" Link="Commands\PatCheckResult.cs" />
     <Compile Include="..\..\Shared\I18n\Strings.cs" Link="I18n\Strings.cs" />
     <Compile Include="..\..\Shared\Palette\ArbitrateDialog.cs" Link="Palette\ArbitrateDialog.cs" />
     <Compile Include="..\..\Shared\Palette\EditEntryDialog.cs" Link="Palette\EditEntryDialog.cs" />
