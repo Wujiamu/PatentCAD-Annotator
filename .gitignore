@@ -73,8 +73,12 @@ PatentMarker.log
 # ---- 部署包运行时产物 ----
 *.bak.*
 PatentMarker-*-deploy/PatentMarker-doctor-report.txt
+PatentMarker-*-deploy/PatentMarker-doctor-offline-report.txt
 # install-2025.ps1 生成的 LSP 兜底文件（内容含本机绝对路径，勿入库）
 PatentMarker-*-deploy/load-patent-marker.lsp
+
+# ---- 历史实验残留（MLeader 分支预研暂存区） ----
+.mleader-fork-staging/
 
 # ---- 临时文件 ----
 *.tmp

@@ -14,6 +14,7 @@ PatentMarker 2007 安装说明 (v2.12)
   install-2007.vbs            步骤1: 安装 CAD 插件 (三层自动加载)
   install-2007.bat            步骤1: BAT 快捷方式
   uninstall-2007.vbs          卸载 CAD 插件
+  doctor-2007.vbs            诊断脚本 (CAD 外排查, 见下方【诊断】)
   install-vba.vbs             步骤2: 安装 VBA 到 Normal 模板
   load-patent-marker.lsp      CAD 加载脚本 (安装时自动部署)
   vba\
@@ -146,6 +147,21 @@ PatentMarker 2007 安装说明 (v2.12)
     ExtractDict          手动导出 dict.json
     EnableAutoExport     保存时自动导出
     DisableAutoExport    关闭自动导出
+
+
+【诊断】
+
+  插件无法加载或 BZD 命令不可用时，无需进入 AutoCAD 即可排查。
+  双击 doctor-2007.vbs，或命令行运行:
+      cscript doctor-2007.vbs
+  - 离线层: 检查 PatentMarker.dll、自动加载注册表及 LOADER 指向、
+    所需 .NET Framework 2.0、PatentMarker.log 尾部
+  - 在线层: 自动以批处理模式启动 AutoCAD 2007~2009，
+    NETLOAD 部署 DLL 并执行 PATDOCTOR 生成 CAD 内诊断报告
+  - 仅做离线检查: cscript doctor-2007.vbs offline
+  - 报告输出到本目录 PatentMarker-doctor-offline-report.txt
+    （以及 CAD 内诊断报告 PatentMarker-doctor-report.txt）
+  - 运行在线层前请先关闭已打开的 AutoCAD
 
 【卸载】
 

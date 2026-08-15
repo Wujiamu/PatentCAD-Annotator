@@ -32,18 +32,19 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 
 ### 3.1 部署包逐版本差异
 
-5 套部署包共享 `PatentMarker.dll` + `install-vba.vbs` + `README.txt` + `vba/`（6 模块），差异如下：
+5 套部署包共享 `PatentMarker.dll` + `install-vba.vbs` + `README.txt` + `vba/`（6 模块）+ 外部诊断脚本 doctor，差异如下：
 
-| 版本 | 安装脚本 | 卸载脚本 | 额外依赖 |
-|------|---------|---------|---------|
-| 2007 | `install-2007.bat` + `install-2007.vbs` | `uninstall-2007.vbs` | 无 |
-| 2010 | `install-2010.vbs` | `uninstall-2010.vbs` | 无 |
-| 2013 | `install-2013.vbs` | `uninstall-2013.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
-| 2015 | `install-2015.vbs` | `uninstall-2015.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
-| 2025 | `install-2025.ps1`（PowerShell） | `uninstall-2025.ps1`（PowerShell） | 无（System.Text.Json 内置） |
+| 版本 | 安装脚本 | 卸载脚本 | 诊断脚本 | 额外依赖 |
+|------|---------|---------|---------|---------|
+| 2007 | `install-2007.bat` + `install-2007.vbs` | `uninstall-2007.vbs` | `doctor-2007.vbs` | 无 |
+| 2010 | `install-2010.vbs` | `uninstall-2010.vbs` | `doctor-2010.vbs` | 无 |
+| 2013 | `install-2013.vbs` | `uninstall-2013.vbs` | `doctor-2013.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
+| 2015 | `install-2015.vbs` | `uninstall-2015.vbs` | `doctor-2015.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
+| 2025 | `install-2025.ps1`（PowerShell） | `uninstall-2025.ps1`（PowerShell） | `doctor-2025.ps1`（PowerShell） | 无（System.Text.Json 内置） |
 
 - 修改任一部署包脚本时，评估是否需同步到其他 4 套；2025 版用 `.ps1`，其余用 `.vbs`，脚本语法不通用
 - 卸载脚本职责：2015 版清理 HKCU/HKLM 注册表（版本候选与 install-2015.vbs 对称）；2025 版额外清理 install-2025.ps1 生成的 LSP 兜底文件（部署目录与 `%LOCALAPPDATA%\PatentMarker`，可用 `-KeepLsp` 保留）
+- **doctor 诊断脚本**：解决“CAD 内 `PATDOCTOR/BZD` 命令本身加载失败时无法诊断”的死锁——不依赖插件加载即可在 CAD 外运行。两层结构：Tier 1 离线检查（DLL 存在性、demand-load 注册表与 LOADER 目标、.NET 运行时、PatentMarker.log 尾部）；Tier 2 在线升级（自动以 `/b` 批处理模式启动对应范围 AutoCAD，NETLOAD 部署 DLL 后执行 `PATDOCTOR` 生成 CAD 内报告）。四份 `doctor-<year>.vbs` 字节级相同（版本从文件名自识别，编辑任一份后复制到其余三份）；输出 `PatentMarker-doctor-offline-report.txt` 与 `PatentMarker-doctor-report.txt`（两者均为运行产物，不入库）
 
 ## 4. 修改代码的同步规则
 

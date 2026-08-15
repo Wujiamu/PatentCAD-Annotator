@@ -6,6 +6,7 @@ PatentMarker 2015 部署说明
 文件说明：
   PatentMarker.dll     - CAD 插件主文件（单文件部署，已内置 JSON 解析）
   install-2015.vbs     - 安装脚本
+  doctor-2015.vbs      - 诊断脚本（CAD 外排查，见下方"诊断"）
   vba/                 - Word VBA 模块（6个文件）
 
 安装步骤：
@@ -27,6 +28,19 @@ PatentMarker 2015 部署说明
 
 Word 端：
   将 vba/ 下的 6 个模块导入 Word Normal 模板
+
+诊断（doctor）：
+  插件无法加载或 BZD 命令不可用时，无需进入 AutoCAD 即可排查。
+  双击 doctor-2015.vbs，或命令行运行:
+      cscript doctor-2015.vbs
+  - 离线层：检查 PatentMarker.dll、自动加载注册表及 LOADER 指向、
+    所需 .NET Framework 4.5+、PatentMarker.log 尾部
+  - 在线层：自动以批处理模式启动本版本范围内的 AutoCAD，
+    NETLOAD 部署 DLL 并执行 PATDOCTOR 生成 CAD 内诊断报告
+  - 仅做离线检查: cscript doctor-2015.vbs offline
+  - 报告输出到本目录 PatentMarker-doctor-offline-report.txt
+    （以及 CAD 内诊断报告 PatentMarker-doctor-report.txt）
+  - 运行在线层前请先关闭已打开的 AutoCAD
 
 命令：BZ BZM BZC BZA BZS DAGUOHAO PATBRACE PATBRACEEDIT
 

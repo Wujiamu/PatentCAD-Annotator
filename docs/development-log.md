@@ -4,6 +4,16 @@
 
 ---
 
+## v4.8 (2026-08-15)
+
+- 新增 CAD 外诊断脚本 doctor：解决 `PATDOCTOR/BZD` 作为 CAD 内命令的固有死锁——插件本身加载失败或命令未注册时，用户无从触发诊断。doctor 不依赖插件加载即可在 AutoCAD 外运行，五套部署包各内置一份（`doctor-2007/2010/2013/2015.vbs` + `doctor-2025.ps1`）。
+- 两层诊断结构：Tier 1 离线检查（无需 AutoCAD）——部署 DLL 存在性、demand-load 注册表条目及 LOADER 指向文件是否存在、该版本所需 .NET 运行时（2.0/3.5/4.0/4.5+/8）、`PatentMarker.log` 尾部；Tier 2 在线升级——检测到本版本支持范围内的 AutoCAD 后，自动以 `/b` 批处理模式启动宿主，SCR 编排 `NETLOAD` 部署 DLL → `PATDOCTOR` → `QUIT`（应答 `_N`），生成 CAD 内诊断报告并强制回收宿主进程。
+- 鲁棒性设计：启动前检测残留 `acad.exe`（持有 profile 锁会使批处理宿主静默挂起）并以 WARN 跳过在线层；vbs 四份字节级相同（版本从文件名 `doctor-(\d{4})` 自识别，报告与控制台输出含版本号）；vbs 为纯 ASCII（与 install-*.vbs 同一约定，杜绝代码页损坏），ps1 保留中英文控制台 i18n；报告文件（`PatentMarker-doctor-offline-report.txt`）加入 `.gitignore` 运行时产物。
+- 同步文档：AGENTS.md 3.1 部署包差异表新增"诊断脚本"列并说明两层结构与单源规则；五套部署包 README.txt 增加"诊断（doctor）"章节（2007 版为 GBK 编码，按编码安全方式拼接，Win7 记事本可正常显示）。
+- 验证（全部本地实际执行）：四份 vbs 哈希一致（SHA256 相同）+ 纯 ASCII 字节扫描通过；`cscript doctor-2015.vbs offline` 与 `cscript doctor-2007.vbs`（无参数）退出码 0，版本自识别/注册表扫描/.NET 检查/在线层 SKIP 路径均正确；`doctor-2025.ps1` 全梯子在 AutoCAD 2026 真机通过（Tier 2 自动启动宿主、NETLOAD、PATDOCTOR 报告落盘，OVERALL PASS=5 FAIL=0 WARN=0，宿主回收正常）——经由计划任务派生进程执行以规避本机终端沙箱对 AutoCAD 启动写受限路径的误杀，此前 17:03 的 SCR+/b 实测亦已证明同一编排可用。`build.ps1 -Structure` / `-Static` 通过。
+
+---
+
 ## v4.7 (2026-08-15)
 
 - 补齐 AGENTS.md 记录的部署包技术债：2015/2025 两套卸载脚本缺失，现五套部署包安装/卸载脚本齐全。

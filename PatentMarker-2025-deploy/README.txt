@@ -43,6 +43,18 @@ PatentMarker 2025 部署说明
   - 注册表自动加载未生效时，在 AutoCAD 中运行 APPLOAD，选择 load-patent-marker.lsp；
     或直接运行 NETLOAD，选择 PatentMarker.dll
 
+诊断（doctor）：
+  插件无法加载或 BZD 命令不可用时，无需进入 AutoCAD 即可排查:
+      powershell -ExecutionPolicy Bypass -File .\doctor-2025.ps1
+  - 离线层：检查 PatentMarker.dll、自动加载注册表及 LOADER 指向、
+    .NET 8 运行时、PatentMarker.log 尾部
+  - 在线层：自动以批处理模式启动 AutoCAD 2025/2026+，
+    NETLOAD 部署 DLL 并执行 PATDOCTOR 生成 CAD 内诊断报告
+  - 参数：-OfflineOnly 仅做离线检查；-NoPause 结束时不等待回车
+  - 报告输出到本目录 PatentMarker-doctor-offline-report.txt
+    （以及 CAD 内诊断报告 PatentMarker-doctor-report.txt）
+  - 运行在线层前请先关闭已打开的 AutoCAD
+
 命令：
   BZ   (PATPALETTE)    打开字典面板
   BZM  (PATMARK)       创建引线标注
