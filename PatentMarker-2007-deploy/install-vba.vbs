@@ -1,7 +1,7 @@
 ' PatentMarker VBA Module Installer (VBScript)
 '
 ' Function:
-'   - Import 6 VBA modules into Word Normal.dotm global template
+'   - Import VBA modules (5 .bas + 1 UserForm + 1 class) into Word Normal.dotm global template
 '   - Available in all Word documents after install
 '   - Detailed log: install-vba.log
 '
@@ -75,7 +75,7 @@ Function L(t)
     t = Replace(t, "Found ", "检测到 ")
     t = Replace(t, "PatentMarker VBA Install", "PatentMarker VBA 安装")
     t = Replace(t, "ERROR: VBA file not found: ", "错误：找不到 VBA 文件：")
-    t = Replace(t, "Ensure \vba\ contains all .bas modules", "请确保 \vba\ 目录包含所有 .bas 模块")
+    t = Replace(t, "Ensure \vba\ contains all .bas/.frm modules", "请确保 \vba\ 目录包含所有 .bas/.frm 模块")
     t = Replace(t, "Aborted by user.", "用户取消安装。")
     t = Replace(t, "ERROR: Word is still running." & vbCrLf & "Please close all Word instances and retry.", _
                            "错误：Word 仍在运行。" & vbCrLf & "请关闭所有 Word 实例后重试。")
@@ -140,11 +140,10 @@ Function L(t)
                            "模块已安装到全局模板，可在所有 Word 文档中使用")
     t = Replace(t, "Verification:", "验证方法：")
     t = Replace(t, "  1. Open a new Word document", "  1. 打开新的 Word 文档")
-    t = Replace(t, "  2. Press Alt+F11, check modules under 'Normal'", _
-                           "  2. 按 Alt+F11，检查 Normal 下的模块")
-    t = Replace(t, "  3. Run EnableAutoExport to enable auto-export", _
-                           "  3. 运行 EnableAutoExport 启用自动导出")
-    t = Replace(t, "     (or manually run ExtractDict)", "     （或手动运行 ExtractDict）")
+    t = Replace(t, "  2. In Word: Alt+F8 -> ShowPatentDictPanel (one macro)", _
+                           "  2. 在 Word 中：Alt+F8 -> ShowPatentDictPanel（单一宏）")
+    t = Replace(t, "  3. In the panel: click Manual Export or toggle Auto-Export on Save", _
+                           "  3. 在面板中：点击“手动导出”按钮或切换“保存时自动导出”开关")
     t = Replace(t, "dict.json will be saved to Word document directory", _
                            "dict.json 将保存到 Word 文档所在目录")
     t = Replace(t, "CAD auto-export (DWG in same folder)", "CAD 自动导出（DWG 同目录）")
@@ -182,12 +181,13 @@ Dim vbaDir
 vbaDir = scriptDir & "\vba"
 LogMsg "VBA dir: " & vbaDir
 
-Dim vbaFiles(4)
+Dim vbaFiles(5)
 vbaFiles(0) = "Patterns.bas"
 vbaFiles(1) = "DictModel.bas"
 vbaFiles(2) = "JsonWriter.bas"
 vbaFiles(3) = "PatentExtractor.bas"
 vbaFiles(4) = "AutoExport.bas"
+vbaFiles(5) = "PatentDictPanel.frm"
 ' Note: clsSaveHook.cls is NOT in this array. Word 2010 cannot correctly import
 ' .cls files (VERSION/Attribute lines appear as visible code and fail to compile).
 ' It is created programmatically in Step 7.5 below.
@@ -196,11 +196,11 @@ Dim i, filePath
 For i = 0 To UBound(vbaFiles)
     filePath = vbaDir & "\" & vbaFiles(i)
     If Not fso.FileExists(filePath) Then
-        QuitWithMsg "ERROR: VBA file not found: " & filePath & vbCrLf & "Ensure \vba\ contains all .bas modules"
+        QuitWithMsg "ERROR: VBA file not found: " & filePath & vbCrLf & "Ensure \vba\ contains all .bas/.frm modules"
     End If
 Next
 
-LogMsg "VBA files: all present (5 .bas modules)"
+LogMsg "VBA files: all present (5 .bas + 1 .frm)"
 
 ' --- 1.5. Check for running Word processes ---
 LogMsg "--- Word Process Check ---"
@@ -354,13 +354,14 @@ LogMsg "VBA project: accessible"
 LogMsg "VBA project name: " & vbProj.Name
 
 ' --- 6. Delete old modules ---
-Dim moduleNames(5)
+Dim moduleNames(6)
 moduleNames(0) = "Patterns"
 moduleNames(1) = "DictModel"
 moduleNames(2) = "JsonWriter"
 moduleNames(3) = "PatentExtractor"
 moduleNames(4) = "AutoExport"
 moduleNames(5) = "clsSaveHook"
+moduleNames(6) = "PatentDictPanel"
 
 LogMsg "Deleting old modules (if any)..."
 For i = 0 To UBound(moduleNames)
@@ -441,7 +442,7 @@ clsComp.CodeModule.AddFromString clsCode
 LogMsg "  OK: clsSaveHook (class module, code injected)"
 imported = imported + 1
 
-LogMsg "Imported " & imported & " / 6 modules"
+LogMsg "Imported " & imported & " / 7 modules"
 
 ' --- 8. Save Normal.dotm (3-level strategy) ---
 LogMsg "Saving Normal template..."
@@ -549,7 +550,7 @@ End If
 LogMsg ""
 LogMsg "=== VBA Install Complete ==="
 LogMsg "Normal template: " & normalPath
-LogMsg "Modules imported: " & imported & " / 6"
+LogMsg "Modules imported: " & imported & " / 7"
 If saveVerified Then
     LogMsg "Saved: Yes (verified)"
 Else
@@ -560,9 +561,8 @@ LogMsg "Modules installed to global template, available in all Word documents"
 LogMsg ""
 LogMsg "Verification:"
 LogMsg "  1. Open a new Word document"
-LogMsg "  2. Press Alt+F11, check modules under 'Normal'"
-LogMsg "  3. Run EnableAutoExport to enable auto-export"
-LogMsg "     (or manually run ExtractDict)"
+LogMsg "  2. In Word: Alt+F8 -> ShowPatentDictPanel (one macro)"
+LogMsg "  3. In the panel: click Manual Export or toggle Auto-Export on Save"
 LogMsg ""
 LogMsg "dict.json will be saved to Word document directory"
 LogMsg "CAD auto-export (DWG in same folder)"

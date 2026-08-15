@@ -62,13 +62,13 @@ PatentMarker 2007 安装说明 (v2.12)
   4. 脚本自动:
      - 获取 Normal.dotm 路径
      - 打开 Normal.dotm
-     - 导入 6 个 VBA 模块
+     - 导入 7 个 VBA 文件（6 个模块 + 1 个面板 UserForm）
      - 保存 Normal.dotm
   5. 打开 Word 文档即可使用宏
 
   步骤3: 验证
   -----------
-  1. Word 端: 运行 EnableAutoExport (或 ExtractDict)
+  1. Word 端: 运行 ShowPatentDictPanel (打开工具面板)
      -> 生成 <dwg名>.dict.json
   2. AutoCAD 端: 输入 BZ (或 PATPALETTE)
      -> 打开标注显示面板
@@ -144,9 +144,8 @@ PatentMarker 2007 安装说明 (v2.12)
     BZS /  PATSELECTALL  全选标注实体
 
   Word (VBA, 在 Normal 模板):
-    ExtractDict          手动导出 dict.json
-    EnableAutoExport     保存时自动导出
-    DisableAutoExport    关闭自动导出
+    ShowPatentDictPanel  打开"专利标注字典工具"面板
+    面板功能: "手动导出字典"按钮 + "保存时自动导出"开关
 
 
 【诊断】
@@ -166,7 +165,7 @@ PatentMarker 2007 安装说明 (v2.12)
 【卸载】
 
   1. 运行 uninstall-2007.vbs (删除 CAD 注册表)
-  2. Word 中: Alt+F11 > Normal > 删除 6 个模块
+  2. Word 中: Alt+F11 > Normal > 删除 7 个模块
   3. 删除部署文件夹
 
 【常见问题】

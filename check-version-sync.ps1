@@ -94,10 +94,8 @@ $sharedSourceFiles = @(
     "Commands\PatBraceGeometry.cs",
     "Commands\PatBraceEntity.cs",
     "Commands\PatBraceCommand.cs",
-    "Commands\PatMarkCommand.cs",
     "Commands\PatCheckCommand.cs",
     "Commands\PatAlignCommand.cs",
-    "Commands\PatSelectAllCommand.cs",
     "Cad\PatEntityHelper.cs",
     "Palette\DictPaletteCadService.cs",
     "Palette\DictPaletteWorkflow.cs",
@@ -155,6 +153,68 @@ foreach ($shared in $sharedSourceFiles) {
 }
 Write-Host ""
 
+# ── MLeader fork (F方案) local commands ─────────────────────
+# 2010/2013/2015/2025 compile identical version-local MLeader command
+# files (Plan-F three-point vertex chain). 2007 has no MLeader API and
+# keeps the Shared Leader+MText implementation for these two commands.
+$mleaderEditions = @("2010", "2013", "2015", "2025")
+$mleaderLocalFiles = @(
+    "Commands\PatMarkCommand.cs",
+    "Commands\PatMLeaderCreator.cs",
+    "Commands\PatMLeaderSetCommand.cs",
+    "Commands\PatMLeaderVerifyCommand.cs",
+    "Commands\PatSelectAllCommand.cs"
+)
+Write-Host "-- MLeader fork local commands (2010/2013/2015/2025) --" -ForegroundColor Cyan
+foreach ($mleaderFile in $mleaderLocalFiles) {
+    $leaf = Split-Path -Leaf $mleaderFile
+    $compilePattern = '"' + [regex]::Escape("Commands\$leaf") + '"'
+    $refHash = $null
+    $problems = @()
+    foreach ($v in $mleaderEditions) {
+        $localPath = Join-Path $pluginRoot "$v\PatentMarker\$mleaderFile"
+        if (-not (Test-Path -LiteralPath $localPath)) {
+            $problems += "missing in $v"
+            continue
+        }
+        $h = Get-FileHashCached $localPath
+        if ($null -eq $refHash) { $refHash = $h }
+        elseif ($h -ne $refHash) { $problems += "content drift in $v" }
+        $csproj = Join-Path $pluginRoot "$v\PatentMarker\PatentMarker.csproj"
+        $projectText = Get-Content -LiteralPath $csproj -Raw
+        # SDK-style csproj (2025) implicitly includes Commands\*.cs via globbing;
+        # legacy csproj (2010/2013/2015) needs an explicit Compile Include entry.
+        if ($projectText -match '<Project Sdk=') {
+            if ($projectText -match ('<Compile Remove="' + [regex]::Escape("Commands\$leaf") + '"')) {
+                $problems += "explicitly excluded in $v"
+            }
+        } elseif ($projectText -notmatch $compilePattern) {
+            $problems += "not compiled in $v"
+        }
+    }
+    $v2007Path = Join-Path $pluginRoot "2007\PatentMarker\$mleaderFile"
+    if (Test-Path -LiteralPath $v2007Path) {
+        $problems += "unexpected in 2007 (no MLeader API)"
+    }
+    if ($problems.Count -gt 0) {
+        Write-Host "  [FAIL] $mleaderFile : $($problems -join '; ')" -ForegroundColor Red
+        $criticalSyncFailures++
+    } else {
+        Write-Host "  [OK]   $mleaderFile identical and compiled in $($mleaderEditions -join '/')" -ForegroundColor Green
+    }
+}
+foreach ($legacyShared in @("Commands\PatMarkCommand.cs", "Commands\PatSelectAllCommand.cs")) {
+    $csproj2007 = Join-Path $pluginRoot "2007\PatentMarker\PatentMarker.csproj"
+    if (Test-Path -LiteralPath $csproj2007) {
+        $projectText = Get-Content -LiteralPath $csproj2007 -Raw
+        if ($projectText -notmatch [regex]::Escape("..\..\Shared\$legacyShared")) {
+            Write-Host "  [FAIL] 2007 must link Shared\$legacyShared (Leader+MText baseline)" -ForegroundColor Red
+            $criticalSyncFailures++
+        }
+    }
+}
+Write-Host ""
+
 # Backward-compatible alias used by older output consumers.
 $criticalSharedFiles = @("IO\NumberIdentity.cs", "IO\PatSettings.cs")
 Write-Host "-- Critical shared contract aliases --" -ForegroundColor Cyan
@@ -185,6 +245,7 @@ $sanctionedLocalFiles = @(
 
 foreach ($rel in $sortedPaths) {
     if ($sanctionedLocalFiles -contains $rel) { continue }
+    if ($mleaderLocalFiles -contains $rel) { continue }
     $present = @()
     $absent  = @()
     $hashes  = @{}

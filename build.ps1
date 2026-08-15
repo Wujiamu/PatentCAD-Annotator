@@ -40,10 +40,10 @@ $script:DllMap = [ordered]@{
 # Edition -> .NET / annotation API / build tool
 $script:VersionInfo = [ordered]@{
     "2007" = @{ Net = ".NET 2.0"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2007-2009 install dir" }
-    "2010" = @{ Net = ".NET 3.5"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2010-2012 install dir" }
-    "2013" = @{ Net = ".NET 4.0"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2013-2014 install dir" }
-    "2015" = @{ Net = ".NET 4.5"; Api = "Leader + MText"; Tool = "MSBuild"; DllNote = "AutoCAD 2015-2024 install dir" }
-    "2025" = @{ Net = ".NET 8.0"; Api = "Leader + MText"; Tool = "dotnet";  DllNote = "AutoCAD 2025+ install dir" }
+    "2010" = @{ Net = ".NET 3.5"; Api = "MLeader (Plan F)"; Tool = "MSBuild"; DllNote = "AutoCAD 2010-2012 install dir" }
+    "2013" = @{ Net = ".NET 4.0"; Api = "MLeader (Plan F)"; Tool = "MSBuild"; DllNote = "AutoCAD 2013-2014 install dir" }
+    "2015" = @{ Net = ".NET 4.5"; Api = "MLeader (Plan F)"; Tool = "MSBuild"; DllNote = "AutoCAD 2015-2024 install dir" }
+    "2025" = @{ Net = ".NET 8.0"; Api = "MLeader (Plan F)"; Tool = "dotnet";  DllNote = "AutoCAD 2025+ install dir" }
 }
 
 function Write-Section($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
@@ -142,10 +142,10 @@ function Invoke-StructureCheck {
             }
         }
 
-        # 3. Deploy package completeness: PatentMarker.dll + 6 VBA modules
+        # 3. Deploy package completeness: PatentMarker.dll + 8 VBA files (6 .bas/.cls + 1 .frm UserForm + 1 .frx blob)
         $deployDir = Join-Path $root "PatentMarker-$ver-deploy"
         $deployDll = Join-Path $deployDir "PatentMarker.dll"
-        $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls")
+        $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
         $missingVba = @()
         foreach ($v in $vbaFiles) {
             if (-not (Test-Path (Join-Path $deployDir "vba\$v"))) { $missingVba += $v }
@@ -182,7 +182,7 @@ function Invoke-StaticCheck {
 
     # ---- 1. VBA cross-package consistency ----
     Write-Host "`n  --- VBA cross-package consistency ---"
-    $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls")
+    $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
     $deployVersions = @("2007","2010","2013","2015","2025")
     foreach ($vf in $vbaFiles) {
         $hashes = @{}

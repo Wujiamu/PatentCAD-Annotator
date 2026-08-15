@@ -17,7 +17,7 @@ $OutputRoot = if ([string]::IsNullOrEmpty($OutputRoot)) {
     Join-Path ([System.IO.Path]::GetTempPath()) ("PatentCAD-Annotator-release-" + (Get-Date -Format "yyyyMMdd-HHmmss"))
 } else { $OutputRoot }
 $versions = if ($Version -eq "all") { @("2007", "2010", "2013", "2015", "2025") } else { @($Version) }
-$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls")
+$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
 $ilrepack = Join-Path $root "tools\ilrepack\tools\ILRepack.exe"
 
 function Fail($message) { throw $message }

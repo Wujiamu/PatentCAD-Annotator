@@ -4,23 +4,47 @@ Option Explicit
 Private m_hook As clsSaveHook
 Private m_enabled As Boolean
 
-Public Sub AutoOpen()
+' µ¥Ò»Èë¿Úºê£º´ò¿ª×¨Àû±ê×¢×Öµä¹¤¾ßÃæ°å£¨Î¨Ò»³öÏÖÔÚ Word ºêÁĞ±íÖĞµÄ¹ı³Ì£©
+Public Sub ShowPatentDictPanel()
+    PatentDictPanel.Show
+End Sub
+
+' ×Ô¶¯µ¼³ö×´Ì¬¶ÁÈ¡£¨¹©Ãæ°å¹´Ñ¡×´Ì¬Óë³õÊ¼»¯¶ÁÈ¡£©
+Public Property Get IsAutoExportEnabled() As Boolean
+    IsAutoExportEnabled = m_enabled
+End Property
+
+' ×Ô¶¯µ¼³ö×´Ì¬Ğ´Èë£¨¹©Ãæ°å¹´Ñ¡ÊÂ¼şµ÷ÓÃ£©
+Public Property Let IsAutoExportEnabled(ByVal v As Boolean)
+    If v Then
+        EnableAutoExport
+    Else
+        DisableAutoExport
+    End If
+End Property
+
+' ´ò¿ªÎÄµµÊ±×Ô¶¯¿ªÆô±£´æµ¼³ö
+'£¨Private£º²»ÏÔÊ¾ÔÚºêÁĞ±íÖĞ£¬µ«×÷Îª Word ×Ô¶¯ºêÈÔ»á×Ô¶¯Ö´ĞĞ£©
+Private Sub AutoOpen()
     EnableAutoExport
 End Sub
 
-Public Sub EnableAutoExport()
+Private Sub EnableAutoExport()
     If m_enabled Then Exit Sub
     Set m_hook = New clsSaveHook
     m_enabled = True
 End Sub
 
-Public Sub DisableAutoExport()
+Private Sub DisableAutoExport()
     Set m_hook = Nothing
     m_enabled = False
 End Sub
 
-Public Sub ExportDict(Optional ByVal doc As Document)
+' µ¼³öµ±Ç°ÎÄµµÎª <Ö÷Ãû>.dict.json
+'£¨Function£º²»ÏÔÊ¾ÔÚºêÁĞ±íÖĞ£¬ÓÉ±£´æ¹³×Ó clsSaveHook ÓëÃæ°å"ÊÖ¶¯µ¼³ö"°´Å¥µ÷ÓÃ£©
+Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     On Error GoTo errHandler
+    ExportDict = False
 
     If doc Is Nothing Then Set doc = ActiveDocument
 
@@ -29,7 +53,7 @@ Public Sub ExportDict(Optional ByVal doc As Document)
 
     Dim outPath As String
     outPath = GetOutputPath(doc)
-    If outPath = "" Then Exit Sub
+    If outPath = "" Then Exit Function
 
     Dim timestamp As String
     timestamp = Format(Now, "yyyy-mm-ddTHH:nn:ss")
@@ -40,29 +64,31 @@ Public Sub ExportDict(Optional ByVal doc As Document)
     Dim json As String
     json = JsonWriter.Serialize(root)
 
-    ' v4.0ï¼šå¯¼å‡ºå‰å¤‡ä»½è¢« CAD ç«¯ä¿®æ”¹è¿‡çš„æ—§å­—å…¸ï¼Œé˜²æ­¢ Word é™é»˜è¦†ç›–
+    ' v4.0£ºµ¼³öÇ°±¸·İ±» CAD ¶ËĞŞ¸Ä¹ıµÄ¾É×Öµä£¬·ÀÖ¹ Word ¾²Ä¬¸²¸Ç
     BackupIfCadModified outPath
 
     JsonWriter.WriteToFile outPath, json
 
-    Exit Sub
+    ExportDict = True
+    Exit Function
 
 errHandler:
     On Error Resume Next
     Dim errPath As String
     errPath = GetOutputDir(doc) & "\autoexport-error.txt"
     JsonWriter.WriteToFile errPath, "ERROR: " & Err.Description & " (" & Err.Number & ")"
-End Sub
+    ExportDict = False
+End Function
 
 ' ======================================================================
-' È·ï¿½ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½Í¬Ä¿Â¼ï¿½Âµï¿½ DWG ï¿½Ä¼ï¿½ï¿½ï¿½
+' È·¶¨Êä³öÄ¿Â¼£¬ÓÅÏÈÊ¹ÓÃÍ¬Ä¿Â¼ÏÂµÄ DWG ÎÄ¼ş¡£
 '
-' ï¿½ï¿½ï¿½Ò²ï¿½ï¿½Ô£ï¿½
-'   1. É¨ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ï¿½Ğµï¿½ .dwg ï¿½Ä¼ï¿½
-'   2. ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ò»ï¿½ï¿½ DWGï¿½ï¿½Ö±ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-'   3. ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½Æ¥ï¿½ä£¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
-'   4. ï¿½ï¿½ï¿½ï¿½Ş·ï¿½Æ¥ï¿½ä£¬Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Äµï¿½ DWG
-'   5. ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ Word ï¿½Äµï¿½ï¿½ï¿½
+' Æ¥Åä²ßÂÔ£º
+'   1. É¨Ãè Word ÎÄµµËùÔÚÄ¿Â¼ÖĞµÄ .dwg ÎÄ¼ş
+'   2. Èç¹ûÖ»ÓĞÒ»¸ö DWG£¬Ö±½ÓÊ¹ÓÃÆäÃû³Æ
+'   3. Èç¹û¶à¸ö DWG£¬³¢ÊÔÓë Word ÎÄµµÃûÆ¥Åä£¨Ë«Ïò°üº¬£©
+'   4. ÈôÎŞ·¨Æ¥Åä£¬Ê¹ÓÃ×î½üĞŞ¸ÄµÄ DWG
+'   5. Èç¹ûÃ»ÓĞ DWG£¬»ØÍËµ½ Word ÎÄµµÃû
 ' ======================================================================
 Private Function GetOutputPath(ByVal doc As Document) As String
     Dim dir As String
@@ -75,7 +101,7 @@ Private Function GetOutputPath(ByVal doc As Document) As String
     Dim baseName As String
     baseName = FindDwgBaseName(dir, doc.Name)
 
-    ' ï¿½ï¿½ï¿½Ã»ï¿½Òµï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½ Word ï¿½Äµï¿½ï¿½ï¿½
+    ' ÈôÎ´ÕÒµ½ DWG£¬»ØÍËµ½ Word ÎÄµµÃû
     If baseName = "" Then
         baseName = doc.Name
         Dim dotPos As Long
@@ -87,7 +113,8 @@ Private Function GetOutputPath(ByVal doc As Document) As String
 End Function
 
 ' ======================================================================
-' ï¿½ï¿½Ö¸ï¿½ï¿½Ä¿Â¼ï¿½Ğ²ï¿½ï¿½ï¿½ DWG ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹ï¿½ï¿½ï¿½ï¿½
+' ÔÚÖ¸¶¨Ä¿Â¼ÖĞ²éÕÒ DWG ÎÄ¼ş£¨×î¶àÊÕ¼¯ 100 ¸ö£¬¹ıÂËÆäËûÀ©Õ¹Ãû£©¡£
+' ÓÅÏÈÓë Word ÎÄµµÃûË«Ïò°üº¬Æ¥Åä£¬·ñÔòÈ¡×î½üĞŞ¸ÄµÄ DWG¡£
 ' ======================================================================
 Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String) As String
     On Error GoTo errHandler
@@ -109,7 +136,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     ReDim dwgNames(0 To 99)
     ReDim dwgDates(0 To 99)
 
-    ' ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ .dwg ï¿½Ä¼ï¿½
+    ' ÊÕ¼¯ËùÓĞ .dwg ÎÄ¼ş
     Dim f As Object
     For Each f In folder.Files
         If LCase(fso.GetExtensionName(f.Name)) = "dwg" Then
@@ -126,13 +153,13 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
         Exit Function
     End If
 
-    ' Ö»ï¿½ï¿½Ò»ï¿½ï¿½ DWGï¿½ï¿½Ö±ï¿½ï¿½Ê¹ï¿½ï¿½
+    ' Ö»ÓĞÒ»¸ö DWG£¬Ö±½ÓÊ¹ÓÃ
     If dwgCount = 1 Then
         FindDwgBaseName = RemoveExt(dwgNames(0))
         Exit Function
     End If
 
-    ' ï¿½ï¿½ï¿½ DWGï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Word ï¿½Äµï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+    ' ¶à¸ö DWG£ºÓë Word ÎÄµµÃûÆ¥Åä
     Dim wordBase As String
     wordBase = RemoveExt(wordDocName)
 
@@ -140,7 +167,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     For i = 0 To dwgCount - 1
         Dim dwgBase As String
         dwgBase = RemoveExt(dwgNames(i))
-        ' Ë«ï¿½ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½ï¿½
+        ' Ë«Ïò°üº¬Æ¥Åä
         If InStr(1, LCase(wordBase), LCase(dwgBase), vbTextCompare) > 0 Or _
            InStr(1, LCase(dwgBase), LCase(wordBase), vbTextCompare) > 0 Then
             FindDwgBaseName = dwgBase
@@ -148,7 +175,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
         End If
     Next
 
-    ' ï¿½Ş·ï¿½Æ¥ï¿½ä£ºÊ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Äµï¿½ DWG
+    ' ÎŞ·¨Æ¥Åä£ºÊ¹ÓÃ×î½üĞŞ¸ÄµÄ DWG
     Dim newest As Long: newest = 0
     For i = 1 To dwgCount - 1
         If dwgDates(i) > dwgDates(newest) Then newest = i
@@ -183,12 +210,12 @@ Private Function GetOutputDir(ByVal doc As Document) As String
 End Function
 
 ' ======================================================================
-' v4.0ï¼šå¯¼å‡ºå‰å¤‡ä»½è¢« CAD ç«¯ä¿®æ”¹è¿‡çš„æ—§å­—å…¸ï¼Œé˜²æ­¢ Word é™é»˜è¦†ç›–ã€‚
+' v4.0£ºµ¼³öÇ°±¸·İ±» CAD ¶ËĞŞ¸Ä¹ıµÄ¾É×Öµä£¬·ÀÖ¹ Word ¾²Ä¬¸²¸Ç¡£
 '
-' æ£€æµ‹ï¼šæ—§ dict.json å†…å®¹å« "modified_by": "cad"ï¼ˆCAD ç«¯ DictWriter å†™å…¥çš„æ ‡è®°ï¼‰ã€‚
-' å¤‡ä»½ï¼š<ä¸»å>.dict.json.word-<yyyymmdd-hhnnss>.bakï¼Œåªä¿ç•™æœ€æ–°ä¸€ä¸ªï¼›
-'       CAD ç«¯ DictConflict.FindWordBackup ä¾èµ–æ­¤å‘½åçº¦å®šåšå†²çªæ£€æµ‹ã€‚
-' ä»»ä½•å¤±è´¥éƒ½ä¸é˜»æ–­å¯¼å‡ºï¼ˆå¤‡ä»½æ˜¯å°½åŠ›è€Œä¸ºï¼‰ã€‚
+' ¼ì²â£º¾É dict.json ÄÚÈİº¬ "modified_by": "cad"£¨CAD ¶Ë DictWriter Ğ´ÈëµÄ±ê¼Ç£©¡£
+' ±¸·İ£º<Ö÷Ãû>.dict.json.word-<yyyymmdd-hhnnss>.bak£¬Ö»±£Áô×îĞÂÒ»¸ö£»
+'       CAD ¶Ë DictConflict.FindWordBackup ÒÀÀµ´ËÃüÃûÔ¼¶¨×ö³åÍ»¼ì²â¡£
+' ÈÎºÎÊ§°Ü¶¼²»×è¶Ïµ¼³ö£¨±¸·İÊÇ¾¡Á¦¶øÎª£©¡£
 ' ======================================================================
 Private Sub BackupIfCadModified(ByVal dictPath As String)
     On Error GoTo done
@@ -197,7 +224,7 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
     Set fso = CreateObject("Scripting.FileSystemObject")
     If Not fso.FileExists(dictPath) Then Exit Sub
 
-    ' è¯»æ—§æ–‡ä»¶ï¼ˆUTF-8ï¼‰ï¼Œæ£€æŸ¥ CAD ä¿®æ”¹æ ‡è®°
+    ' ¶Á¾ÉÎÄ¼ş£¨UTF-8£©£¬¼ì²é CAD ĞŞ¸Ä±ê¼Ç
     Dim content As String
     content = ReadUtf8File(dictPath)
     If InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Sub
@@ -208,7 +235,7 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
     Dim fileName As String
     fileName = fso.GetFileName(dictPath)
 
-    ' åˆ é™¤æ—§å¤‡ä»½ï¼ˆåªä¿ç•™æœ€æ–°ä¸€ä¸ªï¼‰
+    ' É¾³ı¾É±¸·İ£¨Ö»±£Áô×îĞÂÒ»¸ö£©
     Dim oldBak As String
     oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak")
     Do While oldBak <> ""
@@ -218,7 +245,7 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
         oldBak = Dir()
     Loop
 
-    ' ç”Ÿæˆæ–°å¤‡ä»½ï¼ˆåŒä¸€ç§’å†…é‡å¤å¯¼å‡ºæ—¶å…ˆåˆ åå¤åˆ¶ï¼‰
+    ' Éú³ÉĞÂ±¸·İ£¨Í¬Ò»ÃëÄÚÖØ¸´µ¼³öÊ±ÏÈÉ¾ºó¸´ÖÆ£©
     Dim stamp As String
     stamp = Format(Now, "yyyymmdd-hhnnss")
     Dim bakPath As String
@@ -233,7 +260,7 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
 done:
 End Sub
 
-' ä»¥ UTF-8 è¯»å–æ•´ä¸ªæ–‡ä»¶å†…å®¹ï¼ˆå¤±è´¥è¿”å›ç©ºä¸²ï¼‰
+' ÒÔ UTF-8 ¶ÁÈ¡Õû¸öÎÄ¼şÄÚÈİ£¨Ê§°Ü·µ»Ø¿Õ´®£©
 Private Function ReadUtf8File(ByVal path As String) As String
     On Error GoTo errHandler
     Dim stream As Object

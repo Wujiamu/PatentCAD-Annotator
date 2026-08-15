@@ -27,6 +27,10 @@ PatentMarker 2025 部署说明
 验证：
   命令行输入 BZ，应弹出字典面板。
 
+Word 端：
+  将 vba/ 下的所有文件导入 Word Normal 模板（包括 PatentDictPanel.frm 和 .frx）
+  安装后运行宏 ShowPatentDictPanel 打开"专利标注字典工具"面板
+
 卸载：
   运行 uninstall-2025.ps1（PowerShell），清理注册表自动加载条目和生成的
   LSP 兜底文件（部署目录与 %LOCALAPPDATA%\PatentMarker）。

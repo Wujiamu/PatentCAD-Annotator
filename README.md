@@ -21,24 +21,25 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 
 v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、右键或按 `F2` 编辑条目、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
 
-### 当前标注实现（v4.1）
+### 当前标注实现（v5.0）
 
-- 五个版本统一使用 `Leader + MText` 创建标注。2013/2015/2025 虽然提供 MLeader API，但 MLeader 的文字内容附着机制会产生无法稳定关闭的额外附着点或连接线，因此当前版本不再用 MLeader 创建新标注。
+- 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 文字点`（文字点始终是最后一个顶点），并禁用全部自动几何（dogleg/landing/extend），绘制路径与用户点击点完全一致；2007 无 MLeader API，保持 `Leader + MText`。
+- 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
+- 无箭头时 `ArrowSize` 置 0（非零值会修剪引线起点，导致引线不触及零件），箭头用空箭头块 `_PAT_NO_ARROW` 实现；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问保持 2010-2012 兼容。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
 - 点数模式默认是三点；点击“点数”按钮后才切换为无限点，设置按当前图纸会话保留。
 - 三点或无限点标注过程中，按 ESC 或右键菜单中的“确认/取消”都可以退出当前标注命令；无限点采集到一半时也可以直接取消。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
-- 文字附着点按靠近文字的最后一个引线拐点相对文字的位置自动判断四个象限：左上/左下分别连接文字左上/左下，右上/右下分别连接文字右上/右下；同高或默认文字点与末端拐点重合时，固定连接对应侧上角，不再退回侧面中点。
-- 为消除 AutoCAD `Leader.Annotation` 自动生成的 hook line，创建时把文字附着点直接作为 Leader 的最后一个用户顶点；MText 通过扩展字典保存内部关联，不再使用原生文字附着关联。
-- 事务提交后会重新打开 MText 复写并读回附着点；日志还会记录实际加载的 DLL 路径和提交后的 Leader 顶点数量，便于核对现场是否加载了旧部署包或产生了额外顶点。
-- 2013/2015/2025 的校验、对齐、全选、删除和编号同步逻辑已经同步适配 `Leader + MText`。
+- `PATSELECTALL`/`BZS` 通过扩展字典标记 `PATENTMARKER_MLEADER` 识别新建 MLeader（并记录用户点链），同时兼容旧图纸的 Leader 标注与独立文字。
+- 新增 `PATMLSET`（开关脚本化入口）与 `PATMLVERIFY`（形态诊断：Explode 全部 PAT MLeader 并对照记录点链输出报告，回归测试工具）。
+- 旧图纸处理：不迁移既有实体，`PATSELECTALL` 只认带 PAT 标记的 MLeader；旧 Leader+MText 标注继续被识别。
 - 面板新增“Brace/大括号”按钮，对应 `PATBRACE`（别名 `DAGUOHAO`）：依次指定顶部、底部和宽度方向三点，创建独立的参数化矢量大括号；它不是文字字符，也不加入 Leader/MText 标注关联。
 - `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
 - 第三点决定中部尖点的朝向：竖向大括号可向左/向右，横向大括号可向上/向下；两端肩部平滑过渡到尖点相反侧的直干，形成 PPT 风格的曲线轮廓。
 - 大括号轮廓以 PPT `Right Brace` 为视觉基准：端部是平滑肩部，中段直干位于尖点相反侧，中心是单一真正尖锐的折角，不使用圆弧尖点或 W 型轮廓。
 
-问题现象、日志证据和放弃 MLeader 的完整原因见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)。
+v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)；该问题已被 F 方案解决（顶点链补全文字点），详见 [MLeader F 方案文档](docs/mleader-f-plan.md)。
 
 ### 版本总览
 
@@ -47,17 +48,17 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 | 目录 | 覆盖 AutoCAD | .NET | 最低 OS | 标注方式 | 状态 |
 |------|-------------|------|---------|----------|------|
 | [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | Leader + MText | ✅ 已完成 |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader（F 方案） | ✅ 已完成 |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader（F 方案） | ✅ 已完成 |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader（F 方案） | ✅ 已完成 |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader（F 方案） | ✅ 已完成 |
 
 ### 为什么分 5 个版本？能否交叉使用？
 
 **不能交叉使用。** 每个版本的 DLL 只能在其对应的 AutoCAD 年份区间内运行，原因：
 
 1. **.NET 运行时不兼容** — 2007~2009 的 CAD 只加载 .NET 2.0 程序集，2025+ 只加载 .NET 8，CLR 完全不同，DLL 无法被加载。
-2. **托管 API 断代** — AutoCAD 2013 及以后虽然提供 `MLeader`，但当前项目为避免 MLeader 文字附着夹点，所有版本统一使用 `Leader` + `MText`；各版本引用的 API 程序集和方法签名仍然不同。
+2. **托管 API 断代** — 2010/2013/2015/2025 使用 MLeader（F 方案，2007 无该实体故用 `Leader` + `MText`）；各版本引用的 API 程序集和方法签名仍然不同（如 `ExtendLeaderToText` 属性 2014+ 才有）。
 3. **程序集版本绑定** — 编译时引用的 `acdbmgd.dll` 内部接口随 CAD 版本变化，跨版本加载会抛 `MissingMethodException`。
 
 > 例：把 2007 版装到 AutoCAD 2026 → 无法加载（.NET 2.0 vs .NET 8）；把 2015 版装到 AutoCAD 2012 → 无法加载（.NET 4.5 vs .NET 3.5，且 SDK 程序集版本不匹配）。
@@ -66,7 +67,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 ### 快速开始（2007 版）
 
-1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 6 个 VBA 模块到 Normal 模板）
+1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 7 个 VBA 文件：6 模块 + 1 面板 UserForm 到 Normal 模板）
 2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
 3. **使用**：Word 保存 → 生成 `.dict.json` → CAD 中 `BZ` 打开面板 → `BZM` 标注
 
@@ -147,7 +148,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（29 个文件），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、四个标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录仅保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本，且必须被五个 csproj 链接。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（27 个文件），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令（Leader+MText 基线，2007 编译）、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（5 个 MLeader F 方案文件，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。
 
 ```
 PatentCAD-Annotator/
@@ -156,11 +157,11 @@ PatentCAD-Annotator/
 │   ├── RuntimeContract.Tests/  # 2007/2010/2013/2015 契约模拟测试工程（仿真 host）
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   └── PatentMarker/    #   C# 源码 + csproj
-│   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
-│   ├── 2013/               # AutoCAD 2013~2014（Leader + MText，.NET 4.0）
-│   ├── 2015/               # AutoCAD 2015~2024（Leader + MText，.NET 4.5）
-│   └── 2025/               # AutoCAD 2025~2026+（Leader + MText，.NET 8.0）
-├── vba/                     # 6 个 Word VBA 模块唯一真源（vba-sync.ps1 同步到部署包）
+│   ├── 2010/               # AutoCAD 2010~2012（MLeader F 方案，.NET 3.5）
+│   ├── 2013/               # AutoCAD 2013~2014（MLeader F 方案，.NET 4.0）
+│   ├── 2015/               # AutoCAD 2015~2024（MLeader F 方案，.NET 4.5）
+│   └── 2025/               # AutoCAD 2025~2026+（MLeader F 方案，.NET 8.0）
+├── vba/                     # 7 个 Word VBA 文件唯一真源（6 模块 + PatentDictPanel 面板，vba-sync.ps1 同步到部署包）
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -170,7 +171,8 @@ PatentCAD-Annotator/
 ├── docs/
 │   ├── version-plan.md      # 版本规划（分版理由）
 │   ├── development-log.md   # 变更记录
-│   └── mleader-attachment-grip-incident.md # MLeader 附着点问题总结
+│   ├── mleader-f-plan.md    # MLeader F 方案（三点顶点链）
+│   └── mleader-attachment-grip-incident.md # MLeader 附着点问题总结（已被 F 方案解决）
 └── LICENSE
 ```
 
@@ -178,13 +180,16 @@ PatentCAD-Annotator/
 
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
-- [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题、舍弃原因与替代方案
+- [docs/mleader-f-plan.md](docs/mleader-f-plan.md) — MLeader F 方案（三点顶点链）定义、实证与架构
+- [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题（v4.0 舍弃原因，已被 F 方案解决）
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
 
 ### 版本历史
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v5.0 | 2026-08-16 | 标注引擎切换为 MLeader（F 方案三点顶点链）：2010/2013/2015/2025 四版本统一，单实体自持文字、无鱼钩、无额外附着点；新增 `PATMLSET`/`PATMLVERIFY`；AutoCAD 2026 实测 4/4 PASS；2007 保持 Leader + MText |
+| v4.9 | 2026-08-15 | Word 端接口收敛：4 个宏精简为单一入口 `ShowPatentDictPanel`，打开"专利标注字典工具"面板（手动导出按钮 + 保存时自动导出开关）；新增 `PatentDictPanel.frm`/`.frx` UserForm，5 套部署包与构建脚本纳入 .frm/.frx 校验 |
 | v4.6 | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
 | v4.5 | 2026-08-15 | 新增 `PATDOCTOR`（`BZD`）自动诊断机制：共享源码 Diagnostics 模块、RawLog 错误环形缓冲、自检报告；五版本编译通过 |
 | v4.1 | 2026-08-11 | 新增独立参数化矢量大括号：三点创建、控制点交互调整和高度/宽度输入；五个版本及部署包同步 |
@@ -212,23 +217,24 @@ Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palett
 
 Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
 
-### Current annotation implementation (v4.1)
+### Current annotation implementation (v5.0)
 
-- All five editions create annotations with `Leader + MText`. AutoCAD 2013/2015/2025 expose MLeader, but its text-content attachment geometry can create an extra grip or connection segment that cannot be reliably disabled across supported hosts.
+- Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → dogleg(s) → text` with the text point always appended as the LAST vertex, and all automatic geometry (dogleg/landing/extend) is disabled, so the drawn path matches the user-picked points exactly. Edition 2007 has no MLeader API and keeps `Leader + MText`.
+- v4.0 rolled MLeader back because of the "fishhook" distortion; the 2026-08-15 form probe traced the root cause to an incomplete vertex chain (attach→dogleg only). Plan F fixes it by appending the text point — see the [Plan F document](docs/mleader-f-plan.md).
+- `ArrowSize` is set to 0 when the arrow is off (a non-zero value trims the leader start away from the part); the arrow-off look uses an empty arrow block `_PAT_NO_ARROW`. `ExtendLeaderToText` is a 2014+ SDK property and is accessed via reflection so one source file serves 2010-2012 as well.
 - The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
 - Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
 - Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
-- The text attachment point is selected from the four corners according to the last leader segment: upper-left/lower-left use the text's top-left/bottom-left, while upper-right/lower-right use top-right/bottom-right. A horizontal tie or an unlimited-mode default text point uses the corresponding upper corner and never falls back to a middle-side attachment.
-- To remove AutoCAD's automatic `Leader.Annotation` hook line, creation appends the text attachment point as the final user-selected Leader vertex. MText is linked through the Leader extension dictionary instead of native annotation association.
-- After the first transaction commits, the plug-in reopens MText, reapplies and reads back the attachment. The log also records the loaded DLL path and committed Leader vertex list so an old deployment package can be distinguished from a real extra vertex.
-- `PATCHECK`, `PATALIGN`, `PATSELECTALL`, palette deletion and dictionary renaming are synchronized with the `Leader + MText` representation.
+- `PATSELECTALL` recognizes the new MLeaders through the extension-dictionary marker `PATENTMARKER_MLEADER` (which also records the user point chain), while remaining compatible with legacy Leader annotations and standalone text in old drawings.
+- New commands: `PATMLSET` (scriptable switches) and `PATMLVERIFY` (form diagnostic: explodes all PAT MLeaders and reports against the recorded chains — the regression tool).
+- Legacy drawings: existing entities are not migrated; `PATSELECTALL` only recognizes MLeaders carrying the PAT marker, and old Leader+MText annotations keep working.
 - The palette adds a `Brace` button for `PATBRACE` (alias `DAGUOHAO`). Pick the top, bottom and width-direction points to create an independent parameterized vector brace; it is not a text glyph and is not part of the Leader/MText relationship.
 - `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
 - The third point controls the center-tip direction: vertical braces can point left or right, and horizontal braces can point up or down. The endpoint shoulders curve smoothly into straight stems on the side opposite the tip to form the PPT-style profile.
 - The brace profile is based on the PPT `Right Brace`: smooth endpoint shoulders, opposite-side straight stems, and one genuinely sharp center fold; it does not use a rounded tip or a W-shaped outline.
 
-See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the log evidence, rejected fixes and compatibility notes.
+See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the v4.0 log evidence and rejected fixes; the issue is resolved by Plan F (complete vertex chain). Details in the [Plan F document](docs/mleader-f-plan.md).
 
 ### Versions
 
@@ -237,24 +243,24 @@ Because AutoCAD's managed API is tightly bound to the .NET runtime, a single sou
 | Directory | AutoCAD | .NET | Min OS | Annotation | Status |
 |-----------|---------|------|--------|------------|--------|
 | [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | Leader + MText | ✅ Complete |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader (Plan F) | ✅ Complete |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader (Plan F) | ✅ Complete |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader (Plan F) | ✅ Complete |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader (Plan F) | ✅ Complete |
 
 ### Why 5 versions? Can I use one version on a different AutoCAD?
 
 **No cross-version usage.** Each DLL only works within its designated AutoCAD year range:
 
 1. **.NET runtime mismatch** — AutoCAD 2007–2009 loads .NET 2.0 only; 2025+ loads .NET 8 only. The CLR is entirely different.
-2. **Annotation implementation profile** — AutoCAD 2013 and later expose `MLeader`, but all five editions intentionally use the stable `Leader` + `MText` pair to avoid the MLeader content-attachment grip. Separate .NET targets and SDK DLLs are still required.
+2. **Annotation implementation profile** — Editions 2010/2013/2015/2025 use MLeader (Plan F; 2007 lacks the entity and keeps `Leader` + `MText`). Separate .NET targets and SDK DLLs are still required (e.g. the `ExtendLeaderToText` property only exists in the 2014+ SDK).
 3. **Assembly binding** — `acdbmgd.dll` internal interfaces change per CAD version; loading a mismatched DLL throws `MissingMethodException`.
 
 See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 ### Quick Start (v2007)
 
-1. **Word side**: import the 6 VBA modules ([PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/)) into the Normal template
+1. **Word side**: import the 7 VBA files ([PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/)) into the Normal template (6 modules + the `PatentDictPanel` UserForm)
 2. **CAD side**: deploy [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) to a non-C-drive folder, run `install-2007.vbs`
 3. **Usage**: save Word → generates `.dict.json` → run `BZ` in CAD to open palette → `BZM` to annotate
 
@@ -270,7 +276,7 @@ Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 | 2015 | `install-2015.vbs` | AutoCAD 2015~2024; Newtonsoft.Json is merged into the DLL |
 | 2025 | `install-2025.ps1` | AutoCAD 2025+; generates an LSP fallback if the PowerShell installation cannot complete |
 
-Each package contains the matching `PatentMarker.dll` and the six shared VBA modules. Do not mix DLLs between AutoCAD year ranges.
+Each package contains the matching `PatentMarker.dll` and the seven shared VBA files (6 modules + the `PatentDictPanel` UserForm). Do not mix DLLs between AutoCAD year ranges.
 
 ### Commands
 

@@ -90,7 +90,8 @@ Private Function EscapeString(ByVal s As String) As String
     EscapeString = """" & result & """"
 End Function
 
-Public Sub WriteToFile(ByVal path As String, ByVal content As String)
+' Function (not Sub) to hide it from the Word macro list (called by AutoExport only)
+Public Function WriteToFile(ByVal path As String, ByVal content As String) As Boolean
     Dim stream As Object
     Set stream = CreateObject("ADODB.Stream")
     stream.Type = 2
@@ -111,4 +112,5 @@ Public Sub WriteToFile(ByVal path As String, ByVal content As String)
     outStream.Write bytes
     outStream.SaveToFile path, 2
     outStream.Close
-End Sub
+    WriteToFile = True
+End Function

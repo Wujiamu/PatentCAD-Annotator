@@ -4,6 +4,37 @@
 
 ---
 
+## v5.0 (2026-08-16)
+
+**标注引擎切换为 MLeader（F 方案）**：2010/2013/2015/2025 四个版本的新建标注统一改为单个 MLeader 实体（自持 MText 文字）；2007 无 MLeader API，保持 `Leader + MText`。这是 v4.0"放弃 MLeader"决策的正式回归——形态探针（`tools/MLeaderRepro`）证实当年鱼钩形态的根因是顶点链不完整（只给 attach→dogleg），F 方案把文字点补为最后一个顶点后问题消除。
+
+- **F 方案核心**（`Commands/PatMLeaderCreator.cs`）：全禁用自动几何（EnableDogleg/EnableLanding/ExtendLeaderToText=false、DoglegLength/LandingGap=0）+ 顶点链 `attach → dogleg… → text`；新增全禁用样式 `PAT_MLEADER` 与文字样式复用 `PatentTimesNewRoman`。
+- **无箭头修复**：`ArrowSize` 在无箭头时置 0——非零 ArrowSize 即使配空箭头块 `_PAT_NO_ARROW` 也会把引线起点修剪掉 ArrowSize，导致引线不触及零件；箭头 On 时恢复面板设定值并配 `ObjectId.Null`（默认实心箭头）。
+- **跨版本 API 适配**：`ExtendLeaderToText` 为 2014+ SDK 属性（2010-2012 无此成员），经 `PatMLeaderCreator.SetExtendLeaderToText/GetExtendLeaderToText` 反射访问，四版本单一代码文件；命令文件保持 .NET 3.5 兼容语法（自实现 `IsNullOrWhiteSpace`、显式 `List<Point3d>` 等）。
+- **版本本地 Commands 组**：2010/2013/2015/2025 各自 `Commands/` 下 5 个文件（`PatMarkCommand`、`PatMLeaderCreator`、`PatMLeaderSetCommand`、`PatMLeaderVerifyCommand`、`PatSelectAllCommand`）字节级相同；csproj 改为引用本地文件（2010/2013/2015 显式 Include，2025 SDK 隐式包含），Shared 层的 `PatMarkCommand.cs`/`PatSelectAllCommand.cs` 仅由 2007 链接（Leader+MText 基线）。
+- **`PATSELECTALL`/`BZS`**：通过扩展字典标记 `PATENTMARKER_MLEADER`（含 hasArrow/isSplined/用户点链 Xrecord）识别 PAT MLeader，兼容旧图纸 Leader 标注与独立文字。
+- **新命令**：`PATMLSET`（ThreePoint/Spline/Arrow 开关的脚本化入口，测试用）；`PATMLVERIFY`（形态诊断：Explode 全部 PAT MLeader → 统一解析 Line/Spline/Polyline 曲线（端点 + 弧长 ~2 单位采样）→ 对照记录点链输出 C1-C6 检查报告；C6 断言直线模式的合法几何载体为 Line 或 Polyline——Explode 产物因 AutoCAD 版本而异；报告目录支持 `PATML_REPORT_DIR` 环境变量重定向）。
+- **`check-version-sync.ps1` 新增 MLeader 组校验**：`PatMarkCommand.cs`/`PatSelectAllCommand.cs` 移出 Shared 强制清单，改为 MLeader 组规则——四版本存在、字节级一致、被各自 csproj 编译（SDK 风格 csproj 检查无 Compile Remove）、2007 不得携带且必须继续链接 Shared 版本。
+- **部署包**：`package.ps1 -Apply` 重打包五套，2010/2013/2015/2025 的 `PatentMarker.dll` 更新为 MLeader 版（2013/2015 经 ILRepack 合并 Newtonsoft.Json）。
+- **同步文档**：AGENTS.md（版本矩阵标注 API 列、目录约定 MLeader 组、第 5/6 节改写）、根 README.md（中英双语"当前标注实现"改 v5.0、版本矩阵、目录树、文档列表、版本历史）、新增 `docs/mleader-f-plan.md`（F 方案定义/实证/架构/验收，双语）。
+- 验证（全部本地实际执行）：四版本编译通过（2010 .NET 3.5 反射适配为关键回归点）+ 2007 回归编译；`build.ps1 -Structure` / `-Static` 通过（含新版 check-version-sync MLeader 组）；契约模拟测试 4×28 全过；2025 单元测试 112/112；**AutoCAD 2026 批处理实测**（accoreconsole /s + SCR 编排 NETLOAD→PATMLSET→PATMARK 4 场景→PATSELECTALL→PATMLVERIFY）**4/4 PASS**（三点直线无箭头、三点样条+箭头、无限 1 拐点、无限 2 拐点；C1-C6 全过）。
+
+---
+
+## v4.9 (2026-08-15)
+
+- Word 端接口收敛：宏列表由 4 个（`ExtractDict` / `EnableAutoExport` / `DisableAutoExport` / `ExportDict`）精简为唯一入口 `ShowPatentDictPanel`，运行后打开"专利标注字典工具"面板，包含「手动导出字典」按钮与「保存时自动导出」开关；其余内部过程均改为 Function/Private 隐藏，不再占用 Word Alt+F8 宏列表。
+- 新增面板 UserForm `PatentDictPanel.frm` + 二进制 `PatentDictPanel.frx`（控件存储，导入 Word 时必需）：`cmdExport` 手动导出（调用 `AutoExport.ExportDict`）、`chkAutoExport` 自动导出开关（读写 `AutoExport.IsAutoExportEnabled`）、`UserForm_Initialize` 初始化勾选状态；面板为 Word COM 生成，控件二进制数据完整，无手写 .frm 的文本控件块导入后变标准模块（type=1）问题。
+- `AutoExport.bas`：新增 `ShowPatentDictPanel` 唯一入口与 `IsAutoExportEnabled` 属性（属性 Let 内部路由到 Enable/Disable）；`ExportDict` 由 Sub 改 Function（含 `On Error` 重试路径不变）以隐藏于宏列表；Enable/Disable 改为 Private。
+- `JsonWriter.bas`：`WriteToFile` 由 Sub 改 Function 以隐藏于宏列表（UTF-8 无 BOM 写盘逻辑不变）。
+- `PatentExtractor.bas`：移除 `ExtractDict` 宏及私有辅助函数，仅保留占位注释（部署包与 Word 端依赖固定文件名，不可删除/重命名）。
+- 5 套部署包 `install-vba.vbs` 同步：导入 `PatentDictPanel.frm`（.frx 由 Word 导入 .frm 时自动读取）、清理旧版遗留的已删除模块、更新提示文案与文件计数（6 模块 → 7 文件）；脚本为 GBK 编码，按字节级安全方式修改（PowerShell 显式 GBK 编解码），杜绝中文乱码。
+- 构建/同步脚本纳入 UserForm：`vba-sync.ps1` 把 `.frm`/`.frx` 一并从根 `vba/` 同步到 5 套部署包；`build.ps1 -Structure` / `package.ps1` 校验部署包含 `.frm`/`.frx` 且与真源一致。
+- 同步文档：AGENTS.md（7 个 VBA 文件、面板入口、禁止事项与结构/静态校验描述）、根 README.md（中英双语 VBA 文件表、快速开始与部署包说明、版本历史 v4.9）、5 套部署包 README.txt（2010/2025 补充 Word 端面板说明，2007 为 GBK 编码）。
+- 验证（全部本地实际执行）：`vba-sync.ps1` 推送后 5 套部署包 VBA 文件（含 .frm/.frx）与根 `vba/` 哈希一致；`build.ps1 -Structure` / `-Static` 通过；Word COM 实测导入 7 文件（含 UserForm）成功、宏列表仅含 1 个 `ShowPatentDictPanel`、手动导出生成合法 UTF-8 `.dict.json`、自动导出开关开/关生效，面板按钮/开关中文文案与初始化勾选状态正确。
+
+---
+
 ## v4.8 (2026-08-15)
 
 - 新增 CAD 外诊断脚本 doctor：解决 `PATDOCTOR/BZD` 作为 CAD 内命令的固有死锁——插件本身加载失败或命令未注册时，用户无从触发诊断。doctor 不依赖插件加载即可在 AutoCAD 外运行，五套部署包各内置一份（`doctor-2007/2010/2013/2015.vbs` + `doctor-2025.ps1`）。

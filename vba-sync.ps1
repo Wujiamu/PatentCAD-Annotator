@@ -16,14 +16,23 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $canonical = Join-Path $root "vba"
 $versions = @("2007", "2010", "2013", "2015", "2025")
-$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls")
+$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
 
 foreach ($file in $vbaFiles) {
     $src = Join-Path $canonical $file
     if (-not (Test-Path -LiteralPath $src)) { throw "Missing canonical VBA module: $src" }
     foreach ($ver in $versions) {
         $dst = Join-Path $root "PatentMarker-$ver-deploy\vba\$file"
-        if (-not (Test-Path -LiteralPath $dst)) { throw "Missing deployment VBA module: $dst" }
+        if (-not (Test-Path -LiteralPath $dst)) {
+            # New module: not yet present in this deployment package
+            if ($Check) {
+                Write-Host "[DRIFT] $ver/vba/$file missing (canonical has it)" -ForegroundColor Yellow
+            } else {
+                Copy-Item -LiteralPath $src -Destination $dst -Force
+                Write-Host "[ADD]   $ver/vba/$file <- vba/$file" -ForegroundColor Green
+            }
+            continue
+        }
         $srcHash = (Get-FileHash -LiteralPath $src -Algorithm SHA256).Hash
         $dstHash = (Get-FileHash -LiteralPath $dst -Algorithm SHA256).Hash
         if ($srcHash -ne $dstHash) {

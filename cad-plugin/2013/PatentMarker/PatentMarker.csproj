@@ -64,7 +64,11 @@
     <Compile Include="..\..\Shared\IO\MarkingTextParser.cs" />
     <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" />
     <Compile Include="..\..\Shared\Styles\PatStyleInitializer.cs" />
-    <Compile Include="..\..\Shared\Commands\PatMarkCommand.cs" />
+    <!-- 复线差异：PatMarkCommand 改用版本本地 MLeader F 方案文件 -->
+    <Compile Include="Commands\PatMarkCommand.cs" />
+    <Compile Include="Commands\PatMLeaderCreator.cs" />
+    <Compile Include="Commands\PatMLeaderSetCommand.cs" />
+    <Compile Include="Commands\PatMLeaderVerifyCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" />
@@ -74,7 +78,7 @@
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" />
-    <Compile Include="..\..\Shared\Commands\PatSelectAllCommand.cs" />
+    <Compile Include="Commands\PatSelectAllCommand.cs" />
     <Compile Include="..\..\Shared\Palette\PatPaletteCommand.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteControl.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" />

@@ -7,7 +7,7 @@ PatentMarker 2015 部署说明
   PatentMarker.dll     - CAD 插件主文件（单文件部署，已内置 JSON 解析）
   install-2015.vbs     - 安装脚本
   doctor-2015.vbs      - 诊断脚本（CAD 外排查，见下方"诊断"）
-  vba/                 - Word VBA 模块（6个文件）
+  vba/                 - Word VBA 文件（7个文件：6个模块 + 1个面板 UserForm）
 
 安装步骤：
   1. 将 PatentMarker.dll 放到固定目录（如 C:\PatentMarker\）
@@ -27,7 +27,8 @@ PatentMarker 2015 部署说明
   - 如果注册表方式不生效，可用 NETLOAD 手动加载
 
 Word 端：
-  将 vba/ 下的 6 个模块导入 Word Normal 模板
+  将 vba/ 下的所有文件导入 Word Normal 模板（包括 PatentDictPanel.frm 和 .frx）
+  安装后运行宏 ShowPatentDictPanel 打开"专利标注字典工具"面板
 
 诊断（doctor）：
   插件无法加载或 BZD 命令不可用时，无需进入 AutoCAD 即可排查。

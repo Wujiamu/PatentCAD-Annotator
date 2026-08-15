@@ -12,7 +12,8 @@
 #   Job 1 - Structure Integrity:
 #     - All 5 edition csproj files exist and are parseable XML
 #     - Every <Compile Include> source file referenced by a legacy csproj exists
-#     - Each deploy package ships PatentMarker.dll and the 6 shared VBA modules
+#     - Each deploy package ships PatentMarker.dll and the 8 shared VBA files
+      (6 .bas/.cls + 1 .frm UserForm + 1 .frx binary blob)
 #   Job 2 - Static Analysis:
 #     - VBA modules are identical across all 5 deploy packages
 #     - csproj TargetFramework matches the version matrix
