@@ -39,11 +39,11 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 | 2007 | `install-2007.bat` + `install-2007.vbs` | `uninstall-2007.vbs` | 无 |
 | 2010 | `install-2010.vbs` | `uninstall-2010.vbs` | 无 |
 | 2013 | `install-2013.vbs` | `uninstall-2013.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
-| 2015 | `install-2015.vbs` | 无 | 无（Newtonsoft.Json 已合并进 DLL） |
-| 2025 | `install-2025.ps1`（PowerShell） | 无 | 无（System.Text.Json 内置） |
+| 2015 | `install-2015.vbs` | `uninstall-2015.vbs` | 无（Newtonsoft.Json 已合并进 DLL） |
+| 2025 | `install-2025.ps1`（PowerShell） | `uninstall-2025.ps1`（PowerShell） | 无（System.Text.Json 内置） |
 
 - 修改任一部署包脚本时，评估是否需同步到其他 4 套；2025 版用 `.ps1`，其余用 `.vbs`，脚本语法不通用
-- 2015/2025 当前缺卸载脚本，新增卸载逻辑时优先补齐这两套
+- 卸载脚本职责：2015 版清理 HKCU/HKLM 注册表（版本候选与 install-2015.vbs 对称）；2025 版额外清理 install-2025.ps1 生成的 LSP 兜底文件（部署目录与 `%LOCALAPPDATA%\PatentMarker`，可用 `-KeepLsp` 保留）
 
 ## 4. 修改代码的同步规则
 

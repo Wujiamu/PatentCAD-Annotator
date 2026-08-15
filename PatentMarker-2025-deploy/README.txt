@@ -27,6 +27,15 @@ PatentMarker 2025 部署说明
 验证：
   命令行输入 BZ，应弹出字典面板。
 
+卸载：
+  运行 uninstall-2025.ps1（PowerShell），清理注册表自动加载条目和生成的
+  LSP 兜底文件（部署目录与 %LOCALAPPDATA%\PatentMarker）。
+  - 如需保留 LSP 兜底文件，使用参数：-KeepLsp
+  - 部署目录本身不会被删除，如需彻底移除请手动删除整个文件夹
+  - 日志保存在 uninstall-2025.log
+  - 方式 B（Bundle）安装的用户：删除 %ProgramData%\Autodesk\ApplicationPlugins\
+    下的 PatentMarker.bundle 文件夹即可
+
 注意：
   - .NET 8 不支持 Win7，最低要求 Windows 10 1607
   - PatentMarker.dll 是单文件部署，无其他依赖

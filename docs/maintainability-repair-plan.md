@@ -400,3 +400,13 @@
 - 自动复核已通过：五版本构建、2010/2013/2015 模拟测试各 7/7（共 21/21）、2025 单元测试 108/108、Structure/Static/Sync/API 检查及 `git diff --check`。
 - 已准备临时人工校验目录 `C:\Users\wjm\AppData\Local\Temp\PatentCAD-manual-check-2025-20260806-185637`，包含构建后的 2025 DLL、两份黄金字典和 `load-and-check-2025.scr`。由于 Core Console 从模板创建空 DWG 未在限定时间内返回，未把空 DWG 生成标记为成功；人工校验时应在 AutoCAD 2026 中新建空图，另存为 `refactor-smoke-2025.dwg`，并把对应字典放在同一目录。
 - 当前已到人工校验入口，尚未声称交互式 AutoCAD/WinForms 通过。人工校验应只使用临时副本，重点覆盖 `BZ` 生命周期、`BZM` 三点/无限点、字典刷新/Diff、改号同步、PAT 删除不误伤非 PAT、多文档切换和关闭重开。
+
+## 14. 2026-08-15 真实宿主解锁与技术债三阶段清理（v4.5-v4.7）
+
+本节回填第 7/10 节之后的关键进展，并修正已过时的边界表述。
+
+- **交互式宿主验证已部分解锁（v4.5）**：第 10 节记录的 COM 自动化失败（`CO_E_SERVER_EXEC_FAILURE`）不再阻塞——`tools/doctor-live-test.ps1` 改用 SCR + `/b` 批处理模式启动全新 AutoCAD 2026 进程，绕开 COM 附着残留实例与模态对话框挂起问题。已在该真实宿主中加载 2025 部署包 DLL 并运行 `PATDOCTOR`：报告 PASS 3 / FAIL 1 / SKIP 2（语义正确）、最近错误 0。结论修正：**2025 版"无 UI 命令级"的真实宿主验证已可行**；面板级交互回归（`BZ` 打开、列表点击、对话框）仍需人工在交互式 AutoCAD 中执行，该边界保持不变。
+- **新增 PATDOCTOR 诊断机制（v4.5）**：`Shared/Diagnostics/` 三文件（错误环形缓冲 + 检查模型 + 报告输出），五版本 `PatentMarkerApp.RawLog` 挂钩自动收集 error/failed/fatal/exception 日志行；实测中修复错误缓冲自引用污染与报告 Drawing 字段重复两处缺陷。
+- **技术债三阶段清理（v4.6）**：Phase 1 VBA 单源化（根 `vba/` 唯一真源 + `vba-sync.ps1` + 打包断言）；Phase 2 共享层收敛至 29 文件——**包括第 7 节表述为"待主机验证后再决定"的 `DictPaletteControl` 本体**，现与其会话/工作流/CAD 服务/渲染层全部位于 `cad-plugin/Shared/`，五版本经 csproj 链接编译，`ConfigLoader.Current` 兼容投影仍在版本本地 IO 适配层中保留；Phase 3 校验闭环（2007 契约测试补齐至 4 版本 × 28 用例、`PatentCAD.sln` 接入全部 10 个工程、`check-version-sync.ps1` 增设版本特有文件白名单、`build.ps1 -Static` 委托共享层检查）。
+- **部署包卸载脚本补齐（v4.7）**：新增 `uninstall-2015.vbs`（注册表清理，与 install-2015.vbs 版本候选对称）和 `uninstall-2025.ps1`（注册表 + LSP 兜底文件清理，`-KeepLsp` 可保留）；五套部署包安装/卸载脚本齐全。已做真实端到端演练（备份 → 卸载 → 核验删除 → 恢复 → 核验恢复）。
+- **当前剩余边界**（较第 7 节收窄）：AutoCAD 2007/2010/2013/2015 真旧版宿主回归仍无对应环境（契约模拟 4×28 作为替代证据）；2025 面板级交互回归待人工；`ConfigLoader.Current` 兼容投影的最终去留待多文档实机回归后裁决。其余本机可完成的结构性阻碍已全部解除。

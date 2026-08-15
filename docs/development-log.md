@@ -4,6 +4,17 @@
 
 ---
 
+## v4.7 (2026-08-15)
+
+- 补齐 AGENTS.md 记录的部署包技术债：2015/2025 两套卸载脚本缺失，现五套部署包安装/卸载脚本齐全。
+- 新增 `PatentMarker-2015-deploy/uninstall-2015.vbs`：清理 HKCU/HKLM 注册表自动加载条目，版本候选与 `install-2015.vbs` 完全对称（R20.0–R24.2 + R25.0，共 10 键）；GBK 编码 + 中英文 i18n，与既有 vbs 部署脚本风格一致。
+- 新增 `PatentMarker-2025-deploy/uninstall-2025.ps1`：清理 R25.0/R25.1/R26.0 的 HKCU 条目（并防御性清理旧版安装器可能写入的 HKLM 残留）；额外删除 `install-2025.ps1` 生成的 LSP 兜底文件（部署目录与 `%LOCALAPPDATA%\PatentMarker`，目录空则连目录清理，`-KeepLsp` 可保留）；UTF-8 BOM + 中英文 i18n + 日志 `uninstall-2025.log`。
+- 修复上一版误提交：`PatentMarker-2025-deploy/load-patent-marker.lsp` 实为 `install-2025.ps1` 的生成物（内容由部署目录绝对路径决定，对其他用户是坏路径），已从版本库移除并加入 `.gitignore`；本地文件由安装脚本随时再生。
+- 同步文档：AGENTS.md 3.1 卸载脚本矩阵补齐并删除"缺卸载脚本"备注；两套部署包 README.txt 增加卸载说明；maintainability-repair-plan.md 追加 2026-08-15 执行记录（v4.5/v4.6 成果回填，解除"交互式宿主"表述过时的部分）。
+- 验证（全部本地实际执行）：PowerShell PSParser 语法检查 0 错误；真实宿主端到端演练——先 `reg export` 备份本机 R25.1 两个 profile 的 PatentMarker 键 → 执行 `uninstall-2015.vbs`（退出码 0，正确报告"未找到条目"，确认对本机 2025 版无副作用）→ 执行 `uninstall-2025.ps1`（真实删除 2 个 HKCU 键 + 部署目录 LSP，输出与日志正常）→ `reg import` 恢复注册表并核验 LOADCTRLS/LOADER 与备份一致 → 恢复 LSP 文件；`build.ps1 -Structure` / `-Static` 通过。
+
+---
+
 ## v4.6 (2026-08-15)
 
 - 技术债清理三阶段（Phase 1 单源化 → Phase 2 共享层收敛 → Phase 3 校验闭环），五个版本行为保持一致，仅 JSON 库与 .NET 目标框架保留版本特有差异。

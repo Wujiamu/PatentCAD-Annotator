@@ -15,6 +15,10 @@ PatentMarker 2015 部署说明
   4. 重启 AutoCAD
   5. 命令行输入 BZ 验证
 
+卸载：
+  双击 uninstall-2015.vbs，清理注册表自动加载条目后重启 AutoCAD。
+  部署目录本身保留，如需彻底移除请手动删除整个文件夹。
+
 注意事项：
   - 单文件部署：无需 Newtonsoft.Json.dll（已合并进 PatentMarker.dll）
   - 脚本会自动检测 R20.x-R24.x
