@@ -83,6 +83,7 @@ namespace PatentMarker
         /// </summary>
         internal static void RawLog(string msg)
         {
+            Diagnostics.PatDiagnostics.OnRawLog(msg);
             try
             {
                 string logDir;

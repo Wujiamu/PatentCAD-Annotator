@@ -23,6 +23,8 @@ PatentCAD-Annotator 是 AutoCAD 专利图纸标注插件：从 Word 说明书提
 ## 3. 目录约定
 
 - `cad-plugin/<version>/PatentMarker/` — C# 源码，5 个版本内部子目录同构：`Commands/`、`I18n/`、`IO/`、`Palette/`、`Styles/` + `PatentMarkerApp.cs` + `PatentMarker.csproj`
+- `cad-plugin/Shared/` — 共享单源层（29 个文件：Commands / I18n / Palette / Styles / IO / Cad / Diagnostics），5 个版本通过 csproj `<Compile Include="..\..\Shared\...">` 链接编译；**禁止把 Shared 文件复制回版本目录**（`check-version-sync.ps1` 强制校验）。各版本目录仅保留版本特有文件：`PatentMarkerApp.cs`、`IO/ConfigLoader.cs`、`IO/DictEntry.cs`、`IO/DictWriter.cs`、`IO/RuntimeHost.cs`（2007/2010 另有 `IO/SimpleJson.cs`）
+- `cad-plugin/RuntimeContract.Tests/` — 2007/2010/2013/2015 四个契约模拟测试工程（仿真 host 重放命令编排）
 - `PatentMarker-{version}-deploy/` — 即装即用部署包（DLL + 安装/卸载脚本 + `vba/` 模块副本），2007 版另有 `install-2007.bat`
 - `cad-plugin/<version>/PatentMarker/lib/` — 存放编译所需 SDK DLL（不入库）
 - 6 个 VBA 模块（Word 端，全版本共享）：`Patterns.bas`、`DictModel.bas`、`JsonWriter.bas`、`PatentExtractor.bas`、`AutoExport.bas`、`clsSaveHook.cls`
@@ -80,7 +82,11 @@ API 名称不确定时，用 `System.Reflection.MetadataLoadContext` 加载 `Pat
   - 合并命令示例：`ILRepack.exe /out:PatentMarker.merged.dll /target:library /internalize /lib:lib PatentMarker.dll ..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll`（2013 用 net35 版，2015 用 net45 版；`/lib` 指向 SDK DLL 目录）
   - 2013 目标 v4.0：13.0.x 包 `lib/net40` 的 DLL 实际 TFM 为 v4.5，编译会报 MSB3274，必须引用 `lib/net35`（无 TFM 标记、CLR4 兼容）；HintPath 为 `..\..\packages\...`（packages 在 `cad-plugin/packages`）
   - 合并后必须确认程序集不再引用外部 Newtonsoft.Json（`GetReferencedAssemblies()` 无该条目）
-- **项目无自动化测试与 CI 编译检查**：验证手段为本地编译 + 在对应 AutoCAD 版本中实测（`NETLOAD` 加载 DLL）
+- **自动化验证分层**（`.github/workflows/build.yml` 每次 push/PR 运行，本地等效命令 `./build.ps1 -Structure` / `-Static` / `-Simulation`）：
+  - 结构完整性：5 个版本 csproj 可解析、`<Compile Include>` 引用的源文件全部存在、部署包含 DLL + 6 个 VBA 模块
+  - 静态一致性：VBA 模块跨 5 套部署包哈希一致、csproj TargetFramework 匹配版本矩阵、`check-version-sync.ps1` 校验 `cad-plugin/Shared/` 单源层（本地副本禁止 + 5 版本链接齐全）、版本本地文件组内无漂移
+  - 契约模拟测试：`cad-plugin/RuntimeContract.Tests/` 下 2007/2010/2013/2015 四个测试工程用仿真 host 重放 PATMARK 编排；2025 版另有 `PatentMarker.Tests`
+- CI 无法真实编译各版本 DLL（SDK DLL 不入库）；真实编译需本地 SDK DLL + `./build.ps1 -Version <年份>`，最终验证仍需在对应 AutoCAD 版本中实测（`NETLOAD` 加载 DLL）
 - 不得声称"已通过 CI/测试验证"；只报告实际执行的编译或实测结果
 
 ## 8. 文档同步要求
@@ -98,6 +104,7 @@ API 名称不确定时，用 `System.Reflection.MetadataLoadContext` 加载 `Pat
 | `PATCHECK` | `BZC` | 校验编号一致性 |
 | `PATALIGN` | `BZA` | 对齐引线 |
 | `PATSELECTALL` | `BZS` | 全选标注实体 |
+| `PATDOCTOR` | `BZD` | 自检插件状态并生成诊断报告 |
 
 ## 10. 禁止事项
 

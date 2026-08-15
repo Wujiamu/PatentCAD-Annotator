@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
@@ -29,7 +29,7 @@
     <Compile Include="..\Shared\Cad\PatEntityHelper.cs" Link="Edition\IO\PatEntityHelper.cs" />
     <Compile Include="..\Shared\IO\NumberIdentity.cs" Link="Edition\IO\NumberIdentity.cs" />
     <Compile Include="..\Shared\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />
-    <Compile Include="..\2010\PatentMarker\IO\RuntimeHost.cs" Link="Edition\IO\RuntimeHost.cs" />
+    <Compile Include="..\2007\PatentMarker\IO\RuntimeHost.cs" Link="Edition\IO\RuntimeHost.cs" />
     <Compile Include="..\Shared\I18n\Language.cs" Link="Edition\I18n\Language.cs" />
     <Compile Include="..\Shared\I18n\Strings.cs" Link="Edition\I18n\Strings.cs" />
     <Compile Include="..\Shared\Palette\DictPaletteCadService.cs" Link="Edition\Palette\DictPaletteCadService.cs" />

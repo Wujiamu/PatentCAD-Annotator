@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -55,6 +55,20 @@
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" Link="Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" Link="Commands\PatBraceEntity.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" Link="Commands\PatBraceCommand.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" Link="Diagnostics\PatDiagnostics.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" Link="Diagnostics\PatDoctorReport.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" Link="Diagnostics\PatDoctorCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatMarkCommand.cs" Link="Commands\PatMarkCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" Link="Commands\PatCheckCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" Link="Commands\PatAlignCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatSelectAllCommand.cs" Link="Commands\PatSelectAllCommand.cs" />
+    <Compile Include="..\..\Shared\I18n\Strings.cs" Link="I18n\Strings.cs" />
+    <Compile Include="..\..\Shared\Palette\ArbitrateDialog.cs" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\EditEntryDialog.cs" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\PasteRecognizeDialog.cs" Link="Palette\PasteRecognizeDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteControl.cs" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="..\..\Shared\Palette\PatPaletteCommand.cs" Link="Palette\PatPaletteCommand.cs" />
+    <Compile Include="..\..\Shared\Styles\PatStyleInitializer.cs" Link="Styles\PatStyleInitializer.cs" />
   </ItemGroup>
 
   <!-- System.Text.Json 内置于 .NET 8，无需额外 NuGet 包 -->

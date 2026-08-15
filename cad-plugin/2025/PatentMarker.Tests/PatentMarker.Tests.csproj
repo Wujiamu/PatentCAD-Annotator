@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -31,7 +31,7 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" Link="Palette\DictPaletteWorkflow.cs" />
     <Compile Include="..\..\Shared\I18n\Language.cs" Link="I18n\Language.cs" />
-    <Compile Include="..\PatentMarker\I18n\Strings.cs" Link="I18n\Strings.cs" />
+    <Compile Include="..\..\Shared\I18n\Strings.cs" Link="I18n\Strings.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -63,26 +63,29 @@
     <Compile Include="IO\RuntimeHost.cs" />
     <Compile Include="..\..\Shared\IO\MarkingTextParser.cs" />
     <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" />
-    <Compile Include="Styles\PatStyleInitializer.cs" />
-    <Compile Include="Commands\PatMarkCommand.cs" />
+    <Compile Include="..\..\Shared\Styles\PatStyleInitializer.cs" />
+    <Compile Include="..\..\Shared\Commands\PatMarkCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" />
-    <Compile Include="Commands\PatCheckCommand.cs" />
-    <Compile Include="Commands\PatAlignCommand.cs" />
-    <Compile Include="Commands\PatSelectAllCommand.cs" />
-    <Compile Include="Palette\PatPaletteCommand.cs" />
-    <Compile Include="Palette\DictPaletteControl.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatAlignCommand.cs" />
+    <Compile Include="..\..\Shared\Commands\PatSelectAllCommand.cs" />
+    <Compile Include="..\..\Shared\Palette\PatPaletteCommand.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteControl.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteCadService.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" />
-    <Compile Include="Palette\PasteRecognizeDialog.cs" />
-    <Compile Include="Palette\EditEntryDialog.cs" />
-    <Compile Include="Palette\ArbitrateDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\PasteRecognizeDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\EditEntryDialog.cs" />
+    <Compile Include="..\..\Shared\Palette\ArbitrateDialog.cs" />
     <Compile Include="..\..\Shared\I18n\Language.cs" />
-    <Compile Include="I18n\Strings.cs" />
+    <Compile Include="..\..\Shared\I18n\Strings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

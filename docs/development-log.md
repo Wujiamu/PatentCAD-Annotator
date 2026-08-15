@@ -4,8 +4,32 @@
 
 ---
 
+## v4.6 (2026-08-15)
+
+- 技术债清理三阶段（Phase 1 单源化 → Phase 2 共享层收敛 → Phase 3 校验闭环），五个版本行为保持一致，仅 JSON 库与 .NET 目标框架保留版本特有差异。
+- Phase 1 VBA 单源化：根目录 `vba/` 成为 6 个 Word 模块的唯一真源，`vba-sync.ps1` 向五套部署包同步，`package.ps1` 在打包前断言部署副本与真源一致；部署包内 VBA 不再手工维护。
+- Phase 2 共享层收敛：再收敛 11 个文件族（PatMarkCommand/PatCheckCommand/PatAlignCommand/PatSelectAllCommand、Strings、ArbitrateDialog/EditEntryDialog/PasteRecognizeDialog、DictPaletteControl、PatPaletteCommand、PatStyleInitializer）至 `cad-plugin/Shared/`，共享层达 29 个文件；裁决并统一 PatStyleInitializer 的样式初始化行为差异；五个 csproj 全部改为 `<Compile Include="..\..\Shared\...">` 链接编译，版本目录仅保留版本特有 IO 适配层与入口文件。
+- Phase 3 校验闭环：新增 `PatentMarker.RuntimeContract.2007.Tests`，契约模拟测试覆盖 2007/2010/2013/2015 全部四个旧版（各 28 用例）；`PatentCAD.sln` 接入全部五个版本工程与五个测试工程（修复项目 GUID 重复与重名解决方案文件夹）；`check-version-sync.ps1` 增设版本特有文件白名单并补齐 Diagnostics 三文件；`build.ps1 -Static` 的共享层检查改为委托 `check-version-sync.ps1`（消除双重列表维护），版本本地文件组内一致性按同 JSON 栈分组校验（2013↔2015、2007↔2010）。
+- 修复收敛引入的兼容性回归：`Shared/Palette/PasteRecognizeDialog.cs` 使用了 .NET 4.0 才有的 `string.IsNullOrWhiteSpace`，导致 2007（.NET 2.0）/2010（.NET 3.5）编译失败；改为 .NET 2.0 兼容写法（`null` 检查 + `Trim().Length == 0`），共享层源码再次通过五版本编译。
+- 实测脚本加固：`tools/doctor-live-test.ps1` 由 COM 驱动改为 SCR + `/b` 批处理模式（COM `New-Object -ComObject` 会附着到崩溃残留实例、`SendCommand` 在模态对话框上挂起，见 acad.err 2026-08-15 16:30 致命错误记录）；判定条件改为轮询 doctor 报告落盘，宿主未按脚本 QUIT 时强制回收；启动前检查残留 acad 进程。复测通过：全新 AutoCAD 会话加载新鲜打包的 2025 部署包 DLL，PATDOCTOR 报告 PASS 3 / FAIL 1 / SKIP 2、最近错误 0。
+- 仓库清理：`.gitignore` 新增本地自备/临时类条目（`cad-plugin/packages/`、`cad-plugin/tools/`、`tools/ilrepack|net-ref-fetch|refasm/`、探针与构建日志、`.qoder/`、`acad.err`、`docs/handoff-*.md` 会话交接稿）；补齐 `tools/BoundaryHarness.bas`（已被跟踪的 `test-vba-boundary-harness.vbs` 引用）与 `PatentMarker-2025-deploy/load-patent-marker.lsp`（`install-2025.ps1` 的复制源）。
+- 验证（全部本地实际执行）：结构检查、静态检查（29 共享文件 canonical + 五版本链接齐全 + 0 警告）、契约模拟测试 4×28 通过、2025 单元测试 112 通过、五版本真实编译通过、五套部署包重新打包（2013/2015 ILRepack 合并后确认无外部 Newtonsoft.Json 引用）、AutoCAD 2026 宿主实测（`/b` 脚本加载 2025 部署包 DLL 并运行 `PATDOCTOR`，报告正常生成：PASS 3 / FAIL 1 / SKIP 2，最近错误 0）。
+
+---
+
+## v4.5 (2026-08-15)
+
+- 新增自动诊断机制 `PATDOCTOR`（别名 `BZD`）：一键自检插件运行状态并生成报告，五个版本共用同一份共享源码（`cad-plugin/Shared/Diagnostics/`，含错误环形缓冲、检查结果模型与报告输出）。
+- 自检项：报告目录可写、`PAT_DIM` 标注样式与 `TIMES_ROMAN` 文字样式状态（含箭头/文字高度当前值）、运行设置、`.dict.json` 字典解析与条目数、模型空间实体扫描（Leader/MText 计数）；报告写入 DLL 旁 `PatentMarker-doctor-report.txt`，附环境信息（程序集路径、.NET 运行时）与最近 100 条错误。
+- 错误捕获：五个版本的 `PatentMarkerApp.RawLog` 入口挂钩 `PatDiagnostics.OnRawLog`，自动把 error/failed/fatal/exception 类日志行汇入环形缓冲，PATDOCTOR 直接带出；文件日志写盘失败不影响缓冲记录。
+- 诊断模块保持 .NET 2.0 / C# 3.0 兼容语法、无 JSON 依赖，通过 csproj 源码链接编入五个版本，不生成跨 CLR DLL；五版本本地编译通过（0 错误）、结构检查与同步检查通过。
+- 真实宿主实测通过（`tools/doctor-live-test.ps1`，COM 驱动 AutoCAD 2026、注册表自动加载部署包 DLL）：`BZD` 与 `PATDOCTOR` 全名均正常触发，报告落盘于 DLL 旁，PASS 3 / FAIL 1 / SKIP 2 语义正确（新图纸样式 SKIP、未设置字典路径 FAIL、模型空间扫描 PASS）；2025 版插件在 AutoCAD 2026 中跨版本加载运行正常。实测中发现并修复错误缓冲自引用污染（PATDOCTOR 自身汇总日志含 "error" 字样被钩子误记为错误，已改为跳过 PATDOCTOR 前缀日志且汇总日志不再携带该字样）与报告 Drawing 字段重复两处缺陷。
+
+---
+
 ## v4.4 (2026-08-12)
 
+- Unified PATMARK completion handling across all five editions: ESC and the right-click Confirm/Cancel result now leave both three-point and unlimited-point marking mode, including cancellation during an unfinished dogleg sequence.
 - Corrected the unlimited-point tie case so it always resolves to a text corner instead of the left/right middle attachment, and added a free-mode regression assertion for the selected corner.
 - Localized the new palette switches: Chinese mode now displays `引线` and `下划线`, while English mode continues to display `Leader` and `Underline`.
 - Rebuilt the five edition deployment DLLs after verification so field installations receive the source fixes rather than continuing to load the older packaged binaries.

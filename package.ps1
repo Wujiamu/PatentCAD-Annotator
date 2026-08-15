@@ -42,15 +42,20 @@ function Get-AssemblyReferenceNames {
 }
 
 function Assert-VbaSync {
+    # vba/ at the repository root is the canonical single source; every
+    # deployment copy must be byte-identical to it. Edit vba/ and run
+    # .\vba-sync.ps1 to propagate; never edit deployment copies directly.
     foreach ($file in $vbaFiles) {
-        $hashes = @()
+        $canonical = Join-Path $root "vba\$file"
+        if (-not (Test-Path -LiteralPath $canonical)) { Fail "Missing canonical VBA module: $canonical" }
+        $canonicalHash = (Get-FileHash -LiteralPath $canonical -Algorithm SHA256).Hash
         foreach ($ver in $versions) {
             $path = Join-Path $root "PatentMarker-$ver-deploy\vba\$file"
             if (-not (Test-Path -LiteralPath $path)) { Fail "Missing VBA module: $path" }
-            $hashes += (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash
-        }
-        if (@($hashes | Select-Object -Unique).Count -ne 1) {
-            Fail "VBA module drift detected: $file"
+            $hash = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash
+            if ($hash -ne $canonicalHash) {
+                Fail "VBA module drift detected: $file (deploy $ver differs from canonical vba/$file; run .\vba-sync.ps1)"
+            }
         }
     }
 }

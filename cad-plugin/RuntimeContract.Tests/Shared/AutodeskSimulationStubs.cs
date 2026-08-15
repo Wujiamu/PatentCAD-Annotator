@@ -169,6 +169,7 @@ namespace Autodesk.AutoCAD.EditorInput
 
         public List<string> Messages { get; } = new List<string>();
         public List<string> PointPrompts { get; } = new List<string>();
+        public List<bool> PointPromptAllowsNone { get; } = new List<bool>();
 
         public void EnqueuePoint(PromptStatus status, Point3d value)
         {
@@ -183,12 +184,14 @@ namespace Autodesk.AutoCAD.EditorInput
         public PromptPointResult GetPoint(string message)
         {
             PointPrompts.Add(message);
+            PointPromptAllowsNone.Add(false);
             return DequeuePoint();
         }
 
         public PromptPointResult GetPoint(PromptPointOptions options)
         {
             PointPrompts.Add(options.Message);
+            PointPromptAllowsNone.Add(options.AllowNone);
             return DequeuePoint();
         }
 

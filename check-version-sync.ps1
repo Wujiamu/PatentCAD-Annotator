@@ -89,15 +89,29 @@ $sharedSourceFiles = @(
     "IO\DictConflict.cs",
     "IO\MarkingTextParser.cs",
     "I18n\Language.cs",
+    "I18n\Strings.cs",
     "Commands\PatLeaderTextAttachment.cs",
     "Commands\PatBraceGeometry.cs",
     "Commands\PatBraceEntity.cs",
     "Commands\PatBraceCommand.cs",
+    "Commands\PatMarkCommand.cs",
+    "Commands\PatCheckCommand.cs",
+    "Commands\PatAlignCommand.cs",
+    "Commands\PatSelectAllCommand.cs",
     "Cad\PatEntityHelper.cs",
     "Palette\DictPaletteCadService.cs",
     "Palette\DictPaletteWorkflow.cs",
     "Palette\DictPaletteSession.cs",
-    "Palette\DictPaletteViewRenderer.cs"
+    "Palette\DictPaletteViewRenderer.cs",
+    "Palette\DictPaletteControl.cs",
+    "Palette\PatPaletteCommand.cs",
+    "Palette\ArbitrateDialog.cs",
+    "Palette\EditEntryDialog.cs",
+    "Palette\PasteRecognizeDialog.cs",
+    "Styles\PatStyleInitializer.cs",
+    "Diagnostics\PatDiagnostics.cs",
+    "Diagnostics\PatDoctorCommand.cs",
+    "Diagnostics\PatDoctorReport.cs"
 )
 Write-Host "-- Canonical shared source layer --" -ForegroundColor Cyan
 function Get-SharedSourcePath {
@@ -154,7 +168,23 @@ foreach ($critical in $criticalSharedFiles) {
 }
 Write-Host ""
 
+# Version-local files that are deliberately edition-specific (IO/JSON adapter
+# layer, per-edition entry point and project files). They are exempt from the
+# sync advisories; everything else that lives in a version directory must be
+# either identical across editions or moved into cad-plugin/Shared/.
+$sanctionedLocalFiles = @(
+    "IO\SimpleJson.cs",
+    "IO\ConfigLoader.cs",
+    "IO\DictEntry.cs",
+    "IO\DictWriter.cs",
+    "IO\RuntimeHost.cs",
+    "packages.config",
+    "PatentMarker.csproj",
+    "PatentMarkerApp.cs"
+)
+
 foreach ($rel in $sortedPaths) {
+    if ($sanctionedLocalFiles -contains $rel) { continue }
     $present = @()
     $absent  = @()
     $hashes  = @{}
@@ -337,3 +367,4 @@ Write-Host "Check complete." -ForegroundColor Cyan
 if ($criticalSyncFailures -gt 0) {
     exit 1
 }
+exit 0

@@ -109,5 +109,38 @@ namespace PatentMarker.RuntimeContractTests
             Editor.EnqueuePoint(PromptStatus.None, new Point3d());
             Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
         }
+
+        public void QueueThreePointCancelAfterFirstAnnotation(string number,
+            Point3d attach, Point3d dogleg, Point3d text)
+        {
+            Palette.PatPaletteCommand.PendingNumber = number;
+            Palette.PatPaletteCommand.PendingName = "测试名称";
+            Editor.EnqueuePoint(PromptStatus.OK, attach);
+            Editor.EnqueuePoint(PromptStatus.OK, dogleg);
+            Editor.EnqueuePoint(PromptStatus.OK, text);
+            Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+        }
+
+        public void QueueFreeModeCancelDuringDoglegs(string number,
+            Point3d attach, Point3d dogleg)
+        {
+            Palette.PatPaletteCommand.PendingNumber = number;
+            Palette.PatPaletteCommand.PendingName = "测试名称";
+            Editor.EnqueuePoint(PromptStatus.OK, attach);
+            Editor.EnqueuePoint(PromptStatus.OK, dogleg);
+            Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
+        }
+
+        public void QueueFreeModeConfirmAfterAnnotation(string number,
+            Point3d attach, Point3d dogleg)
+        {
+            Palette.PatPaletteCommand.PendingNumber = number;
+            Palette.PatPaletteCommand.PendingName = "测试名称";
+            Editor.EnqueuePoint(PromptStatus.OK, attach);
+            Editor.EnqueuePoint(PromptStatus.OK, dogleg);
+            Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+            Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+            Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+        }
     }
 }

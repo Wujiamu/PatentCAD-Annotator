@@ -7,7 +7,7 @@
 #   .\build.ps1 -Version all           Check/build all 5 editions
 #   .\build.ps1 -Check                 Doctor mode: check environment only
 #   .\build.ps1 -Structure             Structure integrity check (CI, no SDK DLL needed)
-#   .\build.ps1 -Simulation            Run simulated host contract tests for 2010/2013/2015
+#   .\build.ps1 -Simulation            Run simulated host contract tests for 2007/2010/2013/2015
 #   .\check-autocad-host.ps1            Read-only AutoCAD/COM/licensing prerequisite inventory
 #
 # Notes:
@@ -258,133 +258,85 @@ function Invoke-StaticCheck {
         }
     }
 
-    # ---- 3. Canonical shared source layer ----
+    # ---- 3. Canonical shared source layer (delegates to check-version-sync.ps1) ----
     Write-Host "`n  --- Canonical shared source layer ---"
-    $canonicalShared = @(
-        "IO\NumberIdentity.cs",
-        "IO\PatSettings.cs",
-        "IO\DictDiff.cs",
-        "IO\DictConflict.cs",
-        "IO\MarkingTextParser.cs",
-        "I18n\Language.cs",
-        "Commands\PatLeaderTextAttachment.cs",
-        "Commands\PatBraceGeometry.cs",
-        "Commands\PatBraceEntity.cs",
-        "Commands\PatBraceCommand.cs",
-        "Cad\PatEntityHelper.cs",
-        "Palette\DictPaletteCadService.cs",
-        "Palette\DictPaletteWorkflow.cs",
-        "Palette\DictPaletteSession.cs",
-        "Palette\DictPaletteViewRenderer.cs"
-    )
-    foreach ($rel in $canonicalShared) {
-        $sharedPath = Join-Path $root "cad-plugin\Shared\$rel"
-        if (-not (Test-Path -LiteralPath $sharedPath)) {
-            Write-Err2 "Shared source missing: cad-plugin/Shared/$rel"
+    $syncScript = Join-Path $root "check-version-sync.ps1"
+    if (Test-Path -LiteralPath $syncScript) {
+        & $syncScript
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err2 "Canonical shared source check failed (see output above)."
             $failCount++
-            continue
+        } else {
+            Write-Ok "Canonical shared source layer verified by check-version-sync.ps1"
         }
-
-        $localDuplicates = @()
-        $missingLinks = @()
-        foreach ($ver in $script:DllMap.Keys) {
-            $localPath = Join-Path (Get-ProjectDir $ver) $rel
-            if (Test-Path -LiteralPath $localPath) { $localDuplicates += $ver }
-
-            $csproj = Join-Path (Get-ProjectDir $ver) "PatentMarker.csproj"
-            if (-not (Test-Path -LiteralPath $csproj)) {
-                $missingLinks += "$ver (csproj missing)"
-                continue
-            }
-            $include = "..\..\Shared\$rel"
-            $projectText = Get-Content -LiteralPath $csproj -Raw
-            if ($projectText -notmatch [regex]::Escape($include)) { $missingLinks += $ver }
-        }
-
-        if ($localDuplicates.Count -gt 0) {
-            Write-Err2 "$rel`: local duplicate exists in $($localDuplicates -join ', '); use cad-plugin/Shared"
-            $failCount++
-        }
-        if ($missingLinks.Count -gt 0) {
-            Write-Err2 "$rel`: shared link missing in $($missingLinks -join ', ')"
-            $failCount++
-        }
-        if ($localDuplicates.Count -eq 0 -and $missingLinks.Count -eq 0) {
-            Write-Ok "$rel`: canonical source linked by all five editions"
-        }
+    } else {
+        Write-Err2 "check-version-sync.ps1 not found at repo root; cannot verify shared layer."
+        $failCount++
     }
 
-    # ---- 4. C# cross-edition source consistency (within groups) ----
-    Write-Host "`n  --- C# cross-edition source consistency ---"
-    # Group A: 2013/2015/2025 (Leader + MText group, same file set)
-    $annotationGroup = @("2013","2015","2025")
-    $sharedFiles = @(
-        "PatentMarkerApp.cs",
-        "Commands\PatMarkCommand.cs",
-        "Commands\PatCheckCommand.cs",
-        "Commands\PatAlignCommand.cs",
-        "Commands\PatSelectAllCommand.cs",
-        "Palette\PatPaletteCommand.cs",
-        "Palette\DictPaletteControl.cs",
-        "I18n\Strings.cs",
-        "Styles\PatStyleInitializer.cs",
+    # ---- 4. Version-local file consistency (within groups) ----
+    Write-Host "`n  --- Version-local file consistency ---"
+    # Files that still live in each edition directory (JSON adapters, entry
+    # point). Shared logic lives in cad-plugin/Shared and is checked above.
+    # Group A: 2013 vs 2015 (same Newtonsoft JSON stack + accoremgd era).
+    # 2025 is excluded: System.Text.Json/.NET 8 makes its adapters legitimately
+    # different. PatentMarkerApp.cs is excluded: per-edition entry point.
+    $localFilesA = @(
         "IO\ConfigLoader.cs",
         "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
-        "IO\PatEntityHelper.cs"
+        "IO\DictWriter.cs"
     )
     $driftCount = 0
-    foreach ($rel in $sharedFiles) {
-        $hashes = @{}
-        foreach ($ver in $annotationGroup) {
-            $fpath = Join-Path (Get-ProjectDir $ver) $rel
-            if (Test-Path $fpath) {
-                $hashes[$ver] = (Get-FileHash $fpath -Algorithm SHA256).Hash
+    foreach ($rel in $localFilesA) {
+        $h1 = Join-Path (Get-ProjectDir "2013") $rel
+        $h2 = Join-Path (Get-ProjectDir "2015") $rel
+        if ((Test-Path $h1) -and (Test-Path $h2)) {
+            $hash1 = (Get-FileHash $h1 -Algorithm SHA256).Hash
+            $hash2 = (Get-FileHash $h2 -Algorithm SHA256).Hash
+            if ($hash1 -ne $hash2) {
+                Write-Warn2 "DRIFT: $rel differs between 2013/2015 (same JSON stack; review if intentional)"
+                $driftCount++
             }
-        }
-        $unique = $hashes.Values | Select-Object -Unique
-        if ($unique.Count -gt 1) {
-            Write-Warn2 "DRIFT: $rel differs in Leader + MText group ($($hashes.Keys -join '/'))"
+        } else {
+            Write-Warn2 "$rel not present in both 2013 and 2015 (edition-local layout may have changed)"
             $driftCount++
         }
     }
     if ($driftCount -eq 0) {
-        Write-Ok "Leader + MText group (2013/2015/2025): all $($sharedFiles.Count) shared files consistent"
+        Write-Ok "Group 2013/2015 (Newtonsoft stack): $($localFilesA.Count) version-local files consistent"
     } else {
-        Write-Warn2 "Leader + MText group: $driftCount file(s) differ across editions (review if intentional)"
         $warnCount += $driftCount
     }
 
-    # Group B: 2007/2010 (Leader group)
-    $leaderShared = @(
-        "PatentMarkerApp.cs",
-        "Commands\PatMarkCommand.cs",
-        "Commands\PatCheckCommand.cs",
-        "Commands\PatAlignCommand.cs",
-        "Commands\PatSelectAllCommand.cs",
-        "Palette\PatPaletteCommand.cs",
-        "Palette\DictPaletteControl.cs",
-        "I18n\Strings.cs",
-        "Styles\PatStyleInitializer.cs",
+    # Group B: 2007 vs 2010 (SimpleJson stack). PatentMarkerApp.cs is excluded
+    # (2007 targets C# 2.0 syntax, 2010 may use C# 3.0+).
+    $localFilesB = @(
         "IO\ConfigLoader.cs",
         "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
-        "IO\PatEntityHelper.cs"
+        "IO\DictWriter.cs",
+        "IO\SimpleJson.cs"
     )
     $driftCount2 = 0
-    foreach ($rel in $leaderShared) {
+    foreach ($rel in $localFilesB) {
         $h1 = Join-Path (Get-ProjectDir "2007") $rel
         $h2 = Join-Path (Get-ProjectDir "2010") $rel
         if ((Test-Path $h1) -and (Test-Path $h2)) {
             $hash1 = (Get-FileHash $h1 -Algorithm SHA256).Hash
             $hash2 = (Get-FileHash $h2 -Algorithm SHA256).Hash
-            if ($hash1 -ne $hash2) { $driftCount2++ }
+            if ($hash1 -ne $hash2) {
+                Write-Warn2 "DRIFT: $rel differs between 2007/2010 (same JSON stack; review if intentional)"
+                $driftCount2++
+            }
+        } else {
+            Write-Warn2 "$rel not present in both 2007 and 2010 (edition-local layout may have changed)"
+            $driftCount2++
         }
     }
     if ($driftCount2 -eq 0) {
-        Write-Ok "Leader group (2007/2010): all $($leaderShared.Count) shared files consistent"
+        Write-Ok "Group 2007/2010 (SimpleJson stack): $($localFilesB.Count) version-local files consistent"
     } else {
-        Write-Warn2 "Leader group: $driftCount2 file(s) differ across editions (review if intentional)"
         $warnCount += $driftCount2
     }
 

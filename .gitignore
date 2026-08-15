@@ -38,17 +38,48 @@ shots-v2/
 .trae/
 .workbuddy/
 .vs/
+.qoder/
 *.user
 *.suo
+
+# ---- 会话交接稿（临时文档，不入库） ----
+docs/handoff-*.md
+
+# ---- NuGet 包与本地构建支持（用户自备，不入库） ----
+cad-plugin/packages/
+cad-plugin/tools/
+
+# ---- 第三方工具（ILRepack / 引用程序集下载，用户自备） ----
+tools/ilrepack/
+tools/net-ref-fetch/
+tools/refasm/
+
+# ---- 本地探针 / 复现工程 / 构建日志 ----
+tools/MLeaderRepro/
+tools/ApiSurfaceProbe/
+tools/api-probe-*.txt
+tools/msbuild-*.txt
+tools/dotnet-*-log.txt
+tools/patterns-slice.txt
+tools/backup-*.vbs
+
+# ---- AutoCAD 运行时残留 ----
+acad.err
 
 # ---- 日志 ----
 *.log
 PatentMarker.log
 
+# ---- 部署包运行时产物 ----
+*.bak.*
+PatentMarker-*-deploy/PatentMarker-doctor-report.txt
+
 # ---- 临时文件 ----
 *.tmp
 *.bak
 ~$*
+/snap_*.png
+/autocad_screen.png
 
 # ---- 测试产物 / 临时测试文件 ----
 test-single-export.vbs

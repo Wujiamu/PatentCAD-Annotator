@@ -281,6 +281,108 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
+        public void ThreePointConfirmAfterCompletedAnnotationExitsCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointCancelAfterFirstAnnotation("confirm-three",
+                    new Point3d(1, 1, 0), new Point3d(2, 2, 0), new Point3d(3, 3, 0));
+
+                new PatMarkCommand().Run();
+
+                Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+                Assert.Equal(4, fixture.Editor.PointPrompts.Count);
+                Assert.Equal(4, fixture.Editor.PointPromptAllowsNone.Count);
+                Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
+            }
+        }
+
+        [Fact]
+        public void ThreePointCancelAfterCompletedAnnotationExitsCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                Palette.PatPaletteCommand.PendingNumber = "cancel-three";
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(1, 1, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(2, 2, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(3, 3, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
+
+                new PatMarkCommand().Run();
+
+                Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+                Assert.Equal(4, fixture.Editor.PointPrompts.Count);
+                Assert.Equal(4, fixture.Editor.PointPromptAllowsNone.Count);
+                Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
+            }
+        }
+
+        [Fact]
+        public void FreeModeCancelDuringDoglegCollectionExitsCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                fixture.QueueFreeModeCancelDuringDoglegs("cancel-free",
+                    new Point3d(1, 1, 0), new Point3d(2, 2, 0));
+
+                new PatMarkCommand().Run();
+
+                Assert.Empty(fixture.Database.CommittedEntities);
+                Assert.Equal(3, fixture.Editor.PointPrompts.Count);
+                Assert.Equal(3, fixture.Editor.PointPromptAllowsNone.Count);
+                Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
+            }
+        }
+
+        [Fact]
+        public void FreeModeConfirmAfterAnnotationExitsCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                fixture.QueueFreeModeConfirmAfterAnnotation("confirm-free",
+                    new Point3d(1, 1, 0), new Point3d(2, 2, 0));
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+#else
+                Assert.Single(fixture.Database.CommittedEntities);
+#endif
+                Assert.Equal(5, fixture.Editor.PointPrompts.Count);
+                Assert.Equal(5, fixture.Editor.PointPromptAllowsNone.Count);
+                Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
+            }
+        }
+
+        [Fact]
+        public void FreeModeCancelAfterAnnotationExitsCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                Palette.PatPaletteCommand.PendingNumber = "cancel-free-after";
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(1, 1, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.OK, new Point3d(2, 2, 0));
+                fixture.Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+                fixture.Editor.EnqueuePoint(PromptStatus.None, new Point3d());
+                fixture.Editor.EnqueuePoint(PromptStatus.Cancel, new Point3d());
+
+                new PatMarkCommand().Run();
+
+#if SIM_LEADER
+                Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+#else
+                Assert.Single(fixture.Database.CommittedEntities);
+#endif
+                Assert.Equal(5, fixture.Editor.PointPrompts.Count);
+                Assert.Equal(5, fixture.Editor.PointPromptAllowsNone.Count);
+                Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
+            }
+        }
+
+        [Fact]
         public void TransactionFailureRollsBackTheSimulatedEntitySet()
         {
             using (SimulationFixture fixture = new SimulationFixture())

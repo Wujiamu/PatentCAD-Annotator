@@ -26,6 +26,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 五个版本统一使用 `Leader + MText` 创建标注。2013/2015/2025 虽然提供 MLeader API，但 MLeader 的文字内容附着机制会产生无法稳定关闭的额外附着点或连接线，因此当前版本不再用 MLeader 创建新标注。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
 - 点数模式默认是三点；点击“点数”按钮后才切换为无限点，设置按当前图纸会话保留。
+- 三点或无限点标注过程中，按 ESC 或右键菜单中的“确认/取消”都可以退出当前标注命令；无限点采集到一半时也可以直接取消。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
 - 文字附着点按靠近文字的最后一个引线拐点相对文字的位置自动判断四个象限：左上/左下分别连接文字左上/左下，右上/右下分别连接文字右上/右下；同高或默认文字点与末端拐点重合时，固定连接对应侧上角，不再退回侧面中点。
@@ -129,6 +130,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 | `PATSELECTALL` | `BZS` | 全选标注实体 |
 | `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
 | `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
+| `PATDOCTOR` | `BZD` | 插件自检并生成诊断报告（样式/设置/字典/实体扫描 + 最近错误） |
 
 ### VBA 模块（Word 端，全版本共享）
 
@@ -145,18 +147,20 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层，当前包含编号、设置、字典差异/冲突、粘贴识别、语言枚举，以及已验证的面板工作流、会话状态、WinForms 列表渲染和 Leader/MText 实体服务。各版本项目通过源码链接编译；CLR、JSON 库和面板生命周期仍保留在对应版本目录，AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（29 个文件），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、四个标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录仅保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），AutoCAD 相关共享代码仍按各项目 SDK 引用编译，不生成跨 CLR DLL。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本，且必须被五个 csproj 链接。
 
 ```
 PatentCAD-Annotator/
 ├── cad-plugin/
 │   ├── Shared/              # 五版本共用的纯 C# 源码（按项目链接编译，不合并 CLR）
+│   ├── RuntimeContract.Tests/  # 2007/2010/2013/2015 契约模拟测试工程（仿真 host）
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   └── PatentMarker/    #   C# 源码 + csproj
 │   ├── 2010/               # AutoCAD 2010~2012（Leader + MText，.NET 3.5）
 │   ├── 2013/               # AutoCAD 2013~2014（Leader + MText，.NET 4.0）
 │   ├── 2015/               # AutoCAD 2015~2024（Leader + MText，.NET 4.5）
 │   └── 2025/               # AutoCAD 2025~2026+（Leader + MText，.NET 8.0）
+├── vba/                     # 6 个 Word VBA 模块唯一真源（vba-sync.ps1 同步到部署包）
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -181,6 +185,8 @@ PatentCAD-Annotator/
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v4.6 | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
+| v4.5 | 2026-08-15 | 新增 `PATDOCTOR`（`BZD`）自动诊断机制：共享源码 Diagnostics 模块、RawLog 错误环形缓冲、自检报告；五版本编译通过 |
 | v4.1 | 2026-08-11 | 新增独立参数化矢量大括号：三点创建、控制点交互调整和高度/宽度输入；五个版本及部署包同步 |
 | v4.0 | 2026-08-06 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决；修复 MLeader 额外附着点问题，五个版本统一使用 Leader + MText 并重新编译部署 |
 | v3.2 | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
@@ -277,13 +283,14 @@ Each package contains the matching `PatentMarker.dll` and the six shared VBA mod
 | `PATSELECTALL` | `BZS` | Select all annotation entities |
 | `PATBRACE` | `DAGUOHAO` | Create an independent parameterized vector brace from three points |
 | `PATBRACEEDIT` | — | Adjust a brace by control points or exact height/width |
+| `PATDOCTOR` | `BZD` | Self check the plugin and write a doctor report (styles, settings, dictionary, entity scan, recent errors) |
 
 ### Local verification status
 
 - All five editions compile locally.
-- Runtime contract simulations pass 17/17 for 2010, 2013 and 2015 (including shared brace geometry and four-direction brace checks).
+- Runtime contract simulations pass 28/28 for each of 2007, 2010, 2013 and 2015 (command orchestration against strict fake hosts, including shared brace geometry and four-direction brace checks).
 - The 2025 test suite passes 112/112.
-- API-contract, structure and static synchronization checks pass for all five editions.
+- Structure and static synchronization checks pass for all five editions: the 29-file `cad-plugin/Shared/` canonical layer is linked by every edition csproj with no local duplicates, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
 
 ### License
