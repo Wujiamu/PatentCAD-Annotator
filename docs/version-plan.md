@@ -11,16 +11,16 @@ PatentCAD-Annotator 面向 AutoCAD 2007 至 2026+ 全部版本，需覆盖 Win7 
 | 目录 | 覆盖 AutoCAD | .NET | 最低 OS | 标注方式 | JSON 库 |
 |---|---|---|---|---|---|
 | `cad-plugin/2007/` | 2007, 2008, 2009 | 2.0 | Win7 | Leader + MText | SimpleJson（零依赖） |
-| `cad-plugin/2010/` | 2010, 2011, 2012 | 3.5 | Win7 | Leader + MText | SimpleJson（零依赖） |
-| `cad-plugin/2013/` | 2013, 2014 | 4.0 | Win7 | Leader + MText | Newtonsoft.Json（ILRepack 合并） |
-| `cad-plugin/2015/` | 2015—2024 | 4.5 | Win7 | Leader + MText | Newtonsoft.Json（ILRepack 合并） |
-| `cad-plugin/2025/` | 2025, 2026+ | 8.0 | Win10+ | Leader + MText | System.Text.Json（内置） |
+| `cad-plugin/2010/` | 2010, 2011, 2012 | 3.5 | Win7 | MLeader（F 方案） | SimpleJson（零依赖） |
+| `cad-plugin/2013/` | 2013, 2014 | 4.0 | Win7 | MLeader（F 方案） | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2015/` | 2015—2024 | 4.5 | Win7 | MLeader（F 方案） | Newtonsoft.Json（ILRepack 合并） |
+| `cad-plugin/2025/` | 2025, 2026+ | 8.0 | Win10+ | MLeader（F 方案） | System.Text.Json（内置） |
 
 ## 分版理由
 
-### 1. 标注实现策略：统一使用 Leader + MText
+### 1. 标注实现策略：2007 用 Leader + MText，2010+ 用 MLeader（F 方案）
 
-AutoCAD 2013 首次引入 `MLeader` 类，但实测其文字内容附着机制会产生额外的文字侧控制点。为保证三点模式和无限点模式只保留用户输入的顶点，当前五个版本统一使用 `Leader` + `MText` 两个对象拼合实现标注；2013/2015/2025 仍分别保持自己的 .NET 与 SDK 编译边界。
+AutoCAD 2007 的托管 API 尚无 `MLeader` 类，2007 版沿用 `Leader` + `MText` 两个对象拼合实现标注。2010 及以后版本统一使用 `MLeader`（F 方案三点顶点链：attach → dogleg… → text，禁用全部自动几何），文字由 MLeader 自持，无独立 MText 实体；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问以兼容 2010—2012。四个 MLeader 版本的 `Commands/` 实现（5 个文件）字节级相同。
 
 ### 2. .NET Framework 断代
 
@@ -45,7 +45,7 @@ AutoCAD 2013 首次引入 `MLeader` 类，但实测其文字内容附着机制�
 每个版本的 DLL 只能在其对应的 AutoCAD 年份区间内运行：
 
 1. **.NET 运行时不兼容** — 2007 只加载 .NET 2.0 程序集，2025 只加载 .NET 8，CLR 完全不同。
-2. **标注 API 选择** — 2013 之后虽然提供 `MLeader`，本项目仍统一选择 `Leader` + `MText`，以避免 MLeader 的文字附着控制点。
+2. **标注 API 选择** — 2010+ 统一使用 `MLeader`（F 方案），2007 无 MLeader API 使用 `Leader` + `MText`，两套实现互不通用。
 3. **程序集版本绑定** — 编译时引用的 `acdbmgd.dll` 内部接口随 CAD 版本变化，跨版本加载会抛 `MissingMethodException`。
 
 ## VBA 模块

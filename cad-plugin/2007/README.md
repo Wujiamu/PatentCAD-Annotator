@@ -18,7 +18,7 @@
 
 | 特性 | 2013+ 版 | 2007 版 |
 |------|----------|---------|
-| 引线类型 | Leader + MText（组合） | Leader + MText（组合） |
+| 引线类型 | MLeader（F 方案三点顶点链，单实体自持文字） | Leader + MText（组合；2007 无 MLeader API） |
 | 样式管理 | MLeaderStyle (PAT_STYLE) | DimStyle (PAT_DIM) |
 | JSON | Newtonsoft.Json | 内置 SimpleJson（~200 行，零依赖） |
 | LINQ | 可用 | 不可用（手动循环 + List.Sort） |
@@ -72,11 +72,12 @@ cd D:\PatentMarker
 |------|----------|------|
 | `PATPALETTE` | `BIAOZHU` / `BZ` | 打开字典面板（可停靠侧栏） |
 | `PATMARK` | `BZM` | 创建引线标注（Leader + MText） |
-| `PATCHECK` | `BZC` | 校验图纸编号与字典的一致性 |
-| `PATALIGN` | `BZA` | 对齐引线（选择模式 / 框边模式） |
+| `PATCHECK` | `BZC` | 漏标检测：报告"字典有 · 图纸未标注"清单并在面板高亮 |
+| `PATALIGN` | `BZA` | 对齐标注文字（先选标注，再选线/框基准；空间不足时自动延伸排列） |
 | `PATSELECTALL` | `BZS` | 选中所有 PAT 引线及文字（配合 Ctrl+1 改属性） |
 | `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
 | `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
+| `PATDOCTOR` | `BZD` | 插件自检并生成诊断报告 |
 
 ## 面板交互
 
@@ -88,6 +89,7 @@ cd D:\PatentMarker
 - 文字附着点按靠近文字的最后一个引线拐点相对文字的位置选择四个象限：左上/左下连接文字左上/左下，右上/右下连接文字右上/右下；同高或默认文字点重合时连接对应侧上角，不再连接侧面中点。
 - 创建时不设置原生 `Leader.Annotation`，而是把文字附着点作为最后一个 Leader 顶点，并用扩展字典保存 MText 关系，避免 AutoCAD 自动生成 hook line。
 - 提交后会重新打开 MText 复写附着点并读回实际值；`PatentMarker.log` 同时记录实际加载 DLL 路径和提交后的 Leader 顶点列表，便于核对 2007 宿主是否加载了旧部署包或产生了额外顶点。
+- 面板新增"检测/对齐"按钮，分别触发 `PATCHECK`（漏标检测，完成后高亮未标注条目）与 `PATALIGN`（选择集先行的线/框对齐，2007 版处理 Leader+MText 与独立文字）。
 - 新增条目仍通过面板“新增条目”按钮进入编辑窗口。
 - 面板“Brace/大括号”按钮启动 `PATBRACE`；`PATBRACEEDIT` 可重新点选控制点，也可直接输入高度和宽度。大括号是独立 Polyline，不参与 Leader/MText 关联。
 - 第三点决定中部尖点方向：竖向可向左/向右，横向可向上/向下；外侧肩部自动位于相反侧。

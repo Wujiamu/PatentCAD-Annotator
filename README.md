@@ -21,7 +21,7 @@ PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保�
 
 v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、右键或按 `F2` 编辑条目、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
 
-### 当前标注实现（v5.0）
+### 当前标注实现（v5.1）
 
 - 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 文字点`（文字点始终是最后一个顶点），并禁用全部自动几何（dogleg/landing/extend），绘制路径与用户点击点完全一致；2007 无 MLeader API，保持 `Leader + MText`。
 - 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
@@ -38,6 +38,9 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
 - 第三点决定中部尖点的朝向：竖向大括号可向左/向右，横向大括号可向上/向下；两端肩部平滑过渡到尖点相反侧的直干，形成 PPT 风格的曲线轮廓。
 - 大括号轮廓以 PPT `Right Brace` 为视觉基准：端部是平滑肩部，中段直干位于尖点相反侧，中心是单一真正尖锐的折角，不使用圆弧尖点或 W 型轮廓。
+- **v5.1 PATCHECK 只做漏标检测**：报告"字典有 · 图纸未标注"清单（命令行列出，面板同步以橙色 + `△` 前缀高亮），由面板"检测"按钮或 `BZC` 触发；不再检查"图纸有 · 字典无"与"重复编号"（前者在纯面板流程下不可能出现，后者是同一部件多处标同号的合法用法）。
+- **v5.1 PATALIGN 重做为"选择集先行"**：先选中要对齐的标注（支持 `BZS` 建立的 pickfirst 预选集），再指定**线**或**框**基准——线模式把文字投影到基准线；框模式把文字推到指定边外侧（间距由 config.json `align.marginToFrame` 控制）。空间不足时自动延伸：线模式沿基准线方向紧凑排列并越过线端；框模式按列向远离框的方向退位（避免各边延伸交叉重叠）。排列顺序一律为投影顺序，不按编号大小或层级重排；文字占位测量失败时退化为纯投影。移动 MLeader 文字时末顶点自动跟随（Xrecord 点链同步重写），对齐后 `PATMLVERIFY` 仍然通过。
+- 面板新增"检测"与"对齐"两个按钮，分别触发 `PATCHECK` 与 `PATALIGN`。
 
 v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)；该问题已被 F 方案解决（顶点链补全文字点），详见 [MLeader F 方案文档](docs/mleader-f-plan.md)。
 
@@ -101,11 +104,12 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 ### 本地验证状态
 
 - 五个版本均已完成本地编译；
-- 2010、2013、2015 主机契约模拟测试均为 7/7（共 21/21）；
-- 2025 测试套件为 112/112；新增 123A1/123A2 识别、紧邻分隔符和表格预处理回归用例；
+- 2007/2010/2013/2015 主机契约模拟测试均为 28/28（共 112/112）；
+- 2025 测试套件为 112/112（含 123A1/123A2 识别、紧邻分隔符和表格预处理回归用例）；
 - 五套部署包的 Word VBA 均通过真实 Word COM 批量验证：8 份样例输出与 v4 基线一致，并通过 123A1/123A2 端到端 JSON 验证；
-- 五个版本的 API 契约、结构和静态同步检查通过；
-- 本地没有完整替代真实 AutoCAD 界面交互的自动化测试，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
+- 五个版本的 API 契约、结构和静态同步检查通过（Shared 30 文件单源层 + MLeader 组 7 文件字节级一致）；
+- **v5.1 AutoCAD 2026 全量实机测试通过**（部署包 DLL 批处理）：PATDOCTOR、BZM 创建、BZC 漏标检测（含字典变更复测）、PATALIGN 线/框两模式四种空间场景、pickfirst 工作流（BZS→BZA 免提示）、PATMLVERIFY 链校验、保存-重开持久化全部通过；面板（BZ）为 GUI 组件，需交互式会话实测。
+- 本地自动化测试不能完全替代真实 AutoCAD 界面交互，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
 
 可使用根目录 `build.ps1` 辅助构建与环境检查：
 
@@ -129,6 +133,8 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | `PATCHECK` | `BZC` | 漏标检测：报告"字典有 · 图纸未标注"清单并在面板高亮 |
 | `PATALIGN` | `BZA` | 对齐标注文字（先选标注，再选线/框基准；空间不足时自动延伸排列） |
 | `PATSELECTALL` | `BZS` | 全选标注实体 |
+| `PATMLSET` | — | MLeader 脚本化开关（仅 2010/2013/2015/2025） |
+| `PATMLVERIFY` | — | MLeader 形态诊断报告：对照记录点链校验（仅 2010/2013/2015/2025） |
 | `PATBRACE` | `DAGUOHAO` | 三点创建独立参数化矢量大括号 |
 | `PATBRACEEDIT` | — | 通过控制点或输入高度/宽度调整大括号 |
 | `PATDOCTOR` | `BZD` | 插件自检并生成诊断报告（样式/设置/字典/实体扫描 + 最近错误） |
@@ -148,7 +154,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（27 个文件），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令（Leader+MText 基线，2007 编译）、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（5 个 MLeader F 方案文件，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（30 个文件），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令（Leader+MText 基线，2007 编译）、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（7 个 MLeader 组文件：F 方案创建/开关/校验 + v5.1 的 PATCHECK/PATALIGN + 全选，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。
 
 ```
 PatentCAD-Annotator/
@@ -188,6 +194,7 @@ PatentCAD-Annotator/
 
 | 版本 | 日期 | 主要变更 |
 |------|------|----------|
+| v5.1 | 2026-08-16 | PATCHECK 简化为漏标检测（面板"检测"按钮触发，未标注条目橙色 + △ 高亮）；PATALIGN v2 重做（选择集先行 → 线/框基准 → 空间不足自动延伸，排列顺序 = 投影顺序）；面板新增"检测/对齐"按钮；AutoCAD 2026 全量实机测试通过（含 pickfirst 流程与保存-重开持久化） |
 | v5.0 | 2026-08-16 | 标注引擎切换为 MLeader（F 方案三点顶点链）：2010/2013/2015/2025 四版本统一，单实体自持文字、无鱼钩、无额外附着点；新增 `PATMLSET`/`PATMLVERIFY`；AutoCAD 2026 实测 4/4 PASS；2007 保持 Leader + MText |
 | v4.9 | 2026-08-15 | Word 端接口收敛：4 个宏精简为单一入口 `ShowPatentDictPanel`，打开"专利标注字典工具"面板（手动导出按钮 + 保存时自动导出开关）；新增 `PatentDictPanel.frm`/`.frx` UserForm，5 套部署包与构建脚本纳入 .frm/.frx 校验 |
 | v4.6 | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
@@ -217,7 +224,7 @@ Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palett
 
 Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
 
-### Current annotation implementation (v5.0)
+### Current annotation implementation (v5.1)
 
 - Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → dogleg(s) → text` with the text point always appended as the LAST vertex, and all automatic geometry (dogleg/landing/extend) is disabled, so the drawn path matches the user-picked points exactly. Edition 2007 has no MLeader API and keeps `Leader + MText`.
 - v4.0 rolled MLeader back because of the "fishhook" distortion; the 2026-08-15 form probe traced the root cause to an incomplete vertex chain (attach→dogleg only). Plan F fixes it by appending the text point — see the [Plan F document](docs/mleader-f-plan.md).
@@ -233,6 +240,9 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 - `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
 - The third point controls the center-tip direction: vertical braces can point left or right, and horizontal braces can point up or down. The endpoint shoulders curve smoothly into straight stems on the side opposite the tip to form the PPT-style profile.
 - The brace profile is based on the PPT `Right Brace`: smooth endpoint shoulders, opposite-side straight stems, and one genuinely sharp center fold; it does not use a rounded tip or a W-shaped outline.
+- **v5.1 PATCHECK is an unmarked-only check**: it reports the "in dictionary but not annotated" list (in the command line, and highlighted in the palette with an orange `△` prefix), triggered by the palette Check button or `BZC`. It no longer reports "in drawing but missing from dict" (impossible in a palette-only flow) or duplicate numbers (the same part may legitimately be labelled more than once).
+- **v5.1 PATALIGN is rebuilt around a selection-first flow**: select the annotations to align first (the pickfirst set built by `BZS` is honored), then pick a **Line** or **Frame** reference — Line mode projects the texts onto the baseline; Frame mode pushes them outside the chosen side (offset from `align.marginToFrame` in config.json). When space is short it auto-extends: Line mode compacts along the baseline direction and continues past the endpoint; Frame mode spills into extra columns stepping away from the frame (so per-side extensions never cross and overlap). Ordering is always the projection order — never re-sorted by numeral value or hierarchy — and the command falls back to pure projection when text measurement fails. Moving an MLeader text drags its last vertex along (the Xrecord point chain is rewritten), so `PATMLVERIFY` still passes after aligning.
+- The palette adds `Check` and `Align` buttons that trigger `PATCHECK` and `PATALIGN` respectively.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the v4.0 log evidence and rejected fixes; the issue is resolved by Plan F (complete vertex chain). Details in the [Plan F document](docs/mleader-f-plan.md).
 
@@ -287,6 +297,8 @@ Each package contains the matching `PatentMarker.dll` and the seven shared VBA f
 | `PATCHECK` | `BZC` | Unmarked check: report "in dict but not annotated" list and highlight in palette |
 | `PATALIGN` | `BZA` | Align annotation texts (select annotations first, then a line/frame reference; auto-extend when space is short) |
 | `PATSELECTALL` | `BZS` | Select all annotation entities |
+| `PATMLSET` | — | Scriptable MLeader switches (2010/2013/2015/2025 only) |
+| `PATMLVERIFY` | — | MLeader form diagnostic: validate entities against recorded point chains (2010/2013/2015/2025 only) |
 | `PATBRACE` | `DAGUOHAO` | Create an independent parameterized vector brace from three points |
 | `PATBRACEEDIT` | — | Adjust a brace by control points or exact height/width |
 | `PATDOCTOR` | `BZD` | Self check the plugin and write a doctor report (styles, settings, dictionary, entity scan, recent errors) |
@@ -296,7 +308,8 @@ Each package contains the matching `PatentMarker.dll` and the seven shared VBA f
 - All five editions compile locally.
 - Runtime contract simulations pass 28/28 for each of 2007, 2010, 2013 and 2015 (command orchestration against strict fake hosts, including shared brace geometry and four-direction brace checks).
 - The 2025 test suite passes 112/112.
-- Structure and static synchronization checks pass for all five editions: the 29-file `cad-plugin/Shared/` canonical layer is linked by every edition csproj with no local duplicates, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
+- Structure and static synchronization checks pass for all five editions: the 30-file `cad-plugin/Shared/` canonical layer is linked by every edition csproj with no local duplicates, the 7-file MLeader command group is byte-identical across 2010/2013/2015/2025, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
+- **v5.1 full on-machine test passed on AutoCAD 2026** (batch runs against the deployment-package DLL): PATDOCTOR, BZM creation, BZC unmarked detection (including a dictionary-change re-check), PATALIGN line/frame modes across four space scenarios, the pickfirst workflow (BZS → BZA without prompts), PATMLVERIFY chain validation, and save-reopen persistence. The palette (BZ) is a GUI component and requires an interactive session.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
 
 ### License

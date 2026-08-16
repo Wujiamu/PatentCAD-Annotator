@@ -139,9 +139,10 @@ PatentMarker 2007 安装说明 (v2.12)
   CAD (AutoCAD):
     BZ  /  PATPALETTE    打开面板
     BZM /  PATMARK       标注选中对象
-    BZC /  PATCHECK      一致性检查
-    BZA /  PATALIGN      对齐标注
+    BZC /  PATCHECK      漏标检测：报告"字典有 · 图纸未标注"清单
+    BZA /  PATALIGN      对齐标注文字（先选标注，再选线/框基准）
     BZS /  PATSELECTALL  全选标注实体
+    BZD /  PATDOCTOR     插件自检并生成诊断报告
 
   Word (VBA, 在 Normal 模板):
     ShowPatentDictPanel  打开"专利标注字典工具"面板

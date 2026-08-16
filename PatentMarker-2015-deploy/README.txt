@@ -43,7 +43,8 @@ Word 端：
     （以及 CAD 内诊断报告 PatentMarker-doctor-report.txt）
   - 运行在线层前请先关闭已打开的 AutoCAD
 
-命令：BZ BZM BZC BZA BZS DAGUOHAO PATBRACE PATBRACEEDIT
+命令：BZ BZM BZC BZA BZS BZD DAGUOHAO PATBRACE PATBRACEEDIT PATMLSET PATMLVERIFY
 
+BZC 漏标检测（字典有 · 图纸未标注）；BZA 对齐标注文字（先选标注，再选线/框基准）；PATMLSET/PATMLVERIFY 为 MLeader 开关与形态诊断。
 `PATBRACE` / `DAGUOHAO` 通过顶部、底部和宽度方向三点创建独立矢量大括号；`PATBRACEEDIT` 支持重新点选控制点或输入高度/宽度调整。
 第三点决定中部尖点方向：竖向左/右、横向上/下；外侧肩部位于相反侧。

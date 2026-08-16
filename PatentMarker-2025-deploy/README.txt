@@ -62,9 +62,11 @@ Word 端：
 命令：
   BZ   (PATPALETTE)    打开字典面板
   BZM  (PATMARK)       创建引线标注
-  BZC  (PATCHECK)      校验一致性
-  BZA  (PATALIGN)      对齐引线
+  BZC  (PATCHECK)      漏标检测：报告"字典有 · 图纸未标注"清单
+  BZA  (PATALIGN)      对齐标注文字（先选标注，再选线/框基准）
   BZS  (PATSELECTALL)  全选 PAT 标注
+  BZD  (PATDOCTOR)     插件自检并生成诊断报告
+  PATMLSET / PATMLVERIFY MLeader scriptable switches and form diagnostic
   DAGUOHAO (PATBRACE)  三点创建独立矢量大括号
   PATBRACEEDIT         通过控制点或输入高度/宽度调整大括号
   第三点决定中部尖点方向：竖向左/右、横向上/下；外侧肩部位于相反侧
