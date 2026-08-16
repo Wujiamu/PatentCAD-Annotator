@@ -22,6 +22,7 @@
 - **部署包**：`package.ps1 -Apply` 重打包五套（2013/2015 经 ILRepack 合并 Newtonsoft.Json，合并后 `GetReferencedAssemblies()` 无外部引用）。
 - 验证（全部本地实际执行）：五版本编译通过；`build.ps1 -Structure` / `-Static` 通过（含 7 文件 MLeader 组 + Shared legacy 校验）；**AutoCAD 2026 批处理实测**（accoreconsole `/s` + SCR，英文 config.local.json，测试字典 `Drawing1.dict.json` 5 条目）——PATCHECK 漏标清单正确（标注 3/5，报 `#40 Bearing`、`#50 Cover`）；PATALIGN 线模式长线投影（`Aligned 3 (0 failed)` 无溢出文案）+ 短线紧凑延伸（`overflowed` 提示）；框模式宽边投影 + 窄边溢出 5 列（`4 extra column(s)`）；两种模式对齐后 `PATMLVERIFY` 全过（Run A 3/3、Run B 5/5，recorded 点链与实体状态一致）。
 - 实测备注：accoreconsole 2026 的 SCR 参数为 `/s <script>`（绝对路径），非旧版 `/b`；SCR 中窗口选择对 MLeader 实测失效（完全包含仍 0 命中），改用 `ALL` 关键字选集。
+- **全量实机复测（2026-08-16，AutoCAD 2026 + 部署包 DLL `PatentMarker-2025-deploy\PatentMarker.dll`）**：PATDOCTOR `PASS 4 / FAIL 0 / SKIP 2`（报告写入 DLL 旁）；BZM 连续创建 5 条；BZC 全标注时输出 "All dict entries are annotated"；PATALIGN 线模式长线投影 / 短线溢出、框模式宽边投影 / 窄边 4 列溢出全部正确；**pickfirst 流程实测通过**——BZS 建立预选集后 PATALIGN 免提示直接对齐 5 条；PATMLVERIFY 两轮 5/5；SAVEAS 后重开图纸，字典增补 `#60 Gear` 后 BZC 正确报漏标、链持久化校验仍 5/5 通过。局限：accoreconsole 不加载 `acmgd`，BZ 面板需交互式 GUI 会话实测。
 
 ---
 
