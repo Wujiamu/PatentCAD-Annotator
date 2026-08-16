@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PatentMarker · CAD 端字典编辑闭环 动态演示 v5</title>
+<title>PatentMarker · Word ↔ dict.json ↔ CAD 全链路动态演示 v5.1</title>
 <style>
 :root{
-  --bg0:#f5f6f8; --bg1:#ecedf0; --card:#ffffff; --card2:#f8f9fa;
-  --ink:#1a1a2e; --mut:#64748b; --dim:#94a3b8;
-  --cy:#2563eb; --cy2:#1d4ed8; --am:#f59e0b; --am2:#d97706;
-  --ok:#16a34a; --bad:#dc2626;
-  --line:rgba(0,0,0,.08);
+  --bg0:#0b0f16; --bg1:#0d1220; --card:#141a26; --card2:#10151f;
+  --ink:#e8edf5; --mut:#8b98ab; --dim:#5c6878;
+  --cy:#4da3ff; --cy2:#2f7fe0; --am:#ffb454; --am2:#e29a3c;
+  --ok:#3fb950; --bad:#f85149;
+  --line:rgba(255,255,255,.09);
   --sans:"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
   --mono:"Cascadia Code",Consolas,"Courier New",monospace;
 }
@@ -22,8 +22,8 @@ body{
 }
 #gridlayer{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
   background-image:
-    linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
   background-size:44px 44px;
 }
 #vig{position:fixed;inset:0;pointer-events:none;z-index:0;display:none}
@@ -31,7 +31,7 @@ body{
 
 #topbar{height:60px;flex:0 0 60px;display:flex;align-items:center;gap:16px;
   padding:0 24px;border-bottom:1px solid var(--line);
-  background:rgba(255,255,255,.92)}
+  background:rgba(12,16,24,.92)}
 #logo{width:34px;height:34px;flex:0 0 34px}
 .tb-title{display:flex;flex-direction:column;line-height:1.15}
 .tb-title b{font-size:19px;font-weight:800;letter-spacing:.06em}
@@ -40,8 +40,8 @@ body{
 .tb-badges{display:flex;gap:8px;margin-left:8px}
 .badge{font-family:var(--mono);font-size:10.5px;color:var(--mut);
   border:1px solid var(--line);border-radius:999px;padding:3px 10px;
-  background:rgba(0,0,0,.03);letter-spacing:.05em;transition:.25s}
-.badge:hover{color:var(--cy);border-color:rgba(37,99,235,.4);transform:translateY(-1px)}
+  background:rgba(255,255,255,.03);letter-spacing:.05em;transition:.25s}
+.badge:hover{color:var(--cy);border-color:rgba(77,163,255,.4);transform:translateY(-1px)}
 .badge.amber{color:var(--am)}
 #tbRight{margin-left:auto;display:flex;align-items:center;gap:18px}
 #sceneCounter{font-family:var(--mono);font-size:13px;color:var(--mut)}
@@ -50,46 +50,46 @@ body{
 
 #chapters{height:46px;flex:0 0 46px;display:flex;align-items:center;gap:8px;
   padding:0 24px;overflow-x:auto;border-bottom:1px solid var(--line);
-  background:#fff;scrollbar-width:none}
+  background:#0e131d;scrollbar-width:none}
 #chapters::-webkit-scrollbar{display:none}
 .chip{flex:0 0 auto;display:flex;align-items:center;gap:7px;cursor:pointer;
   font-size:12px;color:var(--mut);border:1px solid var(--line);border-radius:999px;
-  padding:5px 13px 5px 9px;background:rgba(0,0,0,.02);transition:.22s;font-family:var(--sans)}
+  padding:5px 13px 5px 9px;background:rgba(255,255,255,.02);transition:.22s;font-family:var(--sans)}
 .chip .ci{font-family:var(--mono);font-size:10px;color:var(--dim);
-  background:rgba(0,0,0,.05);border-radius:999px;padding:1px 6px;transition:.22s}
-.chip:hover{color:var(--ink);border-color:rgba(37,99,235,.35);transform:translateY(-1px)}
-.chip.on{color:var(--cy);border-color:rgba(37,99,235,.5);background:rgba(37,99,235,.08)}
-.chip.on .ci{color:#fff;background:var(--cy)}
+  background:rgba(255,255,255,.06);border-radius:999px;padding:1px 6px;transition:.22s}
+.chip:hover{color:var(--ink);border-color:rgba(77,163,255,.35);transform:translateY(-1px)}
+.chip.on{color:var(--cy);border-color:rgba(77,163,255,.5);background:rgba(77,163,255,.1)}
+.chip.on .ci{color:#0b0f16;background:var(--cy)}
 
 #stageOuter{flex:1;display:flex;align-items:center;justify-content:center;padding:16px;min-height:0;position:relative}
 #stage{position:relative;width:1280px;height:720px;flex:0 0 auto;overflow:hidden;
-  border-radius:16px;border:1px solid rgba(0,0,0,.06);
-  background:#e8ecf2;
-  box-shadow:0 8px 32px rgba(0,0,0,.08);
+  border-radius:16px;border:1px solid rgba(255,255,255,.07);
+  background:#0d1420;
+  box-shadow:0 10px 40px rgba(0,0,0,.5);
   transform-origin:top left;cursor:default}
 #stageDrag{position:absolute;top:0;left:0;right:0;height:22px;z-index:100;
-  cursor:grab;border-radius:16px 16px 0 0;background:rgba(0,0,0,.02);
+  cursor:grab;border-radius:16px 16px 0 0;background:rgba(255,255,255,.02);
   display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s}
-#stageDrag:hover{opacity:1;background:rgba(0,0,0,.05)}
-#stageDrag::after{content:"\2630";font-size:11px;color:rgba(0,0,0,.25);letter-spacing:2px}
-#stageDrag.active{cursor:grabbing;opacity:1;background:rgba(37,99,235,.08)}
+#stageDrag:hover{opacity:1;background:rgba(255,255,255,.06)}
+#stageDrag::after{content:"\2630";font-size:11px;color:rgba(255,255,255,.3);letter-spacing:2px}
+#stageDrag.active{cursor:grabbing;opacity:1;background:rgba(77,163,255,.12)}
 #stageResize{position:absolute;bottom:0;right:0;width:22px;height:22px;z-index:100;
   cursor:nwse-resize;opacity:0;transition:opacity .2s;display:flex;align-items:center;justify-content:center}
 #stageResize:hover{opacity:1}
 #stageResize::after{content:"";width:10px;height:10px;
-  border-right:2px solid rgba(0,0,0,.3);border-bottom:2px solid rgba(0,0,0,.3)}
+  border-right:2px solid rgba(255,255,255,.35);border-bottom:2px solid rgba(255,255,255,.35)}
 #stageGrid{position:absolute;inset:0;pointer-events:none;
   background-image:
-    linear-gradient(rgba(0,0,0,.03) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,0,0,.03) 1px,transparent 1px);
+    linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
   background-size:40px 40px}
-#stageFrame{position:absolute;inset:10px;border:1px solid rgba(0,0,0,.04);
+#stageFrame{position:absolute;inset:10px;border:1px solid rgba(255,255,255,.05);
   border-radius:10px;pointer-events:none}
 
 .win{position:absolute;display:none;flex-direction:column;border-radius:6px;overflow:hidden;
-  box-shadow:0 4px 24px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.06);
-  border:1px solid rgba(0,0,0,.10);transition:box-shadow .3s}
-.win.focus{box-shadow:0 8px 36px rgba(0,0,0,.14), 0 0 0 2px rgba(37,99,235,.18), 0 1px 4px rgba(0,0,0,.06)}
+  box-shadow:0 8px 32px rgba(0,0,0,.55), 0 1px 4px rgba(0,0,0,.4);
+  border:1px solid rgba(0,0,0,.5);transition:box-shadow .3s}
+.win.focus{box-shadow:0 12px 44px rgba(0,0,0,.6), 0 0 0 2px rgba(77,163,255,.35), 0 1px 4px rgba(0,0,0,.4)}
 .wtbar{height:30px;flex:0 0 30px;display:flex;align-items:center;gap:8px;padding:0 6px 0 10px;
   font-size:12px;user-select:none}
 .wtbar .wt{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -192,13 +192,15 @@ body{
 #wordSaveState{position:absolute;right:14px;bottom:12px;font-size:10.5px;color:#2c6e3a;
   background:#e6f5e8;border:1px solid #bfe0c4;border-radius:3px;padding:3px 9px;opacity:0;transition:.3s}
 
-#win-json{width:430px;height:390px;background:#f4f2ec}
-#win-json .wtbar{background:linear-gradient(180deg,#f4f2ec,#dcd8cc);color:#3a3a34;border-bottom:1px solid #b8b4a6}
-#term-json{flex:1;background:#fffdf6;color:#333;font-family:var(--mono);font-size:12.5px;
+#win-json{width:430px;height:390px;background:#10151f}
+#win-json .wtbar{background:linear-gradient(180deg,#2b3140,#1d2230);color:#dfe6f2;border-bottom:1px solid #12151f}
+#win-json .wtbar .wt{font-family:var(--mono);font-size:11.5px}
+#win-json .wbtns i{color:#aab4c8}
+#term-json{flex:1;background:#0e1117;color:#c9d4e3;font-family:var(--mono);font-size:12.5px;
   line-height:1.7;padding:10px 14px;overflow-y:auto;scrollbar-width:none}
 #term-json::-webkit-scrollbar{width:0;height:0;display:none}
-.j-k{color:#0e7490}.j-s{color:#b45309}.j-n{color:#15803d}.j-p{color:#6b7280}
-.j-hl{background:#fef3c7;display:block}
+.j-k{color:#59b0ff}.j-s{color:#ffb454}.j-n{color:#57d38c}.j-p{color:#6b7686}
+.j-hl{background:rgba(255,180,84,.16);display:block}
 
 #win-vbe{width:520px;height:400px;background:#d4d0c8}
 #win-vbe .wtbar{background:linear-gradient(180deg,#5a78d0,#33539f);color:#fff}
@@ -211,6 +213,8 @@ body{
   background:#f0c33c;border:1px solid #b08a1e;border-radius:1px}
 #vbeTree .root{font-weight:700;padding-left:2px}
 #vbeTree .root::before{background:#7aa7e8;border-color:#3c6cb0}
+#vbeTree .grp{color:#8a8678;font-size:10px;padding-left:8px}
+#vbeTree .grp::before{background:#d8d4c6;border-color:#a8a496}
 #vbeCode{flex:1;background:#fff;font-family:var(--mono);font-size:11px;line-height:1.85;
   padding:8px 12px;color:#222;overflow:hidden}
 #vbeCode .kw{color:#0000cc}#vbeCode .cm{color:#008000}#vbeCode .st{color:#a31515}
@@ -219,8 +223,8 @@ body{
   justify-content:center;opacity:0;pointer-events:none;transition:opacity .6s;z-index:20}
 #ov0.show,#ovEnd.show{opacity:1}
 .flowRow{display:flex;align-items:stretch;gap:0}
-.fnode{width:270px;background:rgba(255,255,255,.96);border:1px solid rgba(0,0,0,.08);border-radius:12px;
-  padding:20px 22px;box-shadow:0 8px 28px rgba(0,0,0,.08);
+.fnode{width:270px;background:rgba(20,26,38,.96);border:1px solid rgba(255,255,255,.09);border-radius:12px;
+  padding:20px 22px;box-shadow:0 10px 30px rgba(0,0,0,.45);
   opacity:0;transform:translateY(22px);transition:.6s cubic-bezier(.2,.8,.3,1.1)}
 .fnode.in{opacity:1;transform:none}
 .fnode .fic{font-size:24px;margin-bottom:10px;display:block}
@@ -240,7 +244,7 @@ body{
 @keyframes flowdash{to{background-position:-30px 0}}
 .farrow span{font-size:10.5px;color:var(--mut);margin-bottom:8px;text-align:center;line-height:1.5}
 #ov0note{margin-top:34px;font-size:12.5px;color:var(--mut);opacity:0;transition:.6s .3s;
-  border:1px dashed rgba(0,0,0,.15);border-radius:999px;padding:8px 22px;background:rgba(255,255,255,.8)}
+  border:1px dashed rgba(255,255,255,.18);border-radius:999px;padding:8px 22px;background:rgba(16,21,32,.85)}
 #ov0note.in{opacity:1}
 #ov0note b{color:var(--am)}
 #ov0title{font-size:13px;letter-spacing:.3em;color:var(--dim);margin-bottom:26px;opacity:0;transition:.6s}
@@ -253,8 +257,8 @@ body{
 #endCard .sub{font-size:13px;color:var(--mut);letter-spacing:.2em;margin-bottom:30px}
 #endGrid{display:grid;grid-template-columns:repeat(2,minmax(300px,360px));gap:10px 16px;text-align:left}
 .endItem{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--ink);
-  background:rgba(255,255,255,.92);border:1px solid rgba(0,0,0,.08);border-radius:9px;padding:11px 15px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04);opacity:0;transform:translateY(14px);transition:.5s}
+  background:rgba(20,26,38,.94);border:1px solid rgba(255,255,255,.09);border-radius:9px;padding:11px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);opacity:0;transform:translateY(14px);transition:.5s}
 .endItem.in{opacity:1;transform:none}
 .endItem .ck{color:var(--ok);font-weight:800;font-size:14px;flex:0 0 auto}
 .endItem b{color:var(--am);font-weight:700}
@@ -262,49 +266,49 @@ body{
 #endStamp.in{opacity:1}
 
 #caption{position:absolute;left:28px;bottom:10px;max-width:560px;z-index:50;
-  background:rgba(255,255,255,.97);backdrop-filter:blur(9px);
-  border:1px solid rgba(0,0,0,.06);border-left:4px solid var(--cy);
-  border-radius:10px;padding:10px 18px 11px;box-shadow:0 4px 20px rgba(0,0,0,.08);
+  background:rgba(14,19,29,.96);
+  border:1px solid rgba(255,255,255,.08);border-left:4px solid var(--cy);
+  border-radius:10px;padding:10px 18px 11px;box-shadow:0 6px 24px rgba(0,0,0,.45);
   opacity:0;transform:translateY(10px);transition:.45s cubic-bezier(.2,.8,.3,1.1)}
 #caption.show{opacity:1;transform:none}
-#caption .tag{display:inline-block;font-size:12px;letter-spacing:.14em;color:#fff;
+#caption .tag{display:inline-block;font-size:12px;letter-spacing:.14em;color:#0b0f16;
   background:var(--cy);border-radius:999px;padding:2px 12px;font-weight:700;margin-bottom:6px}
-#caption .tag.am{background:var(--am);color:#fff}
-#caption p{font-size:14px;line-height:1.6;color:#1e293b}
+#caption .tag.am{background:var(--am);color:#241503}
+#caption p{font-size:14px;line-height:1.6;color:#dbe4f0}
 #caption p b{color:var(--cy);font-weight:700}
 #caption p i{font-style:normal;color:var(--am);font-weight:700}
-#caption p code{font-family:var(--mono);font-size:12px;color:var(--cy);background:rgba(37,99,235,.08);
+#caption p code{font-family:var(--mono);font-size:12px;color:var(--cy);background:rgba(77,163,255,.12);
   border-radius:3px;padding:0 5px}
 
 #cursorEl{position:absolute;width:22px;height:22px;z-index:90;pointer-events:none;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));display:none}
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.45));display:none}
 .ripple{position:absolute;width:14px;height:14px;border:2px solid var(--cy);border-radius:50%;
   z-index:89;pointer-events:none;animation:rip .55s ease-out forwards}
 @keyframes rip{from{transform:translate(-50%,-50%) scale(.4);opacity:.95}
   to{transform:translate(-50%,-50%) scale(3.2);opacity:0}}
 #keybadge{position:absolute;z-index:91;pointer-events:none;display:none;
-  font-family:var(--mono);font-size:12px;color:#fff;background:var(--am);
-  border-radius:6px;padding:4px 12px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.2);
+  font-family:var(--mono);font-size:12px;color:#241503;background:var(--am);
+  border-radius:6px;padding:4px 12px;font-weight:700;box-shadow:0 4px 14px rgba(0,0,0,.35);
   animation:kpop .25s cubic-bezier(.2,.8,.3,1.4)}
 @keyframes kpop{from{transform:scale(.6);opacity:0}}
 
 #dock{height:88px;flex:0 0 88px;display:flex;align-items:center;gap:18px;padding:0 30px;
-  border-top:1px solid var(--line);background:rgba(255,255,255,.92)}
-.dbtn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(0,0,0,.1);background:#fff;
+  border-top:1px solid var(--line);background:rgba(12,16,24,.92)}
+.dbtn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.12);background:#161c29;
   color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:.22s;font-size:15px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.dbtn:hover{border-color:rgba(37,99,235,.4);color:var(--cy);transform:translateY(-2px);
-  box-shadow:0 4px 14px rgba(37,99,235,.12)}
+  transition:.22s;font-size:15px;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.dbtn:hover{border-color:rgba(77,163,255,.45);color:var(--cy);transform:translateY(-2px);
+  box-shadow:0 4px 14px rgba(77,163,255,.18)}
 #bPlay{width:56px;height:56px;background:linear-gradient(145deg,var(--cy),var(--cy2));
-  color:#fff;border:none;font-size:18px;box-shadow:0 4px 16px rgba(37,99,235,.25)}
-#bPlay:hover{color:#fff;box-shadow:0 6px 24px rgba(37,99,235,.35)}
+  color:#fff;border:none;font-size:18px;box-shadow:0 4px 16px rgba(77,163,255,.3)}
+#bPlay:hover{color:#fff;box-shadow:0 6px 24px rgba(77,163,255,.45)}
 #progWrap{flex:1;max-width:640px;display:flex;align-items:center;gap:14px}
-#prog{flex:1;height:10px;background:#e2e5ea;border-radius:5px;position:relative;cursor:pointer}
+#prog{flex:1;height:10px;background:#1b2230;border-radius:5px;position:relative;cursor:pointer}
 #progFill{height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,var(--cy),var(--am));
   position:relative}
 #progFill::after{content:"";position:absolute;right:-7px;top:-4px;width:18px;height:18px;
-  border-radius:50%;background:#fff;border:3px solid var(--cy);box-shadow:0 0 10px rgba(37,99,235,.3)}
-.ptick{position:absolute;top:-2px;width:2px;height:14px;background:rgba(0,0,0,.15);border-radius:1px}
+  border-radius:50%;background:#0d1420;border:3px solid var(--cy);box-shadow:0 0 10px rgba(77,163,255,.4)}
+.ptick{position:absolute;top:-2px;width:2px;height:14px;background:rgba(255,255,255,.2);border-radius:1px}
 #timeNow{font-family:var(--mono);font-size:14px;color:var(--mut);min-width:100px;text-align:right}
 #dockRight{margin-left:auto;display:flex;align-items:center;gap:10px}
 #liveDot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);
@@ -339,9 +343,10 @@ body{
 .conflict-side small{display:block;color:#777268;line-height:1.55}.conflict-arrow{align-self:center;text-align:center;color:#c48613;font-size:20px}
 .conflict-badge{display:inline-block;padding:2px 7px;border-radius:9px;background:#fde9b8;color:#835600;font-weight:700;margin-bottom:6px}
 #pasteDlg{left:35px;top:31px;width:520px}#editDlg{left:122px;top:72px;width:350px}#conflictDlg{left:52px;top:48px;width:500px}
-#palBtnResolve.attn{background:linear-gradient(180deg,#ffe7a4,#f1bd3f);border-color:#b77a00;color:#6c4500;box-shadow:0 0 0 2px rgba(245,158,11,.2)}
 .entity-flash{animation:entityFlash .65s ease-in-out 3}
 @keyframes entityFlash{50%{fill:#fbbf24}}
+.brace-flash{animation:braceFlash .65s ease-in-out 3}
+@keyframes braceFlash{50%{stroke:#fbbf24}}
 </style>
 </head>
 <body>
@@ -349,8 +354,8 @@ body{
 <div id="app">
   <header id="topbar">
     <svg id="logo" viewBox="0 0 34 34" fill="none">
-      <circle cx="17" cy="17" r="14.5" stroke="#2563eb" stroke-width="2"/>
-      <path d="M17 4v7M17 23v7M4 17h7M23 17h7" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="17" cy="17" r="14.5" stroke="#4da3ff" stroke-width="2"/>
+      <path d="M17 4v7M17 23v7M4 17h7M23 17h7" stroke="#4da3ff" stroke-width="2" stroke-linecap="round"/>
       <circle cx="17" cy="17" r="4" fill="#fbbf24"/>
       <path d="M24 10l4-4" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
     </svg>
@@ -361,10 +366,10 @@ body{
     <div class="tb-badges">
       <span class="badge">AutoCAD 2007-2026</span>
       <span class="badge">5 Versions</span>
-      <span class="badge amber">插件 v4.0 · 编辑闭环</span>
+      <span class="badge amber">插件 v5.1 · 全链路</span>
     </div>
     <div id="tbRight">
-      <span id="sceneCounter"><b>01</b> / 11</span>
+      <span id="sceneCounter"><b>01</b> / 17</span>
       <span id="clock">--:--:--</span>
     </div>
   </header>
@@ -376,7 +381,7 @@ body{
       <div id="stageGrid"></div><div id="stageFrame"></div>
 
       <div class="win" id="win-term">
-        <div class="wtbar"><span class="wt" id="termTitle">install.vbs</span>
+        <div class="wtbar"><span class="wt" id="termTitle">install-2015.vbs</span>
           <span class="wbtns"><i>─</i><i>□</i><i>✕</i></span></div>
         <div id="term-main"></div>
       </div>
@@ -413,8 +418,9 @@ body{
                 <circle cx="280" cy="150" r="16" stroke-width="1.2"/>
               </g>
               <g id="gSelBox" style="display:none">
-                <rect id="selRect" x="0" y="0" width="0" height="0" fill="rgba(37,99,235,.07)" stroke="#2563eb" stroke-width="1" stroke-dasharray="5 4"/>
+                <rect id="selRect" x="0" y="0" width="0" height="0" fill="rgba(77,163,255,.08)" stroke="#4da3ff" stroke-width="1" stroke-dasharray="5 4"/>
               </g>
+              <line id="alignLine" x1="140" y1="95" x2="520" y2="95" stroke="#4da3ff" stroke-width="1" stroke-dasharray="7 5" style="display:none"/>
               <g id="ld0" style="opacity:0">
                 <path id="ldP0" d="M300,330 C318,352 340,366 352,369 L366,369" fill="none" stroke="#f5f5f5" stroke-width="1.5"/>
                 <path id="ldA0" d="M0,0 L-9,3.4 L-9,-3.4 Z" fill="#f5f5f5" style="opacity:0"/>
@@ -439,6 +445,13 @@ body{
                 <circle cx="241" cy="269" r="2.4" fill="#f5f5f5" id="ldD3" style="opacity:0"/>
                 <text id="ldT3" x="298" y="304" fill="#f5f5f5" font-size="15" font-family="Consolas,monospace" style="opacity:0">4</text>
               </g>
+              <g id="gBrace" style="opacity:0">
+                <path id="bracePath" d="M505,150 C505,154 502,169 497,169 L497,201 C497,222 517,226 523,230 C517,234 497,238 497,261 L497,291 C502,291 505,306 505,310" fill="none" stroke="#f5f5f5" stroke-width="1.6"/>
+                <circle id="gripT" cx="505" cy="150" r="3.2" fill="#0d1420" stroke="#4da3ff" stroke-width="1.4" style="display:none"/>
+                <circle id="gripB" cx="505" cy="310" r="3.2" fill="#0d1420" stroke="#4da3ff" stroke-width="1.4" style="display:none"/>
+                <circle id="gripW" cx="523" cy="230" r="3.2" fill="#0d1420" stroke="#4da3ff" stroke-width="1.4" style="display:none"/>
+              </g>
+              <text id="toText" x="445" y="322" fill="#f5f5f5" font-size="15" font-family="Consolas,monospace" text-decoration="underline" style="opacity:0">5</text>
               <g id="gCross" style="display:none" stroke="#d8d8d8" stroke-width="0.8" opacity="0.85">
                 <line id="chV" x1="0" y1="0" x2="0" y2="458"/>
                 <line id="chH" x1="0" y1="0" x2="638" y2="0"/>
@@ -473,12 +486,12 @@ body{
             </div>
           </div>
           <div class="cad-modal" id="conflictDlg">
-            <div class="modal-title">Word / CAD 字典冲突裁决 <span>×</span></div>
+            <div class="modal-title">冲突裁决 <span>×</span></div>
             <div class="modal-body">
               <span class="conflict-badge">检测到 Word 已覆盖 CAD 修改</span>
-              <div>CAD 修改前已自动生成最新备份，请选择本次采用的版本：</div>
+              <div>Word 端已覆盖 CAD 的修改。CAD 原版已备份为:<br>patent-sample.dict.json.word-20260816-142608.bak<br><br>请选择保留哪一版:</div>
               <div class="conflict-card">
-                <div class="conflict-side"><b>Word 版 · 当前文件</b><small>#3 伺服电机<br>#12 防护罩<br>保存于 14:26:08</small></div>
+                <div class="conflict-side"><b>Word 版 · 当前文件</b><small>#3 电机<br>#12 防护罩<br>保存于 14:26:08</small></div>
                 <div class="conflict-arrow">⇄</div>
                 <div class="conflict-side"><b>CAD 版 · 自动备份</b><small>#3A 伺服电机<br>#12 防护罩<br>修改于 14:25:41</small></div>
               </div>
@@ -505,7 +518,7 @@ body{
       </div>
 
       <div class="win" id="win-json">
-        <div class="wtbar"><span class="wt">patent-sample.dict.json - 记事本</span>
+        <div class="wtbar"><span class="wt" id="jsonTitle">patent-sample.dict.json - 记事本</span>
           <span class="wbtns"><i>─</i><i>□</i><i>✕</i></span></div>
         <div id="term-json"></div>
       </div>
@@ -516,14 +529,18 @@ body{
         <div class="vbe-body">
           <div id="vbeTree">
             <div class="nd root in">Normal</div>
+            <div class="nd grp in">模块</div>
             <div class="nd" data-m="1">Patterns</div>
             <div class="nd" data-m="2">DictModel</div>
             <div class="nd" data-m="3">JsonWriter</div>
             <div class="nd" data-m="4">PatentExtractor</div>
             <div class="nd" data-m="5">AutoExport</div>
-            <div class="nd" data-m="6">clsSaveHook</div>
+            <div class="nd grp in">窗体</div>
+            <div class="nd" data-m="6">PatentDictPanel</div>
+            <div class="nd grp in">类模块</div>
+            <div class="nd" data-m="7">clsSaveHook</div>
           </div>
-          <div id="vbeCode"><span class="cm">' clsSaveHook — 保存钩子</span><br><span class="kw">Private Sub</span> App_DocumentBeforeSave(...)<br>&nbsp;&nbsp;<span class="kw">Call</span> ExportDict <span class="cm">' → dict.json</span><br><span class="kw">End Sub</span></div>
+          <div id="vbeCode"><span class="cm">' clsSaveHook — 保存钩子</span><br><span class="kw">Private Sub</span> App_DocumentBeforeSave(...)<br>&nbsp;&nbsp;<span class="kw">Call</span> ExportDict <span class="cm">' → dict.json</span><br><span class="kw">End Sub</span><br><br><span class="cm">' 唯一入口宏（Word 宏列表仅暴露此项）</span><br><span class="kw">Public Sub</span> ShowPatentDictPanel()<br>&nbsp;&nbsp;PatentDictPanel.Show <span class="cm">' 手动导出 / 自动导出</span><br><span class="kw">End Sub</span></div>
         </div>
       </div>
 
@@ -532,14 +549,14 @@ body{
         <div class="flowRow">
           <div class="fnode cy" id="fn1"><span class="fic">📄</span><h4>Word 专利说明书</h4>
             <p>1底座；2支架；3电机；<br>4齿轮；5轴承；…</p></div>
-          <div class="farrow" id="fa1"><span>VBA v4.0 自动提取<br>（多格式识别·保存即导出）</span><div class="aline"></div></div>
+          <div class="farrow" id="fa1"><span>VBA 自动提取<br>（多格式识别·保存即导出）</span><div class="aline"></div></div>
           <div class="fnode am" id="fn2"><span class="fic">{ }</span><h4>dict.json</h4>
-            <p>11 条 · 结构化字典<br>number / name / occurrences</p></div>
+            <p>12 条 · 结构化字典<br>number / name / occurrences</p></div>
           <div class="farrow am" id="fa2"><span>双向写回 + 自动重载<br>（冲突备份与裁决）</span><div class="aline"></div></div>
           <div class="fnode gr" id="fn3"><span class="fic">⌗</span><h4>AutoCAD</h4>
-            <p>标注 + 字典编辑<br>粘贴识别 / 改号联动</p></div>
+            <p>标注 + 大括号 + 自检<br>BZM / PATBRACE / BZD</p></div>
         </div>
-        <div id="ov0note">两步安装：<b>① 运行安装脚本</b> → 注册表自动加载 + LSP 兜底 &nbsp;·&nbsp; <b>② VBA 模块导入</b> Normal 全局模板</div>
+        <div id="ov0note">两步安装：<b>① 运行安装脚本</b> → 注册表自动加载 + LSP 兜底 &nbsp;·&nbsp; <b>② VBA 导入</b> Normal 全局模板 &nbsp;·&nbsp; 插件加载失败时用 <b>doctor-&lt;版本&gt;</b> 脚本体检</div>
       </div>
 
       <div id="ovEnd">
@@ -547,16 +564,16 @@ body{
           <h2>Patent<i>Marker</i> · 就绪</h2>
           <div class="sub">从 WORD 到 CAD 附图标记 · 全链路自动化</div>
           <div id="endGrid">
-            <div class="endItem"><span class="ck">✓</span><span>两步安装：<b>安装脚本</b>注册表自动加载 + LSP 兜底</span></div>
-            <div class="endItem"><span class="ck">✓</span><span><b>VBA 安装脚本</b>导入 6 个模块 → Normal 全局模板</span></div>
-            <div class="endItem"><span class="ck">✓</span><span>NETLOAD / 注册表加载 · 读取 dict.json <b>11 条</b></span></div>
-            <div class="endItem"><span class="ck">✓</span><span>面板 v4.0：<b>三点默认 / 双击标注 / 右键或 F2 编辑</b></span></div>
-            <div class="endItem"><span class="ck">✓</span><span><b>粘贴识别</b>：预览编辑 / 覆盖整个字典 / 按编号合并</span></div>
-            <div class="endItem"><span class="ck">✓</span><span>CAD 改号自动更新图纸 PAT 引线文字并 <b>Regen</b></span></div>
-            <div class="endItem"><span class="ck">✓</span><span>Word 覆盖前自动备份 · <b>Word / CAD 三选一裁决</b></span></div>
-            <div class="endItem"><span class="ck">✓</span><span>BZC 检查 · BZA 对齐 · BZS 全选（Leader + MText）</span></div>
+            <div class="endItem"><span class="ck">✓</span><span>两步安装：<b>install-&lt;版本&gt;.vbs/.ps1</b> 注册表自动加载 + LSP 兜底</span></div>
+            <div class="endItem"><span class="ck">✓</span><span><b>VBA 7 模块</b>（5 .bas + 面板 .frm + cls）→ Normal 全局模板，入口 ShowPatentDictPanel</span></div>
+            <div class="endItem"><span class="ck">✓</span><span>NETLOAD / 注册表加载 · 读取 dict.json <b>12 条</b> · 面板 2s 自动刷新</span></div>
+            <div class="endItem"><span class="ck">✓</span><span>面板开关：<b>引线 / 下划线 / 箭头 / 线型 / 点数</b> · 粘贴识别 / 改号联动</span></div>
+            <div class="endItem"><span class="ck">✓</span><span>BZM：MLeader F 方案（2010+）/ Leader+MText（2007）· <b>三点默认 / 无限拐点</b></span></div>
+            <div class="endItem"><span class="ck">✓</span><span>BZC v2 漏标检测 · 面板<b>橙色 △ 高亮</b>未标注条目</span></div>
+            <div class="endItem"><span class="ck">✓</span><span>BZA v2 选集先行 · 线/框基准 · <b>溢出补列</b> · BZS 全选</span></div>
+            <div class="endItem"><span class="ck">✓</span><span><b>PATBRACE</b> 参数化大括号 · <b>BZD</b> 自诊断体检 · Word / CAD 裁决</span></div>
           </div>
-          <div id="endStamp">PatentMarker v4.0 · AutoCAD 2007-2026 · 5 版本全覆盖</div>
+          <div id="endStamp">PatentMarker v5.1 · AutoCAD 2007-2026 · 5 版本全覆盖</div>
         </div>
       </div>
 
@@ -582,885 +599,1104 @@ var lerp=function(a,b,p){return a+(b-a)*p};
 var ease=function(p){return p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2};
 var fmt=function(ms){var s=Math.floor(ms/1000);return (s<600?('0'+Math.floor(s/60)):Math.floor(s/60))+':'+('0'+(s%60)).slice(-2)};
 var esc=function(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
-var setHtml=function(el,h){if(el._c!==h){el._c=h;el.innerHTML=h}};
-
-var DICT=[
- {n:'1',name:'底座',occ:5},{n:'2',name:'支架',occ:3},{n:'3',name:'电机',occ:4},
- {n:'4',name:'齿轮',occ:2},{n:'5',name:'轴承',occ:6},{n:'6',name:'弹簧',occ:1},
- {n:'7',name:'外壳',occ:2},{n:'8',name:'螺栓',occ:8},{n:'9',name:'传感器',occ:3},
- {n:'10',name:'传动轴',occ:4},{n:'11',name:'联轴器',occ:1}
-];
 
 var WINS=['win-term','win-cad','win-word','win-json','win-vbe'];
-var CAD_DIALOGS=['pasteDlg','editDlg','conflictDlg'];
-var TBMAP={'win-term':0,'win-cad':1,'win-word':2,'win-json':3,'win-vbe':4};
-var zTop=20, activeWin=null;
-
-function showWin(id,x,y,z,scale){
-  var w=$(id); w.style.display='flex'; w.style.left=x+'px'; w.style.top=y+'px';
-  w.style.zIndex=z||(++zTop);
-  w.style.transform=scale?('scale('+scale+')'):''; w.style.transformOrigin='top left';
+var WINP={
+  'win-term':{x:240,y:105},'win-cad':{x:40,y:80},'win-word':{x:340,y:145},
+  'win-json':{x:810,y:215},'win-vbe':{x:700,y:150}
+};
+function showWin(id){var e=$(id);e.style.display='flex';e.style.left=WINP[id].x+'px';e.style.top=WINP[id].y+'px'}
+function hideWin(id){$(id).style.display='none'}
+function setWinPos(id,x,y){WINP[id].x=x;WINP[id].y=y;var e=$(id);if(e.style.display!=='none'){e.style.left=x+'px';e.style.top=y+'px'}}
+function focusWin(id){for(var i=0;i<WINS.length;i++){var e=$(WINS[i]);e.classList.remove('focus')}$(id).classList.add('focus')}
+function hideAllWins(){for(var i=0;i<WINS.length;i++)hideWin(WINS[i])}
+function showCadDialog(id){$(id).classList.add('show')}
+function hideCadDialog(id){$(id).classList.remove('show')}
+function hideCadDialogs(){hideCadDialog('pasteDlg');hideCadDialog('editDlg');hideCadDialog('conflictDlg')}
+function setTermTitle(s){$('termTitle').textContent=s}
+function resetWord(){
+  $('wordM3').textContent='3电机';$('wordM3').style.fontWeight='';
+  $('wordEdit').textContent='';$('wordSaveState').style.opacity='0';
 }
-function focusWin(id){
-  var w=$(id); w.style.zIndex=++zTop;
-  if(activeWin&&activeWin!==w)activeWin.classList.remove('focus');
-  w.classList.add('focus'); activeWin=w;
+function vp(sx,sy){return {x:190.8+sx*0.969,y:158+sy*0.969}}
+function setCross(v,x,y){
+  var g=$('gCross');
+  if(!v||!scene.cross){g.style.display='none';return}
+  g.style.display='';
+  var sx=(x-190.8)/0.969,sy=(y-158)/0.969;
+  $('chV').setAttribute('x1',sx);$('chV').setAttribute('x2',sx);
+  $('chH').setAttribute('y1',sy);$('chH').setAttribute('y2',sy);
+  $('cadCoord').textContent=(sx-300).toFixed(4)+', '+(300-sy).toFixed(4);
 }
-function hideWin(id){$(id).style.display='none';$(id).classList.remove('focus')}
-function hideOverlays(){$('ov0').classList.remove('show');$('ovEnd').classList.remove('show')}
-function hideCadDialogs(){for(var i=0;i<CAD_DIALOGS.length;i++)$(CAD_DIALOGS[i]).classList.remove('show')}
-function showCadDialog(id){hideCadDialogs();$(id).classList.add('show')}
-
-var TERMS=[];
-function lineCls(s){
-  if(/失败|警告|不可写/.test(s))return 't-warn';
-  if(/^====|安装程序|安装结果|VBA 安装完成|安装结束/.test(s))return 't-hd';
-  if(/^---/.test(s))return 't-cy';
-  if(/成功|>>>|验证通过|全部存在|正常|已生成|已导入|已保存|已找到/.test(s))return 't-ok';
-  if(/^\s+PAT/.test(s))return 't-key';
-  return '';
+var CUR={x:640,y:380};
+function setCursor(v,x,y){
+  var e=$('cursorEl');
+  if(!v){e.style.display='none';setCross(false);return}
+  CUR.x=x;CUR.y=y;
+  e.style.display='block';e.style.left=(x-3)+'px';e.style.top=(y-2)+'px';
+  setCross(true,x,y);
 }
-function termHtml(text,caretCls,hl){
-  var lines=text.split('\n'),out=[],i,ln,body,c;
-  var caret=caretCls?'<span class="'+caretCls+'"></span>':'';
-  for(i=0;i<lines.length;i++){
-    ln=lines[i];
-    body=ln===''?'&nbsp;':esc(ln);
-    if(hl&&ln.indexOf(hl)>=0)body='<span class="j-hl">'+body+'</span>';
-    if(i===lines.length-1)body+=caret;
-    c=lineCls(ln);
-    out.push('<div class="tl'+(c?' '+c:'')+'">'+body+'</div>');
-  }
-  return out.join('');
+function clickAt(x,y){
+  setCursor(true,x,y);
+  var r=document.createElement('div');r.className='ripple';
+  r.style.left=x+'px';r.style.top=y+'px';
+  $('stage').appendChild(r);
+  setTimeout(function(){if(r.parentNode)r.parentNode.removeChild(r)},650);
 }
-function Term(el,opts){this.el=el;this.full=opts.text;this.cps=opts.cps||60;this.caretCls=opts.caretCls||'tcaret';this.hl=opts.hl||null;this._last=-1;TERMS.push(this);}
-Term.prototype.render=function(t){
-  var n=clamp(Math.floor(t*this.cps),0,this.full.length);
-  if(n===this._last)return;
-  this._last=n;
-  var done=n>=this.full.length;
-  setHtml(this.el,termHtml(this.full.slice(0,n),done?null:this.caretCls,this.hl));
+function Term(el,cfg){this.el=el;this.cfg=cfg;this._last=''}
+Term.prototype.render=function(p){
+  var full=this.cfg.text,n=Math.floor(full.length*p),c=cfgLineCls(full);
+  if(this._last===full.slice(0,n))return;
+  this._last=full.slice(0,n);
+  this.el.innerHTML='<div class="tl '+c+'">'+esc(this._last)+(this.cfg.caret&&p<1?'<span class="'+(this.cfg.caretCls||'tcaret')+'"></span>':'')+'</div>';
   this.el.scrollTop=this.el.scrollHeight;
 };
-var T1=null,T2=null,T3=null,T7=null,TJ=null;
+function cfgLineCls(t){
+  var l=t.indexOf('\n'),line=l<0?t:t.slice(0,l);
+  if(line.indexOf('=====')>=0||line.indexOf('命令: ')===0)return 't-hd';
+  if(line.indexOf('✓')>=0||line.indexOf('成功')>=0)return 't-ok';
+  if(line.indexOf('警告')>=0||line.indexOf('失败')>=0)return 't-warn';
+  if(line.indexOf('>>')===0)return 't-cy';
+  return '';
+}
+var TERMS=[];
+function fin(t){var s=t.replace(/§H§([^§]*)§§/g,'<span class="t-hd">$1</span>');return s}
 
 var INSTALL1=[
-'========================================',
-'PatentMarker 安装程序',
-'========================================',
+'==================================================',
+'  PatentMarker 安装程序 (2015 版)',
+'==================================================',
 '',
-'--- 系统信息 ---',
-'  OS: Windows_NT',
-'  用户名: wjm',
-'  脚本目录: C:\\PatentMarker\\',
-'  日志文件: C:\\PatentMarker\\install.log',
-'已找到 DLL: C:\\PatentMarker\\PatentMarker.dll',
+'此安装程序将注册 PatentMarker AutoCAD 插件：',
 '',
-'--- 扫描注册表 ---',
-'HKCU\\Software\\Autodesk\\AutoCAD\\R17.0',
-'  子键: ACAD-5001:804',
-'检测到 1 个 AutoCAD 产品',
-'  ACAD-5001:804 安装路径: C:\\Program Files\\AutoCAD\\',
-'  ACAD-5001:804 产品名: AutoCAD - 简体中文',
-'',
-'--- 写入 HKCU 注册表 ---',
-'目标: HKCU\\Software\\Autodesk\\AutoCAD\\R17.0\\ACAD-5001:804\\Applications\\PatentMarker',
-'  DESCRIPTION: 成功',
-'  LOADCTRLS=14: 成功',
-'  MANAGED=1: 成功',
-'  LOADER: 成功',
-'  >>> HKCU 写入验证通过',
-'',
-'--- 尝试写入 HKLM ---',
-'  HKLM CreateKey 失败: 拒绝访问。 (0x80070005)',
-'  >>> HKLM 不可写 (需要管理员权限)',
-'',
-'--- 生成辅助加载文件 ---',
-'已生成: C:\\PatentMarker\\load-patent-marker.lsp',
-'',
-'=== 安装结果 ===',
-'HKCU 写入: 1 / 1 成功',
-'HKLM 写入: 失败 (权限不足)',
-'',
-'警告: HKLM 不可写, AutoCAD 可能只读 HKLM',
-'HKCU 注册表已写入, 但可能不生效 (已知问题)',
-'',
-'>>> 推荐方案: 用 APPLOAD 加载 LSP <<<',
-'  1. 打开 AutoCAD',
-'  2. 输入 APPLOAD 命令',
-'  3. 点击 \'启动套件\' 下的 \'内容\'',
-'  4. 添加: C:\\PatentMarker\\load-patent-marker.lsp',
-'  5. 关闭对话框, 重启 AutoCAD',
-'',
-'或直接用 NETLOAD:',
-'  输入 NETLOAD, 选择: C:\\PatentMarker\\PatentMarker.dll',
-'',
-'可用命令 (括号内为拼音别名):',
 '  PATPALETTE (BIAOZHU / BZ)  - 打开字典面板',
 '  PATMARK    (BZM)           - 创建引线标注',
-'  PATCHECK   (BZC)           - 检查一致性',
-'  PATALIGN   (BZA)           - 对齐引线',
+'  PATCHECK   (BZC)           - 漏标检测',
+'  PATALIGN   (BZA)           - 对齐标注',
 '  PATSELECTALL (BZS)         - 全选标注实体',
+'  PATBRACE   (DAGUOHAO)      - 参数化大括号',
+'  PATDOCTOR  (BZD)           - 自诊断体检',
 '',
-'========================================',
-'安装结束',
-'========================================'
+'[1/5] 定位 AutoCAD 安装目录...',
+'',
+'  找到: C:\\Program Files\\Autodesk\\AutoCAD 2015',
+'',
+'[2/5] 写入 HKCU 注册表自动加载项...',
+'',
+'  注册表路径:',
+'  HKEY_CURRENT_USER\\Software\\Autodesk\\AutoCAD\\',
+'  R20.0\\ACAD-7001:804\\Applications\\PatentMarker',
+'',
+'    LOADER       = C:\\PatentMarker\\PatentMarker.dll',
+'    LOADCTRLS    = 14  (所有加载情形)',
+'    DESCRIPTION  = PatentMarker 专利标注插件',
+'',
+'  ✓ HKCU 写入成功',
+'',
+'[3/5] 验证文件存在性...',
+'',
+'  ✓ PatentMarker.dll',
+'',
+'[4/5] 写入 HKLM 全局注册表...',
+'',
+'  ⚠ 权限不足，HKLM 写入失败',
+'  → 自动启用 LSP 兜底方案',
+'',
+'[5/5] 生成兜底 LSP 与诊断脚本...',
+'',
+'  ✓ C:\\PatentMarker\\load-patent-marker.lsp',
+'  ✓ doctor-2015.vbs（插件无法加载时在 CAD 外体检）',
+'',
+'==================================================',
+'  安装完成！重启 AutoCAD 后插件自动加载。',
+'  打开任意 DWG 后输入 BZ 即可打开字典面板。',
+'=================================================='
 ].join('\n');
-
-var INSTALL2=[
-'========================================',
-'PatentMarker VBA 模块安装程序',
-'(安装到 Normal 全局模板)',
-'========================================',
+var NETLOAD=[
+'命令: NETLOAD',
 '',
-'--- 系统信息 ---',
-'  用户名: wjm',
-'  脚本目录: C:\\PatentMarker\\',
-'VBA 文件夹: C:\\PatentMarker\\vba\\',
-'VBA 文件检查: 全部存在',
-'Word 已启动',
-'Normal 模板路径: C:\\Users\\wjm\\AppData\\Roaming\\Microsoft\\Templates\\Normal.dotm',
-'Normal 模板已打开',
-'  只读: False',
-'  保护: -1',
-'VBA 工程访问: 正常',
-'VBA 工程名: Normal',
+'浏览到 C:\\PatentMarker\\PatentMarker.dll',
+'',
+'>> 程序集已加载: PatentMarker.dll (v5.1.0.0)',
+'',
+'>> 字典面板: 输入 BZ 打开',
+'',
+'提示: 注册表自动加载失效时，用 NETLOAD 手动加载。',
+'      CAD 外诊断请运行 doctor-<版本>.vbs。'
+].join('\n');
+var DICTJSON=fin(
+'§H§{§§\n'+
+'  §K§"metadata"§§: §H§{§§\n'+
+'    §K§"source_doc"§§: §S§"patent-sample.docx"§§,\n'+
+'    §K§"exported_at"§§: §S§"2026-08-16T14:22:05"§§,\n'+
+'    §K§"modified_by"§§: §S§"word"§§\n'+
+'  §H§}§§,\n'+
+'  §K§"entries"§§: §H§[§§\n'+
+'§HL§    §H§{§§ §K§"number"§§: §S§"1"§§, §K§"name"§§: §S§"底座"§§, §K§"occurrences"§§: §N§1§§ §H§}§§,§§\n'+
+'    §H§{§§ §K§"number"§§: §S§"2"§§, §K§"name"§§: §S§"支架"§§, §K§"occurrences"§§: §N§1§§ §H§}§§,\n'+
+'§HL§    §H§{§§ §K§"number"§§: §S§"3"§§, §K§"name"§§: §S§"伺服电机"§§, §K§"occurrences"§§: §N§2§§ §H§}§§,§§\n'+
+'    §H§{§§ §K§"number"§§: §S§"4"§§, §K§"name"§§: §S§"齿轮"§§, §K§"occurrences"§§: §N§1§§ §H§}§§,\n'+
+'    §H§{§§ §K§"number"§§: §S§"5"§§, §K§"name"§§: §S§"轴承"§§, §K§"occurrences"§§: §N§2§§ §H§}§§,\n'+
+'§HL§    §H§{§§ §K§"number"§§: §S§"12"§§, §K§"name"§§: §S§"防护罩"§§, §K§"occurrences"§§: §N§1§§ §H§}§§,§§\n'+
+'    ... §D§共 12 条§§\n'+
+'  §H§]§§\n'+
+'§H§}§§')
+.replace(/§K§/g,'<span class="j-k">').replace(/§S§/g,'<span class="j-s">')
+.replace(/§N§/g,'<span class="j-n">').replace(/§D§/g,'<span class="t-dim">')
+.replace(/§HL§/g,'<span class="j-hl">').replace(/§§/g,'</span>');
+var CHECK2=[
+'命令: BZC',
+'========== PATCHECK 结果 ==========',
+'字典条目: 12  |  图纸引线 (PAT_DIM): 4',
+'--- 未标注的字典条目 (8) ---',
+'  #5 轴承',
+'  #6 弹簧',
+'  #7 外壳',
+'  #8 螺栓',
+'  #9 传感器',
+'  #10 传动轴',
+'  #11 联轴器',
+'  #12 防护罩',
+'面板中已高亮未标注条目。',
+'=========================================='
+].join('\n');
+var DOCTOR=[
+'命令: BZD',
+'PatentMarker 体检：正在自检...',
+'体检结果: PASS 6 / FAIL 0 / SKIP 0 | recent errors: 0',
+'报告已写入: C:\\PatentMarker\\PatentMarker-doctor-report.txt'
+].join('\n');
+var DOCTORREPORT=[
+'PatentMarker Doctor Report',
+'==========================',
+'Drawing: Drawing1.dwg',
+'Time:    2026-08-16 15:04:12',
+'',
+'## Checks (检查项)',
+'[PASS] 报告目录可写 — C:\\PatentMarker',
+'[PASS] PAT_DIM 标注样式 — 箭头=2.5, 文字高度=3.5',
+'[PASS] TIMES_ROMAN 文字样式',
+'[PASS] 运行设置 — 箭头大小=2.5, 文字高度=3.5',
+'[PASS] 字典 (.dict.json) — C:\\PatentMarker\\patent-sample.dict.json | 12 条 | 文件存在',
+'[PASS] 模型空间扫描 — 23 个实体，4 条引线，5 个多行文字',
+'',
+'## Environment (环境)',
+'- Assembly:       C:\\PatentMarker\\PatentMarker.dll',
+'- .NET Runtime:   4.0.30319.42000',
+'- BaseDirectory:  C:\\PatentMarker\\',
+'- Log (tail):     无异常记录',
+'',
+'Summary: PASS 6 / FAIL 0 / SKIP 0 | recent errors: 0'
+].join('\n');
+var BR1='命令: PATBRACE\n大括号顶部: ';
+var BR2=BR1+'\n大括号底部: ';
+var BR3=BR2+'\n点击大括号宽度方向: ';
+var BR4=BR3+'\n已创建大括号（高度=160.00，宽度=18.00）。';
+var BE1=BR4+'\n命令: PATBRACEEDIT\n选择一个大括号: ';
+var BE2=BE1+'\n编辑方式: 控制点/尺寸 <控制点>: 尺寸';
+var BE3=BE2+'\n高度 <160.00>: 190';
+var BE4=BE3+'\n宽度 <18.00>: ';
+var BE5=BE4+'\n已更新大括号（高度=190.00，宽度=18.00）。';
+var BRACE_D1='M505,150 C505,154 502,169 497,169 L497,201 C497,222 517,226 523,230 C517,234 497,238 497,261 L497,291 C502,291 505,306 505,310';
+var BRACE_D2='M505,150 C505,155 502,173 497,173 L497,211 C497,238 517,241 523,245 C517,249 497,252 497,279 L497,317 C502,317 505,335 505,340';
+var ALIGNCFG=[
+{s:[300,330,318,352,340,366,352,369,366,369],e:[300,330,300,240,340,108,352,99,366,99],tx:[370,373],ex:[370,103]},
+{s:[220,250,200,236,186,224,174,219,160,219],e:[220,250,220,190,176,108,174,99,160,99],tx:[156,223],ex:[156,103]},
+{s:[280,170,298,142,320,120,332,113,346,113],e:[280,170,280,140,330,104,332,99,346,99],tx:[350,117],ex:[350,103]},
+{s:[241,269,256,286,270,296,280,300,294,300],e:[241,269,241,200,278,110,280,99,294,99],tx:[298,304],ex:[298,103]}
+];
+var TX0=[370,373,156,223,350,117,298,304];
+
+var DICT=[['1','底座',1],['2','支架',1],['3','电机',1],['4','齿轮',2],['5','轴承',2],['6','弹簧',1],['7','外壳',1],['8','螺栓',4],['9','传感器',1],['10','传动轴',1],['11','联轴器',1]];
+var DICTPASTE=DICT.concat([['12','防护罩',1]]);
+var DICTEDIT=(function(){var a=[];for(var i=0;i<DICT.length;i++)a.push(DICT[i]);a[2]=['3A','伺服电机',1];return a})();
+var PAL={open:false,dict:DICT,sel:-1,search:'',spline:true,points:true,arrow:true,compare:false,diff:null,status:'就绪。双击条目开始标注（右键/F2 编辑）',statusDiff:false,leader:true,underline:false,checkHl:null};
+function renderPalette(){
+  if(!PAL.open){$('palette').classList.remove('open');return}
+  var d=PAL.dict;
+  var rows=[];for(var i=0;i<d.length;i++){if(!PAL.search||d[i][0].indexOf(PAL.search)>=0||d[i][1].indexOf(PAL.search)>=0)rows.push(i)}
+  var h='<div class="pal-info">dict.json · '+d.length+' 条 · 来源 patent-sample.docx · 自动刷新 2s</div>';
+  h+='<div class="pal-row"><input type="text" placeholder="搜索编号/名称…" value="'+esc(PAL.search)+'"><span class="pbtn">刷新</span></div>';
+  h+='<div class="pal-btns">';
+  h+='<span class="pbtn'+(PAL.leader?'':' tgl-on')+'" id="palBtnLeader">引线:'+(PAL.leader?'开':'关')+'</span>';
+  h+='<span class="pbtn'+(PAL.underline?' tgl-on':'')+'" id="palBtnUnderline">下划线:'+(PAL.underline?'开':'关')+'</span>';
+  h+='<span class="pbtn'+(PAL.arrow?'':' tgl-on')+'">箭头:'+(PAL.arrow?'开':'关')+'</span>';
+  h+='<span class="pbtn">大小:2.5</span>';
+  h+='<span class="pbtn'+(PAL.spline?'':' tgl-on')+'">线型:'+(PAL.spline?'样条':'直线')+'</span>';
+  h+='<span class="pbtn'+(PAL.points?' tgl-on':'')+'">点数:'+(PAL.points?'三点':'无限')+'</span>';
+  h+='<span class="pbtn" id="palBtnBrace">大括号</span>';
+  h+='<span style="flex-basis:100%;height:0"></span>';
+  h+='<span class="pbtn">字高:3.5</span><span class="pbtn">重置</span><span class="pbtn">重载</span><span class="pbtn">打开</span>';
+  h+='<span style="flex-basis:100%;height:0"></span>';
+  h+='<span class="pbtn" id="palBtnPaste">粘贴识别</span><span class="pbtn">新增</span><span class="pbtn'+(PAL.compare?' tgl-on':'')+'">对照</span><span class="pbtn" id="palBtnCheck">检测</span><span class="pbtn" id="palBtnAlign">对齐</span><span class="pbtn">EN</span>';
+  h+='</div>';
+  h+='<div class="pal-status'+(PAL.statusDiff?' diff':'')+'">'+esc(PAL.status)+'</div>';
+  h+='<div class="pal-list"><div class="pal-lh"><span class="c-num">编号</span><span class="c-name">名称</span><span class="c-occ">出现</span>'+(PAL.compare?'<span class="c-old">原编号</span><span class="c-old">原名称</span>':'')+'</div>';
+  for(var r=0;r<rows.length;r++){
+    var i=rows[r],hl=PAL.checkHl&&PAL.checkHl[i];
+    var st=hl?'color:#d97a00;font-weight:600':(PAL.diff&&PAL.diff[i]?'background:'+PAL.diff[i]:'');
+    h+='<div class="pal-lr'+(PAL.sel===i?' sel':'')+'"'+(st?' style="'+st+'"':'')+'>'
+      +'<span class="c-num">'+esc(d[i][0])+'</span><span class="c-name">'+esc((hl?'△ ':'')+d[i][1])+'</span><span class="c-occ">'+d[i][2]+'</span>'
+      +(PAL.compare?'<span class="c-old">'+esc(d[i][3]||'')+'</span><span class="c-old">'+esc(d[i][4]||'')+'</span>':'')
+      +'</div>';
+  }
+  h+='</div>';
+  $('palBody').innerHTML=h;
+  $('palette').classList.add('open');
+}
+var PM={};
+function measurePalette(){
+  var saved={open:PAL.open,search:PAL.search,status:PAL.status,statusDiff:PAL.statusDiff,compare:PAL.compare,diff:PAL.diff,sel:PAL.sel,checkHl:PAL.checkHl};
+  PAL.open=true;PAL.search='';PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';PAL.statusDiff=false;
+  PAL.compare=false;PAL.diff=null;PAL.sel=-1;PAL.checkHl=null;
+  renderPalette();
+  var pl=$('palette').getBoundingClientRect();
+  function rel(id){var r=$(id).getBoundingClientRect();return {cx:r.left+r.width/2-pl.left,cy:r.top+r.height/2-pl.top}}
+  var rows=$('palBody').querySelectorAll('.pal-lr');
+  PM.rows=[];
+  for(var i=0;i<rows.length;i++){var r=rows[i].getBoundingClientRect();PM.rows.push({cx:r.left+r.width/2-pl.left,cy:r.top+r.height/2-pl.top})}
+  var sr=$('palBody').querySelector('input[type=text]').getBoundingClientRect();
+  PM.search={cx:sr.left+sr.width/2-pl.left,cy:sr.top+sr.height/2-pl.top};
+  PM.leaderBtn=rel('palBtnLeader');PM.underBtn=rel('palBtnUnderline');
+  PM.braceBtn=rel('palBtnBrace');PM.pasteBtn=rel('palBtnPaste');
+  PM.checkBtn=rel('palBtnCheck');PM.alignBtn=rel('palBtnAlign');
+  PAL.open=saved.open;PAL.search=saved.search;PAL.status=saved.status;PAL.statusDiff=saved.statusDiff;
+  PAL.compare=saved.compare;PAL.diff=saved.diff;PAL.sel=saved.sel;PAL.checkHl=saved.checkHl;
+  renderPalette();
+  var wordShown=$('win-word').style.display!=='none';
+  showWin('win-word');
+  showCadDialog('pasteDlg');showCadDialog('editDlg');showCadDialog('conflictDlg');
+  var pd=$('pasteDlg').getBoundingClientRect(),ed=$('editDlg').getBoundingClientRect(),cd=$('conflictDlg').getBoundingClientRect();
+  var merge=$('mergeBtn').getBoundingClientRect(),save=$('saveEditBtn').getBoundingClientRect(),restore=$('restoreCadBtn').getBoundingClientRect();
+  PM.mergeBtn={cx:merge.left+merge.width/2-pd.left,cy:merge.top+merge.height/2-pd.top};
+  PM.saveEditBtn={cx:save.left+save.width/2-ed.left,cy:save.top+save.height/2-ed.top};
+  PM.restoreCadBtn={cx:restore.left+restore.width/2-cd.left,cy:restore.top+restore.height/2-cd.top};
+  var w3=$('wordM3').getBoundingClientRect(),wp=$('win-word').getBoundingClientRect();
+  PM.wordM3={cx:w3.left+w3.width/2-wp.left,cy:w3.top+w3.height/2-wp.top};
+  hideCadDialogs();
+  if(!wordShown)hideWin('win-word');
+}
+function palPos(p){return {x:WINP['win-cad'].x+625+p.cx,y:WINP['win-cad'].y+102+p.cy}}
+function dlgPos(id,p){return {x:WINP['win-cad'].x+36+p.cx,y:WINP['win-cad'].y+72+p.cy}}
+var LD=[
+{p:'ldP0',a:'ldA0',d:'ldD0',t:'ldT0',attach:[300,330],angle:Math.atan2(369-352,366-340)},
+{p:'ldP1',a:'ldA1',d:'ldD1',t:'ldT1',attach:[220,250],angle:Math.atan2(219-224,160-174)},
+{p:'ldP2',a:'ldA2',d:'ldD2',t:'ldT2',attach:[280,170],angle:Math.atan2(113-120,346-332)},
+{p:'ldP3',a:'ldA3',d:'ldD3',t:'ldT3',attach:[241,269],angle:Math.atan2(300-296,294-280)}
+];
+function initLeaders(){
+  for(var i=0;i<4;i++){
+    var L=LD[i];
+    $(L.p).setAttribute('d',ALIGNCFG[i].s.length?['M',ALIGNCFG[i].s[0],',',ALIGNCFG[i].s[1],' C',ALIGNCFG[i].s[2],',',ALIGNCFG[i].s[3],' ',ALIGNCFG[i].s[4],',',ALIGNCFG[i].s[5],' ',ALIGNCFG[i].s[6],',',ALIGNCFG[i].s[7],' L',ALIGNCFG[i].s[8],',',ALIGNCFG[i].s[9]].join(''):$(L.p).getAttribute('d'));
+    $(L.a).style.opacity='0';$(L.d).style.opacity='0';$(L.t).style.opacity='0';
+    $(L.t).setAttribute('x',TX0[i*2]);$(L.t).setAttribute('y',TX0[i*2+1]);
+    $('ld'+i).style.opacity='0';
+    $(L.a).setAttribute('transform','translate('+L.attach[0]+','+L.attach[1]+') rotate('+(L.angle*180/Math.PI)+')');
+  }
+  $('ldT2').textContent='3';
+}
+function alignAll(p){
+  for(var i=0;i<4;i++){
+    var c=ALIGNCFG[i],n=[];
+    for(var j=0;j<10;j++)n.push(lerp(c.s[j],c.e[j],p));
+    $(LD[i].p).setAttribute('d','M'+n[0]+','+n[1]+' C'+n[2]+','+n[3]+' '+n[4]+','+n[5]+' '+n[6]+','+n[7]+' L'+n[8]+','+n[9]);
+    $(LD[i].t).setAttribute('x',lerp(c.tx[0],c.ex[0],p));
+    $(LD[i].t).setAttribute('y',lerp(c.tx[1],c.ex[1],p));
+  }
+  for(var k=0;k<4;k++){$(LD[k].p).style.strokeDasharray='';$(LD[k].p).style.strokeDashoffset=''}
+}
+function setAlignLine(v){$('alignLine').style.display=v?'':'none'}
+function drawBrace(p){
+  var el=$('bracePath');
+  if(p<=0){$('gBrace').style.opacity='0';return}
+  $('gBrace').style.opacity='1';
+  if(p>=1){el.style.strokeDasharray='';el.style.strokeDashoffset='';return}
+  var len=el.getTotalLength();
+  el.style.strokeDasharray=len+' '+len;
+  el.style.strokeDashoffset=String(len*(1-p));
+}
+function setBraceGrips(v,bottomY){
+  var d=v?'':'none';
+  $('gripT').style.display=d;$('gripB').style.display=d;$('gripW').style.display=d;
+  if(v){$('gripB').setAttribute('cy',bottomY);$('gripW').setAttribute('cy',(150+bottomY)/2)}
+}
+var scene;
+function resetStage(){
+  hideAllWins();
+  for(var i=0;i<TERMS.length;i++)TERMS[i]._last='';
+  $('term-main').innerHTML='';$('term-json').innerHTML='';$('cmdline').innerHTML='';
+  setCursor(false);setCross(false);
+  PAL.open=false;PAL.search='';PAL.sel=-1;PAL.compare=false;PAL.diff=null;PAL.spline=true;PAL.points=true;
+  PAL.leader=true;PAL.underline=false;PAL.checkHl=null;PAL.statusDiff=false;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+  initLeaders();
+  setAlignLine(false);alignAll(0);
+  $('bracePath').setAttribute('d',BRACE_D1);drawBrace(0);setBraceGrips(false,310);
+  $('gBrace').classList.remove('brace-flash');
+  $('toText').style.opacity='0';
+  $('gSelBox').style.display='none';
+  SELH=false;
+  $('selRect').setAttribute('width',0);$('selRect').setAttribute('height',0);
+  hideCadDialogs();
+  $('pasteNote').textContent='识别 6 条 · 0 个警告';$('pasteNote').className='modal-note';
+  $('editNumber').textContent='3A';$('editNumber').style.color='';
+  $('ld2').classList.remove('entity-flash');$('ldT2').classList.remove('entity-flash');
+  $('jsonTitle').textContent='patent-sample.dict.json - 记事本';
+  resetWord();
+  $('ov0').classList.remove('show');$('ovEnd').classList.remove('show');
+  var nd=$('vbeTree').querySelectorAll('.nd[data-m]');
+  for(var m=0;m<nd.length;m++)nd[m].classList.remove('in');
+  var fx=['ov0title','fn1','fa1','fn2','fa2','fn3','ov0note','endStamp'];
+  for(var f=0;f<fx.length;f++)$(fx[f]).classList.remove('in');
+  var ei=$('endGrid').querySelectorAll('.endItem');
+  for(var e2=0;e2<ei.length;e2++)ei[e2].classList.remove('in');
+  var rips=$('stage').querySelectorAll('.ripple');
+  for(var rp=0;rp<rips.length;rp++)rips[rp].parentNode.removeChild(rips[rp]);
+}
+function showCaption(tag,html){
+  $('capTag').textContent=tag;
+  $('capTag').className='tag'+(tag.indexOf('冲突')>=0||tag.indexOf('后备')>=0?' am':'');
+  $('capTxt').innerHTML=html;
+  $('caption').classList.add('show');
+}
+function hideCaption(){$('caption').classList.remove('show')}
+function setCmd(s){$('cmdline').innerHTML='<div class="tl">'+esc(s).replace(/\n/g,'<br>')+'<span class="caret"></span></div>';$('cmdline').scrollTop=$('cmdline').scrollHeight}
+function vbeReveal(n){
+  var nd=$('vbeTree').querySelectorAll('.nd[data-m]');
+  for(var i=0;i<nd.length;i++){if(+nd[i].getAttribute('data-m')<=n)nd[i].classList.add('in')}
+}
+
+function Scene(title,dur){this.title=title;this.dur=dur;this.acts=[];this.ix=640;this.iy=380;this.cx=640;this.cy=380;this.cross=false}
+Scene.prototype.add=function(t,fn){this.acts.push({type:'fn',t:t,fn:fn});return this};
+Scene.prototype.anim=function(t,dur,fn){return this.add(t,function(lt){fn(clamp(lt/dur,0,1))})};
+Scene.prototype.cursor=function(t,x,y){return this.add(t,function(){setCursor(true,x,y)})};
+Scene.prototype.click=function(t,x,y){return this.add(t,function(){clickAt(x,y)})};
+Scene.prototype.caption=function(t,tag,html){return this.add(t,function(){showCaption(tag,html)})};
+
+var scenes=[];
+
+(function(){
+var s=new Scene('序章 · 数据流',8000);
+s.add(0,function(){$('ov0').classList.add('show');$('ov0title').classList.add('in')});
+s.add(500,function(){$('fn1').classList.add('in')});
+s.add(1200,function(){$('fa1').classList.add('in')});
+s.add(1900,function(){$('fn2').classList.add('in')});
+s.add(2600,function(){$('fa2').classList.add('in')});
+s.add(3300,function(){$('fn3').classList.add('in')});
+s.add(4200,function(){$('ov0note').classList.add('in')});
+s.caption(3500,'序章','专利图纸标注的完整闭环：<b>Word 说明书</b> → VBA 自动提取 → <i>dict.json</i> → CAD 一键标注。插件本体两步安装（安装脚本 + VBA 导入），任一环节出问题都有兜底与体检手段。');
+scenes.push(s);
+})();
+
+(function(){
+var T1;
+var s=new Scene('安装 · CAD 插件',12500);
+s.add(0,function(){
+  hideAllWins();hideCaption();showWin('win-term');setTermTitle('install-2015.vbs');focusWin('win-term');
+  T1=new Term($('term-main'),{text:INSTALL1,cps:38});TERMS.push(T1);
+});
+s.anim(300,11200,function(p){T1.render(p)});
+s.cursor(400,WINP['win-term'].x+760,WINP['win-term'].y+40);
+s.caption(2500,'安装 ①','双击 <code>install-2015.vbs</code>：写 HKCU 注册表 <b>LOADCTRLS=14</b> 开机自加载；HKLM 无权限时自动生成 <code>load-patent-marker.lsp</code> 兜底。5 个版本各带安装脚本（2025 版为 .ps1），并附 <i>doctor 体检脚本</i>。');
+scenes.push(s);
+})();
+
+(function(){
+var INSTALL2=[
+'=== PatentMarker VBA 安装程序 ===',
+'',
+'目标: Normal.dotm (Word 全局模板)',
+'',
+'VBA 文件检查: 全部存在 (5 .bas + 1 .frm)',
+'',
 '删除旧模块 (如有)...',
-'  (不存在): Patterns',
-'  (不存在): DictModel',
-'  (不存在): JsonWriter',
-'  (不存在): PatentExtractor',
-'  (不存在): AutoExport',
-'  (不存在): clsSaveHook',
 '导入 VBA 模块...',
 '  成功: Patterns.bas',
 '  成功: DictModel.bas',
 '  成功: JsonWriter.bas',
 '  成功: PatentExtractor.bas',
 '  成功: AutoExport.bas',
-'  成功: clsSaveHook.cls',
-'已导入 6 / 6 个模块',
-'保存 Normal 模板...',
-'  保存成功',
+'  成功: PatentDictPanel.frm',
+'  (clsSaveHook.cls 以代码方式注入 — Word 2010 无法直接导入 .cls)',
+'已导入 7 / 7 个模块',
+'保存 Normal 模板... 保存成功',
 '',
 '=== VBA 安装完成 ===',
-'Normal 模板: C:\\Users\\wjm\\AppData\\Roaming\\Microsoft\\Templates\\Normal.dotm',
-'已导入模块: 6 / 6',
-'已保存: 是',
-'',
-'模块已安装到全局模板, 所有 Word 文档均可使用',
+'已导入模块: 7 / 7',
 '',
 '后续步骤:',
 '  1. 打开任意 Word 文档',
-'  2. 按 Alt+F11, 在左侧 \'Normal\' 下查看模块',
-'  3. 运行 EnableAutoExport 启用自动导出',
-'     (或手动运行 ExtractDict)',
-'',
-'dict.json 将保存到 Word 文档同目录',
-'CAD 插件会自动检测 (DWG 需在同一文件夹)',
-'',
-'========================================',
-'安装结束',
-'========================================'
+'  2. 运行宏 ShowPatentDictPanel（唯一入口，打开字典面板）',
+'  3. 面板内可 手动导出 / 保存时自动导出'
 ].join('\n');
+var T2;
+var s=new Scene('安装 · VBA 模块',12500);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  setWinPos('win-term',60,150);showWin('win-term');setTermTitle('install-vba.vbs');
+  setWinPos('win-vbe',700,150);showWin('win-vbe');
+  focusWin('win-term');
+  T2=new Term($('term-main'),{text:INSTALL2,cps:42});TERMS.push(T2);
+});
+s.anim(300,9600,function(p){T2.render(p)});
+s.cursor(300,WINP['win-term'].x+740,WINP['win-term'].y+36);
+s.add(1600,function(){focusWin('win-vbe')});
+s.add(2200,function(){vbeReveal(1)});
+s.add(2900,function(){vbeReveal(2)});
+s.add(3600,function(){vbeReveal(3)});
+s.add(4300,function(){vbeReveal(4)});
+s.add(5000,function(){vbeReveal(5)});
+s.add(5700,function(){vbeReveal(6)});
+s.add(6400,function(){vbeReveal(7)});
+s.add(7400,function(){focusWin('win-term')});
+s.caption(3000,'安装 ②','双击 <code>install-vba.vbs</code>：5 个 .bas + 面板 .frm + cls 注入 → <b>Normal.dotm</b> 全局模板。此后只需运行唯一入口宏 <i>ShowPatentDictPanel</i> 打开面板，保存文档即自动导出 dict.json。');
+scenes.push(s);
+})();
 
-var NETLOAD=[
-'命令: _netload',
-'',
-'[10:23:45.120] === PatentMarker Initialize START ===',
-'[10:23:45.125] NET Runtime: 2.0.50727.9164',
-'[10:23:45.128] BaseDirectory: C:\\PatentMarker\\',
-"[10:23:45.201]   Assembly 'acdbmgd': LOADED (17.0.51.0)",
-"[10:23:45.214]   Assembly 'acmgd': LOADED (17.0.51.0)",
-'[10:23:45.220] Loading config...',
-"[10:23:45.226] Config loaded: defaultDictPath='dict.json'",
-'[10:23:45.230] === PatentMarker Initialize END ==='
-].join('\n');
-
-var CHECK=[
-'命令: BZC',
-'========== PATCHECK 结果 ==========',
-'字典条目: 11  |  图纸引线 (PAT_DIM): 4',
-'(扫描 4 条 Leader，匹配 4 条 PAT_DIM，0 个文字错误)',
-'--- 图纸有，字典缺失 (0) ---',
-'--- 字典有，图纸缺失 (7) ---',
-'  #5 (轴承)  #6 (弹簧)  #7 (外壳)  #8 (螺栓)',
-'  #9 (传感器)  #10 (传动轴)  #11 (联轴器)',
-'--- 图纸中重复 (0) ---',
-'总问题数: 7',
-'保存报告到文件? <否>: 是',
-'报告已保存到: C:\\PatentMarker\\Drawing1.check.txt'
-].join('\n');
-
-var DICTJSON=[
-'{',
-'  "metadata": {',
-'    "source_file": "patent-sample.docx",',
-'    "extracted_at": "2026-07-23 10:24:31",',
-'    "version": "1.0"',
-'  },',
-'  "entries": [',
-'    {',
-'      "number": "1",',
-'      "name": "底座",',
-'      "occurrences": 5,',
-'      "conflicts": []',
-'    },',
-'    {',
-'      "number": "2",',
-'      "name": "支架",',
-'      "occurrences": 3,',
-'      "conflicts": []',
-'    },',
-'    {',
-'      "number": "3",',
-'      "name": "伺服电机",',
-'      "occurrences": 4,',
-'      "conflicts": []',
-'    },',
-'    ...',
-'  ]',
-'}'
-].join('\n');
-
-var keyTO=null;
-function spawnRipple(x,y){
-  var s=document.createElement('span');
-  s.className='ripple';s.style.left=x+'px';s.style.top=y+'px';
-  $('stage').appendChild(s);
-  setTimeout(function(){if(s.parentNode)s.parentNode.removeChild(s);},650);
-}
-function showKey(text,x,y){
-  var k=$('keybadge');
-  k.textContent=text;k.style.left=(x+14)+'px';k.style.top=(y-34)+'px';k.style.display='block';
-  k.style.animation='none';void k.offsetWidth;k.style.animation='';
-  if(keyTO)clearTimeout(keyTO);
-  keyTO=setTimeout(function(){k.style.display='none';},900);
-}
-function setCursor(x,y,vis){
-  var c=$('cursorEl');
-  c.style.display=vis?'block':'none';
-  if(vis){c.style.left=(x-3)+'px';c.style.top=(y-2)+'px';}
-}
-
-function vp(sx,sy){return {x:190.8+sx*0.969,y:158+sy*0.969};}
-function crossAt(sx,sy,vis){
-  var g=$('gCross');g.style.display=vis?'':'none';
-  if(vis){$('chV').setAttribute('x1',sx);$('chV').setAttribute('x2',sx);$('chH').setAttribute('y1',sy);$('chH').setAttribute('y2',sy);}
-}
-function selBox(sx,sy,w,h,vis){
-  var g=$('gSelBox');g.style.display=vis?'':'none';
-  if(vis){var r=$('selRect');r.setAttribute('x',sx);r.setAttribute('y',sy);r.setAttribute('width',w);r.setAttribute('height',h);}
-}
-function setCmd(text,caret){
-  var lines=text.split('\n'),out=[],i,body;
-  for(i=0;i<lines.length;i++){
-    body=lines[i]===''?'&nbsp;':esc(lines[i]);
-    if(caret&&i===lines.length-1)body+='<span class="caret"></span>';
-    out.push('<div class="tl">'+body+'</div>');
-  }
-  setHtml($('cmdline'),out.join(''));
-  $('cmdline').scrollTop=$('cmdline').scrollHeight;
-}
-function showCap(tag,html,am){
-  $('capTag').textContent=tag;
-  $('capTag').className='tag'+(am?' am':'');
-  setHtml($('capTxt'),html);
-  $('caption').classList.add('show');
-}
-function hideCap(){$('caption').classList.remove('show');}
-function wordSet(t,sel){var e=$('wordM3');e.textContent=t;e.style.background=sel?'#316ac5':'';e.style.color=sel?'#fff':'';}
-function vbeReveal(n,on){
-  var nds=document.querySelectorAll('#vbeTree .nd[data-m]'),i;
-  for(i=0;i<nds.length;i++){if(nds[i].getAttribute('data-m')===String(n))nds[i].classList[on?'add':'remove']('in');}
-}
-function endStep(n,on){var its=$('endGrid').querySelectorAll('.endItem');if(its[n])its[n].classList[on?'add':'remove']('in');}
-
-var LD=[
- {splineD:'M300,330 C318,352 340,366 352,369 L366,369',lineD:'M300,330 L352,369 L366,369'},
- {splineD:'M220,250 C200,236 186,224 174,219 L160,219',lineD:'M220,250 L174,219 L160,219'},
- {splineD:'M280,170 C298,142 320,120 332,113 L346,113',lineD:'M280,170 L332,113 L346,113'},
- {splineD:'M241,269 C256,286 270,296 280,300 L294,300',lineD:'M241,269 L280,300 L294,300'}
-];
-function initLeaders(){
-  var i,p;
-  for(i=0;i<4;i++){
-    $('ld'+i).style.opacity='0';
-    p=$('ldP'+i);p.setAttribute('d',LD[i].splineD);p.style.strokeDasharray='';p.style.strokeDashoffset='';
-    $('ldA'+i).style.opacity='0';$('ldD'+i).style.opacity='0';$('ldT'+i).style.opacity='0';
-  }
-  $('ldT2').setAttribute('x',350);
-}
-function configLeader(i,mode){
-  var p=$('ldP'+i);
-  p.setAttribute('d',mode==='line'?LD[i].lineD:LD[i].splineD);
-  p.style.strokeDasharray='';p.style.strokeDashoffset='';
-}
-function drawLeader(i,prog){
-  var g=$('ld'+i),p=$('ldP'+i),len;
-  if(prog<=0){g.style.opacity='0';return;}
-  g.style.opacity='1';
-  len=p.getTotalLength();
-  if(prog>=1){p.style.strokeDasharray='';p.style.strokeDashoffset='';$('ldD'+i).style.opacity='1';$('ldT'+i).style.opacity='1';}
-  else{p.style.strokeDasharray=len+' '+len;p.style.strokeDashoffset=String(len*(1-prog));$('ldD'+i).style.opacity=prog>0.02?'1':'0';$('ldT'+i).style.opacity='0';}
-}
-function alignLd2(p){
-  var ex=Math.round(lerp(346,366,p)),tx=Math.round(lerp(350,370,p));
-  $('ldP2').setAttribute('d','M280,170 L332,113 L'+ex+',113');
-  $('ldP2').style.strokeDasharray='';$('ldP2').style.strokeDashoffset='';
-  $('ldT2').setAttribute('x',tx);
-  $('ld2').style.opacity='1';$('ldD2').style.opacity='1';$('ldT2').style.opacity='1';
-}
-function leadersAll(ld2line){
-  configLeader(0,'spline');drawLeader(0,1);
-  configLeader(1,'spline');drawLeader(1,1);
-  configLeader(2,ld2line?'line':'spline');drawLeader(2,1);
-  configLeader(3,'spline');drawLeader(3,1);
-}
-
-var PAL={open:false,search:'',caret:false,arrow:false,spline:true,points:true,compare:false,loaded:'',sel:-1,dict:DICT,diff:{},status:'字典已加载。',statusDiff:false,conflict:false};
-var DICT2=[],DICTPASTE=[],DICTEDIT=[];
 (function(){
-  for(var i=0;i<DICT.length;i++)DICT2.push({n:DICT[i].n,name:DICT[i].name,occ:DICT[i].occ});
-  DICT2[2].name='伺服电机';DICT2[2].old='电机';
-  for(i=0;i<DICT2.length;i++)DICTPASTE.push({n:DICT2[i].n,name:DICT2[i].name,occ:DICT2[i].occ,old:DICT2[i].old});
-  DICTPASTE.push({n:'12',name:'防护罩',occ:1});
-  for(i=0;i<DICTPASTE.length;i++)DICTEDIT.push({n:DICTPASTE[i].n,name:DICTPASTE[i].name,occ:DICTPASTE[i].occ,old:DICTPASTE[i].old});
-  DICTEDIT[2].n='3A';DICTEDIT[2].old='3';
-})();
-function renderPalette(){
-  var el=$('palBody'),h='',i,d;
-  if(!PAL.open){setHtml(el,'');return;}
-  h+='<div class="pal-info">dict.json · '+PAL.dict.length+' 条 · 来源 patent-sample.docx · 自动刷新 2s · 按原文顺序</div>';
-  h+='<div class="pal-row"><span class="sin">'+esc(PAL.search)+(PAL.caret?'<span class="caret"></span>':'')+'</span></div>';
-  h+='<div class="pal-row">装填 <span class="pal-num">'+(PAL.loaded||'—')+'</span></div>';
-  h+='<div class="pal-btns">';
-  h+='<span class="pbtn'+(PAL.arrow?' tgl-on':'')+'">箭头:'+(PAL.arrow?'开':'关')+'</span>';
-  h+='<span class="pbtn">大小:2.5</span>';
-  h+='<span class="pbtn'+(PAL.spline?'':' tgl-on')+'" id="palBtnSpline">线型:'+(PAL.spline?'样条':'直线')+'</span>';
-  h+='<span class="pbtn'+(PAL.points?' tgl-on':'')+'" id="palBtnPoints">点数:'+(PAL.points?'三点':'无限')+'</span>';
-  h+='<span style="flex-basis:100%;height:0"></span>';
-  h+='<span class="pbtn">字高:3.5</span><span class="pbtn">重置</span><span class="pbtn">重载</span><span class="pbtn">打开</span>';
-  h+='<span style="flex-basis:100%;height:0"></span>';
-  h+='<span class="pbtn" id="palBtnPaste">粘贴识别</span><span class="pbtn">新增</span><span class="pbtn'+(PAL.conflict?' attn':'')+'" id="palBtnResolve"'+(PAL.conflict?'':' disabled')+'>裁决</span>';
-  h+='<span style="flex-basis:100%;height:0"></span>';
-  h+='<span class="pbtn">冲突</span><span class="pbtn">删除引线</span><span class="pbtn act">全选</span><span class="pbtn'+(PAL.compare?' tgl-on':'')+'">对照</span><span class="pbtn">EN</span>';
-  h+='</div>';
-  h+='<div class="pal-status'+(PAL.statusDiff?' diff':'')+'">'+esc(PAL.status)+'</div>';
-  h+='<div class="pal-list">';
-  h+='<div class="pal-lh"><span class="c-num">编号</span><span class="c-name">名称</span><span class="c-occ">次</span>'+(PAL.compare?'<span class="c-old">旧版</span>':'')+'</div>';
-  for(i=0;i<PAL.dict.length;i++){
-    d=PAL.dict[i];
-    if(PAL.search&&(d.name.indexOf(PAL.search)<0&&d.n.indexOf(PAL.search)<0))continue;
-    h+='<div class="pal-lr'+(PAL.sel===i?' sel':'')+'"'+(PAL.diff[i]?' style="background:'+PAL.diff[i]+'"':'')+'>';
-    h+='<span class="c-num">'+esc(d.n)+'</span><span class="c-name">'+esc(d.name)+'</span><span class="c-occ">'+d.occ+'</span>'+(PAL.compare?'<span class="c-old">'+esc(d.old||'—')+'</span>':'');
-    h+='</div>';
-  }
-  h+='</div>';
-  setHtml(el,h);
-}
-
-var PM=(function(){
-  var so=PAL.open,pal=$('palette');
-  showWin('win-cad',40,80);
-  PAL.open=true;renderPalette();
-  pal.style.transition='none';pal.classList.add('open');
-  var sr=$('stage').getBoundingClientRect();
-  function rel(el){var r=el.getBoundingClientRect();return {x:r.left-sr.left+r.width/2,y:r.top-sr.top+r.height/2};}
-  var rows=$('palBody').getElementsByClassName('pal-lr'),rw=[],i;
-  for(i=0;i<4;i++)rw.push(rel(rows[i]));
-  var lineBtn=rel($('palBtnSpline'));
-  var pointsBtn=rel($('palBtnPoints'));
-  var pasteBtn=rel($('palBtnPaste'));
-  var resolveBtn=rel($('palBtnResolve'));
-  var search=rel($('palBody').getElementsByClassName('sin')[0]);
-  showCadDialog('pasteDlg');var mergeBtn=rel($('mergeBtn'));
-  showCadDialog('editDlg');var saveEditBtn=rel($('saveEditBtn'));
-  showCadDialog('conflictDlg');var restoreCadBtn=rel($('restoreCadBtn'));
-  hideCadDialogs();
-  showWin('win-word',50,130,undefined,0.95);
-  var wordM3=rel($('wordM3'));
-  hideWin('win-word');hideWin('win-cad');
-  pal.classList.remove('open');pal.style.transition='';
-  PAL.open=so;renderPalette();
-  return {r1:rw[0],r2:rw[1],r3:rw[2],r4:rw[3],lineBtn:lineBtn,pointsBtn:pointsBtn,pasteBtn:pasteBtn,resolveBtn:resolveBtn,
-    mergeBtn:mergeBtn,saveEditBtn:saveEditBtn,restoreCadBtn:restoreCadBtn,search:search,wordM3:wordM3};
+var T3;
+var s=new Scene('后备 · NETLOAD',8500);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  setWinPos('win-term',240,110);showWin('win-term');setTermTitle('AutoCAD - NETLOAD');focusWin('win-term');
+  T3=new Term($('term-main'),{text:NETLOAD,cps:46,caret:true,caretCls:'caret'});TERMS.push(T3);
+});
+s.anim(300,6800,function(p){T3.render(p)});
+s.cursor(400,WINP['win-term'].x+700,WINP['win-term'].y+60);
+s.caption(1800,'后备','注册表加载失效时的手动后备：<code>NETLOAD</code> 选择 PatentMarker.dll 即加载。插件本身无法加载时，可在 CAD 外运行 <i>doctor-&lt;版本&gt;.vbs/.ps1</i> 做两层体检（离线检查 + CAD 内 PATDOCTOR）。');
+scenes.push(s);
 })();
 
-function resetStage(){
-  dragOff.x=0;dragOff.y=0;zoom=1;
-  var i;
-  for(i=0;i<WINS.length;i++)hideWin(WINS[i]);
-  hideOverlays();hideCap();hideCadDialogs();
-  $('cursorEl').style.display='none';$('keybadge').style.display='none';
-  setHtml($('cmdline'),'');setHtml($('term-main'),'');setHtml($('term-json'),'');
-  PAL.open=false;PAL.search='';PAL.caret=false;PAL.arrow=false;PAL.spline=true;PAL.points=true;PAL.compare=false;
-  PAL.loaded='';PAL.sel=-1;PAL.dict=DICT;PAL.diff={};PAL.status='字典已加载。';PAL.statusDiff=false;PAL.conflict=false;
-  $('palette').classList.remove('open');renderPalette();
-  initLeaders();selBox(0,0,0,0,false);crossAt(0,0,false);
-  $('ldT2').textContent='3';$('ldT2').classList.remove('entity-flash');
-  $('wordSaveState').style.opacity='0';wordSet('3电机',false);
-  var nds=document.querySelectorAll('#vbeTree .nd[data-m]');
-  for(i=0;i<nds.length;i++)nds[i].classList.remove('in');
-  var ov=['ov0title','fn1','fa1','fn2','fa2','fn3','ov0note'];
-  for(i=0;i<ov.length;i++)$(ov[i]).classList.remove('in');
-  var its=$('endGrid').querySelectorAll('.endItem');
-  for(i=0;i<its.length;i++)its[i].classList.remove('in');
-  $('endStamp').classList.remove('in');
-  $('cadCoord').textContent='0.0000, 0.0000';
-  for(i=0;i<TERMS.length;i++)TERMS[i]._last=-1;
-  $('termTitle').textContent='install.vbs';
-}
+(function(){
+var s=new Scene('面板 · BZ',11000);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICT;PAL.open=false;
+  setCmd('命令: BZ');
+});
+s.cursor(300,WINP['win-cad'].x+820,WINP['win-cad'].y+120);
+s.add(800,function(){PAL.open=true;renderPalette()});
+s.caption(1200,'面板','<code>BZ</code>（PATPALETTE）打开字典面板：<b>引线/下划线/箭头/线型/点数</b> 样式开关 + <b>粘贴识别/新增/对照/检测/对齐</b> 操作入口；<i>双击</i>条目直接开始标注，<i>右键 / F2</i> 编辑。');
+s.anim(2200,1100,function(p){
+  PAL.search='电机'.slice(0,p<1?1:2);renderPalette();
+});
+s.anim(4200,900,function(p){
+  PAL.search='电机'.slice(0,p<1?2:1);renderPalette();
+});
+s.add(5800,function(){PAL.search='';renderPalette()});
+s.anim(6500,1000,function(p){PAL.sel=p<1?-1:0;renderPalette()});
+s.anim(7900,1000,function(p){PAL.sel=p<1?0:3;renderPalette()});
+scenes.push(s);
+})();
 
-function Scene(title,dur){this.title=title;this.dur=dur;this.acts=[];this.ix=640;this.iy=380;this.cx=640;this.cy=380;this.cross=false;}
-Scene.prototype.add=function(t,fn){this.acts.push({type:'fn',t:t,fn:fn});return this;};
-Scene.prototype.anim=function(t,dur,fn){return this.add(t,function(lt){fn(clamp(lt/dur,0,1));});};
-Scene.prototype.move=function(t,x,y,d){this.acts.push({type:'move',t:t,x0:this.cx,y0:this.cy,x1:x,y1:y,d:(d==null?0.5:d)});this.cx=x;this.cy=y;return this;};
-Scene.prototype.click=function(t,x,y){this.move(t,x,y,0.3);this.acts.push({type:'click',t:t+0.32,x:x,y:y});return this;};
-Scene.prototype.key=function(t,text,x,y){this.acts.push({type:'key',t:t,text:text,x:x,y:y});return this;};
-Scene.prototype.cap=function(t,tag,html,am){return this.add(t,function(){showCap(tag,html,am);});};
-Scene.prototype.render=function(gt){
-  var cx=this.ix,cy=this.iy,vis=false,i,a,p;
-  for(i=0;i<this.acts.length;i++){
-    a=this.acts[i];
-    if(a.t>gt)break;
-    if(a.type==='fn'){a.fn(gt-a.t);}
-    else if(a.type==='move'){vis=true;p=a.d>0?ease(clamp((gt-a.t)/a.d,0,1)):1;cx=lerp(a.x0,a.x1,p);cy=lerp(a.y0,a.y1,p);}
-  }
-  setCursor(cx,cy,vis);
-  if(this.cross&&vis){
-    var sx=clamp((cx-190.8)/0.969,0,638),sy=clamp((cy-158)/0.969,0,458);
-    crossAt(sx,sy,true);
-    $('cadCoord').textContent=sx.toFixed(4)+', '+sy.toFixed(4);
-  }
-};
-function fin(s){
-  for(var i=0;i<s.acts.length;i++)s.acts[i]._i=i;
-  s.acts.sort(function(a,b){return (a.t-b.t)||(a._i-b._i);});
-  scenes.push(s);return s;
-}
+(function(){
+var s=new Scene('开关 · 引线&下划线',10000);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICT;PAL.open=true;PAL.leader=true;PAL.underline=false;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+  setCmd('命令: BZ');
+});
+s.caption(200,'开关','面板样式开关即时生效：<code>引线:关</code> → 后续 BZM 只创建<i>独立文字</i>；<code>下划线:开</code> → 新建文字带下划线（箭头/字高/线型/点数同理）。');
+s.cursor(400,WINP['win-cad'].x+820,WINP['win-cad'].y+120);
+s.add(1200,function(){var p=palPos(PM.leaderBtn);setCursor(true,p.x,p.y)});
+s.add(2000,function(){var p=palPos(PM.leaderBtn);clickAt(p.x,p.y)});
+s.add(2200,function(){PAL.leader=false;PAL.status='引线: 关（影响后续新建标注）';renderPalette()});
+s.add(3400,function(){var p=palPos(PM.underBtn);setCursor(true,p.x,p.y)});
+s.add(4200,function(){var p=palPos(PM.underBtn);clickAt(p.x,p.y)});
+s.add(4400,function(){PAL.underline=true;PAL.status='下划线: 开（影响后续新建文字）';renderPalette()});
+s.add(5600,function(){setCmd('命令: BZM\n独立文字位置 (Esc/右键取消): ')});
+s.cursor(6300,vp(445,320).x,vp(445,320).y);
+s.click(6800,vp(445,320).x,vp(445,320).y);
+s.add(7000,function(){$('toText').style.opacity='1';PAL.status='已创建独立文字: 5（无引线）';renderPalette()});
+scenes.push(s);
+})();
 
-var scenes=[],starts=[],TOTAL=0,gt=0,playing=true,lastTs=null,curScene=-1,lastGt=-1,needReset=true;
-function sceneAt(g){for(var i=0;i<scenes.length;i++){if(g<starts[i]+scenes[i].dur)return i;}return scenes.length-1;}
-function fullRender(g){
-  var si=sceneAt(g);
-  if(needReset||si!==curScene||g<lastGt-1e-4){resetStage();needReset=false;curScene=si;}
-  scenes[si].render(g-starts[si]);
-  lastGt=g;
-  syncChrome(si,g);
-}
-function fireCrossings(prevG,g){
-  if(!playing||g<=prevG)return;
-  var si=sceneAt(g);
-  if(si!==sceneAt(prevG))return;
-  var st=starts[si],acts=scenes[si].acts,i,a;
-  for(i=0;i<acts.length;i++){
-    a=acts[i];
-    if(a.t>prevG-st&&a.t<=g-st){
-      if(a.type==='click')spawnRipple(a.x,a.y);
-      else if(a.type==='key')showKey(a.text,a.x,a.y);
+(function(){
+var s=new Scene('粘贴识别 · CAD',13000);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICT;PAL.open=true;PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+  setCmd('命令: PATPALETTE');
+});
+s.caption(200,'CAD 端','无 Word 也能建字典：<b>粘贴识别</b>从剪贴板解析「附图标记说明」；<i>对照模式</i>并排显示新旧两版。');
+s.cursor(500,WINP['win-cad'].x+820,WINP['win-cad'].y+130);
+s.add(1300,function(){var p=palPos(PM.pasteBtn);setCursor(true,p.x,p.y)});
+s.add(1800,function(){var p=palPos(PM.pasteBtn);clickAt(p.x,p.y)});
+s.add(2000,function(){showCadDialog('pasteDlg')});
+s.caption(2600,'粘贴识别','粘贴「附图标记说明」段落 → 实时解析 <b>编号 + 名称</b>。示例中 #3 电机 → <i>伺服电机</i>（名称变更），#12 防护罩为<i>新增</i>。');
+s.anim(3200,800,function(p){$('pasteNote').textContent='识别 '+Math.round(6*p)+' 条 · 0 个警告'});
+s.add(4600,function(){var p=dlgPos('pasteDlg',PM.mergeBtn);setCursor(true,p.x,p.y)});
+s.add(5300,function(){var p=dlgPos('pasteDlg',PM.mergeBtn);clickAt(p.x,p.y)});
+s.add(5500,function(){hideCadDialog('pasteDlg')});
+s.add(5700,function(){
+  PAL.dict=DICTPASTE;PAL.compare=true;
+  PAL.diff={2:'#ffe9c8',11:'#d8f0da'};
+  PAL.status='已合并 12 条 · 1 条名称变更 · 1 条新增';PAL.statusDiff=true;
+  renderPalette();
+});
+s.caption(6300,'结果','按编号合并：名称变更行与新增行以底色标示，面板顶部状态栏同步汇总。');
+scenes.push(s);
+})();
+
+(function(){
+var s=new Scene('标注 · BZM',22000);s.cross=true;
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICTPASTE;PAL.open=true;PAL.sel=0;
+  PAL.status='已加载标注: 1 底座';
+  renderPalette();
+});
+s.caption(100,'标注','<code>BZM</code>（PATMARK）逐点绘制引线：附着点 → 任意拐点 → 文字位。2010+ 走 <b>MLeader F 方案</b>（三点顶点链，禁用自动几何），2007 为 Leader+MText。');
+s.add(600,function(){setCmd('命令: BZM\n点击 [1 底座] 的标注点（Esc/右键确认或取消）: ')});
+s.cursor(1300,vp(300,330).x,vp(300,330).y);
+s.click(1900,vp(300,330).x,vp(300,330).y);
+s.add(2100,function(){
+  $('ld0').style.opacity='1';$('ldD0').style.opacity='1';
+  var len=$('ldP0').getTotalLength();
+  $('ldP0').style.strokeDasharray=len+' '+len;
+  $('ldP0').style.strokeDashoffset=len;
+  setCmd('命令: BZM\n点击 [1 底座] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: ');
+});
+s.anim(2100,700,function(p){
+  var len=$('ldP0').getTotalLength();
+  $('ldP0').style.strokeDashoffset=len*(1-p);
+});
+s.add(2900,function(){$('ldP0').style.strokeDasharray='';$('ldP0').style.strokeDashoffset=''});
+s.cursor(3100,vp(336,362).x,vp(336,362).y);
+s.click(3600,vp(336,362).x,vp(336,362).y);
+s.add(3800,function(){setCmd('命令: BZM\n点击 [1 底座] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: \n点击下一个拐点（回车结束，Esc/右键取消）: ')});
+s.cursor(4100,vp(370,373).x,vp(370,373).y);
+s.click(4600,vp(370,373).x,vp(370,373).y);
+s.add(4800,function(){
+  $('ldA0').style.opacity='1';$('ldT0').style.opacity='1';
+  setCmd('命令: BZM\n点击 [1 底座] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: \n点击下一个拐点（回车结束，Esc/右键取消）: \n点击文字位置（回车=最后拐点，Esc/右键取消）: ');
+});
+s.caption(5400,'完成','引线文字取自当前面板选中条目，实体落在 <code>PAT_DIM</code> 图层，供后续检测与统计。');
+s.add(6200,function(){PAL.sel=1;PAL.status='已加载标注: 2 支架';renderPalette();
+  setCmd('命令: BZM\n点击 [2 支架] 的标注点（Esc/右键确认或取消）: ')});
+s.cursor(6800,vp(220,250).x,vp(220,250).y);
+s.click(7300,vp(220,250).x,vp(220,250).y);
+s.add(7500,function(){
+  $('ld1').style.opacity='1';$('ldD1').style.opacity='1';
+  var len=$('ldP1').getTotalLength();
+  $('ldP1').style.strokeDasharray=len+' '+len;
+  $('ldP1').style.strokeDashoffset=len;
+  setCmd('命令: BZM\n点击 [2 支架] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: ');
+});
+s.anim(7500,600,function(p){
+  var len=$('ldP1').getTotalLength();
+  $('ldP1').style.strokeDashoffset=len*(1-p);
+});
+s.add(8100,function(){$('ldP1').style.strokeDasharray='';$('ldP1').style.strokeDashoffset=''});
+s.cursor(8200,vp(156,223).x,vp(156,223).y);
+s.click(8600,vp(156,223).x,vp(156,223).y);
+s.add(8800,function(){$('ldD1').style.opacity='0';$('ldA1').style.opacity='1';$('ldT1').style.opacity='1'});
+s.add(9200,function(){PAL.sel=2;PAL.status='已加载标注: 3 电机';renderPalette();
+  setCmd('命令: BZM\n点击 [3 电机] 的标注点（Esc/右键确认或取消）: ')});
+s.cursor(9700,vp(280,170).x,vp(280,170).y);
+s.click(10200,vp(280,170).x,vp(280,170).y);
+s.add(10400,function(){
+  $('ld2').style.opacity='1';$('ldD2').style.opacity='1';
+  var len=$('ldP2').getTotalLength();
+  $('ldP2').style.strokeDasharray=len+' '+len;
+  $('ldP2').style.strokeDashoffset=len;
+  setCmd('命令: BZM\n点击 [3 电机] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: ');
+});
+s.anim(10400,600,function(p){
+  var len=$('ldP2').getTotalLength();
+  $('ldP2').style.strokeDashoffset=len*(1-p);
+});
+s.add(11000,function(){$('ldP2').style.strokeDasharray='';$('ldP2').style.strokeDashoffset=''});
+s.cursor(11100,vp(350,117).x,vp(350,117).y);
+s.click(11500,vp(350,117).x,vp(350,117).y);
+s.add(11700,function(){$('ldD2').style.opacity='0';$('ldA2').style.opacity='1';$('ldT2').style.opacity='1'});
+s.add(12100,function(){PAL.sel=3;PAL.status='已加载标注: 4 齿轮';renderPalette();
+  setCmd('命令: BZM\n点击 [4 齿轮] 的标注点（Esc/右键确认或取消）: ')});
+s.cursor(12600,vp(241,269).x,vp(241,269).y);
+s.click(13100,vp(241,269).x,vp(241,269).y);
+s.add(13300,function(){
+  $('ld3').style.opacity='1';$('ldD3').style.opacity='1';
+  var len=$('ldP3').getTotalLength();
+  $('ldP3').style.strokeDasharray=len+' '+len;
+  $('ldP3').style.strokeDashoffset=len;
+  setCmd('命令: BZM\n点击 [4 齿轮] 的标注点（Esc/右键确认或取消）: \n点击拐点（回车结束，Esc/右键取消）: ');
+});
+s.anim(13300,600,function(p){
+  var len=$('ldP3').getTotalLength();
+  $('ldP3').style.strokeDashoffset=len*(1-p);
+});
+s.add(13900,function(){$('ldP3').style.strokeDasharray='';$('ldP3').style.strokeDashoffset=''});
+s.cursor(14000,vp(298,304).x,vp(298,304).y);
+s.click(14400,vp(298,304).x,vp(298,304).y);
+s.add(14600,function(){$('ldD3').style.opacity='0';$('ldA3').style.opacity='1';$('ldT3').style.opacity='1';setCmd('命令: ');setCursor(false)});
+s.caption(15200,'完成','四条引线完成：样条引线（可切直线）、文字高度取自面板设置。');
+scenes.push(s);
+})();
+
+(function(){
+var S2='命令: BZM\n点击 [4 齿轮] 的标注点（Esc/右键确认或取消）: ';
+var S3=S2+'\n[三点模式] 点击拐点（第 2/3 点，Esc/右键取消）: ';
+var S4=S3+'\n[三点模式] 点击文字位置（第 3/3 点，自动创建；Esc/右键取消）: ';
+var s=new Scene('默认三点 · v4.0',10500);s.cross=true;
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICTPASTE;PAL.open=true;PAL.sel=3;
+  PAL.status='已加载标注: 4 齿轮 · 点数: 三点';
+  renderPalette();
+  for(var i=0;i<3;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+});
+s.caption(100,'三点默认','点数默认<b>三点</b>：附着点 → 拐点 → 文字位，第三点落点即自动创建，减少一次回车。');
+s.add(700,function(){setCmd(S2)});
+s.cursor(1200,vp(241,269).x,vp(241,269).y);
+s.click(1700,vp(241,269).x,vp(241,269).y);
+s.add(1900,function(){
+  $('ld3').style.opacity='1';$('ldD3').style.opacity='1';
+  var len=$('ldP3').getTotalLength();
+  $('ldP3').style.strokeDasharray=len+' '+len;
+  $('ldP3').style.strokeDashoffset=len;
+  setCmd(S3);
+});
+s.anim(1900,600,function(p){
+  var len=$('ldP3').getTotalLength();
+  $('ldP3').style.strokeDashoffset=len*(1-p);
+});
+s.add(2600,function(){$('ldP3').style.strokeDasharray='';$('ldP3').style.strokeDashoffset=''});
+s.cursor(2900,vp(298,304).x,vp(298,304).y);
+s.click(3400,vp(298,304).x,vp(298,304).y);
+s.add(3600,function(){
+  $('ldD3').style.opacity='0';$('ldA3').style.opacity='1';$('ldT3').style.opacity='1';
+  setCmd(S4+'\n  已创建引线: 4（3 个顶点）');
+});
+s.caption(4200,'三点完成','第三点既是文字位也是终点 —— 点完即生成。');
+s.add(5400,function(){
+  PAL.sel=4;PAL.status='已加载标注: 5 轴承';renderPalette();
+  setCmd('命令: BZM\n点击 [5 轴承] 的标注点（Esc/右键确认或取消）: ');
+});
+s.caption(5900,'切换无限点','面板「点数」切 <i>无限</i> 可回到自由拐点模式（Esc / 右键取消，回车结束）。');
+s.add(6500,function(){var p=palPos(PM.search);setCursor(true,p.x,p.y)});
+s.add(7200,function(){
+  PAL.sel=4;PAL.status='已切换为: 无限拐点。已加载标注: 5 轴承';renderPalette();
+  setCmd('命令: BZM\n点击 [5 轴承] 的标注点（Esc/右键确认或取消）: \n>> 已切换为: 无限拐点');
+});
+scenes.push(s);
+})();
+
+(function(){
+var TJ;
+var s=new Scene('同步 · Ctrl+S',14000);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  setWinPos('win-word',130,150);showWin('win-word');focusWin('win-word');
+});
+s.caption(300,'Word 端','在 Word 中把「3电机」改成 <i>3伺服电机</i>，再补一条「12防护罩」。');
+s.cursor(900,WINP['win-word'].x+100,WINP['win-word'].y+80);
+s.add(1400,function(){var p=PM.wordM3;setCursor(true,WINP['win-word'].x+p.cx,WINP['win-word'].y+p.cy)});
+s.add(2000,function(){var p=PM.wordM3;clickAt(WINP['win-word'].x+p.cx,WINP['win-word'].y+p.cy)});
+s.anim(2300,1200,function(p){
+  var t=p<.33?'3伺':(p<.66?'3伺服':'3伺服电');
+  $('wordM3').textContent=p>=1?'3伺服电机':t;
+  $('wordM3').style.fontWeight='700';
+});
+s.anim(4000,1100,function(p){
+  $('wordEdit').textContent='12防护罩；'.slice(0,Math.floor(6*p));
+});
+s.add(5400,function(){
+  var kb=$('keybadge');
+  kb.style.display='block';
+  kb.style.left=(WINP['win-word'].x+470)+'px';
+  kb.style.top=(WINP['win-word'].y+40)+'px';
+  kb.textContent='Ctrl+S';
+});
+s.add(6000,function(){$('keybadge').style.display='none';$('wordSaveState').style.opacity='1'});
+s.caption(5700,'保存钩子','Ctrl+S 触发 <code>clsSaveHook</code> → AutoExport：正则扫描全文 → <b>立即覆盖写 dict.json</b>（UTF-8 无 BOM）。');
+s.add(7000,function(){
+  hideWin('win-word');
+  setWinPos('win-json',240,140);showWin('win-json');focusWin('win-json');
+  $('jsonTitle').textContent='patent-sample.dict.json - 记事本';
+  TJ=new Term($('term-json'),{text:DICTJSON,cps:120});TERMS.push(TJ);
+});
+s.anim(7300,3600,function(p){TJ.render(p)});
+s.caption(8200,'导出结果','新导出包含 <i>#3 伺服电机（出现 2 次）</i>与<i>#12 防护罩</i>，metadata 记录来源文档与 modified_by=word。');
+s.add(11200,function(){
+  setWinPos('win-cad',700,120);showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICTPASTE;PAL.open=true;
+  PAL.diff={2:'#ffe9c8',11:'#d8f0da'};
+  PAL.status='字典已自动更新（文件变更检测）';PAL.statusDiff=true;
+  renderPalette();
+});
+s.caption(11600,'CAD 端','面板 Timer 检测文件变更 → <b>自动重载</b>：变更/新增行以底色高亮，无需手动刷新。');
+scenes.push(s);
+})();
+
+(function(){
+var s=new Scene('编辑 · 改号联动',12500);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  for(var i=0;i<4;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+  PAL.dict=DICT;PAL.open=true;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+});
+s.caption(300,'改号联动','面板里把 #3 电机改成 <i>3A</i>：字典写回带 <code>modified_by="cad"</code>，图纸引线文字同步更新。');
+s.cursor(800,WINP['win-cad'].x+760,WINP['win-cad'].y+214);
+s.click(1400,WINP['win-cad'].x+760,WINP['win-cad'].y+214);
+s.add(1600,function(){showCadDialog('editDlg')});
+s.anim(2200,1400,function(p){
+  $('editNumber').textContent=['3','3','3A','3A'][Math.floor(p*4)]||'3A';
+});
+s.add(4000,function(){var p=dlgPos('editDlg',PM.saveEditBtn);setCursor(true,p.x,p.y)});
+s.add(4600,function(){var p=dlgPos('editDlg',PM.saveEditBtn);clickAt(p.x,p.y)});
+s.add(4800,function(){hideCadDialog('editDlg')});
+s.add(5000,function(){
+  PAL.dict=DICTEDIT;
+  PAL.diff={2:'#ffe9c8'};
+  PAL.status='已保存 3 → 3A，图纸 1 条引线已同步';PAL.statusDiff=true;
+  renderPalette();
+});
+s.add(5600,function(){$('ld2').classList.add('entity-flash');$('ldT2').classList.add('entity-flash')});
+s.anim(6000,500,function(p){$('ldT2').textContent=p>=1?'3A':'3'});
+s.caption(6600,'联动','保存时字典写回磁盘（CAD 标记），同时更新图纸中匹配引线并 Regen —— 面板、JSON、图纸三者一致。');
+scenes.push(s);
+})();
+
+(function(){
+var s=new Scene('冲突 · 裁决',14500);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  setWinPos('win-cad',40,110);showWin('win-cad');focusWin('win-cad');
+  for(var i=0;i<4;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+  $('ldT2').textContent='3A';
+  setWinPos('win-word',760,160);showWin('win-word');
+  PAL.dict=DICTEDIT;PAL.open=true;
+  PAL.status='CAD 字典已修改 · 等待 Word 保存';
+  renderPalette();
+});
+s.caption(200,'冲突场景','CAD 端已把 #3 改成 <i>3A</i>（modified_by=cad）；此时 Word 又保存了一次 —— VBA 会先<b>备份 CAD 版</b>再覆盖。');
+s.cursor(1200,WINP['win-word'].x+560,WINP['win-word'].y+60);
+s.add(1800,function(){
+  var kb=$('keybadge');
+  kb.style.display='block';
+  kb.style.left=(WINP['win-word'].x+470)+'px';
+  kb.style.top=(WINP['win-word'].y+40)+'px';
+  kb.textContent='Ctrl+S';
+});
+s.add(2200,function(){$('keybadge').style.display='none';$('wordSaveState').style.opacity='1';$('wordM3').textContent='3电机'});
+s.caption(2400,'Word 覆盖','AutoExport 检测到旧文件带 CAD 标记 → 备份为 <code>*.word-20260816-142608.bak</code> → 覆盖导出 Word 版（#3 电机）。');
+s.add(4000,function(){
+  hideWin('win-word');focusWin('win-cad');
+  PAL.diff={2:'#ffe9c8'};
+  PAL.status='检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理';PAL.statusDiff=true;
+  renderPalette();
+  showCadDialog('conflictDlg');
+  setCmd('检测到备份: patent-sample.dict.json.word-20260816-142608.bak');
+});
+s.caption(4600,'检测到冲突','面板自动发现备份文件 → 弹出裁决对话框：Word 版（当前文件）⇄ CAD 版（自动备份）。');
+s.add(8500,function(){var p=dlgPos('conflictDlg',PM.restoreCadBtn);setCursor(true,p.x,p.y)});
+s.add(9200,function(){var p=dlgPos('conflictDlg',PM.restoreCadBtn);clickAt(p.x,p.y)});
+s.add(9400,function(){hideCadDialog('conflictDlg')});
+s.add(9600,function(){
+  PAL.status='已恢复 CAD 版（CAD 标记已清除）。';PAL.statusDiff=false;
+  renderPalette();
+  setCmd('已恢复 CAD 版字典\n已清除 modified_by 标记并删除备份');
+});
+s.caption(10200,'恢复 CAD 版','备份覆盖回 dict.json → 清除 CAD 标记（防循环提示）→ 删除备份。若选「采用 Word 版」则仅删备份。');
+scenes.push(s);
+})();
+
+(function(){
+var T7;
+var s=new Scene('检测 · BZC v2',9500);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  for(var i=0;i<4;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+  $('ldT2').textContent='3';
+  PAL.dict=DICTPASTE;PAL.open=true;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+  setCmd('命令: ');
+  T7=new Term($('cmdline'),{text:CHECK2,cps:55,caret:true,caretCls:'caret'});TERMS.push(T7);
+});
+s.caption(200,'检测','<code>BZC</code>（PATCHECK）v2 只做<b>漏标检测</b>：列出「字典有 · 图纸未标注」的条目；旧版「图纸有·字典无 / 同号重复」检测已移除（合法用法不再误报）。');
+s.anim(600,4000,function(p){T7.render(p)});
+s.add(5200,function(){
+  PAL.checkHl={4:true,5:true,6:true,7:true,8:true,9:true,10:true,11:true};
+  renderPalette();
+});
+s.caption(5800,'面板高亮','结果写入 PatCheckResult 静态缓存，面板 Timer 轮询版本号变化后重渲染 —— 未标注条目<i>橙色 △</i> 前缀高亮。');
+scenes.push(s);
+})();
+
+(function(){
+var A1='命令: BZS';
+var A2=A1+'\nPatentMarker: 已选中 4 个 PAT Leader/MText 实体。按 Ctrl+1 修改属性。';
+var A3=A2+'\n命令: BZA';
+var A4=A3+'\n对齐基准 [线(L)/框(F)]? 线';
+var A5=A4+'\n基准线起点: ';
+var A6=A5+'\n基准线终点: ';
+var A7=A6+'\n对齐 4 个标注（0 个失败）。';
+var s=new Scene('全选 · 对齐 v2',13500);s.cross=true;
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  for(var i=0;i<4;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+  $('ldT2').textContent='3';
+  PAL.dict=DICTPASTE;PAL.open=true;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+});
+s.caption(200,'全选','<code>BZS</code>（PATSELECTALL）选中全部 PAT 引线/MText 实体 —— 供 BZA 选集对齐或 Ctrl+1 属性修改。');
+s.add(800,function(){setCmd(A1)});
+s.anim(1200,900,function(p){
+  var e=ease(p);
+  $('gSelBox').style.display=SELH?'none':'';
+  $('selRect').setAttribute('x',lerp(430,120,e));
+  $('selRect').setAttribute('y',lerp(300,60,e));
+  $('selRect').setAttribute('width',460*e);
+  $('selRect').setAttribute('height',330*e);
+});
+s.add(2200,function(){setCmd(A2)});
+s.caption(2600,'对齐 v2','<code>BZA</code>（PATALIGN）v2：<b>pickfirst 选集先行</b>（一 DWG 多附图可分别对齐）→ 选 <i>线/框</i> 基准 → 文字投影对齐；框模式边长不足时按<i>列溢出</i>补排。');
+s.add(3300,function(){setCmd(A3)});
+s.add(3900,function(){setCmd(A4)});
+s.add(4300,function(){setAlignLine(true)});
+s.cursor(4700,vp(140,95).x,vp(140,95).y);
+s.click(5100,vp(140,95).x,vp(140,95).y);
+s.add(5300,function(){setCmd(A5)});
+s.cursor(5600,vp(520,95).x,vp(520,95).y);
+s.click(6000,vp(520,95).x,vp(520,95).y);
+s.add(6200,function(){setCmd(A6)});
+s.anim(6600,1500,function(p){alignAll(ease(p))});
+s.add(8400,function(){SELH=true;setCmd(A7);$('gSelBox').style.display='none'});
+s.caption(9000,'对齐完成','四个文字投影到基准线垂足并保持原间距；线长不足时沿线紧凑排列并越过线端延伸，排列顺序一律按投影顺序。');
+scenes.push(s);
+})();
+
+(function(){
+var s=new Scene('大括号 · PATBRACE',12000);s.cross=true;
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  PAL.dict=DICTPASTE;PAL.open=true;
+  PAL.status='就绪。双击条目开始标注（右键/F2 编辑）';
+  renderPalette();
+  setCmd('命令: ');
+});
+s.caption(200,'大括号','<code>PATBRACE</code>（DAGUOHAO）三点创建<b>参数化矢量大括号</b>：顶部 → 底部 → 宽度方向；几何写入多段线并记录定义，可再编辑。');
+s.add(700,function(){var p=palPos(PM.braceBtn);setCursor(true,p.x,p.y)});
+s.add(1200,function(){var p=palPos(PM.braceBtn);clickAt(p.x,p.y)});
+s.add(1400,function(){setCmd(BR1)});
+s.cursor(1900,vp(505,150).x,vp(505,150).y);
+s.click(2300,vp(505,150).x,vp(505,150).y);
+s.add(2500,function(){setCmd(BR2)});
+s.cursor(2900,vp(505,310).x,vp(505,310).y);
+s.click(3300,vp(505,310).x,vp(505,310).y);
+s.add(3500,function(){setCmd(BR3)});
+s.cursor(3900,vp(530,230).x,vp(530,230).y);
+s.click(4300,vp(530,230).x,vp(530,230).y);
+s.anim(4500,1100,function(p){drawBrace(ease(p))});
+s.add(5800,function(){setCmd(BR4)});
+s.caption(6200,'编辑','<code>PATBRACEEDIT</code> 选择大括号后可用<i>控制点</i>或<i>尺寸</i>（高度/宽度）两种方式调整。');
+s.add(6800,function(){setCmd(BE1)});
+s.cursor(7200,vp(510,230).x,vp(510,230).y);
+s.click(7600,vp(510,230).x,vp(510,230).y);
+s.add(7800,function(){setBraceGrips(true,310);setCmd(BE2)});
+s.add(8600,function(){setCmd(BE3)});
+s.add(9300,function(){setCmd(BE4)});
+s.add(9800,function(){
+  $('bracePath').setAttribute('d',BRACE_D2);
+  $('gBrace').classList.add('brace-flash');
+  setBraceGrips(false,310);
+  setCmd(BE5);
+});
+scenes.push(s);
+})();
+
+(function(){
+var TB,TD;
+var s=new Scene('体检 · BZD',10000);
+s.add(0,function(){
+  hideAllWins();hideCaption();
+  showWin('win-cad');focusWin('win-cad');
+  for(var i=0;i<4;i++){$('ld'+i).style.opacity='1';$('ldA'+i).style.opacity='1';$('ldT'+i).style.opacity='1';$('ldD'+i).style.opacity='0';
+    $('ldP'+i).style.strokeDasharray='';$('ldP'+i).style.strokeDashoffset=''}
+  $('toText').style.opacity='1';
+  setCmd('命令: ');
+  TB=new Term($('cmdline'),{text:DOCTOR,cps:55,caret:true,caretCls:'caret'});TERMS.push(TB);
+});
+s.caption(200,'体检','<code>BZD</code>（PATDOCTOR）一键自检：报告目录 / PAT_DIM 样式 / 文字样式 / 运行设置 / 字典 / 模型空间扫描，汇总 PASS / FAIL / SKIP。');
+s.anim(500,3600,function(p){TB.render(p)});
+s.add(4800,function(){
+  setWinPos('win-json',700,180);showWin('win-json');focusWin('win-json');
+  $('jsonTitle').textContent='PatentMarker-doctor-report.txt - 记事本';
+  TD=new Term($('term-json'),{text:DOCTORREPORT,cps:95});TERMS.push(TD);
+});
+s.anim(5100,3900,function(p){TD.render(p)});
+s.caption(6200,'报告','结果写入 <code>PatentMarker-doctor-report.txt</code>（含环境信息与日志尾部）。CAD 内命令本身加载失败时，改在 CAD 外运行 <i>doctor-&lt;版本&gt;.vbs/.ps1</i>：Tier 1 离线检查 + Tier 2 自动开 CAD 重放 PATDOCTOR。');
+scenes.push(s);
+})();
+
+(function(){
+var s=new Scene('尾声 · 就绪',9500);
+s.add(0,function(){$('ovEnd').classList.add('show')});
+s.caption(1500,'完成','全链路就绪：从 Word 到 CAD，标注、检测、对齐、大括号、体检一站式闭环。');
+s.add(600,function(){var ei=$('endGrid').querySelectorAll('.endItem');for(var i=0;i<ei.length;i++)ei[i].classList.add('in')});
+s.add(2400,function(){$('endStamp').classList.add('in')});
+scenes.push(s);
+})();
+
+var total=0;
+for(var i=0;i<scenes.length;i++){scenes[i].acts.sort(function(a,b){return a.t-b.t});total+=scenes[i].dur}
+var t=0,playing=true,lastTs=null;
+var sceneIdx=-1;
+
+function fireCrossings(s,from,to){
+  for(var i=0;i<s.acts.length;i++){
+    var a=s.acts[i];
+    if(a.type==='fn'&&a.t>from&&a.t<=to){
+      if(a.fn.length===0){a._done=true;a.fn()}else a.fn(0);
     }
   }
 }
 function tick(ts){
+  if(lastTs===null)lastTs=ts;
+  var dt=ts-lastTs;lastTs=ts;
+  if(playing){t+=dt;if(t>=total){t=total;playing=false;$('bPlay').textContent='▶'}}
+  var acc=0,idx=0,lt=0;
+  for(var i=0;i<scenes.length;i++){
+    if(t<acc+scenes[i].dur||i===scenes.length-1){idx=i;lt=t-acc;break}
+    acc+=scenes[i].dur;
+  }
+  var s=scenes[idx];
+  if(idx!==sceneIdx){
+    sceneIdx=idx;scene=s;
+    resetStage();fireCrossings(s,-1,lt);
+    var chips=$('chapters').querySelectorAll('.chip');
+    for(var c=0;c<chips.length;c++)chips[c].classList.toggle('on',c===idx);
+    $('sceneCounter').innerHTML='<b>'+('0'+(idx+1)).slice(-2)+'</b> / '+('0'+scenes.length).slice(-2);
+  }else{
+    scene=s;
+    fullRender(s,lt);
+  }
+  $('progFill').style.width=(t/total*100)+'%';
+  $('timeNow').textContent=fmt(t)+' / '+fmt(total);
   requestAnimationFrame(tick);
-  if(lastTs===null){lastTs=ts;return;}
-  var dt=Math.min((ts-lastTs)/1000,0.1);lastTs=ts;
-  if(playing){
-    var prev=gt;gt+=dt;
-    if(gt>=TOTAL){gt=TOTAL;playing=false;updatePlayBtn();}
-    fireCrossings(prev,gt);
-    fullRender(gt);
+}
+function fullRender(s,lt){
+  for(var i=0;i<s.acts.length;i++){
+    var a=s.acts[i];
+    if(a.t>lt)break;
+    if(a.fn.length===0){if(!a._done){a._done=true;a.fn()}}
+    else a.fn(lt-a.t);
   }
 }
-function seek(g){gt=clamp(g,0,TOTAL);needReset=true;fullRender(gt);}
+function seek(ms){
+  t=clamp(ms,0,total);sceneIdx=-1;
+  if(!playing){}
+}
+function sceneStart(i){var acc=0;for(var k=0;k<i;k++)acc+=scenes[k].dur;return acc}
 
-function pad2(n){return (n<10?'0':'')+n;}
-var chipEls=[];
-function syncChrome(si,g){
-  $('sceneCounter').innerHTML='<b>'+pad2(si+1)+'</b> / '+pad2(scenes.length);
-  for(var i=0;i<chipEls.length;i++)chipEls[i].className='chip'+(i===si?' on':'');
-  $('progFill').style.width=(TOTAL?(g/TOTAL*100):0)+'%';
-  $('timeNow').textContent=fmt(g*1000)+' / '+fmt(TOTAL*1000);
+var chipsEl=$('chapters');
+for(var ci=0;ci<scenes.length;ci++){
+  (function(i){
+    var d=document.createElement('div');
+    d.className='chip';
+    d.innerHTML='<span class="ci">'+('0'+(i+1)).slice(-2)+'</span>'+scenes[i].title;
+    d.onclick=function(){seek(sceneStart(i));if(!playing){playing=true;$('bPlay').textContent='❚❚'}};
+    chipsEl.appendChild(d);
+    var tickEl=document.createElement('div');
+    tickEl.className='ptick';
+    tickEl.style.left=(sceneStart(i)/total*100)+'%';
+    $('prog').appendChild(tickEl);
+  })(ci);
 }
-function buildChapters(){
-  var nav=$('chapters'),h='',i;
-  for(i=0;i<scenes.length;i++)h+='<button class="chip"><span class="ci">'+pad2(i+1)+'</span>'+esc(scenes[i].title)+'</button>';
-  setHtml(nav,h);
-  var bs=nav.getElementsByTagName('button');
-  for(i=0;i<bs.length;i++)(function(idx){bs[idx].onclick=function(){seek(starts[idx]);this.blur();};chipEls.push(bs[idx]);})(i);
-}
-function buildTicks(){
-  var pw=$('prog'),i;
-  for(i=1;i<scenes.length;i++){var tk=document.createElement('span');tk.className='ptick';tk.style.left=(starts[i]/TOTAL*100)+'%';pw.appendChild(tk);}
-  pw.onclick=function(e){var r=pw.getBoundingClientRect();seek((e.clientX-r.left)/r.width*TOTAL);};
-}
-function updatePlayBtn(){$('bPlay').textContent=playing?'❚❚':'▶';}
 $('bPlay').onclick=function(){
-  if(gt>=TOTAL-0.01){seek(0);playing=true;}else{playing=!playing;}
-  if(playing)lastTs=null;
-  updatePlayBtn();this.blur();
+  if(t>=total){t=0;sceneIdx=-1;playing=true}
+  else playing=!playing;
+  $('bPlay').textContent=playing?'❚❚':'▶';
 };
-$('bNext').onclick=function(){var si=sceneAt(gt);seek(si+1<scenes.length?starts[si+1]:TOTAL-0.01);this.blur();};
-$('bPrev').onclick=function(){var si=sceneAt(gt);seek(gt-starts[si]>1||si===0?starts[si]:(starts[si-1]||0));this.blur();};
-$('bReplay').onclick=function(){seek(0);playing=true;lastTs=null;updatePlayBtn();this.blur();};
-document.onkeydown=function(e){
-  var k=e.keyCode;
-  if(k===32){e.preventDefault();$('bPlay').onclick();}
-  else if(k===39){$('bNext').onclick();}
-  else if(k===37){$('bPrev').onclick();}
-  else if(k===36){seek(0);}
-};
-
-var zoom=1;
-function fit(){
-  var ow=$('stageOuter'),st=$('stage');
-  var s=Math.min((ow.clientWidth-32)/1280,(ow.clientHeight-32)/720,1)*zoom;
-  st.style.position='absolute';st.style.transformOrigin='top left';
-  st.style.transform='scale('+s+') translate('+dragOff.x+'px,'+dragOff.y+'px)';
-  st.style.left=Math.max((ow.clientWidth-1280*s)/2,16)+'px';
-  st.style.top=Math.max((ow.clientHeight-720*s)/2,16)+'px';
-}
-var dragOff={x:0,y:0},dragging=false,dragSX=0,dragSY=0;
-$('stageDrag').onmousedown=function(e){
-  dragging=true;dragSX=e.clientX-dragOff.x;dragSY=e.clientY-dragOff.y;
-  this.classList.add('active');e.preventDefault();
-};
-var resizing=false,rsSX=0,rsSY=0,rsZ=1;
-$('stageResize').onmousedown=function(e){
-  resizing=true;rsSX=e.clientX;rsSY=e.clientY;rsZ=zoom;
-  e.preventDefault();e.stopPropagation();
-};
-document.onmousemove=function(e){
-  if(dragging){
-    dragOff.x=e.clientX-dragSX;dragOff.y=e.clientY-dragSY;
-    var st=$('stage'),s=parseFloat(st.style.transform.match(/scale\(([\d.]+)\)/)[1]);
-    st.style.transform='scale('+s+') translate('+(dragOff.x/s)+'px,'+(dragOff.y/s)+'px)';
-  }else if(resizing){
-    var d=(e.clientX-rsSX)+(e.clientY-rsSY);
-    zoom=Math.max(0.5,Math.min(3,rsZ+d/300));
-    fit();
-  }
-};
-document.onmouseup=function(){
-  if(dragging){dragging=false;$('stageDrag').classList.remove('active');}
-  resizing=false;
-};
-window.onresize=fit;
-
-fin(new Scene('序章·数据流',8)
-  .add(0,function(){$('ov0').classList.add('show');})
-  .add(0.4,function(){$('ov0title').classList.add('in');})
-  .add(1.2,function(){$('fn1').classList.add('in');})
-  .add(2.0,function(){$('fa1').classList.add('in');})
-  .add(2.8,function(){$('fn2').classList.add('in');})
-  .add(3.6,function(){$('fa2').classList.add('in');})
-  .add(4.6,function(){$('fn3').classList.add('in');$('ov0note').classList.add('in');})
-  .cap(5.2,'序章','三条管线一次讲清：<b>Word</b> 提取 → <i>dict.json</i> → <b>CAD</b> 标注。'));
-
-fin(new Scene('安装·CAD 插件',12.5)
-  .add(0,function(){showWin('win-term',240,110);focusWin('win-term');})
-  .add(0.6,function(lt){if(!T1)T1=new Term($('term-main'),{text:INSTALL1,cps:150});T1.render(lt);})
-  .cap(1.0,'安装 ①','双击 <code>install.vbs</code>：写入 HKCU 注册表 <i>LOADCTRLS=14</i> 开机自动加载；HKLM 无权限时生成 <code>load-patent-marker.lsp</code> 兜底。',true));
-
-fin(new Scene('安装·VBA 模块',12.5)
-  .add(0,function(){showWin('win-term',100,120);showWin('win-vbe',660,170);focusWin('win-vbe');$('termTitle').textContent='install-vba.vbs';})
-  .add(0.5,function(lt){if(!T2)T2=new Term($('term-main'),{text:INSTALL2,cps:120});T2.render(lt);})
-  .add(4.8,function(){vbeReveal(1,true);})
-  .add(5.0,function(){vbeReveal(2,true);})
-  .add(5.2,function(){vbeReveal(3,true);})
-  .add(5.4,function(){vbeReveal(4,true);})
-  .add(5.6,function(){vbeReveal(5,true);})
-  .add(5.8,function(){vbeReveal(6,true);})
-  .cap(1.0,'安装 ②','双击 <code>install-vba.vbs</code>：6 个模块导入 <b>Normal.dotm</b> 全局模板，此后 Ctrl+S 保存即导出 dict.json。',true));
-
-fin(new Scene('后备·NETLOAD',8.5)
-  .add(0,function(){showWin('win-cad',40,80);focusWin('win-cad');})
-  .add(1.0,function(lt){if(!T3)T3=new Term($('cmdline'),{text:NETLOAD,cps:60,caretCls:'caret'});T3.render(lt);})
-  .cap(2.5,'加载','<i>后备方案</i>：当 VBS 安装未能自动加载插件时，手动 <code>NETLOAD</code> 加载 PatentMarker.dll。',true));
-
-fin(new Scene('面板·BZ',11)
-  .add(0,function(){showWin('win-cad',40,80);focusWin('win-cad');setCmd('命令: BZ',true);})
-  .add(0.3,function(){PAL.open=true;renderPalette();$('palette').classList.add('open');})
-  .click(1.5,PM.search.x,PM.search.y)
-  .add(1.9,function(){PAL.caret=true;renderPalette();})
-  .add(2.1,function(){PAL.search='弹';renderPalette();})
-  .add(2.6,function(){PAL.search='弹簧';renderPalette();})
-  .add(4.5,function(){PAL.search='';renderPalette();})
-  .click(6.0,PM.r1.x,PM.r1.y)
-  .click(6.35,PM.r1.x,PM.r1.y)
-  .add(6.8,function(){PAL.loaded='1';PAL.sel=0;PAL.status='已装填: [1] — 请在图纸中点击';renderPalette();})
-  .cap(1.0,'面板 v4.0','<code>BZ</code> 打开字典面板：默认三点模式；<b>双击</b>条目直接开始标注，<i>右键 / F2</i> 进入编辑。'));
-
-fin(new Scene('粘贴识别·CAD',13)
-  .add(0,function(){
-    showWin('win-cad',40,80);focusWin('win-cad');
-    PAL.open=true;PAL.points=true;PAL.status='可直接从 Word 粘贴附图标记段落';renderPalette();
-    setCmd('命令: BZ\n面板已就绪 — 可粘贴识别并写回 dict.json',true);
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .click(1.4,PM.pasteBtn.x,PM.pasteBtn.y)
-  .add(1.8,function(){showCadDialog('pasteDlg');})
-  .add(3.2,function(){$('pastePreview').style.boxShadow='0 0 0 2px rgba(37,99,235,.25)';})
-  .click(5.4,PM.mergeBtn.x,PM.mergeBtn.y)
-  .add(5.8,function(){
-    hideCadDialogs();$('pastePreview').style.boxShadow='';
-    PAL.dict=DICTPASTE;PAL.compare=true;PAL.diff={2:'lightblue',11:'lightgreen'};PAL.statusDiff=true;
-    PAL.status='已按编号合并 — 更新 1，新增 1；已写回 dict.json';renderPalette();
-    setCmd('粘贴识别完成: 6 条（更新 1，新增 1，警告 0）\n字典已保存，metadata.modified_by = cad',true);
-  })
-  .cap(0.8,'CAD 端识别','点击 <b>粘贴识别</b>，把 Word 段落直接转成可编辑预览；可选<i>覆盖整个字典</i>或<i>按编号合并</i>，无需先运行 VBA。',true));
-
-var P2='命令: BZM\n点击 [1 底座] 的标注点（Esc 取消）: ';
-var P3=P2+'\n点击拐点（回车结束，至少1个）: ';
-var P4=P3+'\n点击下一个拐点（回车结束）: ';
-var P5=P4+'\n点击文字位置（回车=最后拐点）: ';
-var P6=P5+'\n  已创建引线: 1（2 个顶点）';
-var Q2=P6+'\n  >> 已切换为: 2\n点击 [2 支架] 的标注点（Esc 取消）: ';
-var Q3=Q2+'\n点击拐点（回车结束，至少1个）: ';
-var Q4=Q3+'\n点击下一个拐点（回车结束）: ';
-var Q5=Q4+'\n点击文字位置（回车=最后拐点）: ';
-var Q6=Q5+'\n  已创建引线: 2（2 个顶点）';
-var R2=Q6+'\n  >> 已切换为: 3\n点击 [3 电机] 的标注点（Esc 取消）: ';
-var R3=R2+'\n点击拐点（回车结束，至少1个）: ';
-var R4=R3+'\n点击下一个拐点（回车结束）: ';
-var R5=R4+'\n点击文字位置（回车=最后拐点）: ';
-var R6=R5+'\n  已创建引线: 3（2 个顶点）';
-var p0a=vp(300,330),p0b=vp(352,369),p0c=vp(366,369);
-var p1a=vp(220,250),p1b=vp(174,219),p1c=vp(160,219);
-var p2a=vp(280,170),p2b=vp(332,113),p2c=vp(346,113);
-
-var s5=new Scene('标注·BZM',22);
-s5.cross=true;
-fin(s5
-  .add(0,function(){
-    showWin('win-cad',40,80);focusWin('win-cad');
-    PAL.open=true;PAL.points=false;PAL.dict=DICTPASTE;PAL.loaded='1';PAL.sel=0;PAL.status='已切换到无限点模式 · 装填 [1]';
-    renderPalette();setCmd(P2,true);
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .click(2.0,p0a.x,p0a.y)
-  .add(2.4,function(){setCmd(P3,true);})
-  .anim(2.5,0.9,function(p){drawLeader(0,p*0.65);})
-  .click(3.6,p0b.x,p0b.y)
-  .add(4.0,function(){setCmd(P4,true);})
-  .key(4.9,'Enter ↵',620,640)
-  .add(5.1,function(){setCmd(P5,true);})
-  .anim(5.2,0.6,function(p){drawLeader(0,0.65+p*0.3);})
-  .click(6.0,p0c.x,p0c.y)
-  .add(6.4,function(){drawLeader(0,1);})
-  .add(6.45,function(){setCmd(P6,true);})
-  .click(7.2,PM.r2.x,PM.r2.y)
-  .click(7.55,PM.r2.x,PM.r2.y)
-  .add(8.0,function(){PAL.loaded='2';PAL.sel=1;PAL.status='已切换到 #2 支架';renderPalette();setCmd(Q2,true);})
-  .click(8.8,p1a.x,p1a.y)
-  .add(9.2,function(){setCmd(Q3,true);})
-  .anim(9.3,0.9,function(p){drawLeader(1,p*0.65);})
-  .click(10.4,p1b.x,p1b.y)
-  .add(10.8,function(){setCmd(Q4,true);})
-  .key(11.6,'Enter ↵',620,640)
-  .add(11.8,function(){setCmd(Q5,true);})
-  .anim(11.9,0.6,function(p){drawLeader(1,0.65+p*0.3);})
-  .click(12.7,p1c.x,p1c.y)
-  .add(13.1,function(){drawLeader(1,1);})
-  .add(13.15,function(){setCmd(Q6,true);})
-  .click(13.9,PM.r3.x,PM.r3.y)
-  .click(14.25,PM.r3.x,PM.r3.y)
-  .add(14.7,function(){PAL.loaded='3';PAL.sel=2;PAL.status='已切换到 #3 电机';renderPalette();setCmd(R2,true);})
-  .click(15.6,PM.lineBtn.x,PM.lineBtn.y)
-  .add(16.0,function(){PAL.spline=false;PAL.status='线型: 直线段（影响后续新建引线）';renderPalette();configLeader(2,'line');})
-  .click(17.0,p2a.x,p2a.y)
-  .add(17.4,function(){setCmd(R3,true);})
-  .anim(17.5,0.8,function(p){drawLeader(2,p*0.7);})
-  .click(18.6,p2b.x,p2b.y)
-  .add(19.0,function(){setCmd(R4,true);})
-  .key(19.8,'Enter ↵',620,640)
-  .add(20.0,function(){setCmd(R5,true);})
-  .anim(20.1,0.5,function(p){drawLeader(2,0.7+p*0.25);})
-  .click(20.8,p2c.x,p2c.y)
-  .add(21.2,function(){drawLeader(2,1);})
-  .add(21.25,function(){setCmd(R6,true);})
-  .cap(1.0,'无限点模式','v4.0 默认三点；需要多拐点时点一次按钮切到<i>点数:无限</i>。标注过程中双击面板行仍可热切换编号。'));
-
-var S2='命令: BZM\n点击 [4 齿轮] 的标注点（Esc 取消）: ';
-var S3=S2+'\n[三点模式] 点击拐点（第 2/3 点）: ';
-var S4=S3+'\n[三点模式] 点击文字位置（第 3/3 点，自动创建）: ';
-var S5=S4+'\n  已创建引线: 4（2 个顶点）\n点击 [4 齿轮] 的标注点（Esc 取消）: ';
-var p3a=vp(241,269),p3b=vp(280,300),p3c=vp(294,300);
-
-var s6=new Scene('默认三点·v4.0',10.5);
-s6.cross=true;
-fin(s6
-  .add(0,function(){
-    showWin('win-cad',40,80);focusWin('win-cad');
-    PAL.open=true;PAL.points=true;PAL.dict=DICTPASTE;PAL.loaded='';PAL.sel=-1;PAL.status='三点模式已默认开启';
-    renderPalette();
-    configLeader(0,'spline');drawLeader(0,1);
-    configLeader(1,'spline');drawLeader(1,1);
-    configLeader(2,'line');drawLeader(2,1);
-    setCmd(S2,true);
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .click(1.4,PM.r4.x,PM.r4.y)
-  .click(1.75,PM.r4.x,PM.r4.y)
-  .add(2.1,function(){PAL.loaded='4';PAL.sel=3;PAL.status='双击已启动 PATMARK: [4] 齿轮';renderPalette();setCmd(S2,true);})
-  .click(3.4,p3a.x,p3a.y)
-  .add(3.8,function(){setCmd(S3,true);})
-  .anim(3.9,0.8,function(p){drawLeader(3,p*0.7);})
-  .click(5.0,p3b.x,p3b.y)
-  .add(5.4,function(){setCmd(S4,true);})
-  .anim(5.5,0.6,function(p){drawLeader(3,0.7+p*0.25);})
-  .click(6.4,p3c.x,p3c.y)
-  .add(6.8,function(){drawLeader(3,1);})
-  .add(6.85,function(){setCmd(S5,true);})
-  .cap(1.0,'v4.0 默认交互','双击“4 齿轮”直接启动 <code>PATMARK</code>。默认三点固定采集：<b>附着点 → 1 拐点 → 文字位置</b>，第 3 点即自动创建。'));
-
-fin(new Scene('同步·Ctrl+S',14)
-  .add(0,function(){
-    showWin('win-cad',40,80);
-    PAL.open=true;PAL.loaded='3';PAL.sel=-1;PAL.status='已装填: [3] — 请在图纸中点击';
-    renderPalette();leadersAll(true);
-    setCmd('命令: BZM\n点击 [3 电机] 的标注点（Esc 取消）: ',true);
-    showWin('win-word',50,130,undefined,0.95);focusWin('win-word');
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .click(0.8,PM.wordM3.x,PM.wordM3.y)
-  .add(1.2,function(){wordSet('3电机',true);})
-  .add(1.8,function(){wordSet('3伺',true);})
-  .add(2.2,function(){wordSet('3伺服',true);})
-  .add(2.6,function(){wordSet('3伺服电',true);})
-  .add(3.0,function(){wordSet('3伺服电机',true);})
-  .add(3.4,function(){wordSet('3伺服电机',false);})
-  .key(4.0,'Ctrl+S',320,300)
-  .add(4.3,function(){$('wordSaveState').style.opacity='1';})
-  .add(4.6,function(){showWin('win-json',90,200,undefined,0.9);})
-  .add(4.8,function(lt){if(!TJ)TJ=new Term($('term-json'),{text:DICTJSON,cps:200,caretCls:'caret',hl:'伺服电机'});TJ.render(lt);})
-  .add(9.5,function(){
-    PAL.dict=DICT2;PAL.compare=true;PAL.diff={2:'lightblue'};PAL.statusDiff=true;
-    PAL.status='字典已更新 — 新增 0，删除 0，编号变 0，名称变 1，无法匹配 0';
-    PAL.sel=-1;renderPalette();
-  })
-  .cap(1.0,'同步','Word 里改「电机」→「伺服电机」，<i>Ctrl+S</i> 即导出；面板 2s 内差异高亮（名称变 → 蓝）。',true));
-
-fin(new Scene('编辑·改号联动',12.5)
-  .add(0,function(){
-    showWin('win-cad',40,80);focusWin('win-cad');
-    PAL.open=true;PAL.points=true;PAL.dict=DICTPASTE;PAL.loaded='3';PAL.sel=2;PAL.status='右键条目或按 F2 编辑';
-    renderPalette();leadersAll(true);$('ldT2').textContent='3';
-    setCmd('命令: BZ\n已选中 [3] 伺服电机',true);
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .click(1.4,PM.r3.x,PM.r3.y)
-  .key(2.0,'F2',PM.r3.x-36,PM.r3.y)
-  .add(2.4,function(){showCadDialog('editDlg');})
-  .click(5.0,PM.saveEditBtn.x,PM.saveEditBtn.y)
-  .add(5.4,function(){
-    hideCadDialogs();PAL.dict=DICTEDIT;PAL.compare=true;PAL.diff={2:'lightyellow'};PAL.loaded='3A';PAL.sel=2;PAL.statusDiff=true;
-    PAL.status='已保存 3 → 3A；图纸同步更新 1 条引线';renderPalette();
-    $('ldT2').textContent='3A';$('ldT2').classList.add('entity-flash');
-    setCmd('字典已保存: 3 → 3A\n已更新图纸 PAT 引线: 1 条\nREGEN 完成',true);
-  })
-  .add(8.2,function(){$('ldT2').classList.remove('entity-flash');})
-  .cap(0.8,'编辑与实体联动','选中条目按 <code>F2</code>（或右键）编辑；改号保存后，字典与图纸中的 PAT 引线文字<b>同步更新</b>并立即 Regen。'));
-
-fin(new Scene('冲突·Word / CAD 裁决',14.5)
-  .add(0,function(){
-    showWin('win-cad',40,80);PAL.open=true;PAL.points=true;PAL.dict=DICTEDIT;PAL.loaded='';PAL.sel=-1;
-    PAL.status='CAD 字典已修改 · 等待 Word 保存';renderPalette();leadersAll(true);$('ldT2').textContent='3A';
-    setCmd('CAD 修改已写回: metadata.modified_by = cad',true);
-    showWin('win-word',55,125,undefined,0.82);focusWin('win-word');
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .key(1.8,'Ctrl+S',350,285)
-  .add(2.2,function(){$('wordSaveState').style.opacity='1';})
-  .add(4.0,function(){
-    hideWin('win-word');focusWin('win-cad');PAL.conflict=true;PAL.statusDiff=true;
-    PAL.status='检测到 Word 已覆盖 CAD 修改 — 点击“裁决”选择版本';renderPalette();
-    setCmd('检测到备份: patent-sample.dict.json.word-20260806-142608.bak\n当前 Word 版与 CAD 备份版需要裁决',true);
-  })
-  .click(5.4,PM.resolveBtn.x,PM.resolveBtn.y)
-  .add(5.8,function(){showCadDialog('conflictDlg');})
-  .click(9.1,PM.restoreCadBtn.x,PM.restoreCadBtn.y)
-  .add(9.5,function(){
-    hideCadDialogs();PAL.conflict=false;PAL.statusDiff=false;PAL.dict=DICTEDIT;PAL.status='已恢复 CAD 版 · 备份已处理 · 冲突解除';renderPalette();
-    setCmd('已恢复 CAD 版字典\n已清除 modified_by 标记并删除已处理备份\n冲突裁决完成',true);
-  })
-  .cap(0.8,'安全裁决','Word 保存若覆盖 CAD 修改，会先自动备份；CAD 仅点亮提示、不打断工作。可选<b>采用 Word 版 / 恢复 CAD 版 / 稍后再说</b>。',true));
-
-fin((function(){
-  var s=new Scene('检查·BZC',9);
-  s.cross=true;
-  return s
-    .add(0,function(){
-      showWin('win-cad',40,80);focusWin('win-cad');
-      PAL.open=true;PAL.dict=DICT2;PAL.compare=true;PAL.diff={2:'lightblue'};
-      PAL.loaded='';PAL.sel=-1;PAL.statusDiff=false;PAL.status='字典已加载。';
-      renderPalette();leadersAll(true);
-    })
-    .add(0.3,function(){$('palette').classList.add('open');})
-    .add(1.0,function(lt){if(!T7)T7=new Term($('cmdline'),{text:CHECK,cps:90,caretCls:'caret'});T7.render(lt);})
-    .cap(2.0,'检查','<code>BZC</code> 双向核对：图纸 4 条 vs 字典 11 条，<i>7 项缺失</i>，报告一键落盘。');
-})());
-
-var A2='命令: BZA\n对齐模式: 选择';
-var A3=A2+'\n选择要对齐的 PAT_DIM 引线: ';
-var A4=A3+'\n选择对齐参考点: ';
-var A5=A4+'\n对齐方向? 水平';
-var A6=A5+'\n对齐 1 条引线（跳过 0，错误 0）。';
-var B1='命令: BZS';
-var B2=B1+'\nPatentMarker: 已选中 8 个 PAT 实体（Leader + MText）。按 Ctrl+1 修改属性。';
-var dA=vp(250,95),dB=vp(410,395),dRef=vp(370,373);
-
-var s8=new Scene('对齐·BZA / 全选·BZS',12.5);
-s8.cross=true;
-fin(s8
-  .add(0,function(){
-    showWin('win-cad',40,80);focusWin('win-cad');
-    PAL.open=true;PAL.dict=DICT2;PAL.compare=true;PAL.diff={2:'lightblue'};
-    PAL.loaded='';PAL.sel=-1;PAL.statusDiff=false;PAL.status='字典已加载。';
-    renderPalette();leadersAll(true);setCmd('命令: BZA',true);
-  })
-  .add(0.3,function(){$('palette').classList.add('open');})
-  .add(1.0,function(){setCmd(A2,true);})
-  .add(1.5,function(){setCmd(A3,true);})
-  .move(2.2,dA.x,dA.y,0.25)
-  .move(2.5,dB.x,dB.y,0.7)
-  .anim(2.5,0.7,function(p){selBox(250,95,160*p,300*p,true);})
-  .add(3.5,function(){setCmd(A4,true);})
-  .click(4.2,dRef.x,dRef.y)
-  .add(5.0,function(){setCmd(A5,true);})
-  .anim(5.5,1.0,function(p){alignLd2(p);})
-  .add(6.6,function(){setCmd(A6,true);})
-  .add(7.0,function(){selBox(0,0,0,0,false);})
-  .add(8.0,function(){setCmd(B1,true);})
-  .add(9.0,function(){setCmd(B2,true);})
-  .add(9.5,function(){selBox(130,85,290,310,true);})
-  .cap(1.0,'对齐','<code>BZA</code> 框选引线、指定参考点，文字水平对齐；<code>BZS</code> 全选 Leader + MText。'));
-
-fin(new Scene('尾声·就绪',9.5)
-  .add(0,function(){$('ovEnd').classList.add('show');})
-  .add(0.8,function(){endStep(0,true);})
-  .add(1.5,function(){endStep(1,true);})
-  .add(2.2,function(){endStep(2,true);})
-  .add(2.9,function(){endStep(3,true);})
-  .add(3.6,function(){endStep(4,true);})
-  .add(4.3,function(){endStep(5,true);})
-  .add(5.0,function(){endStep(6,true);})
-  .add(5.7,function(){endStep(7,true);})
-  .add(6.4,function(){$('endStamp').classList.add('in');})
-  .cap(7.0,'就绪','安装 + 后备加载、五条命令 — <b>PatentMarker</b> 已就绪。'));
-
+$('bPrev').onclick=function(){seek(sceneStart(Math.max(0,sceneIdx-1)))};
+$('bNext').onclick=function(){seek(sceneStart(Math.min(scenes.length-1,sceneIdx+1)))};
+$('bReplay').onclick=function(){seek(0);playing=true;$('bPlay').textContent='❚❚'};
 (function(){
-  var acc=0,i;
-  for(i=0;i<scenes.length;i++){starts.push(acc);acc+=scenes[i].dur;}
-  TOTAL=acc;
-  buildChapters();buildTicks();fit();resetStage();fullRender(0);updatePlayBtn();
-  setInterval(function(){var d=new Date();$('clock').textContent=pad2(d.getHours())+':'+pad2(d.getMinutes())+':'+pad2(d.getSeconds());},1000);
-  var qp=(location.search||'').replace(/^\?/,'').split('&'),pm={};
-  for(var qi=0;qi<qp.length;qi++){var kv=qp[qi].split('=');if(kv[0])pm[kv[0]]=kv[1];}
-  if(pm.t!==undefined){var t0=parseFloat(pm.t)||0;seek(t0);if(pm.p==='1'){playing=false;updatePlayBtn();}else{lastTs=null;requestAnimationFrame(tick);}}
-  else{requestAnimationFrame(tick);}
+  var prog=$('prog'),drag=false;
+  function seekEv(e){
+    var r=prog.getBoundingClientRect();
+    seek(clamp((e.clientX-r.left)/r.width,0,1)*total);
+  }
+  prog.addEventListener('mousedown',function(e){drag=true;seekEv(e)});
+  window.addEventListener('mousemove',function(e){if(drag)seekEv(e)});
+  window.addEventListener('mouseup',function(){drag=false});
 })();
+function syncChrome(){
+  var s=scenes[sceneIdx]||scenes[0];
+  if(sceneIdx===0){showCaption('序章','专利图纸标注的完整闭环：<b>Word 说明书</b> → VBA 自动提取 → <i>dict.json</i> → CAD 一键标注。')}
+  $('liveTxt').textContent=playing?'LIVE · 幂等时间轴':'PAUSED · 幂等时间轴';
+}
+setInterval(syncChrome,400);
+setInterval(function(){
+  var d=new Date();
+  $('clock').textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+':'+('0'+d.getSeconds()).slice(-2);
+},1000);
+
+measurePalette();
+resetStage();
+
+var STW=1280,STH=720;
+function fitStage(){
+  var st=$('stage'),out=$('stageOuter');
+  var aw=out.clientWidth-8,ah=out.clientHeight-8;
+  var sc=Math.min(aw/STW,ah/STH,1.6);
+  st.style.transform='scale('+sc+')';
+  out.style.justifyContent=STW*sc<aw?'center':'flex-start';
+  out.style.alignItems=STH*sc<ah?'center':'flex-start';
+}
+(function(){
+  var st=$('stage'),bar=$('stageDrag');
+  var sx=0,sy=0,ox=0,oy=0,tx=0,ty=0,dragging=false;
+  function apply(){st.style.left=tx+'px';st.style.top=ty+'px'}
+  bar.addEventListener('mousedown',function(e){
+    dragging=true;sx=e.clientX;sy=e.clientY;ox=tx;oy=ty;
+    bar.classList.add('active');e.preventDefault();
+  });
+  window.addEventListener('mousemove',function(e){
+    if(dragging){tx=ox+e.clientX-sx;ty=oy+e.clientY-sy;apply()}
+  });
+  window.addEventListener('mouseup',function(){dragging=false;bar.classList.remove('active')});
+  var rz=$('stageResize'),rw=STW,rh=STH,rdrag=false;
+  rz.addEventListener('mousedown',function(e){
+    rdrag=true;sx=e.clientX;sy=e.clientY;e.preventDefault();
+  });
+  window.addEventListener('mousemove',function(e){
+    if(!rdrag)return;
+    var sc=parseFloat(st.style.transform.replace('scale(','').replace(')',''))||1;
+    rw=Math.max(720,STW+(e.clientX-sx)/sc);
+    rh=Math.max(405,STH+(e.clientY-sy)/sc);
+    st.style.width=rw+'px';st.style.height=rh+'px';
+  });
+  window.addEventListener('mouseup',function(){rdrag=false});
+  window.addEventListener('resize',fitStage);
+})();
+fitStage();
+requestAnimationFrame(tick);
+
+var qSeek=location.search.match(/seek=(\d+)/);
+if(qSeek)seek(+qSeek[1]*1000);
 })();
 </script>
 </body>
