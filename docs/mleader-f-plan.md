@@ -11,7 +11,7 @@
 主线项目（PatentCAD-Annotator）的标注引擎原采用 `Leader + MText` 两个独立实体拼合，通过扩展字典维护关联。2026-08-06 曾因 MLeader"鱼钩形态"问题回退该方案（见 [mleader-attachment-grip-incident.md](mleader-attachment-grip-incident.md)）；2026-08-15 的形态探针（`tools/MLeaderRepro`）重新定位了根因：
 
 - 根因不是"宿主硬编码行为"，而是**顶点链不完整**：旧实现只提供 attach→dogleg 两点，MLeader 自行计算文字着陆点，产生回折线段（鱼钩）。
-- 把**文字点作为最后一个顶点**加入顶点链后（F 方案），引线路径与用户点击点完全一致。
+- 顶点链末顶点改为缩进端点（沿最后一段方向缩进 0.4×字高，不直接触及文字），文字仍锚定在 `TextLocation`。
 - 无箭头时 `ArrowSize` 必须为 0：非零 ArrowSize 即使配空箭头块（`_PAT_NO_ARROW`），也会把引线起点修剪掉 ArrowSize，导致引线不触及零件。
 
 2026-08-16 F 方案合并进主线：2010/2013/2015/2025 四个版本的新建标注统一改为 MLeader（F 方案）；2007 无 MLeader API，保持 `Leader + MText`。
@@ -55,7 +55,7 @@ ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 
 **跨版本 API 适配（Cross-version adaptation）：** `ExtendLeaderToText` 为 2014+ SDK 属性（2010-2012 无此成员），统一经 `PatMLeaderCreator.SetExtendLeaderToText / GetExtendLeaderToText` 反射访问，保持四版本单一代码；不支持时静默跳过（其默认行为即不延伸）。命令文件整体保持 .NET 3.5 兼容语法（不使用 `string.IsNullOrWhiteSpace` 等 4.0+ API）。
 
-**English summary:** all auto-geometry off (style + entity level), then the vertex chain is `attach → dogleg(s) → text` where the text point is always the LAST vertex; text is attached via `ml.MText` + `TextLocation` after the vertices. `ExtendLeaderToText` is a 2014+ SDK property and is accessed via reflection so one source file serves all four editions.
+**English summary:** all auto-geometry off (style + entity level), then the vertex chain is `attach → dogleg(s) → retracted endpoint` (the last vertex is retracted by 0.4×text-height from the text along the final segment direction, so it does not touch the text); the text is still attached via `ml.MText` + `TextLocation` after the vertices. `ExtendLeaderToText` is a 2014+ SDK property and is accessed via reflection so one source file serves all four editions.
 
 ---
 
