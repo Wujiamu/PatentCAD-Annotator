@@ -396,7 +396,7 @@ namespace PatentMarker.Commands
                 MText text = (MText)tr.GetObject(annId, OpenMode.ForWrite);
                 text.Location = newPos;
                 if (leader.Annotation.IsNull)
-                    PatLeaderTextAttachment.SetTextEndpoint(leader, newPos);
+                    PatLeaderTextAttachment.SetTextEndpoint(leader, newPos, text.TextHeight);
                 return true;
             }
             catch (Exception ex)

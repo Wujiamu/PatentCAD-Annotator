@@ -28,7 +28,11 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.Equal(2, fixture.Database.CommittedEntities.Count);
                 Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
                 Assert.Equal(3, leader.Vertices.Count);
-                Assert.Equal(new Point3d(5, 6, 0), leader.VertexAt(2));
+                // 引线末顶点从文字点缩进 0.4×字高（字高 4.25 → gap=1.7），不直接触及文字。
+                Point3d tpt = leader.VertexAt(2);
+                double ex = tpt.X - 5.0, ey = tpt.Y - 6.0;
+                Assert.True(Math.Abs(Math.Sqrt(ex * ex + ey * ey) - 1.7) < 0.01,
+                    "leader endpoint should be 1.7 from text point, got " + tpt);
                 Assert.True(leader.HasArrowHead);
                 Assert.False(leader.IsSplined);
                 Assert.Equal(3.25, leader.Dimasz);
@@ -41,7 +45,7 @@ namespace PatentMarker.RuntimeContractTests
                 MLeader leader = Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(ContentType.MTextContent, leader.ContentType);
                 Assert.False(leader.MLeaderStyle.IsNull);
-                Assert.Equal(2, leader.Vertices.Count);
+                Assert.Equal(3, leader.Vertices.Count);
                 Assert.Equal(LeaderType.StraightLeader, leader.LeaderLineType);
                 Assert.Equal(3.25, leader.ArrowSize);
                 Assert.Equal(4.25, leader.TextHeight);
@@ -52,7 +56,11 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.Equal(TextAttachmentType.AttachmentCenter, leader.TextAttachmentType);
                 Assert.Equal(TextAngleType.HorizontalAngle, leader.TextAngleType);
                 Assert.Equal(1, leader.LeaderLineCount);
-                Assert.Equal(new Point3d(3, 4, 0), leader.GetLastVertex(0));
+                // 末顶点从文字点缩进 0.4×字高（gap=1.7），不直接触及文字。
+                Point3d mle = leader.GetLastVertex(0);
+                double mx = mle.X - 5.0, my = mle.Y - 6.0;
+                Assert.True(Math.Abs(Math.Sqrt(mx * mx + my * my) - 1.7) < 0.01,
+                    "MLeader endpoint should be 1.7 from text, got " + mle);
                 Assert.Equal(new Point3d(5, 6, 0), leader.TextLocation);
                 Assert.NotNull(leader.MText);
                 Assert.Equal("1342A", leader.MText.Contents);

@@ -57,13 +57,19 @@ namespace PatentMarker.Commands
                 ? ObjectId.Null
                 : EnsureNoArrowBlock(db, tr);
 
-            // ---- F 方案顶点链：attach → dogleg… → text（文字点必须进链）----
+            // ---- F 方案顶点链：attach → dogleg… → 缩进端点（贴近但不触及文字）----
             int line = ml.AddLeaderLine(attachPt);
+            Point3d lastVertex = attachPt;
             foreach (Point3d dogleg in doglegPts)
+            {
                 ml.AddLastVertex(line, dogleg);
-            if (doglegPts.Count == 0 ||
-                !SamePoint(doglegPts[doglegPts.Count - 1], textPt))
-                ml.AddLastVertex(line, textPt);
+                lastVertex = dogleg;
+            }
+            // 末顶点从最后一个稳定顶点向文字点缩进 gap=0.4×字高，使引线不直接顶住文字。
+            Point3d endpoint = PatLeaderTextAttachment.Retract(
+                lastVertex, textPt, settings.TextHeight);
+            if (!SamePoint(endpoint, lastVertex))
+                ml.AddLastVertex(line, endpoint);
 
             // ---- 文字挂接（顺序与探针一致：先顶点后文字）----
             MText mt = new MText();

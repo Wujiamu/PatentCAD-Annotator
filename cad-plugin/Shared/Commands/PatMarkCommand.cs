@@ -263,7 +263,8 @@ namespace PatentMarker.Commands
                 leader.AppendVertex(attachPt);
                 foreach (Point3d point in doglegPts)
                     leader.AppendVertex(point);
-                PatLeaderTextAttachment.AppendTextEndpoint(leader, textPt);
+                PatLeaderTextAttachment.AppendTextEndpoint(leader, textPt,
+                    IO.PatSettingsStore.Current.TextHeight);
                 leader.IsSplined = IO.PatSettingsStore.Current.IsSplined;
                 leader.HasArrowHead = IO.PatSettingsStore.Current.HasArrowHead;
                 leader.Dimasz = IO.PatSettingsStore.Current.ArrowSize;

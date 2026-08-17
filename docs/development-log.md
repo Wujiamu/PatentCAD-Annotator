@@ -4,6 +4,19 @@
 
 ---
 
+## v5.2 (2026-08-18)
+
+**引线末端与文字之间加入随字高同步变化的间距**。此前 PATMARK 创建的引线最后一段一直延伸到文字点（MLeader F 方案的末顶点 / 2007 Leader 的文字端点），视觉上引线几乎直接顶住文字，不够清晰。现改为引线末端沿最后一段方向回缩 `gap = 0.4 × 字高`，文字仍锚定在用户点击的文字点不动。
+
+- **间距常量**：`Shared/Commands/PatLeaderTextAttachment.cs` 新增 `TextGapPerHeight = 0.4` 与 `Retract(previous, textPoint, textHeight)`（纯坐标标量运算，无 `Vector3d`，保持契约模拟测试 stub 可编译）；字高来自 `PatSettingsStore.Current.TextHeight`，字高变大间距自动变大。
+- **2007 Leader+MText（Shared 单源）**：`AppendTextEndpoint`/`SetTextEndpoint` 增加 `textHeight` 参数，创建时末顶点改为缩进点；`Shared/Commands/PatMarkCommand.cs` 传入 `TextHeight`；`Shared/Commands/PatAlignCommand.cs` 对齐移动后按新文字点重建缩进末顶点（从倒数第二个稳定顶点向新文字点缩进）。此路径末顶点完全可控，已通过契约模拟测试验证（见下）。
+- **MLeader 组（2010/2013/2015/2025）**：`PatMLeaderCreator.Create` 顶点链改为 `attach → dogleg… → 缩进端点`（几何末顶点回缩），记录链（Xrecord）仍保留文字点作为末点——PATMLVERIFY 的 C3（文字位置==记录点）与 C4（文字 1 字高内曲线端点 ≤1）不受影响，任一宿主规范化路径下验证仍通过；`PatAlignCommand`（旧 Leader 回退分支）同步 3 参 `SetTextEndpoint`。四个版本文件字节级一致。
+- **同步**：MLeader 组 2 个文件（`PatMLeaderCreator.cs`、`PatAlignCommand.cs`）四版本字节级复制；契约模拟测试 4 工程断言更新（末顶点距文字 = 0.4×字高，容差断言）。
+- 验证（全部本地实际执行）：`build.ps1 -Structure` / `-Static` 通过（含 check-version-sync MLeader 组 + Shared 单源校验）；契约模拟测试 2007/2010/2013/2015 各 28/28 通过；2025 单元测试 112/112 通过。
+- **实测备注**：本地无 AutoCAD SDK/宿主，五版本真实编译与 MLeader 宿主内行为需在对应 AutoCAD 版本 `NETLOAD` 实测（G 探针曾观察到 MLeader 会把非文字末顶点规范化到文字附着锚点——若宿主覆盖缩进点，2007 路径不受影响、MLeader 路径的间距以宿主最终渲染为准，可在实测后按需调整 `TextGapPerHeight` 或启用受控 `LandingGap`）。
+
+---
+
 ## v5.1 (2026-08-16)
 
 **PATCHECK 简化 + PATALIGN v2 重做**。PATCHECK 从三类检测收缩为单一"漏标检测"（字典有 · 图纸未标注）；PATALIGN 从"参考点 + 水平/垂直方向"重做为"选择集先行 → 线/框基准 → 空间不足时默认延伸"。

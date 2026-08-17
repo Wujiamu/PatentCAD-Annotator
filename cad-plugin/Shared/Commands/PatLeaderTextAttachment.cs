@@ -16,6 +16,9 @@ namespace PatentMarker.Commands
         private const string AnnotationLinkKey = "PATENTMARKER_MTEXT";
         private const int HardPointerIdCode = 340;
 
+        /// <summary>引线末端与文字之间的间距 = 该值 × 字高，随字体大小同步变化。</summary>
+        public const double TextGapPerHeight = 0.4;
+
         /// <summary>
         /// Selects the text corner facing the last leader vertex. The result
         /// is always one of the four corners. This is important when unlimited
@@ -71,27 +74,61 @@ namespace PatentMarker.Commands
         }
 
         /// <summary>
-        /// Appends the user-selected text attachment point as the final Leader
-        /// vertex. A separate MText must not be assigned to Leader.Annotation:
-        /// AutoCAD then creates a hook line and an extra text-side grip.
+        /// Computes the retracted leader endpoint: the point on the last segment
+        /// (from the preceding vertex toward the text) that stops just short of
+        /// the text by a gap proportional to the text height. Keeps the leader
+        /// from visually touching the text while the text stays anchored at its
+        /// picked location.
         /// </summary>
-        public static void AppendTextEndpoint(Leader leader, Point3d textPoint)
+        public static Point3d Retract(Point3d previous, Point3d textPoint, double textHeight)
         {
+            double dx = textPoint.X - previous.X;
+            double dy = textPoint.Y - previous.Y;
+            double dz = textPoint.Z - previous.Z;
+            double length = Math.Sqrt(dx * dx + dy * dy + dz * dz);
+            double gap = TextGapPerHeight * (textHeight < 0 ? 0 : textHeight);
+            if (length < 1e-9 || gap < 1e-9) return textPoint;
+            // 段太短时最多回落到中点，避免越过前一点。
+            double safeGap = gap < length ? gap : length * 0.5;
+            double t = safeGap / length;
+            return new Point3d(
+                textPoint.X - dx * t,
+                textPoint.Y - dy * t,
+                textPoint.Z - dz * t);
+        }
+
+        /// <summary>
+        /// Appends the retracted leader endpoint as the final Leader vertex,
+        /// keeping a text-height-proportional gap from the text. A separate
+        /// MText must not be assigned to Leader.Annotation: AutoCAD then creates
+        /// a hook line and an extra text-side grip.
+        /// </summary>
+        public static void AppendTextEndpoint(Leader leader, Point3d textPoint, double textHeight)
+        {
+            Point3d retracted = textPoint;
+            if (leader.NumVertices > 0)
+                retracted = Retract(leader.VertexAt(leader.NumVertices - 1), textPoint, textHeight);
             if (leader.NumVertices == 0 || !SamePoint(
-                leader.VertexAt(leader.NumVertices - 1), textPoint))
+                leader.VertexAt(leader.NumVertices - 1), retracted))
             {
-                leader.AppendVertex(textPoint);
+                leader.AppendVertex(retracted);
             }
         }
 
         /// <summary>
-        /// Keeps the detached Leader endpoint aligned when PATALIGN moves the
+        /// Keeps the detached Leader endpoint retracted when PATALIGN moves the
         /// independently stored MText.
         /// </summary>
-        public static void SetTextEndpoint(Leader leader, Point3d textPoint)
+        public static void SetTextEndpoint(Leader leader, Point3d textPoint, double textHeight)
         {
-            if (leader.NumVertices > 0)
-                leader.SetVertexAt(leader.NumVertices - 1, textPoint);
+            if (leader.NumVertices == 0) return;
+            // 单顶点时以该顶点为参照，否则以倒数第二个稳定顶点为参照，
+            // 让末顶点在跟随文字对齐位置的同时保持缩进间距。
+            Point3d previous = leader.NumVertices == 1
+                ? leader.VertexAt(0)
+                : leader.VertexAt(leader.NumVertices - 2);
+            leader.SetVertexAt(leader.NumVertices - 1,
+                Retract(previous, textPoint, textHeight));
         }
 
         /// <summary>

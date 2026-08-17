@@ -1,4 +1,4 @@
-﻿// ============================================================================
+// ============================================================================
 // 复线（mleader 分支）版本本地文件 — 仅 MLeader 复线版本编译
 //（2010/2013/2015/2025；2007 无 MLeader API，用 Shared 旧版）。
 // PATALIGN v2：选择集先行 → 线/框两种基准模式 → 溢出时默认延伸。
@@ -431,7 +431,7 @@ namespace PatentMarker.Commands
                 MText text = (MText)tr.GetObject(annId, OpenMode.ForWrite);
                 text.Location = newPos;
                 if (leader.Annotation.IsNull)
-                    PatLeaderTextAttachment.SetTextEndpoint(leader, newPos);
+                    PatLeaderTextAttachment.SetTextEndpoint(leader, newPos, text.TextHeight);
                 return true;
             }
             catch (Exception ex)
