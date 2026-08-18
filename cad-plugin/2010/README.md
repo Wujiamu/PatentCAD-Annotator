@@ -1,6 +1,6 @@
 # PatentCAD-Annotator 2010 — AutoCAD 2010~2012 适配版
 
-> **状态：已完成**
+> **状态：已完成（1.0.0）**
 > 源码从 `cad-plugin/2007/` 派生；标注引擎为 MLeader（F 方案三点顶点链），2007 无 MLeader API 保持 Leader + MText。
 >
 > **兼容性：本版本仅适用于 AutoCAD 2010 / 2011 / 2012，不可用于其他版本的 AutoCAD。**

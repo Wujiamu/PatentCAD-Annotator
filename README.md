@@ -72,7 +72,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 7 个 VBA 文件：6 模块 + 1 面板 UserForm 到 Normal 模板）
 2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
-3. **使用**：Word 保存 → 生成 `.dict.json`（v5.3 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注
+3. **使用**：Word 保存 → 生成 `.dict.json`（1.0.0 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
 
@@ -192,21 +192,25 @@ PatentCAD-Annotator/
 
 ### 版本历史
 
-| 版本 | 日期 | 主要变更 |
-|------|------|----------|
-| v5.1 | 2026-08-16 | PATCHECK 简化为漏标检测（面板"检测"按钮触发，未标注条目橙色 + △ 高亮）；PATALIGN v2 重做（选择集先行 → 线/框基准 → 空间不足自动延伸，排列顺序 = 投影顺序）；面板新增"检测/对齐"按钮；AutoCAD 2026 全量实机测试通过（含 pickfirst 流程与保存-重开持久化） |
-| v5.0 | 2026-08-16 | 标注引擎切换为 MLeader（F 方案三点顶点链）：2010/2013/2015/2025 四版本统一，单实体自持文字、无鱼钩、无额外附着点；新增 `PATMLSET`/`PATMLVERIFY`；AutoCAD 2026 实测 4/4 PASS；2007 保持 Leader + MText |
-| v4.9 | 2026-08-15 | Word 端接口收敛：4 个宏精简为单一入口 `ShowPatentDictPanel`，打开"专利标注字典工具"面板（手动导出按钮 + 保存时自动导出开关）；新增 `PatentDictPanel.frm`/`.frx` UserForm，5 套部署包与构建脚本纳入 .frm/.frx 校验 |
-| v4.6 | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
-| v4.5 | 2026-08-15 | 新增 `PATDOCTOR`（`BZD`）自动诊断机制：共享源码 Diagnostics 模块、RawLog 错误环形缓冲、自检报告；五版本编译通过 |
-| v4.1 | 2026-08-11 | 新增独立参数化矢量大括号：三点创建、控制点交互调整和高度/宽度输入；五个版本及部署包同步 |
-| v4.0 | 2026-08-06 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决；修复 MLeader 额外附着点问题，五个版本统一使用 Leader + MText 并重新编译部署 |
-| v3.2 | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
-| v3.1 | 2026-08-03 | 新增三点模式（面板切换按钮）：固定 3 点采集引线，与线型开关正交；全 5 版本同步 |
-| v3.0 | 2026-08-03 | VBA v3.0 多格式识别（括号/连字符/英文标点/裸列表）；C# 取消 JSON 排序按原文顺序；全版本重新编译部署 |
-| v2.5 | 2026-07-27 | 修复 Word 2010 无法导入 clsSaveHook.cls 的兼容性问题（改为代码注入）；修复 2007/2010 版箭头大小修改后不能立即生效；所有部署包补充 install-vba.vbs |
-| v2.4 | 2026-07-26 | 多版本适配完成（2010/2013/2015/2025），全部通过编译验证；动态复核修复 MLeader API 名称、ArrowSize/TextHeight 实例同步 |
-| v2.0 | 2026-07 | 2007 版完成：样条曲线引线 + 无限拐点 + 面板控制 + 字典自动刷新 |
+当前对外正式版本为 **1.0.0**。变更记录见 [CHANGELOG.md](CHANGELOG.md)；完整开发归档见 [docs/development-log.md](docs/development-log.md)。以下为 1.0.0 发布前的里程碑时间线（仅作演进参考，不再以版本号对外呈现）。
+
+| 里程碑 | 日期 | 主要变更 |
+|--------|------|----------|
+| M5 (v5.3) | 2026-08-18 | 字典文件隐藏化：`.dict.json` 及 `.bak` 备份写入后设"隐藏+系统"属性，资源管理器默认不可见；CAD 写回/冲突裁决适配；后放入 DWG 时自动清理隐藏孤儿字典 |
+| M5 (v5.2) | 2026-08-18 | 引线末端与文字之间加入随字高同步变化的间距（回缩 0.4×字高） |
+| M4 (v5.1) | 2026-08-16 | PATCHECK 简化为漏标检测（面板"检测"按钮触发，未标注条目橙色 + △ 高亮）；PATALIGN v2 重做（选择集先行 → 线/框基准 → 空间不足自动延伸，排列顺序 = 投影顺序）；面板新增"检测/对齐"按钮；AutoCAD 2026 全量实机测试通过（含 pickfirst 流程与保存-重开持久化） |
+| M4 (v5.0) | 2026-08-16 | 标注引擎切换为 MLeader（F 方案三点顶点链）：2010/2013/2015/2025 四版本统一，单实体自持文字、无鱼钩、无额外附着点；新增 `PATMLSET`/`PATMLVERIFY`；AutoCAD 2026 实测 4/4 PASS；2007 保持 Leader + MText |
+| M4 (v4.9) | 2026-08-15 | Word 端接口收敛：4 个宏精简为单一入口 `ShowPatentDictPanel`，打开"专利标注字典工具"面板（手动导出按钮 + 保存时自动导出开关）；新增 `PatentDictPanel.frm`/`.frx` UserForm，5 套部署包与构建脚本纳入 .frm/.frx 校验 |
+| M3 (v4.6) | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
+| M3 (v4.5) | 2026-08-15 | 新增 `PATDOCTOR`（`BZD`）自动诊断机制：共享源码 Diagnostics 模块、RawLog 错误环形缓冲、自检报告；五版本编译通过 |
+| M2 (v4.1) | 2026-08-11 | 新增独立参数化矢量大括号：三点创建、控制点交互调整和高度/宽度输入；五个版本及部署包同步 |
+| M2 (v4.0) | 2026-08-06 | CAD 端字典编辑闭环：粘贴识别（VBA 引擎移植 C#）+ 编辑对话框（改号/改名/新增/删除）+ 实体联动（改号同步图纸）+ 冲突裁决；修复 MLeader 额外附着点问题，五个版本统一使用 Leader + MText 并重新编译部署 |
+| M1 (v3.2) | 2026-08-04 | 修复 MLeaderStyle 未入库先设属性异常；2013/2015 改单文件部署（ILRepack 合并 Newtonsoft.Json）；VBA 分隔符类补全角分号 |
+| M1 (v3.1) | 2026-08-03 | 新增三点模式（面板切换按钮）：固定 3 点采集引线，与线型开关正交；全 5 版本同步 |
+| M1 (v3.0) | 2026-08-03 | VBA v3.0 多格式识别（括号/连字符/英文标点/裸列表）；C# 取消 JSON 排序按原文顺序；全版本重新编译部署 |
+| M1 (v2.5) | 2026-07-27 | 修复 Word 2010 无法导入 clsSaveHook.cls 的兼容性问题（改为代码注入）；修复 2007/2010 版箭头大小修改后不能立即生效；所有部署包补充 install-vba.vbs |
+| M1 (v2.4) | 2026-07-26 | 多版本适配完成（2010/2013/2015/2025），全部通过编译验证；动态复核修复 MLeader API 名称、ArrowSize/TextHeight 实例同步 |
+| M1 (v2.0) | 2026-07 | 2007 版完成：样条曲线引线 + 无限拐点 + 面板控制 + 字典自动刷新 |
 
 ---
 
@@ -226,7 +230,7 @@ Since v4.0 the dictionary can be edited directly in CAD: paste the marking secti
 
 Since v5.3, `.dict.json` and its `.bak` backups carry Hidden+System attributes and are invisible in Windows Explorer by default (Folder Options → Show hidden files and uncheck "Hide protected operating system files" to reveal them); copying/sharing the folder is unaffected. If a DWG is added to the folder later and the dict filename switches to the DWG name, the old dict is cleaned up automatically — no hidden orphan files are left behind.
 
-### Current annotation implementation (v5.1)
+### Current annotation implementation (1.0.0)
 
 - Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → dogleg(s) → text` with the text point always appended as the LAST vertex, and all automatic geometry (dogleg/landing/extend) is disabled, so the drawn path matches the user-picked points exactly. Edition 2007 has no MLeader API and keeps `Leader + MText`.
 - v4.0 rolled MLeader back because of the "fishhook" distortion; the 2026-08-15 form probe traced the root cause to an incomplete vertex chain (attach→dogleg only). Plan F fixes it by appending the text point — see the [Plan F document](docs/mleader-f-plan.md).
@@ -313,6 +317,27 @@ Each package contains the matching `PatentMarker.dll` and the seven shared VBA f
 - Structure and static synchronization checks pass for all five editions: the 30-file `cad-plugin/Shared/` canonical layer is linked by every edition csproj with no local duplicates, the 7-file MLeader command group is byte-identical across 2010/2013/2015/2025, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
 - **v5.1 full on-machine test passed on AutoCAD 2026** (batch runs against the deployment-package DLL): PATDOCTOR, BZM creation, BZC unmarked detection (including a dictionary-change re-check), PATALIGN line/frame modes across four space scenarios, the pickfirst workflow (BZS → BZA without prompts), PATMLVERIFY chain validation, and save-reopen persistence. The palette (BZ) is a GUI component and requires an interactive session.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
+
+### Version
+The public release of this project is **1.0.0**. See [CHANGELOG.md](CHANGELOG.md) for release notes and [docs/development-log.md](docs/development-log.md) for the full development archive. The table below is the pre-1.0.0 milestone timeline (kept for reference only; internal iteration numbers are no longer exposed as public versions).
+
+| Milestone | Date | Key changes |
+|-----------|------|-------------|
+| M5 (v5.3) | 2026-08-18 | Hide dict files: `.dict.json` and its `.bak` backups get Hidden+System attributes, invisible in Explorer by default; CAD write-back/conflict resolution adapted; orphan hidden dicts auto-cleaned when a DWG appears later |
+| M5 (v5.2) | 2026-08-18 | Leader tip pulled back from the text by a height-proportional gap (0.4× text height) |
+| M4 (v5.1) | 2026-08-16 | PATCHECK reduced to unmarked-only check (palette Check button, orange `△` highlight); PATALIGN v2 rebuilt (selection-first → line/frame reference → auto-extend); new Check/Align palette buttons; full on-machine test passed on AutoCAD 2026 (incl. pickfirst flow and save-reopen persistence) |
+| M4 (v5.0) | 2026-08-16 | Annotation engine switched to MLeader (Plan F three-point vertex chain) across 2010/2013/2015/2025: single entity, fishhook-free, no extra attachment point; new `PATMLSET`/`PATMLVERIFY`; AutoCAD 2026 on-machine 4/4 PASS; 2007 keeps Leader + MText |
+| M4 (v4.9) | 2026-08-15 | Word-side interface converged to a single `ShowPatentDictPanel` entry point with the annotation palette (manual export + auto export on save); added `PatentDictPanel.frm`/`.frx` UserForm; deployed packages and build scripts now validate .frm/.frx |
+| M3 (v4.6) | 2026-08-15 | Three-stage tech-debt cleanup: VBA single-sourcing (`vba/` + `vba-sync.ps1`), shared layer tightened to 29 files, contract tests added for 2007; fixed a .NET 4.0 API compatibility regression; repackaged all five packages and verified on AutoCAD 2026 |
+| M3 (v4.5) | 2026-08-15 | `PATDOCTOR` (`BZD`) auto-diagnostics: shared Diagnostics module, RawLog ring buffer, self-check report; all five editions compile |
+| M2 (v4.1) | 2026-08-11 | Independent parameterized vector brace: create from three points, adjust via control points or exact dimensions; synced across five editions and packages |
+| M2 (v4.0) | 2026-08-06 | CAD-side dictionary editing loop: paste recognition (VBA engine ported to C#) + edit dialog (renumber/rename/add/delete) + entity linkage + conflict resolution; fixed the MLeader extra-attachment issue; all five editions unified on Leader + MText and recompiled |
+| M1 (v3.2) | 2026-08-04 | Fixed MLeaderStyle set-before-add exception; 2013/2015 switched to single-file deployment (ILRepack-merged Newtonsoft.Json); VBA delimiter set completed with full-width semicolon |
+| M1 (v3.1) | 2026-08-03 | Three-point mode (palette toggle) — fixed 3-point leaders, orthogonal to the line-type switch; synced across all 5 editions |
+| M1 (v3.0) | 2026-08-03 | VBA multi-format recognition (brackets/hyphens/English punctuation/bare lists); C# JSON no longer sorted (keeps source order); all editions recompiled |
+| M1 (v2.5) | 2026-07-27 | Fixed Word 2010 clsSaveHook.cls import incompatibility (injected instead); fixed arrow-size not applying immediately on 2007/2010; install-vba.vbs added to all packages |
+| M1 (v2.4) | 2026-07-26 | Multi-edition adoption completed (2010/2013/2015/2025), all compiling; verified fixes for MLeader API names and ArrowSize/TextHeight instance sync |
+| M1 (v2.0) | 2026-07 | 2007 edition completed: spline leader + unlimited doglegs + palette control + auto dictionary refresh |
 
 ### License
 

@@ -1,6 +1,6 @@
 # PatentCAD-Annotator 2025 — AutoCAD 2025~2026+ 适配版
 
-> **状态：已完成**
+> **状态：已完成（1.0.0）**
 > AutoCAD 2025 迁移到 .NET 8，使用 System.Text.Json，零外部依赖。
 >
 > **兼容性：本版本仅适用于 AutoCAD 2025 及更高版本，不可用于其他版本的 AutoCAD。需要 Windows 10+。**

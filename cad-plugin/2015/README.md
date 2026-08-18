@@ -1,6 +1,6 @@
 # PatentCAD-Annotator 2015 — AutoCAD 2015~2024 适配版
 
-> **状态：已完成**
+> **状态：已完成（1.0.0）**
 > 源码从 `cad-plugin/2013/` 派生；标注引擎为 MLeader（F 方案三点顶点链），Newtonsoft.Json 经 ILRepack 合并进单 DLL 部署。
 >
 > **兼容性：本版本仅适用于 AutoCAD 2015 ~ 2024，不可用于其他版本的 AutoCAD。**
