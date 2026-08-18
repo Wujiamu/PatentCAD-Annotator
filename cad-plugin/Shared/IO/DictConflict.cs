@@ -65,6 +65,9 @@ namespace PatentMarker.IO
             error = "";
             try
             {
+                // v5.2：清除隐藏/系统属性后再删除（备份文件为隐藏文件）
+                try { if (File.Exists(backupPath)) File.SetAttributes(backupPath, FileAttributes.Normal); }
+                catch { }
                 if (File.Exists(backupPath)) File.Delete(backupPath);
                 return true;
             }

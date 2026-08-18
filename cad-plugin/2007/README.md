@@ -96,7 +96,7 @@ cd D:\PatentMarker
 
 ## 字典文件
 
-将 `<dwg文件名>.dict.json` 放在 DWG 同目录。由 `PatentMarker-2007-deploy/vba/` 下的 VBA 宏从 Word 说明书提取生成。
+将 `<dwg文件名>.dict.json` 放在 DWG 同目录。由 `PatentMarker-2007-deploy/vba/` 下的 VBA 宏从 Word 说明书提取生成。v5.3 起该文件带"隐藏+系统"属性，资源管理器默认不可见（文件夹选项 → 显示隐藏的文件，并取消"隐藏受保护的操作系统文件"可查看）。
 
 ## 配置
 

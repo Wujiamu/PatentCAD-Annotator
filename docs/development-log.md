@@ -4,6 +4,21 @@
 
 ---
 
+## v5.3 (2026-08-18)
+
+**字典文件隐藏化**：`.dict.json` 及 `.word-*.bak` 备份写入后自动设置"隐藏+系统"属性，资源管理器默认不可见（需勾选"显示隐藏的文件"**并**取消"隐藏受保护的操作系统文件"才可见）；文件夹整体拷贝/共享行为不变，CAD 端 `File.Exists`/时间戳轮询对隐藏文件正常工作，双向同步无变化。
+
+- **Word 端（`vba/AutoExport.bas`，5 套部署包 + 2007-v2 同步，SHA256 一致）**：
+  - 导出前 `SetAttr vbNormal` 清属性（ADODB `SaveToFile` 无法覆盖隐藏文件），导出后设 `vbHidden Or vbSystem`；
+  - `.bak` 备份同样设隐藏；清理旧备份的 `Dir()` 补 `vbHidden Or vbSystem` 参数（`Dir` 默认不返回隐藏文件）+ `Kill` 前清属性；
+  - 新增 `CleanupOrphanWordDict`：文件夹后放入 DWG 导致导出基名从 Word 名切换为 DWG 名时，自动删除 Word-only 时代的旧 `<Word名>.dict.json`（清属性后 Kill）——该文件已隐藏，用户无法手动发现/删除；仅精确匹配当前 Word 文档基名（不区分大小写），不触碰其他文档字典；不做额外的历史孤儿批量清理（旧孤儿在下次 Word 保存时自然回收）。
+- **CAD 端（5 版本 `IO/DictWriter.cs` + Shared `IO/DictConflict.cs`）**：写回前清目标文件隐藏属性（否则 `File.Replace` 覆盖隐藏文件失败）、写回后重设隐藏+系统；冲突裁决删除备份前清属性。
+- **部署包**：五版本 DLL 经 `package.ps1 -Apply` 更新（2013/2015 ILRepack 合并后确认无外部 Newtonsoft.Json 引用，旧 DLL 自动备份 `.bak.20260818-100747`）；VBA 七份全量同步。
+- 验证（全部本地实际执行）：`build.ps1 -Structure` / `-Static` 全绿（VBA 跨包一致 + Shared 单源层 + MLeader 组）；2025 单元测试 112/112；五版本真实编译通过。
+- 兼容说明：升级后已存在的旧 `.dict.json`（无隐藏属性）在下次 Word 保存时自动补上隐藏属性，无需用户干预。
+
+---
+
 ## v5.2 (2026-08-18)
 
 **引线末端与文字之间加入随字高同步变化的间距**。此前 PATMARK 创建的引线最后一段一直延伸到文字点（MLeader F 方案的末顶点 / 2007 Leader 的文字端点），视觉上引线几乎直接顶住文字，不够清晰。现改为引线末端沿最后一段方向回缩 `gap = 0.4 × 字高`，文字仍锚定在用户点击的文字点不动。

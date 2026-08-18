@@ -67,7 +67,22 @@ Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     ' v4.0：导出前备份被 CAD 端修改过的旧字典，防止 Word 静默覆盖
     BackupIfCadModified outPath
 
+    ' v5.2: clear Hidden/System attributes so ADODB SaveToFile can overwrite the hidden dict file
+    On Error Resume Next
+    SetAttr outPath, vbNormal
+    On Error GoTo errHandler
+
     JsonWriter.WriteToFile outPath, json
+
+    ' v5.2: keep the dict file invisible in Windows Explorer (Hidden + System attributes)
+    On Error Resume Next
+    SetAttr outPath, vbHidden Or vbSystem
+    On Error GoTo errHandler
+
+    ' v5.2: after a DWG appeared, the export target switched from the Word base
+    ' name to the DWG base name - remove the orphan dict from the Word-only era
+    ' (it is hidden, so the user cannot see or delete it manually)
+    CleanupOrphanWordDict doc, outPath
 
     ExportDict = True
     Exit Function
@@ -237,9 +252,12 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
 
     ' 删除旧备份（只保留最新一个）
     Dim oldBak As String
-    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak")
+    ' v5.2: vbHidden+vbSystem required - Dir() default (vbNormal) does not return hidden backup files
+    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak", vbHidden Or vbSystem)
     Do While oldBak <> ""
         On Error Resume Next
+        ' v5.2: clear attributes before Kill (hidden files cannot be killed)
+        SetAttr bakDir & "\" & oldBak, vbNormal
         Kill bakDir & "\" & oldBak
         On Error GoTo done
         oldBak = Dir()
@@ -252,14 +270,55 @@ Private Sub BackupIfCadModified(ByVal dictPath As String)
     bakPath = bakDir & "\" & fileName & ".word-" & stamp & ".bak"
     If fso.FileExists(bakPath) Then
         On Error Resume Next
+        ' v5.2: clear attributes before Kill (hidden files cannot be killed)
+        SetAttr bakPath, vbNormal
         Kill bakPath
         On Error GoTo done
     End If
     FileCopy dictPath, bakPath
 
+    ' v5.2: keep the backup file invisible in Windows Explorer too
+    On Error Resume Next
+    SetAttr bakPath, vbHidden Or vbSystem
+    On Error GoTo done
+
 done:
 End Sub
 
+' ======================================================================
+' v5.2: delete <Word base>.dict.json when the effective export base is a
+' DWG name (a DWG appeared after the first Word-only export). The orphan
+' is hidden (v5.2 attributes), so the user cannot see or delete it.
+' Only the file named exactly like the current Word document is touched;
+' other documents' dict files are never affected.
+' ======================================================================
+Private Sub CleanupOrphanWordDict(ByVal doc As Document, ByVal outPath As String)
+    On Error GoTo done
+
+    Dim dir As String
+    dir = GetOutputDir(doc)
+    If dir = "" Then Exit Sub
+
+    Dim wordBase As String
+    wordBase = RemoveExt(doc.Name)
+
+    Dim orphanPath As String
+    orphanPath = dir & "\" & wordBase & ".dict.json"
+
+    ' Target never switched (no DWG rename) - nothing to clean
+    If StrComp(orphanPath, outPath, vbTextCompare) = 0 Then Exit Sub
+
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FileExists(orphanPath) Then Exit Sub
+
+    On Error Resume Next
+    ' Hidden files cannot be killed - clear attributes first
+    SetAttr orphanPath, vbNormal
+    Kill orphanPath
+
+done:
+End Sub
 ' 以 UTF-8 读取整个文件内容（失败返回空串）
 Private Function ReadUtf8File(ByVal path As String) As String
     On Error GoTo errHandler

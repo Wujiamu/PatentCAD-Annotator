@@ -72,7 +72,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 7 个 VBA 文件：6 模块 + 1 面板 UserForm 到 Normal 模板）
 2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
-3. **使用**：Word 保存 → 生成 `.dict.json` → CAD 中 `BZ` 打开面板 → `BZM` 标注
+3. **使用**：Word 保存 → 生成 `.dict.json`（v5.3 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
 
@@ -223,6 +223,8 @@ PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing
 Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
 
 Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
+
+Since v5.3, `.dict.json` and its `.bak` backups carry Hidden+System attributes and are invisible in Windows Explorer by default (Folder Options → Show hidden files and uncheck "Hide protected operating system files" to reveal them); copying/sharing the folder is unaffected. If a DWG is added to the folder later and the dict filename switches to the DWG name, the old dict is cleaned up automatically — no hidden orphan files are left behind.
 
 ### Current annotation implementation (v5.1)
 
