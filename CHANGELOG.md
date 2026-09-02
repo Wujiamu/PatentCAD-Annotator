@@ -24,6 +24,11 @@ Adopts [Semantic Versioning](https://semver.org/).
 - **自检诊断** / **Self-check diagnostics**：BZD 一键生成插件状态与最近错误报告。
 - **多版本适配** / **Multi-edition support**：5 个版本覆盖 AutoCAD 2007—2026+（版本矩阵见根 `README.md`）。
 
+### 修复 / Fixes
+
+- **Word 工具面板空白小框**：`PatentDictPanel.frm` 配套的 `.frx` 设计数据由程序生成，控件坐标误用了 twip 量级数值（如 `Width=3000`），而 MSForms 实际单位为磅（points），所有控件被排到客户区之外——打开面板只显示一个空的小边框。修复：`UserForm_Initialize` 中以磅为单位显式设置窗体与控件布局（不依赖 `.frx` 设计数据），并把窗体标题从 "UserForm1" 改为"专利标注字典工具"。已通过 Word 实机（重放导入 + 运行时属性查询 + 屏幕像素分析）验证按钮与复选框正常显示。
+- **Word tool panel rendered as an empty frame**: the generated `.frx` design blob stored twip-scale control coordinates (e.g. `Width=3000`) while MSForms expects points, pushing every control outside the client area - the panel showed up as an empty little frame. Fixed by setting the form and control layout explicitly in points inside `UserForm_Initialize` (independent of `.frx` design data), and the form caption is now "专利标注字典工具" instead of "UserForm1". Verified on a live Word instance via runtime property queries and screen-pixel analysis.
+
 ### 里程碑时间线 / Milestone timeline (pre-1.0.0, for reference)
 
 | 里程碑 / Milestone | 日期 / Date | 关键内容 / Key content |
