@@ -8,8 +8,8 @@ namespace PatentMarker.Commands
     /// Parametric definition of one two-dimensional curly brace.
     /// Top and Bottom are the two endpoints. Width is the distance from the
     /// endpoint axis to the sharp center tip, and Side is the signed side of
-    /// that axis (+1 or -1). The outer shoulders and stems sit on the side
-    /// opposite the center tip, matching the PPT right-brace silhouette.
+    /// that axis (+1 or -1). The full profile stays between that axis and the
+    /// center tip, matching the DrawingML rightBrace bounding box.
     /// </summary>
     public sealed class PatBraceDefinition
     {
@@ -46,17 +46,14 @@ namespace PatentMarker.Commands
         private const double Epsilon = 0.000000001;
         private const double DefaultWidthRatio = 0.22;
 
-        // The profile follows the PowerPoint rightBrace silhouette. The
-        // selected side is used only by the center cusp; the endpoint
-        // shoulders and straight stems remain on the opposite side. Keeping
-        // these stations explicit avoids the old W-shaped fixed point table.
+        // DrawingML rightBrace defaults: the center fold is halfway down the
+        // height, the straight stems are halfway across the selected width,
+        // and the four quarter-ellipse corners use 8.333% of the shorter side
+        // as their along-axis radius. The entire profile therefore remains
+        // inside the endpoint-axis-to-tip width selected by the user.
         private const double CenterT = 0.5;
-        private const double StemOffsetRatio = 0.42;
-        private const double ShoulderAlongRatio = 0.12;
-        private const double UpperStemAlongRatio = 0.32;
-        private const double LowerStemAlongRatio = 0.68;
-        private const double CenterControlAlongRatio = 0.10;
-        private const double CenterTipControlOffsetRatio = 0.22;
+        private const double StemOffsetRatio = 0.5;
+        private const double CornerAlongRatio = 8333.0 / 100000.0;
         private const double CubicKappa = 0.5522847498307936;
         private const int CurveSamples = 8;
 
@@ -166,26 +163,27 @@ namespace PatentMarker.Commands
             List<Point3d> points = new List<Point3d>();
 
             double tipOffset = definition.Width;
-            double stemOffset = -tipOffset * StemOffsetRatio;
-            double shoulderAlong = height * ShoulderAlongRatio;
+            double stemOffset = tipOffset * StemOffsetRatio;
+            double cornerAlong = Math.Min(tipOffset, height)
+                * CornerAlongRatio;
             double centerAlong = height * CenterT;
-            double upperStemAlong = height * UpperStemAlongRatio;
-            double lowerStemAlong = height * LowerStemAlongRatio;
-            double bottomShoulderAlong = height * (1.0 - ShoulderAlongRatio);
+            double upperStemAlong = centerAlong - cornerAlong;
+            double lowerStemAlong = centerAlong + cornerAlong;
+            double bottomShoulderAlong = height - cornerAlong;
 
             LocalPoint top = new LocalPoint(0.0, 0.0);
-            LocalPoint topShoulder = new LocalPoint(shoulderAlong, stemOffset);
+            LocalPoint topShoulder = new LocalPoint(cornerAlong, stemOffset);
             LocalPoint upperStem = new LocalPoint(upperStemAlong, stemOffset);
             LocalPoint tip = new LocalPoint(centerAlong, tipOffset);
             LocalPoint lowerStem = new LocalPoint(lowerStemAlong, stemOffset);
             LocalPoint bottomShoulder = new LocalPoint(bottomShoulderAlong, stemOffset);
             LocalPoint bottom = new LocalPoint(height, 0.0);
 
-            // Endpoint shoulder: leave the endpoint on the axis, sweep to
-            // the opposite-side shoulder, then keep a straight outer stem.
+            // First DrawingML quarter ellipse: endpoint on the axis to the
+            // half-width stem, with horizontal then vertical tangents.
             AppendCubic(points, top,
                 new LocalPoint(0.0, stemOffset * CubicKappa),
-                new LocalPoint(shoulderAlong * (1.0 - CubicKappa),
+                new LocalPoint(cornerAlong * (1.0 - CubicKappa),
                     stemOffset),
                 topShoulder, axisX, axisY, perpX, perpY,
                 definition, height, false);
@@ -193,43 +191,32 @@ namespace PatentMarker.Commands
             AddLocalPoint(points, upperStem, axisX, axisY, perpX, perpY,
                 definition, height);
 
-            // The two center curves meet at one shared vertex. Their control
-            // points leave that vertex in different directions, so the
-            // Polyline preserves a genuinely sharp folded corner rather
-            // than drawing a rounded arc through it.
-            double upperCenterSpan = centerAlong - upperStemAlong;
-            double lowerCenterSpan = lowerStemAlong - centerAlong;
+            // The two center quarter ellipses meet at one shared point while
+            // reversing direction. This keeps the DrawingML fold sharp.
             AppendCubic(points, upperStem,
                 new LocalPoint(upperStemAlong
-                    + upperCenterSpan * (1.0 - CenterControlAlongRatio),
-                    stemOffset),
-                new LocalPoint(
-                    centerAlong - upperCenterSpan * CenterControlAlongRatio,
-                    tipOffset - (tipOffset - stemOffset)
-                        * CenterTipControlOffsetRatio),
+                    + cornerAlong * CubicKappa, stemOffset),
+                new LocalPoint(centerAlong,
+                    tipOffset - stemOffset * CubicKappa),
                 tip, axisX, axisY, perpX, perpY,
                 definition, height, true);
             AppendCubic(points, tip,
-                new LocalPoint(
-                    centerAlong + lowerCenterSpan * CenterControlAlongRatio,
-                    tipOffset - (tipOffset - stemOffset)
-                        * CenterTipControlOffsetRatio),
+                new LocalPoint(centerAlong,
+                    tipOffset - stemOffset * CubicKappa),
                 new LocalPoint(lowerStemAlong
-                    - lowerCenterSpan * (1.0 - CenterControlAlongRatio),
-                    stemOffset),
+                    - cornerAlong * CubicKappa, stemOffset),
                 lowerStem, axisX, axisY, perpX, perpY,
                 definition, height, true);
 
             AddLocalPoint(points, bottomShoulder, axisX, axisY, perpX, perpY,
                 definition, height);
 
-            // Mirror the endpoint shoulder at the bottom.
+            // Mirror the endpoint quarter ellipse at the bottom.
             AppendCubic(points, bottomShoulder,
                 new LocalPoint(bottomShoulderAlong
-                    + (height - bottomShoulderAlong) * CubicKappa,
-                    stemOffset),
+                    + cornerAlong * CubicKappa, stemOffset),
                 new LocalPoint(height,
-                    stemOffset * (1.0 - CubicKappa)),
+                    stemOffset * CubicKappa),
                 bottom, axisX, axisY, perpX, perpY,
                 definition, height, true);
 

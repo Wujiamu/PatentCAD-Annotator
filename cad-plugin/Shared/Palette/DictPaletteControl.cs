@@ -66,6 +66,9 @@ namespace PatentMarker.Palette
         {
             try
             {
+                // 面板点击可能发生在另一个 CAD 命令期间；命令结束后由这里补发一次请求。
+                PatPaletteCommand.TryDispatchPendingForCurrentDocument();
+
                 // v5.1：PATCHECK 完成后重渲染列表（未标注条目高亮）
                 if (Commands.PatCheckResult.Version != _lastCheckVersion)
                 {
@@ -617,17 +620,17 @@ namespace PatentMarker.Palette
                 return;
             }
 
-            PatPaletteCommand.PendingNumber = target.Number;
-            PatPaletteCommand.PendingName = target.Name != null ? target.Name : "";
-            _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
-
             var doc = IO.RuntimeHost.ActiveDocument;
-            if (doc != null)
+            string name = target.Name != null ? target.Name : "";
+            if (!PatPaletteCommand.RequestMark(doc, target.Number, name))
             {
-                doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
-                    PatPaletteCommand.PendingNumber, PatPaletteCommand.PendingName));
-                doc.SendStringToExecute("PATMARK ", false, false, false);
+                _lblStatus.Text = string.Format(Strings.Status_LoadFailed, "PATMARK");
+                return;
             }
+
+            _lblStatus.Text = string.Format(Strings.Status_Loaded, target.Number);
+            doc.Editor.WriteMessage(string.Format(Strings.Status_LoadedCmd,
+                target.Number, name));
         }
 
         /// <summary>编辑入口：右键菜单或 F2 打开单条目编辑对话框。</summary>

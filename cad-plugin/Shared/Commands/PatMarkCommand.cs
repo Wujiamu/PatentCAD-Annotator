@@ -25,44 +25,48 @@ namespace PatentMarker.Commands
             var ed = doc.Editor;
             var db = doc.Database;
 
-            Styles.PatStyleInitializer.EnsurePatDimStyle();
-
-            if (_currentNumber == null)
+            Palette.PatPaletteCommand.NotifyPatMarkStarted(doc);
+            try
             {
-                if (Palette.PatPaletteCommand.PendingNumber != null)
+                Styles.PatStyleInitializer.EnsurePatDimStyle();
+
+                if (_currentNumber == null)
                 {
-                    _currentNumber = Palette.PatPaletteCommand.PendingNumber;
-                    _currentName = Palette.PatPaletteCommand.PendingName;
-                    Palette.PatPaletteCommand.PendingNumber = null;
-                    Palette.PatPaletteCommand.PendingName = null;
+                    string pendingNumber;
+                    string pendingName;
+                    if (Palette.PatPaletteCommand.TryConsumePending(doc,
+                        out pendingNumber, out pendingName))
+                    {
+                        _currentNumber = pendingNumber;
+                        _currentName = pendingName;
+                    }
+                    else
+                    {
+                        var numResult = ed.GetString(Strings.PatMark_EnterNumber);
+                        if (numResult.Status != PromptStatus.OK) return;
+                        _currentNumber = numResult.StringResult;
+                        var nameResult = ed.GetString(Strings.PatMark_EnterName);
+                        if (nameResult.Status == PromptStatus.OK)
+                            _currentName = nameResult.StringResult;
+                    }
                 }
-                else
+
+                if (IsNullOrWhiteSpace(_currentNumber))
                 {
-                    var numResult = ed.GetString(Strings.PatMark_EnterNumber);
-                    if (numResult.Status != PromptStatus.OK) return;
-                    _currentNumber = numResult.StringResult;
-                    var nameResult = ed.GetString(Strings.PatMark_EnterName);
-                    if (nameResult.Status == PromptStatus.OK)
-                        _currentName = nameResult.StringResult;
+                    ed.WriteMessage(Strings.PatMark_NoNumber);
+                    return;
                 }
-            }
 
-            if (IsNullOrWhiteSpace(_currentNumber))
-            {
-                ed.WriteMessage(Strings.PatMark_NoNumber);
-                return;
-            }
-
-            while (true)
-            {
-                ApplyPendingIfNeeded(ed);
+                while (true)
+                {
+                    ApplyPendingIfNeeded(ed, doc);
                 if (!IO.PatSettingsStore.Current.HasLeader)
                 {
                     var textOnlyOptions = new PromptPointOptions(Strings.PatMark_PromptTextOnly);
                     textOnlyOptions.AllowNone = true;
                     var textOnlyResult = ed.GetPoint(textOnlyOptions);
                     if (textOnlyResult.Status != PromptStatus.OK) break;
-                    ApplyPendingIfNeeded(ed);
+                    ApplyPendingIfNeeded(ed, doc);
                     try
                     {
                         CreateTextOnly(db, textOnlyResult.Value, _currentNumber);
@@ -82,7 +86,7 @@ namespace PatentMarker.Commands
                 attachOptions.AllowNone = true;
                 var ptResult = ed.GetPoint(attachOptions);
                 if (ptResult.Status != PromptStatus.OK) break;
-                ApplyPendingIfNeeded(ed);
+                ApplyPendingIfNeeded(ed, doc);
 
                 if (IO.PatSettingsStore.Current.ThreePointMode)
                 {
@@ -92,7 +96,7 @@ namespace PatentMarker.Commands
                     doglegOpts.AllowNone = true;
                     var doglegResult = ed.GetPoint(doglegOpts);
                     if (doglegResult.Status != PromptStatus.OK) break;
-                    ApplyPendingIfNeeded(ed);
+                    ApplyPendingIfNeeded(ed, doc);
 
                     var textOpts = new PromptPointOptions(Strings.PatMark_PromptTextPos3);
                     textOpts.BasePoint = doglegResult.Value;
@@ -100,7 +104,7 @@ namespace PatentMarker.Commands
                     textOpts.AllowNone = true;
                     var textResult = ed.GetPoint(textOpts);
                     if (textResult.Status != PromptStatus.OK) break;
-                    ApplyPendingIfNeeded(ed);
+                    ApplyPendingIfNeeded(ed, doc);
 
                     try
                     {
@@ -148,7 +152,7 @@ namespace PatentMarker.Commands
                     }
                     doglegs.Add(doglegResult.Value);
                     lastBase = doglegResult.Value;
-                    ApplyPendingIfNeeded(ed);
+                    ApplyPendingIfNeeded(ed, doc);
                 }
                 if (cancelled) break;
 
@@ -171,7 +175,7 @@ namespace PatentMarker.Commands
                     ? (doglegs.Count > 1 ? doglegs[doglegs.Count - 2] : ptResult.Value)
                     : doglegs[doglegs.Count - 1];
 
-                ApplyPendingIfNeeded(ed);
+                ApplyPendingIfNeeded(ed, doc);
                 try
                 {
                     CreateLeaderWithText(db, ptResult.Value, doglegs, textPt,
@@ -186,8 +190,18 @@ namespace PatentMarker.Commands
                 }
             }
 
-            _currentNumber = null;
-            _currentName = null;
+            }
+            catch (Exception ex)
+            {
+                ed.WriteMessage(Strings.ErrorPrefix + ex.GetType().Name + ": " + ex.Message + "\n");
+                PatentMarkerApp.RawLog("PATMARK EXCEPTION: " + ex.GetType().FullName + ": " + ex.Message);
+            }
+            finally
+            {
+                _currentNumber = null;
+                _currentName = null;
+                Palette.PatPaletteCommand.NotifyPatMarkFinished(doc);
+            }
         }
 
         private void CreateTextOnly(Database db, Point3d textPt, string number)
@@ -319,13 +333,14 @@ namespace PatentMarker.Commands
             return value == null || value.Trim().Length == 0;
         }
 
-        private void ApplyPendingIfNeeded(Editor ed)
+        private void ApplyPendingIfNeeded(Editor ed, Document doc)
         {
-            if (Palette.PatPaletteCommand.PendingNumber == null) return;
-            _currentNumber = Palette.PatPaletteCommand.PendingNumber;
-            _currentName = Palette.PatPaletteCommand.PendingName;
-            Palette.PatPaletteCommand.PendingNumber = null;
-            Palette.PatPaletteCommand.PendingName = null;
+            string pendingNumber;
+            string pendingName;
+            if (!Palette.PatPaletteCommand.TryConsumePending(doc,
+                out pendingNumber, out pendingName)) return;
+            _currentNumber = pendingNumber;
+            _currentName = pendingName;
             ed.WriteMessage(string.Format(Strings.PatMark_Switched, _currentNumber));
         }
     }

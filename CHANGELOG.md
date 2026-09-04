@@ -8,6 +8,28 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ***
 
+## \[Unreleased] - 1.0.2 candidate (2026-09-04)
+
+**修复参数化大括号越过端点轴线、呈反向/W 形的问题。**
+
+**Fixed parameterized braces crossing the endpoint axis and appearing reversed/W-shaped.**
+
+### 修复 / Fixes
+
+- 真实 AutoCAD 截图确认当前部署 DLL 正在生成错误轮廓：中部尖点位于第三点一侧，但两段直干被放在端点轴线的另一侧，使实际跨度变成所选宽度的 `1.42×`。因此此前“现场仍加载旧 DLL”的判断被推翻。
+- Rebuilt the shared geometry from the DrawingML/PowerPoint `rightBrace` definition: endpoints at one bounding edge, straight stems at half the selected width, center cusp at the selected width, and four quarter-ellipse transitions using 8.333% of the shorter side.
+- 更正契约测试：左右/上下及旋转后的轮廓必须全部位于端点轴线与第三点之间；不再把“直干位于尖点反侧”当成正确行为。
+
+### 兼容 / Compatibility
+
+- 几何源码由五个 AutoCAD 版本共享，2007/2010/2013/2015/2025 部署 DLL 已同步重打包。大括号 Xrecord 参数格式未变；已有错误轮廓可通过 `PATBRACEEDIT` 重新输入原尺寸来重建，或直接删除后重画。
+- 修复面板双击条目时无条件重复排队 `PATMARK` 的问题：请求改为按当前图纸保存并去重；已有 CAD 命令运行时延迟到空闲后再启动，运行中的 `PATMARK` 可在提示边界切换到最新请求。
+- 修复 `PATMARK` 命令实例在异常、取消或空编号返回后残留状态的问题，五个版本的 Leader/MLeader 路径统一清理；部署 DLL 已同步更新。
+- Fixed repeated palette double-clicks stacking asynchronous `PATMARK` commands: requests are now isolated per drawing, de-duplicated, and retried after AutoCAD becomes idle.
+- PATMARK now clears its per-document command-instance state on cancellation, early return, and unhandled failure across all five Leader/MLeader editions.
+
+***
+
 ## \[1.0.1] - 2026-09-02
 
 **Word 工具面板 UI 优化 + 导出状态反馈。**

@@ -111,6 +111,25 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
+        public void InvalidPendingNumberDoesNotLatchTheNextCommand()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                PatMarkCommand command = new PatMarkCommand();
+                Palette.PatPaletteCommand.PendingNumber = " ";
+                command.Run();
+
+                IO.PatSettingsStore.Current.ThreePointMode = true;
+                fixture.QueueThreePointAnnotation("after-invalid",
+                    new Point3d(1, 2, 0), new Point3d(3, 4, 0), new Point3d(5, 6, 0));
+
+                command.Run();
+
+                Assert.NotEmpty(fixture.Database.CommittedEntities);
+            }
+        }
+
+        [Fact]
         public void UnderlineSwitchAlsoFormatsLeaderText()
         {
             using (SimulationFixture fixture = new SimulationFixture())

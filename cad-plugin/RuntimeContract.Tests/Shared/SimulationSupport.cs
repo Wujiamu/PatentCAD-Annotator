@@ -20,6 +20,18 @@ namespace PatentMarker.Palette
     {
         public static string PendingNumber;
         public static string PendingName;
+
+        public static bool TryConsumePending(Document doc, out string number, out string name)
+        {
+            number = PendingNumber;
+            name = PendingName;
+            PendingNumber = null;
+            PendingName = null;
+            return number != null;
+        }
+
+        public static void NotifyPatMarkStarted(Document doc) { }
+        public static void NotifyPatMarkFinished(Document doc) { }
     }
 }
 

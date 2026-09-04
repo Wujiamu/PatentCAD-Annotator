@@ -64,7 +64,7 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void WidthPointControlsCenterTipAndOppositeOuterShoulders()
+        public void WidthPointControlsTipAndKeepsProfileOnSelectedSide()
         {
             PatBraceDefinition rightTip = PatBraceGeometry.FromPoints(
                 new Point3d(0, 10, 0),
@@ -74,8 +74,10 @@ namespace PatentMarker.RuntimeContractTests
 
             Assert.Equal(1, rightTip.Side);
             Assert.True(rightPoints.Count > 19);
-            Assert.True(rightPoints[8].X < 0.0);
-            Assert.True(rightPoints[rightPoints.Count / 2].X > rightPoints[8].X);
+            Assert.Equal(2.0, rightPoints[8].X, 6);
+            for (int i = 0; i < rightPoints.Count; i++)
+                Assert.True(rightPoints[i].X >= -0.000001
+                    && rightPoints[i].X <= 4.000001);
 
             PatBraceDefinition leftTip = PatBraceGeometry.FromPoints(
                 new Point3d(0, 10, 0),
@@ -85,8 +87,10 @@ namespace PatentMarker.RuntimeContractTests
 
             Assert.Equal(-1, leftTip.Side);
             Assert.True(leftPoints.Count > 19);
-            Assert.True(leftPoints[8].X > 0.0);
-            Assert.True(leftPoints[leftPoints.Count / 2].X < leftPoints[8].X);
+            Assert.Equal(-2.0, leftPoints[8].X, 6);
+            for (int i = 0; i < leftPoints.Count; i++)
+                Assert.True(leftPoints[i].X >= -4.000001
+                    && leftPoints[i].X <= 0.000001);
         }
 
         [Fact]
@@ -110,7 +114,7 @@ namespace PatentMarker.RuntimeContractTests
         }
 
         [Fact]
-        public void CenterTipIsSharpAndStemsStayOppositeTheTip()
+        public void CenterTipIsSharpAndProfileStaysOnSelectedSide()
         {
             PatBraceDefinition definition = PatBraceGeometry.Create(
                 new Point3d(0, 100, 0),
@@ -136,18 +140,74 @@ namespace PatentMarker.RuntimeContractTests
             double outgoingY = points[tipIndex + 1].Y - points[tipIndex].Y;
             double cross = incomingX * outgoingY - incomingY * outgoingX;
             Assert.True(Math.Abs(cross) > 0.0001);
-            bool hasOppositeSideShoulder = false;
+            bool hasHalfWidthStem = false;
             for (int i = 0; i < points.Count; i++)
             {
                 if (i != tipIndex)
                 {
-                    Assert.True(points[i].X >= -20.000001
+                    Assert.True(points[i].X >= -0.000001
                         && points[i].X <= 20.000001);
-                    if (points[i].X < -0.000001)
-                        hasOppositeSideShoulder = true;
+                    if (Math.Abs(points[i].X - 10.0) < 0.000001)
+                        hasHalfWidthStem = true;
                 }
             }
-            Assert.True(hasOppositeSideShoulder);
+            Assert.True(hasHalfWidthStem);
+        }
+
+        [Fact]
+        public void PptDefaultUsesHalfWidthStemsAndShortSideCornerDepth()
+        {
+            PatBraceDefinition definition = PatBraceGeometry.Create(
+                new Point3d(0, 100, 0),
+                new Point3d(0, 0, 0),
+                20.0, 1);
+            var points = PatBraceGeometry.BuildPoints(definition);
+            double cornerAlong = 20.0 * 8333.0 / 100000.0;
+
+            Assert.Equal(10.0, points[8].X, 6);
+            Assert.Equal(100.0 - cornerAlong, points[8].Y, 6);
+            Assert.Equal(10.0, points[9].X, 6);
+            Assert.Equal(50.0 + cornerAlong, points[9].Y, 6);
+            Assert.Equal(20.0, points[points.Count / 2].X, 6);
+            Assert.Equal(50.0, points[points.Count / 2].Y, 6);
+        }
+
+        [Fact]
+        public void RotatedProfileStaysInsideSelectedBoundingStrip()
+        {
+            Point3d top = new Point3d(3, 4, 0);
+            Point3d bottom = new Point3d(13, 24, 0);
+            double dx = bottom.X - top.X;
+            double dy = bottom.Y - top.Y;
+            double height = Math.Sqrt(dx * dx + dy * dy);
+            double axisX = dx / height;
+            double axisY = dy / height;
+            double perpX = -axisY;
+            double perpY = axisX;
+
+            for (int side = -1; side <= 1; side += 2)
+            {
+                PatBraceDefinition definition = PatBraceGeometry.Create(
+                    top, bottom, 7.0, side);
+                var points = PatBraceGeometry.BuildPoints(definition);
+                double maximumOffset = 0.0;
+
+                for (int i = 0; i < points.Count; i++)
+                {
+                    double vx = points[i].X - top.X;
+                    double vy = points[i].Y - top.Y;
+                    double along = vx * axisX + vy * axisY;
+                    double selectedOffset = (vx * perpX + vy * perpY) * side;
+                    Assert.True(along >= -0.000001
+                        && along <= height + 0.000001);
+                    Assert.True(selectedOffset >= -0.000001
+                        && selectedOffset <= 7.000001);
+                    if (selectedOffset > maximumOffset)
+                        maximumOffset = selectedOffset;
+                }
+
+                Assert.Equal(7.0, maximumOffset, 6);
+            }
         }
     }
 }
