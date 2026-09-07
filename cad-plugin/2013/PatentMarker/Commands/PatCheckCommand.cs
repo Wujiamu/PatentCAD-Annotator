@@ -31,6 +31,7 @@ namespace PatentMarker.Commands
             IO.DictModel dict = IO.DictLoader.LoadForCurrentDrawing();
             if (dict == null)
             {
+                PatCheckResult.Clear(doc);
                 ed.WriteMessage(Strings.PatCheck_NoDict);
                 return;
             }
@@ -95,7 +96,7 @@ namespace PatentMarker.Commands
                 }
             }
 
-            PatCheckResult.SetUnmarked(unmarked);
+            PatCheckResult.SetUnmarked(doc, unmarked);
 
             ed.WriteMessage(Strings.PatCheck_ReportTitle);
             ed.WriteMessage(string.Format(Strings.PatCheck_Summary,

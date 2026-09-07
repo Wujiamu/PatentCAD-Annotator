@@ -31,6 +31,7 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - 三点或无限点标注过程中，按 ESC 或右键菜单中的“确认/取消”都可以退出当前标注命令；无限点采集到一半时也可以直接取消。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 面板标注请求按当前图纸隔离并去重；若 CAD 正在执行其他命令，会在空闲后自动补发一次 `PATMARK`，不会因重复点击叠加失效命令。
+- 面板检测到 Word 覆盖 CAD 修改时会启用“裁决”按钮，可选择采用 Word 版、恢复 CAD 版或稍后处理；PATCHECK 结果按图纸隔离，重载字典时只清理当前图纸的高亮状态。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
 - `PATSELECTALL`/`BZS` 通过扩展字典标记 `PATENTMARKER_MLEADER` 识别新建 MLeader（并记录用户点链），同时兼容旧图纸的 Leader 标注与独立文字。
 - 新增 `PATMLSET`（开关脚本化入口）与 `PATMLVERIFY`（形态诊断：Explode 全部 PAT MLeader 并对照记录点链输出报告，回归测试工具）。
@@ -73,7 +74,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 7 个 VBA 文件：6 模块 + 1 面板 UserForm 到 Normal 模板）
 2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
-3. **使用**：Word 保存 → 生成 `.dict.json`（1.0.0 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注
+3. **使用**：Word 保存 → 生成 `.dict.json`（1.0.0 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注。目录内有多个 DWG 时先按 Word 文件名精确匹配，只有一个兼容匹配才继续；无法安全判断时会取消导出并写入 `autoexport-error.txt`。
 
 完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
 
@@ -101,16 +102,23 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 2025 | `install-2025.ps1` | 适用于 AutoCAD 2025 及以后；若 PowerShell 安装受本机策略影响，脚本会生成 LSP fallback 供 APPLOAD/NETLOAD 手动加载 |
 
 五套部署包都包含对应版本的 `PatentMarker.dll` 和全套 VBA 模块。不要把不同 AutoCAD 年份的 DLL 混用。
+2025 安装脚本会合并 HKCU/HKLM，枚举 R25.0、R25.1、R26.0 中的全部配置并逐一写入 HKCU，支持 AutoCAD 2025/2026 并存安装。
+2007/2010/2013/2015 安装脚本也会合并 HKCU/HKLM，枚举各自支持范围内的全部注册表配置并逐一写入，支持这些年份的并存安装；2010 卸载脚本会同步清理其生成的 acad.lsp 片段。
 
 ### 本地验证状态
 
 - 五个版本均已完成本地编译；
-- 2007/2010/2013/2015 主机契约模拟测试均为 31/31（共 124/124）；
-- 2025 测试套件为 112/112（含 123A1/123A2 识别、紧邻分隔符和表格预处理回归用例）；
-- 五套部署包的 Word VBA 均通过真实 Word COM 批量验证：8 份样例输出与 v4 基线一致，并通过 123A1/123A2 端到端 JSON 验证；
+- 2007/2010/2013/2015 主机契约模拟测试均为 33/33（共 132/132）；2010/2013/2015 测试工程直接编译各自的 MLeader 命令与创建器；
+- 2025 测试套件为 117/117（含 123A1/123A2 识别、紧邻分隔符、表格预处理、面板 Diff 渲染、PATCHECK 按图纸隔离和配置字典回退回归用例）；
+- 测试工程自带 8 份脱敏 VBA/C# 对比语料，干净检出也会执行；若要用本机 Word 重新生成权威结果，可运行 `cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus`；
+- 五套部署包的 Word VBA 有历史 Word COM 批量验证记录：8 份样例输出与 v4 基线一致，并通过 123A1/123A2 端到端 JSON 验证；本轮以 2025 部署副本实测 UserForm 导入、唯一宏、首次手动导出、自动导出开关、控件标题和附图标记段落边界，均通过，五套副本已哈希同步；
+- `tools/verify-vba-export.vbs` 另行覆盖无 DWG 回退、多个 DWG 的歧义拒绝、Word 文件名精确匹配，以及保存事件在无法安全映射时取消保存；本机 Word COM 运行结果为 `PASS`；
 - 五个版本的 API 契约、结构和静态同步检查通过（Shared 共 30 个 C# 文件，其中 27 个由五版本共同链接；MLeader 组 7 文件字节级一致）；
+- `build.ps1 -Static` 同时检查五版安装/卸载脚本是否合并 HKCU/HKLM 并枚举支持范围内的全部注册表版本，防止并存安装与卸载回归；
 - **v5.1 AutoCAD 2026 全量实机测试通过**（部署包 DLL 批处理）：PATDOCTOR、BZM 创建、BZC 漏标检测（含字典变更复测）、PATALIGN 线/框两模式四种空间场景、pickfirst 工作流（BZS→BZA 免提示）、PATMLVERIFY 链校验、保存-重开持久化全部通过；面板（BZ）为 GUI 组件，需交互式会话实测。
 - **1.0.2 AutoCAD 2026 冒烟复测通过**：从 2025 部署包加载新 DLL 后完成一次三点 PATMARK，日志包含完整 START/END，PATDOCTOR 扫描到 1 个实体且近期错误为 0；面板双击与连续点击仍需交互式验收。
+- **1.0.2 大括号真宿主补测通过**：AutoCAD 2026 Core Console 使用同一组三点执行 `PATBRACE`，`LIST` 读取的实体顶点范围为 `x=0..50、y=0..100`，未跨过端点轴线；这项批处理证据仍不替代 GUI 目检。
+- **1.0.2 大括号尺寸编辑补测通过**：AutoCAD 2026 Core Console 从 100×50 创建结果执行 `PATBRACEEDIT` 尺寸模式改为 120×60，命令报告更新成功，`LIST` 端点范围为 `x=0..60、y=0..120`；这项批处理证据仍不替代旧图形和 GUI 目检。
 - 本地自动化测试不能完全替代真实 AutoCAD 界面交互，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
 
 可使用根目录 `build.ps1` 辅助构建与环境检查：
@@ -122,9 +130,11 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 .\build.ps1 -Simulation           # 运行 2010/2013/2015 主机契约模拟测试
 .\check-api-contract.ps1 -Version all # 检查各版本 AutoCAD SDK API 表面
 .\check-autocad-host.ps1          # 只读检查本机 AutoCAD/COM/许可服务前置条件
+cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus # Word COM 重生成脱敏语料预期
+cscript //nologo .\tools\verify-vba-export.vbs .\PatentMarker-2025-deploy\vba # Word COM 导出映射与保存失败策略
 ```
 
-> 2007/2010/2013/2015 为传统 MSBuild 工程，需 Visual Studio 或 Build Tools 的 MSBuild；2025 版为 SDK 风格工程，可直接用 `dotnet build`。
+> 2007/2010 为传统 MSBuild 工程，需 Visual Studio 或 Build Tools 的 MSBuild；2013/2015 在缺少 `MSBuild.exe` 时可使用仓库内 `tools/refasm` 通过 `dotnet msbuild` 构建；2025 版为 SDK 风格工程，可直接用 `dotnet build`。
 
 ### 命令清单
 
@@ -156,7 +166,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（30 个 C# 文件；其中 27 个由五版本共同链接，3 个 Leader 版命令仅供 2007 链接），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（7 个 MLeader 组文件：F 方案创建/开关/校验 + v5.1 的 PATCHECK/PATALIGN + 全选，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（30 个 C# 文件；其中 27 个由五版本共同链接，3 个 Leader 版命令仅供 2007 链接），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（7 个 MLeader 组文件：F 方案创建/开关/校验 + v5.1 的 PATCHECK/PATALIGN + 全选，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。修改 MLeader 组时可先运行 `sync-mleader-group.ps1`，再运行同步检查。
 
 ```
 PatentCAD-Annotator/
@@ -281,7 +291,7 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 1. **Word side**: import the 7 VBA files ([PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/)) into the Normal template (6 modules + the `PatentDictPanel` UserForm)
 2. **CAD side**: deploy [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) to a non-C-drive folder, run `install-2007.vbs`
-3. **Usage**: save Word → generates `.dict.json` → run `BZ` in CAD to open palette → `BZM` to annotate
+3. **Usage**: save Word → generates `.dict.json` → run `BZ` in CAD to open palette → `BZM` to annotate. When a folder contains multiple DWGs, export first uses an exact Word-file-name match and accepts only one unambiguous compatibility match; unsafe mappings are rejected with `autoexport-error.txt`.
 
 Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 
@@ -296,6 +306,8 @@ Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 | 2025 | `install-2025.ps1` | AutoCAD 2025+; generates an LSP fallback if the PowerShell installation cannot complete |
 
 Each package contains the matching `PatentMarker.dll` and the seven shared VBA files (6 modules + the `PatentDictPanel` UserForm). Do not mix DLLs between AutoCAD year ranges.
+The 2025 installer enumerates detected R25.0, R25.1, and R26.0 profiles and registers each one in HKCU, so side-by-side AutoCAD 2025/2026 installs are covered.
+All five installers and uninstallers merge HKCU/HKLM profile lists, process every supported configuration, and de-duplicate repeated profiles; the 2010 uninstaller also removes generated `acad.lsp` fallback blocks.
 
 ### Commands
 
@@ -315,11 +327,17 @@ Each package contains the matching `PatentMarker.dll` and the seven shared VBA f
 ### Local verification status
 
 - All five editions compile locally.
-- Runtime contract simulations pass 31/31 for each of 2007, 2010, 2013 and 2015 (command orchestration against strict fake hosts, including shared brace geometry and four-direction brace checks).
-- The 2025 test suite passes 112/112.
+- Runtime contract simulations pass 33/33 for each of 2007, 2010, 2013 and 2015 (command orchestration against strict fake hosts, including shared brace geometry, four-direction brace checks, and the production MLeader path for 2010/2013/2015).
+- The 2025 test suite passes 117/117, including per-document PATCHECK state, palette Diff rendering, and configured dictionary fallback regressions.
+- The test project carries eight sanitized VBA/C# corpus fixtures, so a clean checkout executes the parity comparison too. To regenerate the authoritative expected output with local Word, run `cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus`.
+- Word COM smoke checks pass against the 2025 deployment VBA for UserForm import, the single public macro, first export, auto-export toggling, captions, and marking-section boundaries; all five deployment copies are hash-identical.
+- `tools/verify-vba-export.vbs` also passes Word COM checks for no-DWG fallback, ambiguous multi-DWG rejection, exact-name matching, and save cancellation when mapping is unsafe.
+- Palette PATCHECK results are keyed by the AutoCAD document, so switching drawings no longer discards the other drawing's completed result; reloading a dictionary invalidates only the active document.
 - Structure and static synchronization checks pass for all five editions: `cad-plugin/Shared/` contains 30 canonical C# files (27 linked by every edition and 3 legacy Leader command implementations linked by 2007), the 7-file MLeader command group is byte-identical across 2010/2013/2015/2025, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
 - **v5.1 full on-machine test passed on AutoCAD 2026** (batch runs against the deployment-package DLL): PATDOCTOR, BZM creation, BZC unmarked detection (including a dictionary-change re-check), PATALIGN line/frame modes across four space scenarios, the pickfirst workflow (BZS → BZA without prompts), PATMLVERIFY chain validation, and save-reopen persistence. The palette (BZ) is a GUI component and requires an interactive session.
 - **1.0.2 AutoCAD 2026 smoke re-test passed**: the new 2025 deployment DLL completed one three-point PATMARK with matching START/END logs; PATDOCTOR found one entity and no recent errors. Palette double-click and rapid-click behavior still requires interactive validation.
+- **1.0.2 brace host check passed**: AutoCAD 2026 Core Console ran `PATBRACE` with the same three points, and `LIST` reported vertices within `x=0..50, y=0..100`, with no crossing of the endpoint axis; this batch evidence does not replace GUI inspection.
+- **1.0.2 brace size-edit check passed**: AutoCAD 2026 Core Console changed a 100×50 brace to 120×60 with `PATBRACEEDIT`; the command reported success and `LIST` confirmed endpoints within `x=0..60, y=0..120`. This does not replace legacy-drawing or GUI inspection.
 - These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
 
 ### Version

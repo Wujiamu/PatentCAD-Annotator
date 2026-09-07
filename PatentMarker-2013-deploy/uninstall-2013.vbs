@@ -55,38 +55,52 @@ Dim versionCandidates(1)
 versionCandidates(0) = "R19.0"
 versionCandidates(1) = "R19.1"
 
-Dim vc, removed
+Dim vc, removed, hive, hiveName, profileId, seenProfiles
 removed = 0
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
 
 For vc = 0 To 1
     Dim acadBaseKey, subKeys
     acadBaseKey = "Software\Autodesk\AutoCAD\" & versionCandidates(vc)
 
-    reg.EnumKey HKCU, acadBaseKey, subKeys
-    If IsNull(subKeys) Then
-        reg.EnumKey HKLM, acadBaseKey, subKeys
-    End If
-    If Not IsNull(subKeys) Then
-        Dim i
-        For i = 0 To UBound(subKeys)
-            If Left(subKeys(i), 5) = "ACAD-" Then
-                Dim appKey
-                appKey = acadBaseKey & "\" & subKeys(i) & "\Applications\PatentMarker"
-                On Error Resume Next
-                reg.DeleteKey HKCU, appKey
-                If Err.Number = 0 Then
-                    output = output & "  Removed HKCU: " & appKey & vbCrLf
-                    removed = removed + 1
-                End If
-                reg.DeleteKey HKLM, appKey
-                If Err.Number = 0 Then
-                    output = output & "  Removed HKLM: " & appKey & vbCrLf
-                    removed = removed + 1
-                End If
-                On Error GoTo 0
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, acadBaseKey, subKeys
+        If Not IsNull(subKeys) Then
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
             End If
-        Next
-    End If
+            output = output & "Found: " & versionCandidates(vc) & " (" & hiveName & ")" & vbCrLf
+            Dim i
+            For i = 0 To UBound(subKeys)
+                If Left(subKeys(i), 5) = "ACAD-" Then
+                    profileId = LCase(acadBaseKey & "\" & subKeys(i))
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        Dim appKey
+                        appKey = acadBaseKey & "\" & subKeys(i) & "\Applications\PatentMarker"
+                        On Error Resume Next
+                        Err.Clear
+                        reg.DeleteKey HKCU, appKey
+                        If Err.Number = 0 Then
+                            output = output & "  Removed HKCU: " & appKey & vbCrLf
+                            removed = removed + 1
+                        End If
+                        Err.Clear
+                        reg.DeleteKey HKLM, appKey
+                        If Err.Number = 0 Then
+                            output = output & "  Removed HKLM: " & appKey & vbCrLf
+                            removed = removed + 1
+                        End If
+                        On Error GoTo 0
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
 output = output & vbCrLf

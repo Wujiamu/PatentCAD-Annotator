@@ -77,6 +77,25 @@ namespace PatentMarker.RuntimeContractTests
             }
         }
 
+        [Fact]
+        public void RenameAndDeleteIncludePlanFMLeader()
+        {
+            using (SimulationFixture fixture = new SimulationFixture())
+            {
+                MLeader mleader;
+                AddMLeader(fixture, "old", out mleader);
+
+                Assert.Equal(1, Palette.DictPaletteCadService.RenameNumber(
+                    fixture.Document, "OLD", "new"));
+                Assert.Equal("new", mleader.MText.Contents);
+
+                Palette.DictPaletteDeleteResult result =
+                    Palette.DictPaletteCadService.DeleteAll(fixture.Document);
+                Assert.Equal(1, result.Deleted);
+                Assert.True(mleader.IsErased);
+            }
+        }
+
         private static void AddLeader(
             SimulationFixture fixture,
             string number,
@@ -99,6 +118,29 @@ namespace PatentMarker.RuntimeContractTests
                 else
                     leader.Annotation = text.ObjectId;
 
+                tr.Commit();
+            }
+        }
+
+        private static void AddMLeader(
+            SimulationFixture fixture,
+            string number,
+            out MLeader mleader)
+        {
+            using (Transaction tr = fixture.Database.TransactionManager.StartTransaction())
+            {
+                mleader = new MLeader();
+                mleader.ContentType = ContentType.MTextContent;
+                mleader.MText = new MText { Contents = number };
+                fixture.Database.ModelSpace.AppendEntity(mleader);
+                mleader.CreateExtensionDictionary();
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    mleader.ExtensionDictionary, OpenMode.ForWrite);
+                Xrecord record = new Xrecord();
+                record.Data = new ResultBuffer(
+                    new TypedValue(1, "PATENTMARKER_MLEADER_V1"));
+                dictionary.SetAt("PATENTMARKER_MLEADER", record);
+                tr.AddNewlyCreatedDBObject(record, true);
                 tr.Commit();
             }
         }

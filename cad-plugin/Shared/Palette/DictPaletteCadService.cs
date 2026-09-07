@@ -10,7 +10,7 @@ namespace PatentMarker.Palette
     /// <summary>
     /// CAD-side operations used by the palette.  The control owns user
     /// interaction and status text; this service owns document locks,
-    /// transactions, and PAT Leader/MText entity traversal.
+    /// transactions, and PAT annotation entity traversal.
     /// </summary>
     public sealed class DictPaletteDeleteResult
     {
@@ -65,6 +65,7 @@ namespace PatentMarker.Palette
                     bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForWrite);
 
                 List<AcDb.ObjectId> leadersToDelete = new List<AcDb.ObjectId>();
+                List<AcDb.ObjectId> mleadersToDelete = new List<AcDb.ObjectId>();
                 List<AcDb.ObjectId> annotationsToDelete = new List<AcDb.ObjectId>();
                 List<AcDb.ObjectId> standaloneTextsToDelete = new List<AcDb.ObjectId>();
 
@@ -72,6 +73,12 @@ namespace PatentMarker.Palette
                 {
                     AcDb.Entity ent = (AcDb.Entity)tr.GetObject(
                         entId, AcDb.OpenMode.ForRead);
+                    if (PatEntityHelper.IsPatMLeader(ent, tr))
+                    {
+                        mleadersToDelete.Add(entId);
+                        continue;
+                    }
+
                     AcDb.Leader leader = ent as AcDb.Leader;
                     if (leader == null)
                     {
@@ -107,6 +114,22 @@ namespace PatentMarker.Palette
                     {
                         PatentMarkerApp.RawLog(
                             "DictPaletteCadService leader delete error: " + ex.Message);
+                    }
+                }
+
+                foreach (AcDb.ObjectId id in mleadersToDelete)
+                {
+                    try
+                    {
+                        AcDb.Entity mleader = (AcDb.Entity)tr.GetObject(
+                            id, AcDb.OpenMode.ForWrite);
+                        mleader.Erase(true);
+                        result.Deleted++;
+                    }
+                    catch (Exception ex)
+                    {
+                        PatentMarkerApp.RawLog(
+                            "DictPaletteCadService mleader delete error: " + ex.Message);
                     }
                 }
 

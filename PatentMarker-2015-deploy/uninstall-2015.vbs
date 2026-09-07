@@ -1,5 +1,5 @@
 ' PatentMarker 2015 Uninstaller (VBScript)
-' Removes registry entries for AutoCAD 2015-2024 (R20.0-R24.x, plus R25.0
+' Removes registry entries for AutoCAD 2015-2024 (R20.0-R24.x)
 ' covered by install-2015.vbs detection list)
 
 Option Explicit
@@ -54,7 +54,7 @@ output = output & "PatentMarker 2015 Uninstaller" & vbCrLf
 output = output & "========================================" & vbCrLf
 
 ' Same release candidates as install-2015.vbs (AutoCAD 2015-2024 detection).
-Dim versionCandidates(9)
+Dim versionCandidates(8)
 versionCandidates(0) = "R24.0"
 versionCandidates(1) = "R23.1"
 versionCandidates(2) = "R23.0"
@@ -64,40 +64,53 @@ versionCandidates(5) = "R20.1"
 versionCandidates(6) = "R20.0"
 versionCandidates(7) = "R24.1"
 versionCandidates(8) = "R24.2"
-versionCandidates(9) = "R25.0"
 
-Dim vc, removed
+Dim vc, removed, hive, hiveName, profileId, seenProfiles
 removed = 0
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
 
-For vc = 0 To 9
+For vc = 0 To 8
     Dim acadBaseKey, subKeys
     acadBaseKey = "Software\Autodesk\AutoCAD\" & versionCandidates(vc)
 
-    reg.EnumKey HKCU, acadBaseKey, subKeys
-    If IsNull(subKeys) Then
-        reg.EnumKey HKLM, acadBaseKey, subKeys
-    End If
-    If Not IsNull(subKeys) Then
-        Dim i
-        For i = 0 To UBound(subKeys)
-            If Left(subKeys(i), 5) = "ACAD-" Then
-                Dim appKey
-                appKey = acadBaseKey & "\" & subKeys(i) & "\Applications\PatentMarker"
-                On Error Resume Next
-                reg.DeleteKey HKCU, appKey
-                If Err.Number = 0 Then
-                    output = output & "  Removed HKCU: " & appKey & vbCrLf
-                    removed = removed + 1
-                End If
-                reg.DeleteKey HKLM, appKey
-                If Err.Number = 0 Then
-                    output = output & "  Removed HKLM: " & appKey & vbCrLf
-                    removed = removed + 1
-                End If
-                On Error GoTo 0
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, acadBaseKey, subKeys
+        If Not IsNull(subKeys) Then
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
             End If
-        Next
-    End If
+            output = output & "Found: " & versionCandidates(vc) & " (" & hiveName & ")" & vbCrLf
+            Dim i
+            For i = 0 To UBound(subKeys)
+                If Left(subKeys(i), 5) = "ACAD-" Then
+                    profileId = LCase(acadBaseKey & "\" & subKeys(i))
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        Dim appKey
+                        appKey = acadBaseKey & "\" & subKeys(i) & "\Applications\PatentMarker"
+                        On Error Resume Next
+                        Err.Clear
+                        reg.DeleteKey HKCU, appKey
+                        If Err.Number = 0 Then
+                            output = output & "  Removed HKCU: " & appKey & vbCrLf
+                            removed = removed + 1
+                        End If
+                        Err.Clear
+                        reg.DeleteKey HKLM, appKey
+                        If Err.Number = 0 Then
+                            output = output & "  Removed HKLM: " & appKey & vbCrLf
+                            removed = removed + 1
+                        End If
+                        On Error GoTo 0
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
 output = output & vbCrLf

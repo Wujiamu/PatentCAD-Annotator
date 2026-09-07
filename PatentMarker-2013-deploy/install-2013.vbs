@@ -91,60 +91,65 @@ output = output & "DLL: " & dllPath & vbCrLf
 
 ' Newtonsoft.Json merged into PatentMarker.dll via ILRepack (single-file deploy), no extra DLL needed.
 
-' --- 2. Scan registry for ACAD 2013/2014 ---
+' --- 2. Scan all registry hives for ACAD 2013/2014 ---
 Dim versionCandidates(1)
 versionCandidates(0) = "R19.0"
 versionCandidates(1) = "R19.1"
 
-Dim vc, subKeys, acadBaseKey
-acadBaseKey = ""
+Dim vc, subKeys, tryKey, foundAny, hive, hiveName
+foundAny = False
+Dim i, installed, profileId, seenProfiles
+installed = 0
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
+
 For vc = 0 To 1
-    Dim tryKey
     tryKey = "Software\Autodesk\AutoCAD\" & versionCandidates(vc)
-    reg.EnumKey HKCU, tryKey, subKeys
-    If Not IsNull(subKeys) Then
-        acadBaseKey = tryKey
-        Exit For
-    End If
-    reg.EnumKey HKLM, tryKey, subKeys
-    If Not IsNull(subKeys) Then
-        acadBaseKey = tryKey
-        Exit For
-    End If
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, tryKey, subKeys
+        If Not IsNull(subKeys) Then
+            foundAny = True
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
+            End If
+            output = output & "Found: " & versionCandidates(vc) & " (" & hiveName & ")" & vbCrLf
+            For i = 0 To UBound(subKeys)
+                If Left(subKeys(i), 5) = "ACAD-" Then
+                    profileId = LCase(tryKey & "\" & subKeys(i))
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        Dim appKey
+                        appKey = tryKey & "\" & subKeys(i) & "\Applications\PatentMarker"
+                        reg.CreateKey HKCU, appKey
+                        reg.SetStringValue HKCU, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
+                        reg.SetDWORDValue HKCU, appKey, "LOADCTRLS", 14
+                        reg.SetDWORDValue HKCU, appKey, "MANAGED", 1
+                        reg.SetStringValue HKCU, appKey, "LOADER", dllPath
+
+                        Dim verifyVal
+                        verifyVal = ""
+                        reg.GetStringValue HKCU, appKey, "LOADER", verifyVal
+                        If verifyVal = dllPath Then
+                            output = output & "  " & subKeys(i) & ": Registry OK" & vbCrLf
+                            installed = installed + 1
+                        End If
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
-If acadBaseKey = "" Then
+If Not foundAny Then
     output = output & "ERROR: AutoCAD 2013/2014 (R19.x) not found in registry" & vbCrLf
     WScript.Echo L(output)
     WScript.Quit(1)
 End If
-output = output & "Found: " & acadBaseKey & vbCrLf
 
-' --- 3. Write HKCU registry ---
-Dim i, installed
-installed = 0
-
-For i = 0 To UBound(subKeys)
-    If Left(subKeys(i), 5) = "ACAD-" Then
-        Dim appKey
-        appKey = acadBaseKey & "\" & subKeys(i) & "\Applications\PatentMarker"
-        reg.CreateKey HKCU, appKey
-        reg.SetStringValue HKCU, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
-        reg.SetDWORDValue HKCU, appKey, "LOADCTRLS", 14
-        reg.SetDWORDValue HKCU, appKey, "MANAGED", 1
-        reg.SetStringValue HKCU, appKey, "LOADER", dllPath
-
-        Dim verifyVal
-        verifyVal = ""
-        reg.GetStringValue HKCU, appKey, "LOADER", verifyVal
-        If verifyVal = dllPath Then
-            output = output & "  " & subKeys(i) & ": Registry OK" & vbCrLf
-            installed = installed + 1
-        End If
-    End If
-Next
-
-' --- 4. Summary ---
+' --- 3. Summary ---
 output = output & vbCrLf
 output = output & "=== Summary ===" & vbCrLf
 output = output & "Registry entries: " & installed & vbCrLf

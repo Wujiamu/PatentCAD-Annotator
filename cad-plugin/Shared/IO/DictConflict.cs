@@ -110,7 +110,15 @@ namespace PatentMarker.IO
                         return null;
                 }
 
-                if (File.Exists(backupPath)) File.Delete(backupPath);
+                // Word creates the backup as hidden/system.  Normalize the
+                // attributes before cleanup so a successful restore does not
+                // leave a stale backup that reopens the conflict prompt.
+                if (File.Exists(backupPath))
+                {
+                    try { File.SetAttributes(backupPath, FileAttributes.Normal); }
+                    catch { }
+                    File.Delete(backupPath);
+                }
                 return restored;
             }
             catch (Exception ex)

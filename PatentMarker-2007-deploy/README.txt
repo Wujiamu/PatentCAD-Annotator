@@ -1,5 +1,5 @@
 ============================================
-PatentMarker 2007 安装说明 (1.0.0 - 2026-08-18, 首个正式发布)
+PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
 ============================================
 
 【系统要求】
@@ -24,6 +24,7 @@ PatentMarker 2007 安装说明 (1.0.0 - 2026-08-18, 首个正式发布)
     PatentExtractor.bas       VBA 模块
     AutoExport.bas            VBA 模块
     clsSaveHook.cls           VBA 类模块
+    PatentDictPanel.frm/.frx   面板 UserForm（窗体及二进制布局）
 
 【安装步骤】
 
@@ -33,6 +34,7 @@ PatentMarker 2007 安装说明 (1.0.0 - 2026-08-18, 首个正式发布)
   2. 双击 install-2007.vbs
   3. 脚本将自动执行三层加载策略:
      - 第1层: 写 HKCU 注册表 (LOADCTRLS=14, 启动时加载)
+       R17.0 注册表合并 HKCU/HKLM 中的全部 ACAD- 配置，重复配置只写入一次
        有管理员权限时同时写 HKLM
      - 第2层: 部署 acad.lsp 到 ACAD 支持路径
        扫描注册表支持路径/AcadLocation\Support/%APPDATA%
@@ -54,7 +56,7 @@ PatentMarker 2007 安装说明 (1.0.0 - 2026-08-18, 首个正式发布)
   1. 打开 Word 并启用 VBA 宏运行权限:
      - 文件 > 选项 > 信任中心
      - 信任中心设置 > 宏设置
-     - 勾选: 禁用 VBA 工程对象模型的访问
+     - 勾选: 信任对 VBA 工程对象模型的访问
      - 宏安全设置: 禁用所有宏并发出通知
      - 确定
   2. 关闭所有 Word 窗口 (避免 Normal.dotm 被占用)
@@ -143,10 +145,16 @@ PatentMarker 2007 安装说明 (1.0.0 - 2026-08-18, 首个正式发布)
     BZA /  PATALIGN      对齐标注文字（先选标注，再选线/框基准）
     BZS /  PATSELECTALL  全选标注实体
     BZD /  PATDOCTOR     插件自检并生成诊断报告
+    DAGUOHAO / PATBRACE 三点创建独立矢量大括号
+    PATBRACEEDIT        通过控制点或输入高度/宽度调整大括号
+    第三点决定中部尖点方向和宽度；完整轮廓保持在端点轴线与尖点之间，直干位于所选宽度中线
 
   Word (VBA, 在 Normal 模板):
     ShowPatentDictPanel  打开"专利标注字典工具"面板
     面板功能: "手动导出字典"按钮 + "保存时自动导出"开关
+    导出规则: 目录无 DWG 时使用 Word 文件名；有多个 DWG 时优先同名，兼容匹配必须唯一，
+      否则拒绝写入并记录 autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，
+      Save As 会先允许建立路径。
 
 
 【诊断】

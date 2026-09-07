@@ -145,64 +145,75 @@ try {
     # are blocked by policy.
     New-LspFallback $DllPath | Out-Null
 
-    # 2. Find AutoCAD 2025+ in either registry hive
+    # 2. Find AutoCAD 2025+ profiles in both registry hives
     $acadVersions = @("R25.0", "R25.1", "R26.0")
-    $detectedBaseKey = $null
-    $registryWriteBase = $null
-    $foundVersion = ""
-    $subKeys = @()
+    # Keep one merged profile list per installed release. Side-by-side
+    # installs may split profiles between HKCU and HKLM; prefer HKCU for a
+    # duplicate profile but retain machine-only profiles as well.
+    $detectedTargets = @()
 
     foreach ($ver in $acadVersions) {
         $candidates = @(
             "HKCU:\Software\Autodesk\AutoCAD\$ver",
             "HKLM:\Software\Autodesk\AutoCAD\$ver"
         )
+        $profiles = @{}
+        $roots = @()
         foreach ($candidate in $candidates) {
             if (-not (Test-Path -LiteralPath $candidate)) { continue }
             $candidateSubKeys = @(Get-ChildItem -LiteralPath $candidate -ErrorAction SilentlyContinue | Where-Object { $_.PSChildName -like "ACAD-*" })
-            if ($candidateSubKeys.Count -gt 0) {
-                $detectedBaseKey = $candidate
-                $subKeys = $candidateSubKeys
-                $foundVersion = $ver
-                break
+            if ($candidateSubKeys.Count -eq 0) { continue }
+            $rootName = if ($candidate.StartsWith("HKCU:")) { "HKCU" } else { "HKLM" }
+            if ($roots -notcontains $rootName) { $roots += $rootName }
+            foreach ($sk in $candidateSubKeys) {
+                if (-not $profiles.ContainsKey($sk.PSChildName)) {
+                    $profiles[$sk.PSChildName] = $sk
+                }
             }
         }
-        if ($null -ne $detectedBaseKey) { break }
+        if ($profiles.Count -gt 0) {
+            $detectedTargets += [PSCustomObject]@{
+                Version = $ver
+                RegistryRoot = ($roots -join " + ")
+                Profiles = @($profiles.Values)
+            }
+        }
     }
 
-    if ($null -eq $detectedBaseKey) {
+    if ($detectedTargets.Count -eq 0) {
         Write-InstallerLine (L "WARNING: AutoCAD 2025+ was not found in registry." "警告：注册表中未找到 AutoCAD 2025+。") -Color Yellow
         Write-InstallerLine (L "Use APPLOAD with the generated LSP fallback below." "请使用下面生成的 LSP 兜底文件，通过 APPLOAD 手动加载。") -Color Yellow
     }
     else {
-        Write-InstallerLine (L "Found: $foundVersion ($detectedBaseKey)" "找到：$foundVersion（$detectedBaseKey）")
-
         # Always write the application registration to HKCU. The old script
         # attempted to write to HKLM when detection found an HKLM key, which
         # silently failed for normal users. HKCU is the supported no-admin path.
-        $registryWriteBase = "HKCU:\Software\Autodesk\AutoCAD\$foundVersion"
-        foreach ($sk in $subKeys) {
-            $acadUserKey = Join-Path $registryWriteBase $sk.PSChildName
-            $appKey = Join-Path $acadUserKey "Applications\PatentMarker"
-            try {
-                if (-not (Test-Path -LiteralPath $acadUserKey)) { New-Item -Path $acadUserKey -Force | Out-Null }
-                if (-not (Test-Path -LiteralPath $appKey)) { New-Item -Path $appKey -Force | Out-Null }
-                Set-RegistryValue $appKey "DESCRIPTION" "PatentMarker - Patent Drawing Annotation Plugin" "String"
-                Set-RegistryValue $appKey "LOADCTRLS" 14 "DWord"
-                Set-RegistryValue $appKey "MANAGED" 1 "DWord"
-                Set-RegistryValue $appKey "LOADER" $DllPath "String"
+        foreach ($target in $detectedTargets) {
+            Write-InstallerLine (L "Found: $($target.Version) ($($target.RegistryRoot))" "找到：$($target.Version)（$($target.RegistryRoot)）")
+            $registryWriteBase = "HKCU:\Software\Autodesk\AutoCAD\$($target.Version)"
+            foreach ($sk in $target.Profiles) {
+                $acadUserKey = Join-Path $registryWriteBase $sk.PSChildName
+                $appKey = Join-Path $acadUserKey "Applications\PatentMarker"
+                try {
+                    if (-not (Test-Path -LiteralPath $acadUserKey)) { New-Item -Path $acadUserKey -Force | Out-Null }
+                    if (-not (Test-Path -LiteralPath $appKey)) { New-Item -Path $appKey -Force | Out-Null }
+                    Set-RegistryValue $appKey "DESCRIPTION" "PatentMarker - Patent Drawing Annotation Plugin" "String"
+                    Set-RegistryValue $appKey "LOADCTRLS" 14 "DWord"
+                    Set-RegistryValue $appKey "MANAGED" 1 "DWord"
+                    Set-RegistryValue $appKey "LOADER" $DllPath "String"
 
-                $verify = Get-ItemProperty -LiteralPath $appKey -ErrorAction Stop
-                if ([string]$verify.LOADER -eq $DllPath -and [int]$verify.LOADCTRLS -eq 14 -and [int]$verify.MANAGED -eq 1) {
-                    Write-InstallerLine "  $($sk.PSChildName): $(L 'Registry OK' '注册表 OK')" -Color Green
-                    $script:Installed++
+                    $verify = Get-ItemProperty -LiteralPath $appKey -ErrorAction Stop
+                    if ([string]$verify.LOADER -eq $DllPath -and [int]$verify.LOADCTRLS -eq 14 -and [int]$verify.MANAGED -eq 1) {
+                        Write-InstallerLine "  $($target.Version)/$($sk.PSChildName): $(L 'Registry OK' '注册表 OK')" -Color Green
+                        $script:Installed++
+                    }
+                    else {
+                        Write-InstallerLine "  $($target.Version)/$($sk.PSChildName): $(L 'Registry verification failed' '注册表校验失败')" -Color Yellow
+                    }
                 }
-                else {
-                    Write-InstallerLine "  $($sk.PSChildName): $(L 'Registry verification failed' '注册表校验失败')" -Color Yellow
+                catch {
+                    Write-InstallerLine "  $($target.Version)/$($sk.PSChildName): $(L 'FAILED' '失败') - $($_.Exception.Message)" -Color Yellow
                 }
-            }
-            catch {
-                Write-InstallerLine "  $($sk.PSChildName): $(L 'FAILED' '失败') - $($_.Exception.Message)" -Color Yellow
             }
         }
     }

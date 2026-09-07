@@ -162,6 +162,7 @@ namespace PatentMarker.Tests
             WriteFile(DictPath, MakeJson(null));   // 当前 = Word 最新导出
             string backup = DictPath + DictConflict.BackupInfix + "20260704-090000.bak";
             WriteFile(backup, backupContent);
+            File.SetAttributes(backup, FileAttributes.Hidden | FileAttributes.System);
 
             string error;
             DictModel? restored = DictConflict.ResolveRestoreCad(DictPath, backup, out error);

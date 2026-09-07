@@ -6,7 +6,6 @@
     <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <DefineConstants>SIM_LEADER</DefineConstants>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
@@ -23,9 +22,12 @@
     <Compile Include="Shared\PatMarkSimulationTests.cs" />
     <Compile Include="Shared\DictPaletteCadServiceTests.cs" />
     <Compile Include="Shared\PatBraceGeometryTests.cs" />
-    <Compile Include="..\Shared\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
+    <Compile Include="Shared\PatBraceEntityTests.cs" />
+    <Compile Include="..\2013\PatentMarker\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
+    <Compile Include="..\2013\PatentMarker\Commands\PatMLeaderCreator.cs" Link="Edition\Commands\PatMLeaderCreator.cs" />
     <Compile Include="..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Edition\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\Shared\Commands\PatBraceGeometry.cs" Link="Edition\Commands\PatBraceGeometry.cs" />
+    <Compile Include="..\Shared\Commands\PatBraceEntity.cs" Link="Edition\Commands\PatBraceEntity.cs" />
     <Compile Include="..\Shared\Cad\PatEntityHelper.cs" Link="Edition\IO\PatEntityHelper.cs" />
     <Compile Include="..\Shared\IO\NumberIdentity.cs" Link="Edition\IO\NumberIdentity.cs" />
     <Compile Include="..\Shared\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />

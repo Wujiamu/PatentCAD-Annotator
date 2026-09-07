@@ -22,7 +22,7 @@ PatentCAD-Annotator 面向 AutoCAD 2007 至 2026+ 全部版本，需覆盖 Win7 
 
 ### 1. 标注实现策略：2007 用 Leader + MText，2010+ 用 MLeader（F 方案）
 
-AutoCAD 2007 的托管 API 尚无 `MLeader` 类，2007 版沿用 `Leader` + `MText` 两个对象拼合实现标注。2010 及以后版本统一使用 `MLeader`（F 方案三点顶点链：attach → dogleg… → text，禁用全部自动几何），文字由 MLeader 自持，无独立 MText 实体；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问以兼容 2010—2012。四个 MLeader 版本的 `Commands/` 实现（5 个文件）字节级相同。
+AutoCAD 2007 的托管 API 尚无 `MLeader` 类，2007 版沿用 `Leader` + `MText` 两个对象拼合实现标注。2010 及以后版本统一使用 `MLeader`（F 方案三点顶点链：attach → dogleg… → text，禁用全部自动几何），文字由 MLeader 自持，无独立 MText 实体；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问以兼容 2010—2012。四个 MLeader 版本的 `Commands/` 实现（7 个文件，含 `PATCHECK` 与 `PATALIGN`）字节级相同。
 
 ### 2. .NET Framework 断代
 

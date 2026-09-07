@@ -65,14 +65,28 @@ Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     json = JsonWriter.Serialize(root)
 
     ' v4.0：导出前备份被 CAD 端修改过的旧字典，防止 Word 静默覆盖
-    BackupIfCadModified outPath
+    Dim backupFailure As String
+    If Not BackupIfCadModified(outPath, backupFailure) Then
+        Err.Raise vbObjectError + 510, "AutoExport.BackupIfCadModified", backupFailure
+    End If
 
     ' v5.2: clear Hidden/System attributes so ADODB SaveToFile can overwrite the hidden dict file
-    On Error Resume Next
-    SetAttr outPath, vbNormal
-    On Error GoTo errHandler
+    If CreateObject("Scripting.FileSystemObject").FileExists(outPath) Then
+        On Error Resume Next
+        Err.Clear
+        SetAttr outPath, vbNormal
+        Dim attributeFailure As String
+        If Err.Number <> 0 Then
+            attributeFailure = Err.Description & " (" & Err.Number & ")"
+            On Error GoTo errHandler
+            Err.Raise vbObjectError + 511, "AutoExport.SetAttr", attributeFailure
+        End If
+        On Error GoTo errHandler
+    End If
 
-    JsonWriter.WriteToFile outPath, json
+    If Not JsonWriter.WriteToFile(outPath, json) Then
+        Err.Raise vbObjectError + 513, "AutoExport.JsonWriter", "Dictionary write failed"
+    End If
 
     ' v5.2: keep the dict file invisible in Windows Explorer (Hidden + System attributes)
     On Error Resume Next
@@ -88,22 +102,25 @@ Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     Exit Function
 
 errHandler:
+    Dim errorNumber As Long
+    Dim errorDescription As String
+    errorNumber = Err.Number
+    errorDescription = Err.Description
     On Error Resume Next
     Dim errPath As String
-    errPath = GetOutputDir(doc) & "\autoexport-error.txt"
-    JsonWriter.WriteToFile errPath, "ERROR: " & Err.Description & " (" & Err.Number & ")"
+    Dim errorDir As String
+    errorDir = GetOutputDir(doc)
+    If errorDir <> "" Then
+        errPath = errorDir & "\autoexport-error.txt"
+        JsonWriter.WriteToFile errPath, "ERROR: " & errorDescription & " (" & errorNumber & ")"
+    End If
     ExportDict = False
 End Function
 
 ' ======================================================================
-' 确定输出目录，优先使用同目录下的 DWG 文件。
-'
-' 匹配策略：
-'   1. 扫描 Word 文档所在目录中的 .dwg 文件
-'   2. 如果只有一个 DWG，直接使用其名称
-'   3. 如果多个 DWG，尝试与 Word 文档名匹配（双向包含）
-'   4. 若无法匹配，使用最近修改的 DWG
-'   5. 如果没有 DWG，回退到 Word 文档名
+' Resolve the output dictionary in the Word document directory.
+' An exact DWG base name wins; a single compatibility match is accepted.
+' Ambiguous multi-DWG directories fail closed instead of guessing.
 ' ======================================================================
 Private Function GetOutputPath(ByVal doc As Document) As String
     Dim dir As String
@@ -114,7 +131,11 @@ Private Function GetOutputPath(ByVal doc As Document) As String
     End If
 
     Dim baseName As String
-    baseName = FindDwgBaseName(dir, doc.Name)
+    Dim mappingFailure As String
+    baseName = FindDwgBaseName(dir, doc.Name, mappingFailure)
+    If mappingFailure <> "" Then
+        Err.Raise vbObjectError + 512, "AutoExport.GetOutputPath", mappingFailure
+    End If
 
     ' 若未找到 DWG，回退到 Word 文档名
     If baseName = "" Then
@@ -128,11 +149,12 @@ Private Function GetOutputPath(ByVal doc As Document) As String
 End Function
 
 ' ======================================================================
-' 在指定目录中查找 DWG 文件（最多收集 100 个，过滤其他扩展名）。
-' 优先与 Word 文档名双向包含匹配，否则取最近修改的 DWG。
+' Find the DWG base name safely. The function returns an empty value when
+' there is no DWG; failure is populated when multiple candidates are unsafe.
 ' ======================================================================
-Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String) As String
+Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String, ByRef failure As String) As String
     On Error GoTo errHandler
+    failure = ""
 
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
@@ -147,19 +169,15 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
 
     Dim dwgCount As Long: dwgCount = 0
     Dim dwgNames() As String
-    Dim dwgDates() As Date
-    ReDim dwgNames(0 To 99)
-    ReDim dwgDates(0 To 99)
+    ReDim dwgNames(0 To 0)
 
     ' 收集所有 .dwg 文件
     Dim f As Object
     For Each f In folder.Files
         If LCase(fso.GetExtensionName(f.Name)) = "dwg" Then
-            If dwgCount <= 99 Then
-                dwgNames(dwgCount) = f.Name
-                dwgDates(dwgCount) = f.DateLastModified
-                dwgCount = dwgCount + 1
-            End If
+            ReDim Preserve dwgNames(0 To dwgCount)
+            dwgNames(dwgCount) = f.Name
+            dwgCount = dwgCount + 1
         End If
     Next
 
@@ -180,25 +198,39 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
 
     Dim i As Long
     For i = 0 To dwgCount - 1
-        Dim dwgBase As String
-        dwgBase = RemoveExt(dwgNames(i))
-        ' 双向包含匹配
-        If InStr(1, LCase(wordBase), LCase(dwgBase), vbTextCompare) > 0 Or _
-           InStr(1, LCase(dwgBase), LCase(wordBase), vbTextCompare) > 0 Then
-            FindDwgBaseName = dwgBase
+        If StrComp(wordBase, RemoveExt(dwgNames(i)), vbTextCompare) = 0 Then
+            FindDwgBaseName = RemoveExt(dwgNames(i))
             Exit Function
         End If
     Next
 
-    ' 无法匹配：使用最近修改的 DWG
-    Dim newest As Long: newest = 0
-    For i = 1 To dwgCount - 1
-        If dwgDates(i) > dwgDates(newest) Then newest = i
+    Dim matchCount As Long
+    Dim matchedBase As String
+    matchCount = 0
+    For i = 0 To dwgCount - 1
+        Dim dwgBase As String
+        dwgBase = RemoveExt(dwgNames(i))
+        If InStr(1, LCase(wordBase), LCase(dwgBase), vbTextCompare) > 0 Or _
+           InStr(1, LCase(dwgBase), LCase(wordBase), vbTextCompare) > 0 Then
+            matchCount = matchCount + 1
+            matchedBase = dwgBase
+        End If
     Next
-    FindDwgBaseName = RemoveExt(dwgNames(newest))
+
+    If matchCount = 1 Then
+        FindDwgBaseName = matchedBase
+        Exit Function
+    End If
+
+    If matchCount > 1 Then
+        failure = "Multiple DWG files match the Word document name; export was not written."
+    Else
+        failure = "Multiple DWG files are present and no exact name match was found; export was not written."
+    End If
     Exit Function
 
 errHandler:
+    failure = "DWG discovery failed: " & Err.Description
     FindDwgBaseName = ""
 End Function
 
@@ -230,60 +262,65 @@ End Function
 ' 检测：旧 dict.json 内容含 "modified_by": "cad"（CAD 端 DictWriter 写入的标记）。
 ' 备份：<主名>.dict.json.word-<yyyymmdd-hhnnss>.bak，只保留最新一个；
 '       CAD 端 DictConflict.FindWordBackup 依赖此命名约定做冲突检测。
-' 任何失败都不阻断导出（备份是尽力而为）。
+' Backup failures are returned to ExportDict so CAD changes are never silently overwritten.
 ' ======================================================================
-Private Sub BackupIfCadModified(ByVal dictPath As String)
-    On Error GoTo done
+Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As String) As Boolean
+    On Error GoTo errHandler
+    BackupIfCadModified = True
+    failure = ""
 
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
-    If Not fso.FileExists(dictPath) Then Exit Sub
+    If Not fso.FileExists(dictPath) Then Exit Function
 
-    ' 读旧文件（UTF-8），检查 CAD 修改标记
     Dim content As String
-    content = ReadUtf8File(dictPath)
-    If InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Sub
+    Dim readFailure As String
+    content = ReadUtf8File(dictPath, readFailure)
+    If readFailure <> "" Then
+        failure = "CAD dictionary read failed: " & readFailure
+        BackupIfCadModified = False
+        Exit Function
+    End If
+    If InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Function
 
     Dim bakDir As String
     bakDir = fso.GetParentFolderName(dictPath)
-    If bakDir = "" Then Exit Sub
+    If bakDir = "" Then Exit Function
     Dim fileName As String
     fileName = fso.GetFileName(dictPath)
 
-    ' 删除旧备份（只保留最新一个）
-    Dim oldBak As String
-    ' v5.2: vbHidden+vbSystem required - Dir() default (vbNormal) does not return hidden backup files
-    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak", vbHidden Or vbSystem)
-    Do While oldBak <> ""
-        On Error Resume Next
-        ' v5.2: clear attributes before Kill (hidden files cannot be killed)
-        SetAttr bakDir & "\" & oldBak, vbNormal
-        Kill bakDir & "\" & oldBak
-        On Error GoTo done
-        oldBak = Dir()
-    Loop
-
-    ' 生成新备份（同一秒内重复导出时先删后复制）
+    ' Create the new backup before deleting older backups. If copying fails,
+    ' the previous CAD backup remains available for arbitration.
     Dim stamp As String
     stamp = Format(Now, "yyyymmdd-hhnnss")
     Dim bakPath As String
     bakPath = bakDir & "\" & fileName & ".word-" & stamp & ".bak"
     If fso.FileExists(bakPath) Then
-        On Error Resume Next
-        ' v5.2: clear attributes before Kill (hidden files cannot be killed)
         SetAttr bakPath, vbNormal
         Kill bakPath
-        On Error GoTo done
     End If
     FileCopy dictPath, bakPath
-
-    ' v5.2: keep the backup file invisible in Windows Explorer too
-    On Error Resume Next
     SetAttr bakPath, vbHidden Or vbSystem
-    On Error GoTo done
 
-done:
-End Sub
+    ' Keep only the newest backup, including hidden/system files.
+    Dim oldBak As String
+    Dim oldPath As String
+    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak", vbHidden Or vbSystem)
+    Do While oldBak <> ""
+        oldPath = bakDir & "\" & oldBak
+        If StrComp(oldPath, bakPath, vbTextCompare) <> 0 Then
+            SetAttr oldPath, vbNormal
+            Kill oldPath
+        End If
+        oldBak = Dir()
+    Loop
+
+    Exit Function
+
+errHandler:
+    failure = Err.Description & " (" & Err.Number & ")"
+    BackupIfCadModified = False
+End Function
 
 ' ======================================================================
 ' v5.2: delete <Word base>.dict.json when the effective export base is a
@@ -319,9 +356,10 @@ Private Sub CleanupOrphanWordDict(ByVal doc As Document, ByVal outPath As String
 
 done:
 End Sub
-' 以 UTF-8 读取整个文件内容（失败返回空串）
-Private Function ReadUtf8File(ByVal path As String) As String
+' Read UTF-8 file content and return failure details to the caller.
+Private Function ReadUtf8File(ByVal path As String, ByRef failure As String) As String
     On Error GoTo errHandler
+    failure = ""
     Dim stream As Object
     Set stream = CreateObject("ADODB.Stream")
     stream.Type = 2
@@ -332,7 +370,12 @@ Private Function ReadUtf8File(ByVal path As String) As String
     stream.Close
     Exit Function
 errHandler:
+    Dim errorNumber As Long
+    Dim errorDescription As String
+    errorNumber = Err.Number
+    errorDescription = Err.Description
     On Error Resume Next
     If Not stream Is Nothing Then stream.Close
+    failure = errorDescription & " (" & errorNumber & ")"
     ReadUtf8File = ""
 End Function

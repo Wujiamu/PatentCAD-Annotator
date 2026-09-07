@@ -91,7 +91,19 @@ function Stage-Version {
 
     New-Item -ItemType Directory -Path $stage -Force | Out-Null
     foreach ($item in Get-ChildItem -LiteralPath $template -Force) {
-        if ($item.Name -in @("PatentMarker.dll", "PatentMarker.repacked.dll", "PatentMarker.repacked.pdb")) { continue }
+        # Deployment templates are also used as live install directories, so
+        # they contain logs, doctor reports, generated LSP files and timestamped
+        # DLL backups.  Only installer assets belong in a release archive.
+        if ($item.PSIsContainer) {
+            if ($item.Name -ne "vba") { continue }
+        }
+        else {
+            if ($item.Name -in @("PatentMarker.dll", "PatentMarker.repacked.dll", "PatentMarker.repacked.pdb")) { continue }
+            if ($item.Name -like "*.bak.*" -or
+                $item.Name -like "*report*.txt" -or
+                $item.Extension -in @(".log", ".lsp")) { continue }
+            if ($item.Extension -notin @(".bat", ".vbs", ".ps1", ".txt")) { continue }
+        }
         Copy-Item -LiteralPath $item.FullName -Destination (Join-Path $stage $item.Name) -Recurse -Force
     }
 

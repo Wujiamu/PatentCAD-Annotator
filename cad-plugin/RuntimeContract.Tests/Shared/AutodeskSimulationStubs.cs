@@ -4,6 +4,36 @@ using System.Collections.Generic;
 
 namespace Autodesk.AutoCAD.Geometry
 {
+    public struct Point2d : IEquatable<Point2d>
+    {
+        public Point2d(double x, double y)
+        {
+            X = x;
+            Y = y;
+        }
+
+        public double X { get; }
+        public double Y { get; }
+
+        public bool Equals(Point2d other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Point2d && Equals((Point2d)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (X.GetHashCode() * 397) ^ Y.GetHashCode();
+            }
+        }
+    }
+
     public struct Point3d : IEquatable<Point3d>
     {
         public Point3d(double x, double y, double z)
@@ -331,6 +361,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
             _entries[name] = value.ObjectId;
             return value.ObjectId;
         }
+
+        public void UpgradeOpen() { }
     }
 
     public sealed class Xrecord : DBObject
@@ -352,21 +384,25 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public sealed class ResultBuffer : IEnumerable<TypedValue>, IDisposable
     {
-        private readonly TypedValue[] _values;
+        private readonly List<TypedValue> _values;
 
         public ResultBuffer(params TypedValue[] values)
         {
-            _values = values ?? new TypedValue[0];
+            _values = values != null
+                ? new List<TypedValue>(values)
+                : new List<TypedValue>();
         }
+
+        public void Add(TypedValue value) { _values.Add(value); }
 
         public IEnumerator<TypedValue> GetEnumerator()
         {
-            return ((IEnumerable<TypedValue>)_values).GetEnumerator();
+            return _values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return _values.GetEnumerator();
+            return ((IEnumerable<TypedValue>)_values).GetEnumerator();
         }
 
         public void Dispose() { }
@@ -407,6 +443,46 @@ namespace Autodesk.AutoCAD.DatabaseServices
     public sealed class DBText : Entity
     {
         public string TextString { get; set; } = "";
+    }
+
+    public sealed class Polyline : Entity
+    {
+        private readonly List<Point2d> _vertices = new List<Point2d>();
+
+        public int NumberOfVertices { get { return _vertices.Count; } }
+        public double Elevation { get; set; }
+        public IReadOnlyList<Point2d> Vertices { get { return _vertices; } }
+
+        public void AddVertexAt(
+            int index, Point2d point, double bulge,
+            double startWidth, double endWidth)
+        {
+            if (index < 0 || index > _vertices.Count)
+                throw new ArgumentOutOfRangeException("index");
+            _vertices.Insert(index, point);
+        }
+
+        public Point2d GetPointAt(int index)
+        {
+            return _vertices[index];
+        }
+
+        public void SetPointAt(int index, Point2d point)
+        {
+            _vertices[index] = point;
+        }
+
+        public void RemoveVertexAt(int index)
+        {
+            // AutoCAD rejects a polyline becoming invalid while vertices are
+            // removed; this models the eDegenerateGeometry failure that the
+            // PATBRACEEDIT regression exposed.
+            if (_vertices.Count <= 2)
+                throw new InvalidOperationException("eDegenerateGeometry");
+            _vertices.RemoveAt(index);
+        }
+
+        public void UpgradeOpen() { }
     }
 
     public sealed class Leader : Entity
@@ -488,8 +564,6 @@ namespace Autodesk.AutoCAD.DatabaseServices
         {
             if (ContentType != ContentType.MTextContent)
                 throw new InvalidOperationException("MLeader content must be MTextContent before AddLeaderLine.");
-            if (_mtext == null)
-                throw new InvalidOperationException("MLeader MText must be attached before AddLeaderLine.");
             if (_style.IsNull)
                 throw new InvalidOperationException("MLeader style must be attached before AddLeaderLine.");
             _leaderStarted = true;
@@ -514,6 +588,25 @@ namespace Autodesk.AutoCAD.DatabaseServices
         }
     }
 
+    public sealed class MLeaderStyle : DBObject
+    {
+        public string Name { get; set; }
+        public ContentType ContentType { get; set; }
+        public double TextHeight { get; set; }
+        public TextAttachmentType TextAttachmentType { get; set; }
+        public TextAttachmentDirection TextAttachmentDirection { get; set; }
+        public TextAngleType TextAngleType { get; set; }
+        public LeaderType LeaderLineType { get; set; }
+        public bool EnableDogleg { get; set; }
+        public bool EnableLanding { get; set; }
+        public bool ExtendLeaderToText { get; set; }
+        public double DoglegLength { get; set; }
+        public double LandingGap { get; set; }
+        public double ArrowSize { get; set; }
+        public ObjectId ArrowSymbolId { get; set; }
+        public ObjectId TextStyleId { get; set; }
+    }
+
     public sealed class Database
     {
         private int _nextId = 10;
@@ -525,23 +618,28 @@ namespace Autodesk.AutoCAD.DatabaseServices
             BlockTableId = new ObjectId(1);
             TextStyleTableId = new ObjectId(2);
             ModelSpaceId = new ObjectId(3);
+            MLeaderStyleDictionaryId = new ObjectId(4);
             BlockTable = new BlockTable(this);
             ModelSpace = new BlockTableRecord(this);
             TextStyleTable = new TextStyleTable(this);
+            MLeaderStyleDictionary = new DBDictionary();
             Register(BlockTableId, BlockTable);
             Register(ModelSpaceId, ModelSpace);
             Register(TextStyleTableId, TextStyleTable);
+            Register(MLeaderStyleDictionaryId, MLeaderStyleDictionary);
             TransactionManager = new TransactionManager(this);
         }
 
         public ObjectId BlockTableId { get; private set; }
         public ObjectId ModelSpaceId { get; private set; }
         public ObjectId TextStyleTableId { get; private set; }
+        public ObjectId MLeaderStyleDictionaryId { get; private set; }
         public ObjectId Textstyle { get; set; }
         public TransactionManager TransactionManager { get; private set; }
         public BlockTable BlockTable { get; private set; }
         public BlockTableRecord ModelSpace { get; private set; }
         public TextStyleTable TextStyleTable { get; private set; }
+        public DBDictionary MLeaderStyleDictionary { get; private set; }
         public List<string> Trace { get; } = new List<string>();
         public List<Entity> CommittedEntities { get; } = new List<Entity>();
         public bool FailOnCommit { get; set; }
@@ -684,9 +782,28 @@ namespace Autodesk.AutoCAD.DatabaseServices
     public sealed class BlockTable : DBObject
     {
         private readonly Database _database;
+        private readonly Dictionary<string, ObjectId> _blocks =
+            new Dictionary<string, ObjectId>(StringComparer.OrdinalIgnoreCase);
         internal BlockTable(Database database) { _database = database; }
         public static string ModelSpace { get { return "*Model_Space"; } }
-        public ObjectId this[string name] { get { return new ObjectId(3); } }
+        public ObjectId this[string name]
+        {
+            get
+            {
+                ObjectId id;
+                if (name == ModelSpace) return new ObjectId(3);
+                if (_blocks.TryGetValue(name, out id)) return id;
+                return ObjectId.Null;
+            }
+        }
+        public bool Has(string name) { return _blocks.ContainsKey(name); }
+        public void UpgradeOpen() { }
+        public ObjectId Add(BlockTableRecord block)
+        {
+            ObjectId id = _database.AllocateId(block);
+            _blocks[block.Name] = id;
+            return id;
+        }
     }
 
     public sealed class BlockTableRecord : DBObject, IEnumerable<ObjectId>
@@ -694,8 +811,14 @@ namespace Autodesk.AutoCAD.DatabaseServices
         private readonly Database _database;
         private readonly List<ObjectId> _entityIds = new List<ObjectId>();
         internal BlockTableRecord(Database database) { _database = database; }
+        public BlockTableRecord() { _database = null; }
+        public string Name { get; set; }
         public static string ModelSpace { get { return "*Model_Space"; } }
-        public void AppendEntity(Entity entity) { _database.AddPending(entity); }
+        public ObjectId AppendEntity(Entity entity)
+        {
+            _database.AddPending(entity);
+            return entity.ObjectId;
+        }
 
         internal void AddCommitted(ObjectId id)
         {

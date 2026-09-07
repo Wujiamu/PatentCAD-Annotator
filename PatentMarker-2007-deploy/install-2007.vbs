@@ -155,38 +155,54 @@ Dim adminOk
 adminOk = IsAdmin()
 LogMsg "Privilege: " & IIf(adminOk, "Admin", "Non-admin (HKLM skipped)")
 
-' --- 3. Scan registry for ACAD 2007 ---
+' --- 3. Scan all registry hives for ACAD 2007 ---
 Dim acadBaseKey
 acadBaseKey = "Software\Autodesk\AutoCAD\R17.0"
 LogMsg ""
 LogMsg "--- Scanning Registry ---"
 
-Dim subKeys
-reg.EnumKey HKCU, acadBaseKey, subKeys
-If IsNull(subKeys) Then
-    reg.EnumKey HKLM, acadBaseKey, subKeys
-    If IsNull(subKeys) Then
-        QuitWithMsg "ERROR: AutoCAD R17.0 not found in registry"
-    End If
-    LogMsg "  Found in HKLM"
-Else
-    LogMsg "  Found in HKCU"
-End If
+Dim subKeys, hive, hiveName, foundAny, seenProfiles
+foundAny = False
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
 
-Dim productCodes()
-ReDim productCodes(0)
-Dim productCount
+Dim productCodes(), productCount
 productCount = 0
 
-Dim i, key
-For i = 0 To UBound(subKeys)
-    key = subKeys(i)
-    If Left(key, 5) = "ACAD-" Then
-        ReDim Preserve productCodes(productCount)
-        productCodes(productCount) = key
-        productCount = productCount + 1
+Dim i, key, profileId
+For Each hive In Array(HKCU, HKLM)
+    subKeys = Null
+    reg.EnumKey hive, acadBaseKey, subKeys
+    If Not IsNull(subKeys) Then
+        foundAny = True
+        If hive = HKCU Then
+            hiveName = "HKCU"
+        Else
+            hiveName = "HKLM"
+        End If
+        LogMsg "  Found in " & hiveName
+        For i = 0 To UBound(subKeys)
+            key = subKeys(i)
+            If Left(key, 5) = "ACAD-" Then
+                profileId = LCase(acadBaseKey & "\" & key)
+                If Not seenProfiles.Exists(profileId) Then
+                    seenProfiles.Add profileId, True
+                    If productCount = 0 Then
+                        ReDim productCodes(0)
+                    Else
+                        ReDim Preserve productCodes(productCount)
+                    End If
+                    productCodes(productCount) = key
+                    productCount = productCount + 1
+                End If
+            End If
+        Next
     End If
 Next
+
+If Not foundAny Then
+    QuitWithMsg "ERROR: AutoCAD R17.0 not found in registry"
+End If
 
 If productCount = 0 Then
     QuitWithMsg "ERROR: No ACAD- product code found"
@@ -253,6 +269,7 @@ If adminOk Then
     For j = 0 To productCount - 1
         appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
         On Error Resume Next
+        Err.Clear
         reg.CreateKey HKLM, appKey
         If Err.Number = 0 Then
             reg.SetStringValue HKLM, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
@@ -268,7 +285,6 @@ If adminOk Then
         Else
             LogMsg "  " & productCodes(j) & ": HKLM failed - " & Err.Description
             On Error GoTo 0
-            Exit For
         End If
         On Error GoTo 0
     Next
@@ -291,14 +307,13 @@ lspLoadCmd = "(command ""NETLOAD"" """ & lspDllPath & """)"
 Dim lspPrinc
 lspPrinc = "(princ ""\nPatentMarker loaded. Type BZ for palette.\n"")(princ)"
 
-For j = 0 To productCount - 1
-    If lspDeployed Then Exit For
+Dim candidateDirs()
 
+For j = 0 To productCount - 1
     Dim productCode
     productCode = productCodes(j)
 
     ' Collect candidate support directories
-    Dim candidateDirs()
     ReDim candidateDirs(0)
     Dim candCount
     candCount = 0
@@ -308,6 +323,9 @@ For j = 0 To productCount - 1
     supportKey = acadBaseKey & "\" & productCode & "\Fixed Profile\General\ACAD"
     supportPath = ""
     reg.GetStringValue HKCU, supportKey, "ACAD", supportPath
+    If IsNull(supportPath) Or supportPath = "" Then
+        reg.GetStringValue HKLM, supportKey, "ACAD", supportPath
+    End If
 
     If Not IsNull(supportPath) And supportPath <> "" Then
         LogMsg "  Support path found for " & productCode

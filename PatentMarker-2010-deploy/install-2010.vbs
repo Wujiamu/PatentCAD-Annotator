@@ -161,67 +161,73 @@ Dim adminOk
 adminOk = IsAdmin()
 LogMsg "Privilege: " & IIf(adminOk, "Admin", "Non-admin (HKLM skipped)")
 
-' --- 3. Scan registry for ACAD 2010/2011/2012 (R18.x) ---
-Dim acadBaseKey, acadVersionLabel
-acadVersionLabel = ""
-
-' Try R18.0 (2010), R18.1 (2011), R18.2 (2012)
+' --- 3. Scan all registry hives for ACAD 2010/2011/2012 (R18.x) ---
 Dim versionCandidates(2)
 versionCandidates(0) = "R18.0"
 versionCandidates(1) = "R18.1"
 versionCandidates(2) = "R18.2"
 
-Dim vc, subKeys
-acadBaseKey = ""
+Dim vc, subKeys, tryKey, foundAny, hive, hiveName
+foundAny = False
+Dim productCodes(), productBases(), productVersions(), acadPaths()
+Dim productCount, i, key, profileId, seenProfiles
+productCount = 0
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
+
 For vc = 0 To 2
-    Dim tryKey
     tryKey = "Software\Autodesk\AutoCAD\" & versionCandidates(vc)
-    reg.EnumKey HKCU, tryKey, subKeys
-    If Not IsNull(subKeys) Then
-        acadBaseKey = tryKey
-        acadVersionLabel = versionCandidates(vc)
-        Exit For
-    End If
-    reg.EnumKey HKLM, tryKey, subKeys
-    If Not IsNull(subKeys) Then
-        acadBaseKey = tryKey
-        acadVersionLabel = versionCandidates(vc)
-        Exit For
-    End If
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, tryKey, subKeys
+        If Not IsNull(subKeys) Then
+            foundAny = True
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
+            End If
+            LogMsg "Found: " & versionCandidates(vc) & " (" & hiveName & ")"
+            For i = 0 To UBound(subKeys)
+                key = subKeys(i)
+                If Left(key, 5) = "ACAD-" Then
+                    profileId = LCase(tryKey & "\" & key)
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        If productCount = 0 Then
+                            ReDim productCodes(0)
+                            ReDim productBases(0)
+                            ReDim productVersions(0)
+                            ReDim acadPaths(0)
+                        Else
+                            ReDim Preserve productCodes(productCount)
+                            ReDim Preserve productBases(productCount)
+                            ReDim Preserve productVersions(productCount)
+                            ReDim Preserve acadPaths(productCount)
+                        End If
+                        productCodes(productCount) = key
+                        productBases(productCount) = tryKey
+                        productVersions(productCount) = versionCandidates(vc)
+                        productCount = productCount + 1
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
-If acadBaseKey = "" Then
+If Not foundAny Then
     QuitWithMsg "ERROR: AutoCAD 2010/2011/2012 (R18.x) not found in registry"
 End If
-LogMsg "Found: " & acadVersionLabel
-
-Dim productCodes()
-ReDim productCodes(0)
-Dim productCount
-productCount = 0
-
-Dim i, key
-For i = 0 To UBound(subKeys)
-    key = subKeys(i)
-    If Left(key, 5) = "ACAD-" Then
-        ReDim Preserve productCodes(productCount)
-        productCodes(productCount) = key
-        productCount = productCount + 1
-    End If
-Next
-
 If productCount = 0 Then
     QuitWithMsg "ERROR: No ACAD- product code found"
 End If
 LogMsg "Products found: " & productCount
 
-' --- 4. Read ACAD paths ---
-Dim acadPaths()
-ReDim acadPaths(productCount - 1)
-
+' --- 4. Read ACAD paths for every detected profile ---
 For i = 0 To productCount - 1
     Dim prodKey, acadLocation
-    prodKey = acadBaseKey & "\" & productCodes(i)
+    prodKey = productBases(i) & "\" & productCodes(i)
     acadLocation = ""
     reg.GetStringValue HKCU, prodKey, "AcadLocation", acadLocation
     If IsNull(acadLocation) Or acadLocation = "" Then
@@ -229,9 +235,8 @@ For i = 0 To productCount - 1
     End If
     If IsNull(acadLocation) Then acadLocation = ""
     acadPaths(i) = acadLocation
-    LogMsg "  " & productCodes(i) & " -> " & acadLocation
+    LogMsg "  " & productVersions(i) & "\" & productCodes(i) & " -> " & acadLocation
 Next
-
 ' --- 5. Write HKCU registry (Layer 1) ---
 LogMsg ""
 LogMsg "--- Layer 1: Write HKCU Registry ---"
@@ -240,7 +245,7 @@ Dim j, appKey, installed
 installed = 0
 
 For j = 0 To productCount - 1
-    appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+    appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
     reg.CreateKey HKCU, appKey
 
     Dim verifyVal, verifyDword
@@ -255,10 +260,10 @@ For j = 0 To productCount - 1
     reg.GetDWORDValue HKCU, appKey, "LOADCTRLS", verifyDword
 
     If verifyVal = dllPath And verifyDword = 14 Then
-        LogMsg "  " & productCodes(j) & ": OK"
+        LogMsg "  " & productVersions(j) & "\" & productCodes(j) & ": OK"
         installed = installed + 1
     Else
-        LogMsg "  " & productCodes(j) & ": FAILED"
+        LogMsg "  " & productVersions(j) & "\" & productCodes(j) & ": FAILED"
     End If
 Next
 
@@ -270,8 +275,9 @@ If adminOk Then
     LogMsg ""
     LogMsg "--- Write HKLM ---"
     For j = 0 To productCount - 1
-        appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+        appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
         On Error Resume Next
+        Err.Clear
         reg.CreateKey HKLM, appKey
         If Err.Number = 0 Then
             reg.SetStringValue HKLM, appKey, "DESCRIPTION", "PatentMarker - Patent Drawing Annotation Plugin"
@@ -281,13 +287,12 @@ If adminOk Then
             verifyVal = ""
             reg.GetStringValue HKLM, appKey, "LOADER", verifyVal
             If verifyVal = dllPath Then
-                LogMsg "  " & productCodes(j) & ": HKLM OK"
+                LogMsg "  " & productVersions(j) & "\" & productCodes(j) & ": HKLM OK"
                 hklmOk = True
             End If
         Else
-            LogMsg "  " & productCodes(j) & ": HKLM failed - " & Err.Description
+            LogMsg "  " & productVersions(j) & "\" & productCodes(j) & ": HKLM failed - " & Err.Description
             On Error GoTo 0
-            Exit For
         End If
         On Error GoTo 0
     Next
@@ -311,8 +316,6 @@ Dim lspPrinc
 lspPrinc = "(princ ""\nPatentMarker loaded. Type BZ for palette.\n"")(princ)"
 
 For j = 0 To productCount - 1
-    If lspDeployed Then Exit For
-
     Dim productCode
     productCode = productCodes(j)
 

@@ -1,4 +1,5 @@
 using PatentMarker.IO;
+using System.IO;
 
 namespace PatentMarker.Palette
 {
@@ -33,7 +34,10 @@ namespace PatentMarker.Palette
         public string ResolveDictPath()
         {
             string path = DictLoader.CurrentPath;
-            return path != null ? path : DictLoader.ResolveDictPath();
+            // A cached path can outlive a deleted/renamed dictionary.  Fall
+            // back to the loader's canonical resolver so every palette action
+            // sees the same current-drawing/configured path.
+            return path != null && File.Exists(path) ? path : DictLoader.ResolveDictPath();
         }
 
         public bool IsPendingConflict(DictModel current, string dictPath)

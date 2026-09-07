@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <LangVersion>12</LangVersion>
@@ -29,6 +30,8 @@
     <Compile Include="..\..\Shared\IO\PatSettings.cs" Link="IO\PatSettings.cs" />
     <Compile Include="..\PatentMarker\IO\RuntimeHost.cs" Link="IO\RuntimeHost.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" Link="Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" Link="Commands\PatCheckResult.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteWorkflow.cs" Link="Palette\DictPaletteWorkflow.cs" />
     <Compile Include="..\..\Shared\I18n\Language.cs" Link="I18n\Language.cs" />
     <Compile Include="..\..\Shared\I18n\Strings.cs" Link="I18n\Strings.cs" />
@@ -36,6 +39,7 @@
 
   <ItemGroup>
     <None Update="Fixtures\parser-contract.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures\vba-corpus\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

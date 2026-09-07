@@ -18,7 +18,7 @@
 | 权威源 | 二选一，无合并逻辑（Q5） |
 | occurrences | 本次不动（Q4/C） |
 | 实施起点 | 2025 版先行（Q10/A，本机 AutoCAD 2026 实测） |
-| 识别验收 | 9 份真实语料逐条比对 number/name（Q11） |
+| 识别验收 | 8 份受跟踪语料逐条比对 number/name（Q11；当前仓库 fixture 数量） |
 | 版本号 | v4.0（Q12） |
 
 ## 3. 功能规格
@@ -48,7 +48,7 @@
 ### 阶段 1：2025 版（含测试项目）
 
 1. `MarkingTextParser` 移植 + `DictWriter` + `DictLoader` 自写接口
-2. 单元测试：识别器用例 + 9 份真实语料对比（`批量测试/` 下 txt 跑 C# 识别 vs VBA 预期输出，逐条比对 number/name）
+2. 单元测试：识别器用例 + 8 份受跟踪语料对比（`批量测试/` 或仓库 fixture 下 txt 跑 C# 识别 vs VBA 预期输出，逐条比对 number/name）
 3. 面板 UI（粘贴识别对话框、编辑对话框、裁决提示）+ PatEntityHelper 改文字
 4. 本地编译 + 本机 AutoCAD 2026 NETLOAD 实测全流程（粘贴→识别→确认→编辑→改号同步图纸→Word 保存→裁决）
 
@@ -92,12 +92,12 @@
 | 6 | 面板 UI：编辑对话框（改 number/name、新增、删除） | 2025 | ✅ 完成 | `EditEntryDialog`（保存/保存并标注/删除，OK/Yes/Abort 交互约定）；`DictWriter.TryApplyEdit/TryRemoveEntry`（编号冲突忽略大小写排除自身）+ 8 项单测；面板双击改开编辑对话框，原双击装填行为移至「保存并标注」；新增按钮；编译 0 错 |
 | 7 | `PatEntityHelper` 按旧编号改文字 + Regen | 2025 | ✅ 完成 | `SetMLeaderNumber`（MText.Contents 写入，未变化返回 false）+ `RenameNumberInModelSpace`（trim 忽略大小写匹配，与 BZC 口径一致）；面板事务 + Regen + 状态栏/命令行提示；编译 0 错 |
 | 8 | 冲突裁决：备份检测 + 状态栏提示 + 裁决对话框 + 清除标记 | 2025 | ✅ 完成 | `DictConflict`（FindWordBackup 按文件名时间戳取最新 / IsPendingConflict / ResolveKeepWord / ResolveRestoreCad 恢复+清标记+删备份）；`ArbitrateDialog` 三选（OK=采用 Word 版/Yes=恢复 CAD 版/Cancel=稍后再说）；面板 2s 轮询 `CheckConflictState`（橙色状态栏提示 + 裁决按钮点亮/熄灭）；13 项单测；编译 0 错，全量 88 项测试通过 |
-| 9 | 2025 编译 + 本机 AutoCAD 2026 全流程实测 | 2025 | ⏳ 待开始 | |
-| 10 | 平移 2013/2015（Newtonsoft + MLeader）并编译验证 | 2013/2015 | ⏳ 待开始 | |
-| 11 | 平移 2010/2007（无 LINQ、Leader+MText、SimpleJson 序列化器）并编译验证 | 2010/2007 | ⏳ 待开始 | |
-| 12 | VBA `AutoExport.bas` 备份逻辑 + 同步 5 套部署包 | VBA | ⏳ 待开始 | |
-| 13 | 更新 5 套部署包 DLL + 安装脚本核验 | 部署包 | ⏳ 待开始 | |
-| 14 | `docs/development-log.md` v4.0 条目 + README 同步 | 文档 | ⏳ 待开始 | |
+| 9 | 2025 编译 + 本机 AutoCAD 2026 全流程实测 | 2025 | 🟡 命令级完成，GUI 待验 | 五版 DLL 已编译；AutoCAD 2026 Core Console 已验证 PATMARK/PATDOCTOR/PATBRACE 命令级流程；面板鼠标、对话框和冲突裁决仍需交互式 GUI |
+| 10 | 平移 2013/2015（Newtonsoft + MLeader）并编译验证 | 2013/2015 | ✅ 编译与契约完成 | 生产 MLeader 命令直接进入运行时契约模拟，各 33/33；真实旧版 AutoCAD 宿主仍待对应环境 |
+| 11 | 平移 2010/2007（无 LINQ、Leader+MText、SimpleJson 序列化器）并编译验证 | 2010/2007 | ✅ 编译与契约完成 | 2007/2010 契约模拟各 33/33；2007 真宿主加载与交互仍待对应环境 |
+| 12 | VBA `AutoExport.bas` 备份逻辑 + 同步 5 套部署包 | VBA | ✅ 完成 | 动态 DWG 映射、歧义拒绝、失败保存保护、原子 UTF-8 替换；本机 Word COM `verify-vba-export.vbs` 通过，5 套 VBA 同步检查通过 |
+| 13 | 更新 5 套部署包 DLL + 安装脚本核验 | 部署包 | ✅ 完成 | 五版真实编译、2013/2015 ILRepack、发行暂存和逐版 DLL/VBA 内容校验通过；五版安装脚本合并 HKCU/HKLM 并枚举全部支持范围配置，2025 覆盖 R25.0/R25.1/R26.0 并存配置；旧版宿主安装回归仍待对应环境 |
+| 14 | `docs/development-log.md` v4.0 条目 + README 同步 | 文档 | ✅ 完成 | 根 README、五套部署说明、CHANGELOG、开发记录与维护计划已同步到 1.0.2 candidate |
 
 ## 8. 关键风险与对策（沿用可行性验证结论）
 

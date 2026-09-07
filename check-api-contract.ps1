@@ -23,22 +23,12 @@ foreach ($ver in $versions) {
     }
 
     $commandSource = Join-Path $root "cad-plugin\$ver\PatentMarker\Commands\PatMarkCommand.cs"
-    if ($ver -eq "2010") {
-        $forbidden = Select-String -LiteralPath $commandSource -Pattern "\bMLeader\s+[A-Za-z_]" -AllMatches -ErrorAction SilentlyContinue
-        if ($forbidden) {
-            Write-Error "2010 command source contains an MLeader type reference: $commandSource"
-            exit 1
-        }
-        Write-Host "[OK] 2010 source profile excludes MLeader command types" -ForegroundColor Green
+    $mleaderReferences = Select-String -LiteralPath $commandSource -Pattern "\bMLeader\b" -AllMatches -ErrorAction SilentlyContinue
+    if (-not $mleaderReferences) {
+        Write-Error "$ver command source does not contain the expected MLeader construction path: $commandSource"
+        exit 1
     }
-    elseif ($ver -in @("2013", "2015", "2025")) {
-        $forbidden = Select-String -LiteralPath $commandSource -Pattern "\bMLeader\b" -AllMatches -ErrorAction SilentlyContinue
-        if ($forbidden) {
-            Write-Error "$ver command source still contains an MLeader reference: $commandSource"
-            exit 1
-        }
-        Write-Host "[OK] $ver source profile uses the Leader + MText construction path" -ForegroundColor Green
-    }
+    Write-Host "[OK] $ver source profile uses the MLeader Plan-F construction path" -ForegroundColor Green
 
     $directDocumentReads = Get-ChildItem -LiteralPath (Join-Path $root "cad-plugin\$ver\PatentMarker") -Recurse -File -Filter "*.cs" |
         Where-Object { $_.Name -ne "RuntimeHost.cs" } |

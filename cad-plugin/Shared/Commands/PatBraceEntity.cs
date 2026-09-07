@@ -28,12 +28,47 @@ namespace PatentMarker.Commands
         {
             System.Collections.Generic.List<Point3d> points =
                 PatBraceGeometry.BuildPoints(definition);
-            for (int i = 0; i < points.Count; i++)
+            SetGeometry(polyline, points, definition.Top.Z);
+        }
+
+        /// <summary>
+        /// Rewrites the vertex list without ever removing a valid polyline
+        /// down to zero vertices. AutoCAD rejects that intermediate state
+        /// with eDegenerateGeometry, which made PATBRACEEDIT fail after the
+        /// new definition had already been calculated.
+        /// </summary>
+        private static void SetGeometry(
+            Polyline polyline,
+            System.Collections.Generic.List<Point3d> points,
+            double elevation)
+        {
+            int existingCount = polyline.NumberOfVertices;
+            int sharedCount = Math.Min(existingCount, points.Count);
+
+            for (int i = 0; i < sharedCount; i++)
+            {
+                polyline.SetPointAt(i,
+                    new Point2d(points[i].X, points[i].Y));
+            }
+
+            // A valid AutoCAD polyline must retain at least two vertices.
+            // BuildPoints always returns more than two, so this loop can
+            // safely trim only the surplus tail.
+            while (polyline.NumberOfVertices > points.Count)
+            {
+                if (polyline.NumberOfVertices <= 2)
+                    throw new InvalidOperationException(
+                        "Brace geometry requires at least two vertices.");
+                polyline.RemoveVertexAt(polyline.NumberOfVertices - 1);
+            }
+
+            for (int i = polyline.NumberOfVertices; i < points.Count; i++)
             {
                 polyline.AddVertexAt(i,
                     new Point2d(points[i].X, points[i].Y), 0.0, 0.0, 0.0);
             }
-            polyline.Elevation = definition.Top.Z;
+
+            polyline.Elevation = elevation;
         }
 
         public static bool IsBrace(Entity entity, Transaction tr)
@@ -147,9 +182,9 @@ namespace PatentMarker.Commands
             Polyline polyline, PatBraceDefinition definition, Transaction tr)
         {
             polyline.UpgradeOpen();
-            while (polyline.NumberOfVertices > 0)
-                polyline.RemoveVertexAt(polyline.NumberOfVertices - 1);
-            ApplyGeometry(polyline, definition);
+            System.Collections.Generic.List<Point3d> points =
+                PatBraceGeometry.BuildPoints(definition);
+            SetGeometry(polyline, points, definition.Top.Z);
             WriteDefinition(polyline, definition, tr);
         }
     }

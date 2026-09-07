@@ -75,7 +75,7 @@ namespace PatentMarker.Palette
             }
 
             ReloadRuntimeSettingsForCurrentDrawing();
-            LoadDictForCurrentDrawing();
+            LoadDictForCurrentDrawing(true);
 
             AppAcad.DocumentManager.DocumentActivated -= DocManager_DocumentActivated;
             AppAcad.DocumentManager.DocumentActivated += DocManager_DocumentActivated;
@@ -90,7 +90,10 @@ namespace PatentMarker.Palette
             // 修复 B6：事件处理器中加 null 守卫，防止 Terminate 后崩溃
             if (_control == null) return;
             ReloadRuntimeSettingsForCurrentDrawing();
-            LoadDictForCurrentDrawing();
+            // Keep the target document's last completed PATCHECK result when
+            // its dictionary is unchanged. If Word changed the dictionary
+            // while this document was inactive, the old highlight is stale.
+            LoadDictForCurrentDrawing(false);
         }
 
         private static void ReloadRuntimeSettingsForCurrentDrawing()
@@ -110,6 +113,8 @@ namespace PatentMarker.Palette
         {
             Document closing = e != null ? e.Document : null;
             ClearMarkDispatchState(closing);
+            if (closing != null)
+                Commands.PatCheckResult.Release(closing);
             string drawingPath = closing != null ? closing.Name : "";
             IO.DictLoader.ReleaseForDrawing(drawingPath);
             IO.PatSettingsStore.Release(drawingPath);
@@ -286,19 +291,25 @@ namespace PatentMarker.Palette
 
         public static void LoadDictForCurrentDrawing()
         {
+            LoadDictForCurrentDrawing(true);
+        }
+
+        public static void LoadDictForCurrentDrawing(bool clearCheckResult)
+        {
             if (_control == null) return;
 
             try
             {
+                bool dictChanged = DictLoader.IsFileChanged();
                 var dict = DictLoader.LoadForCurrentDrawing();
                 if (dict != null)
-                    _control.LoadDict(dict);
+                    _control.LoadDict(dict, clearCheckResult || dictChanged);
                 else
                     _control.ShowNoDict();
             }
             catch (System.Exception ex)
             {
-            var doc = IO.RuntimeHost.ActiveDocument;
+                var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc != null)
                     doc.Editor.WriteMessage("\nPatentMarker: dict load error: " + ex.Message + "\n");
                 if (_control != null)
@@ -316,6 +327,7 @@ namespace PatentMarker.Palette
                 _control = null;
             }
             _markDispatchStates.Clear();
+            Commands.PatCheckResult.ClearAll();
             _paletteSet = null;
         }
     }

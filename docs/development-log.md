@@ -4,7 +4,7 @@
 
 ***
 
-## 1.0.2（待发布，2026-09-04）
+## 1.0.2（待发布，2026-09-05）
 
 **参数化矢量大括号几何复核与修复。** 本次以用户补充的真实 AutoCAD 截图重新开始分析，推翻了“当前源码正常、现场加载旧 DLL”的旧结论。
 
@@ -12,11 +12,22 @@
 - **根因**：提交 `9098e82` 把 DrawingML/PPT `rightBrace` 误读成“只有中心尖点位于选择侧，肩部与直干位于轴线另一侧”，并同步修改测试去断言这一错误行为。结果轮廓跨过端点轴线，实际横向跨度为 `0.42W + W = 1.42W`，形成截图中的巨大中心楔形和反向/W 形观感。
 - **标准几何**：按 DrawingML `rightBrace` 默认定义重建四段四分之一椭圆——端点位于包围盒一侧，直干位于 `0.5W`，中心尖点位于 `W`；沿高度方向的转角半径为 `min(W,H) × 8333 / 100000`，中心位置为 `0.5H`。所有采样点保持在端点轴线与第三点之间。
 - **实现与同步**：修正共享单源 `Shared/Commands/PatBraceGeometry.cs`，五个版本自动链接同一实现；更新中英文 README 和几何契约测试；五套部署 DLL 已重新编译并通过 `package.ps1 -Apply` 同步。
-- **验证（本地实际执行）**：`build.ps1 -Static` 通过；2007/2010/2013/2015 契约模拟测试各 `31/31` 通过；2025 测试 `112/112` 通过；2007/2010/2013/2015/2025 五版本真实编译均成功；2013/2015 ILRepack 单文件打包成功且无外部 Newtonsoft.Json 引用。尚未在 AutoCAD 2007 交互主机中目检。
+- **验证（本地实际执行）**：`build.ps1 -Static` 通过；2007/2010/2013/2015 契约模拟测试各 `33/33` 通过；2025 测试 `117/117` 通过；2007/2010/2013/2015/2025 五版本真实编译均成功；2013/2015 ILRepack 单文件打包成功且无外部 Newtonsoft.Json 引用。尚未在 AutoCAD 2007 交互主机中目检。
 - **已有图形**：Xrecord 的顶部、底部、宽度和方向格式未改变，但图形不会在加载新 DLL 后自动重绘。可用 `PATBRACEEDIT` 的尺寸模式重新输入原高度/宽度触发重建，或删除后重新创建。
 - **面板标注请求调度修复**：双击字典条目不再直接无条件叠加 `SendStringToExecute("PATMARK ")`。请求按当前图纸隔离；若 CAD 正在执行其他命令，则保留请求并由面板计时器在空闲后补发一次。正在运行的 `PATMARK` 会在提示边界消费最新请求，不再启动嵌套命令。
 - **命令状态清理**：2007 的 `Leader + MText` 路径及 2010/2013/2015/2025 的 MLeader 路径都在入口、异常、取消和返回路径统一清空实例状态；空编号不会再把后续点击锁死。五套部署 DLL 已重新编译并同步。
 - **AutoCAD 2026 真宿主验证**：从 2025 部署包 `NETLOAD` 新 DLL，批处理完成一次 `LIVE-1` 三点 `PATMARK`；日志包含成对的 `PATMARK START/END` 与 `CreateMLeaderWithText END (success)`，PATDOCTOR 扫描到 1 个实体且近期错误为 0。测试空白图没有字典路径，因此字典检查的单项 FAIL 属于预期；面板鼠标双击及高频连续点击仍需交互式人工验收。
+- **1.0.2 交付链路修复（本轮）**：公共 CAD 服务现在通过扩展字典标记识别并改号/删除 Plan-F MLeader；面板接入“裁决”按钮，Word 覆盖 CAD 修改时可选择保留 Word 或恢复 CAD；Diff 列表保留 Removed 条目，筛选后继续显示旧值与差异颜色；PATCHECK 结果按图纸隔离，重载字典时只清理当前图纸的高亮。运行时契约测试改为实际编译 2010/2013/2015 的 MLeader 命令与创建器，四版各 33/33 通过。
+- **质量门与发行包修复（本轮）**：修正 GitHub Actions YAML 注释语法；API 契约检查按实际版本要求 MLeader（2010 也包含 MLeader，2014+ 检查 `ExtendLeaderToText`）；2015 安装/卸载脚本不再扫描 AutoCAD 2025 的 R25.0；`package.ps1` staging 仅复制发行所需资产，排除日志、报告、LSP 和历史 DLL 备份；无本地 Word/VBA 语料时，2025 可选对比测试不再令干净 CI 失败。
+- **本机可验证性补强（本轮后续）**：PATCHECK 结果改为按 AutoCAD `Document` 对象隔离，关闭文档时释放状态，未标注编号查询沿用 `NumberIdentity` 的大小写不敏感规则；Word 导出前的 CAD 备份读取、复制和清理失败会阻止覆盖并写入 `autoexport-error.txt`；新增 `sync-mleader-group.ps1` 以 2010 版为默认源自动同步 2010/2013/2015/2025 的七文件 MLeader 组；2025 回归测试增至 115 项。
+- **Word 首次导出与主机回归（本轮后续）**：修正首次导出时对不存在字典文件调用 `SetAttr` 的错误路径；正式 Word COM 回归通过 UserForm 导入、唯一公开宏、首次 UTF-8 导出、自动导出开关和控件标题检查；附图标记段落边界回归也通过。切换到非活动图纸期间若字典发生变化，重新激活时会清除过期 PATCHECK 高亮；PATCHECK 状态表增加同步保护。
+- **语料可复现性（本轮）**：新增 8 份脱敏 VBA/C# 对比语料和受跟踪的 `tools/generate-vba-corpus.vbs`；测试工程在干净检出时使用仓库 fixture，不再因缺少本机 Word 语料而静默跳过跨语言解析对比。权威预期已由本机真实 Word VBA 重新生成并通过 C# 对比。
+- **Word 导出映射与保存保护（本轮后续）**：`AutoExport.FindDwgBaseName` 改为动态枚举 DWG；先接受与 Word 文件同名的精确匹配，只有一个兼容匹配时才继续，多个匹配或多个 DWG 无法判断时失败并写入 `autoexport-error.txt`，避免把字典写到错误图纸。`clsSaveHook` 在已有路径的普通保存中遇到导出失败会取消保存，并在 Save As 尚未建立路径时保留 Save As 让用户先落盘。新增 `tools/verify-vba-export.vbs` 覆盖无 DWG 回退、歧义拒绝、精确匹配和保存取消；本机 Word COM 实测 `PASS`。
+- **写文件与并存版本安装（本轮后续）**：`JsonWriter.WriteToFile` 先在目标目录写临时 UTF-8 文件，再以 Unicode 同卷替换；替换失败会保留旧字典并向 `AutoExport` 传播错误。`generate-vba-corpus.vbs` 将输入路径规范化为绝对路径，干净检出命令不再依赖当前目录。2025 安装脚本不再遇到第一个注册表版本就停止，会枚举 R25.0/R25.1/R26.0 并为各版本用户配置注册自动加载；本机 Word COM 重新生成 8 份语料与跟踪基线 SHA256 一致。2025 回归测试为 117/117，五版重新编译和发行暂存均通过。
+- **大括号真宿主补测（本轮收尾）**：AutoCAD 2026 Core Console 从 2025 部署 DLL 执行 `PATBRACE`，输入 `(0,0)`、`(0,100)`、`(50,50)` 后用 `LIST` 读取实体；输出的 LWPOLYLINE 顶点范围为 `x=0..50、y=0..100`，证明修复后的几何在高版本真宿主中未跨越端点轴线。该批处理证据不替代交互式 GUI 目检，2007 真宿主和 `PATBRACEEDIT` 旧图形回归仍待对应环境。
+- **大括号尺寸编辑补测（本轮收尾）**：首次用 AutoCAD 2026 Core Console 回放 `PATBRACEEDIT` 尺寸模式时发现 `eDegenerateGeometry`；根因是 `PatBraceEntity.ReplaceGeometry` 先将 Polyline 顶点删到 0 个。现改为原位更新顶点并保持有效顶点列表，四版契约模拟各 `33/33`，重新编译 DLL 后 Core Console 从 100×50 改为 120×60 成功，`LIST` 端点为 `(0,0)`/`(0,120)`、尖点为 `(60,60)`；旧图形与交互式 GUI 目检仍待对应环境。
+- **五版并存安装器收尾修复（本轮收尾）**：2007/2010/2013/2015/2025 安装脚本现在合并 HKCU/HKLM，枚举各自支持范围内的全部注册表配置并逐配置写入 HKCU；重复配置去重，2010 的 HKLM 与 Support/acad.lsp 兜底也逐配置尝试。四份安装 VBScript 与四份卸载 VBScript 已用 `cscript` 在临时目录完成解析验证，并用混合 HKCU/HKLM FakeReg 回放覆盖配置合并、去重和 2010 acad.lsp 清理；PowerShell 安装/卸载版本通过解析与静态契约门，真实旧版 AutoCAD 安装回归仍待对应主机。
+- **方案文档状态校正（本轮收尾）**：`docs/mleader-f-plan.md` 补齐已并入主线的 `PATCHECK`/`PATALIGN` MLeader 适配与 7 文件版本组；`docs/mleader-attachment-grip-incident.md` 明确为历史回退记录，当前四个 MLeader 版本以 Plan F 为准；`docs/version-plan.md` 同步 7 文件组说明。
 
 ***
 

@@ -8,7 +8,7 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ***
 
-## \[Unreleased] - 1.0.2 candidate (2026-09-04)
+## \[Unreleased] - 1.0.2 candidate (2026-09-05)
 
 **修复参数化大括号越过端点轴线、呈反向/W 形的问题。**
 
@@ -27,6 +27,25 @@ Adopts [Semantic Versioning](https://semver.org/).
 - 修复 `PATMARK` 命令实例在异常、取消或空编号返回后残留状态的问题，五个版本的 Leader/MLeader 路径统一清理；部署 DLL 已同步更新。
 - Fixed repeated palette double-clicks stacking asynchronous `PATMARK` commands: requests are now isolated per drawing, de-duplicated, and retried after AutoCAD becomes idle.
 - PATMARK now clears its per-document command-instance state on cancellation, early return, and unhandled failure across all five Leader/MLeader editions.
+- 修复 MLeader 标注在面板改号、删除全部标注时被漏掉的问题；冲突裁决现在有可见入口，Diff 对照保留 Removed 条目并在筛选后保留旧值与颜色。
+- 修复 CI YAML/API 质量门与 2015 安装脚本误扫描 AutoCAD 2025 的版本号；发行 staging 现在排除日志、报告、LSP 和历史 DLL 备份。
+- Fixed palette renumber/delete handling for Plan-F MLeaders; conflict arbitration now has a visible entry point, and filtered diff views preserve removed rows, old values, and status colors.
+- Fixed CI YAML/API quality gates and the 2015 installer scanning AutoCAD 2025; release staging now excludes logs, reports, LSP fallbacks, and historical DLL backups.
+- 修复 PATCHECK 结果跨图纸互相覆盖：现在按 AutoCAD 文档保存并在文档关闭时释放；Word 导出前 CAD 备份失败会中止覆盖并写入 `autoexport-error.txt`；新增 `sync-mleader-group.ps1` 自动同步四个 MLeader 版本组，2025 回归测试增至 117 项。
+- PATCHECK results are now isolated by AutoCAD document and released when a document closes; CAD-backup failures abort Word overwrite and write `autoexport-error.txt`; `sync-mleader-group.ps1` automates the four-edition MLeader fork, and the 2025 regression suite is now 117 tests.
+- PATCHECK 未标注编号查询与 `NumberIdentity` 保持大小写不敏感，避免 `1342A`/`1342a` 在面板高亮中出现口径不一致。
+- PATCHECK unmarked-number lookup now follows the case-insensitive `NumberIdentity` rule, so `1342A` and `1342a` highlight consistently.
+- 修复首次 Word 导出对不存在目标文件调用 `SetAttr` 的错误路径；Word COM 面板/导出/开关/标题与段落边界回归均通过，且非活动图纸期间发生字典变更时重新激活会清理过期 PATCHECK 高亮。
+- Fixed the first-export `SetAttr` failure path; Word COM panel/export/toggle/caption and marking-boundary smoke checks pass, and reactivating a drawing whose dictionary changed while inactive now clears stale PATCHECK highlights.
+- 新增 8 份脱敏 VBA/C# 对比语料与受跟踪的 `generate-vba-corpus.vbs`，干净检出不再因缺少本机语料而跳过跨语言解析对比。
+- Added eight sanitized VBA/C# parity fixtures and a tracked `generate-vba-corpus.vbs`, so clean checkouts no longer silently skip the cross-language parser comparison.
+- Word 导出现在动态枚举 DWG：优先使用与 Word 文件同名的精确匹配，仅在兼容匹配唯一时继续；歧义目录失败关闭并写入 `autoexport-error.txt`。已有路径的普通保存在导出失败时被取消，Save As 则保留以便先建立路径；新增 `tools/verify-vba-export.vbs` 并通过本机 Word COM 验证。
+- Word export now enumerates DWGs dynamically, prefers an exact Word-file-name match, and accepts only one compatibility match; ambiguous folders fail closed with `autoexport-error.txt`. Ordinary saves with an existing path are cancelled when export fails, while Save As is allowed to establish the path; `tools/verify-vba-export.vbs` passes on local Word COM.
+- `JsonWriter.WriteToFile` now writes a same-directory temporary UTF-8 file and replaces the destination with a Unicode same-volume rename; failed replacement leaves the previous dictionary intact and propagates failure to `AutoExport`. The 2025 installer registers every detected R25.0/R25.1/R26.0 profile instead of stopping at the first release, covering side-by-side hosts.
+- 五版安装与卸载脚本现在合并 HKCU/HKLM 并处理支持范围内检测到的全部配置，不再在第一个版本处停止；2010 的 HKLM 与 Support/acad.lsp 兜底会针对每个配置尝试，卸载时同步清理生成的 acad.lsp 片段，重复配置会去重。
+- All five installers and uninstallers now merge HKCU/HKLM profile lists and process every detected supported profile instead of stopping at the first release; the 2010 HKLM and Support/acad.lsp fallbacks are attempted for each profile, generated acad.lsp blocks are removed on uninstall, and duplicate profiles are de-duplicated.
+- 修复 `PATBRACEEDIT` 尺寸模式在真实 AutoCAD 中抛出 `eDegenerateGeometry` 的问题：原实现先把 Polyline 顶点删到 0 个，现改为原位更新并保持有效顶点数；四版契约模拟与 AutoCAD 2026 Core Console 尺寸编辑回放均通过。
+- Fixed `PATBRACEEDIT` size-mode `eDegenerateGeometry`: the old replacement emptied the Polyline before rebuilding it; geometry is now updated in place while preserving a valid vertex list, covered by four simulated editions and an AutoCAD 2026 Core Console size-edit replay.
 
 ***
 

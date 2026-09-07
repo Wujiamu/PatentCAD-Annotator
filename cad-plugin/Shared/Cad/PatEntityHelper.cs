@@ -3,20 +3,26 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using PatentMarker.Commands;
 using PatentMarker.Styles;
+using System.Reflection;
 
 namespace PatentMarker.IO
 {
     /// <summary>
     /// PAT entity recognition and annotation text operations shared by all
-    /// Leader + MText editions.
+    /// Leader + MText and MLeader editions. MLeader is accessed through
+    /// reflection so this file remains loadable by the 2007 CLR/API profile.
     /// </summary>
     public static class PatEntityHelper
     {
         private const string StandaloneTextKey = "PATENTMARKER_TEXT";
         private const string StandaloneTextMarker = "PATENTMARKER_TEXT_V1";
+        private const string MLeaderMarkerKey = "PATENTMARKER_MLEADER";
+        private const string MLeaderMarkerValue = "PATENTMARKER_MLEADER_V1";
 
         public static bool IsPatEntity(Entity ent, Transaction tr)
         {
+            if (IsPatMLeader(ent, tr)) return true;
+
             Leader leader = ent as Leader;
             if (leader != null)
             {
@@ -35,6 +41,37 @@ namespace PatentMarker.IO
 
             MText text = ent as MText;
             return text != null && IsStandaloneText(text, tr);
+        }
+
+        /// <summary>
+        /// Recognizes a Plan-F MLeader without statically referencing the
+        /// MLeader type (which does not exist in the 2007 SDK).
+        /// </summary>
+        public static bool IsPatMLeader(Entity ent, Transaction tr)
+        {
+            if (ent == null || ent.GetType().FullName !=
+                "Autodesk.AutoCAD.DatabaseServices.MLeader") return false;
+            if (ent.ExtensionDictionary.IsNull) return false;
+            try
+            {
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    ent.ExtensionDictionary, OpenMode.ForRead);
+                if (!dictionary.Contains(MLeaderMarkerKey)) return false;
+                Xrecord record = (Xrecord)tr.GetObject(
+                    dictionary.GetAt(MLeaderMarkerKey), OpenMode.ForRead);
+                using (ResultBuffer data = record.Data)
+                {
+                    if (data == null) return false;
+                    foreach (TypedValue value in data)
+                    {
+                        if (value.TypeCode == 1 && value.Value is string &&
+                            (string)value.Value == MLeaderMarkerValue)
+                            return true;
+                    }
+                }
+            }
+            catch { }
+            return false;
         }
 
         /// <summary>
@@ -92,6 +129,42 @@ namespace PatentMarker.IO
         {
             if (text == null) return "";
             return UnformatText(text.Contents);
+        }
+
+        /// <summary>Reads the text carried by a Plan-F MLeader.</summary>
+        public static string GetMLeaderNumber(Entity mleader)
+        {
+            MText text = GetMLeaderText(mleader);
+            return GetTextNumber(text);
+        }
+
+        private static MText GetMLeaderText(Entity mleader)
+        {
+            if (mleader == null) return null;
+            try
+            {
+                PropertyInfo property = mleader.GetType().GetProperty("MText");
+                if (property == null || !property.CanRead) return null;
+                return property.GetValue(mleader, null) as MText;
+            }
+            catch { return null; }
+        }
+
+        private static bool SetMLeaderNumber(Entity mleader, string newNumber)
+        {
+            try
+            {
+                PropertyInfo property = mleader.GetType().GetProperty("MText");
+                MText text = GetMLeaderText(mleader);
+                if (property == null || text == null) return false;
+                bool changed = SetTextNumber(text, newNumber);
+                // Older hosts return a mutable MText instance; hosts that
+                // return a value copy still receive it through the setter.
+                if (changed && property.CanWrite)
+                    property.SetValue(mleader, text, null);
+                return changed;
+            }
+            catch { return false; }
         }
 
         public static string FormatText(string number, bool underline)
@@ -198,6 +271,20 @@ namespace PatentMarker.IO
             foreach (ObjectId entId in modelSpace)
             {
                 Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
+                if (IsPatMLeader(ent, tr))
+                {
+                    string mleaderNumber = GetMLeaderNumber(ent);
+                    if (!NumberIdentity.AreEqual(mleaderNumber, oldNumber)) continue;
+                    try
+                    {
+                        Entity writableMLeader = (Entity)tr.GetObject(
+                            ent.ObjectId, OpenMode.ForWrite);
+                        if (SetMLeaderNumber(writableMLeader, newNumber)) changed++;
+                    }
+                    catch { }
+                    continue;
+                }
+
                 Leader leader = ent as Leader;
                 if (leader == null)
                 {

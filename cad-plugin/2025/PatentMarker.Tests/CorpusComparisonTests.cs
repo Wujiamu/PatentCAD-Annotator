@@ -4,29 +4,48 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Xunit.Sdk;
 
 namespace PatentMarker.Tests
 {
     /// <summary>
     /// 真实语料对比：8 份说明书 txt 跑 C# 引擎 vs 当前实际 VBA 权威预期。
-    /// 预期文件「批量测试/vba-expected-v4-output.txt」由真实 VBA 模块生成。
+    /// 预期文件由真实 VBA 模块生成；开发机上的批量语料优先，仓库内的
+    /// 脱敏 fixture 作为干净检出和 CI 的稳定回退。
     /// 它从 5 套部署包
     /// 共享的 Patterns.bas / DictModel.bas（GBK）提取函数体、转换为独立 VBScript 后，
     /// 用 cscript 运行生成（同一份语料、同一份引擎代码，避免人工转写偏差）。
     /// </summary>
     public class CorpusComparisonTests
     {
-        private static string FindBatchDir()
+        private static string FindCorpusDir()
         {
             var dir = new DirectoryInfo(AppContext.BaseDirectory);
             while (dir != null)
             {
                 var candidate = Path.Combine(dir.FullName, "批量测试");
-                if (Directory.Exists(candidate)) return candidate;
+                if (Directory.Exists(candidate) &&
+                    File.Exists(Path.Combine(candidate, "vba-expected-v4-output.txt")))
+                    return candidate;
                 dir = dir.Parent;
             }
-            throw new DirectoryNotFoundException("未找到「批量测试」目录");
+
+            var fixture = Path.Combine(AppContext.BaseDirectory, "Fixtures", "vba-corpus");
+            if (Directory.Exists(fixture) &&
+                File.Exists(Path.Combine(fixture, "vba-expected-v4-output.txt")))
+                return fixture;
+
+            dir = new DirectoryInfo(AppContext.BaseDirectory);
+            while (dir != null)
+            {
+                fixture = Path.Combine(dir.FullName, "Fixtures", "vba-corpus");
+                if (Directory.Exists(fixture) &&
+                    File.Exists(Path.Combine(fixture, "vba-expected-v4-output.txt")))
+                    return fixture;
+                dir = dir.Parent;
+            }
+
+            throw new DirectoryNotFoundException(
+                "未找到本地「批量测试」或仓库内 Fixtures/vba-corpus 语料");
         }
 
         private class ExpectedCorpus
@@ -60,15 +79,7 @@ namespace PatentMarker.Tests
         [Fact]
         public void Corpus_CSharpMatchesVbaExpected()
         {
-            string batchDir;
-            try
-            {
-                batchDir = FindBatchDir();
-            }
-            catch (DirectoryNotFoundException)
-            {
-                throw SkipException.ForSkip("未提供本机 Word/VBA 批量语料；运行受版本控制的解析契约测试即可完成干净环境验证。");
-            }
+            string batchDir = FindCorpusDir();
             var expectedPath = Path.Combine(batchDir, "vba-expected-v4-output.txt");
             Assert.True(File.Exists(expectedPath), "预期文件缺失: " + expectedPath);
 

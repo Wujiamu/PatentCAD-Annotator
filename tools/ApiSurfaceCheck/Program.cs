@@ -183,6 +183,20 @@ void RequireDetachedLeaderApi()
     RequireType($"{db}.ResultBuffer");
 }
 
+void RequireMLeaderApi(bool requireExtendLeaderToText)
+{
+    RequireType($"{db}.MLeader");
+    RequireProperty($"{db}.MLeader", "MText");
+    RequireProperty($"{db}.MLeader", "MLeaderStyle");
+    RequireProperty($"{db}.MLeader", "TextLocation");
+    RequireProperty($"{db}.MLeader", "LeaderLineCount");
+    RequireMethod($"{db}.MLeader", "AddLeaderLine", 1);
+    RequireMethod($"{db}.MLeader", "AddLastVertex", 2);
+    RequireMethod($"{db}.MLeader", "GetLastVertex", 1);
+    if (requireExtendLeaderToText)
+        RequireProperty($"{db}.MLeader", "ExtendLeaderToText");
+}
+
 void RequireBraceApi()
 {
     RequireType($"{db}.Polyline");
@@ -210,7 +224,10 @@ if (edition == "2010")
     RequireMethod($"{db}.Leader", "AppendVertex", 1);
     RequireDetachedLeaderApi();
     RequireBraceApi();
-    RequireAbsent($"{db}.MLeader");
+    // AutoCAD 2010-2012 production uses the MLeader Plan-F path.  The
+    // extension property is intentionally omitted because it was introduced
+    // in the 2014 SDK and is accessed reflectively by the plugin.
+    RequireMLeaderApi(false);
 }
 else if (edition is "2013" or "2015" or "2025")
 {
@@ -228,6 +245,7 @@ else if (edition is "2013" or "2015" or "2025")
     RequireDetachedLeaderApi();
     RequireBraceApi();
     RequireType($"{geo}.Point3d");
+    RequireMLeaderApi(edition is "2015" or "2025");
 }
 else
 {

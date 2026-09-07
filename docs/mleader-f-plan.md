@@ -1,7 +1,7 @@
 # MLeader 标注方案（F 方案）/ MLeader Annotation Plan (Plan F)
 
-> 状态 / Status: **已合并主线**（2010/2013/2015/2025 四版本，AutoCAD 2026 实测 4/4 PASS，2026-08-16）
-> Merged into mainline (editions 2010/2013/2015/2025; verified 4/4 PASS on AutoCAD 2026, 2026-08-16)
+> 状态 / Status: **已合并主线**（2010/2013/2015/2025 四版本，AutoCAD 2026 命令级实测通过，2026-08-16；PATCHECK/PATALIGN 适配已并入）
+> Merged into mainline (editions 2010/2013/2015/2025; AutoCAD 2026 command-level validation passed on 2026-08-16; PATCHECK/PATALIGN support is included)
 
 ---
 
@@ -84,10 +84,11 @@ ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 2. 面板开关全部生效：`Arrow Off/On`（Off 用空箭头块 `_PAT_NO_ARROW` + `ArrowSize=0`）、`Line Type Spline/Straight`、箭头大小、字高、下划线、无引线纯文字模式（纯文字仍为独立 MText）。
 3. `PATSELECTALL`/`BZS` 识别 PAT MLeader（扩展字典标记 `PATENTMARKER_MLEADER`，含用户点链记录），同时兼容旧图纸的 Leader 标注与独立文字。
 4. `PATMLSET` 调试命令（ThreePoint/Spline/Arrow 开关的脚本化入口）与 `PATMLVERIFY` 形态诊断命令：Explode 全部 PAT MLeader，对照记录的用户点链输出报告（回归测试工具）。
-5. 覆盖 2010/2013/2015/2025 四版本（.NET 3.5/4.0/4.5/8.0），四版本命令文件字节级相同。
+5. `PATCHECK`/`BZC` 识别带 PAT 扩展字典标记的 MLeader，按字典顺序报告漏标编号，并把结果按 AutoCAD 文档隔离后交给面板高亮。
+6. `PATALIGN`/`BZA` 支持 PAT MLeader 的线/框基准对齐；移动文字时同步最后顶点和 Xrecord 点链，完成后仍可由 `PATMLVERIFY` 校验。
+7. 覆盖 2010/2013/2015/2025 四版本（.NET 3.5/4.0/4.5/8.0），四版本命令文件字节级相同。
 
 **后续（Backlog）：**
-- `PATCHECK`/`BZC`、`PATALIGN`/`BZA` 的 MLeader 适配（当前沿用现有逻辑，对 MLeader 不生效）。
 - 着陆尾巴的程序化消除（候选：创建后 `MoveGripPointsAt` 零位移重算）。
 - 2007 版不在计划内（无 MLeader 实体，保持 Leader + MText）。
 
@@ -98,12 +99,14 @@ ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 ```
 Shared 层（5 版本链接）:  Shared/Commands/PatMarkCommand.cs、PatSelectAllCommand.cs
                           └─ 仅 2007 版编译（Leader + MText 基线）
-MLeader 版本组（4 版本本地，字节级相同）:
+MLeader 版本组（4 版本本地，7 个文件字节级相同）:
   cad-plugin/{2010,2013,2015,2025}/PatentMarker/Commands/
     ├─ PatMarkCommand.cs          ← 版本本地替换版（交互流同源，创建走 MLeader）
     ├─ PatMLeaderCreator.cs       ← F 方案核心：样式/顶点链/箭头块/标记/反射适配
     ├─ PatMLeaderSetCommand.cs    ← PATMLSET 开关脚本化入口
     ├─ PatMLeaderVerifyCommand.cs ← PATMLVERIFY 形态诊断
+    ├─ PatCheckCommand.cs         ← PATCHECK 漏标检测与 MLeader 识别
+    ├─ PatAlignCommand.cs         ← PATALIGN 线/框对齐与点链同步
     └─ PatSelectAllCommand.cs     ← 版本本地替换版（+MLeader 识别）
 ```
 
@@ -123,8 +126,12 @@ MVP 视为跑通，当且仅当在真实 AutoCAD 2026 宿主中：
 4. 箭头 Off 时 Explode 无箭头 Solid（且引线触及零件）；On 时有 Solid。
 5. 样条开关切换后 `LeaderType` 相应变化。
 6. `PATSELECTALL` 能选中新建 MLeader。
+7. `PATCHECK` 能识别带 PAT 标记的 MLeader，并在混合实体图纸中只报告字典漏标项。
+8. `PATALIGN` 能移动 PAT MLeader 文字并同步末顶点；对齐后 `PATMLVERIFY` 仍通过。
 
 **2026-08-16 结果：4/4 场景 PASS（SUMMARY: total=4 passed=4 failed=0）。**
+
+同日的生产批处理回归还覆盖了 `PATCHECK` 漏标清单、`PATALIGN` 线/框两种模式、空间不足时的延伸以及对齐后的 `PATMLVERIFY` 点链校验；具体命令输出与场景记录见 [development-log.md](development-log.md)。
 
 ---
 

@@ -1,6 +1,6 @@
 PatentMarker 2025 部署说明
 ===========================
-版本：1.0.0 (2026-08-18)  首个正式发布
+版本：1.0.2 candidate (2026-09-05)  待发布
 
 
 目标环境：AutoCAD 2025 / 2026+ (R25.0+)，Windows 10+
@@ -14,6 +14,7 @@ PatentMarker 2025 部署说明
 
 安装脚本说明：
   - 脚本会优先写入当前用户 HKCU 注册表，不需要管理员权限
+  - 脚本会合并 HKCU/HKLM，枚举已安装的 R25.0/R25.1/R26.0 版本，并为每个发现的配置写入 HKCU 自动加载项（重复配置去重）
   - 脚本会在部署目录生成 load-patent-marker.lsp 兜底文件
   - 如果窗口闪退，请从 PowerShell 运行：
       powershell.exe -ExecutionPolicy Bypass -File .\install-2025.ps1
@@ -32,6 +33,9 @@ PatentMarker 2025 部署说明
 Word 端：
   将 vba/ 下的所有文件导入 Word Normal 模板（包括 PatentDictPanel.frm 和 .frx）
   安装后运行宏 ShowPatentDictPanel 打开"专利标注字典工具"面板
+  导出规则：目录无 DWG 时使用 Word 文件名；有多个 DWG 时优先同名，兼容匹配必须唯一，
+    否则拒绝写入并记录 autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，
+    Save As 会先允许建立路径。
 
 卸载：
   运行 uninstall-2025.ps1（PowerShell），清理注册表自动加载条目和生成的
@@ -71,4 +75,5 @@ Word 端：
   PATMLSET / PATMLVERIFY MLeader scriptable switches and form diagnostic
   DAGUOHAO (PATBRACE)  三点创建独立矢量大括号
   PATBRACEEDIT         通过控制点或输入高度/宽度调整大括号
-  第三点决定中部尖点方向：竖向左/右、横向上/下；外侧肩部位于相反侧
+  第三点决定中部尖点方向和宽度：竖向可向左/向右，横向可向上/向下；
+  完整轮廓保持在端点轴线与尖点之间，直干位于所选宽度中线。

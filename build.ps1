@@ -14,7 +14,8 @@
 #   - AutoCAD SDK DLLs (acdbmgd.dll etc.) are NOT in the repo (licensing).
 #     Copy them from your AutoCAD install dir into each edition's lib\ folder.
 #   - 2025 edition uses SDK-style csproj -> built with "dotnet build".
-#   - 2007/2010/2013/2015 use legacy MSBuild csproj -> need MSBuild/Visual Studio.
+#   - 2007/2010 use legacy MSBuild csproj -> need MSBuild/Visual Studio.
+#   - 2013/2015 can fall back to dotnet msbuild when tools/refasm is present.
 # ============================================================================
 
 param(
@@ -53,6 +54,25 @@ function Write-Err2($msg)    { Write-Host "  [FAIL] $msg" -ForegroundColor Red }
 
 function Get-ProjectDir($ver) {
     return Join-Path $root "cad-plugin\$ver\PatentMarker"
+}
+
+# The repository may carry the NuGet .NET Framework reference-assembly
+# package under tools/refasm for machines that have MSBuild but no Developer
+# Pack installed.  Return the package's build root when it is available;
+# normal Developer Pack resolution remains the default fallback.
+function Get-FrameworkReferenceRoot($ver) {
+    $package = switch ($ver) {
+        "2013" { "ra40" }
+        "2015" { "ra45" }
+        default { $null }
+    }
+    if (-not $package) { return $null }
+    $candidate = Join-Path $root "tools\refasm\$package\build"
+    $frameworkVersion = if ($ver -eq "2013") { "v4.0" } else { "v4.5" }
+    if (Test-Path -LiteralPath (Join-Path $candidate ".NETFramework\$frameworkVersion")) {
+        return $candidate
+    }
+    return $null
 }
 
 # Returns array of missing DLL file names (empty = all present)
@@ -373,6 +393,22 @@ function Invoke-StaticCheck {
         }
     }
 
+    # ---- 6. Installer profile enumeration ----
+    Write-Host "`n  --- Installer profile enumeration ---"
+    $installerContract = Join-Path $root "tools\check-installer-contract.ps1"
+    if (Test-Path -LiteralPath $installerContract) {
+        & $installerContract
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err2 "Installer profile enumeration check failed (see output above)."
+            $failCount++
+        } else {
+            Write-Ok "All installer profile enumeration contracts passed"
+        }
+    } else {
+        Write-Err2 "Installer profile enumeration check script not found: $installerContract"
+        $failCount++
+    }
+
     # ---- Summary ----
     Write-Section "Static check result"
     if ($failCount -eq 0 -and $warnCount -eq 0) {
@@ -460,8 +496,10 @@ function Invoke-Doctor($ver) {
         $msbuildPath = Get-MSBuildPath
         if ($msbuildPath) {
             Write-Ok "MSBuild available ($msbuildPath)"
+        } elseif ((Get-FrameworkReferenceRoot $ver) -and (Test-CommandExists "dotnet")) {
+            Write-Ok "dotnet msbuild fallback available (bundled .NET Framework reference assemblies)"
         } else {
-            Write-Warn2 "MSBuild not found. Edition $ver uses a legacy csproj and needs MSBuild from Visual Studio or Build Tools."
+            Write-Warn2 "MSBuild not found and no dotnet msbuild reference-assembly fallback is available for edition $ver."
             return $false
         }
     }
@@ -504,7 +542,13 @@ function Invoke-BuildVersion($ver) {
         else { Write-Err2 "Edition $ver build failed (exit $buildExit)"; return $false }
     } else {
         $msbuildPath = Get-MSBuildPath
-        if (-not $msbuildPath) {
+        $frameworkRoot = Get-FrameworkReferenceRoot $ver
+        $useDotnetMsbuild = $false
+        if (-not $msbuildPath -and $frameworkRoot -and (Test-CommandExists "dotnet")) {
+            $useDotnetMsbuild = $true
+            Write-Host "  MSBuild.exe not found; using dotnet msbuild with bundled reference assemblies" -ForegroundColor DarkGray
+        }
+        if (-not $msbuildPath -and -not $useDotnetMsbuild) {
             Write-Warn2 "MSBuild not found; cannot auto-build edition $ver (legacy csproj)."
             Write-Host "         Open cad-plugin\$ver\PatentMarker\PatentMarker.csproj in Visual Studio to build manually." -ForegroundColor Yellow
             return $false
@@ -513,7 +557,16 @@ function Invoke-BuildVersion($ver) {
         # These legacy projects use packages.config/direct assembly references;
         # do not let stale SDK-style project.assets.json files trigger NuGet
         # runtime-identifier validation during a plain MSBuild build.
-        $buildOutput = & $msbuildPath $csproj /t:Build /p:Configuration=Release /p:ResolveNuGetPackages=false /v:minimal /nologo 2>&1
+        $frameworkArgs = @()
+        if ($frameworkRoot) {
+            $frameworkArgs = @("/p:TargetFrameworkRootPath=$frameworkRoot")
+            Write-Host "  Using bundled .NET Framework reference assemblies: $frameworkRoot" -ForegroundColor DarkGray
+        }
+        if ($useDotnetMsbuild) {
+            $buildOutput = & dotnet msbuild $csproj /t:Build /p:Configuration=Release /p:ResolveNuGetPackages=false @frameworkArgs /v:minimal /nologo 2>&1
+        } else {
+            $buildOutput = & $msbuildPath $csproj /t:Build /p:Configuration=Release /p:ResolveNuGetPackages=false @frameworkArgs /v:minimal /nologo 2>&1
+        }
         $buildExit = $LASTEXITCODE
         $buildOutput | ForEach-Object { Write-Host $_ }
         $ok = ($buildExit -eq 0)

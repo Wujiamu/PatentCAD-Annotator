@@ -1,6 +1,21 @@
 Attribute VB_Name = "JsonWriter"
 Option Explicit
 
+#If VBA7 Then
+Private Declare PtrSafe Function MoveFileExW Lib "kernel32" ( _
+    ByVal lpExistingFileName As LongPtr, _
+    ByVal lpNewFileName As LongPtr, _
+    ByVal dwFlags As Long) As Long
+#Else
+Private Declare Function MoveFileExW Lib "kernel32" ( _
+    ByVal lpExistingFileName As Long, _
+    ByVal lpNewFileName As Long, _
+    ByVal dwFlags As Long) As Long
+#End If
+
+Private Const MOVEFILE_REPLACE_EXISTING As Long = &H1
+Private Const MOVEFILE_WRITE_THROUGH As Long = &H8
+
 Public Function Serialize(ByVal v As Variant, Optional ByVal indent As Long = 0) As String
     Dim pad As String
     pad = String$(indent * 2, " ")
@@ -92,6 +107,14 @@ End Function
 
 ' Function (not Sub) to hide it from the Word macro list (called by AutoExport only)
 Public Function WriteToFile(ByVal path As String, ByVal content As String) As Boolean
+    Dim tempPath As String
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+
+    On Error GoTo errHandler
+    WriteToFile = False
+    tempPath = path & ".tmp-" & fso.GetTempName
+
     Dim stream As Object
     Set stream = CreateObject("ADODB.Stream")
     stream.Type = 2
@@ -110,7 +133,24 @@ Public Function WriteToFile(ByVal path As String, ByVal content As String) As Bo
     outStream.Type = 1
     outStream.Open
     outStream.Write bytes
-    outStream.SaveToFile path, 2
+    ' Write beside the destination, then replace it with a same-volume
+    ' Unicode rename. A failed replacement leaves the previous dictionary
+    ' intact instead of exposing a partially written JSON file.
+    outStream.SaveToFile tempPath, 2
     outStream.Close
+
+    If MoveFileExW(StrPtr(tempPath), StrPtr(path), _
+        MOVEFILE_REPLACE_EXISTING Or MOVEFILE_WRITE_THROUGH) = 0 Then
+        Err.Raise vbObjectError + 2, "JsonWriter.WriteToFile", _
+            "Could not replace destination dictionary"
+    End If
+
     WriteToFile = True
+    Exit Function
+
+errHandler:
+    On Error Resume Next
+    If Not outStream Is Nothing Then outStream.Close
+    If tempPath <> "" And fso.FileExists(tempPath) Then fso.DeleteFile tempPath, True
+    WriteToFile = False
 End Function

@@ -36,7 +36,26 @@ namespace PatentMarker.Palette
                 item.Number = entry.Number;
                 item.Name = entry.Name;
                 item.Occurrences = entry.Occurrences;
+                item.Source = entry;
                 _allEntries.Add(item);
+            }
+
+            // Keep removed entries in the session as read-only rows so the
+            // compare view does not silently hide one side of the diff.
+            if (_currentDiff != null)
+            {
+                foreach (DictDiffEntry diff in _currentDiff)
+                {
+                    if (diff.Status != DiffStatus.Removed || diff.OldEntry == null)
+                        continue;
+                    PaletteEntry removed = new PaletteEntry();
+                    removed.Number = diff.OldEntry.Number;
+                    removed.Name = diff.OldEntry.Name;
+                    removed.Occurrences = diff.OldEntry.Occurrences;
+                    removed.Source = diff.OldEntry;
+                    removed.IsRemoved = true;
+                    _allEntries.Add(removed);
+                }
             }
         }
 
@@ -54,8 +73,8 @@ namespace PatentMarker.Palette
             foreach (PaletteEntry entry in _allEntries)
             {
                 if (term.Length == 0 ||
-                    entry.Number.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                    entry.Name.IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0)
+                    (entry.Number ?? "").IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                    (entry.Name ?? "").IndexOf(term, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     result.Add(entry);
                 }
@@ -87,5 +106,9 @@ namespace PatentMarker.Palette
         public string Number = "";
         public string Name = "";
         public int Occurrences;
+        // Source keeps the diff identity when rows are filtered.  Removed
+        // rows are displayed for comparison but are not valid edit targets.
+        public DictEntry Source;
+        public bool IsRemoved;
     }
 }

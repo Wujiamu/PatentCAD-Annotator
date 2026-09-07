@@ -6,6 +6,7 @@
 #
 # Usage:  .\check-version-sync.ps1 [-Verbose]
 #         .\check-version-sync.ps1 -Group Commands
+#         .\sync-mleader-group.ps1 [-Check]  # repair the MLeader fork
 # ─────────────────────────────────────────────────────────────
 param(
     [string]$Group = ""

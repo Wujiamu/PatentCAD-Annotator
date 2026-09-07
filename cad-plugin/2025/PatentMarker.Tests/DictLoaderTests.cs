@@ -243,6 +243,25 @@ namespace PatentMarker.Tests
             Assert.Null(DictLoader.PreviousModel);
         }
 
+        [Fact]
+        public void PaletteWorkflow_UsesConfiguredFallbackPath()
+        {
+            string path = WriteTempJson("configured.dict.json", "{\"entries\":[],\"warnings\":[]}");
+            DictLoader.InvalidateCache();
+            ConfigLoader.Current = new PatConfig { DefaultDictPath = path };
+
+            try
+            {
+                string? resolved = new PatentMarker.Palette.DictPaletteWorkflow().ResolveDictPath();
+                Assert.Equal(path, resolved);
+            }
+            finally
+            {
+                ConfigLoader.Current = null;
+                DictLoader.InvalidateCache();
+            }
+        }
+
         // ================================================================
         // 真实格式兼容性测试（模拟 VBA 导出格式）
         // ================================================================

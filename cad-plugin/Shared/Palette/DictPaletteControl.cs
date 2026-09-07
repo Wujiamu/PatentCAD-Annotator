@@ -31,7 +31,9 @@ namespace PatentMarker.Palette
         private Button _btnCompare;
         private Button _btnCheck;
         private Button _btnAlign;
+        private Button _btnArbitrate;
         private int _lastCheckVersion = -1;
+        private object _lastCheckDocumentKey;
         private Button _btnLanguage;  // v2.3：语言切换
         private Label _lblStatus;
         private NumericUpDown _numTextHeight;
@@ -70,12 +72,18 @@ namespace PatentMarker.Palette
                 PatPaletteCommand.TryDispatchPendingForCurrentDocument();
 
                 // v5.1：PATCHECK 完成后重渲染列表（未标注条目高亮）
-                if (Commands.PatCheckResult.Version != _lastCheckVersion)
+                object checkDocumentKey = GetCurrentCheckDocumentKey();
+                int checkVersion = Commands.PatCheckResult.GetVersion(checkDocumentKey);
+                if (!object.ReferenceEquals(checkDocumentKey, _lastCheckDocumentKey) ||
+                    checkVersion != _lastCheckVersion)
                 {
-                    _lastCheckVersion = Commands.PatCheckResult.Version;
+                    _lastCheckDocumentKey = checkDocumentKey;
+                    _lastCheckVersion = checkVersion;
                     RefreshListRendering();
+                    UpdateConflictState();
                     return;
                 }
+                UpdateConflictState();
                 if (!_workflow.IsFileChanged()) return;
                 var dict = _workflow.LoadCurrent();
                 if (dict != null)
@@ -98,8 +106,14 @@ namespace PatentMarker.Palette
         private void RefreshListRendering()
         {
             if (_currentDict == null) return;
+            _view.SetCheckDocumentKey(GetCurrentCheckDocumentKey());
             string keyword = _txtSearch.Text.Trim().ToLowerInvariant();
-            _view.RenderFiltered(_session.Filter(keyword));
+            _view.RenderFiltered(_session.Filter(keyword), _currentDiff, _compareMode);
+        }
+
+        private static object GetCurrentCheckDocumentKey()
+        {
+            return IO.RuntimeHost.ActiveDocument;
         }
 
         private void InitializeComponent()
@@ -270,6 +284,12 @@ namespace PatentMarker.Palette
             _btnAlign.AutoSize = true;
             _btnAlign.Margin = new Padding(0, 0, 4, 2);
 
+            _btnArbitrate = new Button();
+            _btnArbitrate.Text = Strings.Palette_Arbitrate;
+            _btnArbitrate.AutoSize = true;
+            _btnArbitrate.Margin = new Padding(0, 0, 4, 2);
+            _btnArbitrate.Enabled = false;
+
             // v2.3：语言切换按钮 | Language toggle button
             _btnLanguage = new Button();
             _btnLanguage.Text = Strings.Palette_Language;
@@ -279,7 +299,7 @@ namespace PatentMarker.Palette
 
             btnPanel.Controls.AddRange(new Control[] {
                 _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnCompare,
-                _btnCheck, _btnAlign, _btnLanguage
+                _btnCheck, _btnAlign, _btnArbitrate, _btnLanguage
             });
             _btnReload.Click += new EventHandler(BtnReload_Click);
             _btnOpen.Click += new EventHandler(BtnOpen_Click);
@@ -288,6 +308,7 @@ namespace PatentMarker.Palette
             _btnCompare.Click += new EventHandler(BtnCompare_Click);
             _btnCheck.Click += new EventHandler(BtnCheck_Click);
             _btnAlign.Click += new EventHandler(BtnAlign_Click);
+            _btnArbitrate.Click += new EventHandler(BtnArbitrate_Click);
 
             _lblStatus = new Label();
             _lblStatus.Text = Strings.Status_Ready;
@@ -361,6 +382,7 @@ namespace PatentMarker.Palette
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
             if (_btnCheck != null) _btnCheck.Text = Strings.Palette_Check;
             if (_btnAlign != null) _btnAlign.Text = Strings.Palette_Align;
+            if (_btnArbitrate != null) _btnArbitrate.Text = Strings.Palette_Arbitrate;
             if (_btnLanguage != null) _btnLanguage.Text = Strings.Palette_Language;
             if (_btnBrace != null) _btnBrace.Text = Strings.Palette_Brace;
             UpdateLeaderButtonText();
@@ -384,7 +406,7 @@ namespace PatentMarker.Palette
             // 刷新字典信息标签
             if (_currentDict != null)
             {
-                LoadDict(_currentDict);
+                LoadDict(_currentDict, false);
             }
         }
 
@@ -401,11 +423,26 @@ namespace PatentMarker.Palette
 
         public void LoadDict(DictModel dict)
         {
+            LoadDict(dict, true);
+        }
+
+        /// <summary>
+        /// Loads the current dictionary. A document activation can preserve a
+        /// valid PATCHECK result for that document; actual dictionary changes
+        /// pass true to invalidate it.
+        /// </summary>
+        public void LoadDict(DictModel dict, bool clearCheckResult)
+        {
             if (dict == null) { ShowNoDict(); return; }
+            object checkDocumentKey = GetCurrentCheckDocumentKey();
+            if (clearCheckResult)
+                Commands.PatCheckResult.Clear(checkDocumentKey);
+            _view.SetCheckDocumentKey(checkDocumentKey);
             _session.Load(dict, _workflow.PreviousModel);
             _btnCompare.Enabled = _currentDiff != null;
             if (_currentDiff == null) _compareMode = false;
             _view.RenderDictionary(dict, _session, _compareMode);
+            UpdateConflictState();
         }
 
         public void ApplyRuntimeSettings()
@@ -423,16 +460,21 @@ namespace PatentMarker.Palette
 
         public void ShowNoDict()
         {
+            object checkDocumentKey = GetCurrentCheckDocumentKey();
+            Commands.PatCheckResult.Clear(checkDocumentKey);
+            _view.SetCheckDocumentKey(checkDocumentKey);
             _session.Clear();
             _view.ShowNoDictionary();
+            UpdateConflictState();
         }
 
         // ===== 事件 =====
 
         private void TxtSearch_TextChanged(object sender, EventArgs e)
         {
+            _view.SetCheckDocumentKey(GetCurrentCheckDocumentKey());
             string keyword = _txtSearch.Text.Trim().ToLowerInvariant();
-            _view.RenderFiltered(_session.Filter(keyword));
+            _view.RenderFiltered(_session.Filter(keyword), _currentDiff, _compareMode);
         }
 
         private void LstEntries_SelectedIndexChanged(object sender, EventArgs e)
@@ -571,6 +613,51 @@ namespace PatentMarker.Palette
             doc.SendStringToExecute("PATALIGN\n", false, false, false);
         }
 
+        private void BtnArbitrate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string dictPath = _workflow.ResolveDictPath();
+                if (dictPath == null || !_workflow.IsPendingConflict(_currentDict, dictPath))
+                {
+                    UpdateConflictState();
+                    return;
+                }
+
+                using (ArbitrateDialog dlg = new ArbitrateDialog(dictPath))
+                {
+                    DialogResult result = dlg.ShowDialog(this);
+                    if (result == DialogResult.OK || result == DialogResult.Yes)
+                    {
+                        DictModel dict = _workflow.ReloadCurrent();
+                        if (dict != null) LoadDict(dict);
+                        else ShowNoDict();
+                        _lblStatus.Text = result == DialogResult.Yes
+                            ? Strings.Conflict_RestoreOk : Strings.Conflict_KeepWordOk;
+                    }
+                }
+                UpdateConflictState();
+            }
+            catch (System.Exception ex)
+            {
+                _lblStatus.Text = string.Format(Strings.Conflict_Failed, ex.Message);
+                PatentMarkerApp.RawLog("BtnArbitrate error: " + ex.Message);
+            }
+        }
+
+        private void UpdateConflictState()
+        {
+            if (_btnArbitrate == null) return;
+            string dictPath = _workflow.ResolveDictPath();
+            bool pending = _currentDict != null && dictPath != null &&
+                _workflow.IsPendingConflict(_currentDict, dictPath);
+            _btnArbitrate.Enabled = pending;
+            if (pending && _lblStatus != null &&
+                (_lblStatus.Text == Strings.Status_DictLoaded ||
+                 _lblStatus.Text == Strings.Status_Ready))
+                _lblStatus.Text = Strings.Conflict_StatusDetected;
+        }
+
         private void LstEntries_DoubleClick(object sender, EventArgs e)
         {
             MarkSelectedEntry();
@@ -605,7 +692,7 @@ namespace PatentMarker.Palette
         {
             if (_lstEntries.SelectedItems.Count == 0) return;
             PaletteEntry entry = _lstEntries.SelectedItems[0].Tag as PaletteEntry;
-            if (entry == null) return;
+            if (entry == null || entry.IsRemoved) return;
 
             if (_currentDict == null)
             {
@@ -638,7 +725,7 @@ namespace PatentMarker.Palette
         {
             if (_lstEntries.SelectedItems.Count == 0) return;
             PaletteEntry entry = _lstEntries.SelectedItems[0].Tag as PaletteEntry;
-            if (entry == null) return;
+            if (entry == null || entry.IsRemoved) return;
 
             if (_currentDict == null)
             {
@@ -797,13 +884,10 @@ namespace PatentMarker.Palette
         {
             try
             {
-                var doc = IO.RuntimeHost.ActiveDocument;
-                if (doc == null) return;
-                string dwgDir = System.IO.Path.GetDirectoryName(doc.Name);
-                if (dwgDir == null) dwgDir = "";
-                string dwgBase = System.IO.Path.GetFileNameWithoutExtension(doc.Name);
-                string dictPath = System.IO.Path.Combine(dwgDir, dwgBase + ".dict.json");
-                if (!System.IO.File.Exists(dictPath))
+                // Use the same resolver as loading/editing so configured fallback
+                // dictionaries and the current drawing never diverge.
+                string dictPath = _workflow.ResolveDictPath();
+                if (dictPath == null || !System.IO.File.Exists(dictPath))
                 {
                     _lblStatus.Text = Strings.Status_NoDictFile;
                     return;

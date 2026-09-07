@@ -77,36 +77,48 @@ Dim acadBaseKey
 acadBaseKey = "Software\Autodesk\AutoCAD\R17.0"
 
 ' --- 1. Scan for ACAD products ---
-Dim subKeys
-reg.EnumKey HKCU, acadBaseKey, subKeys
+Dim subKeys, hive, hiveName, foundAny, seenProfiles
+foundAny = False
+Set seenProfiles = CreateObject("Scripting.Dictionary")
+seenProfiles.CompareMode = 1
 
-If IsNull(subKeys) Then
-    output = output & "AutoCAD R17.0 not found, nothing to uninstall." & vbCrLf
-    WScript.Echo L(output)
-    logFile.Close
-    WScript.Quit(0)
-End If
-
-Dim productCodes()
-ReDim productCodes(0)
-Dim productCount
+Dim productCodes(), productCount
 productCount = 0
-
-Dim i, key
-For i = 0 To UBound(subKeys)
-    key = subKeys(i)
-    If Left(key, 5) = "ACAD-" Then
-        ReDim Preserve productCodes(productCount)
-        productCodes(productCount) = key
-        productCount = productCount + 1
+Dim i, key, profileId
+For Each hive In Array(HKCU, HKLM)
+    subKeys = Null
+    reg.EnumKey hive, acadBaseKey, subKeys
+    If Not IsNull(subKeys) Then
+        foundAny = True
+        If hive = HKCU Then
+            hiveName = "HKCU"
+        Else
+            hiveName = "HKLM"
+        End If
+        LogMsg "Found in " & hiveName
+        For i = 0 To UBound(subKeys)
+            key = subKeys(i)
+            If Left(key, 5) = "ACAD-" Then
+                profileId = LCase(acadBaseKey & "\" & key)
+                If Not seenProfiles.Exists(profileId) Then
+                    seenProfiles.Add profileId, True
+                    If productCount = 0 Then
+                        ReDim productCodes(0)
+                    Else
+                        ReDim Preserve productCodes(productCount)
+                    End If
+                    productCodes(productCount) = key
+                    productCount = productCount + 1
+                End If
+            End If
+        Next
     End If
 Next
 
-If productCount = 0 Then
-    output = output & "No ACAD- product code found." & vbCrLf
-    WScript.Echo L(output)
-    logFile.Close
-    WScript.Quit(0)
+If Not foundAny Or productCount = 0 Then
+    LogMsg "AutoCAD R17.0 not found; registry cleanup skipped."
+Else
+    LogMsg "Products found: " & productCount
 End If
 
 ' --- 2. Delete HKCU registry keys ---
@@ -134,6 +146,7 @@ hklmDeleted = 0
 For j = 0 To productCount - 1
     appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
     On Error Resume Next
+    Err.Clear
     reg.DeleteKey HKLM, appKey
     If Err.Number = 0 Then
         LogMsg "  Deleted: HKLM\" & appKey
@@ -148,13 +161,13 @@ LogMsg "--- Clean acad.lsp ---"
 
 Dim lspCleaned
 lspCleaned = 0
+Dim candidateDirs()
 
 For j = 0 To productCount - 1
     Dim productCode
     productCode = productCodes(j)
 
     ' Collect candidate directories (same logic as installer)
-    Dim candidateDirs()
     ReDim candidateDirs(0)
     Dim candCount
     candCount = 0
@@ -164,6 +177,9 @@ For j = 0 To productCount - 1
     supportKey = acadBaseKey & "\" & productCode & "\Fixed Profile\General\ACAD"
     supportPath = ""
     reg.GetStringValue HKCU, supportKey, "ACAD", supportPath
+    If IsNull(supportPath) Or supportPath = "" Then
+        reg.GetStringValue HKLM, supportKey, "ACAD", supportPath
+    End If
 
     If Not IsNull(supportPath) And supportPath <> "" Then
         Dim arrPaths, p, dirPath

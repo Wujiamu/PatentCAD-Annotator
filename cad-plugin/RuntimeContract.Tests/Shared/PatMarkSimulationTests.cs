@@ -52,8 +52,8 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.False(leader.EnableDogleg);
                 Assert.False(leader.EnableLanding);
                 Assert.False(leader.ExtendLeaderToText);
-                Assert.Equal(TextAttachmentDirection.AttachmentVertical, leader.TextAttachmentDirection);
-                Assert.Equal(TextAttachmentType.AttachmentCenter, leader.TextAttachmentType);
+                Assert.Equal(TextAttachmentDirection.AttachmentHorizontal, leader.TextAttachmentDirection);
+                Assert.Equal(TextAttachmentType.AttachmentMiddle, leader.TextAttachmentType);
                 Assert.Equal(TextAngleType.HorizontalAngle, leader.TextAngleType);
                 Assert.Equal(1, leader.LeaderLineCount);
                 // 末顶点从文字点缩进 0.4×字高（gap=1.7），不直接触及文字。
@@ -141,9 +141,16 @@ namespace PatentMarker.RuntimeContractTests
 
                 new PatMarkCommand().Run();
 
+#if SIM_LEADER
                 MText text = Assert.IsType<MText>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal("\\L1342B\\l", text.Contents);
                 Assert.Equal("1342B", IO.PatEntityHelper.GetTextNumber(text));
+#else
+                MLeader leader = Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
+                Assert.NotNull(leader.MText);
+                Assert.Equal("\\L1342B\\l", leader.MText.Contents);
+                Assert.Equal("1342B", IO.PatEntityHelper.GetTextNumber(leader.MText));
+#endif
             }
         }
 
@@ -318,7 +325,11 @@ namespace PatentMarker.RuntimeContractTests
 
                 new PatMarkCommand().Run();
 
+#if SIM_LEADER
                 Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+#else
+                Assert.Single(fixture.Database.CommittedEntities);
+#endif
                 Assert.Equal(4, fixture.Editor.PointPrompts.Count);
                 Assert.Equal(4, fixture.Editor.PointPromptAllowsNone.Count);
                 Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
@@ -339,7 +350,11 @@ namespace PatentMarker.RuntimeContractTests
 
                 new PatMarkCommand().Run();
 
+#if SIM_LEADER
                 Assert.Equal(2, fixture.Database.CommittedEntities.Count);
+#else
+                Assert.Single(fixture.Database.CommittedEntities);
+#endif
                 Assert.Equal(4, fixture.Editor.PointPrompts.Count);
                 Assert.Equal(4, fixture.Editor.PointPromptAllowsNone.Count);
                 Assert.All(fixture.Editor.PointPromptAllowsNone, Assert.True);
