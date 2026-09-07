@@ -1,8 +1,10 @@
 # PatentCAD-Annotator
 
-**AutoCAD 专利图纸标注插件** — 从 Word 说明书提取附图标记，在 AutoCAD 图纸中一键标注并保持双向同步。
+**AutoCAD 专利图纸标注插件** — 从 Word 说明书提取附图标记，通过共享字典在 CAD 中标注、编辑并对照变化。
 
-**AutoCAD patent drawing annotation plugin** — Extract reference numerals from Word specifications, annotate them in AutoCAD drawings with one click, and keep them in sync.
+**AutoCAD patent drawing annotation plugin** — Extract reference numerals from Word into a shared dictionary, annotate drawings, and review changes in CAD.
+
+当前工作区：**1.0.2 candidate（待发布 / unreleased）**。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ---
 
@@ -10,20 +12,36 @@
 
 ### 项目简介
 
-PatentCAD-Annotator 的目的在于减少专利图纸标注中的机械操作，例如修改标注内容、字体、调整位置等，以提高附图标注工作的效率。并且，在申请文件中的附图标记进行修改之后，还可以自动地进行对比。
-具体来说，本项目解决了一下三个痛点：
+PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 提取编号与名称，在 CAD 中创建统一样式的引线标注、检查漏标、对齐文字，并在字典变化时显示差异。
 
-1. **人工对照易错** — Word 说明书里的附图标记编号与图纸手动对照，容易漏标/错标
-2. **修改后不同步** — 说明书改了编号，图纸要逐个找出来改
-3. **格式不统一** — 不同人标注的引线样式、文字高度、对齐方式参差不齐
+工作流：Word 面板手动导出或启用保存时自动导出 → 生成 `.dict.json` → CAD 中用 `BZ` 打开字典面板 → 双击条目或用 `BZM` 创建标注 → 字典更新后查看差异。
 
-PatentCAD-Annotator 的工作流：Word 保存时自动提取附图标记，保存为字典（.dict.json文件） → CAD 端打开字典面板 → 点击编号即可创建标准引线标注 → 字典变更时自动高亮差异。
+### Word 与 CAD 如何交换数据
 
-v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自动识别、右键或按 `F2` 编辑条目、新增/删除条目，修改自动回写 `.dict.json`；改号后图纸内旧编号标注同步更新；Word 再次导出前自动备份被 CAD 修改过的字典，由用户裁决保留哪一版。
+两端通过文件交换数据，正常使用不要求 Word 与 CAD 建立 COM 连接，也不要求两个程序同时打开。CAD 面板约每 2 秒检查字典变化。
 
-### 当前标注实现（v5.1）
+| 操作 | 实际影响 |
+|---|---|
+| Word 导出 | 从当前文档内容提取编号/名称，写入字典；CAD 重载后显示差异 |
+| CAD 粘贴识别、新增或编辑条目 | 写回字典；在 CAD 编辑编号时，联动更新当前图纸中匹配的插件标注 |
+| CAD 修改名称、删除字典条目 | 修改字典；改名称不修改图纸文字，删除条目不自动删除图纸实体 |
+| Word 再次导出，发现字典曾由 CAD 修改 | 先备份 CAD 字典，再写入 Word 版；CAD 面板提供“采用 Word / 恢复 CAD / 稍后”裁决 |
 
-- 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 缩进端点`（末顶点沿最后一段方向缩进 0.4×字高，不直接触及文字），文字仍锚定在 `TextLocation`；并禁用全部自动几何（dogleg/landing/extend），绘制路径与用户点击点完全一致；2007 无 MLeader API，保持 `Leader + MText`。
+**CAD 的字典修改不会自动写回 Word 正文。** Word 导出后的差异高亮也不等于图纸已经自动改号；需要在 CAD 中核对和处理。文件替换、Word 保存与 DWG 事务不是一个整体操作，同时在两端编辑同一字典仍可能产生冲突。
+
+字典默认写在 Word 文档目录，命名规则为：
+
+- 无 DWG：使用 Word 文件主名。
+- 只有一个 DWG：使用该 DWG 主名。
+- 多个 DWG：先精确匹配 Word 主名，再接受唯一的包含关系匹配；仍有歧义就拒绝导出，并尝试写入 `autoexport-error.txt`。
+
+CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `config.DefaultDictPath`。遇到“Word 已导出但 CAD 没更新”，先核对两端实际路径。
+
+`.dict.json` 与冲突备份默认具有“隐藏+系统”属性。交接项目时确认字典随文件夹一起复制；仅发送 Word 或 DWG 文件不会携带字典。需要手动查看时，在资源管理器中显示隐藏文件并取消隐藏受保护的操作系统文件，操作后可恢复显示设置。
+
+### 当前标注功能
+
+- 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 缩进端点`（末顶点沿最后一段方向缩进 0.4×字高，不直接触及文字），文字仍锚定在 `TextLocation`；并禁用全部自动几何（dogleg/landing/extend），引线路径沿用户点链构造，并在文字前保留间距；2007 无 MLeader API，保持 `Leader + MText`。
 - 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
 - 无箭头时 `ArrowSize` 置 0（非零值会修剪引线起点，导致引线不触及零件），箭头用空箭头块 `_PAT_NO_ARROW` 实现；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问保持 2010-2012 兼容。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
@@ -40,23 +58,25 @@ v4.0 起支持 CAD 端直接编辑字典：从 Word 粘贴附图标记段落自�
 - `PATBRACEEDIT` 支持两种调整方式：重新点选顶部/底部/宽度方向控制点，或直接输入高度和宽度。第一版不依赖原生自定义夹点，使用命令交互保证五个 AutoCAD 版本的兼容性。
 - 第三点决定中部尖点的朝向和宽度：竖向大括号可向左/向右，横向大括号可向上/向下；从端点轴线到尖点的整个轮廓均位于第三点所指一侧。
 - 大括号轮廓以 DrawingML/PPT `Right Brace` 为视觉基准：端部和中心使用四段四分之一椭圆，直干位于所选宽度的中线，中心保留单一尖锐折角；不会越过端点轴线或生成 W 型轮廓。
-- **v5.1 PATCHECK 只做漏标检测**：报告"字典有 · 图纸未标注"清单（命令行列出，面板同步以橙色 + `△` 前缀高亮），由面板"检测"按钮或 `BZC` 触发；不再检查"图纸有 · 字典无"与"重复编号"（前者在纯面板流程下不可能出现，后者是同一部件多处标同号的合法用法）。
-- **v5.1 PATALIGN 重做为"选择集先行"**：先选中要对齐的标注（支持 `BZS` 建立的 pickfirst 预选集），再指定**线**或**框**基准——线模式把文字投影到基准线；框模式把文字推到指定边外侧（间距由 config.json `align.marginToFrame` 控制）。空间不足时自动延伸：线模式沿基准线方向紧凑排列并越过线端；框模式按列向远离框的方向退位（避免各边延伸交叉重叠）。排列顺序一律为投影顺序，不按编号大小或层级重排；文字占位测量失败时退化为纯投影。移动 MLeader 文字时末顶点自动跟随（Xrecord 点链同步重写），对齐后 `PATMLVERIFY` 仍然通过。
+- **PATCHECK 只做漏标检测**：报告"字典有 · 图纸未标注"清单（命令行列出，面板同步以橙色 + `△` 前缀高亮），由面板"检测"按钮或 `BZC` 触发；不检查“图纸有 · 字典无”与重复编号；删除字典条目可能留下原有图纸标注，同一部件多处标同号也是合法用法。
+- **PATALIGN 使用“选择集先行”流程**：先选中要对齐的标注（支持 `BZS` 建立的 pickfirst 预选集），再指定**线**或**框**基准——线模式把文字投影到基准线；框模式把文字推到指定边外侧（间距由 config.json `align.marginToFrame` 控制）。空间不足时自动延伸：线模式沿基准线方向紧凑排列并越过线端；框模式按列向远离框的方向退位（避免各边延伸交叉重叠）。排列顺序一律为投影顺序，不按编号大小或层级重排；文字占位测量失败时退化为纯投影。移动 MLeader 文字时末顶点自动跟随（Xrecord 点链同步重写），对齐后 `PATMLVERIFY` 仍然通过。
 - 面板新增"检测"与"对齐"两个按钮，分别触发 `PATCHECK` 与 `PATALIGN`。
 
 v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点问题总结](docs/mleader-attachment-grip-incident.md)；该问题已被 F 方案解决（顶点链补全文字点），详见 [MLeader F 方案文档](docs/mleader-f-plan.md)。
 
 ### 版本总览
 
-由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单份源码无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本。**请根据你本机的 AutoCAD 年份选择对应版本：**
+由于 AutoCAD 托管 API 与 .NET 运行时强绑定，单个 DLL 无法覆盖 2007—2026 全部版本，按 API 断代划分为 5 个版本。**请根据你本机的 AutoCAD 年份选择对应版本：**
 
-| 目录 | 覆盖 AutoCAD | .NET | 最低 OS | 标注方式 | 状态 |
+| 目录 | AutoCAD 支持范围 | .NET | 插件系统基线 | 标注方式 | 验证范围 |
 |------|-------------|------|---------|----------|------|
-| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ 已完成 |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader（F 方案） | ✅ 已完成 |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader（F 方案） | ✅ 已完成 |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader（F 方案） | ✅ 已完成 |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader（F 方案） | ✅ 已完成 |
+| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | 本地构建有记录；旧版宿主待验 |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader（F 方案） | 2026 命令级有记录；GUI 待验 |
+
+表中范围是当前项目支持声明，不代表每个年份都已实测；系统基线也不能替代对应 AutoCAD/Office 的安装要求。未来年份需另行验证。
 
 ### 为什么分 5 个版本？能否交叉使用？
 
@@ -70,13 +90,22 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 详细的分版理由见 [docs/version-plan.md](docs/version-plan.md)。
 
-### 快速开始（2007 版）
+### 快速开始
 
-1. **Word 端**：运行 [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) 中的 `install-vba.vbs`（自动导入 7 个 VBA 文件：6 模块 + 1 面板 UserForm 到 Normal 模板）
-2. **CAD 端**：将部署包放到非 C 盘目录，运行 `install-2007.vbs`
-3. **使用**：Word 保存 → 生成 `.dict.json`（1.0.0 起为隐藏文件，资源管理器默认不可见） → CAD 中 `BZ` 打开面板 → `BZM` 标注。目录内有多个 DWG 时先按 Word 文件名精确匹配，只有一个兼容匹配才继续；无法安全判断时会取消导出并写入 `autoexport-error.txt`。
+1. **选择部署包**：按上表选择 `PatentMarker-<年份>-deploy/`，完整解压到可写且位置固定的目录。保留 DLL、脚本与整个 `vba/` 子目录，安装后不要随意移动。
+2. **安装 Word 工具**：先保存并关闭 Word 文档，再运行包内 `install-vba.vbs`，按提示安装到 Normal 模板。共 7 个 VBA 组件、8 个物理文件，包含配套的 `.frm/.frx`。若提示无法访问 VBA 项目，按提示核对 Word 信任设置；不要直接跳过导入错误。
+3. **导出字典**：在 Word 打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel`，点击“手动导出字典”，确认状态提示；需要自动导出时勾选“保存时自动导出”。首次保存或另存为后，在最终目录再次导出并确认对应图纸。
+4. **安装 CAD 插件**：运行所选包的 CAD 安装入口，见下方部署包表。打开目标 DWG，用 `BZ` 打开面板。
+5. **标注与检查**：单击选择条目，双击开始标注；也可用 `BZM`。F2/右键编辑条目，`BZC` 检查漏标，`BZS` 选择标注后用 `BZA` 对齐。
 
-完整步骤见 [cad-plugin/2007/README.md](cad-plugin/2007/README.md)。
+具体版本操作见 [2007](cad-plugin/2007/README.md)、[2010](cad-plugin/2010/README.md)、[2013](cad-plugin/2013/README.md)、[2015](cad-plugin/2015/README.md)、[2025](cad-plugin/2025/README.md)。
+
+### 已知限制与排查
+
+- **保存失败保护尚未贯通安装链路（2026-09-07 核对）**：根 `vba/clsSaveHook.cls` 在已有路径的普通保存中遇到导出失败会取消保存并提示；五套 `install-vba.vbs` 注入的事件代码仍未包含这段保护。因此，使用当前安装器后，**Word 保存成功不能证明字典导出成功**。重要修改后用面板手动导出并核对 CAD 字典；重复运行同一安装器不会修复这个差异。
+- 自动导出发生在 Word 完成保存之前。首次保存、另存为或取消另存为可能影响输出路径；当前没有 Word、字典与 DWG 的整体回滚保证。两端同时编辑同一字典的竞争情形仍需专门回归。
+- Word 导出失败时查看文档目录的 `autoexport-error.txt`；检查文档是否已有路径、DWG 匹配是否明确、目录是否可写以及字典/备份是否被占用。
+- CAD 插件已能加载时用 `PATDOCTOR` / `BZD` 检查。插件连命令都无法加载时，运行对应包的外部 `doctor-<年份>.vbs`（旧版）或 `doctor-2025.ps1`；诊断可从离线检查升级为启动 CAD 的在线检查，运行前保存工作并阅读脚本提示。
 
 ### 编译说明
 
@@ -89,7 +118,8 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 2025 | acdbmgd.dll, acmgd.dll, accoremgd.dll | `PatentMarker/lib/` |
 
 - 2013/2015 版使用 Newtonsoft.Json 13.0.3（NuGet 还原），发布时经 ILRepack 合并进 `PatentMarker.dll`（单文件部署，安装无需额外 DLL）
-- 2025 版零外部依赖（System.Text.Json 内置）
+- 2013 必须使用该 NuGet 包的 `net35` 资产，2015 使用 `net45`；发布合并优先通过根目录 `package.ps1` 完成。
+- 2025 的 JSON 库为内置 System.Text.Json，无需额外部署 JSON DLL；仍依赖对应 AutoCAD 与 .NET 环境。
 
 ### 部署包
 
@@ -99,42 +129,51 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 2010 | `install-2010.vbs` | 适用于 AutoCAD 2010~2012 |
 | 2013 | `install-2013.vbs` | 适用于 AutoCAD 2013~2014，DLL 已内嵌 Newtonsoft.Json |
 | 2015 | `install-2015.vbs` | 适用于 AutoCAD 2015~2024，DLL 已内嵌 Newtonsoft.Json |
-| 2025 | `install-2025.ps1` | 适用于 AutoCAD 2025 及以后；若 PowerShell 安装受本机策略影响，脚本会生成 LSP fallback 供 APPLOAD/NETLOAD 手动加载 |
+| 2025 | `install-2025.ps1` | 对应 2025/2026+ 版本组；脚本运行后生成 LSP 供 APPLOAD 加载，也可直接 NETLOAD 对应 DLL |
 
-五套部署包都包含对应版本的 `PatentMarker.dll` 和全套 VBA 模块。不要把不同 AutoCAD 年份的 DLL 混用。
+五套部署包都包含对应版本的 `PatentMarker.dll`、安装/卸载及诊断脚本、`install-vba.vbs` 和 8 个 VBA 文件。不要把不同 AutoCAD 年份的 DLL 混用。
+若 PowerShell 策略阻止脚本启动，脚本也无法生成 LSP；此时可在 CAD 中用 `NETLOAD` 选择匹配版本的 DLL。
 2025 安装脚本会合并 HKCU/HKLM，枚举 R25.0、R25.1、R26.0 中的全部配置并逐一写入 HKCU，支持 AutoCAD 2025/2026 并存安装。
 2007/2010/2013/2015 安装脚本也会合并 HKCU/HKLM，枚举各自支持范围内的全部注册表配置并逐一写入，支持这些年份的并存安装；2010 卸载脚本会同步清理其生成的 acad.lsp 片段。
 
-### 本地验证状态
+### 验证范围与开发命令
 
-- 五个版本均已完成本地编译；
-- 2007/2010/2013/2015 主机契约模拟测试均为 33/33（共 132/132）；2010/2013/2015 测试工程直接编译各自的 MLeader 命令与创建器；
-- 2025 测试套件为 117/117（含 123A1/123A2 识别、紧邻分隔符、表格预处理、面板 Diff 渲染、PATCHECK 按图纸隔离和配置字典回退回归用例）；
-- 测试工程自带 8 份脱敏 VBA/C# 对比语料，干净检出也会执行；若要用本机 Word 重新生成权威结果，可运行 `cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus`；
-- 五套部署包的 Word VBA 有历史 Word COM 批量验证记录：8 份样例输出与 v4 基线一致，并通过 123A1/123A2 端到端 JSON 验证；本轮以 2025 部署副本实测 UserForm 导入、唯一宏、首次手动导出、自动导出开关、控件标题和附图标记段落边界，均通过，五套副本已哈希同步；
-- `tools/verify-vba-export.vbs` 另行覆盖无 DWG 回退、多个 DWG 的歧义拒绝、Word 文件名精确匹配，以及保存事件在无法安全映射时取消保存；本机 Word COM 运行结果为 `PASS`；
-- 五个版本的 API 契约、结构和静态同步检查通过（Shared 共 30 个 C# 文件，其中 27 个由五版本共同链接；MLeader 组 7 文件字节级一致）；
-- `build.ps1 -Static` 同时检查五版安装/卸载脚本是否合并 HKCU/HKLM 并枚举支持范围内的全部注册表版本，防止并存安装与卸载回归；
-- **v5.1 AutoCAD 2026 全量实机测试通过**（部署包 DLL 批处理）：PATDOCTOR、BZM 创建、BZC 漏标检测（含字典变更复测）、PATALIGN 线/框两模式四种空间场景、pickfirst 工作流（BZS→BZA 免提示）、PATMLVERIFY 链校验、保存-重开持久化全部通过；面板（BZ）为 GUI 组件，需交互式会话实测。
-- **1.0.2 AutoCAD 2026 冒烟复测通过**：从 2025 部署包加载新 DLL 后完成一次三点 PATMARK，日志包含完整 START/END，PATDOCTOR 扫描到 1 个实体且近期错误为 0；面板双击与连续点击仍需交互式验收。
-- **1.0.2 大括号真宿主补测通过**：AutoCAD 2026 Core Console 使用同一组三点执行 `PATBRACE`，`LIST` 读取的实体顶点范围为 `x=0..50、y=0..100`，未跨过端点轴线；这项批处理证据仍不替代 GUI 目检。
-- **1.0.2 大括号尺寸编辑补测通过**：AutoCAD 2026 Core Console 从 100×50 创建结果执行 `PATBRACEEDIT` 尺寸模式改为 120×60，命令报告更新成功，`LIST` 端点范围为 `x=0..60、y=0..120`；这项批处理证据仍不替代旧图形和 GUI 目检。
-- 本地自动化测试不能完全替代真实 AutoCAD 界面交互，最终部署仍需在对应 AutoCAD 版本中重新加载 DLL 后实测。
+以下为 [开发记录](docs/development-log.md) 与 [维护记录](docs/maintainability-repair-plan.md) 中截至 2026-09-05 的历史证据，**不是本次 README 修改重新执行的测试结果**：
 
-可使用根目录 `build.ps1` 辅助构建与环境检查：
+| 层级 | 已有记录 | 不能据此推断 |
+|---|---|---|
+| 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
+| 自动化测试 | 2025 单测 117/117；2007/2010/2013/2015 契约模拟各 33/33 | 真实宿主 API、面板交互或 Word 安装结果已通过 |
+| Word COM | 8 份脱敏语料与 VBA 基线对比；UserForm 导入、导出开关、路径映射及源码保存失败处理 | 安装器注入代码等同源码；所有旧 Word、位数、Save As 分支已覆盖 |
+| AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
+
+CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测和四版 Simulation。Autodesk SDK 不入库，因此 CI 不做五版真实编译，也不运行 Word 或 AutoCAD GUI。
+
+常用命令如下，按变更选择检查。仅文档调整无需构建；共享 C# 变更应编译受影响版本；Word 保存、窗体与 CAD 面板改动还需对应宿主验证。
 
 ```powershell
-.\build.ps1 -Check               # doctor：检查各版本 SDK DLL 与编译工具链
-.\build.ps1 -Version 2025        # 编译 2025 版（dotnet build）
-.\build.ps1 -Version all -Check  # 检查全部 5 个版本
-.\build.ps1 -Simulation           # 运行 2010/2013/2015 主机契约模拟测试
-.\check-api-contract.ps1 -Version all # 检查各版本 AutoCAD SDK API 表面
-.\check-autocad-host.ps1          # 只读检查本机 AutoCAD/COM/许可服务前置条件
-cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus # Word COM 重生成脱敏语料预期
-cscript //nologo .\tools\verify-vba-export.vbs .\PatentMarker-2025-deploy\vba # Word COM 导出映射与保存失败策略
+./build.ps1 -Structure           # 项目引用、部署文件存在性
+./build.ps1 -Static              # 源码/部署副本一致性与安装器静态契约
+./build.ps1 -Simulation          # 2007/2010/2013/2015 生产命令的模拟宿主契约
+dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
+./build.ps1 -Version all -Check  # 五版 SDK 与工具链环境检查，不执行编译
+./build.ps1 -Version 2025        # 编译对应版本；可换其他年份或 all
+./check-api-contract.ps1 -Version all # SDK 元数据检查，当前仅含 2010/2013/2015/2025
+./check-autocad-host.ps1          # 只读检查本机 AutoCAD/COM/许可服务
+cscript //nologo ./tools/verify-vba-export.vbs ./vba # 真实 Word；直接导入源码，非安装器测试
 ```
 
-> 2007/2010 为传统 MSBuild 工程，需 Visual Studio 或 Build Tools 的 MSBuild；2013/2015 在缺少 `MSBuild.exe` 时可使用仓库内 `tools/refasm` 通过 `dotnet msbuild` 构建；2025 版为 SDK 风格工程，可直接用 `dotnet build`。
+2007/2010 需要传统 MSBuild；2013/2015 在缺少 MSBuild.exe 时可利用本机准备的引用程序集与 dotnet msbuild；2025 为 SDK 风格工程。SDK、引用程序集和 ILRepack 等本地依赖不是仓库自带的完整环境，先检查再构建。
+
+跨语言语料位于 [Fixtures/vba-corpus](cad-plugin/2025/PatentMarker.Tests/Fixtures/vba-corpus/)。需要用 Word 重新生成预期时，先将语料复制到临时目录，再运行 `cscript //nologo ./tools/generate-vba-corpus.vbs ./vba <临时语料目录>`。脚本会改写该目录的 `vba-expected-v4-output.txt`；比较并确认规则变化后才更新仓库基线。
+
+### 源码同步与发布
+
+- Word 源码只改根 `vba/`，运行 `./vba-sync.ps1` 同步五套部署包，再核对哈希。`-Check` 当前发现漂移仅输出 `[DRIFT]`，不能只凭退出码判断通过；打包器另有根真源一致性断言。
+- MLeader 命令在选定版本修改后运行 `./sync-mleader-group.ps1 -SourceVersion <年份>`，再运行 `./check-version-sync.ps1`。默认源是 2010，修改其他版本时须显式指定，避免覆盖新代码。
+- `./package.ps1 -Version <年份或all>` 将已有构建产物写入新暂存目录，并为 2013/2015 合并 Newtonsoft.Json、检查外部引用。检查暂存后，用 `-Apply` 更新部署 DLL（会备份旧 DLL）。打包不代替编译；DLL、VBA、安装器及说明必须对应同一交付状态。
+- Word VBA 文本和部分安装脚本使用 GBK/CP936；编辑前检查实际编码。`.frm/.frx` 配对维护，二进制窗体资源经 Word 设计器生成；字典输出为 UTF-8 无 BOM。
+- 修改 `clsSaveHook.cls` 时还需核对五套安装器注入的类代码。源码测试、部署文件哈希和用户安装结果是不同的验证层次。
 
 ### 命令清单
 
@@ -160,18 +199,22 @@ cscript //nologo .\tools\verify-vba-export.vbs .\PatentMarker-2025-deploy\vba # 
 | `Patterns.bas` | 正则匹配工具 |
 | `DictModel.bas` | 字典数据模型 |
 | `JsonWriter.bas` | JSON 序列化 |
-| `PatentExtractor.bas` | 从 Word 提取附图标记 |
-| `AutoExport.bas` | 自动导出入口 |
-| `clsSaveHook.cls` | DocumentBeforeSave 事件监听 |
+| `PatentExtractor.bas` | 保留兼容的占位模块；当前提取流程由 AutoExport 调用 DictModel |
+| `AutoExport.bas` | 面板入口、自动导出开关、路径映射及导出编排 |
+| `clsSaveHook.cls` | DocumentBeforeSave 事件监听；安装器注入版本存在上述已知差异 |
+| `PatentDictPanel.frm` | Word 工具面板定义与事件代码 |
+| `PatentDictPanel.frx` | 配套二进制窗体资源，导入 .frm 时需在同一目录 |
+
+共 7 个 VBA 组件、8 个物理文件；唯一手动宏入口为 `ShowPatentDictPanel`。
 
 ### 目录结构
 
-`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（30 个 C# 文件；其中 27 个由五版本共同链接，3 个 Leader 版命令仅供 2007 链接），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（7 个 MLeader 组文件：F 方案创建/开关/校验 + v5.1 的 PATCHECK/PATALIGN + 全选，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。修改 MLeader 组时可先运行 `sync-mleader-group.ps1`，再运行同步检查。
+`cad-plugin/Shared/` 是五个 .NET 版本共用的源代码层（共同逻辑由对应版本链接，Leader 命令仅供 2007 链接），包含编号、设置、字典差异/冲突、粘贴识别、语言与文案、标注命令、面板控件/工作流/会话/渲染、三个对话框、样式初始化与 PATDOCTOR 诊断模块。各版本项目通过 `<Compile Include="..\..\Shared\...">` 源码链接编译；版本目录保留入口文件与 JSON/IO 适配层（2013/2015 用 Newtonsoft、2025 用 System.Text.Json、2007/2010 用 SimpleJson），2010/2013/2015/2025 另有版本本地 `Commands/`（7 个 MLeader 组文件：F 方案创建/开关/校验 + v5.1 的 PATCHECK/PATALIGN + 全选，四版本字节级相同）。`check-version-sync.ps1` 强制校验：共享文件不得在版本目录出现本地副本且必须被对应 csproj 链接；MLeader 组文件四版本一致且 2007 不携带。文件清单以当前 csproj 与同步脚本为准。
 
 ```
 PatentCAD-Annotator/
 ├── cad-plugin/
-│   ├── Shared/              # 五版本共用的纯 C# 源码（按项目链接编译，不合并 CLR）
+│   ├── Shared/              # 共享 C# 与 CAD 宿主代码（按项目链接编译，不合并 CLR）
 │   ├── RuntimeContract.Tests/  # 2007/2010/2013/2015 契约模拟测试工程（仿真 host）
 │   ├── 2007/               # AutoCAD 2007~2009（Leader + MText，.NET 2.0）
 │   │   └── PatentMarker/    #   C# 源码 + csproj
@@ -179,7 +222,7 @@ PatentCAD-Annotator/
 │   ├── 2013/               # AutoCAD 2013~2014（MLeader F 方案，.NET 4.0）
 │   ├── 2015/               # AutoCAD 2015~2024（MLeader F 方案，.NET 4.5）
 │   └── 2025/               # AutoCAD 2025~2026+（MLeader F 方案，.NET 8.0）
-├── vba/                     # 7 个 Word VBA 文件唯一真源（6 模块 + PatentDictPanel 面板，vba-sync.ps1 同步到部署包）
+├── vba/                     # 8 个 Word VBA 文件真源（含 .frm/.frx，vba-sync.ps1 同步到部署包）
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -210,7 +253,7 @@ PatentCAD-Annotator/
 |--------|------|----------|
 | M5 (v5.3) | 2026-08-18 | 字典文件隐藏化：`.dict.json` 及 `.bak` 备份写入后设"隐藏+系统"属性，资源管理器默认不可见；CAD 写回/冲突裁决适配；后放入 DWG 时自动清理隐藏孤儿字典 |
 | M5 (v5.2) | 2026-08-18 | 引线末端与文字之间加入随字高同步变化的间距（回缩 0.4×字高） |
-| M4 (v5.1) | 2026-08-16 | PATCHECK 简化为漏标检测（面板"检测"按钮触发，未标注条目橙色 + △ 高亮）；PATALIGN v2 重做（选择集先行 → 线/框基准 → 空间不足自动延伸，排列顺序 = 投影顺序）；面板新增"检测/对齐"按钮；AutoCAD 2026 全量实机测试通过（含 pickfirst 流程与保存-重开持久化） |
+| M4 (v5.1) | 2026-08-16 | PATCHECK 简化为漏标检测（面板"检测"按钮触发，未标注条目橙色 + △ 高亮）；PATALIGN v2 重做（选择集先行 → 线/框基准 → 空间不足自动延伸，排列顺序 = 投影顺序）；面板新增"检测/对齐"按钮；AutoCAD 2026 命令级批处理有通过记录（含 pickfirst 与保存-重开，GUI 另验） |
 | M4 (v5.0) | 2026-08-16 | 标注引擎切换为 MLeader（F 方案三点顶点链）：2010/2013/2015/2025 四版本统一，单实体自持文字、无鱼钩、无额外附着点；新增 `PATMLSET`/`PATMLVERIFY`；AutoCAD 2026 实测 4/4 PASS；2007 保持 Leader + MText |
 | M4 (v4.9) | 2026-08-15 | Word 端接口收敛：4 个宏精简为单一入口 `ShowPatentDictPanel`，打开"专利标注字典工具"面板（手动导出按钮 + 保存时自动导出开关）；新增 `PatentDictPanel.frm`/`.frx` UserForm，5 套部署包与构建脚本纳入 .frm/.frx 校验 |
 | M3 (v4.6) | 2026-08-15 | 技术债清理三阶段：VBA 单源化（根 `vba/` + `vba-sync.ps1`）、共享层收敛至 29 文件、契约测试补齐 2007 版；修复 Shared 层 .NET 4.0 API 兼容性回归；五套部署包重新打包并经 AutoCAD 2026 实测 |
@@ -230,21 +273,26 @@ PatentCAD-Annotator/
 
 ### Overview
 
-PatentCAD-Annotator solves three draw-backs that slow you down in patent drawing annotation:
+PatentCAD-Annotator extracts reference numerals and names from Word, creates consistent CAD annotations, highlights dictionary changes, checks missing labels, and aligns annotation text.
 
-1. **Error-prone manual cross-reference** — matching reference numerals between Word specs and drawings by hand leads to missed/wrong labels
-2. **No sync after edits** — changing a numeral in the spec means hunting down every occurrence in the drawing
-3. **Inconsistent formatting** — different annotators produce different leader styles, text heights, and alignments
+Workflow: export from the Word panel, manually or with auto-export enabled → write `.dict.json` → open the CAD palette with `BZ` → double-click an entry or run `BZM` to annotate.
 
-Workflow: Word auto-extracts a numeral dictionary on save → CAD opens a palette → click a numeral to create a standard leader annotation → changes are auto-highlighted when the dictionary updates.
+### Data exchange and its limits
 
-Since v4.0 the dictionary can be edited directly in CAD: paste the marking section from Word for auto-recognition, right-click or press `F2` to renumber/rename an entry, and add or delete entries — edits are written back to `.dict.json`; drawing leaders are renumbered in sync; before Word re-exports it backs up a CAD-modified dictionary so you can arbitrate which version to keep.
+Word and CAD exchange files; normal use does not require a live COM connection or both applications to stay open. The CAD palette checks for dictionary changes about every two seconds.
 
-Since v5.3, `.dict.json` and its `.bak` backups carry Hidden+System attributes and are invisible in Windows Explorer by default (Folder Options → Show hidden files and uncheck "Hide protected operating system files" to reveal them); copying/sharing the folder is unaffected. If a DWG is added to the folder later and the dict filename switches to the DWG name, the old dict is cleaned up automatically — no hidden orphan files are left behind.
+- Word export updates the dictionary; CAD reloads it and highlights differences. This does not automatically renumber existing drawing annotations.
+- CAD entry edits update the dictionary. Renumbering an entry updates matching plugin annotations in the current drawing; renaming does not change drawing text, and deleting an entry does not delete drawing entities.
+- Before Word overwrites a CAD-edited dictionary, it creates a backup. The CAD palette offers **Keep Word / Restore CAD / Later**.
+- **CAD edits do not rewrite the Word document.** Word saves, dictionary writes and DWG transactions are separate operations; concurrent editing is not a guaranteed conflict-free workflow.
 
-### Current annotation implementation (1.0.0)
+Word writes beside the document: no DWG means the Word base name; one DWG means that DWG base name; multiple DWGs require an exact Word base-name match or one unambiguous containment match. Otherwise export is rejected with an `autoexport-error.txt` diagnostic when writable. CAD first reads the dictionary beside the current DWG with the same base name, then an existing `config.DefaultDictPath`.
 
-- Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → dogleg(s) → text` with the text point always appended as the LAST vertex, and all automatic geometry (dogleg/landing/extend) is disabled, so the drawn path matches the user-picked points exactly. Edition 2007 has no MLeader API and keeps `Leader + MText`.
+Dictionaries and conflict backups are Hidden+System files. Include them when sharing a project folder; sending only the Word or DWG file does not include the dictionary. To inspect them in Explorer, show hidden files and temporarily disable hiding protected operating system files.
+
+### Current annotation features
+
+- Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → bend(s) → shortened endpoint`; the last vertex is pulled back by 0.4× text height while text remains anchored at `TextLocation`. Automatic geometry (dogleg/landing/extend) is disabled, preserving the picked path with a gap before the text. Edition 2007 has no MLeader API and keeps `Leader + MText`.
 - v4.0 rolled MLeader back because of the "fishhook" distortion; the 2026-08-15 form probe traced the root cause to an incomplete vertex chain (attach→dogleg only). Plan F fixes it by appending the text point — see the [Plan F document](docs/mleader-f-plan.md).
 - `ArrowSize` is set to 0 when the arrow is off (a non-zero value trims the leader start away from the part); the arrow-off look uses an empty arrow block `_PAT_NO_ARROW`. `ExtendLeaderToText` is a 2014+ SDK property and is accessed via reflection so one source file serves 2010-2012 as well.
 - The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
@@ -259,23 +307,25 @@ Since v5.3, `.dict.json` and its `.bak` backups carry Hidden+System attributes a
 - `PATBRACEEDIT` adjusts a brace either by repicking its top/bottom/width control points or by entering an exact height and width. The first implementation uses command interaction instead of native custom grips so the same behavior remains available across all five AutoCAD generations.
 - The third point controls both the center-tip direction and width: vertical braces can point left or right, and horizontal braces can point up or down. The complete profile stays on the selected side between the endpoint axis and the tip.
 - The brace follows the DrawingML/PPT `Right Brace`: four quarter-ellipse transitions, straight stems at half the selected width, and one sharp center fold. It never crosses the endpoint axis or creates a W-shaped outline.
-- **v5.1 PATCHECK is an unmarked-only check**: it reports the "in dictionary but not annotated" list (in the command line, and highlighted in the palette with an orange `△` prefix), triggered by the palette Check button or `BZC`. It no longer reports "in drawing but missing from dict" (impossible in a palette-only flow) or duplicate numbers (the same part may legitimately be labelled more than once).
-- **v5.1 PATALIGN is rebuilt around a selection-first flow**: select the annotations to align first (the pickfirst set built by `BZS` is honored), then pick a **Line** or **Frame** reference — Line mode projects the texts onto the baseline; Frame mode pushes them outside the chosen side (offset from `align.marginToFrame` in config.json). When space is short it auto-extends: Line mode compacts along the baseline direction and continues past the endpoint; Frame mode spills into extra columns stepping away from the frame (so per-side extensions never cross and overlap). Ordering is always the projection order — never re-sorted by numeral value or hierarchy — and the command falls back to pure projection when text measurement fails. Moving an MLeader text drags its last vertex along (the Xrecord point chain is rewritten), so `PATMLVERIFY` still passes after aligning.
+- **PATCHECK is an unmarked-only check**: it reports the "in dictionary but not annotated" list (in the command line, and highlighted in the palette with an orange `△` prefix), triggered by the palette Check button or `BZC`. It does not report annotations absent from the dictionary or duplicate numbers: deleting a dictionary entry can leave an annotation, and the same part may legitimately be labelled more than once.
+- **PATALIGN uses a selection-first flow**: select the annotations to align first (the pickfirst set built by `BZS` is honored), then pick a **Line** or **Frame** reference — Line mode projects the texts onto the baseline; Frame mode pushes them outside the chosen side (offset from `align.marginToFrame` in config.json). When space is short it auto-extends: Line mode compacts along the baseline direction and continues past the endpoint; Frame mode spills into extra columns stepping away from the frame (so per-side extensions never cross and overlap). Ordering is always the projection order — never re-sorted by numeral value or hierarchy — and the command falls back to pure projection when text measurement fails. Moving an MLeader text drags its last vertex along (the Xrecord point chain is rewritten), so `PATMLVERIFY` still passes after aligning.
 - The palette adds `Check` and `Align` buttons that trigger `PATCHECK` and `PATALIGN` respectively.
 
 See [MLeader attachment-grip incident report](docs/mleader-attachment-grip-incident.md) for the v4.0 log evidence and rejected fixes; the issue is resolved by Plan F (complete vertex chain). Details in the [Plan F document](docs/mleader-f-plan.md).
 
 ### Versions
 
-Because AutoCAD's managed API is tightly bound to the .NET runtime, a single source base cannot cover AutoCAD 2007—2026. The project is split into 5 versions along API boundaries. **Choose the version matching your AutoCAD year:**
+Because AutoCAD's managed API is tightly bound to the .NET runtime, a single DLL cannot cover AutoCAD 2007—2026. The project is split into 5 versions along API boundaries. **Choose the version matching your AutoCAD year:**
 
-| Directory | AutoCAD | .NET | Min OS | Annotation | Status |
+| Directory | AutoCAD range | .NET | Plugin OS baseline | Annotation | Evidence |
 |-----------|---------|------|--------|------------|--------|
-| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | ✅ Complete |
-| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader (Plan F) | ✅ Complete |
-| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader (Plan F) | ✅ Complete |
-| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader (Plan F) | ✅ Complete |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader (Plan F) | ✅ Complete |
+| [`cad-plugin/2007/`](cad-plugin/2007/) | **2007 ~ 2009** | 2.0 | Win7 | Leader + MText | Local build recorded; legacy host pending |
+| [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
+| [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
+| [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader (Plan F) | 2026 command checks recorded; GUI pending |
+
+These are project support declarations, not proof that every year has been tested. The OS baseline does not replace the requirements of the installed AutoCAD/Office version; future releases need separate verification.
 
 ### Why 5 versions? Can I use one version on a different AutoCAD?
 
@@ -287,13 +337,22 @@ Because AutoCAD's managed API is tightly bound to the .NET runtime, a single sou
 
 See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
-### Quick Start (v2007)
+### Quick start
 
-1. **Word side**: import the 7 VBA files ([PatentMarker-2007-deploy/vba/](PatentMarker-2007-deploy/vba/)) into the Normal template (6 modules + the `PatentDictPanel` UserForm)
-2. **CAD side**: deploy [PatentMarker-2007-deploy/](PatentMarker-2007-deploy/) to a non-C-drive folder, run `install-2007.vbs`
-3. **Usage**: save Word → generates `.dict.json` → run `BZ` in CAD to open palette → `BZM` to annotate. When a folder contains multiple DWGs, export first uses an exact Word-file-name match and accepts only one unambiguous compatibility match; unsafe mappings are rejected with `autoexport-error.txt`.
+1. Choose `PatentMarker-<year>-deploy/` for your AutoCAD and extract the complete package into a writable, stable directory. Keep the DLL, scripts and entire `vba/` folder together.
+2. Save and close Word documents, then run `install-vba.vbs` to install into the Normal template. The package contains **7 VBA components in 8 files**, including the paired `.frm/.frx`.
+3. Open and save the Word document. Use Alt+F8 → `ShowPatentDictPanel`, click manual export and check the status. Enable “Auto-export on save” if desired. After a first save or Save As, export again from the final location.
+4. Run the matching CAD installer below. Open the target DWG and run `BZ`.
+5. Single-click selects; double-click or `BZM` starts marking. F2/right-click edits entries, `BZC` checks missing annotations, and `BZS` followed by `BZA` selects and aligns annotations.
 
-Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
+Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README.md), [2013](cad-plugin/2013/README.md), [2015](cad-plugin/2015/README.md), [2025](cad-plugin/2025/README.md).
+
+### Known limitations and diagnosis
+
+- **Save-failure protection differs after installation (code checked 2026-09-07).** The source `vba/clsSaveHook.cls` cancels an ordinary save with an existing path when export fails. All five installers still inject an older event handler without that protection. A successful Word save therefore does not prove the dictionary was exported. After important edits, use manual export and check the CAD dictionary; rerunning the same installer does not fix this difference.
+- Auto-export runs before Word finishes saving. First saves, Save As and cancelled Save As can affect the output path. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
+- For export failures, check `autoexport-error.txt`, the document path, DWG name matching, write access and file locks.
+- Use `PATDOCTOR` / `BZD` when the plugin loads. Otherwise use the package's external `doctor-<year>.vbs` or `doctor-2025.ps1`; it can escalate from offline checks to launching CAD, so save work and review its prompts first.
 
 ### Deployment packages
 
@@ -303,9 +362,9 @@ Full instructions: [cad-plugin/2007/README.md](cad-plugin/2007/README.md).
 | 2010 | `install-2010.vbs` | AutoCAD 2010~2012 |
 | 2013 | `install-2013.vbs` | AutoCAD 2013~2014; Newtonsoft.Json is merged into the DLL |
 | 2015 | `install-2015.vbs` | AutoCAD 2015~2024; Newtonsoft.Json is merged into the DLL |
-| 2025 | `install-2025.ps1` | AutoCAD 2025+; generates an LSP fallback if the PowerShell installation cannot complete |
+| 2025 | `install-2025.ps1` | 2025/2026+ edition group; generates an LSP for APPLOAD when the script runs; direct NETLOAD is also available |
 
-Each package contains the matching `PatentMarker.dll` and the seven shared VBA files (6 modules + the `PatentDictPanel` UserForm). Do not mix DLLs between AutoCAD year ranges.
+Each package contains the matching `PatentMarker.dll`, installation/uninstallation and diagnostic scripts, `install-vba.vbs`, and eight VBA files. Do not mix DLLs between AutoCAD year ranges. If policy prevents the PowerShell script from starting, no LSP can be generated; use `NETLOAD` with the matching DLL.
 The 2025 installer enumerates detected R25.0, R25.1, and R26.0 profiles and registers each one in HKCU, so side-by-side AutoCAD 2025/2026 installs are covered.
 All five installers and uninstallers merge HKCU/HKLM profile lists, process every supported configuration, and de-duplicate repeated profiles; the 2010 uninstaller also removes generated `acad.lsp` fallback blocks.
 
@@ -324,30 +383,36 @@ All five installers and uninstallers merge HKCU/HKLM profile lists, process ever
 | `PATBRACEEDIT` | — | Adjust a brace by control points or exact height/width |
 | `PATDOCTOR` | `BZD` | Self check the plugin and write a doctor report (styles, settings, dictionary, entity scan, recent errors) |
 
-### Local verification status
+### Verification and development
 
-- All five editions compile locally.
-- Runtime contract simulations pass 33/33 for each of 2007, 2010, 2013 and 2015 (command orchestration against strict fake hosts, including shared brace geometry, four-direction brace checks, and the production MLeader path for 2010/2013/2015).
-- The 2025 test suite passes 117/117, including per-document PATCHECK state, palette Diff rendering, and configured dictionary fallback regressions.
-- The test project carries eight sanitized VBA/C# corpus fixtures, so a clean checkout executes the parity comparison too. To regenerate the authoritative expected output with local Word, run `cscript //nologo .\tools\generate-vba-corpus.vbs .\PatentMarker-2025-deploy\vba .\cad-plugin\2025\PatentMarker.Tests\Fixtures\vba-corpus`.
-- Word COM smoke checks pass against the 2025 deployment VBA for UserForm import, the single public macro, first export, auto-export toggling, captions, and marking-section boundaries; all five deployment copies are hash-identical.
-- `tools/verify-vba-export.vbs` also passes Word COM checks for no-DWG fallback, ambiguous multi-DWG rejection, exact-name matching, and save cancellation when mapping is unsafe.
-- Palette PATCHECK results are keyed by the AutoCAD document, so switching drawings no longer discards the other drawing's completed result; reloading a dictionary invalidates only the active document.
-- Structure and static synchronization checks pass for all five editions: `cad-plugin/Shared/` contains 30 canonical C# files (27 linked by every edition and 3 legacy Leader command implementations linked by 2007), the 7-file MLeader command group is byte-identical across 2010/2013/2015/2025, VBA modules are identical across all five deployment packages, and `check-version-sync.ps1` gates the shared layer.
-- **v5.1 full on-machine test passed on AutoCAD 2026** (batch runs against the deployment-package DLL): PATDOCTOR, BZM creation, BZC unmarked detection (including a dictionary-change re-check), PATALIGN line/frame modes across four space scenarios, the pickfirst workflow (BZS → BZA without prompts), PATMLVERIFY chain validation, and save-reopen persistence. The palette (BZ) is a GUI component and requires an interactive session.
-- **1.0.2 AutoCAD 2026 smoke re-test passed**: the new 2025 deployment DLL completed one three-point PATMARK with matching START/END logs; PATDOCTOR found one entity and no recent errors. Palette double-click and rapid-click behavior still requires interactive validation.
-- **1.0.2 brace host check passed**: AutoCAD 2026 Core Console ran `PATBRACE` with the same three points, and `LIST` reported vertices within `x=0..50, y=0..100`, with no crossing of the endpoint axis; this batch evidence does not replace GUI inspection.
-- **1.0.2 brace size-edit check passed**: AutoCAD 2026 Core Console changed a 100×50 brace to 120×60 with `PATBRACEEDIT`; the command reported success and `LIST` confirmed endpoints within `x=0..60, y=0..120`. This does not replace legacy-drawing or GUI inspection.
-- These checks do not replace final interactive validation inside each installed AutoCAD host; load the matching deployment DLL before testing.
+The following summarizes historical records through **2026-09-05** in [the development log](docs/development-log.md) and [maintenance notes](docs/maintainability-repair-plan.md). These checks were **not rerun for this README edit**.
+
+| Layer | Recorded evidence | Remaining boundary |
+|---|---|---|
+| Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
+| Automated tests | 2025: 117/117; 2007/2010/2013/2015 simulations: 33/33 each | Real host APIs, GUI and installed Word code |
+| Word COM | Eight corpus cases, form import, export toggle, mapping and source save-failure checks | Installer-injected code, older Word/bitness and all Save As branches |
+| AutoCAD 2026 | 2025 DLL command checks for marking, checking, alignment, chain validation and persistence; 1.0.2 marking/brace smoke checks | Interactive palette/dialogs, legacy drawings and older AutoCAD hosts |
+
+[CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite and four simulated host suites. It does not compile the five production DLLs without the locally supplied Autodesk SDK, or run Word/AutoCAD GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
+
+Edit Word code in root `vba/`, then run `./vba-sync.ps1`. Its `-Check` currently only reports drift, so inspect output/hashes instead of trusting exit status alone. Edit the MLeader group in one chosen edition and run `./sync-mleader-group.ps1 -SourceVersion <year>` before the consistency check. The default source is 2010.
+
+Corpus fixtures live in [Fixtures/vba-corpus](cad-plugin/2025/PatentMarker.Tests/Fixtures/vba-corpus/). Copy them to a temporary directory before running `cscript //nologo ./tools/generate-vba-corpus.vbs ./vba <temporary-corpus-directory>`; the generator overwrites that directory's expected-output file. Review differences before updating the tracked baseline.
+
+For local builds, supply SDK DLLs in each edition's `PatentMarker/lib/`: acdbmgd/acmgd for 2007/2010, plus accoremgd for later editions. Newtonsoft.Json 13.0.3 uses the net35 asset for 2013 and net45 for 2015. `./package.ps1 -Version <year-or-all>` stages existing builds, merges Newtonsoft for those two editions and checks assembly references; review the stage before using `-Apply` to update deployment DLLs. Packaging does not compile source.
+
+The source tree uses linked `cad-plugin/Shared/` files, version-specific runtime/JSON adapters and a seven-file MLeader command group. Word has five .bas files, clsSaveHook.cls and PatentDictPanel.frm/.frx; PatentExtractor.bas is a compatibility placeholder. Preserve text encodings (many VBA/VBS files use GBK/CP936), keep form resources paired, and inspect installer-injected code when changing the save hook.
 
 ### Version
+
 The workspace is preparing **1.0.2 (unreleased)**. See [CHANGELOG.md](CHANGELOG.md) for release notes and [docs/development-log.md](docs/development-log.md) for the full development archive. The table below is the pre-1.0.0 milestone timeline (kept for reference only; internal iteration numbers are no longer exposed as public versions).
 
 | Milestone | Date | Key changes |
 |-----------|------|-------------|
 | M5 (v5.3) | 2026-08-18 | Hide dict files: `.dict.json` and its `.bak` backups get Hidden+System attributes, invisible in Explorer by default; CAD write-back/conflict resolution adapted; orphan hidden dicts auto-cleaned when a DWG appears later |
 | M5 (v5.2) | 2026-08-18 | Leader tip pulled back from the text by a height-proportional gap (0.4× text height) |
-| M4 (v5.1) | 2026-08-16 | PATCHECK reduced to unmarked-only check (palette Check button, orange `△` highlight); PATALIGN v2 rebuilt (selection-first → line/frame reference → auto-extend); new Check/Align palette buttons; full on-machine test passed on AutoCAD 2026 (incl. pickfirst flow and save-reopen persistence) |
+| M4 (v5.1) | 2026-08-16 | PATCHECK reduced to unmarked-only check (palette Check button, orange `△` highlight); PATALIGN v2 rebuilt (selection-first → line/frame reference → auto-extend); new Check/Align palette buttons; command-level batch checks recorded on AutoCAD 2026 (incl. pickfirst and save-reopen; GUI separate) |
 | M4 (v5.0) | 2026-08-16 | Annotation engine switched to MLeader (Plan F three-point vertex chain) across 2010/2013/2015/2025: single entity, fishhook-free, no extra attachment point; new `PATMLSET`/`PATMLVERIFY`; AutoCAD 2026 on-machine 4/4 PASS; 2007 keeps Leader + MText |
 | M4 (v4.9) | 2026-08-15 | Word-side interface converged to a single `ShowPatentDictPanel` entry point with the annotation palette (manual export + auto export on save); added `PatentDictPanel.frm`/`.frx` UserForm; deployed packages and build scripts now validate .frm/.frx |
 | M3 (v4.6) | 2026-08-15 | Three-stage tech-debt cleanup: VBA single-sourcing (`vba/` + `vba-sync.ps1`), shared layer tightened to 29 files, contract tests added for 2007; fixed a .NET 4.0 API compatibility regression; repackaged all five packages and verified on AutoCAD 2026 |
