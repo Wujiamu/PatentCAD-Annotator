@@ -192,15 +192,24 @@ vbaFiles(5) = "PatentDictPanel.frm"
 ' .cls files (VERSION/Attribute lines appear as visible code and fail to compile).
 ' It is created programmatically in Step 7.5 below.
 
-Dim i, filePath
+Dim i, filePath, frxPath
+frxPath = vbaDir & "\PatentDictPanel.frx"
+If Not fso.FileExists(frxPath) Then
+    QuitWithMsg "ERROR: PatentDictPanel.frx not found: " & frxPath & vbCrLf & _
+                "Keep PatentDictPanel.frm and PatentDictPanel.frx together."
+End If
+If fso.GetFile(frxPath).Size = 0 Then
+    QuitWithMsg "ERROR: PatentDictPanel.frx is empty: " & frxPath
+End If
+
 For i = 0 To UBound(vbaFiles)
     filePath = vbaDir & "\" & vbaFiles(i)
     If Not fso.FileExists(filePath) Then
-        QuitWithMsg "ERROR: VBA file not found: " & filePath & vbCrLf & "Ensure \vba\ contains all .bas/.frm modules"
+        QuitWithMsg "ERROR: VBA file not found: " & filePath & vbCrLf & "Ensure \vba\ contains all .bas/.frm/.frx modules"
     End If
 Next
 
-LogMsg "VBA files: all present (5 .bas + 1 .frm)"
+LogMsg "VBA files: all present (5 .bas + 1 .frm + 1 .frx)"
 
 ' --- 1.5. Check for running Word processes ---
 LogMsg "--- Word Process Check ---"
@@ -397,6 +406,24 @@ For i = 0 To UBound(vbaFiles)
     End If
     On Error GoTo 0
 Next
+
+' --- 7.25. Verify UserForm import ---
+Dim panelComp, panelType
+Set panelComp = Nothing
+panelType = 0
+On Error Resume Next
+Set panelComp = vbProj.VBComponents.Item("PatentDictPanel")
+If Not panelComp Is Nothing Then panelType = panelComp.Type
+On Error GoTo 0
+If panelType <> 3 Then
+    On Error Resume Next
+    doc.Close False
+    wordApp.Quit
+    On Error GoTo 0
+    QuitWithMsg "ERROR: PatentDictPanel.frm was not imported as a UserForm (type 3)." & vbCrLf & _
+                "The .frm and .frx files must stay together; remove the bad module and retry."
+End If
+LogMsg "  OK: PatentDictPanel is a UserForm (type 3)"
 
 ' --- 7.5. Create clsSaveHook class module via code injection ---
 ' Word 2010+ (and some Word 2007 configurations) fail to import .cls files
