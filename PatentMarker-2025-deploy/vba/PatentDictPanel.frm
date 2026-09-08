@@ -39,10 +39,12 @@ Private Sub UserForm_Initialize()
     Me.Font.Size = 10
 
     Dim x As Single, iw As Single, ih As Single
-    ' Keep the layout deterministic. Word 2010's MSForms host can reject
-    ' InsideWidth/InsideHeight even though newer Office versions expose them.
-    iw = 292
-    ih = 150
+    On Error Resume Next
+    iw = Me.InsideWidth
+    ih = Me.InsideHeight
+    On Error GoTo 0
+    If iw < 100 Then iw = 292
+    If ih < 100 Then ih = 150
     x = 16
 
     With cmdExport

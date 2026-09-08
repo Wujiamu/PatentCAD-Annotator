@@ -22,8 +22,8 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ### 兼容 / Compatibility
 
-- 修复 Word 2010 打开面板时的“无效外部过程”：截图中的 `VERSION` / `Begin` / `OleObjectBlob` 出现在代码窗口，说明 `.frm` 被当成普通模块导入。5 份安装器现在检查 `PatentDictPanel.frx` 必须存在且非空，并验证 `PatentDictPanel` 必须是 UserForm（type=3）；面板布局同时改用固定客户区尺寸，根 VBA 与 5 套部署包已同步。
-- Fixed the Word 2010 "invalid outside procedure" panel failure caused by importing `PatentDictPanel.frm` as a standard module. All five installers now require a non-empty companion `PatentDictPanel.frx` and verify that `PatentDictPanel` is a UserForm (type 3); the panel also uses deterministic client dimensions, with the canonical VBA and all five deployment copies synchronized.
+- 修复 Word 2010 打开面板时的“无效外部过程”：截图中的 `VERSION` / `Begin` / `OleObjectBlob` 出现在代码窗口，说明 `.frm` 被当成普通模块导入。5 份安装器现在检查导入结果的 type=3 和必需控件；若导入报错、类型错误或控件缺失，会删除坏组件，用 `VBComponents.Add(3)` + `Designer.Controls.Add` 重建 `PatentDictPanel`，再注入窗体代码并记录原始失败原因。安装前保留 `Normal.dotm` 临时备份，保存失败时恢复原模板；`.frm/.frx` 仍须在包内配对，根 VBA 与 5 套部署包已同步。
+- Fixed the Word 2010 "invalid outside procedure" panel failure caused by importing `PatentDictPanel.frm` as a standard module. All five installers now validate the imported component as type 3 with the required controls; on an import error, wrong type, or missing controls they remove the bad component, rebuild `PatentDictPanel` with `VBComponents.Add(3)` and `Designer.Controls.Add`, inject the form code, and log the original failure. The installer keeps a temporary `Normal.dotm` backup and restores it if saving fails; `.frm/.frx` must still remain paired in the package, with the canonical VBA synchronized to all five deployments.
 
 - 几何源码由五个 AutoCAD 版本共享，2007/2010/2013/2015/2025 部署 DLL 已同步重打包。大括号 Xrecord 参数格式未变；已有错误轮廓可通过 `PATBRACEEDIT` 重新输入原尺寸来重建，或直接删除后重画。
 - 修复面板双击条目时无条件重复排队 `PATMARK` 的问题：请求改为按当前图纸保存并去重；已有 CAD 命令运行时延迟到空闲后再启动，运行中的 `PATMARK` 可在提示边界切换到最新请求。

@@ -166,6 +166,309 @@ Sub QuitWithMsg(msg)
     WScript.Quit(1)
 End Sub
 
+Function GetVbComponent(vbProj, componentName)
+    Dim comp
+    Set comp = Nothing
+    On Error Resume Next
+    Set comp = vbProj.VBComponents.Item(componentName)
+    On Error GoTo 0
+    Set GetVbComponent = comp
+End Function
+
+Function ReadPatentPanelText(filePath, ByRef textValue, ByRef errorText)
+    Dim stream, textStream, errNo, errDesc
+    textValue = ""
+    errorText = ""
+
+    On Error Resume Next
+    Err.Clear
+    Set stream = CreateObject("ADODB.Stream")
+    stream.Type = 2
+    stream.Charset = "gb2312"
+    stream.Open
+    stream.LoadFromFile filePath
+    textValue = stream.ReadText(-1)
+    stream.Close
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo = 0 And Len(textValue) > 0 Then
+        ReadPatentPanelText = True
+        Exit Function
+    End If
+
+    On Error Resume Next
+    Err.Clear
+    Set textStream = fso.OpenTextFile(filePath, 1, False, -2)
+    textValue = textStream.ReadAll
+    textStream.Close
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo = 0 And Len(textValue) > 0 Then
+        ReadPatentPanelText = True
+        Exit Function
+    End If
+
+    If errNo = 0 Then
+        errorText = "PatentDictPanel.frm is empty"
+    Else
+        errorText = "cannot read PatentDictPanel.frm (" & CStr(errNo) & "): " & errDesc
+    End If
+    ReadPatentPanelText = False
+End Function
+
+Function ExtractPatentPanelCode(rawText, ByRef codeText, ByRef errorText)
+    Dim normalized, lines, n, lineText, started, body
+    normalized = Replace(rawText, vbCrLf, vbLf)
+    normalized = Replace(normalized, vbCr, vbLf)
+    lines = Split(normalized, vbLf)
+    started = False
+    body = ""
+
+    For n = 0 To UBound(lines)
+        lineText = lines(n)
+        If Not started Then
+            If InStr(1, lineText, "Attribute VB_Exposed = False", vbTextCompare) > 0 Then
+                started = True
+            End If
+        Else
+            If InStr(1, LTrim(lineText), "Attribute VB_", vbTextCompare) <> 1 Then
+                body = body & lineText & vbCrLf
+            End If
+        End If
+    Next
+
+    If Not started Then
+        errorText = "PatentDictPanel.frm has no VBA code section"
+        codeText = ""
+        ExtractPatentPanelCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Private Sub UserForm_Initialize", vbTextCompare) = 0 Then
+        errorText = "PatentDictPanel.frm code section is incomplete"
+        codeText = ""
+        ExtractPatentPanelCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Private Sub cmdExport_Click", vbTextCompare) = 0 Then
+        errorText = "PatentDictPanel.frm is missing cmdExport_Click"
+        codeText = ""
+        ExtractPatentPanelCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Private Sub chkAutoExport_Click", vbTextCompare) = 0 Then
+        errorText = "PatentDictPanel.frm is missing chkAutoExport_Click"
+        codeText = ""
+        ExtractPatentPanelCode = False
+        Exit Function
+    End If
+
+    If InStr(1, body, "Option Explicit", vbTextCompare) = 0 Then
+        body = "Option Explicit" & vbCrLf & body
+    End If
+    codeText = body
+    errorText = ""
+    ExtractPatentPanelCode = True
+End Function
+
+Function PanelControlExists(panelComp, controlName)
+    Dim ctrl
+    Set ctrl = Nothing
+    On Error Resume Next
+    Set ctrl = panelComp.Designer.Controls.Item(controlName)
+    On Error GoTo 0
+    If ctrl Is Nothing Then
+        PanelControlExists = False
+    Else
+        PanelControlExists = True
+    End If
+End Function
+
+Function PanelFormIsUsable(panelComp, ByRef reason)
+    Dim compType, errNo, errDesc, lineCount, moduleText
+    reason = ""
+    If panelComp Is Nothing Then
+        reason = "Import returned no component"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+
+    compType = 0
+    On Error Resume Next
+    Err.Clear
+    compType = panelComp.Type
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo <> 0 Then
+        reason = "Cannot read imported component type (" & CStr(errNo) & "): " & errDesc
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+    If compType <> 3 Then
+        reason = "Imported component type is " & CStr(compType) & ", expected UserForm type 3"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+
+    If Not PanelControlExists(panelComp, "cmdExport") Then
+        reason = "UserForm is missing control cmdExport"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+    If Not PanelControlExists(panelComp, "chkAutoExport") Then
+        reason = "UserForm is missing control chkAutoExport"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+    If Not PanelControlExists(panelComp, "lblStatus") Then
+        reason = "UserForm is missing control lblStatus"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+
+    lineCount = 0
+    moduleText = ""
+    On Error Resume Next
+    Err.Clear
+    lineCount = panelComp.CodeModule.CountOfLines
+    If lineCount > 0 Then moduleText = panelComp.CodeModule.Lines(1, lineCount)
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo <> 0 Then
+        reason = "Cannot read UserForm code (" & CStr(errNo) & "): " & errDesc
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+    If InStr(1, moduleText, "Private Sub UserForm_Initialize", vbTextCompare) = 0 Then
+        reason = "UserForm code is missing UserForm_Initialize"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
+
+    PanelFormIsUsable = True
+End Function
+
+Function BuildPatentPanelFallback(vbProj, frmPath, ByRef errorText)
+    Dim rawText, readError, codeText, codeError
+    Dim oldComp, panelComp, designer, button, checkBox, label
+    Dim errNo, errDesc, verifyReason
+    errorText = ""
+
+    If Not ReadPatentPanelText(frmPath, rawText, readError) Then
+        errorText = readError
+        BuildPatentPanelFallback = False
+        Exit Function
+    End If
+    If Not ExtractPatentPanelCode(rawText, codeText, codeError) Then
+        errorText = codeError
+        BuildPatentPanelFallback = False
+        Exit Function
+    End If
+
+    Set oldComp = GetVbComponent(vbProj, "PatentDictPanel")
+    If Not oldComp Is Nothing Then
+        On Error Resume Next
+        Err.Clear
+        vbProj.VBComponents.Remove oldComp
+        errNo = Err.Number
+        errDesc = Err.Description
+        On Error GoTo 0
+        If errNo <> 0 Then
+            errorText = "Cannot remove the bad PatentDictPanel component (" & CStr(errNo) & "): " & errDesc
+            BuildPatentPanelFallback = False
+            Exit Function
+        End If
+    End If
+
+    On Error Resume Next
+    Err.Clear
+    Set panelComp = vbProj.VBComponents.Add(3)
+    panelComp.Name = "PatentDictPanel"
+    Set designer = panelComp.Designer
+    Set button = designer.Controls.Add("Forms.CommandButton.1", "cmdExport", True)
+    Set checkBox = designer.Controls.Add("Forms.CheckBox.1", "chkAutoExport", True)
+    Set label = designer.Controls.Add("Forms.Label.1", "lblStatus", True)
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo <> 0 Then
+        errorText = "Cannot create UserForm with VBComponents.Add(3) (" & CStr(errNo) & "): " & errDesc
+        BuildPatentPanelFallback = False
+        Exit Function
+    End If
+
+    On Error Resume Next
+    Err.Clear
+    panelComp.CodeModule.AddFromString codeText
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo <> 0 Then
+        errorText = "Cannot inject PatentDictPanel code (" & CStr(errNo) & "): " & errDesc
+        BuildPatentPanelFallback = False
+        Exit Function
+    End If
+
+    If Not PanelFormIsUsable(panelComp, verifyReason) Then
+        errorText = "Fallback UserForm failed validation: " & verifyReason
+        BuildPatentPanelFallback = False
+        Exit Function
+    End If
+
+    BuildPatentPanelFallback = True
+End Function
+
+Function Pad2(value)
+    If Len(CStr(value)) < 2 Then
+        Pad2 = "0" & CStr(value)
+    Else
+        Pad2 = CStr(value)
+    End If
+End Function
+
+Function MakeBackupStamp()
+    Dim nowValue
+    nowValue = Now
+    MakeBackupStamp = CStr(Year(nowValue)) & Pad2(Month(nowValue)) & Pad2(Day(nowValue)) & "-" & _
+                       Pad2(Hour(nowValue)) & Pad2(Minute(nowValue)) & Pad2(Second(nowValue))
+End Function
+
+Function CreateNormalBackup(normalPath, ByRef backupPath, ByRef errorText)
+    Dim tempFolder, basePath, counter, errNo, errDesc
+    backupPath = ""
+    errorText = ""
+    tempFolder = fso.GetSpecialFolder(2)
+    basePath = tempFolder & "\PatentMarker-Normal-" & MakeBackupStamp()
+    backupPath = basePath & ".dotm"
+    counter = 0
+    Do While fso.FileExists(backupPath)
+        counter = counter + 1
+        backupPath = basePath & "-" & CStr(counter) & ".dotm"
+    Loop
+
+    On Error Resume Next
+    Err.Clear
+    fso.CopyFile normalPath, backupPath, False
+    errNo = Err.Number
+    errDesc = Err.Description
+    On Error GoTo 0
+    If errNo <> 0 Then
+        errorText = "Cannot copy Normal.dotm (" & CStr(errNo) & "): " & errDesc
+        CreateNormalBackup = False
+        Exit Function
+    End If
+    If Not fso.FileExists(backupPath) Then
+        errorText = "Normal.dotm backup was not created"
+        CreateNormalBackup = False
+        Exit Function
+    End If
+    CreateNormalBackup = True
+End Function
+
+' === End Word 2010 UserForm compatibility helpers ===
 output = output & "========================================" & vbCrLf
 output = output & "PatentMarker VBA Module Installer" & vbCrLf
 output = output & "(Install to Normal global template)" & vbCrLf
@@ -309,6 +612,16 @@ Else
     LogMsg "  Normal.dotm is writable (not read-only)"
 End If
 
+' --- 3.75. Make a recoverable Normal.dotm backup before changing VBA ---
+Dim normalBackupPath, backupError
+normalBackupPath = ""
+backupError = ""
+If Not CreateNormalBackup(normalPath, normalBackupPath, backupError) Then
+    wordApp.Quit
+    QuitWithMsg "ERROR: Cannot backup Normal template before installation." & vbCrLf & _
+                "Reason: " & backupError
+End If
+LogMsg "Normal template backup: " & normalBackupPath
 ' --- 4. Open Normal.dotm ---
 Dim doc
 On Error Resume Next
@@ -384,47 +697,80 @@ For i = 0 To UBound(moduleNames)
     On Error GoTo 0
 Next
 
-' --- 7. Import VBA modules (.bas) ---
+' --- 7. Import VBA modules (.bas/.frm) ---
 LogMsg "Importing VBA modules..."
-Dim imported
+Dim imported, panelComp, panelReason, fallbackError, normalImportError, importedComp, importErr
 imported = 0
 
 For i = 0 To UBound(vbaFiles)
     filePath = vbaDir & "\" & vbaFiles(i)
-    On Error Resume Next
-    vbProj.VBComponents.Import filePath
-    If Err.Number <> 0 Then
-        Dim importErr
-        importErr = Err.Description
+    If LCase(fso.GetExtensionName(vbaFiles(i))) = "frm" Then
+        Set panelComp = Nothing
+        normalImportError = ""
+        On Error Resume Next
+        Err.Clear
+        Set panelComp = vbProj.VBComponents.Import(filePath)
+        If Err.Number <> 0 Then
+            normalImportError = CStr(Err.Number) & ": " & Err.Description
+        End If
         On Error GoTo 0
-        doc.Close False
-        wordApp.Quit
-        QuitWithMsg "ERROR: Import failed: " & vbaFiles(i) & vbCrLf & "Reason: " & importErr
-    Else
-        LogMsg "  OK: " & vbaFiles(i)
+
+        panelReason = ""
+        If Not PanelFormIsUsable(panelComp, panelReason) Then
+            If normalImportError = "" Then normalImportError = panelReason
+            LogMsg "  UserForm import did not produce a usable UserForm: " & normalImportError
+            fallbackError = ""
+            If Not panelComp Is Nothing Then
+                On Error Resume Next
+                Err.Clear
+                vbProj.VBComponents.Remove panelComp
+                On Error GoTo 0
+            End If
+            If Not BuildPatentPanelFallback(vbProj, filePath, fallbackError) Then
+                On Error Resume Next
+                doc.Close False
+                wordApp.Quit
+                On Error GoTo 0
+                QuitWithMsg "ERROR: PatentDictPanel.frm import failed and fallback reconstruction failed." & vbCrLf & _
+                            "Normal import: " & normalImportError & vbCrLf & _
+                            "Fallback: " & fallbackError & vbCrLf & _
+                            "Keep PatentDictPanel.frm and PatentDictPanel.frx together and retry."
+            End If
+            LogMsg "  OK: PatentDictPanel rebuilt with VBComponents.Add(3) and Designer controls"
+        Else
+            LogMsg "  OK: PatentDictPanel.frm -> UserForm (type 3)"
+        End If
         imported = imported + 1
+    Else
+        On Error Resume Next
+        Err.Clear
+        Set importedComp = vbProj.VBComponents.Import(filePath)
+        If Err.Number <> 0 Then
+            importErr = Err.Description
+            On Error GoTo 0
+            doc.Close False
+            wordApp.Quit
+            QuitWithMsg "ERROR: Import failed: " & vbaFiles(i) & vbCrLf & "Reason: " & importErr
+        Else
+            LogMsg "  OK: " & vbaFiles(i)
+            imported = imported + 1
+        End If
+        On Error GoTo 0
     End If
-    On Error GoTo 0
 Next
 
-' --- 7.25. Verify UserForm import ---
-Dim panelComp, panelType
-Set panelComp = Nothing
-panelType = 0
-On Error Resume Next
-Set panelComp = vbProj.VBComponents.Item("PatentDictPanel")
-If Not panelComp Is Nothing Then panelType = panelComp.Type
-On Error GoTo 0
-If panelType <> 3 Then
+' --- 7.25. Verify UserForm import/reconstruction ---
+Set panelComp = GetVbComponent(vbProj, "PatentDictPanel")
+panelReason = ""
+If Not PanelFormIsUsable(panelComp, panelReason) Then
     On Error Resume Next
     doc.Close False
     wordApp.Quit
     On Error GoTo 0
-    QuitWithMsg "ERROR: PatentDictPanel.frm was not imported as a UserForm (type 3)." & vbCrLf & _
-                "The .frm and .frx files must stay together; remove the bad module and retry."
+    QuitWithMsg "ERROR: PatentDictPanel is not a usable UserForm after import." & vbCrLf & _
+                "Reason: " & panelReason
 End If
-LogMsg "  OK: PatentDictPanel is a UserForm (type 3)"
-
+LogMsg "  OK: PatentDictPanel is a UserForm (type 3) with required controls"
 ' --- 7.5. Create clsSaveHook class module via code injection ---
 ' Word 2010+ (and some Word 2007 configurations) fail to import .cls files
 ' correctly: the VERSION/Attribute metadata appears as visible code, causing
@@ -473,10 +819,12 @@ LogMsg "Imported " & imported & " / 7 modules"
 
 ' --- 8. Save Normal.dotm (3-level strategy) ---
 LogMsg "Saving Normal template..."
-Dim saveOk, saveErr, wordClosed
+Dim saveOk, saveErr, wordClosed, restoreOk, restoreErr
 saveOk = False
 saveErr = ""
 wordClosed = False
+restoreOk = False
+restoreErr = ""
 
 Dim beforeModTime
 beforeModTime = fso.GetFile(normalPath).DateLastModified
@@ -545,9 +893,30 @@ If Not saveOk Then
         wordApp.Quit
     End If
     On Error GoTo 0
-    QuitWithMsg "ERROR: Cannot save Normal template." & vbCrLf & _
-                "Reason: " & saveErr & vbCrLf & _
-                "Please close all Word instances and retry."
+
+    On Error Resume Next
+    Err.Clear
+    fso.CopyFile normalBackupPath, normalPath, True
+    If Err.Number = 0 Then
+        restoreOk = True
+        LogMsg "  Restored Normal.dotm from backup after save failure"
+    Else
+        restoreErr = Err.Description & " (0x" & Hex(Err.Number) & ")"
+        LogMsg "  WARNING: failed to restore Normal.dotm backup: " & restoreErr
+    End If
+    On Error GoTo 0
+
+    If restoreOk Then
+        QuitWithMsg "ERROR: Cannot save Normal template; the original template was restored." & vbCrLf & _
+                    "Reason: " & saveErr & vbCrLf & _
+                    "Backup: " & normalBackupPath & vbCrLf & _
+                    "Please close all Word instances and retry."
+    Else
+        QuitWithMsg "ERROR: Cannot save Normal template and automatic restore failed." & vbCrLf & _
+                    "Save reason: " & saveErr & vbCrLf & _
+                    "Restore reason: " & restoreErr & vbCrLf & _
+                    "Backup: " & normalBackupPath
+    End If
 End If
 
 ' --- 8.5. Verify save by checking file modification time ---
@@ -577,6 +946,7 @@ End If
 LogMsg ""
 LogMsg "=== VBA Install Complete ==="
 LogMsg "Normal template: " & normalPath
+LogMsg "Backup retained: " & normalBackupPath
 LogMsg "Modules imported: " & imported & " / 7"
 If saveVerified Then
     LogMsg "Saved: Yes (verified)"

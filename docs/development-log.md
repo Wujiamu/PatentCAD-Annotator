@@ -6,7 +6,9 @@
 
 ## 1.0.2（待发布，2026-09-05）
 
-**Word 2010 面板导入兼容修复。** 截图中的 `VERSION 5.00`、`Begin {...}` 和 `OleObjectBlob` 出现在代码窗口，说明 `PatentDictPanel.frm` 被 Word 2010 当成普通模块导入，因窗体头位于过程外而报“无效外部过程”。安装器现在检查配套 `PatentDictPanel.frx` 是否存在且非空，并验证导入组件必须是 UserForm（type=3）；同时面板布局改用固定客户区尺寸，避免旧版 MSForms 对可选 `InsideWidth` / `InsideHeight` 读取产生差异。已同步 5 份安装器和 5 套部署包的 VBA 源文件。
+**Word 2010 面板导入兼容修复。** 截图中的 `VERSION 5.00`、`Begin {...}` 和 `OleObjectBlob` 出现在代码窗口，说明 `PatentDictPanel.frm` 被 Word 2010 当成普通模块导入，因窗体头位于过程外而报“无效外部过程”。仅在导入后检查 type=3 只能发现问题，不能修复；本轮安装器现在校验 type=3、三个必需控件和窗体代码，若导入报错或返回普通模块，则删除坏组件，使用 `VBComponents.Add(3)`、`Designer.Controls.Add` 重建 UserForm，再从 `.frm` 的代码段注入事件过程，并把原始失败原因写入安装日志。修改 Normal 前先保存临时副本，保存失败时恢复；`.frm/.frx` 仍要求配对。已同步 5 份安装器和 5 套部署包的 VBA 源文件。
+
+- **本轮验证（本机可执行范围）**：Word 2024 隔离临时文档中故意放入同名普通模块后调用 fallback，实际通过 `type=3`、名称和三个控件校验；正常 `.frm/.frx` 导入、面板探针及导出回归均通过；`vba-sync.ps1 -Check`、`build.ps1 -Structure`、`build.ps1 -Static` 通过。未在 Word 2010 真机或 Office 旧位数上宣称通过。
 
 **参数化矢量大括号几何复核与修复。** 本次以用户补充的真实 AutoCAD 截图重新开始分析，推翻了“当前源码正常、现场加载旧 DLL”的旧结论。
 

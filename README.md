@@ -93,7 +93,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 ### 快速开始
 
 1. **选择部署包**：按上表选择 `PatentMarker-<年份>-deploy/`，完整解压到可写且位置固定的目录。保留 DLL、脚本与整个 `vba/` 子目录，安装后不要随意移动。
-2. **安装 Word 工具**：先保存并关闭 Word 文档，再运行包内 `install-vba.vbs`，按提示安装到 Normal 模板。共 7 个 VBA 组件、8 个物理文件，包含配套的 `.frm/.frx`。若提示无法访问 VBA 项目，按提示核对 Word 信任设置；不要直接跳过导入错误。
+2. **安装 Word 工具**：先保存并关闭 Word 文档，再运行包内 `install-vba.vbs`，按提示安装到 Normal 模板。共 7 个 VBA 组件、8 个物理文件，包含配套的 `.frm/.frx`。安装器会校验面板组件必须是 UserForm（type=3）；若旧版 Word 将 `.frm` 错导成普通模块，会自动用设计器重建面板并注入事件代码。若提示无法访问 VBA 项目，按提示核对 Word 信任设置；不要直接跳过导入错误。
 3. **导出字典**：在 Word 打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel`，点击“手动导出字典”，确认状态提示；需要自动导出时勾选“保存时自动导出”。首次保存或另存为后，在最终目录再次导出并确认对应图纸。
 4. **安装 CAD 插件**：运行所选包的 CAD 安装入口，见下方部署包表。打开目标 DWG，用 `BZ` 打开面板。
 5. **标注与检查**：单击选择条目，双击开始标注；也可用 `BZM`。F2/右键编辑条目，`BZC` 检查漏标，`BZS` 选择标注后用 `BZA` 对齐。
@@ -102,6 +102,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 已知限制与排查
 
+- **Word 2010 真机仍需验收**：安装器已覆盖“导入异常、组件类型错误或控件缺失”三类面板失败路径，会用 `VBComponents.Add(3)` 和 `Designer.Controls.Add` 重建 `PatentDictPanel`；安装前把原 `Normal.dotm` 复制到临时目录，保存失败时自动恢复。本机当前只在隔离的 Word 2024 临时文档中验证了这条兼容路径，不能据此宣称 Word 2010 或 Office 位数均已通过。
 - **保存失败保护尚未贯通安装链路（2026-09-07 核对）**：根 `vba/clsSaveHook.cls` 在已有路径的普通保存中遇到导出失败会取消保存并提示；五套 `install-vba.vbs` 注入的事件代码仍未包含这段保护。因此，使用当前安装器后，**Word 保存成功不能证明字典导出成功**。重要修改后用面板手动导出并核对 CAD 字典；重复运行同一安装器不会修复这个差异。
 - 自动导出发生在 Word 完成保存之前。首次保存、另存为或取消另存为可能影响输出路径；当前没有 Word、字典与 DWG 的整体回滚保证。两端同时编辑同一字典的竞争情形仍需专门回归。
 - Word 导出失败时查看文档目录的 `autoexport-error.txt`；检查文档是否已有路径、DWG 匹配是否明确、目录是否可写以及字典/备份是否被占用。
@@ -340,7 +341,7 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 ### Quick start
 
 1. Choose `PatentMarker-<year>-deploy/` for your AutoCAD and extract the complete package into a writable, stable directory. Keep the DLL, scripts and entire `vba/` folder together.
-2. Save and close Word documents, then run `install-vba.vbs` to install into the Normal template. The package contains **7 VBA components in 8 files**, including the paired `.frm/.frx`.
+2. Save and close Word documents, then run `install-vba.vbs` to install into the Normal template. The package contains **7 VBA components in 8 files**, including the paired `.frm/.frx`. The installer verifies that the panel is a UserForm (type 3); if an older Word host imports `.frm` as a standard module, it rebuilds the form through the designer and injects the event code.
 3. Open and save the Word document. Use Alt+F8 → `ShowPatentDictPanel`, click manual export and check the status. Enable “Auto-export on save” if desired. After a first save or Save As, export again from the final location.
 4. Run the matching CAD installer below. Open the target DWG and run `BZ`.
 5. Single-click selects; double-click or `BZM` starts marking. F2/right-click edits entries, `BZC` checks missing annotations, and `BZS` followed by `BZA` selects and aligns annotations.
@@ -349,6 +350,7 @@ Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README
 
 ### Known limitations and diagnosis
 
+- **Word 2010 still needs real-host acceptance**: the installer now handles import errors, a wrong component type, and missing panel controls by rebuilding `PatentDictPanel` through `VBComponents.Add(3)` and `Designer.Controls.Add`. It copies the original `Normal.dotm` to a temporary backup before changing VBA and restores it after a save failure. The fallback path is currently validated only in an isolated Word 2024 temporary document, so this is not a claim that Word 2010 or both Office bitnesses have passed.
 - **Save-failure protection differs after installation (code checked 2026-09-07).** The source `vba/clsSaveHook.cls` cancels an ordinary save with an existing path when export fails. All five installers still inject an older event handler without that protection. A successful Word save therefore does not prove the dictionary was exported. After important edits, use manual export and check the CAD dictionary; rerunning the same installer does not fix this difference.
 - Auto-export runs before Word finishes saving. First saves, Save As and cancelled Save As can affect the output path. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
 - For export failures, check `autoexport-error.txt`, the document path, DWG name matching, write access and file locks.
