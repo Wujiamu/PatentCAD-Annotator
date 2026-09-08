@@ -164,6 +164,25 @@ namespace PatentMarker.Tests
         }
 
         [Fact]
+        public void Write_NewFileDefaultsToHidden()
+        {
+            string path = Path.Combine(_tempDir, "default-hidden.dict.json");
+            Assert.True(DictWriter.Write(path, MakeModel(), out string error), error);
+            Assert.False(DictFileVisibility.IsVisible(path));
+        }
+
+        [Fact]
+        public void Write_PreservesVisibleManualEditChoice()
+        {
+            string path = Path.Combine(_tempDir, "visible.dict.json");
+            File.WriteAllText(path, "{}", new UTF8Encoding(false));
+            Assert.True(DictFileVisibility.TrySetVisible(path, true, out string visibilityError), visibilityError);
+
+            Assert.True(DictWriter.Write(path, MakeModel(), out string error), error);
+            Assert.True(DictFileVisibility.IsVisible(path));
+        }
+
+        [Fact]
         public void Write_MissingDirectory_ReturnsFalse()
         {
             string path = Path.Combine(_tempDir, "no", "such", "dir.dict.json");

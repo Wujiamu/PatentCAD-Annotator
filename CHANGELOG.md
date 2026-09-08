@@ -8,6 +8,15 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ***
 
+## [Unreleased] - 1.0.3 candidate (2026-09-08)
+
+### Added
+
+- CAD 的字典面板现在可以用“显示 JSON/隐藏 JSON”切换当前 `.dict.json` 的 Explorer 可见性；Word 面板提供对应的手动编辑开关。切换只改变 Hidden/System 文件属性，不改变 JSON 内容。
+- Word 与五个 CAD 版本的字典写回会保留用户选择的可见状态，新建字典仍默认隐藏；增加了 2025 版属性往返和写回保留测试。
+
+***
+
 ## \[Unreleased] - 1.0.2 candidate (2026-09-05)
 
 **修复参数化大括号越过端点轴线、呈反向/W 形的问题。**

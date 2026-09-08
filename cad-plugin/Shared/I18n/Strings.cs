@@ -507,6 +507,16 @@ namespace PatentMarker.I18n
             get { return En ? "Open" : "打开"; }
         }
 
+        public static string Palette_ShowJson
+        {
+            get { return En ? "Show JSON" : "显示 JSON"; }
+        }
+
+        public static string Palette_HideJson
+        {
+            get { return En ? "Hide JSON" : "隐藏 JSON"; }
+        }
+
         public static string Palette_Conflicts
         {
             get { return En ? "Conflicts" : "冲突"; }
@@ -989,6 +999,21 @@ namespace PatentMarker.I18n
         public static string Status_OpenFailed
         {
             get { return En ? "Open failed: {0}" : "打开失败: {0}"; }
+        }
+
+        public static string Status_JsonShown
+        {
+            get { return En ? "JSON is visible for manual editing." : "JSON 已显示，可手动编辑。"; }
+        }
+
+        public static string Status_JsonHidden
+        {
+            get { return En ? "JSON is hidden." : "JSON 已隐藏。"; }
+        }
+
+        public static string Status_JsonVisibilityFailed
+        {
+            get { return En ? "Changing JSON visibility failed: {0}" : "修改 JSON 可见性失败: {0}"; }
         }
 
         /// <summary>0=deleted, 1=skipped | 已删除 N 条引线（跳过 M）。</summary>

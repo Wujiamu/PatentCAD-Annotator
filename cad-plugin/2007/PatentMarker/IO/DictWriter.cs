@@ -362,6 +362,8 @@ namespace PatentMarker.IO
                 }
 
                 string tmp = path + ".tmp";
+                // Keep the user's explicit visibility choice across atomic rewrites.
+                bool keepVisible = File.Exists(path) && DictFileVisibility.IsVisible(path);
                 // 不输出 BOM（与 VBA ADODB.Stream 输出一致）
                 File.WriteAllText(tmp, json, new UTF8Encoding(false));
                 // v5.2：清除目标文件的隐藏/系统属性，否则 File.Replace 覆盖隐藏文件失败
@@ -371,9 +373,12 @@ namespace PatentMarker.IO
                     File.Replace(tmp, path, null);
                 else
                     File.Move(tmp, path);
-                // v5.2：字典文件保持隐藏+系统属性（资源管理器默认不可见，与 Word 端导出一致）
-                try { File.SetAttributes(path, FileAttributes.Hidden | FileAttributes.System); }
-                catch { }
+                string visibilityError;
+                if (!DictFileVisibility.TrySetVisible(path, keepVisible, out visibilityError))
+                {
+                    error = "字典可见性恢复失败: " + visibilityError;
+                    return false;
+                }
                 return true;
             }
             catch (Exception ex)

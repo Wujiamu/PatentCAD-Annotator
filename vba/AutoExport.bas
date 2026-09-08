@@ -52,6 +52,57 @@ Public Function ExportDictManual(Optional ByVal targetDwgPath As String = "", Op
     ExportDictManual = ExportDictCore(doc, True, targetDwgPath)
 End Function
 
+' Return the dictionary path selected for the current Word document.
+Public Function GetCurrentDictPath(Optional ByVal doc As Document) As String
+    On Error GoTo errHandler
+    If doc Is Nothing Then Set doc = ActiveDocument
+    GetCurrentDictPath = GetOutputPath(doc, False, "")
+    Exit Function
+errHandler:
+    GetCurrentDictPath = ""
+End Function
+
+' The visibility switch is stored in the Windows file attributes.  It does
+' not change JSON content or the Word/CAD synchronization data.
+Public Function IsCurrentDictVisible(Optional ByVal doc As Document) As Boolean
+    On Error GoTo errHandler
+    Dim path As String
+    Dim fso As Object
+    If doc Is Nothing Then Set doc = ActiveDocument
+    path = GetCurrentDictPath(doc)
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If path = "" Or Not fso.FileExists(path) Then Exit Function
+    IsCurrentDictVisible = ((GetAttr(path) And (vbHidden Or vbSystem)) = 0)
+    Exit Function
+errHandler:
+    IsCurrentDictVisible = False
+End Function
+
+' Show or hide the existing dictionary without exporting it.
+Public Function SetCurrentDictVisibility(ByVal visible As Boolean, Optional ByVal doc As Document) As Boolean
+    On Error GoTo errHandler
+    Dim path As String
+    Dim fso As Object
+    Dim attrs As Long
+    If doc Is Nothing Then Set doc = ActiveDocument
+    path = GetCurrentDictPath(doc)
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If path = "" Or Not fso.FileExists(path) Then Exit Function
+
+    attrs = GetAttr(path)
+    If visible Then
+        attrs = attrs And Not (vbHidden Or vbSystem)
+    Else
+        attrs = attrs Or vbHidden Or vbSystem
+    End If
+    SetAttr path, attrs
+    SetCurrentDictVisibility = True
+    Exit Function
+errHandler:
+    SetCurrentDictVisibility = False
+End Function
+
+
 Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection As Boolean, ByVal targetDwgPath As String) As Boolean
     On Error GoTo errHandler
     ExportDictCore = False
@@ -65,6 +116,9 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     outPath = GetOutputPath(doc, allowDwgSelection, targetDwgPath)
     If outPath = "" Then Exit Function
 
+    Dim outputWasVisible As Boolean
+    outputWasVisible = IsPathVisible(outPath)
+
     Dim timestamp As String
     timestamp = Format(Now, "yyyy-mm-ddTHH:nn:ss")
 
@@ -74,9 +128,19 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     Dim json As String
     json = JsonWriter.Serialize(root)
 
-    ' v4.0：导出前备份被 CAD 端修改过的旧字典，防止 Word 静默覆盖
+    ' v4.0：导出前备份被 CAD 端修改过的旧字典，防止 Word 静默覆盖。
+    ' 可见 JSON 若确实被手工改过，也走同一份备份/裁决流程。
     Dim backupFailure As String
-    If Not BackupIfCadModified(outPath, backupFailure) Then
+    Dim manualEditFailure As String
+    Dim manualEditDetected As Boolean
+    manualEditDetected = False
+    If outputWasVisible Then
+        manualEditDetected = IsVisibleDictContentChanged(outPath, json, manualEditFailure)
+        If manualEditFailure <> "" Then
+            Err.Raise vbObjectError + 514, "AutoExport.VisibleDictRead", manualEditFailure
+        End If
+    End If
+    If Not BackupIfCadModified(outPath, backupFailure, manualEditDetected) Then
         Err.Raise vbObjectError + 510, "AutoExport.BackupIfCadModified", backupFailure
     End If
 
@@ -98,9 +162,13 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
         Err.Raise vbObjectError + 513, "AutoExport.JsonWriter", "Dictionary write failed"
     End If
 
-    ' v5.2: keep the dict file invisible in Windows Explorer (Hidden + System attributes)
+    ' Preserve an explicitly visible dictionary; new exports remain hidden.
     On Error Resume Next
-    SetAttr outPath, vbHidden Or vbSystem
+    If outputWasVisible Then
+        SetAttr outPath, vbNormal
+    Else
+        SetAttr outPath, vbHidden Or vbSystem
+    End If
     On Error GoTo errHandler
 
     ' v5.2: after a DWG appeared, the export target switched from the Word base
@@ -128,6 +196,16 @@ errHandler:
     ExportDictCore = False
 End Function
 
+Private Function IsPathVisible(ByVal path As String) As Boolean
+    On Error GoTo errHandler
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If path = "" Or Not fso.FileExists(path) Then Exit Function
+    IsPathVisible = ((GetAttr(path) And (vbHidden Or vbSystem)) = 0)
+    Exit Function
+errHandler:
+    IsPathVisible = False
+End Function
 ' ======================================================================
 ' Resolve the DWG target. Manual export selects among multiple DWGs;
 ' automatic export only reuses a selection already made for this document.
@@ -386,7 +464,52 @@ End Function
 '       CAD 端 DictConflict.FindWordBackup 依赖此命名约定做冲突检测。
 ' Backup failures are returned to ExportDict so CAD changes are never silently overwritten.
 ' ======================================================================
-Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As String) As Boolean
+Private Function IsVisibleDictContentChanged(ByVal dictPath As String, ByVal newContent As String, ByRef failure As String) As Boolean
+    On Error GoTo errHandler
+    failure = ""
+    IsVisibleDictContentChanged = False
+
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FileExists(dictPath) Then Exit Function
+
+    Dim currentContent As String
+    currentContent = ReadUtf8File(dictPath, failure)
+    If failure <> "" Then
+        failure = "Visible dictionary read failed: " & failure
+        Exit Function
+    End If
+
+    IsVisibleDictContentChanged = _
+        (NormalizeJsonForExportCompare(currentContent) <> NormalizeJsonForExportCompare(newContent))
+    Exit Function
+
+errHandler:
+    failure = Err.Description & " (" & Err.Number & ")"
+    IsVisibleDictContentChanged = False
+End Function
+
+Private Function NormalizeJsonForExportCompare(ByVal content As String) As String
+    Dim marker As String
+    Dim valueStart As Long
+    Dim valueEnd As Long
+    marker = Chr(34) & "extracted_at" & Chr(34) & ": " & Chr(34)
+
+    content = Replace(content, vbCrLf, Chr(10))
+    content = Replace(content, vbCr, Chr(10))
+
+    valueStart = InStr(1, content, marker, vbBinaryCompare)
+    If valueStart > 0 Then
+        valueStart = valueStart + Len(marker)
+        valueEnd = InStr(valueStart, content, """", vbBinaryCompare)
+        If valueEnd > valueStart Then
+            content = Left(content, valueStart - 1) & "<timestamp>" & Mid(content, valueEnd)
+        End If
+    End If
+
+    NormalizeJsonForExportCompare = Trim$(content)
+End Function
+Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As String, Optional ByVal forceBackup As Boolean = False) As Boolean
     On Error GoTo errHandler
     BackupIfCadModified = True
     failure = ""
@@ -403,7 +526,7 @@ Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As 
         BackupIfCadModified = False
         Exit Function
     End If
-    If InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Function
+    If Not forceBackup And InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Function
 
     Dim bakDir As String
     bakDir = fso.GetParentFolderName(dictPath)

@@ -82,4 +82,55 @@ namespace PatentMarker.IO
                 _current.MarginToFrame = config.Align.MarginToFrame;
         }
     }
+
+    /// <summary>
+    /// Controls the Explorer visibility of a dictionary file without changing
+    /// its JSON content.  The v5.2 default remains Hidden + System, while the
+    /// palette can opt a specific existing dictionary into manual editing.
+    /// </summary>
+    public static class DictFileVisibility
+    {
+        private const FileAttributes HiddenSystem = FileAttributes.Hidden | FileAttributes.System;
+
+        public static bool IsVisible(string path)
+        {
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+                return false;
+
+            try
+            {
+                return (File.GetAttributes(path) & HiddenSystem) == 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public static bool TrySetVisible(string path, bool visible, out string error)
+        {
+            error = "";
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                error = "字典文件不存在: " + (path ?? "");
+                return false;
+            }
+
+            try
+            {
+                FileAttributes attributes = File.GetAttributes(path);
+                if (visible)
+                    attributes &= ~HiddenSystem;
+                else
+                    attributes |= HiddenSystem;
+                File.SetAttributes(path, attributes);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.GetType().Name + ": " + ex.Message;
+                return false;
+            }
+        }
+    }
 }

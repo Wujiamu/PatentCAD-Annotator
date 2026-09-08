@@ -19,6 +19,7 @@ namespace PatentMarker.Palette
         private TextBox _txtSearch;
         private Button _btnReload;
         private Button _btnOpen;
+        private Button _btnVisibility;
         private Button _btnPaste;      // v4.0：粘贴识别
         private Button _btnAddEntry;   // v4.0：新增条目
         private Button _btnArrow;
@@ -84,6 +85,7 @@ namespace PatentMarker.Palette
                     return;
                 }
                 UpdateConflictState();
+                UpdateVisibilityButtonText();
                 if (!_workflow.IsFileChanged()) return;
                 var dict = _workflow.LoadCurrent();
                 if (dict != null)
@@ -255,6 +257,11 @@ namespace PatentMarker.Palette
             _btnOpen.AutoSize = true;
             _btnOpen.Margin = new Padding(0, 0, 4, 2);
 
+            _btnVisibility = new Button();
+            _btnVisibility.AutoSize = true;
+            _btnVisibility.Margin = new Padding(0, 0, 4, 2);
+            UpdateVisibilityButtonText();
+
             // v4.0：粘贴识别入口 | Paste-recognize entry
             _btnPaste = new Button();
             _btnPaste.Text = Strings.Palette_PasteRecognize;
@@ -298,11 +305,12 @@ namespace PatentMarker.Palette
             _btnLanguage.Click += new EventHandler(BtnLanguage_Click);
 
             btnPanel.Controls.AddRange(new Control[] {
-                _btnReload, _btnOpen, _btnPaste, _btnAddEntry, _btnCompare,
+                _btnReload, _btnOpen, _btnVisibility, _btnPaste, _btnAddEntry, _btnCompare,
                 _btnCheck, _btnAlign, _btnArbitrate, _btnLanguage
             });
             _btnReload.Click += new EventHandler(BtnReload_Click);
             _btnOpen.Click += new EventHandler(BtnOpen_Click);
+            _btnVisibility.Click += new EventHandler(BtnVisibility_Click);
             _btnPaste.Click += new EventHandler(BtnPaste_Click);
             _btnAddEntry.Click += new EventHandler(BtnAddEntry_Click);
             _btnCompare.Click += new EventHandler(BtnCompare_Click);
@@ -377,6 +385,7 @@ namespace PatentMarker.Palette
                 _lblStatus.Text = Strings.Status_Ready;
             if (_btnReload != null) _btnReload.Text = Strings.Palette_Reload;
             if (_btnOpen != null) _btnOpen.Text = Strings.Palette_Open;
+            UpdateVisibilityButtonText();
             if (_btnPaste != null) _btnPaste.Text = Strings.Palette_PasteRecognize;
             if (_btnAddEntry != null) _btnAddEntry.Text = Strings.Palette_AddEntry;
             if (_btnCompare != null) _btnCompare.Text = Strings.Palette_Compare;
@@ -443,6 +452,7 @@ namespace PatentMarker.Palette
             if (_currentDiff == null) _compareMode = false;
             _view.RenderDictionary(dict, _session, _compareMode);
             UpdateConflictState();
+            UpdateVisibilityButtonText();
         }
 
         public void ApplyRuntimeSettings()
@@ -466,6 +476,7 @@ namespace PatentMarker.Palette
             _session.Clear();
             _view.ShowNoDictionary();
             UpdateConflictState();
+            UpdateVisibilityButtonText();
         }
 
         // ===== 事件 =====
@@ -897,6 +908,48 @@ namespace PatentMarker.Palette
             catch (System.Exception ex)
             {
                 _lblStatus.Text = string.Format(Strings.Status_OpenFailed, ex.Message);
+            }
+        }
+
+        private void UpdateVisibilityButtonText()
+        {
+            if (_btnVisibility == null) return;
+
+            string dictPath = _workflow.ResolveDictPath();
+            bool hasFile = dictPath != null && System.IO.File.Exists(dictPath);
+            _btnVisibility.Enabled = hasFile;
+            _btnVisibility.Text = hasFile && _workflow.IsDictVisible(dictPath)
+                ? Strings.Palette_HideJson
+                : Strings.Palette_ShowJson;
+        }
+
+        private void BtnVisibility_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string dictPath = _workflow.ResolveDictPath();
+                if (dictPath == null || !System.IO.File.Exists(dictPath))
+                {
+                    _lblStatus.Text = Strings.Status_NoDictFile;
+                    UpdateVisibilityButtonText();
+                    return;
+                }
+
+                bool makeVisible = !_workflow.IsDictVisible(dictPath);
+                string error;
+                if (!_workflow.TrySetDictVisible(dictPath, makeVisible, out error))
+                {
+                    _lblStatus.Text = string.Format(Strings.Status_JsonVisibilityFailed, error);
+                    return;
+                }
+
+                _lblStatus.Text = makeVisible ? Strings.Status_JsonShown : Strings.Status_JsonHidden;
+                UpdateVisibilityButtonText();
+            }
+            catch (System.Exception ex)
+            {
+                _lblStatus.Text = string.Format(Strings.Status_JsonVisibilityFailed, ex.Message);
+                PatentMarkerApp.RawLog("BtnVisibility error: " + ex.Message);
             }
         }
 

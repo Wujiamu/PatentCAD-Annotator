@@ -40,6 +40,16 @@ namespace PatentMarker.Palette
             return path != null && File.Exists(path) ? path : DictLoader.ResolveDictPath();
         }
 
+        public bool IsDictVisible(string path)
+        {
+            return DictFileVisibility.IsVisible(path);
+        }
+
+        public bool TrySetDictVisible(string path, bool visible, out string error)
+        {
+            return DictFileVisibility.TrySetVisible(path, visible, out error);
+        }
+
         public bool IsPendingConflict(DictModel current, string dictPath)
         {
             return DictConflict.IsPendingConflict(current, dictPath);

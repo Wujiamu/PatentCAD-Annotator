@@ -4,7 +4,7 @@
 
 **AutoCAD patent drawing annotation plugin** — Extract reference numerals from Word into a shared dictionary, annotate drawings, and review changes in CAD.
 
-当前工作区：**1.0.2 candidate（待发布 / unreleased）**。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
+当前工作区：**1.0.3 candidate（待发布 / unreleased）**。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ---
 
@@ -37,7 +37,7 @@ PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 
 
 CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `config.DefaultDictPath`。遇到“Word 已导出但 CAD 没更新”，先核对两端实际路径。
 
-`.dict.json` 与冲突备份默认具有“隐藏+系统”属性。交接项目时确认字典随文件夹一起复制；仅发送 Word 或 DWG 文件不会携带字典。需要手动查看时，在资源管理器中显示隐藏文件并取消隐藏受保护的操作系统文件，操作后可恢复显示设置。
+`.dict.json` 与冲突备份默认具有“隐藏+系统”属性。交接项目时确认字典随文件夹一起复制；仅发送 Word 或 DWG 文件不会携带字典。需要手动查看时，在 CAD 字典面板点击“显示 JSON”，或在 Word 面板勾选“显示 JSON（允许手动编辑）”。这个开关只改变文件属性，不改 JSON 内容；再次写回时会保留可见状态。可见 JSON 的内容如果在 Word 覆盖前确实发生变化，会先生成现有 `.word-*.bak` 备份，再由 CAD 面板提供冲突裁决。编辑后回到 CAD 面板点击“重载”检查结果，非法 JSON 会保留当前有效状态并记录加载失败。也可以在资源管理器中显示隐藏文件并取消隐藏受保护的操作系统文件，操作后可恢复显示设置。
 
 ### 当前标注功能
 
@@ -139,13 +139,13 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 验证范围与开发命令
 
-以下为 [开发记录](docs/development-log.md) 与 [维护记录](docs/maintainability-repair-plan.md) 中截至 2026-09-05 的历史证据，**不是本次 README 修改重新执行的测试结果**：
+以下汇总 [开发记录](docs/development-log.md) 与 [维护记录](docs/maintainability-repair-plan.md) 中的证据；本轮还重新执行了结构/静态检查、版本同步、2025 单测、四版模拟宿主和 Word COM 面板回归：
 
 | 层级 | 已有记录 | 不能据此推断 |
 |---|---|---|
 | 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
-| 自动化测试 | 2025 单测 117/117；2007/2010/2013/2015 契约模拟各 33/33 | 真实宿主 API、面板交互或 Word 安装结果已通过 |
-| Word COM | 8 份脱敏语料与 VBA 基线对比；UserForm 导入、导出开关、路径映射及源码保存失败处理 | 安装器注入代码等同源码；所有旧 Word、位数、Save As 分支已覆盖 |
+| 自动化测试 | 2025 单测 120/120；2007/2010/2013/2015 契约模拟各 33/33 | 真实宿主 API、面板交互或 Word 安装结果已通过 |
+| Word COM | 8 份脱敏语料与 VBA 基线对比；UserForm 导入、导出开关、路径映射、JSON 可见性和可见文件手工修改备份回归 | 安装器注入代码等同源码；所有旧 Word、位数、Save As 分支已覆盖 |
 | AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
 
 CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测和四版 Simulation。Autodesk SDK 不入库，因此 CI 不做五版真实编译，也不运行 Word 或 AutoCAD GUI。
@@ -248,7 +248,7 @@ PatentCAD-Annotator/
 
 ### 版本历史
 
-当前工作区正在准备 **1.0.2（待发布）**。变更记录见 [CHANGELOG.md](CHANGELOG.md)；完整开发归档见 [docs/development-log.md](docs/development-log.md)。以下为 1.0.0 发布前的里程碑时间线（仅作演进参考，不再以版本号对外呈现）。
+当前工作区正在准备 **1.0.3（待发布）**。变更记录见 [CHANGELOG.md](CHANGELOG.md)；完整开发归档见 [docs/development-log.md](docs/development-log.md)。以下为 1.0.0 发布前的里程碑时间线（仅作演进参考，不再以版本号对外呈现）。
 
 | 里程碑 | 日期 | 主要变更 |
 |--------|------|----------|
@@ -289,7 +289,7 @@ Word and CAD exchange files; normal use does not require a live COM connection o
 
 Word writes beside the document: no DWG means the Word base name; one DWG means that DWG base name; with multiple DWGs, manual export lists the files and requires an explicit target selection. The dictionary uses the selected DWG base name, and automatic save reuses that selection for the current document; before a selection, export is rejected with an `autoexport-error.txt` diagnostic when writable. CAD first reads the dictionary beside the current DWG with the same base name, then an existing `config.DefaultDictPath`.
 
-Dictionaries and conflict backups are Hidden+System files. Include them when sharing a project folder; sending only the Word or DWG file does not include the dictionary. To inspect them in Explorer, show hidden files and temporarily disable hiding protected operating system files.
+Dictionaries and conflict backups default to Hidden+System attributes. The CAD palette offers **Show JSON / Hide JSON**, and the Word panel offers **Show JSON (allow manual editing)**; the switch changes file attributes only, and subsequent writes preserve the visible state. If a visible JSON file was manually changed, Word backs it up before overwriting and the existing CAD conflict decision remains available. Include dictionaries when sharing a project folder; sending only the Word or DWG file does not include them. After editing, reload the dictionary in CAD and check the result. To inspect a hidden file in Explorer, show hidden files and temporarily disable hiding protected operating system files.
 
 ### Current annotation features
 
@@ -387,13 +387,13 @@ All five installers and uninstallers merge HKCU/HKLM profile lists, process ever
 
 ### Verification and development
 
-The following summarizes historical records through **2026-09-05** in [the development log](docs/development-log.md) and [maintenance notes](docs/maintainability-repair-plan.md). These checks were **not rerun for this README edit**.
+The following summarizes evidence in [the development log](docs/development-log.md) and [maintenance notes](docs/maintainability-repair-plan.md); this change also reran the structure/static checks, version synchronization, the 2025 suite, four simulated host suites and the Word COM palette regression.
 
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
-| Automated tests | 2025: 117/117; 2007/2010/2013/2015 simulations: 33/33 each | Real host APIs, GUI and installed Word code |
-| Word COM | Eight corpus cases, form import, export toggle, mapping and source save-failure checks | Installer-injected code, older Word/bitness and all Save As branches |
+| Automated tests | 2025: 120/120; 2007/2010/2013/2015 simulations: 33/33 each | Real host APIs, GUI and installed Word code |
+| Word COM | Eight corpus cases, form import, export toggle, mapping, JSON visibility and visible-file manual-edit backup checks | Installer-injected code, older Word/bitness and all Save As branches |
 | AutoCAD 2026 | 2025 DLL command checks for marking, checking, alignment, chain validation and persistence; 1.0.2 marking/brace smoke checks | Interactive palette/dialogs, legacy drawings and older AutoCAD hosts |
 
 [CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite and four simulated host suites. It does not compile the five production DLLs without the locally supplied Autodesk SDK, or run Word/AutoCAD GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
@@ -408,7 +408,7 @@ The source tree uses linked `cad-plugin/Shared/` files, version-specific runtime
 
 ### Version
 
-The workspace is preparing **1.0.2 (unreleased)**. See [CHANGELOG.md](CHANGELOG.md) for release notes and [docs/development-log.md](docs/development-log.md) for the full development archive. The table below is the pre-1.0.0 milestone timeline (kept for reference only; internal iteration numbers are no longer exposed as public versions).
+The workspace is preparing **1.0.3 (unreleased)**. See [CHANGELOG.md](CHANGELOG.md) for release notes and [docs/development-log.md](docs/development-log.md) for the full development archive. The table below is the pre-1.0.0 milestone timeline (kept for reference only; internal iteration numbers are no longer exposed as public versions).
 
 | Milestone | Date | Key changes |
 |-----------|------|-------------|
