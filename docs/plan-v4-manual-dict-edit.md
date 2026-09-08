@@ -95,7 +95,7 @@
 | 9 | 2025 编译 + 本机 AutoCAD 2026 全流程实测 | 2025 | 🟡 命令级完成，GUI 待验 | 五版 DLL 已编译；AutoCAD 2026 Core Console 已验证 PATMARK/PATDOCTOR/PATBRACE 命令级流程；面板鼠标、对话框和冲突裁决仍需交互式 GUI |
 | 10 | 平移 2013/2015（Newtonsoft + MLeader）并编译验证 | 2013/2015 | ✅ 编译与契约完成 | 生产 MLeader 命令直接进入运行时契约模拟，各 33/33；真实旧版 AutoCAD 宿主仍待对应环境 |
 | 11 | 平移 2010/2007（无 LINQ、Leader+MText、SimpleJson 序列化器）并编译验证 | 2010/2007 | ✅ 编译与契约完成 | 2007/2010 契约模拟各 33/33；2007 真宿主加载与交互仍待对应环境 |
-| 12 | VBA `AutoExport.bas` 备份逻辑 + 同步 5 套部署包 | VBA | ✅ 完成 | 动态 DWG 映射、歧义拒绝、失败保存保护、原子 UTF-8 替换；本机 Word COM `verify-vba-export.vbs` 通过，5 套 VBA 同步检查通过 |
+| 12 | VBA `AutoExport.bas` 备份逻辑 + 同步 5 套部署包 | VBA | ✅ 完成 | 动态枚举 DWG；多 DWG 由手动导出明确选择目标并按 DWG 主名生成字典，自动保存复用文档选择；失败保存保护、原子 UTF-8 替换；本机 Word COM `verify-vba-export.vbs` 通过，5 套 VBA 同步检查通过 |
 | 13 | 更新 5 套部署包 DLL + 安装脚本核验 | 部署包 | ✅ 完成 | 五版真实编译、2013/2015 ILRepack、发行暂存和逐版 DLL/VBA 内容校验通过；五版安装脚本合并 HKCU/HKLM 并枚举全部支持范围配置，2025 覆盖 R25.0/R25.1/R26.0 并存配置；旧版宿主安装回归仍待对应环境 |
 | 14 | `docs/development-log.md` v4.0 条目 + README 同步 | 文档 | ✅ 完成 | 根 README、五套部署说明、CHANGELOG、开发记录与维护计划已同步到 1.0.2 candidate |
 

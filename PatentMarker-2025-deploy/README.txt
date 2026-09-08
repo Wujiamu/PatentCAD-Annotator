@@ -33,9 +33,9 @@ PatentMarker 2025 部署说明
 Word 端：
   将 vba/ 下的所有文件导入 Word Normal 模板（包括 PatentDictPanel.frm 和 .frx）
   安装后运行宏 ShowPatentDictPanel 打开"专利标注字典工具"面板
-  导出规则：目录无 DWG 时使用 Word 文件名；有多个 DWG 时优先同名，兼容匹配必须唯一，
-    否则拒绝写入并记录 autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，
-    Save As 会先允许建立路径。
+  导出规则：目录无 DWG 时使用 Word 文件名；有多个 DWG 时点击“手动导出字典”选择目标，
+    按所选 DWG 主名生成字典。自动保存只复用当前文档已选目标，未选择时拒绝写入并记录
+    autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，Save As 会先允许建立路径。
 
 卸载：
   运行 uninstall-2025.ps1（PowerShell），清理注册表自动加载条目和生成的

@@ -152,9 +152,9 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
   Word (VBA, 在 Normal 模板):
     ShowPatentDictPanel  打开"专利标注字典工具"面板
     面板功能: "手动导出字典"按钮 + "保存时自动导出"开关
-    导出规则: 目录无 DWG 时使用 Word 文件名；有多个 DWG 时优先同名，兼容匹配必须唯一，
-      否则拒绝写入并记录 autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，
-      Save As 会先允许建立路径。
+     导出规则: 目录无 DWG 时使用 Word 文件名；有多个 DWG 时点击“手动导出字典”选择目标，
+       按所选 DWG 主名生成字典。自动保存只复用当前文档已选目标，未选择时拒绝写入并记录
+       autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，Save As 会先允许建立路径。
 
 
 【诊断】

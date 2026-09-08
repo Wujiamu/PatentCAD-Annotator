@@ -15,11 +15,11 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private Sub cmdExport_Click()
     ' 1.0.1：导出后立即在底部状态行反馈结果（此前点击后无任何提示）。
-    If AutoExport.ExportDict() Then
+    If AutoExport.ExportDictManual() Then
         lblStatus.Caption = "√ 已导出 " & Format(Now, "hh:nn:ss")
         lblStatus.ForeColor = RGB(0, 128, 0)
     Else
-        lblStatus.Caption = "× 导出失败（文档未保存？）"
+        lblStatus.Caption = "× 导出失败（请检查目标图纸或文档路径）"
         lblStatus.ForeColor = RGB(200, 0, 0)
     End If
 End Sub

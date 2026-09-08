@@ -42,8 +42,30 @@ If Not fso.FileExists(errorPath) Then Fail "ambiguous mapping error report missi
 ambiguousDoc.Close False
 Set ambiguousDoc = Nothing
 
-' An exact base-name match wins even when other DWGs are present.
-Dim exactDir, exactDoc, exactJson
+' Manual export can select a DWG by full path, and the selection is reused by auto-save.
+Dim manualDir, manualDoc, manualTarget, manualResult, manualJson, manualOtherJson
+manualDir = MakeDir("manual-selection")
+Touch fso.BuildPath(manualDir, "manual-alpha.dwg")
+Touch fso.BuildPath(manualDir, "manual-beta.dwg")
+Set manualDoc = OpenDoc(manualDir, "manual.docm")
+manualDoc.Activate
+manualTarget = fso.BuildPath(manualDir, "manual-beta.dwg")
+manualResult = word.Run("ExportHarness.ManualExportTo", manualTarget)
+If Not manualResult Then Fail "manual DWG selection export failed"
+manualJson = fso.BuildPath(manualDir, "manual-beta.dict.json")
+manualOtherJson = fso.BuildPath(manualDir, "manual-alpha.dict.json")
+If Not fso.FileExists(manualJson) Then Fail "selected-DWG dictionary missing"
+If fso.FileExists(manualOtherJson) Then Fail "unselected-DWG dictionary was written"
+word.Run "ExportHarness.EnableAutoExportForTest"
+manualDoc.Content.Text = MarkingText() & vbCr & "changed"
+manualDoc.Save
+If Not manualDoc.Saved Then Fail "automatic save did not reuse manual DWG selection"
+word.Run "ExportHarness.DisableAutoExportForTest"
+manualDoc.Close False
+Set manualDoc = Nothing
+
+' An exact base-name match does not bypass the manual-selection requirement.
+Dim exactDir, exactDoc, exactJson, exactErrorPath
 exactDir = MakeDir("exact")
 Touch fso.BuildPath(exactDir, "exact.dwg")
 Touch fso.BuildPath(exactDir, "exact-other.dwg")
@@ -51,7 +73,9 @@ Set exactDoc = OpenDoc(exactDir, "exact.docm")
 exactDoc.Activate
 word.Run "AutoExport.ExportDict"
 exactJson = fso.BuildPath(exactDir, "exact.dict.json")
-If Not fso.FileExists(exactJson) Then Fail "exact mapping output missing"
+If fso.FileExists(exactJson) Then Fail "exact-name mapping bypassed manual selection"
+exactErrorPath = fso.BuildPath(exactDir, "autoexport-error.txt")
+If Not fso.FileExists(exactErrorPath) Then Fail "exact-name mapping error report missing"
 exactDoc.Close False
 Set exactDoc = Nothing
 
@@ -113,7 +137,10 @@ Sub InstallHarness(ByVal doc)
         "End Sub" & vbCrLf & _
         "Public Sub DisableAutoExportForTest()" & vbCrLf & _
         "    AutoExport.IsAutoExportEnabled = False" & vbCrLf & _
-        "End Sub"
+        "End Sub" & vbCrLf & _
+        "Public Function ManualExportTo(ByVal targetPath As String) As Boolean" & vbCrLf & _
+        "    ManualExportTo = AutoExport.ExportDictManual(targetPath)" & vbCrLf & _
+        "End Function"
     component.CodeModule.AddFromString code
 End Sub
 

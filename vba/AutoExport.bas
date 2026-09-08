@@ -3,6 +3,7 @@ Option Explicit
 
 Private m_hook As clsSaveHook
 Private m_enabled As Boolean
+Private m_selectedDwgByDoc As Object
 
 ' 单一入口宏：打开专利标注字典工具面板（唯一出现在 Word 宏列表中的过程）
 Public Sub ShowPatentDictPanel()
@@ -43,8 +44,17 @@ End Sub
 ' 导出当前文档为 <主名>.dict.json
 '（Function：不显示在宏列表中，由保存钩子 clsSaveHook 与面板"手动导出"按钮调用）
 Public Function ExportDict(Optional ByVal doc As Document) As Boolean
+    ExportDict = ExportDictCore(doc, False, "")
+End Function
+
+' 手动导出入口：多 DWG 时弹出列表，targetDwgPath 仅供自动化/测试传入已选路径。
+Public Function ExportDictManual(Optional ByVal targetDwgPath As String = "", Optional ByVal doc As Document) As Boolean
+    ExportDictManual = ExportDictCore(doc, True, targetDwgPath)
+End Function
+
+Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection As Boolean, ByVal targetDwgPath As String) As Boolean
     On Error GoTo errHandler
-    ExportDict = False
+    ExportDictCore = False
 
     If doc Is Nothing Then Set doc = ActiveDocument
 
@@ -52,7 +62,7 @@ Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     srcName = doc.Name
 
     Dim outPath As String
-    outPath = GetOutputPath(doc)
+    outPath = GetOutputPath(doc, allowDwgSelection, targetDwgPath)
     If outPath = "" Then Exit Function
 
     Dim timestamp As String
@@ -98,7 +108,7 @@ Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     ' (it is hidden, so the user cannot see or delete it manually)
     CleanupOrphanWordDict doc, outPath
 
-    ExportDict = True
+    ExportDictCore = True
     Exit Function
 
 errHandler:
@@ -109,20 +119,20 @@ errHandler:
     On Error Resume Next
     Dim errPath As String
     Dim errorDir As String
-    errorDir = GetOutputDir(doc)
+    errorDir = ""
+    If Not doc Is Nothing Then errorDir = GetOutputDir(doc)
     If errorDir <> "" Then
         errPath = errorDir & "\autoexport-error.txt"
         JsonWriter.WriteToFile errPath, "ERROR: " & errorDescription & " (" & errorNumber & ")"
     End If
-    ExportDict = False
+    ExportDictCore = False
 End Function
 
 ' ======================================================================
-' Resolve the output dictionary in the Word document directory.
-' An exact DWG base name wins; a single compatibility match is accepted.
-' Ambiguous multi-DWG directories fail closed instead of guessing.
+' Resolve the DWG target. Manual export selects among multiple DWGs;
+' automatic export only reuses a selection already made for this document.
 ' ======================================================================
-Private Function GetOutputPath(ByVal doc As Document) As String
+Private Function GetOutputPath(ByVal doc As Document, ByVal allowDwgSelection As Boolean, ByVal targetDwgPath As String) As String
     Dim dir As String
     dir = GetOutputDir(doc)
     If dir = "" Then
@@ -132,7 +142,7 @@ Private Function GetOutputPath(ByVal doc As Document) As String
 
     Dim baseName As String
     Dim mappingFailure As String
-    baseName = FindDwgBaseName(dir, doc.Name, mappingFailure)
+    baseName = FindDwgBaseName(dir, doc.Name, GetDocumentKey(doc), allowDwgSelection, targetDwgPath, mappingFailure)
     If mappingFailure <> "" Then
         Err.Raise vbObjectError + 512, "AutoExport.GetOutputPath", mappingFailure
     End If
@@ -148,11 +158,7 @@ Private Function GetOutputPath(ByVal doc As Document) As String
     GetOutputPath = dir & "\" & baseName & ".dict.json"
 End Function
 
-' ======================================================================
-' Find the DWG base name safely. The function returns an empty value when
-' there is no DWG; failure is populated when multiple candidates are unsafe.
-' ======================================================================
-Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String, ByRef failure As String) As String
+Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As String, ByVal docKey As String, ByVal allowDwgSelection As Boolean, ByVal requestedDwgPath As String, ByRef failure As String) As String
     On Error GoTo errHandler
     failure = ""
 
@@ -167,73 +173,189 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     Dim folder As Object
     Set folder = fso.GetFolder(dir)
 
-    Dim dwgCount As Long: dwgCount = 0
+    Dim dwgCount As Long
+    dwgCount = 0
     Dim dwgNames() As String
+    Dim dwgPaths() As String
     ReDim dwgNames(0 To 0)
+    ReDim dwgPaths(0 To 0)
 
-    ' 收集所有 .dwg 文件
     Dim f As Object
     For Each f In folder.Files
         If LCase(fso.GetExtensionName(f.Name)) = "dwg" Then
             ReDim Preserve dwgNames(0 To dwgCount)
+            ReDim Preserve dwgPaths(0 To dwgCount)
             dwgNames(dwgCount) = f.Name
+            dwgPaths(dwgCount) = f.Path
             dwgCount = dwgCount + 1
         End If
     Next
 
     If dwgCount = 0 Then
-        FindDwgBaseName = ""
+        If requestedDwgPath <> "" Then
+            failure = "The selected DWG was not found; export was not written."
+        Else
+            FindDwgBaseName = ""
+        End If
         Exit Function
     End If
 
-    ' 只有一个 DWG，直接使用
+    Dim selectedPath As String
+    Dim selectedIndex As Long
+
     If dwgCount = 1 Then
-        FindDwgBaseName = RemoveExt(dwgNames(0))
+        If requestedDwgPath <> "" Then
+            selectedIndex = FindDwgPathIndex(dwgPaths, dwgCount, requestedDwgPath)
+            If selectedIndex < 0 Then
+                failure = "The selected DWG is not in the Word document folder; export was not written."
+                Exit Function
+            End If
+            selectedPath = dwgPaths(selectedIndex)
+        Else
+            selectedPath = dwgPaths(0)
+        End If
+        RememberDwgSelection docKey, selectedPath
+        FindDwgBaseName = RemoveExt(fso.GetFileName(selectedPath))
         Exit Function
     End If
 
-    ' 多个 DWG：与 Word 文档名匹配
-    Dim wordBase As String
-    wordBase = RemoveExt(wordDocName)
-
-    Dim i As Long
-    For i = 0 To dwgCount - 1
-        If StrComp(wordBase, RemoveExt(dwgNames(i)), vbTextCompare) = 0 Then
-            FindDwgBaseName = RemoveExt(dwgNames(i))
+    ' 手动导出：多个 DWG 时始终让用户选择，可覆盖自动匹配结果。
+    If allowDwgSelection Then
+        If requestedDwgPath <> "" Then
+            selectedIndex = FindDwgPathIndex(dwgPaths, dwgCount, requestedDwgPath)
+            If selectedIndex < 0 Then
+                failure = "The selected DWG is not in the Word document folder; export was not written."
+                Exit Function
+            End If
+            selectedPath = dwgPaths(selectedIndex)
+        ElseIf Not PromptForDwg(dwgNames, dwgPaths, dwgCount, selectedPath, failure) Then
             Exit Function
         End If
-    Next
-
-    Dim matchCount As Long
-    Dim matchedBase As String
-    matchCount = 0
-    For i = 0 To dwgCount - 1
-        Dim dwgBase As String
-        dwgBase = RemoveExt(dwgNames(i))
-        If InStr(1, LCase(wordBase), LCase(dwgBase), vbTextCompare) > 0 Or _
-           InStr(1, LCase(dwgBase), LCase(wordBase), vbTextCompare) > 0 Then
-            matchCount = matchCount + 1
-            matchedBase = dwgBase
-        End If
-    Next
-
-    If matchCount = 1 Then
-        FindDwgBaseName = matchedBase
+        RememberDwgSelection docKey, selectedPath
+        FindDwgBaseName = RemoveExt(fso.GetFileName(selectedPath))
         Exit Function
     End If
 
-    If matchCount > 1 Then
-        failure = "Multiple DWG files match the Word document name; export was not written."
-    Else
-        failure = "Multiple DWG files are present and no exact name match was found; export was not written."
+    ' 自动导出：优先沿用本次会话中手动选择的目标。
+    ' Automatic export may only reuse a selection made by Manual Export.
+    If GetRememberedDwgSelection(docKey, dir, selectedPath) Then
+        FindDwgBaseName = RemoveExt(fso.GetFileName(selectedPath))
+        Exit Function
     End If
-    Exit Function
 
+    failure = "Multiple DWG files are present. Use Manual Export to select a target DWG before automatic export; export was not written."
+    Exit Function
 errHandler:
     failure = "DWG discovery failed: " & Err.Description
     FindDwgBaseName = ""
 End Function
 
+Private Function FindDwgPathIndex(ByRef dwgPaths() As String, ByVal dwgCount As Long, ByVal requestedDwgPath As String) As Long
+    Dim i As Long
+    FindDwgPathIndex = -1
+    For i = 0 To dwgCount - 1
+        If StrComp(dwgPaths(i), requestedDwgPath, vbTextCompare) = 0 Then
+            FindDwgPathIndex = i
+            Exit Function
+        End If
+    Next
+End Function
+
+Private Function PromptForDwg(ByRef dwgNames() As String, ByRef dwgPaths() As String, ByVal dwgCount As Long, ByRef selectedPath As String, ByRef failure As String) As Boolean
+    Dim prompt As String
+    Dim answer As String
+    Dim choiceValue As Double
+    Dim choiceIndex As Long
+    Dim i As Long
+
+    prompt = "同一文件夹发现多个 DWG，请选择导出目标：" & vbCrLf & vbCrLf
+    For i = 0 To dwgCount - 1
+        prompt = prompt & CStr(i + 1) & ". " & dwgNames(i) & vbCrLf
+    Next
+    prompt = prompt & vbCrLf & "请输入编号，取消则不导出。"
+
+    answer = Trim$(InputBox(prompt, "选择目标 DWG", "1"))
+    If answer = "" Then
+        failure = "DWG selection was cancelled; export was not written."
+        PromptForDwg = False
+        Exit Function
+    End If
+    If Not IsNumeric(answer) Then
+        failure = "Invalid DWG selection; export was not written."
+        PromptForDwg = False
+        Exit Function
+    End If
+
+    choiceValue = CDbl(answer)
+    If choiceValue <> Fix(choiceValue) Then
+        failure = "Invalid DWG selection; export was not written."
+        PromptForDwg = False
+        Exit Function
+    End If
+    choiceIndex = CLng(choiceValue)
+    If choiceIndex < 1 Or choiceIndex > dwgCount Then
+        failure = "Invalid DWG selection; export was not written."
+        PromptForDwg = False
+        Exit Function
+    End If
+
+    selectedPath = dwgPaths(choiceIndex - 1)
+    PromptForDwg = True
+End Function
+
+Private Sub EnsureDwgSelectionStore()
+    If m_selectedDwgByDoc Is Nothing Then
+        Set m_selectedDwgByDoc = CreateObject("Scripting.Dictionary")
+        m_selectedDwgByDoc.CompareMode = vbTextCompare
+    End If
+End Sub
+
+Private Sub RememberDwgSelection(ByVal docKey As String, ByVal selectedPath As String)
+    If docKey = "" Or selectedPath = "" Then Exit Sub
+    EnsureDwgSelectionStore
+    m_selectedDwgByDoc(docKey) = selectedPath
+End Sub
+
+Private Function GetRememberedDwgSelection(ByVal docKey As String, ByVal dir As String, ByRef selectedPath As String) As Boolean
+    Dim fso As Object
+    selectedPath = ""
+    If docKey = "" Then Exit Function
+
+    EnsureDwgSelectionStore
+    If Not m_selectedDwgByDoc.Exists(docKey) Then Exit Function
+    selectedPath = CStr(m_selectedDwgByDoc(docKey))
+
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FileExists(selectedPath) Then
+        m_selectedDwgByDoc.Remove docKey
+        selectedPath = ""
+        Exit Function
+    End If
+    If StrComp(fso.GetParentFolderName(selectedPath), dir, vbTextCompare) <> 0 Then
+        m_selectedDwgByDoc.Remove docKey
+        selectedPath = ""
+        Exit Function
+    End If
+    If LCase(fso.GetExtensionName(selectedPath)) <> "dwg" Then
+        m_selectedDwgByDoc.Remove docKey
+        selectedPath = ""
+        Exit Function
+    End If
+
+    GetRememberedDwgSelection = True
+End Function
+
+Private Function GetDocumentKey(ByVal doc As Document) As String
+    On Error Resume Next
+    Dim key As String
+    key = doc.FullName
+    If Err.Number <> 0 Or key = "" Then
+        Err.Clear
+        key = doc.Name
+    End If
+    On Error GoTo 0
+    GetDocumentKey = key
+End Function
 Private Function RemoveExt(ByVal fileName As String) As String
     Dim dotPos As Long
     dotPos = InStrRev(fileName, ".")

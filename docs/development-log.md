@@ -10,6 +10,10 @@
 
 - **本轮验证（本机可执行范围）**：Word 2024 隔离临时文档中故意放入同名普通模块后调用 fallback，实际通过 `type=3`、名称和三个控件校验；正常 `.frm/.frx` 导入、面板探针及导出回归均通过；`vba-sync.ps1 -Check`、`build.ps1 -Structure`、`build.ps1 -Static` 通过。未在 Word 2010 真机或 Office 旧位数上宣称通过。
 
+**多 DWG 手动目标选择。** `AutoExport.ExportDictManual` 在同目录发现多个 DWG 时列出文件供用户选择，并按所选 DWG 主名生成字典；自动保存只复用当前文档已经选定的目标，未选择时不猜测、不写入。面板按钮已切换到手动入口，错误状态改为提示检查目标图纸或文档路径；根 `vba/` 已同步到 2007/2010/2013/2015/2025 五套部署包。
+
+- **验证**：Word 2024 COM 回归覆盖多 DWG 无选择拒绝、指定 `manual-beta.dwg` 后生成 `manual-beta.dict.json`、不生成未选 DWG 字典，以及后续自动保存复用该目标；单 DWG/无 DWG 与保存失败保护回归继续执行。Word 2010 真机仍待实际环境验收。
+
 **参数化矢量大括号几何复核与修复。** 本次以用户补充的真实 AutoCAD 截图重新开始分析，推翻了“当前源码正常、现场加载旧 DLL”的旧结论。
 
 - **截图与源码一一对应**：截图中端点轴线约为 `x=369`，直干约为 `x=179`，中部尖点约为 `x=820`；反向偏移与点击宽度之比约为 `(369-179)/(820-369)=0.421`，精确对应当前源码的 `stemOffset = -tipOffset * 0.42`。这说明截图展示的正是当前几何，不是历史固定点表或旧 DLL。
@@ -26,7 +30,7 @@
 - **本机可验证性补强（本轮后续）**：PATCHECK 结果改为按 AutoCAD `Document` 对象隔离，关闭文档时释放状态，未标注编号查询沿用 `NumberIdentity` 的大小写不敏感规则；Word 导出前的 CAD 备份读取、复制和清理失败会阻止覆盖并写入 `autoexport-error.txt`；新增 `sync-mleader-group.ps1` 以 2010 版为默认源自动同步 2010/2013/2015/2025 的七文件 MLeader 组；2025 回归测试增至 115 项。
 - **Word 首次导出与主机回归（本轮后续）**：修正首次导出时对不存在字典文件调用 `SetAttr` 的错误路径；正式 Word COM 回归通过 UserForm 导入、唯一公开宏、首次 UTF-8 导出、自动导出开关和控件标题检查；附图标记段落边界回归也通过。切换到非活动图纸期间若字典发生变化，重新激活时会清除过期 PATCHECK 高亮；PATCHECK 状态表增加同步保护。
 - **语料可复现性（本轮）**：新增 8 份脱敏 VBA/C# 对比语料和受跟踪的 `tools/generate-vba-corpus.vbs`；测试工程在干净检出时使用仓库 fixture，不再因缺少本机 Word 语料而静默跳过跨语言解析对比。权威预期已由本机真实 Word VBA 重新生成并通过 C# 对比。
-- **Word 导出映射与保存保护（本轮后续）**：`AutoExport.FindDwgBaseName` 改为动态枚举 DWG；先接受与 Word 文件同名的精确匹配，只有一个兼容匹配时才继续，多个匹配或多个 DWG 无法判断时失败并写入 `autoexport-error.txt`，避免把字典写到错误图纸。`clsSaveHook` 在已有路径的普通保存中遇到导出失败会取消保存，并在 Save As 尚未建立路径时保留 Save As 让用户先落盘。新增 `tools/verify-vba-export.vbs` 覆盖无 DWG 回退、歧义拒绝、精确匹配和保存取消；本机 Word COM 实测 `PASS`。
+- **Word 导出映射与保存保护（本轮后续）**：`AutoExport.FindDwgBaseName` 动态枚举 DWG；无 DWG/单 DWG 保持既有规则，多 DWG 改为由面板手动明确选择目标，按所选 DWG 主名写入字典，自动保存复用当前文档选择，未选择时失败并写入 `autoexport-error.txt`，避免把字典写到错误图纸。`clsSaveHook` 在已有路径的普通保存中遇到导出失败会取消保存，并在 Save As 尚未建立路径时保留 Save As 让用户先落盘。`tools/verify-vba-export.vbs` 覆盖无 DWG 回退、多 DWG 拒绝、手动目标选择/自动保存复用和保存取消；本机 Word COM 实测 `PASS`。
 - **写文件与并存版本安装（本轮后续）**：`JsonWriter.WriteToFile` 先在目标目录写临时 UTF-8 文件，再以 Unicode 同卷替换；替换失败会保留旧字典并向 `AutoExport` 传播错误。`generate-vba-corpus.vbs` 将输入路径规范化为绝对路径，干净检出命令不再依赖当前目录。2025 安装脚本不再遇到第一个注册表版本就停止，会枚举 R25.0/R25.1/R26.0 并为各版本用户配置注册自动加载；本机 Word COM 重新生成 8 份语料与跟踪基线 SHA256 一致。2025 回归测试为 117/117，五版重新编译和发行暂存均通过。
 - **大括号真宿主补测（本轮收尾）**：AutoCAD 2026 Core Console 从 2025 部署 DLL 执行 `PATBRACE`，输入 `(0,0)`、`(0,100)`、`(50,50)` 后用 `LIST` 读取实体；输出的 LWPOLYLINE 顶点范围为 `x=0..50、y=0..100`，证明修复后的几何在高版本真宿主中未跨越端点轴线。该批处理证据不替代交互式 GUI 目检，2007 真宿主和 `PATBRACEEDIT` 旧图形回归仍待对应环境。
 - **大括号尺寸编辑补测（本轮收尾）**：首次用 AutoCAD 2026 Core Console 回放 `PATBRACEEDIT` 尺寸模式时发现 `eDegenerateGeometry`；根因是 `PatBraceEntity.ReplaceGeometry` 先将 Polyline 顶点删到 0 个。现改为原位更新顶点并保持有效顶点列表，四版契约模拟各 `33/33`，重新编译 DLL 后 Core Console 从 100×50 改为 120×60 成功，`LIST` 端点为 `(0,0)`/`(0,120)`、尖点为 `(60,60)`；旧图形与交互式 GUI 目检仍待对应环境。
