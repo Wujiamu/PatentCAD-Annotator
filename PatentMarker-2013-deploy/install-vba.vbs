@@ -1,7 +1,7 @@
 ' PatentMarker VBA Module Installer (VBScript)
 '
 ' Function:
-'   - Import VBA modules (5 .bas + 1 UserForm + 1 class) into Word Normal.dotm global template
+'   - Import 5 standard modules and a class; build the UserForm in Word Normal.dotm
 '   - Available in all Word documents after install
 '   - Detailed log: install-vba.log
 '
@@ -159,8 +159,54 @@ Sub LogMsg(msg)
     output = output & msg & vbCrLf
 End Sub
 
+Sub CloseInstallWord()
+    On Error Resume Next
+    Dim n, closeDoc
+    If IsObject(wordApp) Then
+        wordApp.Run "AutoExport.ReleaseAutoExportForShutdown"
+        For n = wordApp.Documents.Count To 1 Step -1
+            Set closeDoc = wordApp.Documents.Item(n)
+            closeDoc.Close False
+            Set closeDoc = Nothing
+        Next
+        wordApp.Quit False
+    End If
+    Set closeDoc = Nothing
+    Set panelComp = Nothing
+    Set designer = Nothing
+    Set clsComp = Nothing
+    Set importedComp = Nothing
+    Set wordProcs = Nothing
+    Set wmiSvc = Nothing
+    Set vbProj = Nothing
+    Set doc = Nothing
+    Set wordApp = Nothing
+    On Error GoTo 0
+    WaitForWordProcessesToExit
+End Sub
+Sub WaitForWordProcessesToExit()
+    On Error Resume Next
+    Dim attempt, svc, processes, errNo
+    For attempt = 1 To 20
+        Set svc = Nothing
+        Set processes = Nothing
+        Err.Clear
+        Set svc = GetObject("winmgmts:\\.\root\cimv2")
+        If Err.Number = 0 Then Set processes = svc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
+        errNo = Err.Number
+        On Error GoTo 0
+        If errNo <> 0 Or processes Is Nothing Then Exit Sub
+        If processes.Count = 0 Then Exit Sub
+        WScript.Sleep 500
+        On Error Resume Next
+    Next
+    On Error GoTo 0
+End Sub
+
+
 Sub QuitWithMsg(msg)
     LogMsg msg
+    CloseInstallWord
     WScript.Echo L(output)
     logFile.Close
     WScript.Quit(1)
@@ -175,7 +221,7 @@ Function GetVbComponent(vbProj, componentName)
     Set GetVbComponent = comp
 End Function
 
-Function ReadPatentPanelText(filePath, ByRef textValue, ByRef errorText)
+Function ReadVbaSourceText(filePath, ByRef textValue, ByRef errorText)
     Dim stream, textStream, errNo, errDesc
     textValue = ""
     errorText = ""
@@ -193,7 +239,7 @@ Function ReadPatentPanelText(filePath, ByRef textValue, ByRef errorText)
     errDesc = Err.Description
     On Error GoTo 0
     If errNo = 0 And Len(textValue) > 0 Then
-        ReadPatentPanelText = True
+        ReadVbaSourceText = True
         Exit Function
     End If
 
@@ -206,16 +252,16 @@ Function ReadPatentPanelText(filePath, ByRef textValue, ByRef errorText)
     errDesc = Err.Description
     On Error GoTo 0
     If errNo = 0 And Len(textValue) > 0 Then
-        ReadPatentPanelText = True
+        ReadVbaSourceText = True
         Exit Function
     End If
 
     If errNo = 0 Then
-        errorText = "PatentDictPanel.frm is empty"
+        errorText = "VBA source file is empty: " & fso.GetFileName(filePath)
     Else
-        errorText = "cannot read PatentDictPanel.frm (" & CStr(errNo) & "): " & errDesc
+        errorText = "cannot read " & fso.GetFileName(filePath) & " (" & CStr(errNo) & "): " & errDesc
     End If
-    ReadPatentPanelText = False
+    ReadVbaSourceText = False
 End Function
 
 Function ExtractPatentPanelCode(rawText, ByRef codeText, ByRef errorText)
@@ -264,6 +310,12 @@ Function ExtractPatentPanelCode(rawText, ByRef codeText, ByRef errorText)
         Exit Function
     End If
 
+    If InStr(1, body, "Private Sub chkJsonVisible_Click", vbTextCompare) = 0 Then
+        errorText = "PatentDictPanel.frm is missing chkJsonVisible_Click"
+        codeText = ""
+        ExtractPatentPanelCode = False
+        Exit Function
+    End If
     If InStr(1, body, "Option Explicit", vbTextCompare) = 0 Then
         body = "Option Explicit" & vbCrLf & body
     End If
@@ -322,6 +374,11 @@ Function PanelFormIsUsable(panelComp, ByRef reason)
         PanelFormIsUsable = False
         Exit Function
     End If
+    If Not PanelControlExists(panelComp, "chkJsonVisible") Then
+        reason = "UserForm is missing control chkJsonVisible"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
     If Not PanelControlExists(panelComp, "lblStatus") Then
         reason = "UserForm is missing control lblStatus"
         PanelFormIsUsable = False
@@ -347,17 +404,22 @@ Function PanelFormIsUsable(panelComp, ByRef reason)
         PanelFormIsUsable = False
         Exit Function
     End If
+    If InStr(1, moduleText, "Private Sub chkJsonVisible_Click", vbTextCompare) = 0 Then
+        reason = "UserForm code is missing chkJsonVisible_Click"
+        PanelFormIsUsable = False
+        Exit Function
+    End If
 
     PanelFormIsUsable = True
 End Function
 
 Function BuildPatentPanelFallback(vbProj, frmPath, ByRef errorText)
     Dim rawText, readError, codeText, codeError
-    Dim oldComp, panelComp, designer, button, checkBox, label
+    Dim oldComp, panelComp, designer, button, checkBox, jsonCheckBox, label
     Dim errNo, errDesc, verifyReason
     errorText = ""
 
-    If Not ReadPatentPanelText(frmPath, rawText, readError) Then
+    If Not ReadVbaSourceText(frmPath, rawText, readError) Then
         errorText = readError
         BuildPatentPanelFallback = False
         Exit Function
@@ -368,21 +430,23 @@ Function BuildPatentPanelFallback(vbProj, frmPath, ByRef errorText)
         Exit Function
     End If
 
+    Dim oldName
     Set oldComp = GetVbComponent(vbProj, "PatentDictPanel")
+    oldName = ""
     If Not oldComp Is Nothing Then
+        oldName = "PMOldPanel" & Replace(MakeBackupStamp(), "-", "")
         On Error Resume Next
         Err.Clear
-        vbProj.VBComponents.Remove oldComp
+        oldComp.Name = oldName
         errNo = Err.Number
         errDesc = Err.Description
         On Error GoTo 0
         If errNo <> 0 Then
-            errorText = "Cannot remove the bad PatentDictPanel component (" & CStr(errNo) & "): " & errDesc
+            errorText = "Cannot rename the existing PatentDictPanel component (" & CStr(errNo) & "): " & errDesc
             BuildPatentPanelFallback = False
             Exit Function
         End If
     End If
-
     On Error Resume Next
     Err.Clear
     Set panelComp = vbProj.VBComponents.Add(3)
@@ -390,6 +454,7 @@ Function BuildPatentPanelFallback(vbProj, frmPath, ByRef errorText)
     Set designer = panelComp.Designer
     Set button = designer.Controls.Add("Forms.CommandButton.1", "cmdExport", True)
     Set checkBox = designer.Controls.Add("Forms.CheckBox.1", "chkAutoExport", True)
+    Set jsonCheckBox = designer.Controls.Add("Forms.CheckBox.1", "chkJsonVisible", True)
     Set label = designer.Controls.Add("Forms.Label.1", "lblStatus", True)
     errNo = Err.Number
     errDesc = Err.Description
@@ -418,9 +483,70 @@ Function BuildPatentPanelFallback(vbProj, frmPath, ByRef errorText)
         Exit Function
     End If
 
+    If Not oldComp Is Nothing Then
+        On Error Resume Next
+        Err.Clear
+        vbProj.VBComponents.Remove oldComp
+        errNo = Err.Number
+        errDesc = Err.Description
+        On Error GoTo 0
+        Set oldComp = Nothing
+        If errNo <> 0 Then
+            errorText = "Cannot remove the replaced PatentDictPanel component (" & CStr(errNo) & "): " & errDesc
+            BuildPatentPanelFallback = False
+            Exit Function
+        End If
+    End If
+
     BuildPatentPanelFallback = True
 End Function
 
+Function ExtractVbaSourceCode(rawText, ByRef codeText, ByRef errorText)
+    Dim normalized, lines, n, lineText, started, body
+    normalized = Replace(rawText, vbCrLf, vbLf)
+    normalized = Replace(normalized, vbCr, vbLf)
+    lines = Split(normalized, vbLf)
+    started = False
+    body = ""
+
+    For n = 0 To UBound(lines)
+        lineText = lines(n)
+        If Not started Then
+            If InStr(1, lineText, "Attribute VB_Exposed = False", vbTextCompare) > 0 Then
+                started = True
+            End If
+        Else
+            If InStr(1, LTrim(lineText), "Attribute VB_", vbTextCompare) <> 1 Then
+                body = body & lineText & vbCrLf
+            End If
+        End If
+    Next
+
+    If Not started Then
+        errorText = "VBA source has no code section"
+        codeText = ""
+        ExtractVbaSourceCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Private Sub Class_Initialize", vbTextCompare) = 0 Then
+        errorText = "clsSaveHook is missing Class_Initialize"
+        codeText = ""
+        ExtractVbaSourceCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Private Sub App_DocumentBeforeSave", vbTextCompare) = 0 Then
+        errorText = "clsSaveHook is missing DocumentBeforeSave"
+        codeText = ""
+        ExtractVbaSourceCode = False
+        Exit Function
+    End If
+    If InStr(1, body, "Option Explicit", vbTextCompare) = 0 Then
+        body = "Option Explicit" & vbCrLf & body
+    End If
+    codeText = body
+    errorText = ""
+    ExtractVbaSourceCode = True
+End Function
 Function Pad2(value)
     If Len(CStr(value)) < 2 Then
         Pad2 = "0" & CStr(value)
@@ -484,16 +610,17 @@ Dim vbaDir
 vbaDir = scriptDir & "\vba"
 LogMsg "VBA dir: " & vbaDir
 
-Dim vbaFiles(5)
+Dim vbaFiles(6)
 vbaFiles(0) = "Patterns.bas"
 vbaFiles(1) = "DictModel.bas"
 vbaFiles(2) = "JsonWriter.bas"
 vbaFiles(3) = "PatentExtractor.bas"
 vbaFiles(4) = "AutoExport.bas"
 vbaFiles(5) = "PatentDictPanel.frm"
-' Note: clsSaveHook.cls is NOT in this array. Word 2010 cannot correctly import
-' .cls files (VERSION/Attribute lines appear as visible code and fail to compile).
-' It is created programmatically in Step 7.5 below.
+vbaFiles(6) = "clsSaveHook.cls"
+' Word 2010 may import VERSION/Attribute metadata from .cls as visible code.
+' The class source is checked here, then injected into a newly created class
+' module below so the installed component has clean code.
 
 Dim i, filePath, frxPath
 frxPath = vbaDir & "\PatentDictPanel.frx"
@@ -512,7 +639,7 @@ For i = 0 To UBound(vbaFiles)
     End If
 Next
 
-LogMsg "VBA files: all present (5 .bas + 1 .frm + 1 .frx)"
+LogMsg "VBA files: all present (5 .bas + 1 .frm + 1 .frx + 1 .cls source)"
 
 ' --- 1.5. Check for running Word processes ---
 LogMsg "--- Word Process Check ---"
@@ -686,61 +813,50 @@ moduleNames(5) = "clsSaveHook"
 moduleNames(6) = "PatentDictPanel"
 
 LogMsg "Deleting old modules (if any)..."
+Dim oldPanel
 For i = 0 To UBound(moduleNames)
-    On Error Resume Next
-    vbProj.VBComponents.Remove vbProj.VBComponents.Item(moduleNames(i))
-    If Err.Number = 0 Then
-        LogMsg "  Removed: " & moduleNames(i)
+    If moduleNames(i) = "PatentDictPanel" Then
+        Set oldPanel = GetVbComponent(vbProj, "PatentDictPanel")
+        If oldPanel Is Nothing Then
+            LogMsg "  (not found): PatentDictPanel"
+        Else
+            LogMsg "  Retained: PatentDictPanel until replacement is created"
+        End If
+        Set oldPanel = Nothing
     Else
-        LogMsg "  (not found): " & moduleNames(i)
+        On Error Resume Next
+        vbProj.VBComponents.Remove vbProj.VBComponents.Item(moduleNames(i))
+        If Err.Number = 0 Then
+            LogMsg "  Removed: " & moduleNames(i)
+        Else
+            LogMsg "  (not found): " & moduleNames(i)
+        End If
+        On Error GoTo 0
     End If
-    On Error GoTo 0
 Next
 
-' --- 7. Import VBA modules (.bas/.frm) ---
+' --- 7. Install VBA modules (.bas/.frm) ---
+' The .frm/.frx pair is validated as a package asset. To avoid Word 2010
+' importing the form header as standard-module code, the installer builds
+' the UserForm through the VBA designer and injects its clean code section.
 LogMsg "Importing VBA modules..."
-Dim imported, panelComp, panelReason, fallbackError, normalImportError, importedComp, importErr
+Dim imported, panelComp, panelReason, fallbackError, importedComp, importErr
 imported = 0
 
 For i = 0 To UBound(vbaFiles)
     filePath = vbaDir & "\" & vbaFiles(i)
     If LCase(fso.GetExtensionName(vbaFiles(i))) = "frm" Then
-        Set panelComp = Nothing
-        normalImportError = ""
-        On Error Resume Next
-        Err.Clear
-        Set panelComp = vbProj.VBComponents.Import(filePath)
-        If Err.Number <> 0 Then
-            normalImportError = CStr(Err.Number) & ": " & Err.Description
+        LogMsg "  Building PatentDictPanel UserForm with Designer..."
+        fallbackError = ""
+        If Not BuildPatentPanelFallback(vbProj, filePath, fallbackError) Then
+            QuitWithMsg "ERROR: Cannot build PatentDictPanel UserForm." & vbCrLf & _
+                        "Reason: " & fallbackError & vbCrLf & _
+                        "Keep PatentDictPanel.frm and PatentDictPanel.frx together and retry."
         End If
-        On Error GoTo 0
-
-        panelReason = ""
-        If Not PanelFormIsUsable(panelComp, panelReason) Then
-            If normalImportError = "" Then normalImportError = panelReason
-            LogMsg "  UserForm import did not produce a usable UserForm: " & normalImportError
-            fallbackError = ""
-            If Not panelComp Is Nothing Then
-                On Error Resume Next
-                Err.Clear
-                vbProj.VBComponents.Remove panelComp
-                On Error GoTo 0
-            End If
-            If Not BuildPatentPanelFallback(vbProj, filePath, fallbackError) Then
-                On Error Resume Next
-                doc.Close False
-                wordApp.Quit
-                On Error GoTo 0
-                QuitWithMsg "ERROR: PatentDictPanel.frm import failed and fallback reconstruction failed." & vbCrLf & _
-                            "Normal import: " & normalImportError & vbCrLf & _
-                            "Fallback: " & fallbackError & vbCrLf & _
-                            "Keep PatentDictPanel.frm and PatentDictPanel.frx together and retry."
-            End If
-            LogMsg "  OK: PatentDictPanel rebuilt with VBComponents.Add(3) and Designer controls"
-        Else
-            LogMsg "  OK: PatentDictPanel.frm -> UserForm (type 3)"
-        End If
+        LogMsg "  OK: PatentDictPanel rebuilt with VBComponents.Add(3) and Designer controls"
         imported = imported + 1
+    ElseIf LCase(fso.GetExtensionName(vbaFiles(i))) = "cls" Then
+        LogMsg "  OK: clsSaveHook.cls source present (will inject)"
     Else
         On Error Resume Next
         Err.Clear
@@ -748,8 +864,6 @@ For i = 0 To UBound(vbaFiles)
         If Err.Number <> 0 Then
             importErr = Err.Description
             On Error GoTo 0
-            doc.Close False
-            wordApp.Quit
             QuitWithMsg "ERROR: Import failed: " & vbaFiles(i) & vbCrLf & "Reason: " & importErr
         Else
             LogMsg "  OK: " & vbaFiles(i)
@@ -767,7 +881,7 @@ If Not PanelFormIsUsable(panelComp, panelReason) Then
     doc.Close False
     wordApp.Quit
     On Error GoTo 0
-    QuitWithMsg "ERROR: PatentDictPanel is not a usable UserForm after import." & vbCrLf & _
+    QuitWithMsg "ERROR: PatentDictPanel is not a usable UserForm after build." & vbCrLf & _
                 "Reason: " & panelReason
 End If
 LogMsg "  OK: PatentDictPanel is a UserForm (type 3) with required controls"
@@ -793,26 +907,26 @@ On Error GoTo 0
 
 clsComp.Name = "clsSaveHook"
 
-Dim clsCode
-clsCode = _
-    "Option Explicit" & vbCrLf & _
-    "" & vbCrLf & _
-    "Private WithEvents App As Word.Application" & vbCrLf & _
-    "" & vbCrLf & _
-    "Private Sub Class_Initialize()" & vbCrLf & _
-    "    Set App = Word.Application" & vbCrLf & _
-    "End Sub" & vbCrLf & _
-    "" & vbCrLf & _
-    "Private Sub Class_Terminate()" & vbCrLf & _
-    "    Set App = Nothing" & vbCrLf & _
-    "End Sub" & vbCrLf & _
-    "" & vbCrLf & _
-    "Private Sub App_DocumentBeforeSave(ByVal Doc As Document, SaveAsUI As Boolean, Cancel As Boolean)" & vbCrLf & _
-    "    AutoExport.ExportDict Doc" & vbCrLf & _
-    "End Sub"
+Dim clsCode, clsRawText, clsReadError, clsCodeError, clsInjectError
+If Not ReadVbaSourceText(vbaDir & "\clsSaveHook.cls", clsRawText, clsReadError) Then
+    QuitWithMsg "ERROR: Cannot read clsSaveHook.cls source." & vbCrLf & "Reason: " & clsReadError
+End If
+If Not ExtractVbaSourceCode(clsRawText, clsCode, clsCodeError) Then
+    QuitWithMsg "ERROR: clsSaveHook.cls source is incomplete." & vbCrLf & "Reason: " & clsCodeError
+End If
 
+clsInjectError = ""
+On Error Resume Next
+Err.Clear
 clsComp.CodeModule.AddFromString clsCode
-LogMsg "  OK: clsSaveHook (class module, code injected)"
+If Err.Number <> 0 Then
+    clsInjectError = CStr(Err.Number) & ": " & Err.Description
+End If
+On Error GoTo 0
+If clsInjectError <> "" Then
+    QuitWithMsg "ERROR: Cannot inject clsSaveHook code." & vbCrLf & "Reason: " & clsInjectError
+End If
+LogMsg "  OK: clsSaveHook (class module, source code injected)"
 imported = imported + 1
 
 LogMsg "Imported " & imported & " / 7 modules"
@@ -862,10 +976,7 @@ If Not saveOk Then
     If Err.Number = 0 Then
         On Error GoTo 0
         LogMsg "  Saved to temp: " & tempPath
-        doc.Close False
-        wordApp.Quit
-        Set doc = Nothing
-        Set wordApp = Nothing
+        CloseInstallWord
         wordClosed = True
         WScript.Sleep 2000
         On Error Resume Next
@@ -888,10 +999,7 @@ End If
 
 If Not saveOk Then
     On Error Resume Next
-    If Not wordClosed Then
-        doc.Close False
-        wordApp.Quit
-    End If
+    If Not wordClosed Then CloseInstallWord
     On Error GoTo 0
 
     On Error Resume Next
@@ -934,13 +1042,8 @@ Else
 End If
 
 ' --- 9. Close ---
-If Not wordClosed Then
-    doc.Close False
-    wordApp.Quit
-    Set doc = Nothing
-    Set wordApp = Nothing
-    WScript.Sleep 1000
-End If
+CloseInstallWord
+WScript.Sleep 1000
 
 ' --- 10. Summary ---
 LogMsg ""

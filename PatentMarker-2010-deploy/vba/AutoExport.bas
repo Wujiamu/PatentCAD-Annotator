@@ -30,6 +30,18 @@ Private Sub AutoOpen()
     EnableAutoExport
 End Sub
 
+' Release the application event sink before Word shuts down.  Without this
+' AutoExit hook, a hidden COM-created Word instance can remain alive after
+' the installer or a regression script calls Application.Quit.
+Private Sub AutoExit()
+    DisableAutoExport
+End Sub
+
+Public Function ReleaseAutoExportForShutdown() As Boolean
+    DisableAutoExport
+    ReleaseAutoExportForShutdown = True
+End Function
+
 Private Sub EnableAutoExport()
     If m_enabled Then Exit Sub
     Set m_hook = New clsSaveHook

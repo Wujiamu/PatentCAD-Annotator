@@ -64,12 +64,52 @@ WriteUtf8NoBom outputPath, outText
 LogLine "CORPUS_WRITTEN files=" & index & " path=" & outputPath
 LogLine "PASS"
 
-doc.Close False
+CloseAllWordDocuments
 Set doc = Nothing
-word.Quit
+word.Quit False
 Set word = Nothing
+WaitForWordProcessesToExit
+DeleteGeneratedDocument macroPath
 WScript.Echo "PASS|" & outputPath & "|" & logPath
 WScript.Quit 0
+
+Sub CloseAllWordDocuments()
+    On Error Resume Next
+    Dim n, closeDoc
+    If IsObject(word) Then
+        For n = word.Documents.Count To 1 Step -1
+            Set closeDoc = word.Documents.Item(n)
+            closeDoc.Close False
+            Set closeDoc = Nothing
+        Next
+    End If
+    On Error GoTo 0
+End Sub
+
+Sub WaitForWordProcessesToExit()
+    On Error Resume Next
+    Dim attempt, svc, processes, errNo
+    For attempt = 1 To 20
+        Set svc = Nothing
+        Set processes = Nothing
+        Err.Clear
+        Set svc = GetObject("winmgmts:\\.\root\cimv2")
+        If Err.Number = 0 Then Set processes = svc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
+        errNo = Err.Number
+        On Error GoTo 0
+        If errNo <> 0 Or processes Is Nothing Then Exit Sub
+        If processes.Count = 0 Then Exit Sub
+        WScript.Sleep 500
+        On Error Resume Next
+    Next
+    On Error GoTo 0
+End Sub
+
+Sub DeleteGeneratedDocument(ByVal path)
+    On Error Resume Next
+    If fso.FileExists(path) Then fso.DeleteFile path, True
+    On Error GoTo 0
+End Sub
 
 Function ReadUtf8(ByVal path)
     Dim stream
@@ -126,8 +166,12 @@ End Sub
 Sub Fail(ByVal message)
     On Error Resume Next
     LogLine "FAIL " & message
-    If Not doc Is Nothing Then doc.Close False
-    If Not word Is Nothing Then word.Quit
+    CloseAllWordDocuments
+    If IsObject(word) Then word.Quit False
+    Set doc = Nothing
+    Set word = Nothing
+    WaitForWordProcessesToExit
+    DeleteGeneratedDocument macroPath
     WScript.Echo "FAIL|" & message & "|" & logPath
     WScript.Quit 1
 End Sub

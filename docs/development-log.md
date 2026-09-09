@@ -12,13 +12,19 @@
 
 - **验证**：2025 单元测试 `120/120` 通过；`vba-sync.ps1 -Check`、面板 COM 探针和 Word 导出回归通过，五套部署包的 `AutoExport.bas` 与 `PatentDictPanel.frm` 已与根 `vba/` 同步。
 
+**Word VBA 安装器与测试文档清理修复。** 继续复核 Word 2010 的“无效外部过程”后确认，问题不是面板事件代码本身，而是旧版 Word 可能把带 `VERSION`、`Begin`、`OleObjectBlob` 的 `.frm` 导入成普通模块；此外，在同一个 Normal 模板会话中删除旧 UserForm 后立即重新使用同名窗体，会触发错误 75。安装器原先还直接注入了过时的 `clsSaveHook`，与根源码的保存失败保护不一致；回归脚本的异常路径也没有关闭并删除自己创建的 `.docm`。
+
+- **实现**：五套 `install-vba.vbs` 现在只把 `.frm/.frx` 作为配套发布资产校验，不再依赖 `.frm` 的 COM 导入；安装器提取 `.frm` 的代码段，用 `VBComponents.Add(3)` 创建 UserForm，通过 `Designer.Controls.Add` 创建 `cmdExport`、`chkAutoExport`、`chkJsonVisible`、`lblStatus` 四个控件，再注入窗体代码。若模板已有旧面板，先改名为临时组件，创建并校验新面板后再删除旧组件。`clsSaveHook.cls` 也改为从当前源码提取干净正文后注入，并在退出前释放自动导出事件钩子。
+- **清理**：安装器和 Word 回归 VBS 都会逐个关闭自己创建的文档，释放 COM 引用并退出本次启动的 Word；各回归脚本还会删除自己生成的 `.docm`，不触碰用户文件或其他临时诊断文件。
+- **本机验证**：本机 Word 2024 使用正式 2010 部署包安装 `7/7` 组件并完成 `Save VERIFIED`；去掉窗体头的临时故障包回放也通过 Designer 重建路径并正常完成安装。面板 COM 回归、Word 导出回归、`vba-sync.ps1 -Check`、`build.ps1 -Structure` 和 `build.ps1 -Static` 通过。当前没有 Word 2010 真机，因此旧版 Word 和 Office 位数仍需现场验收。
+
 ***
 
 ## 1.0.2（待发布，2026-09-05）
 
-**Word 2010 面板导入兼容修复。** 截图中的 `VERSION 5.00`、`Begin {...}` 和 `OleObjectBlob` 出现在代码窗口，说明 `PatentDictPanel.frm` 被 Word 2010 当成普通模块导入，因窗体头位于过程外而报“无效外部过程”。仅在导入后检查 type=3 只能发现问题，不能修复；本轮安装器现在校验 type=3、三个必需控件和窗体代码，若导入报错或返回普通模块，则删除坏组件，使用 `VBComponents.Add(3)`、`Designer.Controls.Add` 重建 UserForm，再从 `.frm` 的代码段注入事件过程，并把原始失败原因写入安装日志。修改 Normal 前先保存临时副本，保存失败时恢复；`.frm/.frx` 仍要求配对。已同步 5 份安装器和 5 套部署包的 VBA 源文件。
+**Word 2010 面板导入兼容修复（初版方案，后由 1.0.3 安装链路修复完善）。** 截图中的 `VERSION 5.00`、`Begin {...}` 和 `OleObjectBlob` 出现在代码窗口，说明 `PatentDictPanel.frm` 被 Word 2010 当成普通模块导入，因窗体头位于过程外而报“无效外部过程”。仅在导入后检查 type=3 只能发现问题，不能修复；本轮曾采用导入后检查并在异常时用 `VBComponents.Add(3)`、`Designer.Controls.Add` 重建 UserForm 的过渡方案。后续 1.0.3 已改为安装器始终提取 `.frm` 代码段并通过设计器创建窗体，避免先导入再回退的旧版兼容风险；`.frm/.frx` 仍要求配对，五套安装器和部署包已同步。
 
-- **本轮验证（本机可执行范围）**：Word 2024 隔离临时文档中故意放入同名普通模块后调用 fallback，实际通过 `type=3`、名称和三个控件校验；正常 `.frm/.frx` 导入、面板探针及导出回归均通过；`vba-sync.ps1 -Check`、`build.ps1 -Structure`、`build.ps1 -Static` 通过。未在 Word 2010 真机或 Office 旧位数上宣称通过。
+- **本轮验证（本机可执行范围）**：Word 2024 隔离临时文档中验证了设计器重建、`type=3`、名称和四个控件；正式 2010 安装包及去掉窗体头的故障包回放均通过，面板探针、导出回归、`vba-sync.ps1 -Check`、`build.ps1 -Structure`、`build.ps1 -Static` 通过。未在 Word 2010 真机或 Office 旧位数上宣称通过。
 
 **多 DWG 手动目标选择。** `AutoExport.ExportDictManual` 在同目录发现多个 DWG 时列出文件供用户选择，并按所选 DWG 主名生成字典；自动保存只复用当前文档已经选定的目标，未选择时不猜测、不写入。面板按钮已切换到手动入口，错误状态改为提示检查目标图纸或文档路径；根 `vba/` 已同步到 2007/2010/2013/2015/2025 五套部署包。
 

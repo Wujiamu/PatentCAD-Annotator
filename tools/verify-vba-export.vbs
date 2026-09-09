@@ -101,10 +101,60 @@ word.Run "ExportHarness.DisableAutoExportForTest"
 saveDoc.Close False
 Set saveDoc = Nothing
 
-word.Quit
+CloseAllWordDocuments
+word.Quit False
 Set word = Nothing
+WaitForWordProcessesToExit
+DeleteGeneratedDocuments rootDir
 WScript.Echo "PASS|Word export mapping and save-hook checks"
 WScript.Quit 0
+
+Sub CloseAllWordDocuments()
+    On Error Resume Next
+    Dim n, closeDoc
+    If IsObject(word) Then
+        For n = word.Documents.Count To 1 Step -1
+            Set closeDoc = word.Documents.Item(n)
+            closeDoc.Close False
+            Set closeDoc = Nothing
+        Next
+    End If
+    On Error GoTo 0
+End Sub
+
+Sub WaitForWordProcessesToExit()
+    On Error Resume Next
+    Dim attempt, svc, processes, errNo
+    For attempt = 1 To 20
+        Set svc = Nothing
+        Set processes = Nothing
+        Err.Clear
+        Set svc = GetObject("winmgmts:\\.\root\cimv2")
+        If Err.Number = 0 Then Set processes = svc.ExecQuery("SELECT ProcessId FROM Win32_Process WHERE Name='WINWORD.EXE'")
+        errNo = Err.Number
+        On Error GoTo 0
+        If errNo <> 0 Or processes Is Nothing Then Exit Sub
+        If processes.Count = 0 Then Exit Sub
+        WScript.Sleep 500
+        On Error Resume Next
+    Next
+    On Error GoTo 0
+End Sub
+
+Sub DeleteGeneratedDocuments(ByVal folderPath)
+    On Error Resume Next
+    Dim folder, file, child
+    Set folder = fso.GetFolder(folderPath)
+    For Each file In folder.Files
+        If LCase(fso.GetExtensionName(file.Name)) = "docm" Then
+            fso.DeleteFile file.Path, True
+        End If
+    Next
+    For Each child In folder.SubFolders
+        DeleteGeneratedDocuments child.Path
+    Next
+    On Error GoTo 0
+End Sub
 
 Function MakeDir(ByVal name)
     Dim p
@@ -114,15 +164,36 @@ Function MakeDir(ByVal name)
 End Function
 
 Function OpenDoc(ByVal dir, ByVal name)
-    Dim doc, moduleName, path
+    Dim doc, moduleName, path, errNo, errDesc
     path = fso.BuildPath(dir, name)
+    On Error Resume Next
+    Err.Clear
     Set doc = word.Documents.Add
+    If Err.Number <> 0 Then
+        errNo = Err.Number
+        errDesc = Err.Description
+        On Error GoTo 0
+        Fail "cannot create " & name & " (" & CStr(errNo) & "): " & errDesc
+    End If
     doc.Content.Text = MarkingText()
     doc.SaveAs2 path, 13
+    If Err.Number <> 0 Then
+        errNo = Err.Number
+        errDesc = Err.Description
+        On Error GoTo 0
+        Fail "cannot save " & name & " (" & CStr(errNo) & "): " & errDesc
+    End If
     For Each moduleName In Array("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "clsSaveHook.cls", "AutoExport.bas")
         doc.VBProject.VBComponents.Import fso.BuildPath(vbaDir, moduleName)
+        If Err.Number <> 0 Then
+            errNo = Err.Number
+            errDesc = Err.Description
+            On Error GoTo 0
+            Fail "cannot import " & moduleName & " into " & name & " (" & CStr(errNo) & "): " & errDesc
+        End If
     Next
     InstallHarness doc
+    On Error GoTo 0
     doc.Save
     Set OpenDoc = doc
 End Function
@@ -157,7 +228,17 @@ End Sub
 
 Sub Fail(ByVal message)
     On Error Resume Next
-    If Not word Is Nothing Then word.Quit
+    If IsObject(word) Then word.Run "ExportHarness.DisableAutoExportForTest"
+    CloseAllWordDocuments
+    Set saveDoc = Nothing
+    Set exactDoc = Nothing
+    Set manualDoc = Nothing
+    Set ambiguousDoc = Nothing
+    Set singleDoc = Nothing
+    If IsObject(word) Then word.Quit False
+    Set word = Nothing
+    WaitForWordProcessesToExit
+    DeleteGeneratedDocuments rootDir
     WScript.Echo "FAIL|" & message
     WScript.Quit 1
 End Sub

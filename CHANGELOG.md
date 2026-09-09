@@ -15,6 +15,16 @@ Adopts [Semantic Versioning](https://semver.org/).
 - CAD 的字典面板现在可以用“显示 JSON/隐藏 JSON”切换当前 `.dict.json` 的 Explorer 可见性；Word 面板提供对应的手动编辑开关。切换只改变 Hidden/System 文件属性，不改变 JSON 内容。
 - Word 与五个 CAD 版本的字典写回会保留用户选择的可见状态，新建字典仍默认隐藏；增加了 2025 版属性往返和写回保留测试。
 
+### Fixed
+
+- 修复 Word VBA 安装器在旧版 Word 上直接导入 `PatentDictPanel.frm` 后把窗体头当作普通模块代码、触发“无效外部过程”的问题。五套安装器现在校验 `.frm/.frx` 配套资产，提取 `.frm` 代码段，通过 `VBComponents.Add(3)` 和 `Designer.Controls.Add` 创建真实 UserForm，再注入代码；已有面板会先改名，避免同一模板会话中删除后立即复用名称触发错误 75。
+- 修复安装器注入旧版 `clsSaveHook` 的漂移：现在五套安装器都从当前 `clsSaveHook.cls` 提取并注入干净代码，并在退出前释放自动导出事件钩子、关闭其创建的文档和 Word 实例。
+- 修复 Word 回归 VBS 在异常路径未关闭测试文档、导致后续启动 Word 弹出多个 `.docm` 的问题。各脚本现在只清理自己创建的测试文档，同时保留日志和 JSON 诊断文件。
+
+- Fixed legacy-host VBA installation by avoiding direct `PatentDictPanel.frm` import: all five installers validate the `.frm/.frx` pair, extract the `.frm` code section, create a real type-3 UserForm with `VBComponents.Add(3)` and `Designer.Controls.Add`, and inject the code. An existing panel is renamed before replacement so same-session form-name reuse does not trigger error 75.
+- Fixed installer/source drift for `clsSaveHook`: each installer now injects the clean body extracted from the current class source and releases the auto-export event sink, documents, and Word instance it created during shutdown.
+- Fixed regression VBS cleanup on failure paths; each script now closes and deletes only its own generated `.docm` files while retaining logs and JSON diagnostics.
+
 ***
 
 ## \[Unreleased] - 1.0.2 candidate (2026-09-05)

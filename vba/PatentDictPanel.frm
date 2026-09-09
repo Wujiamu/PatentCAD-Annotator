@@ -13,7 +13,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-Private WithEvents m_chkJsonVisible As MSForms.CheckBox
 Private m_syncingJsonVisibility As Boolean
 
 Private Sub cmdExport_Click()
@@ -32,10 +31,10 @@ Private Sub chkAutoExport_Click()
     AutoExport.IsAutoExportEnabled = (chkAutoExport.Value = 1)
 End Sub
 
-Private Sub m_chkJsonVisible_Click()
+Private Sub chkJsonVisible_Click()
     If m_syncingJsonVisibility Then Exit Sub
-    If AutoExport.SetCurrentDictVisibility(m_chkJsonVisible.Value = 1) Then
-        If m_chkJsonVisible.Value = 1 Then
+    If AutoExport.SetCurrentDictVisibility(chkJsonVisible.Value = 1) Then
+        If chkJsonVisible.Value = 1 Then
             lblStatus.Caption = "JSON 已显示，可手动编辑。"
         Else
             lblStatus.Caption = "JSON 已隐藏。"
@@ -88,8 +87,8 @@ Private Sub UserForm_Initialize()
         .Font.Size = 11
     End With
 
-    Set m_chkJsonVisible = Me.Controls.Add("Forms.CheckBox.1", "chkJsonVisible", True)
-    With m_chkJsonVisible
+
+    With chkJsonVisible
         .Left = x - 4
         .Top = 108
         .Width = iw - 2 * x + 8
@@ -124,12 +123,12 @@ Private Sub UpdateJsonVisibilityControl()
     path = AutoExport.GetCurrentDictPath()
     Set fso = CreateObject("Scripting.FileSystemObject")
     If path = "" Or Not fso.FileExists(path) Then
-        m_chkJsonVisible.Enabled = False
-        m_chkJsonVisible.Value = 0
+        chkJsonVisible.Enabled = False
+        chkJsonVisible.Value = 0
         m_syncingJsonVisibility = False
         Exit Sub
     End If
-    m_chkJsonVisible.Enabled = True
-    m_chkJsonVisible.Value = IIf(AutoExport.IsCurrentDictVisible(), 1, 0)
+    chkJsonVisible.Enabled = True
+    chkJsonVisible.Value = IIf(AutoExport.IsCurrentDictVisible(), 1, 0)
     m_syncingJsonVisibility = False
 End Sub
