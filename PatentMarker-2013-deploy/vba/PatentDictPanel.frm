@@ -14,6 +14,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Private m_syncingJsonVisibility As Boolean
+Private m_syncingAutoExport As Boolean
 
 Private Sub cmdExport_Click()
     ' 1.0.1：导出后立即在底部状态行反馈结果（此前点击后无任何提示）。
@@ -28,13 +29,27 @@ Private Sub cmdExport_Click()
 End Sub
 
 Private Sub chkAutoExport_Click()
-    AutoExport.IsAutoExportEnabled = (chkAutoExport.Value = 1)
+    If m_syncingAutoExport Then Exit Sub
+    If CBool(chkAutoExport.Value) Then
+        If AutoExport.EnableAutoExportForDocument() Then
+            lblStatus.Caption = ChrW(&H4FDD) & ChrW(&H5B58) & " Word " & ChrW(&H65F6) & ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H5DF2) & ChrW(&H5F00) & ChrW(&H542F)
+        Else
+            AutoExport.IsAutoExportEnabled = False
+            m_syncingAutoExport = True
+            chkAutoExport.Value = 0
+            m_syncingAutoExport = False
+            lblStatus.Caption = ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H672A) & ChrW(&H5F00) & ChrW(&H542F) & ChrW(&HFF0C) & ChrW(&H8BF7) & ChrW(&H5148) & ChrW(&H9009) & ChrW(&H62E9) & ChrW(&H76EE) & ChrW(&H6807) & " DWG"
+        End If
+    Else
+        AutoExport.IsAutoExportEnabled = False
+        lblStatus.Caption = ChrW(&H4FDD) & ChrW(&H5B58) & ChrW(&H65F6) & ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H5DF2) & ChrW(&H5173) & ChrW(&H95ED)
+    End If
 End Sub
 
 Private Sub chkJsonVisible_Click()
     If m_syncingJsonVisibility Then Exit Sub
-    If AutoExport.SetCurrentDictVisibility(chkJsonVisible.Value = 1) Then
-        If chkJsonVisible.Value = 1 Then
+    If AutoExport.SetCurrentDictVisibility(CBool(chkJsonVisible.Value)) Then
+        If CBool(chkJsonVisible.Value) Then
             lblStatus.Caption = "JSON 已显示，可手动编辑。"
         Else
             lblStatus.Caption = "JSON 已隐藏。"
@@ -111,7 +126,9 @@ Private Sub UserForm_Initialize()
         .Font.Size = 10
     End With
 
+    m_syncingAutoExport = True
     chkAutoExport.Value = IIf(AutoExport.IsAutoExportEnabled, 1, 0)
+    m_syncingAutoExport = False
     UpdateJsonVisibilityControl
 End Sub
 

@@ -94,7 +94,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 1. **选择部署包**：按上表选择 `PatentMarker-<年份>-deploy/`，完整解压到可写且位置固定的目录。保留 DLL、脚本与整个 `vba/` 子目录，安装后不要随意移动。
 2. **安装 Word 工具**：先保存并关闭 Word 文档，再运行包内 `install-vba.vbs`，按提示安装到 Normal 模板。共 7 个 VBA 组件、8 个物理文件，包含配套的 `.frm/.frx`。安装器不直接导入容易被旧版 Word 误识别的 `.frm`，而是校验配套文件后读取其中的代码段，用 `VBComponents.Add(3)` + `Designer.Controls.Add` 重建 type=3 UserForm 和四个固定控件，再注入事件代码。若提示无法访问 VBA 项目，按提示核对 Word 信任设置；不要跳过安装错误。
-3. **导出字典**：在 Word 打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel`，点击“手动导出字典”；同目录有多个 DWG 时，在列表中选择目标，字典会按该 DWG 名称生成。需要自动导出时勾选“保存时自动导出”，它会复用本次文档的选择。首次保存或另存为后，在最终目录再次手动导出并确认对应图纸。
+3. **导出字典**：在 Word 打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel`。同目录有多个 DWG 时，第一次勾选“保存时自动导出”会先要求选择目标 DWG，也可以先点击“手动导出字典”完成选择；选择后保存 Word 即按该 DWG 名称自动生成 JSON。首次保存或另存为后，在最终目录再次保存或手动导出并确认对应图纸。
 4. **安装 CAD 插件**：运行所选包的 CAD 安装入口，见下方部署包表。打开目标 DWG，用 `BZ` 打开面板。
 5. **标注与检查**：单击选择条目，双击开始标注；也可用 `BZM`。F2/右键编辑条目，`BZC` 检查漏标，`BZS` 选择标注后用 `BZA` 对齐。
 
@@ -104,6 +104,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 - **Word 2010 真机仍需验收**：安装器固定走 `VBComponents.Add(3)` + `Designer.Controls.Add`，避开 `.frm` 被旧 Word 当成普通模块的路径；安装前把原 `Normal.dotm` 复制到临时目录，保存失败时自动恢复。本机 Word 2024 已完成正式安装，并用去掉窗体头的故障包回放验证了重建路径；仍不能据此宣称 Word 2010 或 Office 位数均已通过。
 - **安装后的保存失败保护已与源码同步**：五套 `install-vba.vbs` 从配套 `clsSaveHook.cls` 提取干净代码后注入，已有路径的普通保存遇到导出失败会取消保存并提示；关闭安装器/回归脚本创建的隐藏 Word 实例前也会释放保存事件钩子。Word 2010 真机仍需验收。
+- **自动导出目标选择**：勾选“保存时自动导出”时，如果当前目录有多个 DWG 且本文件尚未选择目标，面板会先要求选择；选择成功后普通保存即可自动生成对应 DWG 名称的 JSON，不会静默猜测图纸。
 - 回归 VBS 会在 `%TEMP%\PatentMarker*` 下创建临时 `.docm`；脚本现在无论成功还是显式失败都会逐个关闭 Word 文档，并删除自己生成的测试 `.docm`，保留日志和 JSON 诊断文件。旧版本运行留下的临时文件需人工清理。
 - 自动导出发生在 Word 完成保存之前。首次保存、另存为或取消另存为可能影响输出路径；当前没有 Word、字典与 DWG 的整体回滚保证。两端同时编辑同一字典的竞争情形仍需专门回归。
 - Word 导出失败时查看文档目录的 `autoexport-error.txt`；检查文档是否已有路径、多 DWG 是否已手动选择目标、目录是否可写以及字典/备份是否被占用。
@@ -146,7 +147,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 |---|---|---|
 | 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
 | 自动化测试 | 2025 单测 120/120；2007/2010/2013/2015 契约模拟各 33/33 | 真实 AutoCAD 宿主 API、面板交互或 Word 2010 安装结果已通过 |
-| Word COM | 8 份脱敏语料与 VBA 基线对比；面板导入、导出开关、路径映射、JSON 可见性、安装器正式安装及错误 `.frm` 回放 | Word 2010 真机、所有旧位数、完整 Save As 分支已覆盖 |
+| Word COM | 8 份脱敏语料与 VBA 基线对比；面板导入、导出开关、多 DWG 自动导出目标准备与普通保存、路径映射、JSON 可见性、安装器正式安装及错误 `.frm` 回放 | Word 2010 真机、所有旧位数、完整 Save As 分支已覆盖 |
 | AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
 
 CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测和四版 Simulation。Autodesk SDK 不入库，因此 CI 不做五版真实编译，也不运行 Word 或 AutoCAD GUI。
@@ -343,7 +344,7 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 1. Choose `PatentMarker-<year>-deploy/` for your AutoCAD and extract the complete package into a writable, stable directory. Keep the DLL, scripts and entire `vba/` folder together.
 2. Save and close Word documents, then run `install-vba.vbs` to install into the Normal template. The package contains **7 VBA components in 8 files**, including the paired `.frm/.frx`. The installer validates the pair but does not rely on the fragile `.frm` import path: it extracts the code section, creates a type-3 UserForm with `VBComponents.Add(3)` and `Designer.Controls.Add`, and injects the event code.
-3. Open and save the Word document. Use Alt+F8 → `ShowPatentDictPanel`, click manual export and check the status. If the folder contains multiple DWGs, choose the target from the list; the dictionary is named after that DWG. Enable “Auto-export on save” if desired; it reuses the current document's selection. After a first save or Save As, export again from the final location.
+3. Open and save the Word document. Use Alt+F8 → `ShowPatentDictPanel` and check the status. If the folder contains multiple DWGs, the first time you enable “Auto-export on save” the panel asks you to choose a target; you may also choose one through manual export. After the target is selected, an ordinary Word save creates the JSON named after that DWG. After a first save or Save As, save again or export from the final location.
 4. Run the matching CAD installer below. Open the target DWG and run `BZ`.
 5. Single-click selects; double-click or `BZM` starts marking. F2/right-click edits entries, `BZC` checks missing annotations, and `BZS` followed by `BZA` selects and aligns annotations.
 
@@ -353,6 +354,7 @@ Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README
 
 - **Word 2010 still needs real-host acceptance**: the installer always extracts the `.frm` code section and rebuilds `PatentDictPanel` with `VBComponents.Add(3)` and `Designer.Controls.Add`, avoiding the old-host path that exposes `VERSION`/`Begin`/`OleObjectBlob` as code. The original `Normal.dotm` is backed up before changing VBA and restored after a save failure. Formal installation and a malformed-`.frm` replay passed on local Word 2024; this is not a claim that Word 2010 or both Office bitnesses have passed.
 - **Installed save-failure protection follows the source**: all five installers extract and inject the clean body of `vba/clsSaveHook.cls`, including cancellation of an ordinary save with an existing path when export fails. Word 2010 still needs real-host acceptance.
+- **Automatic-export target selection**: when the folder contains multiple DWGs and the document has no target yet, enabling “Auto-export on save” asks for a target instead of silently guessing. Once selected, an ordinary save creates the JSON for that DWG.
 - Regression VBS files create temporary `.docm` files under `%TEMP%\PatentMarker*`; they now close every document and delete their own test `.docm` on both success and explicit failure while retaining logs and JSON diagnostics. Artifacts from older runs may need manual cleanup.
 - Auto-export runs before Word finishes saving. First saves, Save As and cancelled Save As can affect the output path. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
 - For export failures, check `autoexport-error.txt`, the document path, whether a target was selected when multiple DWGs were present, write access and file locks.

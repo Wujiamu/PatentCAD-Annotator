@@ -18,6 +18,10 @@
 - **清理**：安装器和 Word 回归 VBS 都会逐个关闭自己创建的文档，释放 COM 引用并退出本次启动的 Word；各回归脚本还会删除自己生成的 `.docm`，不触碰用户文件或其他临时诊断文件。
 - **本机验证**：本机 Word 2024 使用正式 2010 部署包安装 `7/7` 组件并完成 `Save VERIFIED`；去掉窗体头的临时故障包回放也通过 Designer 重建路径并正常完成安装。面板 COM 回归、Word 导出回归、`vba-sync.ps1 -Check`、`build.ps1 -Structure` 和 `build.ps1 -Static` 通过。当前没有 Word 2010 真机，因此旧版 Word 和 Office 位数仍需现场验收。
 
+**自动导出开关的多 DWG 首次使用修复。** 本机复现确认保存钩子本身可以生成 JSON；实际面板点击时，MSForms 复选框的勾选值是 `True/-1`，旧代码用 `Value = 1` 判断，因而总是走“关闭自动导出”分支，用户只能通过手动导出间接建立目标。另一个边界是多 DWG 不能猜图纸：即使开关判断修正，启用时也必须先准备明确目标。现在面板使用布尔判断，并调用 `AutoExport.EnableAutoExportForDocument`；多 DWG 弹出目标选择并记录到当前文档，取消选择则自动导出保持关闭。目标准备成功后，普通 `DocumentBeforeSave` 继续由 `clsSaveHook` 调用 `ExportDict(Doc)`，按已选 DWG 主名生成 JSON；JSON 可见性复选框同步修正为同一布尔判断。
+
+- **回归**：Word 2024 正式安装后的多 DWG 测试以显式目标准备自动导出，普通保存直接生成目标 JSON；`verify-vba-export.vbs` 新增同一保存链路断言，面板导入回归继续通过。Word 2010 真机仍待现场验收。
+
 ***
 
 ## 1.0.2（待发布，2026-09-05）

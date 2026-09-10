@@ -20,10 +20,12 @@ Adopts [Semantic Versioning](https://semver.org/).
 - 修复 Word VBA 安装器在旧版 Word 上直接导入 `PatentDictPanel.frm` 后把窗体头当作普通模块代码、触发“无效外部过程”的问题。五套安装器现在校验 `.frm/.frx` 配套资产，提取 `.frm` 代码段，通过 `VBComponents.Add(3)` 和 `Designer.Controls.Add` 创建真实 UserForm，再注入代码；已有面板会先改名，避免同一模板会话中删除后立即复用名称触发错误 75。
 - 修复安装器注入旧版 `clsSaveHook` 的漂移：现在五套安装器都从当前 `clsSaveHook.cls` 提取并注入干净代码，并在退出前释放自动导出事件钩子、关闭其创建的文档和 Word 实例。
 - 修复 Word 回归 VBS 在异常路径未关闭测试文档、导致后续启动 Word 弹出多个 `.docm` 的问题。各脚本现在只清理自己创建的测试文档，同时保留日志和 JSON 诊断文件。
+- 修复 Word 面板复选框将 MSForms 的 `True/-1` 错判为数值 `1` 的问题。现在“保存时自动导出”勾选后会正常启用；多 DWG 文档还会先要求选择目标 DWG，选择成功后保存事件直接复用该目标，不猜测其他图纸；“显示 JSON”开关也同步修正。
 
 - Fixed legacy-host VBA installation by avoiding direct `PatentDictPanel.frm` import: all five installers validate the `.frm/.frx` pair, extract the `.frm` code section, create a real type-3 UserForm with `VBComponents.Add(3)` and `Designer.Controls.Add`, and inject the code. An existing panel is renamed before replacement so same-session form-name reuse does not trigger error 75.
 - Fixed installer/source drift for `clsSaveHook`: each installer now injects the clean body extracted from the current class source and releases the auto-export event sink, documents, and Word instance it created during shutdown.
 - Fixed regression VBS cleanup on failure paths; each script now closes and deletes only its own generated `.docm` files while retaining logs and JSON diagnostics.
+- Fixed Word panel checkbox handling: MSForms checked values (`True/-1`) are no longer misread as numeric `1`, so “Auto-export on save” actually enables; the JSON visibility switch uses the same boolean-safe path. For multiple DWGs, enabling auto-export asks for a target when none has been selected, and later ordinary saves reuse it.
 
 ***
 

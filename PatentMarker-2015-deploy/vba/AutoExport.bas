@@ -53,8 +53,40 @@ Private Sub DisableAutoExport()
     m_enabled = False
 End Sub
 
-' 导出当前文档为 <主名>.dict.json
-'（Function：不显示在宏列表中，由保存钩子 clsSaveHook 与面板"手动导出"按钮调用）
+Public Function EnableAutoExportForDocument(Optional ByVal targetDwgPath As String = "", Optional ByVal doc As Document) As Boolean
+    On Error GoTo errHandler
+    If doc Is Nothing Then Set doc = ActiveDocument
+
+    Dim docDir As String
+    Dim targetPath As String
+    Dim preflightError As Long
+    docDir = GetOutputDir(doc)
+    If docDir <> "" Then
+        If targetDwgPath <> "" Then
+            targetPath = GetOutputPath(doc, True, targetDwgPath)
+        Else
+            ' Reuse a remembered target when possible. If none exists, the
+            ' failed closed lookup is followed by one explicit DWG prompt.
+            On Error Resume Next
+            Err.Clear
+            targetPath = GetOutputPath(doc, False, "")
+            preflightError = Err.Number
+            Err.Clear
+            On Error GoTo errHandler
+            If preflightError <> 0 Then
+                targetPath = GetOutputPath(doc, True, "")
+            End If
+        End If
+        If targetPath = "" Then Exit Function
+    End If
+
+    EnableAutoExport
+    EnableAutoExportForDocument = True
+    Exit Function
+errHandler:
+    EnableAutoExportForDocument = False
+End Function
+
 Public Function ExportDict(Optional ByVal doc As Document) As Boolean
     ExportDict = ExportDictCore(doc, False, "")
 End Function
@@ -219,8 +251,8 @@ errHandler:
     IsPathVisible = False
 End Function
 ' ======================================================================
-' Resolve the DWG target. Manual export selects among multiple DWGs;
-' automatic export only reuses a selection already made for this document.
+' Resolve the DWG target. Manual export and auto-export setup may select
+' among multiple DWGs; automatic save itself only reuses the remembered target.
 ' ======================================================================
 Private Function GetOutputPath(ByVal doc As Document, ByVal allowDwgSelection As Boolean, ByVal targetDwgPath As String) As String
     Dim dir As String
@@ -327,7 +359,7 @@ Private Function FindDwgBaseName(ByVal dir As String, ByVal wordDocName As Strin
     End If
 
     ' 自动导出：优先沿用本次会话中手动选择的目标。
-    ' Automatic export may only reuse a selection made by Manual Export.
+    ' Automatic save may only reuse a remembered selection.
     If GetRememberedDwgSelection(docKey, dir, selectedPath) Then
         FindDwgBaseName = RemoveExt(fso.GetFileName(selectedPath))
         Exit Function

@@ -64,6 +64,34 @@ word.Run "ExportHarness.DisableAutoExportForTest"
 manualDoc.Close False
 Set manualDoc = Nothing
 
+' Automatic export can be enabled with an explicit target; the following
+' ordinary save must create the selected DWG dictionary without a manual export.
+Dim autoDir, autoDoc, autoTarget, autoJson, autoEnabled, autoEnabledAgain, autoSaveError
+autoDir = MakeDir("auto-save-selection")
+Touch fso.BuildPath(autoDir, "auto-alpha.dwg")
+Touch fso.BuildPath(autoDir, "auto-beta.dwg")
+Set autoDoc = OpenDoc(autoDir, "auto-save.docm")
+autoDoc.Activate
+autoTarget = fso.BuildPath(autoDir, "auto-beta.dwg")
+autoEnabled = word.Run("ExportHarness.EnableAutoExportForDocumentForTest", autoTarget)
+If Not autoEnabled Then Fail "automatic export target preparation failed"
+autoEnabledAgain = word.Run("ExportHarness.ReuseAutoExportForDocumentForTest", "")
+If Not autoEnabledAgain Then Fail "remembered automatic export target was not reused"
+autoDoc.Content.Text = MarkingText() & vbCr & "auto-save"
+autoSaveError = 0
+On Error Resume Next
+Err.Clear
+autoDoc.Save
+autoSaveError = Err.Number
+Err.Clear
+On Error GoTo 0
+If autoSaveError <> 0 Or Not autoDoc.Saved Then Fail "automatic export save failed"
+autoJson = fso.BuildPath(autoDir, "auto-beta.dict.json")
+If Not fso.FileExists(autoJson) Then Fail "automatic export dictionary missing"
+word.Run "ExportHarness.DisableAutoExportForTest"
+autoDoc.Close False
+Set autoDoc = Nothing
+
 ' An exact base-name match does not bypass the manual-selection requirement.
 Dim exactDir, exactDoc, exactJson, exactErrorPath
 exactDir = MakeDir("exact")
@@ -210,8 +238,14 @@ Sub InstallHarness(ByVal doc)
         "    AutoExport.IsAutoExportEnabled = False" & vbCrLf & _
         "End Sub" & vbCrLf & _
         "Public Function ManualExportTo(ByVal targetPath As String) As Boolean" & vbCrLf & _
-        "    ManualExportTo = AutoExport.ExportDictManual(targetPath)" & vbCrLf & _
-        "End Function"
+       "    ManualExportTo = AutoExport.ExportDictManual(targetPath)" & vbCrLf & _
+       "End Function" & vbCrLf & _
+       "Public Function EnableAutoExportForDocumentForTest(ByVal targetPath As String) As Boolean" & vbCrLf & _
+       "    EnableAutoExportForDocumentForTest = AutoExport.EnableAutoExportForDocument(targetPath)" & vbCrLf & _
+       "End Function" & vbCrLf & _
+       "Public Function ReuseAutoExportForDocumentForTest(ByVal unused As String) As Boolean" & vbCrLf & _
+       "    ReuseAutoExportForDocumentForTest = AutoExport.EnableAutoExportForDocument("""", ActiveDocument)" & vbCrLf & _
+       "End Function"
     component.CodeModule.AddFromString code
 End Sub
 
