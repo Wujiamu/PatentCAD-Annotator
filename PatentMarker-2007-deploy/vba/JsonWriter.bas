@@ -150,7 +150,16 @@ Public Function WriteToFile(ByVal path As String, ByVal content As String) As Bo
 
 errHandler:
     On Error Resume Next
-    If Not outStream Is Nothing Then outStream.Close
+    If Not stream Is Nothing Then
+        If stream.State <> 0 Then stream.Close
+    End If
+    Err.Clear
+    If Not outStream Is Nothing Then
+        If outStream.State <> 0 Then outStream.Close
+    End If
+    Err.Clear
     If tempPath <> "" And fso.FileExists(tempPath) Then fso.DeleteFile tempPath, True
+    Err.Clear
     WriteToFile = False
+    On Error GoTo 0
 End Function

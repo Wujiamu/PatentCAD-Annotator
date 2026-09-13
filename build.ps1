@@ -130,6 +130,40 @@ function Invoke-StructureCheck {
     Write-Section "Structure integrity check (no SDK DLL required)"
     $failCount = 0
 
+    # Release verification must not depend on ignored/local-only probes. Keep the
+    # complete Word workflow present in a clean checkout before checking packages.
+    $wordWorkflowFiles = @(
+        "sync-word-addin.ps1",
+        "word-addin\PatentMarker.dotm",
+        "word-addin\install-vba.vbs",
+        "word-addin\uninstall-vba.vbs",
+        "tools\build-vba-addin.vbs",
+        "tools\finalize-dotm-package.ps1",
+        "tools\verify-dotm-package.ps1",
+        "tools\test-vba-panel.vbs",
+        "tools\verify-vba-export.vbs",
+        "tools\verify-vba-installer.ps1",
+        "tools\query-word-environment.vbs",
+        "tools\verify-vba-installed-e2e.ps1",
+        "tools\verify-vba-installed-matrix.vbs",
+        "tools\verify-vba-installed-runtime.vbs",
+        "tools\verify-word-sync-gates.ps1"
+    )
+    $missingWordWorkflow = @()
+    foreach ($relativePath in $wordWorkflowFiles) {
+        if (-not (Test-Path -LiteralPath (Join-Path $root $relativePath))) {
+            $missingWordWorkflow += $relativePath
+        }
+    }
+    if ($missingWordWorkflow.Count -eq 0) {
+        Write-Ok "Word release workflow assets present (including formal L2/L4 gates)"
+    } else {
+        foreach ($relativePath in $missingWordWorkflow) {
+            Write-Err2 "Word release workflow asset missing - $relativePath"
+        }
+        $failCount += $missingWordWorkflow.Count
+    }
+
     foreach ($ver in $script:DllMap.Keys) {
         $projDir = Get-ProjectDir $ver
         $csproj = Join-Path $projDir "PatentMarker.csproj"
@@ -162,10 +196,10 @@ function Invoke-StructureCheck {
             }
         }
 
-        # 3. Deploy package completeness: PatentMarker.dll + 8 VBA files (6 .bas/.cls + 1 .frm UserForm + 1 .frx blob)
+        # 3. Deploy package completeness: DLL + generated Startup add-in + 9 VBA source assets.
         $deployDir = Join-Path $root "PatentMarker-$ver-deploy"
         $deployDll = Join-Path $deployDir "PatentMarker.dll"
-        $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
+        $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","PatentMarkerBootstrap.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
         $missingVba = @()
         foreach ($v in $vbaFiles) {
             if (-not (Test-Path (Join-Path $deployDir "vba\$v"))) { $missingVba += $v }
@@ -175,6 +209,12 @@ function Invoke-StructureCheck {
         if (-not (Test-Path $deployDll)) {
             Write-Err2 "$ver : deploy package missing PatentMarker.dll"
             $failCount++
+        }
+        foreach ($requiredWordAsset in @("PatentMarker.dotm", "install-vba.vbs", "uninstall-vba.vbs")) {
+            if (-not (Test-Path -LiteralPath (Join-Path $deployDir $requiredWordAsset))) {
+                Write-Err2 "$ver : deploy package missing Word asset - $requiredWordAsset"
+                $failCount++
+            }
         }
         if ($missingVba.Count -gt 0) {
             Write-Err2 "$ver : deploy package missing VBA modules - $($missingVba -join ', ')"
@@ -202,23 +242,37 @@ function Invoke-StaticCheck {
 
     # ---- 1. VBA cross-package consistency ----
     Write-Host "`n  --- VBA cross-package consistency ---"
-    $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
+    $vbaFiles = @("Patterns.bas","DictModel.bas","JsonWriter.bas","PatentExtractor.bas","AutoExport.bas","PatentMarkerBootstrap.bas","clsSaveHook.cls","PatentDictPanel.frm","PatentDictPanel.frx")
     $deployVersions = @("2007","2010","2013","2015","2025")
     foreach ($vf in $vbaFiles) {
+        $canonicalVbaPath = Join-Path $root "vba\$vf"
+        if (-not (Test-Path -LiteralPath $canonicalVbaPath)) {
+            Write-Err2 "Canonical VBA source missing: vba/$vf"
+            $failCount++
+            continue
+        }
+        $canonicalVbaHash = (Get-FileHash -LiteralPath $canonicalVbaPath -Algorithm SHA256).Hash
         $hashes = @{}
+        $allCanonical = $true
         foreach ($ver in $deployVersions) {
             $fpath = Join-Path $root "PatentMarker-$ver-deploy\vba\$vf"
             if (Test-Path $fpath) {
                 $h = (Get-FileHash $fpath -Algorithm SHA256).Hash
                 $hashes[$ver] = $h
+                if ($h -ne $canonicalVbaHash) {
+                    Write-Err2 "VBA $vf in $ver differs from canonical vba/$vf"
+                    $failCount++
+                    $allCanonical = $false
+                }
             } else {
                 Write-Err2 "VBA $vf missing in $ver deploy package"
                 $failCount++
+                $allCanonical = $false
             }
         }
-        $unique = $hashes.Values | Select-Object -Unique
-        if ($unique.Count -eq 1) {
-            Write-Ok "VBA $vf : identical across all $($hashes.Count) packages"
+        $unique = @($hashes.Values | Select-Object -Unique)
+        if ($allCanonical -and $hashes.Count -eq $deployVersions.Count -and $unique.Count -eq 1) {
+            Write-Ok "VBA $vf : all packages match canonical source"
         } elseif ($unique.Count -gt 1) {
             Write-Err2 "VBA $vf : DIFFERS across packages!"
             foreach ($ver in $hashes.Keys) {
@@ -323,6 +377,108 @@ function Invoke-StaticCheck {
             $driftCount++
         }
     }
+
+    foreach ($asset in @("PatentMarker.dotm", "install-vba.vbs", "uninstall-vba.vbs")) {
+        $canonicalAssetPath = Join-Path $root "word-addin\$asset"
+        if (-not (Test-Path -LiteralPath $canonicalAssetPath)) {
+            Write-Err2 "Canonical Word asset missing: word-addin/$asset"
+            $failCount++
+            continue
+        }
+        $canonicalAssetHash = (Get-FileHash -LiteralPath $canonicalAssetPath -Algorithm SHA256).Hash
+        $hashes = @{}
+        foreach ($ver in $deployVersions) {
+            $assetPath = Join-Path $root "PatentMarker-$ver-deploy\$asset"
+            if (-not (Test-Path -LiteralPath $assetPath)) {
+                Write-Err2 "Word asset $asset missing in $ver deploy package"
+                $failCount++
+                continue
+            }
+            $hashes[$ver] = (Get-FileHash -LiteralPath $assetPath -Algorithm SHA256).Hash
+            if ($hashes[$ver] -ne $canonicalAssetHash) {
+                Write-Err2 "Word asset $asset in $ver differs from canonical word-addin/$asset"
+                $failCount++
+            }
+        }
+        $unique = @($hashes.Values | Select-Object -Unique)
+        if ($hashes.Count -eq $deployVersions.Count -and $unique.Count -eq 1) {
+            Write-Ok "Word asset $asset : identical across all deployment packages"
+        } elseif ($hashes.Count -gt 0 -and $unique.Count -gt 1) {
+            Write-Err2 "Word asset $asset : DIFFERS across deployment packages"
+            $failCount++
+        }
+    }
+
+    $dotmVerifier = Join-Path $root "tools\verify-dotm-package.ps1"
+    try {
+        & $dotmVerifier -Path (Join-Path $root "word-addin\PatentMarker.dotm")
+        Write-Ok "Canonical Word add-in contains required AutoExec macro metadata"
+    } catch {
+        Write-Err2 "Canonical Word add-in package contract failed: $($_.Exception.Message)"
+        $failCount++
+    }
+
+    # ---- 4a. Word add-in installation safety contract ----
+    Write-Host "`n  --- Word add-in installation safety contract ---"
+    $bootstrapPath = Join-Path $root "vba\PatentMarkerBootstrap.bas"
+    $wordInstallerPath = Join-Path $root "word-addin\install-vba.vbs"
+    $wordUninstallerPath = Join-Path $root "word-addin\uninstall-vba.vbs"
+    $bootstrapText = [IO.File]::ReadAllText($bootstrapPath)
+    $wordInstallerText = [IO.File]::ReadAllText($wordInstallerPath)
+    $wordUninstallerText = [IO.File]::ReadAllText($wordUninstallerPath)
+    $wordContractFailures = 0
+
+    $requiredContracts = @(
+        @{ Label = "bootstrap AutoExec"; Text = $bootstrapText; Token = 'Public Sub AutoExec()' },
+        @{ Label = "bootstrap hook initialization"; Text = $bootstrapText; Token = 'AutoExport.InitializeAutoExport("AutoExec")' },
+        @{ Label = "bootstrap AutoExit"; Text = $bootstrapText; Token = 'Public Sub AutoExit()' },
+        @{ Label = "installer Startup path resolution"; Text = $wordInstallerText; Token = 'startupPath = app.StartupPath' },
+        @{ Label = "installer exact product target"; Text = $wordInstallerText; Token = 'targetPath = fso.BuildPath(startupPath, "PatentMarker.dotm")' },
+        @{ Label = "installer staged byte comparison"; Text = $wordInstallerText; Token = 'FilesEqual(sourcePath, targetPath' },
+        @{ Label = "installer ownership manifest"; Text = $wordInstallerText; Token = 'PatentMarker.addin.install.txt' },
+        @{ Label = "installer rollback"; Text = $wordInstallerText; Token = 'If backupMade Then fso.MoveFile backupPath, targetPath' },
+        @{ Label = "uninstaller exact product target"; Text = $wordUninstallerText; Token = 'targetPath = fso.BuildPath(startupPath, "PatentMarker.dotm")' },
+        @{ Label = "uninstaller ownership guard"; Text = $wordUninstallerText; Token = 'ownership manifest is missing; refusing to remove the file without /Force' },
+        @{ Label = "uninstaller recoverable move"; Text = $wordUninstallerText; Token = 'fso.MoveFile targetPath, backupPath' },
+        @{ Label = "uninstaller rollback"; Text = $wordUninstallerText; Token = 'fso.MoveFile backupPath, targetPath' }
+    )
+    foreach ($contract in $requiredContracts) {
+        if ($contract.Text.IndexOf($contract.Token, [StringComparison]::OrdinalIgnoreCase) -lt 0) {
+            Write-Err2 "Missing Word safety contract: $($contract.Label)"
+            $wordContractFailures++
+        }
+    }
+
+    foreach ($forbiddenToken in @("NormalTemplate", "VBProject", "VBComponents", "OrganizerDelete")) {
+        if ($wordInstallerText.IndexOf($forbiddenToken, [StringComparison]::OrdinalIgnoreCase) -ge 0) {
+            Write-Err2 "Word installer must not access user VBA state: forbidden token '$forbiddenToken'"
+            $wordContractFailures++
+        }
+        if ($wordUninstallerText.IndexOf($forbiddenToken, [StringComparison]::OrdinalIgnoreCase) -ge 0) {
+            Write-Err2 "Word uninstaller must not access user VBA state: forbidden token '$forbiddenToken'"
+            $wordContractFailures++
+        }
+    }
+    if ($wordContractFailures -eq 0) {
+        Write-Ok "Startup install/uninstall contracts present; Normal/VBProject access forbidden"
+    } else {
+        $failCount += $wordContractFailures
+    }
+
+    $syncGateTest = Join-Path $root "tools\verify-word-sync-gates.ps1"
+    if (-not (Test-Path -LiteralPath $syncGateTest)) {
+        Write-Err2 "Word synchronization failure-injection test missing"
+        $failCount++
+    } else {
+        try {
+            & $syncGateTest
+            Write-Ok "Word synchronization checks reject drift with nonzero exit codes"
+        } catch {
+            Write-Err2 "Word synchronization failure-injection test failed: $_"
+            $failCount++
+        }
+    }
+
     if ($driftCount -eq 0) {
         Write-Ok "Group 2013/2015 (Newtonsoft stack): $($localFilesA.Count) version-local files consistent"
     } else {

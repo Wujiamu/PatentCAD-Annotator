@@ -93,8 +93,8 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 ### 快速开始
 
 1. **选择部署包**：按上表选择 `PatentMarker-<年份>-deploy/`，完整解压到可写且位置固定的目录。保留 DLL、脚本与整个 `vba/` 子目录，安装后不要随意移动。
-2. **安装 Word 工具**：先保存并关闭 Word 文档，再运行包内 `install-vba.vbs`，按提示安装到 Normal 模板。共 7 个 VBA 组件、8 个物理文件，包含配套的 `.frm/.frx`。安装器不直接导入容易被旧版 Word 误识别的 `.frm`，而是校验配套文件后读取其中的代码段，用 `VBComponents.Add(3)` + `Designer.Controls.Add` 重建 type=3 UserForm 和四个固定控件，再注入事件代码。若提示无法访问 VBA 项目，按提示核对 Word 信任设置；不要跳过安装错误。
-3. **导出字典**：在 Word 打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel`。同目录有多个 DWG 时，第一次勾选“保存时自动导出”会先要求选择目标 DWG，也可以先点击“手动导出字典”完成选择；选择后保存 Word 即按该 DWG 名称自动生成 JSON。首次保存或另存为后，在最终目录再次保存或手动导出并确认对应图纸。
+2. **安装 Word 工具**：先保存并关闭全部 Word 窗口，再运行包内 `install-vba.vbs`。脚本把同目录、预先构建好的 `PatentMarker.dotm` 逐字节校验后安装到 Word `Startup` 目录，**不会打开、修改或保存 `Normal.dotm`，也不要求“信任对 VBA 工程对象模型的访问”**。重复安装会保留旧产品加载项和所有权清单的可恢复备份；卸载使用 `uninstall-vba.vbs`。
+3. **导出字典**：重新启动 Word 后，Startup 加载项通过 `AutoExec` 自动挂接保存事件。打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel` 查看状态或手动导出。同目录有多个 DWG 时，第一次勾选“保存时自动导出”会先要求选择目标 DWG，也可以先点击“手动导出字典”完成选择；选择后普通保存即按该 DWG 名称自动生成 JSON。首次保存或另存为后，在最终目录再次保存或手动导出并确认对应图纸。
 4. **安装 CAD 插件**：运行所选包的 CAD 安装入口，见下方部署包表。打开目标 DWG，用 `BZ` 打开面板。
 5. **标注与检查**：单击选择条目，双击开始标注；也可用 `BZM`。F2/右键编辑条目，`BZC` 检查漏标，`BZS` 选择标注后用 `BZA` 对齐。
 
@@ -102,11 +102,12 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 已知限制与排查
 
-- **Word 2010 真机仍需验收**：安装器固定走 `VBComponents.Add(3)` + `Designer.Controls.Add`，避开 `.frm` 被旧 Word 当成普通模块的路径；安装前把原 `Normal.dotm` 复制到临时目录，保存失败时自动恢复。本机 Word 2024 已完成正式安装，并用去掉窗体头的故障包回放验证了重建路径；仍不能据此宣称 Word 2010 或 Office 位数均已通过。
-- **安装后的保存失败保护已与源码同步**：五套 `install-vba.vbs` 从配套 `clsSaveHook.cls` 提取干净代码后注入，已有路径的普通保存遇到导出失败会取消保存并提示；关闭安装器/回归脚本创建的隐藏 Word 实例前也会释放保存事件钩子。Word 2010 真机仍需验收。
+- **Word 2010 真机仍需验收**：当前加载项由本机 Word 16.0 64 位从根 VBA 真源生成；同一候选包已在该环境通过真实 Startup 安装与全新正常 Word 进程回归，但不能外推到 Word 2010、32 位 Office 或其他宏策略。
+- **安装不再修改 Normal**：新安装器仅复制 `PatentMarker.dotm` 到 Startup。旧版本若曾把 PatentMarker 组件装入 `Normal.dotm`，本次不会自动删除；请先保留完整 Normal 备份和组件清单，再把旧组件迁移视为单独的数据恢复操作，不要用新安装覆盖或批量清空用户宏。
+- **诊断日志**：加载、`AutoExec`、钩子创建、`DocumentBeforeSave`、目标路径、导出成功/失败都写入 `%LOCALAPPDATA%\PatentMarker\Logs\word-vba-YYYYMMDD.tsv`，同一 Word 运行使用同一 `run_id`。文档目录的 `autoexport-error.txt` 只是简短错误提示；排查自动导出时同时核对日志中的加载模板路径和实际 Startup 文件哈希。
 - **自动导出目标选择**：勾选“保存时自动导出”时，如果当前目录有多个 DWG 且本文件尚未选择目标，面板会先要求选择；选择成功后普通保存即可自动生成对应 DWG 名称的 JSON，不会静默猜测图纸。
 - 回归 VBS 会在 `%TEMP%\PatentMarker*` 下创建临时 `.docm`；脚本现在无论成功还是显式失败都会逐个关闭 Word 文档，并删除自己生成的测试 `.docm`，保留日志和 JSON 诊断文件。旧版本运行留下的临时文件需人工清理。
-- 自动导出发生在 Word 完成保存之前。首次保存、另存为或取消另存为可能影响输出路径；当前没有 Word、字典与 DWG 的整体回滚保证。两端同时编辑同一字典的竞争情形仍需专门回归。
+- 自动导出发生在 Word 完成保存之前。本机程序化 Save As 改名/换目录验收确认：保存事件会先更新旧路径的 JSON，新路径需要随后再普通保存一次或手动导出；交互式取消 Save As 尚未验收。当前没有 Word、字典与 DWG 的整体回滚保证，两端并发写入仍需专门回归。
 - Word 导出失败时查看文档目录的 `autoexport-error.txt`；检查文档是否已有路径、多 DWG 是否已手动选择目标、目录是否可写以及字典/备份是否被占用。
 - CAD 插件已能加载时用 `PATDOCTOR` / `BZD` 检查。插件连命令都无法加载时，运行对应包的外部 `doctor-<年份>.vbs`（旧版）或 `doctor-2025.ps1`；诊断可从离线检查升级为启动 CAD 的在线检查，运行前保存工作并阅读脚本提示。
 
@@ -134,20 +135,21 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 2015 | `install-2015.vbs` | 适用于 AutoCAD 2015~2024，DLL 已内嵌 Newtonsoft.Json |
 | 2025 | `install-2025.ps1` | 对应 2025/2026+ 版本组；脚本运行后生成 LSP 供 APPLOAD 加载，也可直接 NETLOAD 对应 DLL |
 
-五套部署包都包含对应版本的 `PatentMarker.dll`、安装/卸载及诊断脚本、`install-vba.vbs` 和 8 个 VBA 文件。不要把不同 AutoCAD 年份的 DLL 混用。
+五套部署包都包含对应版本的 `PatentMarker.dll`、CAD 安装/卸载及诊断脚本、Word 的 `PatentMarker.dotm` / `install-vba.vbs` / `uninstall-vba.vbs`，以及 9 个 VBA 真源文件。不要把不同 AutoCAD 年份的 DLL 混用。
 若 PowerShell 策略阻止脚本启动，脚本也无法生成 LSP；此时可在 CAD 中用 `NETLOAD` 选择匹配版本的 DLL。
 2025 安装脚本会合并 HKCU/HKLM，枚举 R25.0、R25.1、R26.0 中的全部配置并逐一写入 HKCU，支持 AutoCAD 2025/2026 并存安装。
 2007/2010/2013/2015 安装脚本也会合并 HKCU/HKLM，枚举各自支持范围内的全部注册表配置并逐一写入，支持这些年份的并存安装；2010 卸载脚本会同步清理其生成的 acad.lsp 片段。
 
 ### 验证范围与开发命令
 
-以下汇总 [开发记录](docs/development-log.md) 与 [维护记录](docs/maintainability-repair-plan.md) 中的证据；本轮还重新执行了结构/静态检查、版本同步、2025 单测、四版模拟宿主、Word COM 面板/导出回归和 Word 安装器回放：
+以下汇总 [开发记录](docs/development-log.md)、[本轮 Word VBA 验收记录](docs/word-vba-acceptance-2026-09-13.md) 与 [维护记录](docs/maintainability-repair-plan.md) 中的证据。Word 证据明确分层，源码直导入不能替代安装后自动启动：
 
 | 层级 | 已有记录 | 不能据此推断 |
 |---|---|---|
 | 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
 | 自动化测试 | 2025 单测 120/120；2007/2010/2013/2015 契约模拟各 33/33 | 真实 AutoCAD 宿主 API、面板交互或 Word 2010 安装结果已通过 |
-| Word COM | 8 份脱敏语料与 VBA 基线对比；面板导入、导出开关、多 DWG 自动导出目标准备与普通保存、路径映射、JSON 可见性、安装器正式安装及错误 `.frm` 回放 | Word 2010 真机、所有旧位数、完整 Save As 分支已覆盖 |
+| Word L2 源码宿主 | `verify-vba-export.vbs` 与已从忽略规则中放行的正式 `test-vba-panel.vbs` 直接导入根源码，覆盖路径映射、多 DWG 选择复用、普通保存/失败取消，以及组件类型、公开入口、UserForm 与手动导出 | 部署包安装、Startup、AutoExec 或重启持久化已通过 |
+| Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
 | AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
 
 CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测和四版 Simulation。Autodesk SDK 不入库，因此 CI 不做五版真实编译，也不运行 Word 或 AutoCAD GUI。
@@ -163,7 +165,17 @@ dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --con
 ./build.ps1 -Version 2025        # 编译对应版本；可换其他年份或 all
 ./check-api-contract.ps1 -Version all # SDK 元数据检查，当前仅含 2010/2013/2015/2025
 ./check-autocad-host.ps1          # 只读检查本机 AutoCAD/COM/许可服务
-cscript //nologo ./tools/verify-vba-export.vbs ./vba # 真实 Word；直接导入源码，非安装器测试
+cscript //nologo ./tools/verify-vba-export.vbs ./vba # L2：直接导入源码，非安装器/启动测试
+cscript //nologo ./tools/test-vba-panel.vbs ./vba   # L2：组件/公开入口/UserForm/手动导出
+./vba-sync.ps1                     # 根 VBA 真源同步到五套部署源码
+cscript //nologo ./tools/build-vba-addin.vbs ./vba ./word-addin/PatentMarker.dotm
+./tools/verify-dotm-package.ps1 -Path ./word-addin/PatentMarker.dotm # vbaProject + AutoExec 宏元数据
+./sync-word-addin.ps1              # 规范 dotm、Word 安装/卸载脚本同步到五包
+./vba-sync.ps1 -Check              # 漂移时返回非零；不能只看输出中的 PASS 字样
+./sync-word-addin.ps1 -Check       # 漂移时返回非零；逐字节核对三项 Word 安装资产
+./tools/verify-word-sync-gates.ps1 # 临时故障注入：漂移必须失败且 -Check 不得写文件
+powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/verify-vba-installer.ps1 # L2 隔离安装/回滚/哨兵
+powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/verify-vba-installed-e2e.ps1 -ExtendedMatrix -KeepArtifacts # L4：真实 Startup 扩展矩阵
 ```
 
 2007/2010 需要传统 MSBuild；2013/2015 在缺少 MSBuild.exe 时可利用本机准备的引用程序集与 dotnet msbuild；2025 为 SDK 风格工程。SDK、引用程序集和 ILRepack 等本地依赖不是仓库自带的完整环境，先检查再构建。
@@ -172,11 +184,11 @@ cscript //nologo ./tools/verify-vba-export.vbs ./vba # 真实 Word；直接导�
 
 ### 源码同步与发布
 
-- Word 源码只改根 `vba/`，运行 `./vba-sync.ps1` 同步五套部署包，再核对哈希。`-Check` 当前发现漂移仅输出 `[DRIFT]`，不能只凭退出码判断通过；打包器另有根真源一致性断言。
+- Word 源码只改根 `vba/`：先运行 `./vba-sync.ps1`，重新生成规范 `word-addin/PatentMarker.dotm`，再运行 `./sync-word-addin.ps1`。构建器会补齐并验证 Word 用于发现 `ShowPatentDictPanel`、`AutoExec`、`AutoExit` 的包内宏元数据；两个同步脚本的 `-Check` 发现漂移都会非零退出，`build.ps1 -Static` 和打包器还会把五套部署副本逐一与规范源比较。
 - MLeader 命令在选定版本修改后运行 `./sync-mleader-group.ps1 -SourceVersion <年份>`，再运行 `./check-version-sync.ps1`。默认源是 2010，修改其他版本时须显式指定，避免覆盖新代码。
 - `./package.ps1 -Version <年份或all>` 将已有构建产物写入新暂存目录，并为 2013/2015 合并 Newtonsoft.Json、检查外部引用。检查暂存后，用 `-Apply` 更新部署 DLL（会备份旧 DLL）。打包不代替编译；DLL、VBA、安装器及说明必须对应同一交付状态。
 - Word VBA 文本和部分安装脚本使用 GBK/CP936；编辑前检查实际编码。`.frm/.frx` 配对维护，二进制窗体资源经 Word 设计器生成；字典输出为 UTF-8 无 BOM。
-- 修改 `clsSaveHook.cls` 时还需核对五套安装器的源码提取/注入逻辑。源码测试、部署文件哈希和用户安装结果是不同的验证层次。
+- 修改 `clsSaveHook.cls` 或启动入口后，必须重新生成 dotm，并分别执行源码直导入回归与真实 Startup 全新进程回归。源码测试、部署文件哈希和安装后行为属于不同证据层，不能相互替代。
 
 ### 命令清单
 
@@ -204,11 +216,12 @@ cscript //nologo ./tools/verify-vba-export.vbs ./vba # 真实 Word；直接导�
 | `JsonWriter.bas` | JSON 序列化 |
 | `PatentExtractor.bas` | 保留兼容的占位模块；当前提取流程由 AutoExport 调用 DictModel |
 | `AutoExport.bas` | 面板入口、自动导出开关、路径映射及导出编排 |
-| `clsSaveHook.cls` | DocumentBeforeSave 事件监听；五套安装器从该文件提取干净代码后注入 |
+| `PatentMarkerBootstrap.bas` | Startup 全局模板的 `AutoExec` / `AutoExit` 生命周期入口 |
+| `clsSaveHook.cls` | DocumentBeforeSave 事件监听；由生成器编入全局模板 |
 | `PatentDictPanel.frm` | Word 工具面板定义与事件代码 |
-| `PatentDictPanel.frx` | 配套二进制窗体资源，手动导入 `.frm` 时需在同一目录；正式安装器通过设计器重建窗体 |
+| `PatentDictPanel.frx` | 配套二进制窗体资源，生成 `PatentMarker.dotm` 时与 `.frm` 一起导入 |
 
-共 7 个 VBA 组件、8 个物理文件；唯一手动宏入口为 `ShowPatentDictPanel`。
+共 8 个 VBA 组件、9 个物理源文件；唯一支持的手动宏入口为 `ShowPatentDictPanel`，`AutoExec` / `AutoExit` 仅供 Word 生命周期调用。生成的规范全局模板位于 `word-addin/PatentMarker.dotm`。
 
 ### 目录结构
 
@@ -225,7 +238,7 @@ PatentCAD-Annotator/
 │   ├── 2013/               # AutoCAD 2013~2014（MLeader F 方案，.NET 4.0）
 │   ├── 2015/               # AutoCAD 2015~2024（MLeader F 方案，.NET 4.5）
 │   └── 2025/               # AutoCAD 2025~2026+（MLeader F 方案，.NET 8.0）
-├── vba/                     # 8 个 Word VBA 文件真源（含 .frm/.frx，vba-sync.ps1 同步到部署包）
+├── vba/                     # 8 个组件、9 个 Word VBA 物理真源（含配对 .frm/.frx）
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -343,8 +356,8 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 ### Quick start
 
 1. Choose `PatentMarker-<year>-deploy/` for your AutoCAD and extract the complete package into a writable, stable directory. Keep the DLL, scripts and entire `vba/` folder together.
-2. Save and close Word documents, then run `install-vba.vbs` to install into the Normal template. The package contains **7 VBA components in 8 files**, including the paired `.frm/.frx`. The installer validates the pair but does not rely on the fragile `.frm` import path: it extracts the code section, creates a type-3 UserForm with `VBComponents.Add(3)` and `Designer.Controls.Add`, and injects the event code.
-3. Open and save the Word document. Use Alt+F8 → `ShowPatentDictPanel` and check the status. If the folder contains multiple DWGs, the first time you enable “Auto-export on save” the panel asks you to choose a target; you may also choose one through manual export. After the target is selected, an ordinary Word save creates the JSON named after that DWG. After a first save or Save As, save again or export from the final location.
+2. Save work and close every Word window, then run `install-vba.vbs`. It byte-verifies and installs the prebuilt `PatentMarker.dotm` into Word's Startup folder. It **does not open, edit, or save `Normal.dotm` and does not require AccessVBOM**. Repeated installs preserve recoverable backups; use `uninstall-vba.vbs` to remove only the owned add-in.
+3. Restart Word. The Startup add-in attaches the save event through `AutoExec`. Open and save the document, then use Alt+F8 → `ShowPatentDictPanel` to inspect status or export manually. With multiple DWGs, select a target once; later ordinary saves reuse it. After a first save or Save As, save again or export from the final location.
 4. Run the matching CAD installer below. Open the target DWG and run `BZ`.
 5. Single-click selects; double-click or `BZM` starts marking. F2/right-click edits entries, `BZC` checks missing annotations, and `BZS` followed by `BZA` selects and aligns annotations.
 
@@ -352,11 +365,12 @@ Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README
 
 ### Known limitations and diagnosis
 
-- **Word 2010 still needs real-host acceptance**: the installer always extracts the `.frm` code section and rebuilds `PatentDictPanel` with `VBComponents.Add(3)` and `Designer.Controls.Add`, avoiding the old-host path that exposes `VERSION`/`Begin`/`OleObjectBlob` as code. The original `Normal.dotm` is backed up before changing VBA and restored after a save failure. Formal installation and a malformed-`.frm` replay passed on local Word 2024; this is not a claim that Word 2010 or both Office bitnesses have passed.
-- **Installed save-failure protection follows the source**: all five installers extract and inject the clean body of `vba/clsSaveHook.cls`, including cancellation of an ordinary save with an existing path when export fails. Word 2010 still needs real-host acceptance.
+- **Word 2010 still needs real-host acceptance**: the generated add-in and fresh-process Startup flow passed on local Word 16.0 64-bit. This does not establish compatibility with Word 2010, 32-bit Office, or different macro policies.
+- **Normal is outside the installer boundary**: legacy releases may have left PatentMarker components in `Normal.dotm`; the new installer deliberately does not remove them. Inventory and migration require a separate, recoverable operation that proves unrelated user macros are unchanged.
+- **Diagnostics**: lifecycle, hook, save-event, path and export stages are written to `%LOCALAPPDATA%\PatentMarker\Logs\word-vba-YYYYMMDD.tsv` under a per-run ID. `autoexport-error.txt` is only the short document-local failure note.
 - **Automatic-export target selection**: when the folder contains multiple DWGs and the document has no target yet, enabling “Auto-export on save” asks for a target instead of silently guessing. Once selected, an ordinary save creates the JSON for that DWG.
 - Regression VBS files create temporary `.docm` files under `%TEMP%\PatentMarker*`; they now close every document and delete their own test `.docm` on both success and explicit failure while retaining logs and JSON diagnostics. Artifacts from older runs may need manual cleanup.
-- Auto-export runs before Word finishes saving. First saves, Save As and cancelled Save As can affect the output path. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
+- Auto-export runs before Word finishes saving. A programmatic rename/move Save As on the local host updated the old-path JSON first; the new-path JSON required one later ordinary save or a manual export. Interactive Save As cancellation remains untested. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
 - For export failures, check `autoexport-error.txt`, the document path, whether a target was selected when multiple DWGs were present, write access and file locks.
 - Use `PATDOCTOR` / `BZD` when the plugin loads. Otherwise use the package's external `doctor-<year>.vbs` or `doctor-2025.ps1`; it can escalate from offline checks to launching CAD, so save work and review its prompts first.
 
@@ -370,7 +384,7 @@ Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README
 | 2015 | `install-2015.vbs` | AutoCAD 2015~2024; Newtonsoft.Json is merged into the DLL |
 | 2025 | `install-2025.ps1` | 2025/2026+ edition group; generates an LSP for APPLOAD when the script runs; direct NETLOAD is also available |
 
-Each package contains the matching `PatentMarker.dll`, installation/uninstallation and diagnostic scripts, `install-vba.vbs`, and eight VBA files. Do not mix DLLs between AutoCAD year ranges. If policy prevents the PowerShell script from starting, no LSP can be generated; use `NETLOAD` with the matching DLL.
+Each package contains the matching `PatentMarker.dll`, CAD installation/uninstallation and diagnostics, the Word `PatentMarker.dotm` / `install-vba.vbs` / `uninstall-vba.vbs` assets, and nine canonical VBA source files. Do not mix DLLs between AutoCAD year ranges. If policy prevents the PowerShell script from starting, no LSP can be generated; use `NETLOAD` with the matching DLL.
 The 2025 installer enumerates detected R25.0, R25.1, and R26.0 profiles and registers each one in HKCU, so side-by-side AutoCAD 2025/2026 installs are covered.
 All five installers and uninstallers merge HKCU/HKLM profile lists, process every supported configuration, and de-duplicate repeated profiles; the 2010 uninstaller also removes generated `acad.lsp` fallback blocks.
 
@@ -391,24 +405,25 @@ All five installers and uninstallers merge HKCU/HKLM profile lists, process ever
 
 ### Verification and development
 
-The following summarizes evidence in [the development log](docs/development-log.md) and [maintenance notes](docs/maintainability-repair-plan.md); this change also reran the structure/static checks, version synchronization, the 2025 suite, four simulated host suites and the Word COM palette regression.
+The following summarizes evidence in [the development log](docs/development-log.md), [this Word VBA acceptance record](docs/word-vba-acceptance-2026-09-13.md), and [maintenance notes](docs/maintainability-repair-plan.md). Word evidence is deliberately layered: importing source into a test document is not evidence that an installed Startup add-in initialized itself.
 
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
 | Automated tests | 2025: 120/120; 2007/2010/2013/2015 simulations: 33/33 each | Real host APIs, GUI and installed Word code |
-| Word COM | Eight corpus cases, form import, export toggle, mapping, JSON visibility and visible-file manual-edit backup checks | Installer-injected code, older Word/bitness and all Save As branches |
+| Word L2 source host | `verify-vba-export.vbs` and the formal `test-vba-panel.vbs` (now explicitly unignored) import root source and check mapping, ordinary save/failure cancellation, component types, public entry points, the UserForm, and manual export | Deployment install, Startup loading, AutoExec or restart persistence |
+| Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
 | AutoCAD 2026 | 2025 DLL command checks for marking, checking, alignment, chain validation and persistence; 1.0.2 marking/brace smoke checks | Interactive palette/dialogs, legacy drawings and older AutoCAD hosts |
 
 [CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite and four simulated host suites. It does not compile the five production DLLs without the locally supplied Autodesk SDK, or run Word/AutoCAD GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
 
-Edit Word code in root `vba/`, then run `./vba-sync.ps1`. Its `-Check` currently only reports drift, so inspect output/hashes instead of trusting exit status alone. Edit the MLeader group in one chosen edition and run `./sync-mleader-group.ps1 -SourceVersion <year>` before the consistency check. The default source is 2010.
+Edit Word code only in root `vba/`, run `./vba-sync.ps1`, rebuild `word-addin/PatentMarker.dotm`, verify its VBA project and macro-discovery metadata with `tools/verify-dotm-package.ps1`, and then run `./sync-word-addin.ps1`. Both synchronization scripts return a nonzero exit code on `-Check` drift, while `build.ps1 -Static` independently compares every deployment copy with its canonical source. Edit the MLeader group in one chosen edition and run `./sync-mleader-group.ps1 -SourceVersion <year>` before the consistency check. The default source is 2010.
 
 Corpus fixtures live in [Fixtures/vba-corpus](cad-plugin/2025/PatentMarker.Tests/Fixtures/vba-corpus/). Copy them to a temporary directory before running `cscript //nologo ./tools/generate-vba-corpus.vbs ./vba <temporary-corpus-directory>`; the generator overwrites that directory's expected-output file. Review differences before updating the tracked baseline.
 
 For local builds, supply SDK DLLs in each edition's `PatentMarker/lib/`: acdbmgd/acmgd for 2007/2010, plus accoremgd for later editions. Newtonsoft.Json 13.0.3 uses the net35 asset for 2013 and net45 for 2015. `./package.ps1 -Version <year-or-all>` stages existing builds, merges Newtonsoft for those two editions and checks assembly references; review the stage before using `-Apply` to update deployment DLLs. Packaging does not compile source.
 
-The source tree uses linked `cad-plugin/Shared/` files, version-specific runtime/JSON adapters and a seven-file MLeader command group. Word has five .bas files, clsSaveHook.cls and PatentDictPanel.frm/.frx; PatentExtractor.bas is a compatibility placeholder. Preserve text encodings (many VBA/VBS files use GBK/CP936), keep form resources paired, and inspect the installer’s source extraction/injection when changing the save hook.
+The source tree uses linked `cad-plugin/Shared/` files, version-specific runtime/JSON adapters and a seven-file MLeader command group. Word has six `.bas` files, `clsSaveHook.cls`, and the paired `PatentDictPanel.frm/.frx`: eight components and nine physical source files. `PatentExtractor.bas` is a compatibility placeholder. Preserve text encodings (many VBA/VBS files use GBK/CP936), keep form resources paired, rebuild the canonical add-in after source changes, and rerun both the source-host and installed-host checks when changing save behavior.
 
 ### Version
 

@@ -1,6 +1,6 @@
 PatentMarker 2025 部署说明
 ===========================
-版本：1.0.2 candidate (2026-09-05)  待发布
+版本：1.0.3 candidate (2026-09-12)  待发布
 
 
 目标环境：AutoCAD 2025 / 2026+ (R25.0+)，Windows 10+
@@ -31,11 +31,19 @@ PatentMarker 2025 部署说明
   命令行输入 BZ，应弹出字典面板。
 
 Word 端：
-  将 vba/ 下的所有文件导入 Word Normal 模板（包括 PatentDictPanel.frm 和 .frx）
-  安装后运行宏 ShowPatentDictPanel 打开"专利标注字典工具"面板
+  - PatentMarker.dotm 是由根 vba/ 的 8 个组件、9 个物理文件生成的全局模板。
+  1. 关闭 Word，双击 install-vba.vbs；脚本会逐字节校验后把 PatentMarker.dotm
+     安装到 Word Startup。安装器不打开、保存或替换 Normal.dotm，也不要求 AccessVBOM。
+  2. 正常重启 Word。全局模板通过 AutoExec 初始化保存事件；运行宏
+     ShowPatentDictPanel 可打开"专利标注字典工具"面板。
+  3. 卸载 Word 模板时运行 uninstall-vba.vbs；脚本只处理本产品文件并保留可恢复备份。
+  验证边界：本候选仅在 Word 16.0 64 位完成 L4；Word 2010、32 位和不同宏策略仍待目标环境验收。
+  失败保护：已有 JSON 被占用或设为只读时，普通保存会取消并保留原内容与文件属性；解除故障后可再次保存。
+  Save As 边界：改名/换目录时先更新旧路径；请在新路径再普通保存一次或手动导出。
   导出规则：目录无 DWG 时使用 Word 文件名；有多个 DWG 时点击“手动导出字典”选择目标，
     按所选 DWG 主名生成字典。自动保存只复用当前文档已选目标，未选择时拒绝写入并记录
     autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，Save As 会先允许建立路径。
+  诊断日志：%LOCALAPPDATA%\PatentMarker\Logs\word-vba-YYYYMMDD.tsv
 
 卸载：
   运行 uninstall-2025.ps1（PowerShell），清理注册表自动加载条目和生成的

@@ -1,5 +1,5 @@
 ============================================
-PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
+PatentMarker 2007 安装说明 (1.0.3 candidate - 2026-09-12, 待发布)
 ============================================
 
 【系统要求】
@@ -15,16 +15,19 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
   install-2007.bat            步骤1: BAT 快捷方式
   uninstall-2007.vbs          卸载 CAD 插件
   doctor-2007.vbs            诊断脚本 (CAD 外排查, 见下方【诊断】)
-  install-vba.vbs             步骤2: 安装 VBA 到 Normal 模板
+  PatentMarker.dotm           Word 全局加载模板 (由根 vba\ 唯一真源生成)
+  install-vba.vbs             步骤2: 安装 Word 模板到 Startup (不修改 Normal.dotm)
+  uninstall-vba.vbs           可恢复卸载 Word 模板
   load-patent-marker.lsp      CAD 加载脚本 (安装时自动部署)
-  vba\
+  vba\                        Word VBA 源文件 (8 个组件、9 个物理文件)
     Patterns.bas              VBA 模块
     DictModel.bas             VBA 模块
     JsonWriter.bas            VBA 模块
     PatentExtractor.bas       VBA 模块
     AutoExport.bas            VBA 模块
+    PatentMarkerBootstrap.bas VBA 启动入口模块
     clsSaveHook.cls           VBA 类模块
-    PatentDictPanel.frm/.frx   面板 UserForm（窗体及二进制布局）
+    PatentDictPanel.frm/.frx  面板 UserForm（窗体及二进制布局）
 
 【安装步骤】
 
@@ -51,22 +54,17 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
        - 输入 NETLOAD 命令
        - 选择 PatentMarker.dll
 
-  步骤2: 安装 VBA 模块 (Word Normal 模板)
-  ----------------------------------------
-  1. 打开 Word 并启用 VBA 宏运行权限:
-     - 文件 > 选项 > 信任中心
-     - 信任中心设置 > 宏设置
-     - 勾选: 信任对 VBA 工程对象模型的访问
-     - 宏安全设置: 禁用所有宏并发出通知
-     - 确定
-  2. 关闭所有 Word 窗口 (避免 Normal.dotm 被占用)
-  3. 双击 install-vba.vbs
-  4. 脚本自动:
-     - 获取 Normal.dotm 路径
-     - 打开 Normal.dotm
-     - 导入 7 个 VBA 文件（6 个模块 + 1 个面板 UserForm）
-     - 保存 Normal.dotm
-  5. 打开 Word 文档即可使用宏
+  步骤2: 安装 Word 全局模板 (Startup)
+  ------------------------------------
+  1. 关闭所有 Word 窗口
+  2. 双击 install-vba.vbs
+  3. 脚本自动解析 Word Startup 路径，逐字节校验后安装 PatentMarker.dotm
+  4. 安装器不打开、保存或替换 Normal.dotm，也不要求信任 VBA 工程对象模型 (AccessVBOM)
+  5. 正常重启 Word；全局模板通过 AutoExec 初始化保存事件
+  6. 如需卸载，运行 uninstall-vba.vbs；脚本只处理本产品文件并保留可恢复备份
+  注意: 当前候选模板仅在 Word 16.0 64 位完成 L4；Word 2010 和 32 位 Office 仍需现场验收。
+  失败保护: 已有 JSON 被占用或设为只读时，普通保存会取消并保留原内容与文件属性；解除故障后可再次保存。
+  Save As 边界: 改名/换目录时先更新旧路径；请在新路径再普通保存一次或手动导出。
 
   步骤3: 验证
   -----------
@@ -149,12 +147,13 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
     PATBRACEEDIT        通过控制点或输入高度/宽度调整大括号
     第三点决定中部尖点方向和宽度；完整轮廓保持在端点轴线与尖点之间，直干位于所选宽度中线
 
-  Word (VBA, 在 Normal 模板):
+  Word (VBA, Startup 全局模板):
     ShowPatentDictPanel  打开"专利标注字典工具"面板
     面板功能: "手动导出字典"按钮 + "保存时自动导出"开关
      导出规则: 目录无 DWG 时使用 Word 文件名；有多个 DWG 时点击“手动导出字典”选择目标，
        按所选 DWG 主名生成字典。自动保存只复用当前文档已选目标，未选择时拒绝写入并记录
        autoexport-error.txt。已有路径的普通保存在导出失败时会取消保存，Save As 会先允许建立路径。
+     诊断日志: %LOCALAPPDATA%\PatentMarker\Logs\word-vba-YYYYMMDD.tsv
 
 
 【诊断】
@@ -174,7 +173,7 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
 【卸载】
 
   1. 运行 uninstall-2007.vbs (删除 CAD 注册表)
-  2. Word 中: Alt+F11 > Normal > 删除 7 个模块
+  2. 运行 uninstall-vba.vbs (可恢复移除本产品 Word Startup 模板)
   3. 删除部署文件夹
 
 【常见问题】
@@ -185,12 +184,13 @@ PatentMarker 2007 安装说明 (1.0.2 candidate - 2026-09-05, 待发布)
       用 APPLOAD 添加 load-patent-marker.lsp,
       或 NETLOAD 加载 PatentMarker.dll。
 
-  问: VBA 安装提示 Normal 模板只读
-  答: 关闭所有 Word 窗口后重试。
-      Normal.dotm 被 Word 占用时会只读。
+  问: VBA 安装提示 Word 正在运行
+  答: 保存工作并关闭所有 Word 窗口后重试。安装器拒绝在 Word 运行时替换全局模板。
 
-  问: VBA 安装提示无法访问 VBA 工程
-  答: 在 Word 信任中心勾选"禁用 VBA 工程对象模型的访问"。
+  问: 如何确认自动导出钩子是否初始化
+  答: 打开工具面板查看诊断状态，并检查
+      %LOCALAPPDATA%\PatentMarker\Logs\word-vba-YYYYMMDD.tsv。
+      当前安装器不会访问或修改 Normal.dotm，也无需启用 AccessVBOM。
 
   问: CAD 找不到 dict.json
   答: dict.json 必须与 .dwg 文件在同一文件夹,

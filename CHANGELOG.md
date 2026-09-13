@@ -8,22 +8,38 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ***
 
-## [Unreleased] - 1.0.3 candidate (2026-09-08)
+## [Unreleased] - 1.0.3 candidate (2026-09-13)
 
 ### Added
 
 - CAD 的字典面板现在可以用“显示 JSON/隐藏 JSON”切换当前 `.dict.json` 的 Explorer 可见性；Word 面板提供对应的手动编辑开关。切换只改变 Hidden/System 文件属性，不改变 JSON 内容。
 - Word 与五个 CAD 版本的字典写回会保留用户选择的可见状态，新建字典仍默认隐藏；增加了 2025 版属性往返和写回保留测试。
+- 新增由根 VBA 真源构建的 `PatentMarker.dotm` 全局模板、配套 Startup 安装/卸载器、生命周期诊断日志，以及严格区分 L2 源码直导入与 L4 安装后正常启动的回归脚本。
+- 新增 DOTM 包内宏发现元数据门禁及安装后扩展矩阵；扩展矩阵使用第二个正常 Word 新进程覆盖多文档隔离、Save As 改名/换目录、锁定/只读字典失败与恢复、Word 运行中拒绝安装及卸载，并逐项输出业务断言。
 
 ### Fixed
 
-- 修复 Word VBA 安装器在旧版 Word 上直接导入 `PatentDictPanel.frm` 后把窗体头当作普通模块代码、触发“无效外部过程”的问题。五套安装器现在校验 `.frm/.frx` 配套资产，提取 `.frm` 代码段，通过 `VBComponents.Add(3)` 和 `Designer.Controls.Add` 创建真实 UserForm，再注入代码；已有面板会先改名，避免同一模板会话中删除后立即复用名称触发错误 75。
-- 修复安装器注入旧版 `clsSaveHook` 的漂移：现在五套安装器都从当前 `clsSaveHook.cls` 提取并注入干净代码，并在退出前释放自动导出事件钩子、关闭其创建的文档和 Word 实例。
+- 修复“手动导出有效、关闭并重新启动 Word 后普通保存仍不自动导出”：旧路径依赖文档 `AutoOpen`，既没有可靠的全局启动入口，旧回归又通过测试夹具直接启用钩子。现在 Startup 全局模板使用 `AutoExec` 幂等初始化模块级 `WithEvents` 保存钩子，并由 `AutoExit` 释放；本机 Word 16.0 64 位已用正常 `WINWORD.EXE` 全新进程验证普通保存直接生成并解析 JSON。
+- 修复 Word 安装器可能覆盖 `Normal.dotm`、进而丢失用户宏的架构风险。五套安装器不再导入或保存 Normal，只对预构建 `PatentMarker.dotm` 做暂存、逐字节校验、可恢复替换和所有权清单；卸载器只移动本项目文件。隔离故障注入已验证安装/卸载中途失败回滚，真实 Startup 验证中 Normal 与非产品模板 SHA-256 均不变。
+- 修复 `vba-sync.ps1 -Check` 发现漂移仍返回成功的问题，并增加 `sync-word-addin.ps1 -Check`；静态门禁会在临时副本中故意制造两类漂移，断言检查非零退出且不写文件，构建/打包同时校验规范 VBA、加载项、安装器和卸载器与五套部署包一致。
+- 修复正式面板回归被宽泛 `*test*.vbs` 忽略、干净检出可能缺少测试的问题：`.gitignore` 明确放行 `tools/test-vba-panel.vbs`，Structure 门禁强制要求完整 Word L2/L4 工作流资产存在；面板回归按签名核对 3 个无参公开入口，不再误计带参数的诊断过程。
+- 修复安装后黑盒探针过早枚举 Word Templates 的竞态：附加 COM 后会在有限超时内等待指定 Startup 模板和 ENABLED 钩子，超时则输出实际加载模板，而不把“COM 已可用”误当成启动完成。
+- 修复重新生成的 DOTM 虽含 `vbaProject.bin`、但缺少 `vbaData.xml` 及关系而导致模板已加载但 `AutoExec` 未运行的问题。构建器现在确定性补齐并验证恰好 3 个公开宏的发现元数据；Structure、Static 与打包均把它作为硬门禁。
+- 修复导出到已存在字典失败时把 Hidden/System 等原属性清零的问题。VBA 现在记录并在成功或失败路径恢复完整原始属性；锁定和只读故障注入同时断言旧 JSON、属性和 Word 未保存状态均保持不变。
+- 修复 ADODB 写入失败后先关闭一个已关闭 stream 触发次生错误、导致本次 `.tmp-*` 字典残留的问题；错误清理会分别检查两个 stream 状态并继续删除唯一临时文件。
+- 修复 Word 退出时 VBA 状态已被宿主清空后，`AutoExit` 又创建一个仅含 `hook.release` 的伪 run ID。关闭路径现在只沿用已存在的诊断会话；L4 会比较退出前后日志并拒绝任何外来 run ID。
 - 修复 Word 回归 VBS 在异常路径未关闭测试文档、导致后续启动 Word 弹出多个 `.docm` 的问题。各脚本现在只清理自己创建的测试文档，同时保留日志和 JSON 诊断文件。
 - 修复 Word 面板复选框将 MSForms 的 `True/-1` 错判为数值 `1` 的问题。现在“保存时自动导出”勾选后会正常启用；多 DWG 文档还会先要求选择目标 DWG，选择成功后保存事件直接复用该目标，不猜测其他图纸；“显示 JSON”开关也同步修正。
 
-- Fixed legacy-host VBA installation by avoiding direct `PatentDictPanel.frm` import: all five installers validate the `.frm/.frx` pair, extract the `.frm` code section, create a real type-3 UserForm with `VBComponents.Add(3)` and `Designer.Controls.Add`, and inject the code. An existing panel is renamed before replacement so same-session form-name reuse does not trigger error 75.
-- Fixed installer/source drift for `clsSaveHook`: each installer now injects the clean body extracted from the current class source and releases the auto-export event sink, documents, and Word instance it created during shutdown.
+- Fixed auto-export remaining inactive after a Word restart. The old document `AutoOpen` path and source-import harness did not prove global initialization; the Startup add-in now initializes the module-held `WithEvents` sink through `AutoExec` and releases it through `AutoExit`. A normal fresh `WINWORD.EXE` process on local 64-bit Word 16.0 created and parsed the expected JSON through an ordinary save without calling a test initializer or manual export.
+- Replaced the risky Normal-template installer architecture. All five packages now install a byte-verified prebuilt `PatentMarker.dotm` into Word Startup without opening, editing, or saving `Normal.dotm`; upgrades and uninstalls preserve recoverable product backups and use an ownership manifest. Isolation fault injection verifies install/uninstall rollback, while the real-Startup run verifies unchanged hashes for Normal and unrelated templates.
+- Fixed `vba-sync.ps1 -Check` returning success on drift and added a nonzero `sync-word-addin.ps1 -Check`; the static gate now fault-injects both drift classes and asserts nonzero, read-only checks, while build/package gates compare canonical VBA, add-in, installer, and uninstaller assets against every deployment.
+- Fixed the formal panel regression being excluded by the broad `*test*.vbs` ignore rule. The file is explicitly unignored, Structure requires the complete Word L2/L4 workflow in a clean checkout, and the probe now checks the exact three no-argument public entry points instead of counting parameterized diagnostic procedures.
+- Fixed a race in the installed-host probe: after attaching to Word COM it now waits, with a deadline, for the exact Startup template and an enabled hook, and reports the loaded template set on timeout instead of treating COM availability as completed startup.
+- Fixed rebuilt DOTM packages that contained `vbaProject.bin` but omitted `vbaData.xml` and its relationship, leaving the template loaded while `AutoExec` never ran. The build now deterministically finalizes and verifies discovery metadata for exactly three public macros, and Structure, Static, and packaging enforce it.
+- Fixed failed overwrites clearing an existing dictionary's Hidden/System and other attributes. VBA restores the exact original attributes on both success and failure; locked and read-only fault injection also asserts unchanged JSON and a cancelled Word save.
+- Fixed a secondary ADODB stream-close error preventing cleanup of the current `.tmp-*` dictionary after a failed write. Cleanup now checks both stream states independently before deleting the uniquely named temporary file.
+- Fixed Word shutdown creating a diagnostics-only foreign run ID after the VBA host had already cleared module state. Shutdown now reuses an existing session or stays silent, and L4 rejects any foreign run ID appended during process exit.
 - Fixed regression VBS cleanup on failure paths; each script now closes and deletes only its own generated `.docm` files while retaining logs and JSON diagnostics.
 - Fixed Word panel checkbox handling: MSForms checked values (`True/-1`) are no longer misread as numeric `1`, so “Auto-export on save” actually enables; the JSON visibility switch uses the same boolean-safe path. For multiple DWGs, enabling auto-export asks for a target when none has been selected, and later ordinary saves reuse it.
 

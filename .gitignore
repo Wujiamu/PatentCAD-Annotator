@@ -25,6 +25,8 @@ DLL/
 
 # ---- 测试用 VBS 脚本 ----
 *test*.vbs
+# 正式 Word L2 面板回归属于发布门，必须随仓库交付。
+!tools/test-vba-panel.vbs
 
 # ---- 发布包 / 压缩包 ----
 *.zip

@@ -16,7 +16,8 @@ $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $canonical = Join-Path $root "vba"
 $versions = @("2007", "2010", "2013", "2015", "2025")
-$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
+$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "PatentMarkerBootstrap.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
+$driftCount = 0
 
 foreach ($file in $vbaFiles) {
     $src = Join-Path $canonical $file
@@ -27,6 +28,7 @@ foreach ($file in $vbaFiles) {
             # New module: not yet present in this deployment package
             if ($Check) {
                 Write-Host "[DRIFT] $ver/vba/$file missing (canonical has it)" -ForegroundColor Yellow
+                $driftCount++
             } else {
                 Copy-Item -LiteralPath $src -Destination $dst -Force
                 Write-Host "[ADD]   $ver/vba/$file <- vba/$file" -ForegroundColor Green
@@ -38,6 +40,7 @@ foreach ($file in $vbaFiles) {
         if ($srcHash -ne $dstHash) {
             if ($Check) {
                 Write-Host "[DRIFT] $ver/vba/$file differs from canonical vba/$file" -ForegroundColor Yellow
+                $driftCount++
             } else {
                 Copy-Item -LiteralPath $src -Destination $dst -Force
                 Write-Host "[SYNC] $ver/vba/$file <- vba/$file" -ForegroundColor Green
@@ -47,7 +50,11 @@ foreach ($file in $vbaFiles) {
 }
 
 if ($Check) {
-    Write-Host "VBA sync check complete (no writes)." -ForegroundColor Cyan
+    if ($driftCount -gt 0) {
+        Write-Host "VBA sync check failed: $driftCount drift item(s)." -ForegroundColor Red
+        exit 1
+    }
+    Write-Host "VBA sync check passed (no writes)." -ForegroundColor Green
 } else {
     Write-Host "VBA sync complete: canonical vba/ pushed to all five deploys." -ForegroundColor Cyan
 }

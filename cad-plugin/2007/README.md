@@ -57,7 +57,7 @@ copy PatentMarker-2007-deploy\* D:\PatentMarker\
 # 2. 运行安装脚本（写入 HKCU 注册表）
 cd D:\PatentMarker
 .\install-2007.vbs          # CAD 插件
-.\install-vba.vbs           # Word VBA 模块
+.\install-vba.vbs           # Word Startup 全局模板（先关闭 Word；不修改 Normal.dotm）
 
 # 3. 重启 AutoCAD 2007
 ```

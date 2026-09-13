@@ -1,6 +1,8 @@
 Option Explicit
 
-' verify-vba-export.vbs - exercise Word-side mapping and save failure policy.
+' verify-vba-export.vbs - L2 source-import check for mapping and save failure policy.
+' This deliberately imports source and invokes a harness; it is not installation,
+' fresh-process startup, or user-path evidence.
 ' Usage: cscript //nologo verify-vba-export.vbs <vba-directory>
 
 Dim fso, word, vbaDir, rootDir
@@ -134,7 +136,7 @@ word.Quit False
 Set word = Nothing
 WaitForWordProcessesToExit
 DeleteGeneratedDocuments rootDir
-WScript.Echo "PASS|Word export mapping and save-hook checks"
+WScript.Echo "PASS|L2_SOURCE_IMPORT|Word export mapping and save-hook checks"
 WScript.Quit 0
 
 Sub CloseAllWordDocuments()
@@ -211,7 +213,7 @@ Function OpenDoc(ByVal dir, ByVal name)
         On Error GoTo 0
         Fail "cannot save " & name & " (" & CStr(errNo) & "): " & errDesc
     End If
-    For Each moduleName In Array("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "clsSaveHook.cls", "AutoExport.bas")
+    For Each moduleName In Array("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "clsSaveHook.cls", "AutoExport.bas", "PatentMarkerBootstrap.bas")
         doc.VBProject.VBComponents.Import fso.BuildPath(vbaDir, moduleName)
         If Err.Number <> 0 Then
             errNo = Err.Number

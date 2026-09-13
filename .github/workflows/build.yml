@@ -12,10 +12,14 @@
 #   Job 1 - Structure Integrity:
 #     - All 5 edition csproj files exist and are parseable XML
 #     - Every <Compile Include> source file referenced by a legacy csproj exists
-#     - Each deploy package ships PatentMarker.dll and the 8 shared VBA files
-# (6 .bas/.cls + 1 .frm UserForm + 1 .frx binary blob)
+#     - Each deploy package ships PatentMarker.dll, the generated Word Startup
+#       add-in/install assets, and all 9 canonical VBA source files
+#     - Canonical Word build, L2/L4 verification, and synchronization gate tools
+#       are present in the clean checkout (not ignored local probes)
 #   Job 2 - Static Analysis:
-#     - VBA modules are identical across all 5 deploy packages
+#     - Every VBA/Word asset matches its canonical source in all 5 packages
+#     - Canonical DOTM contains vbaProject plus exact AutoExec/AutoExit/user-macro metadata
+#     - Fault injection proves both sync -Check commands reject drift and do not write
 #     - csproj TargetFramework matches the version matrix
 #     - C# source files stay consistent within edition groups (Leader / MLeader)
 #     - Deploy packages ship version-specific dependencies (e.g. Newtonsoft.Json)

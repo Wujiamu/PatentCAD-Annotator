@@ -1,58 +1,234 @@
 Attribute VB_Name = "AutoExport"
 Option Explicit
 
+Private Const PM_VERSION As String = "1.0.3"
+
 Private m_hook As clsSaveHook
 Private m_enabled As Boolean
 Private m_selectedDwgByDoc As Object
+Private m_runId As String
+Private m_logPath As String
+Private m_lastStatus As String
 
-' 单一入口宏：打开专利标注字典工具面板（唯一出现在 Word 宏列表中的过程）
+' The only user-facing macro shown in Word's macro list.
 Public Sub ShowPatentDictPanel()
+    If Not m_enabled Then Call InitializeAutoExport("PanelOpen")
     PatentDictPanel.Show
 End Sub
 
-' 自动导出状态读取（供面板勾选状态与初始化读取）
 Public Property Get IsAutoExportEnabled() As Boolean
     IsAutoExportEnabled = m_enabled
 End Property
 
-' 自动导出状态写入（供面板勾选事件调用）
 Public Property Let IsAutoExportEnabled(ByVal v As Boolean)
     If v Then
-        EnableAutoExport
+        Call InitializeAutoExport("PropertySet")
     Else
-        DisableAutoExport
+        DisableAutoExport "PropertySet"
     End If
 End Property
 
-' 打开文档时自动开启保存导出
-'（Private：不显示在宏列表中，但作为 Word 自动宏仍会自动执行）
-Private Sub AutoOpen()
-    EnableAutoExport
-End Sub
+Public Function InitializeAutoExport(Optional ByVal origin As String = "Unknown") As Boolean
+    On Error GoTo errHandler
+    EnsureDiagnosticState
+    WriteDiagnostic "hook.initialize", "START", _
+        "origin=" & origin & ";template=" & GetThisTemplatePath() & _
+        ";word_version=" & Application.Version & ";office_bitness=" & GetOfficeBitness()
 
-' Release the application event sink before Word shuts down.  Without this
-' AutoExit hook, a hidden COM-created Word instance can remain alive after
-' the installer or a regression script calls Application.Quit.
-Private Sub AutoExit()
-    DisableAutoExport
-End Sub
+    If m_enabled Then
+        WriteDiagnostic "hook.initialize", "PASS", "origin=" & origin & ";state=already_enabled"
+        InitializeAutoExport = True
+        Exit Function
+    End If
+
+    Set m_hook = New clsSaveHook
+    m_enabled = True
+    m_lastStatus = "自动导出已挂钩"
+    WriteDiagnostic "hook.initialize", "PASS", "origin=" & origin & ";state=enabled"
+    InitializeAutoExport = True
+    Exit Function
+
+errHandler:
+    Dim errorNumber As Long
+    Dim errorSource As String
+    Dim errorDescription As String
+    errorNumber = Err.Number
+    errorSource = Err.Source
+    errorDescription = Err.Description
+    On Error Resume Next
+    Set m_hook = Nothing
+    m_enabled = False
+    m_lastStatus = "自动导出初始化失败"
+    WriteDiagnostic "hook.initialize", "FAIL", _
+        "origin=" & origin & ";err_number=" & CStr(errorNumber) & _
+        ";err_source=" & errorSource & ";err_description=" & errorDescription
+    InitializeAutoExport = False
+End Function
 
 Public Function ReleaseAutoExportForShutdown() As Boolean
-    DisableAutoExport
+    On Error Resume Next
+    If m_runId = "" And Not m_enabled Then
+        ReleaseAutoExportForShutdown = True
+        Exit Function
+    End If
+    DisableAutoExport "Shutdown"
     ReleaseAutoExportForShutdown = True
 End Function
 
-Private Sub EnableAutoExport()
-    If m_enabled Then Exit Sub
-    Set m_hook = New clsSaveHook
-    m_enabled = True
-End Sub
-
-Private Sub DisableAutoExport()
+Private Sub DisableAutoExport(Optional ByVal origin As String = "Unknown")
+    On Error Resume Next
+    WriteDiagnostic "hook.release", "START", "origin=" & origin
     Set m_hook = Nothing
     m_enabled = False
+    m_lastStatus = "自动导出未挂钩"
+    WriteDiagnostic "hook.release", "PASS", "origin=" & origin & ";state=disabled"
 End Sub
 
+Public Function GetHookStatusForDiagnostics() As String
+    If m_enabled Then
+        GetHookStatusForDiagnostics = "ENABLED"
+    Else
+        GetHookStatusForDiagnostics = "DISABLED"
+    End If
+End Function
+
+Public Function GetDiagnosticRunId() As String
+    EnsureDiagnosticState
+    GetDiagnosticRunId = m_runId
+End Function
+
+Public Function GetDiagnosticLogPath() As String
+    EnsureDiagnosticState
+    GetDiagnosticLogPath = m_logPath
+End Function
+
+Public Function GetDiagnosticStatus() As String
+    EnsureDiagnosticState
+    If m_lastStatus = "" Then
+        If m_enabled Then
+            m_lastStatus = "自动导出已挂钩"
+        Else
+            m_lastStatus = "自动导出未挂钩"
+        End If
+    End If
+    GetDiagnosticStatus = m_lastStatus
+End Function
+Public Function GetRuntimeEvidenceForDiagnostics() As String
+    EnsureDiagnosticState
+    GetRuntimeEvidenceForDiagnostics = "version=" & PM_VERSION & _
+        ";hook=" & GetHookStatusForDiagnostics() & _
+        ";template=" & GetThisTemplatePath() & _
+        ";run_id=" & m_runId & ";log_path=" & m_logPath
+End Function
+
+Public Sub TraceHookLifecycle(ByVal stage As String, ByVal result As String, Optional ByVal details As String = "")
+    If m_runId = "" Then Exit Sub
+    WriteDiagnostic stage, result, details
+End Sub
+
+Public Sub TraceSaveEvent(ByVal phase As String, ByVal doc As Document, ByVal SaveAsUI As Boolean, ByVal Cancel As Boolean, Optional ByVal details As String = "")
+    Dim eventDetails As String
+    eventDetails = DescribeDocument(doc) & ";save_as_ui=" & BoolText(SaveAsUI) & _
+        ";cancel=" & BoolText(Cancel)
+    If details <> "" Then eventDetails = eventDetails & ";" & details
+    WriteDiagnostic "save.before." & phase, "INFO", eventDetails
+End Sub
+
+Public Function ShouldSkipAutomaticExport(ByVal doc As Document) As Boolean
+    On Error GoTo skipDocument
+    If doc Is Nothing Then GoTo skipDocument
+
+    Dim extensionName As String
+    extensionName = LCase$(CreateObject("Scripting.FileSystemObject").GetExtensionName(doc.Name))
+    If extensionName = "dot" Or extensionName = "dotm" Or extensionName = "dotx" Then GoTo skipDocument
+    ShouldSkipAutomaticExport = False
+    Exit Function
+
+skipDocument:
+    ShouldSkipAutomaticExport = True
+End Function
+
+Private Sub EnsureDiagnosticState()
+    On Error GoTo done
+    If m_runId = "" Then
+        Randomize
+        m_runId = Format$(Now, "yyyymmdd-hhnnss") & "-" & Right$("000000" & Hex$(CLng(Rnd() * 16777215#)), 6)
+    End If
+    If m_logPath <> "" Then Exit Sub
+
+    Dim basePath As String
+    Dim productPath As String
+    Dim logsPath As String
+    Dim fso As Object
+    basePath = Environ$("LOCALAPPDATA")
+    If basePath = "" Then basePath = Environ$("TEMP")
+    If basePath = "" Then Exit Sub
+    productPath = basePath & "\PatentMarker"
+    logsPath = productPath & "\Logs"
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.FolderExists(productPath) Then fso.CreateFolder productPath
+    If Not fso.FolderExists(logsPath) Then fso.CreateFolder logsPath
+    m_logPath = logsPath & "\word-vba-" & Format$(Date, "yyyymmdd") & ".tsv"
+done:
+End Sub
+
+Private Sub WriteDiagnostic(ByVal stage As String, ByVal result As String, Optional ByVal details As String = "")
+    On Error GoTo done
+    EnsureDiagnosticState
+    If m_logPath = "" Then Exit Sub
+
+    Dim fso As Object
+    Dim logFile As Object
+    Dim lineText As String
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set logFile = fso.OpenTextFile(m_logPath, 8, True, -1)
+    lineText = Format$(Now, "yyyy-mm-dd\THH:nn:ss") & vbTab & _
+        SanitizeLogField(m_runId) & vbTab & PM_VERSION & vbTab & _
+        SanitizeLogField(stage) & vbTab & SanitizeLogField(result) & vbTab & _
+        SanitizeLogField(details)
+    logFile.WriteLine lineText
+    logFile.Close
+done:
+End Sub
+
+Private Function DescribeDocument(ByVal doc As Document) As String
+    On Error GoTo failed
+    DescribeDocument = "doc_name=" & doc.Name & ";doc_path=" & doc.Path & ";doc_saved=" & BoolText(doc.Saved)
+    Exit Function
+failed:
+    DescribeDocument = "doc=unavailable"
+End Function
+
+Private Function GetThisTemplatePath() As String
+    On Error Resume Next
+    GetThisTemplatePath = ThisDocument.FullName
+    On Error GoTo 0
+End Function
+
+Private Function GetOfficeBitness() As String
+#If Win64 Then
+    GetOfficeBitness = "64"
+#Else
+    GetOfficeBitness = "32"
+#End If
+End Function
+
+Private Function BoolText(ByVal value As Boolean) As String
+    If value Then
+        BoolText = "true"
+    Else
+        BoolText = "false"
+    End If
+End Function
+
+Private Function SanitizeLogField(ByVal value As String) As String
+    value = Replace(value, vbCr, " ")
+    value = Replace(value, vbLf, " ")
+    value = Replace(value, vbTab, " ")
+    SanitizeLogField = value
+End Function
+
+' Export helpers follow.
 Public Function EnableAutoExportForDocument(Optional ByVal targetDwgPath As String = "", Optional ByVal doc As Document) As Boolean
     On Error GoTo errHandler
     If doc Is Nothing Then Set doc = ActiveDocument
@@ -80,7 +256,7 @@ Public Function EnableAutoExportForDocument(Optional ByVal targetDwgPath As Stri
         If targetPath = "" Then Exit Function
     End If
 
-    EnableAutoExport
+    If Not InitializeAutoExport("PanelToggle") Then Exit Function
     EnableAutoExportForDocument = True
     Exit Function
 errHandler:
@@ -152,16 +328,30 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     ExportDictCore = False
 
     If doc Is Nothing Then Set doc = ActiveDocument
+    WriteDiagnostic "export.start", "START", DescribeDocument(doc) & ";manual_selection=" & BoolText(allowDwgSelection)
 
     Dim srcName As String
     srcName = doc.Name
 
     Dim outPath As String
     outPath = GetOutputPath(doc, allowDwgSelection, targetDwgPath)
-    If outPath = "" Then Exit Function
+    If outPath = "" Then
+        m_lastStatus = "导出失败：没有可用输出路径"
+        WriteDiagnostic "export.target", "FAIL", DescribeDocument(doc) & ";reason=empty_output_path"
+        Exit Function
+    End If
+    WriteDiagnostic "export.target", "PASS", DescribeDocument(doc) & ";output_path=" & outPath
 
     Dim outputWasVisible As Boolean
-    outputWasVisible = IsPathVisible(outPath)
+    Dim outputExisted As Boolean
+    Dim originalOutputAttributes As Long
+    Dim outputFso As Object
+    Set outputFso = CreateObject("Scripting.FileSystemObject")
+    outputExisted = outputFso.FileExists(outPath)
+    If outputExisted Then
+        originalOutputAttributes = GetAttr(outPath)
+        outputWasVisible = ((originalOutputAttributes And (vbHidden Or vbSystem)) = 0)
+    End If
 
     Dim timestamp As String
     timestamp = Format(Now, "yyyy-mm-ddTHH:nn:ss")
@@ -189,10 +379,10 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     End If
 
     ' v5.2: clear Hidden/System attributes so ADODB SaveToFile can overwrite the hidden dict file
-    If CreateObject("Scripting.FileSystemObject").FileExists(outPath) Then
+    If outputExisted Then
         On Error Resume Next
         Err.Clear
-        SetAttr outPath, vbNormal
+        SetAttr outPath, originalOutputAttributes And Not (vbHidden Or vbSystem)
         Dim attributeFailure As String
         If Err.Number <> 0 Then
             attributeFailure = Err.Description & " (" & Err.Number & ")"
@@ -206,10 +396,10 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
         Err.Raise vbObjectError + 513, "AutoExport.JsonWriter", "Dictionary write failed"
     End If
 
-    ' Preserve an explicitly visible dictionary; new exports remain hidden.
+    ' Preserve every existing attribute exactly; new exports remain hidden.
     On Error Resume Next
-    If outputWasVisible Then
-        SetAttr outPath, vbNormal
+    If outputExisted Then
+        SetAttr outPath, originalOutputAttributes
     Else
         SetAttr outPath, vbHidden Or vbSystem
     End If
@@ -220,15 +410,22 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     ' (it is hidden, so the user cannot see or delete it manually)
     CleanupOrphanWordDict doc, outPath
 
+    m_lastStatus = "最近一次导出成功：" & Format$(Now, "hh:nn:ss")
+    WriteDiagnostic "export.success", "PASS", DescribeDocument(doc) & ";output_path=" & outPath
     ExportDictCore = True
     Exit Function
 
 errHandler:
     Dim errorNumber As Long
+    Dim errorSource As String
     Dim errorDescription As String
     errorNumber = Err.Number
+    errorSource = Err.Source
     errorDescription = Err.Description
     On Error Resume Next
+    If outputExisted And outPath <> "" Then
+        If outputFso.FileExists(outPath) Then SetAttr outPath, originalOutputAttributes
+    End If
     Dim errPath As String
     Dim errorDir As String
     errorDir = ""
@@ -237,6 +434,10 @@ errHandler:
         errPath = errorDir & "\autoexport-error.txt"
         JsonWriter.WriteToFile errPath, "ERROR: " & errorDescription & " (" & errorNumber & ")"
     End If
+    m_lastStatus = "最近一次导出失败：" & errorDescription
+    WriteDiagnostic "export.failure", "FAIL", DescribeDocument(doc) & _
+        ";output_path=" & outPath & ";err_number=" & CStr(errorNumber) & _
+        ";err_source=" & errorSource & ";err_description=" & errorDescription
     ExportDictCore = False
 End Function
 

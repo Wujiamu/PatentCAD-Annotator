@@ -130,6 +130,7 @@ Private Sub UserForm_Initialize()
     chkAutoExport.Value = IIf(AutoExport.IsAutoExportEnabled, 1, 0)
     m_syncingAutoExport = False
     UpdateJsonVisibilityControl
+    lblStatus.Caption = AutoExport.GetDiagnosticStatus()
 End Sub
 
 Private Sub UpdateJsonVisibilityControl()

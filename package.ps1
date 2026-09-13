@@ -17,7 +17,7 @@ $OutputRoot = if ([string]::IsNullOrEmpty($OutputRoot)) {
     Join-Path ([System.IO.Path]::GetTempPath()) ("PatentCAD-Annotator-release-" + (Get-Date -Format "yyyyMMdd-HHmmss"))
 } else { $OutputRoot }
 $versions = if ($Version -eq "all") { @("2007", "2010", "2013", "2015", "2025") } else { @($Version) }
-$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
+$vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "PatentMarkerBootstrap.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
 $ilrepack = Join-Path $root "tools\ilrepack\tools\ILRepack.exe"
 
 function Fail($message) { throw $message }
@@ -58,6 +58,23 @@ function Assert-VbaSync {
             }
         }
     }
+
+    foreach ($asset in @("PatentMarker.dotm", "install-vba.vbs", "uninstall-vba.vbs")) {
+        $canonicalAsset = Join-Path $root "word-addin\$asset"
+        if (-not (Test-Path -LiteralPath $canonicalAsset)) { Fail "Missing canonical Word add-in asset: $canonicalAsset" }
+        $canonicalHash = (Get-FileHash -LiteralPath $canonicalAsset -Algorithm SHA256).Hash
+        foreach ($ver in $versions) {
+            $deployAsset = Join-Path $root "PatentMarker-$ver-deploy\$asset"
+            if (-not (Test-Path -LiteralPath $deployAsset)) { Fail "Missing Word add-in asset: $deployAsset" }
+            if ((Get-FileHash -LiteralPath $deployAsset -Algorithm SHA256).Hash -ne $canonicalHash) {
+                Fail "Word add-in asset drift detected: $asset in $ver deployment; run .\sync-word-addin.ps1"
+            }
+        }
+    }
+
+    $dotmVerifier = Join-Path $root "tools\verify-dotm-package.ps1"
+    if (-not (Test-Path -LiteralPath $dotmVerifier)) { Fail "Missing DOTM package verifier: $dotmVerifier" }
+    & $dotmVerifier -Path (Join-Path $root "word-addin\PatentMarker.dotm")
 }
 
 function Invoke-IlRepack {
@@ -102,7 +119,7 @@ function Stage-Version {
             if ($item.Name -like "*.bak.*" -or
                 $item.Name -like "*report*.txt" -or
                 $item.Extension -in @(".log", ".lsp")) { continue }
-            if ($item.Extension -notin @(".bat", ".vbs", ".ps1", ".txt")) { continue }
+            if ($item.Extension -notin @(".bat", ".vbs", ".ps1", ".txt", ".dotm")) { continue }
         }
         Copy-Item -LiteralPath $item.FullName -Destination (Join-Path $stage $item.Name) -Recurse -Force
     }
