@@ -109,7 +109,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 - 回归 VBS 会在 `%TEMP%\PatentMarker*` 下创建临时 `.docm`；脚本现在无论成功还是显式失败都会逐个关闭 Word 文档，并删除自己生成的测试 `.docm`，保留日志和 JSON 诊断文件。旧版本运行留下的临时文件需人工清理。
 - 自动导出发生在 Word 完成保存之前。本机程序化 Save As 改名/换目录验收确认：保存事件会先更新旧路径的 JSON，新路径需要随后再普通保存一次或手动导出；交互式取消 Save As 尚未验收。当前没有 Word、字典与 DWG 的整体回滚保证，两端并发写入仍需专门回归。
 - Word 导出失败时查看文档目录的 `autoexport-error.txt`；检查文档是否已有路径、多 DWG 是否已手动选择目标、目录是否可写以及字典/备份是否被占用。
-- CAD 插件已能加载时用 `PATDOCTOR` / `BZD` 检查。插件连命令都无法加载时，运行对应包的外部 `doctor-<年份>.vbs`（旧版）或 `doctor-2025.ps1`；诊断可从离线检查升级为启动 CAD 的在线检查，运行前保存工作并阅读脚本提示。
+- CAD 插件已能加载时用 `PATDOCTOR` / `BZD` 检查。插件连命令都无法加载时，运行对应包的外部 `doctor-<年份>.vbs`（旧版）或 `doctor-2025.ps1`；诊断可从离线检查升级为启动 CAD 的在线检查，运行前保存工作并阅读脚本提示。字典文件存在但无法读取或解析时，PATDOCTOR 会明确记为 FAIL。2025 doctor 会核对报告中的实际程序集路径和 PASS/FAIL/SKIP 汇总，报告含 FAIL 时返回非零；若注册的 demand-load DLL 会抢先于待测暂存 DLL 加载，则明确 WARN 并跳过在线层。
 
 ### 编译说明
 
@@ -372,7 +372,7 @@ Edition guides: [2007](cad-plugin/2007/README.md), [2010](cad-plugin/2010/README
 - Regression VBS files create temporary `.docm` files under `%TEMP%\PatentMarker*`; they now close every document and delete their own test `.docm` on both success and explicit failure while retaining logs and JSON diagnostics. Artifacts from older runs may need manual cleanup.
 - Auto-export runs before Word finishes saving. A programmatic rename/move Save As on the local host updated the old-path JSON first; the new-path JSON required one later ordinary save or a manual export. Interactive Save As cancellation remains untested. There is no combined Word/JSON/DWG rollback, and concurrent writes need further regression coverage.
 - For export failures, check `autoexport-error.txt`, the document path, whether a target was selected when multiple DWGs were present, write access and file locks.
-- Use `PATDOCTOR` / `BZD` when the plugin loads. Otherwise use the package's external `doctor-<year>.vbs` or `doctor-2025.ps1`; it can escalate from offline checks to launching CAD, so save work and review its prompts first.
+- Use `PATDOCTOR` / `BZD` when the plugin loads. Otherwise use the package's external `doctor-<year>.vbs` or `doctor-2025.ps1`; it can escalate from offline checks to launching CAD, so save work and review its prompts first. PATDOCTOR now reports an existing dictionary that cannot be read or parsed as FAIL. The 2025 doctor validates the reported assembly path and PASS/FAIL/SKIP summary, exits nonzero when the in-CAD report contains failures, and warns/skips the online tier when a registered demand-load DLL would pre-empt a staged candidate.
 
 ### Deployment packages
 

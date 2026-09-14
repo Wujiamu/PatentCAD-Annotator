@@ -26,6 +26,7 @@ $script:CadReport = Join-Path $script:ScriptDir "PatentMarker-doctor-report.txt"
 $script:OfflineReport = Join-Path $script:ScriptDir "PatentMarker-doctor-offline-report.txt"
 $script:Rpt = New-Object System.Collections.Generic.List[string]
 $script:Pass = 0; $script:Fail = 0; $script:Warn = 0
+$script:ExitCode = 0
 
 # === Internationalization (i18n, console only; report file stays ASCII English) ===
 function Get-SysLang {
@@ -219,6 +220,26 @@ try {
             Add-RptResult "PATDOCTOR report" "WARN" ("skipped: AutoCAD is already running (PID " + ($leftover.Id -join ',') + '); close it and rerun for tier 2')
         }
         else {
+        # AutoCAD demand-load runs before the SCR NETLOAD command.  If every
+        # registered PatentMarker loader points somewhere else, that assembly
+        # would pre-empt this candidate and write its report beside the wrong
+        # DLL.  Refuse early instead of waiting five minutes for a report that
+        # can never appear here.
+        $registeredLoaders = @()
+        foreach ($triple in (Get-AcadProfiles)) {
+            $appKey = "$($triple[0]):\SOFTWARE\Autodesk\AutoCAD\$($triple[1])\$($triple[2])\Applications\PatentMarker"
+            if (-not (Test-Path -LiteralPath $appKey)) { continue }
+            $loader = (Get-ItemProperty -LiteralPath $appKey -Name LOADER -ErrorAction SilentlyContinue).LOADER
+            if ($loader) { $registeredLoaders += [IO.Path]::GetFullPath([string]$loader) }
+        }
+        $registeredLoaders = @($registeredLoaders | Sort-Object -Unique)
+        $matchingLoader = @($registeredLoaders | Where-Object {
+            [string]::Equals($_, [IO.Path]::GetFullPath($script:DllPath), [StringComparison]::OrdinalIgnoreCase)
+        })
+        if ($registeredLoaders.Count -gt 0 -and $matchingLoader.Count -eq 0) {
+            Add-RptResult "PATDOCTOR report" "WARN" ("skipped: registered demand-load DLL would pre-empt this candidate: " + ($registeredLoaders -join '; '))
+        }
+        else {
         if (Test-Path -LiteralPath $script:CadReport) { Remove-Item -LiteralPath $script:CadReport -Force }
         $scr = Join-Path ([IO.Path]::GetTempPath()) "patmarker-doctor-2025.scr"
         @(
@@ -242,7 +263,30 @@ try {
 
         if (Test-Path -LiteralPath $script:CadReport) {
             Start-Sleep -Seconds 3   # let the report writer finish flushing
-            Add-RptResult "PATDOCTOR report" "PASS" $script:CadReport
+            $cadReportLines = @(Get-Content -LiteralPath $script:CadReport)
+            $assemblyLine = $cadReportLines | Where-Object { $_ -match '^\- Assembly:\s+' } | Select-Object -First 1
+            $summaryLine = $cadReportLines | Where-Object { $_ -match '^Summary:\s+PASS\s+\d+\s+/\s+FAIL\s+\d+\s+/\s+SKIP\s+\d+' } | Select-Object -First 1
+            if (-not $assemblyLine) {
+                Add-RptResult "PATDOCTOR report" "FAIL" "report does not identify the loaded assembly: $script:CadReport"
+            }
+            elseif (-not $summaryLine) {
+                Add-RptResult "PATDOCTOR report" "FAIL" "report has no parseable PASS/FAIL/SKIP summary: $script:CadReport"
+            }
+            else {
+                $reportedAssembly = [IO.Path]::GetFullPath((($assemblyLine -replace '^\- Assembly:\s+', '').Trim()))
+                $expectedAssembly = [IO.Path]::GetFullPath($script:DllPath)
+                $summaryMatch = [regex]::Match($summaryLine, 'PASS\s+(\d+)\s+/\s+FAIL\s+(\d+)\s+/\s+SKIP\s+(\d+)')
+                $doctorFailures = [int]$summaryMatch.Groups[2].Value
+                if (-not [string]::Equals($reportedAssembly, $expectedAssembly, [StringComparison]::OrdinalIgnoreCase)) {
+                    Add-RptResult "PATDOCTOR report" "FAIL" "wrong assembly loaded: expected '$expectedAssembly', report says '$reportedAssembly'"
+                }
+                elseif ($doctorFailures -gt 0) {
+                    Add-RptResult "PATDOCTOR report" "FAIL" "$summaryLine; see $script:CadReport"
+                }
+                else {
+                    Add-RptResult "PATDOCTOR report" "PASS" "$summaryLine; assembly=$reportedAssembly"
+                }
+            }
         }
         else {
             Add-RptResult "PATDOCTOR report" "FAIL" "not generated within 300s (NETLOAD may have failed; see tier 1 findings)"
@@ -250,6 +294,7 @@ try {
         if (-not $p.HasExited) {
             $p.Kill(); $p.WaitForExit()
             Add-Rpt "  Note: AutoCAD was still running after the wait and has been terminated."
+        }
         }
         }
     }
@@ -261,6 +306,7 @@ try {
 
     Write-Host (L "PASS=$script:Pass FAIL=$script:Fail WARN=$script:Warn" "通过=$script:Pass 失败=$script:Fail 警告=$script:Warn")
     if ($script:Fail -gt 0) {
+        $script:ExitCode = 1
         Write-Host (L ">>> Problems found. See:" ">>> 发现问题，详见：") -Color Yellow
     }
     else {
@@ -275,10 +321,10 @@ try {
 }
 catch {
     Write-Host (L "ERROR: $($_.Exception.Message)" "错误：$($_.Exception.Message)") -Color Red
+    $script:ExitCode = 1
     if (-not $NoPause -and $Host.Name -eq "ConsoleHost") {
         Read-Host (L "Press Enter to close" "按 Enter 键关闭") | Out-Null
     }
-    exit 1
 }
 finally {
     if (-not $NoPause -and $Host.Name -eq "ConsoleHost") {
@@ -286,3 +332,4 @@ finally {
         Read-Host (L "Press Enter to close" "按 Enter 键关闭") | Out-Null
     }
 }
+exit $script:ExitCode

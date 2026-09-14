@@ -71,6 +71,11 @@ Word 端：
   - 参数：-OfflineOnly 仅做离线检查；-NoPause 结束时不等待回车
   - 报告输出到本目录 PatentMarker-doctor-offline-report.txt
     （以及 CAD 内诊断报告 PatentMarker-doctor-report.txt）
+  - 在线层会核对实际加载 DLL 路径及 PASS/FAIL/SKIP 汇总；CAD 报告含 FAIL 时
+    脚本返回非零。若已注册的 demand-load DLL 会抢先加载另一份文件，则 WARN
+    并跳过在线层，不把其他目录生成的报告误算为本候选通过
+  - 字典文件存在但读取或 JSON 解析失败时，PATDOCTOR 明确报告 FAIL，并在
+    Recent errors 中保留具体异常；不会再把损坏字典当成 0 条内容而 SKIP
   - 运行在线层前请先关闭已打开的 AutoCAD
 
 命令：

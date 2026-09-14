@@ -178,6 +178,13 @@ namespace PatentMarker.Diagnostics
                 }
 
                 IO.DictModel model = workflow.LoadCurrent();
+                if (model == null)
+                {
+                    checks.Add(new PatDoctorReport.Check(
+                        Strings_Doctor_CheckDict, PatDoctorReport.Check.Fail,
+                        string.Format(Strings_Doctor_DictLoadFailed, dictPath)));
+                    return;
+                }
                 int count = model != null && model.Entries != null ? model.Entries.Count : 0;
                 string fileState = File.Exists(dictPath)
                     ? Strings_Doctor_DictFilePresent
@@ -335,6 +342,12 @@ namespace PatentMarker.Diagnostics
         private static string Strings_Doctor_DictFilePresent
         {
             get { return En ? "file exists" : "文件存在"; }
+        }
+
+        private static string Strings_Doctor_DictLoadFailed
+        {
+            get { return En ? "failed to read or parse dictionary: {0} - see recent errors"
+                            : "字典读取或解析失败: {0} - 请查看近期错误"; }
         }
 
         private static string Strings_Doctor_DictFileMissing
