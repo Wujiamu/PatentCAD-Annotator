@@ -43,7 +43,7 @@ PowerPoint 加载项不会修改 Word、CAD 生产代码或字典文件，也不
 
 ## 当前本机验证状态
 
-2026-09-26 在 Microsoft 365 PowerPoint 16.0.20430.20092 x64 上，0.1.1.0 已从最终 ZIP 覆盖安装，实际 DLL SHA-256 为 `3135C19BEFAD7A8831347E8876867E9E68A8CA87A21DF884F41C232FDC4A287B`。安装版 Word UI 导出的字典经真实 PowerPoint 面板绑定、跨两页标注、检查漏标、由 PowerPoint 保存、退出后全新进程重开并再次经面板检查通过；另实测多文稿切换、字典副本损坏或丢失后的恢复和图片误选拒绝。随后又通过 PowerPoint 界面键盘插入原生直线并经面板标注；另一页用键盘选中已有直线并标注，两组保存后经全新进程复核。图片及第二页直线由 COM 预备；界面插线使用默认尺寸。鼠标拖拽定向画线、鼠标选线及视觉布局待验，因此结论仍是限定 L3。Windows 7 + Office 2010 x86 也待验。详见 [PowerPoint 0.1.1 验收记录](ppt-release-validation.md)与[可行性报告](feasibility-report.md)。
+2026-09-27 在 Microsoft 365 PowerPoint 16.0.20430.20092 x64 上，0.1.1.0 已从最终 ZIP 覆盖安装，实际 DLL SHA-256 为 `3135C19BEFAD7A8831347E8876867E9E68A8CA87A21DF884F41C232FDC4A287B`。安装版 Word UI 导出的字典经真实 PowerPoint 面板绑定、跨两页标注、检查漏标、由 PowerPoint 保存、退出后全新进程重开并再次经面板检查通过；另实测多文稿切换、字典副本损坏或丢失后的恢复和图片误选拒绝。随后又通过 PowerPoint 界面键盘插入原生直线并经面板标注；另一页用键盘选中已有直线并标注，两组保存后经全新进程复核。C: 演示文稿绑定 F: 字典、保存绝对路径并将 PPTX 复制到另一目录后冷重开检查也已通过。图片及第二页直线由 COM 预备；界面插线使用默认尺寸。鼠标拖拽定向画线、鼠标选线及视觉布局待验，因此结论仍是限定 L3。Windows 7 + Office 2010 x86 也待验。详见 [PowerPoint 0.1.1 验收记录](ppt-release-validation.md)与[可行性报告](feasibility-report.md)。
 
 ## Visio 独立原型
 

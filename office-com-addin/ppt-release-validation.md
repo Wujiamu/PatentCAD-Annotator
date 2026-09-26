@@ -1,6 +1,6 @@
 # PowerPoint 0.1.1.0 发布验收记录
 
-记录时间：2026-09-25 至 2026-09-26。执行身份：本机当前用户；精确身份留在本机原始快照。环境：Windows 10 build 19045、Microsoft 365 PowerPoint 16.0.20430.20092 x64、.NET Framework 4.8.1；程序集目标为 .NET Framework 4.0。本记录对应下述最终候选 ZIP 及同批源码；GitHub 发布另行执行。
+记录时间：2026-09-25 至 2026-09-27。执行身份：本机当前用户；精确身份留在本机原始快照。环境：Windows 10 build 19045、Microsoft 365 PowerPoint 16.0.20430.20092 x64、.NET Framework 4.8.1；程序集目标为 .NET Framework 4.0。本记录对应下述最终候选 ZIP 及同批源码；GitHub 发布另行执行。
 
 ## 当前结果
 
@@ -10,7 +10,7 @@
 | 干净源码副本还原和构建 | PASS，仅复制 PowerPoint 项目顶层源码与共享编号比较文件；0 warning、0 error，未依赖工作树中的本地 CAD NuGet 目录 | L0 |
 | 快速切换演示文稿后立即检查 | 旧已安装 0.1.0.0 DLL 稳定 FAIL：仍报告 A 文稿漏标 1、2；0.1.1.0 处理器在相同场景 PASS：识别 B 文稿并取消这次检查 | L1，模拟宿主对象和真实面板处理器 |
 | 关联 XML 含未知路径类型 | 旧已安装 0.1.0.0 DLL FAIL：把未知类型当绝对路径接受；0.1.1.0 在相同输入上 PASS：要求重新绑定，正常绝对路径仍可解析 | L1，模拟 Custom XML 部件和真实解析器 |
-| 同卷与异卷路径编码 | PASS，`verify-ppt-binding-kind.ps1` 对已安装 DLL 的写入路径计算作代码层断言：同卷得 `relative` 与 `near.dict.json`，模拟异卷 `Z:\PatentMarker\far.dict.json` 得 `absolute` 且路径不变；结果位于 `test-evidence/ppt-binding-kind-20260926-173941-ea6d302f/result.json` | L1；未创建第二卷文件或做异卷宿主重开 |
+| 同卷与异卷路径编码 | PASS，`verify-ppt-binding-kind.ps1` 对已安装 DLL 的写入路径计算作代码层断言：同卷得 `relative` 与 `near.dict.json`，模拟异卷 `Z:\PatentMarker\far.dict.json` 得 `absolute` 且路径不变；结果位于 `test-evidence/ppt-binding-kind-20260926-173941-ea6d302f/result.json` | L1；真实跨卷宿主场景见下文 |
 | 安装器首次故障回滚、重复安装、升级故障回滚和卸载 | PASS，隔离 HKCU 树和临时目录 | 安装器脚本回归；非生产注册项 |
 | 未登记文件与无关注册项保护 | PASS，目录存在未登记文件时安装和卸载均拒绝，文件和注册项哨兵不变 | 安装器脚本回归 |
 | 发布 ZIP 文件清单和哈希 | PASS，精确 8 个资产加清单；逐文件 SHA-256 与源码、构建产物相同 | L0 |
@@ -29,6 +29,8 @@
 | PowerPoint 键盘选线并跨页标注 | PASS，PowerPoint `Ctrl+PageDown` 到第二页，两次 `Tab` 依次选中原图（type 13）和 `PM_TEST_LINE_2`（type 9）；只读宿主对象确认选择归属第二页，再由面板标注编号 2。run `65cb01db81bb476c85d3c748473757e9` 记录 `annotation.create PASS;slide_id=257` 和 `missing=0;marked=2` | 限定 L3，第二页直线由 COM 预备，但选线、选编号和标注经界面键盘完成 |
 | 两种界面路径最终持久化 | PASS，第二次 PowerPoint `Ctrl+S` 后，PPTX 两页各 1 个产品组，`ppt/tags/tag1.xml`、`tag2.xml` 分别记录编号 1、2；新 run `a2b5d87696b54d06bbd81e01779a3b8b` 冷重开并经面板检查 `missing=0;marked=2`。测试字典副本与原 Word 字典 SHA-256 相同 | 安装版、实际保存文件和独立冷进程复核 |
 | PPT 与字典目录存在无关 DWG | PASS，在该测试目录新增独立 `.dwg` 文件名哨兵后，全新 run `682ba39ca4bd4283a019f0be1c4d6dd7` 仍从 PPT 绑定部件恢复 `recovery.dict.json`，面板读 2 项、全稿检查 `missing=0;marked=2`；没有按 DWG 或 PPT 主名猜测字典。哨兵仅验证文件存在，不用于 CAD 格式或 Word 导出验收 | 安装版 PPT 文件关联实测；Word 的 DWG 命名分支另验 |
+| 真实跨卷绑定、异目录副本冷重开 | PASS，C: 测试 PPTX 经面板绑定 F: 字典副本，run `9dd3378adafa42d1b123f2065a13e6e9` 记录 `binding.save PASS` 与 `dict.read PASS`；PowerPoint UI 保存后，PPTX 的唯一产品 Custom XML 部件为 `kind="absolute"` 并保留 F: 路径。复制 PPTX 到 C: 另一目录后，全新 run `f6152041a75e45e5903584777ca97e85` 自动解析同一 F: 字典并由面板检查 `missing=0;marked=2`。异目录副本 PPTX SHA-256 `8B62E99686845EEE78EFF826D63707657045E8579780633E125658D2E80911AF`；字典副本与原 Word 字典 SHA-256 均为 `74ADC14A23992785721CB366E13D313784D41CE2AFE26894C58F5019BF973479` | 安装版真实 C:/F: 卷、面板绑定、保存、冷启动及异目录路径复核；原始断言在本机 `test-evidence/ppt-cross-volume-20260926-174212-0bd8b315/cross-volume-result.json` |
+| 跨卷测试副本清理 | SKIP/BLOCKED，测试结束后 PowerPoint 已退出；当前执行环境的自动策略拒绝删除本轮 F: 临时目录。目录只含本轮创建的脱敏字典副本，留待用户或获授权的环境清理 | 本机资源清理缺口，不计入跨卷业务 PASS |
 | 最终非产品注册项快照 | FAIL（严格字节相等）：`MSOfficePLUS` 的 `FeaturesGate.LastUpdateTime` 从 `2026-09-25T15:49:38.8357687Z` 变为 `2026-09-26T08:51:52.2414261Z`，恰在本轮首次 PowerPoint 冷启动后。该键声明 60 分钟刷新间隔；其 `LoadBehavior`、其他值、其他加载项、全部非产品文件不变。产品安装后与前一轮宿主测试后的快照相等；此差异发生于更晚的宿主运行期，来源于第三方加载项自动刷新是基于时间和键内容的推断，未做独立归因实验 | 全局“非产品注册项零变化”未满足；产品安装隔离回归仍 PASS |
 | Computer Use 窗口连接 | 初次读取曾得到旧 Visio 面板树；重置 Computer Use 会话后重新枚举，PowerPoint 面板树与进程、路径一致，随后键盘路径通过。Windows 19045 截图接口失败，无坐标几何；未做画布拖拽与鼠标选线 | 键盘面板交互 PASS；画布视觉操作未覆盖 |
 
