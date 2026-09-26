@@ -16,6 +16,10 @@ PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 
 
 工作流：Word 面板手动导出或启用保存时自动导出 → 生成 `.dict.json` → CAD 中用 `BZ` 打开字典面板 → 双击条目或用 `BZM` 创建标注 → 字典更新后查看差异。
 
+### Office 只读标图加载项
+
+`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项。PowerPoint 可手动绑定 Word 导出的 `.dict.json`，在已有图片上把原生直线绑定到编号，并检查整份演示文稿的漏标。本机 PowerPoint 16 x64 上，0.1.1.0 已从最终 ZIP 安装；安装版 Word UI 字典经真实面板绑定、跨页标注、漏标检查、保存和全新进程重开通过，多文稿切换、字典故障恢复与图片误选也已验证。图片、直线及选线由 COM 准备，画布手绘和鼠标选线待验。Visio 保留一维连接线，在其起点添加编号框，编号身份存入 ShapeSheet 用户单元格；本机 Visio 16 x64 已从 0.1.3.0 ZIP 安装并通过面板绑定真实 Word UI 导出的字典、标注、全稿检查和冷启动重开。前一 0.1.2.0 候选还覆盖跨两页标注、多文档隔离、字典故障恢复；0.1.3.0 修复切换文档后的即时操作竞态。线条由 COM 预先创建，鼠标画线与粘合仍待验。两者均不回写字典，也不修改 Word/CAD 生产代码。使用步骤和证据范围见 [Office 加载项说明](office-com-addin/README.md)、[PowerPoint 0.1.1 验收记录](office-com-addin/ppt-release-validation.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
+
 ### Word 与 CAD 如何交换数据
 
 两端通过文件交换数据，正常使用不要求 Word 与 CAD 建立 COM 连接，也不要求两个程序同时打开。CAD 面板约每 2 秒检查字典变化。
