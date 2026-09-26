@@ -30,6 +30,15 @@ namespace PatentMarkerPptBindingTest {
         public string FullName { get; set; }
         public FakeCustomXmlParts CustomXMLParts { get; set; }
     }
+    public static class BindingPathInspector {
+        public static string[] GetStoredPath(System.Type bindingType, string presentationPath, string dictionaryPath) {
+            var method = bindingType.GetMethod("GetStoredPath", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            if (method == null) throw new System.InvalidOperationException("GetStoredPath method is missing.");
+            object[] args = new object[] { presentationPath, dictionaryPath, null };
+            string value = (string)method.Invoke(null, args);
+            return new string[] { (string)args[2], value };
+        }
+    }
 }
 '@
 
@@ -58,10 +67,26 @@ $validError = [string]$valid.GetType().GetProperty('Error').GetValue($valid, $nu
 $validPath = [string]$valid.GetType().GetProperty('Path').GetValue($valid, $null)
 $guarded = $invalidError.Contains('路径类型无法识别') -and [string]::IsNullOrEmpty($validError) -and
     [string]::Equals($validPath, $dictionaryFull, [StringComparison]::OrdinalIgnoreCase)
+$sameVolumePath = Join-Path $root 'near.dict.json'
+$sameVolumeResult = [PatentMarkerPptBindingTest.BindingPathInspector]::GetStoredPath($bindingType, $pptPath, $sameVolumePath)
+$relativeKind = $sameVolumeResult[0]
+$relativeValue = $sameVolumeResult[1]
+$otherVolumeRoot = if ([string]::Equals([IO.Path]::GetPathRoot($pptPath), 'Z:\', [StringComparison]::OrdinalIgnoreCase)) { 'Y:\' } else { 'Z:\' }
+$otherVolumePath = $otherVolumeRoot + 'PatentMarker\far.dict.json'
+$otherVolumeResult = [PatentMarkerPptBindingTest.BindingPathInspector]::GetStoredPath($bindingType, $pptPath, $otherVolumePath)
+$absoluteKind = $otherVolumeResult[0]
+$absoluteValue = $otherVolumeResult[1]
+$pathKindsCorrect = $relativeKind -eq 'relative' -and $relativeValue -eq 'near.dict.json' -and
+    $absoluteKind -eq 'absolute' -and $absoluteValue -eq $otherVolumePath
+$guarded = $guarded -and $pathKindsCorrect
 $result = [ordered]@{
     AssemblySha256 = (Get-FileHash -LiteralPath $assemblyFull -Algorithm SHA256).Hash
     InvalidKindError = $invalidError
     ValidAbsolutePathAccepted = [string]::Equals($validPath, $dictionaryFull, [StringComparison]::OrdinalIgnoreCase)
+    SameVolumeKind = $relativeKind
+    SameVolumeValue = $relativeValue
+    OtherVolumeKind = $absoluteKind
+    OtherVolumeValue = $absoluteValue
     Outcome = if ($guarded) { 'PASS' } else { 'FAIL' }
 }
 $result | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $root 'result.json') -Encoding UTF8
