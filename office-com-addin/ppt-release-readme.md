@@ -1,6 +1,6 @@
 # PatentMarker Word → PowerPoint 只读标图加载项
 
-本包面向 Windows 上的 Microsoft PowerPoint，使用 .NET Framework 4.0。加载项读取现有 Word 导出的 `.dict.json`，只在 PowerPoint 演示文稿里创建标注；不会修改字典、Word 或 CAD 文件。
+这是实验性版本，面向 Windows 上的 Microsoft PowerPoint，程序集使用 .NET Framework 4.0。加载项读取现有 Word 导出的 `.dict.json`，只在 PowerPoint 演示文稿里创建标注；不会修改字典、Word 或 CAD 文件。
 
 ## 安装
 
@@ -24,4 +24,6 @@
 
 ## 验证边界
 
-本机 PowerPoint 16 x64 是验收环境；Windows 7 + Office 2010 x86 仍待目标环境验证。加载项不导入图片，不提供 CAD 式幻灯片点击取点，不回写 `.dict.json`。
+0.1.1.0 已在本机 PowerPoint 16 x64 验证：从安装包加载、面板绑定真实 Word 导出字典、在已有图片的测试稿中标注、全稿漏标检查、保存并在全新进程重开；同卷相对路径与跨卷绝对路径绑定、字典损坏或暂时丢失后的恢复也已验证。PowerPoint 界面键盘插入直线和键盘选线通过，但鼠标从编号位置向图片目标拖拽画线、鼠标选线及视觉位置尚未验证。本机截图工具无法取得可靠画布图像；请在实际图稿中目视检查线的起终点和箭头。
+
+Windows 7 + Office 2010 x86 仍待目标环境验证，.NET Framework 4.0 编译目标不代表这些旧环境已通过。加载项不导入图片，不提供 CAD 式幻灯片点击取点，不回写 `.dict.json`。

@@ -18,7 +18,7 @@ PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 
 
 ### Office 只读标图加载项
 
-`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项。PowerPoint 可手动绑定 Word 导出的 `.dict.json`，在已有图片上把原生直线绑定到编号，并检查整份演示文稿的漏标。本机 PowerPoint 16 x64 上，0.1.1.0 已从最终 ZIP 安装；安装版 Word UI 字典经真实面板绑定、跨页标注、漏标检查、保存和全新进程重开通过，多文稿切换、字典故障恢复与图片误选也已验证。另经 PowerPoint 界面键盘插入原生直线、键盘选中另一页直线，均由面板标注并保存重开；鼠标拖拽定向画线、鼠标选线和视觉布局仍待验。Visio 保留一维连接线，在其起点添加编号框，编号身份存入 ShapeSheet 用户单元格；本机 Visio 16 x64 已从 0.1.3.0 ZIP 安装并通过面板绑定真实 Word UI 导出的字典、标注、全稿检查和冷启动重开。前一 0.1.2.0 候选还覆盖跨两页标注、多文档隔离、字典故障恢复；0.1.3.0 修复切换文档后的即时操作竞态。线条由 COM 预先创建，鼠标画线与粘合仍待验。两者均不回写字典，也不修改 Word/CAD 生产代码。使用步骤和证据范围见 [Office 加载项说明](office-com-addin/README.md)、[PowerPoint 0.1.1 验收记录](office-com-addin/ppt-release-validation.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
+`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项。PowerPoint 可手动绑定 Word 导出的 `.dict.json`，在已有图片上把原生直线绑定到编号，并检查整份演示文稿的漏标。本机 PowerPoint 16 x64 上，0.1.1.0 当前 ZIP 经实际安装、面板键盘选线标注、保存和全新进程重开通过；前一候选另覆盖首次绑定、多文稿切换、字典故障恢复、图片误选、界面键盘插线和跨卷关联，两版 DLL 的方法 IL 一致。鼠标拖拽定向画线、鼠标选线和视觉布局仍待验。Visio 保留一维连接线，在其起点添加编号框，编号身份存入 ShapeSheet 用户单元格；本机 Visio 16 x64 已从 0.1.3.0 ZIP 安装并通过面板绑定真实 Word UI 导出的字典、标注、全稿检查和冷启动重开。前一 0.1.2.0 候选还覆盖跨两页标注、多文档隔离、字典故障恢复；0.1.3.0 修复切换文档后的即时操作竞态。线条由 COM 预先创建，鼠标画线与粘合仍待验。两者均不回写字典，也不修改 Word/CAD 生产代码。使用步骤和证据范围见 [Office 加载项说明](office-com-addin/README.md)、[PowerPoint 0.1.1 验收记录](office-com-addin/ppt-release-validation.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
 
 ### Word 与 CAD 如何交换数据
 
