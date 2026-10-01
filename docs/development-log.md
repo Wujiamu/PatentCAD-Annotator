@@ -6,6 +6,7 @@
 
 ## 合并提交与 README 同步（2026-10-01）
 
+- 首次 GitHub CI 在提交 `6fb3ed8` 的 Office 作业失败：PPT 7/7、Visio 24/24 及构建已通过，但隔离 PPT 安装测试自动探测本机 PowerPoint 位数；无 Office 的 runner 因此无法开始安装断言。改为显式测试注册表位数（默认 64），与 Visio 隔离测试一致；实际用户安装器仍保持自动探测。本机相同 `verify-code.ps1` 入口完整复测通过（两端构建、7/7 与 24/24、两端隔离恢复及卸载，零跳过）。原始失败见 [工作流 36880600470](https://github.com/Wujiamu/PatentCAD-Annotator/actions/runs/36880600470)，远程相同门禁的复测结果以 GitHub 工作流为准。
 - 用户确认 CAD、PPT、Visio 和 README 一起提交到 GitHub。根 README 中英文同步实验版本、宿主间差异、共享代码边界、当前测试数量及 CI 门禁，更新 CAD GUI 验收状态；CHANGELOG 保持 CAD / Word 1.0.3 未发布标识，Office 使用各自实验版本。
 - CAD 部署 DLL 保留已完成独立实机验收的候选字节，新增共享编号源码规则仅引用其单测与五版编译证据。以下验收记录中的“未提交 / 未推送”均为各自验收时的历史状态；仓库提交及 CI 结果以 GitHub 历史为准。
 

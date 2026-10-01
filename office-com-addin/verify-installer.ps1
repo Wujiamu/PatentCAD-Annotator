@@ -1,6 +1,7 @@
 ﻿[CmdletBinding()]
 param(
-    [string]$SourceDirectory
+    [string]$SourceDirectory,
+    [ValidateSet('32', '64')][string]$OfficeBitness = '64'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -13,7 +14,9 @@ $testId = [Guid]::NewGuid().ToString('N')
 $testRegistryRoot = 'Software\PatentMarkerOfficeAddinTests\' + $testId
 $testParent = Join-Path ([IO.Path]::GetTempPath()) ('PatentMarkerOfficeAddinTest-' + $testId)
 $testInstallDirectory = Join-Path $testParent 'PowerPoint'
-$bitness = Get-PatentMarkerOfficeBitness -Requested 'Auto'
+# The isolated registry fixture does not require PowerPoint to be installed.
+# Real installation keeps automatic host detection in install-office-addin.ps1.
+$bitness = $OfficeBitness
 $baseKey = Open-PatentMarkerCurrentUserRegistry -OfficeBitness $bitness
 $sentinelPath = $testRegistryRoot + '\Office\PowerPoint\Addins\Example.VendorAddin'
 $sentinelName = 'UnrelatedSentinel'

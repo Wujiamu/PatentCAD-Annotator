@@ -35,7 +35,7 @@ foreach ($hostName in @('PowerPoint', 'Visio')) {
     Write-Output "PASS|OFFICE_CODE_TESTS|$hostName|$($counters.passed)/$($counters.total)"
 }
 
-& (Join-Path $PSScriptRoot 'verify-installer.ps1')
+& (Join-Path $PSScriptRoot 'verify-installer.ps1') -OfficeBitness '64'
 if (-not $?) { throw 'PowerPoint isolated installer verification failed.' }
 & (Join-Path $PSScriptRoot 'verify-visio-installer.ps1')
 if (-not $?) { throw 'Visio isolated installer verification failed.' }

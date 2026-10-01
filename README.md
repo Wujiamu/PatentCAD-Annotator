@@ -169,7 +169,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | AutoCAD 2026 x64 安装后 GUI | 2025 最终部署候选正常冷启动、真实双击、面板 12 个切换方向、左右直线/样条、夹点与多图纸通过；同包生产命令矩阵 16/16 | 旧年份宿主、旧图纸完整迁移或共享编号源码新规则已通过 |
 | Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 安装后正常冷启动，真实面板绑定、多页标注、全稿检查、字典故障恢复及保存冷重开通过；Visio 对象选择由公共 COM 准备 | 原生鼠标画线、视觉布局、Visio 原生选线/粘合跟随或 Win7 / Office 2010 x86 已通过 |
 
-CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测、四版 Simulation，以及独立 Office 门禁（两个 net40 构建、全部代码测试、隔离安装回滚/卸载与 PowerShell 5.1/7 语法检查）。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
+CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测、四版 Simulation，以及独立 Office 门禁（两个 net40 构建、全部代码测试、隔离安装回滚/卸载与 PowerShell 5.1/7 语法检查）。Office 隔离安装测试固定使用测试用 64 位注册表视图，无需安装 Office；这不证明宿主兼容性。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
 
 常用命令如下，按变更选择检查。仅文档调整无需构建；共享 C# 变更应编译受影响版本；Word 保存、窗体与 CAD 面板改动还需对应宿主验证。
 
@@ -453,7 +453,7 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | AutoCAD 2026 x64 installed GUI | Final 2025 candidate: normal cold startup, real double-clicks, 12 palette switch directions, left/right straight and spline leaders, grips and multiple drawings; same-package command matrix: 16/16 | Older hosts, complete legacy-drawing migration or the new shared-number source behavior |
 | Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: normal cold startup, real panel binding, multiple pages, missing-label checks, dictionary recovery and cold reopening; Visio selection prepared through public COM | Mouse drawing, visual layout, native Visio selection/glue or Win7 / Office 2010 x86 |
 
-[CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite, four simulated host suites and independent Office gates: two net40 builds, all code tests, isolated installer rollback/uninstall, and PowerShell 5.1/7 syntax checks. It does not compile the five production CAD DLLs without the locally supplied Autodesk SDK or run Word/CAD/PPT/Visio GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
+[CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite, four simulated host suites and independent Office gates: two net40 builds, all code tests, isolated installer rollback/uninstall, and PowerShell 5.1/7 syntax checks. Isolated Office installers use a test-only 64-bit registry view without requiring Office; this does not prove host compatibility. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK or run Word/CAD/PPT/Visio GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
 
 Edit Word code only in root `vba/`, run `./vba-sync.ps1`, rebuild `word-addin/PatentMarker.dotm`, verify its VBA project and macro-discovery metadata with `tools/verify-dotm-package.ps1`, and then run `./sync-word-addin.ps1`. Both synchronization scripts return a nonzero exit code on `-Check` drift, while `build.ps1 -Static` independently compares every deployment copy with its canonical source. Edit the MLeader group in one chosen edition and run `./sync-mleader-group.ps1 -SourceVersion <year>` before the consistency check. The default source is 2010.
 

@@ -27,7 +27,7 @@ PowerPoint 加载项不会修改 Word、CAD 生产代码或字典文件，也不
 ./office-com-addin/verify-code.ps1
 ```
 
-`verify-code.ps1` 校验 PowerShell 语法、构建两个 net40 产品、执行两组代码测试，并验证隔离安装/回滚/卸载。它要求 TRX 中实际执行的测试全部通过；无测试或跳过不能通过。CI 的 Office 独立作业运行相同入口，不依赖 Office 或 AutoCAD SDK。宿主面板操作和冷重开另行验收。
+`verify-code.ps1` 校验 PowerShell 语法、构建两个 net40 产品、执行两组代码测试，并验证隔离安装/回滚/卸载。它要求 TRX 中实际执行的测试全部通过；无测试或跳过不能通过。CI 的 Office 独立作业运行相同入口，不依赖 Office 或 AutoCAD SDK。隔离安装采用测试用 64 位注册表视图，不探测 Office；单独运行 PPT 安装回归时也可用 `-OfficeBitness 32` 选择测试视图。实际用户安装器仍自动判断宿主位数。宿主面板操作和冷重开另行验收。
 
 需要分别执行时：
 
