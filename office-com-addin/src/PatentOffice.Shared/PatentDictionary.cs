@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace PatentOffice.PowerPoint
+namespace PatentOffice.Shared
 {
     internal sealed class PatentDictionary
     {
@@ -44,10 +44,5 @@ namespace PatentOffice.PowerPoint
 
         [JsonProperty("occurrences")]
         public int Occurrences { get; set; }
-
-        public override string ToString()
-        {
-            return (Number ?? "") + "\t" + (Name ?? "");
-        }
     }
 }

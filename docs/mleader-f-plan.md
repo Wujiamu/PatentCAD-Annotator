@@ -20,7 +20,7 @@
 The mainline annotation engine used to compose `Leader + MText` as two separate entities linked via extension dictionaries. MLeader was rolled back on 2026-08-06 due to the "fishhook" distortion; the 2026-08-15 form probe (`tools/MLeaderRepro`) re-identified the root cause:
 
 - The cause was NOT hardcoded host behavior but an **incomplete vertex chain**: the old implementation supplied only attach→dogleg, so MLeader computed its own text landing point and produced a hooked-back segment.
-- When the **text point is appended as the final vertex** (Plan F), the drawn leader path matches the user-picked points exactly.
+- Plan F retains the picked doglegs and retracts the final vertex by 0.4×text-height before the requested text location.
 - `ArrowSize` must be 0 when the arrow is off: a non-zero ArrowSize trims the leader start by ArrowSize even with the empty arrow block (`_PAT_NO_ARROW`), leaving the leader detached from the part.
 
 On 2026-08-16 Plan F was merged into the mainline: editions 2010/2013/2015/2025 create annotations as MLeader (Plan F); 2007 has no MLeader API and keeps `Leader + MText`.
@@ -37,21 +37,24 @@ EnableDogleg = false;  EnableLanding = false;  ExtendLeaderToText = false;
 DoglegLength = 0;      LandingGap = 0;
 TextAttachmentDirection = AttachmentHorizontal;
 TextAttachmentType = AttachmentMiddle;
+SetTextAttachmentType(AttachmentMiddle, LeftLeader);
+SetTextAttachmentType(AttachmentMiddle, RightLeader); // 样式与实体分别设置
 TextAngleType = HorizontalAngle;
 LeaderLineType = StraightLeader (或 SplineLeader，随面板开关);
 ArrowSize = HasArrowHead ? settings.ArrowSize : 0.0;   // 无箭头必须为 0
 ArrowSymbolId = HasArrowHead ? ObjectId.Null : NoArrowBlock;
 
-// 2) 顶点链：attach → dogleg → text（关键差异）
+// 2) 顶点链：attach → dogleg → 缩进端点
 int line = ml.AddLeaderLine(attachPt);
 ml.AddLastVertex(line, doglegPt);
-ml.AddLastVertex(line, textPt);      // ← 文字点进顶点链
+Point3d endpoint = PatLeaderTextAttachment.Retract(doglegPt, textPt, h);
+if (!SamePoint(endpoint, doglegPt)) ml.AddLastVertex(line, endpoint);
 
 // 3) 文字挂接（先顶点后文字，顺序即探针验证顺序）
 ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 ```
 
-**无限点模式（Unlimited mode）：** `attach → dogleg₁ → … → doglegₙ → text`，文字点始终是最后顶点（与主线 `AppendTextEndpoint` 同义；text 与最后拐点重合时跳过重复顶点）。
+**无限点模式（Unlimited mode）：** `attach → dogleg₁ → … → doglegₙ → 缩进端点`，最后端点从文字点沿末段方向退回 0.4×字高；与最后拐点重合时跳过重复顶点。文字保持在请求的 `TextLocation`。
 
 **跨版本 API 适配（Cross-version adaptation）：** `ExtendLeaderToText` 为 2014+ SDK 属性（2010-2012 无此成员），统一经 `PatMLeaderCreator.SetExtendLeaderToText / GetExtendLeaderToText` 反射访问，保持四版本单一代码；不支持时静默跳过（其默认行为即不延伸）。命令文件整体保持 .NET 3.5 兼容语法（不使用 `string.IsNullOrWhiteSpace` 等 4.0+ API）。
 
@@ -73,7 +76,7 @@ ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 
 **生产版回归（PATMLVERIFY，AutoCAD 2026 批处理实测 2026-08-16）：** 三点直线（无箭头）、三点样条+箭头、无限模式 1 拐点、无限模式 2 拐点，4/4 PASS（C1 附着点、C2 拐点在路径、C3 文字位置、C4 单附着、C5 箭头一致性、C6 直线模式几何载体）。
 
-**已知残留（Known residual）：** 创建后（及跨侧拖拽后）可能存在一条 ~4.08 单位的水平着陆小尾巴；用户拖动文字一次即消失。MVP 接受该残留并如实记录；程序化消除留作后续课题。
+**2026-09-30 修复候选：** 历史“着陆小尾巴可接受”的约定已被用户需求取代。通用附着属性未初始化左右方向，RightLeader 默认 `AttachmentBottomOfTopLine` 会在左侧文字下生成尾巴。候选在样式和新建实体上分别初始化左右 `AttachmentMiddle`；AutoCAD 2026 中旧图纸的 C7/C8 失败，新建左右文字的 C7/C8 通过。该证据限于命令级新建场景，不覆盖旧实体迁移、跨侧夹点拖拽或面板 UI。详见 [2026-09-30 验证记录](cad-acceptance-20260930.md)。
 
 ---
 
@@ -88,8 +91,10 @@ ml.MText = mt;  ml.TextLocation = textPt;  ml.TextHeight = h;
 6. `PATALIGN`/`BZA` 支持 PAT MLeader 的线/框基准对齐；移动文字时同步最后顶点和 Xrecord 点链，完成后仍可由 `PATMLVERIFY` 校验。
 7. 覆盖 2010/2013/2015/2025 四版本（.NET 3.5/4.0/4.5/8.0），四版本命令文件字节级相同。
 
+**2026-10-01 补验：** 新建实体在赋值 MText 前显式设置 leader cluster 的左右 `SetDogleg` 方向，避免连接至背离拐点的文字边缘。C9 故障注入矩阵抓到 1 个失败，最终 CAD 独立构建的 2025 包重新完成真实安装、正常冷启动、鼠标列表双击、面板切换与左右绘制；新建 4 个鼠标样本 C1–C9 全部通过，样条左右文字各覆盖同侧/跨侧原生夹点移动。详见 [最终验收](cad-acceptance-20261001.md)。原生夹点不更新本项目保存的创建点链，因此拖动后不以 C3 的原始文字点断言作为夹点回归依据；跨侧拖动也不保证任意样条点链始终无回环。
+
 **后续（Backlog）：**
-- 着陆尾巴的程序化消除（候选：创建后 `MoveGripPointsAt` 零位移重算）。
+- 其他年份宿主的桌面验收仍需对应环境；旧实体若要迁移需另行设计，当前不自动改写。
 - 2007 版不在计划内（无 MLeader 实体，保持 Leader + MText）。
 
 ---
@@ -139,7 +144,7 @@ MVP 视为跑通，当且仅当在真实 AutoCAD 2026 宿主中：
 
 | 风险 | 对策 |
 |---|---|
-| 着陆尾巴影响观感 | 文档明示；拖动即消；后续探索零位移重算 |
+| 附着方向或旧实体导致文字底部尾巴 | 样式与新建实体双向初始化；C7/C8 检查；旧实体不自动迁移，夹点拖拽待验 |
 | 旧图纸 MLeader（默认样式）形态异常 | 不迁移旧实体；`PATSELECTALL` 只认带 PAT 标记的 MLeader |
 | 四版本命令文件漂移 | `check-version-sync.ps1` MLeader 组校验强制字节级一致（CI `-Static` 层执行） |
 | 2010-2012 无 `ExtendLeaderToText` | 反射访问，不支持时静默跳过（默认行为即不延伸） |

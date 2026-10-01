@@ -54,8 +54,21 @@ namespace PatentMarker.RuntimeContractTests
                 Assert.False(leader.ExtendLeaderToText);
                 Assert.Equal(TextAttachmentDirection.AttachmentHorizontal, leader.TextAttachmentDirection);
                 Assert.Equal(TextAttachmentType.AttachmentMiddle, leader.TextAttachmentType);
+                Assert.Equal(TextAttachmentType.AttachmentMiddle,
+                    leader.GetTextAttachmentType(LeaderDirectionType.LeftLeader));
+                Assert.Equal(TextAttachmentType.AttachmentMiddle,
+                    leader.GetTextAttachmentType(LeaderDirectionType.RightLeader));
                 Assert.Equal(TextAngleType.HorizontalAngle, leader.TextAngleType);
                 Assert.Equal(1, leader.LeaderLineCount);
+                using (Transaction tr = fixture.Database.TransactionManager.StartTransaction())
+                {
+                    MLeaderStyle style = (MLeaderStyle)tr.GetObject(
+                        leader.MLeaderStyle, OpenMode.ForRead);
+                    Assert.Equal(TextAttachmentType.AttachmentMiddle,
+                        style.GetTextAttachmentType(LeaderDirectionType.LeftLeader));
+                    Assert.Equal(TextAttachmentType.AttachmentMiddle,
+                        style.GetTextAttachmentType(LeaderDirectionType.RightLeader));
+                }
                 // 末顶点从文字点缩进 0.4×字高（gap=1.7），不直接触及文字。
                 Point3d mle = leader.GetLastVertex(0);
                 double mx = mle.X - 5.0, my = mle.Y - 6.0;

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using PatentMarker.IO;
+using PatentOffice.Shared;
+using VisioDiagnostics = PatentOffice.Shared.OfficeDiagnostics;
 
 namespace PatentOffice.Visio
 {

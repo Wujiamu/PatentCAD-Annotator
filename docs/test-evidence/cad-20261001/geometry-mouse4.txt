@@ -1,0 +1,69 @@
+=====================================================
+PATMLVERIFY — MLeader form verification
+Time: 2026-10-01 02:47:28
+AutoCAD: 25.1.0.0
+=====================================================
+
+-----------------------------------------------------
+MLeader (2021213762800)
+  recorded: attach=(-58.75,-29.53) doglegs=1 text=(-49.96,25.36) arrow=False splined=True
+  entity: textLocation=(-49.96,25.36) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=51 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 endpoint-on-facing-text-edge: 0.000 (tol=0.350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.111 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+-----------------------------------------------------
+MLeader (2021213762848)
+  recorded: attach=(62.09,-29.53) doglegs=1 text=(149.98,25.36) arrow=False splined=True
+  entity: textLocation=(149.98,25.36) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=58 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 endpoint-on-facing-text-edge: 0.000 (tol=0.350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.015 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+-----------------------------------------------------
+MLeader (2021213762896)
+  recorded: attach=(-58.75,36.34) doglegs=1 text=(-49.96,69.27) arrow=False splined=False
+  entity: textLocation=(-49.96,69.27) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 endpoint-on-facing-text-edge: 0.000 (tol=0.350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+-----------------------------------------------------
+MLeader (2021213762944)
+  recorded: attach=(62.09,36.34) doglegs=1 text=(149.98,69.27) arrow=False splined=False
+  entity: textLocation=(149.98,69.27) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 endpoint-on-facing-text-edge: 0.000 (tol=0.350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+SUMMARY: total=4 passed=4 failed=0

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PatentMarkerAssemblyPath Condition="'$(PatentMarkerAssemblyPath)' == ''">../../cad-plugin/2025/PatentMarker/bin/Release/net8.0-windows/PatentMarker.dll</PatentMarkerAssemblyPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="acdbmgd"><HintPath>../../cad-plugin/2025/PatentMarker/lib/acdbmgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="acmgd"><HintPath>../../cad-plugin/2025/PatentMarker/lib/acmgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="accoremgd"><HintPath>../../cad-plugin/2025/PatentMarker/lib/accoremgd.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PatentMarker"><HintPath>$(PatentMarkerAssemblyPath)</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>

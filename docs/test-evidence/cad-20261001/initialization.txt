@@ -1,0 +1,24 @@
+[02:41:27.745] === PatentMarker Initialize START ===
+[02:41:27.746] Assembly: <WORKSPACE>\_paneltest\cad-final-20261001-0207\final-isolated\installed\PatentMarker.dll
+[02:41:27.747] NET Runtime: 8.0.28
+[02:41:27.747] BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+[02:41:27.747]   Assembly 'acdbmgd': LOADED (25.1.0.0)
+[02:41:27.748]   Assembly 'acmgd': LOADED (25.1.0.0)
+[02:41:27.749]   Assembly 'accoremgd': LOADED (25.1.0.0)
+[02:41:27.753] === PatentMarker Initialize END ===
+[14:14:22.682] === PatentMarker Initialize START ===
+[14:14:22.683] Assembly: <WORKSPACE>\_paneltest\cad-final-20261001-0207\final-isolated\installed\PatentMarker.dll
+[14:14:22.683] NET Runtime: 8.0.28
+[14:14:22.683] BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+[14:14:22.684]   Assembly 'acdbmgd': LOADED (25.1.0.0)
+[14:14:22.685]   Assembly 'acmgd': LOADED (25.1.0.0)
+[14:14:22.685]   Assembly 'accoremgd': LOADED (25.1.0.0)
+[14:14:22.689] === PatentMarker Initialize END ===
+[14:30:28.651] === PatentMarker Initialize START ===
+[14:30:28.664] Assembly: <WORKSPACE>\_paneltest\cad-final-20261001-0207\final-isolated\installed\PatentMarker.dll
+[14:30:28.665] NET Runtime: 8.0.28
+[14:30:28.666] BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+[14:30:28.666]   Assembly 'acdbmgd': LOADED (25.1.0.0)
+[14:30:28.667]   Assembly 'acmgd': NOT LOADED
+[14:30:28.667]   Assembly 'accoremgd': LOADED (25.1.0.0)
+[14:30:28.671] === PatentMarker Initialize END ===

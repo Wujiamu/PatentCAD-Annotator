@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$ExistingDocumentPath,
     [Parameter(Mandatory = $true)][string]$DictionaryPath,
@@ -43,8 +43,10 @@ New-Item -ItemType Directory -Path $runDirectory | Out-Null
 $testDictionary = Join-Path $runDirectory 'recovery.dict.json'
 $testDocument = Join-Path $runDirectory 'recovery-test.vsdx'
 Copy-Item -LiteralPath $dictionaryFull -Destination $testDictionary
-if ((Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash -ne
-    (Get-FileHash -LiteralPath $testDictionary -Algorithm SHA256).Hash) { throw '测试字典副本与 Word 原始导出不一致。' }
+if (-not [Collections.StructuralComparisons]::StructuralEqualityComparer.Equals(
+    [IO.File]::ReadAllBytes($dictionaryFull), [IO.File]::ReadAllBytes($testDictionary))) {
+    throw '测试字典副本与 Word 原始导出不一致。'
+}
 
 $document = $null
 try {
@@ -56,10 +58,9 @@ try {
         RunId = $runId
         OriginalDocument = $existingFull
         OriginalDictionary = $dictionaryFull
-        OriginalDictionarySha256 = (Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash
         TestDocument = $testDocument
         TestDictionary = $testDictionary
-        TestDictionarySha256 = (Get-FileHash -LiteralPath $testDictionary -Algorithm SHA256).Hash
+        DictionaryCopyBytesEqual = $true
     }
     $result | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $runDirectory 'prepared.json') -Encoding UTF8
     Write-Output "PASS|VISIO_RECOVERY_PREPARED|$runDirectory"

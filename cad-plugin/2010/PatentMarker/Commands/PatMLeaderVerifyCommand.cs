@@ -140,6 +140,39 @@ namespace PatentMarker.Commands
                 + " blockRefs=" + ex.BlockRefCount);
 
             bool ok = true;
+            TextAttachmentType leftAttachment =
+                ml.GetTextAttachmentType(LeaderDirectionType.LeftLeader);
+            TextAttachmentType rightAttachment =
+                ml.GetTextAttachmentType(LeaderDirectionType.RightLeader);
+            Report(report, ref ok,
+                leftAttachment == TextAttachmentType.AttachmentMiddle &&
+                rightAttachment == TextAttachmentType.AttachmentMiddle,
+                "C7 directional-middle-attachment",
+                "left=" + leftAttachment + " right=" + rightAttachment);
+
+            int nearTextBottom = CountNearTextBottomSegments(ex,
+                ml.MText != null ? ml.MText.GeometricExtents : ml.GeometricExtents,
+                textHeight);
+            Report(report, ref ok, nearTextBottom == 0,
+                "C8 no-line-under-text",
+                nearTextBottom.ToString(CultureInfo.InvariantCulture));
+
+            // Verify the visible connection side, rather than accepting zero
+            // endpoints near the stored insertion point. A default cluster
+            // direction can connect at the far edge and fold over the text.
+            Extents3d textBounds = ml.MText.GeometricExtents;
+            Point3d previous = doglegs[doglegs.Count - 1];
+            bool textOnRight = textLoc.X >= previous.X;
+            Point3d facingEdge = new Point3d(
+                textOnRight ? textBounds.MinPoint.X : textBounds.MaxPoint.X,
+                (textBounds.MinPoint.Y + textBounds.MaxPoint.Y) / 2.0,
+                textLoc.Z);
+            double edgeDistance = MinDistanceToEndpoint(ex, facingEdge);
+            double edgeTolerance = Math.Max(0.15, textHeight * 0.1);
+            Report(report, ref ok, edgeDistance <= edgeTolerance,
+                "C9 endpoint-on-facing-text-edge",
+                edgeDistance.ToString("F3") + " (tol="
+                + edgeTolerance.ToString("F3") + ")");
 
             // C1 绘制路径起点 = 附着点（有箭头时允许 ArrowSize 修剪量）
             double bestAttach = MinDistanceToEndpoint(ex, attach);
@@ -245,6 +278,30 @@ namespace PatentMarker.Commands
                 ex.CurveEndpoints.Add(start);
                 ex.CurveEndpoints.Add(end);
 
+                // Explode may return one multi-segment Polyline instead of
+                // separate curves. Preserve its exact vertices so C2 does not
+                // miss a picked dogleg between coarse arc-length samples.
+                Polyline polyline = curve as Polyline;
+                if (polyline != null && IsStraightPolyline(polyline))
+                {
+                    int vertices = polyline.NumberOfVertices;
+                    for (int i = 1; i < vertices; i++)
+                    {
+                        ex.Segments.Add(new Point3d[] {
+                            polyline.GetPoint3dAt(i - 1),
+                            polyline.GetPoint3dAt(i)
+                        });
+                    }
+                    if (polyline.Closed && vertices > 1)
+                    {
+                        ex.Segments.Add(new Point3d[] {
+                            polyline.GetPoint3dAt(vertices - 1),
+                            polyline.GetPoint3dAt(0)
+                        });
+                    }
+                    return;
+                }
+
                 double length = curve.GetDistanceAtParameter(curve.EndParam);
                 if (length < 1e-9)
                 {
@@ -272,6 +329,16 @@ namespace PatentMarker.Commands
             }
         }
 
+        private static bool IsStraightPolyline(Polyline polyline)
+        {
+            for (int i = 0; i < polyline.NumberOfVertices; i++)
+            {
+                if (Math.Abs(polyline.GetBulgeAt(i)) > 1e-9)
+                    return false;
+            }
+            return true;
+        }
+
         private static double MinDistanceToEndpoint(Exploded ex, Point3d pt)
         {
             double best = double.MaxValue;
@@ -286,6 +353,32 @@ namespace PatentMarker.Commands
             foreach (Point3d[] seg in ex.Segments)
                 best = Math.Min(best, DistancePointSegment(pt, seg[0], seg[1]));
             return best;
+        }
+
+        /// <summary>
+        /// Detects leader segments running along the lower edge of an MText
+        /// box. The old verifier only checked path endpoints near TextLocation,
+        /// which accepted the default RightLeader bottom-of-top-line tail.
+        /// </summary>
+        private static int CountNearTextBottomSegments(Exploded ex,
+            Extents3d textExtents, double textHeight)
+        {
+            double aboveTolerance = Math.Max(0.15, textHeight * 0.05);
+            double belowTolerance = Math.Max(0.75, textHeight * 0.25);
+            int count = 0;
+            foreach (Point3d[] segment in ex.Segments)
+            {
+                double minX = Math.Min(segment[0].X, segment[1].X);
+                double maxX = Math.Max(segment[0].X, segment[1].X);
+                if (maxX < textExtents.MinPoint.X || minX > textExtents.MaxPoint.X)
+                    continue;
+
+                double midY = (segment[0].Y + segment[1].Y) / 2.0;
+                if (midY <= textExtents.MinPoint.Y + aboveTolerance &&
+                    midY >= textExtents.MinPoint.Y - belowTolerance)
+                    count++;
+            }
+            return count;
         }
 
         private static double DistancePointSegment(Point3d pt, Point3d a, Point3d b)

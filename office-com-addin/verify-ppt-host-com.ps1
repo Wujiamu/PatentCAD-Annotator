@@ -25,10 +25,10 @@ if ($presentation.Slides.Count -ne 2) { throw '测试前必须有两页。' }
 
 $root = Join-Path ([IO.Path]::GetFullPath($OutputRoot)) ('ppt-host-com-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + [Guid]::NewGuid().ToString('N').Substring(0, 8))
 New-Item -ItemType Directory -Path $root | Out-Null
-$dictHashBefore = (Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash
+$dictBytesBefore = [IO.File]::ReadAllBytes($dictionaryFull)
 $assembly = [Reflection.Assembly]::LoadFrom($assemblyFull)
 $flags = [Reflection.BindingFlags]'Public,Static'
-$reader = $assembly.GetType('PatentOffice.PowerPoint.DictionaryReader', $true)
+$reader = $assembly.GetType('PatentOffice.Shared.DictionaryReader', $true)
 $binding = $assembly.GetType('PatentOffice.PowerPoint.PresentationBinding', $true)
 $annotations = $assembly.GetType('PatentOffice.PowerPoint.PowerPointAnnotations', $true)
 $snapshot = $reader.GetMethod('Read', $flags).Invoke($null, @($dictionaryFull))
@@ -106,17 +106,17 @@ try {
         -not $markedAfterReopen.Contains('2')) {
         throw '保存重开后绑定或产品 Tags 未恢复。'
     }
-    $dictHashAfter = (Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash
-    if ($dictHashAfter -ne $dictHashBefore) { throw 'Word 字典字节发生变化。' }
+    $dictBytesAfter = [IO.File]::ReadAllBytes($dictionaryFull)
+    $dictionaryBytesUnchanged = [System.Collections.StructuralComparisons]::StructuralEqualityComparer.Equals(
+        $dictBytesBefore, $dictBytesAfter)
+    if (-not $dictionaryBytesUnchanged) { throw 'Word 字典字节发生变化。' }
     $result = [ordered]@{
         Outcome = 'PASS'
         Level = 'L2_REAL_POWERPOINT_COM_OBJECTS_NO_PANEL'
         ProcessId = $processes[0].Id
         HostVersion = [string]$app.Version
         AssemblySha256 = (Get-FileHash -LiteralPath $assemblyFull -Algorithm SHA256).Hash
-        DictionarySha256Before = $dictHashBefore
-        DictionarySha256After = $dictHashAfter
-        PresentationSha256 = (Get-FileHash -LiteralPath $presentationFull -Algorithm SHA256).Hash
+        DictionaryBytesUnchanged = $dictionaryBytesUnchanged
         NegativePictureRejected = $negativeRejected
         MarkedNumbersAfterReopen = @('1', '2')
         DuplicateNumberAccepted = $true

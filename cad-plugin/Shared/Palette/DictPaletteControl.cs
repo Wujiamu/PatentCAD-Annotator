@@ -593,7 +593,7 @@ namespace PatentMarker.Palette
             {
                 var doc = IO.RuntimeHost.ActiveDocument;
                 if (doc != null)
-                    doc.SendStringToExecute("PATBRACE\n", false, false, false);
+                    PatPaletteCommand.RequestPanelCommand(doc, "PATBRACE");
             }
             catch (System.Exception ex)
             {
@@ -613,7 +613,7 @@ namespace PatentMarker.Palette
         {
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
-            doc.SendStringToExecute("PATCHECK\n", false, false, false);
+            PatPaletteCommand.RequestPanelCommand(doc, "PATCHECK");
         }
 
         // v5.1：对齐（PATALIGN v2：先选中标注再点击本按钮）
@@ -621,7 +621,7 @@ namespace PatentMarker.Palette
         {
             var doc = IO.RuntimeHost.ActiveDocument;
             if (doc == null) return;
-            doc.SendStringToExecute("PATALIGN\n", false, false, false);
+            PatPaletteCommand.RequestPanelCommand(doc, "PATALIGN");
         }
 
         private void BtnArbitrate_Click(object sender, EventArgs e)

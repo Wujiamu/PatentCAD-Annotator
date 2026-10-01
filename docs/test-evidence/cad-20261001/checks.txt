@@ -1,0 +1,40 @@
+cad-only-build-final.log
+
+
+cad-only-package.log
+[OK] 2007 staged: ..\cad-only-release\2007
+[OK] 2010 staged: ..\cad-only-release\2010
+[OK] 2013 staged: ..\cad-only-release\2013
+[OK] 2015 staged: ..\cad-only-release\2015
+[OK] 2025 staged: ..\cad-only-release\2025
+Release staging completed: ../cad-only-release
+
+cad-only-unit.log
+
+
+cad-only-simulation.log
+  [OK]   All simulated host contract tests passed
+
+cad-only-api.log
+[OK] API surface checks passed for: 2010, 2013, 2015, 2025
+
+cad-only-static.log
+  [FAIL] Word synchronization failure-injection test failed: DOTM package lacks required entry: word/_rels/vbaProject.bin.rels
+Installer profile enumeration check passed.
+  [OK]   All installer profile enumeration contracts passed
+=== Static check result ===
+  [FAIL] Found 1 error(s) and 0 warning(s). Fix errors and retry.
+
+cad-only-static-ps5-fixed.log
+PASS|WORD_SYNC_GATE_FAILURE_INJECTION|vba_drift_rejected=true|word_asset_drift_rejected=true|dotm_metadata_drift_rejected=true|check_writes=0
+Installer profile enumeration check passed.
+  [OK]   All installer profile enumeration contracts passed
+=== Static check result ===
+  [OK]   All static checks passed.
+
+cad-only-static-ps7-fixed.log
+PASS|WORD_SYNC_GATE_FAILURE_INJECTION|vba_drift_rejected=true|word_asset_drift_rejected=true|dotm_metadata_drift_rejected=true|check_writes=0
+Installer profile enumeration check passed.
+  [OK]   All installer profile enumeration contracts passed
+=== Static check result ===
+  [OK]   All static checks passed.

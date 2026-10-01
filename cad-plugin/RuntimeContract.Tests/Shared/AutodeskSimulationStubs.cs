@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 namespace Autodesk.AutoCAD.Geometry
 {
+    public struct Vector3d
+    {
+        public Vector3d(double x, double y, double z) { X = x; Y = y; Z = z; }
+        public double X { get; }
+        public double Y { get; }
+        public double Z { get; }
+    }
+
     public struct Point2d : IEquatable<Point2d>
     {
         public Point2d(double x, double y)
@@ -307,10 +315,17 @@ namespace Autodesk.AutoCAD.DatabaseServices
         AttachmentVertical
     }
 
+    public enum LeaderDirectionType
+    {
+        LeftLeader,
+        RightLeader
+    }
+
     public enum TextAttachmentType
     {
         AttachmentMiddle,
-        AttachmentCenter
+        AttachmentCenter,
+        AttachmentBottomOfTopLine
     }
 
     public struct ObjectId : IEquatable<ObjectId>
@@ -532,6 +547,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
         private MText _mtext;
         private ObjectId _style;
         private bool _leaderStarted;
+        private TextAttachmentType _leftTextAttachment = TextAttachmentType.AttachmentMiddle;
+        private TextAttachmentType _rightTextAttachment = TextAttachmentType.AttachmentBottomOfTopLine;
 
         public ContentType ContentType { get; set; }
         public ObjectId MLeaderStyle
@@ -552,7 +569,33 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public TextAttachmentType TextAttachmentType { get; set; }
         public TextAngleType TextAngleType { get; set; }
         public Point3d TextLocation { get; set; }
+        public void SetTextAttachmentType(TextAttachmentType attachment,
+            LeaderDirectionType direction)
+        {
+            if (direction == LeaderDirectionType.LeftLeader)
+                _leftTextAttachment = attachment;
+            else
+                _rightTextAttachment = attachment;
+        }
+        public TextAttachmentType GetTextAttachmentType(LeaderDirectionType direction)
+        {
+            return direction == LeaderDirectionType.LeftLeader
+                ? _leftTextAttachment : _rightTextAttachment;
+        }
         public int LeaderLineCount { get { return _leaderStarted ? 1 : 0; } }
+        public Vector3d DoglegDirection { get; private set; }
+        public int GetLeaderIndex(int lineIndex)
+        {
+            if (!_leaderStarted || lineIndex != 0)
+                throw new InvalidOperationException("MLeader line does not exist.");
+            return 0;
+        }
+        public void SetDogleg(int leaderIndex, Vector3d direction)
+        {
+            if (!_leaderStarted || leaderIndex != 0)
+                throw new InvalidOperationException("MLeader cluster does not exist.");
+            DoglegDirection = direction;
+        }
         public MText MText
         {
             get { return _mtext; }
@@ -590,12 +633,28 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public sealed class MLeaderStyle : DBObject
     {
+        private TextAttachmentType _leftTextAttachment = TextAttachmentType.AttachmentMiddle;
+        private TextAttachmentType _rightTextAttachment = TextAttachmentType.AttachmentBottomOfTopLine;
+
         public string Name { get; set; }
         public ContentType ContentType { get; set; }
         public double TextHeight { get; set; }
         public TextAttachmentType TextAttachmentType { get; set; }
         public TextAttachmentDirection TextAttachmentDirection { get; set; }
         public TextAngleType TextAngleType { get; set; }
+        public void SetTextAttachmentType(TextAttachmentType attachment,
+            LeaderDirectionType direction)
+        {
+            if (direction == LeaderDirectionType.LeftLeader)
+                _leftTextAttachment = attachment;
+            else
+                _rightTextAttachment = attachment;
+        }
+        public TextAttachmentType GetTextAttachmentType(LeaderDirectionType direction)
+        {
+            return direction == LeaderDirectionType.LeftLeader
+                ? _leftTextAttachment : _rightTextAttachment;
+        }
         public LeaderType LeaderLineType { get; set; }
         public bool EnableDogleg { get; set; }
         public bool EnableLanding { get; set; }

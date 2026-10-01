@@ -97,10 +97,22 @@ try {
         $archive.Dispose()
     }
     $dotmDriftHash = (Get-FileHash -LiteralPath $dotmDrift -Algorithm SHA256).Hash
-    $dotmOutput = @(& $engine -NoLogo -NoProfile -File $dotmVerifier -Path $dotmDrift 2>&1 | ForEach-Object { [string]$_ })
-    $dotmExitCode = $LASTEXITCODE
+    # Windows PowerShell promotes native stderr to an ErrorRecord. The
+    # intentionally rejected package must reach the exit-code assertion even
+    # when this script otherwise stops on errors.
+    $savedErrorAction = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = "Continue"
+        $dotmOutput = @(& $engine -NoLogo -NoProfile -File $dotmVerifier -Path $dotmDrift 2>&1 | ForEach-Object { [string]$_ })
+        $dotmExitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $savedErrorAction
+    }
     if ($dotmExitCode -eq 0) {
         throw "DOTM verifier accepted a package with no VBA supplemental-data relationship.`n$($dotmOutput -join [Environment]::NewLine)"
+    }
+    if (($dotmOutput -join [Environment]::NewLine) -notlike "*DOTM package lacks required entry: word/_rels/vbaProject.bin.rels*") {
+        throw "DOTM verifier failed for an unexpected reason.`n$($dotmOutput -join [Environment]::NewLine)"
     }
     if ((Get-FileHash -LiteralPath $dotmDrift -Algorithm SHA256).Hash -ne $dotmDriftHash) {
         throw "DOTM verifier modified the fault-injected package"

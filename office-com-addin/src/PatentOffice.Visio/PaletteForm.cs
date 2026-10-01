@@ -5,6 +5,8 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using PatentMarker.IO;
+using PatentOffice.Shared;
+using VisioDiagnostics = PatentOffice.Shared.OfficeDiagnostics;
 
 namespace PatentOffice.Visio
 {

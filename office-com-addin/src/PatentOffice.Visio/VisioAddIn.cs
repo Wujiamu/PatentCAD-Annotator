@@ -1,6 +1,8 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using PatentOffice.Shared;
+using VisioDiagnostics = PatentOffice.Shared.OfficeDiagnostics;
 
 namespace PatentOffice.Visio
 {
@@ -21,7 +23,7 @@ namespace PatentOffice.Visio
                 string version = "unknown";
                 try { version = Convert.ToString(((dynamic)application).Version); }
                 catch { }
-                VisioDiagnostics.Start(version);
+                VisioDiagnostics.Start(version, "office-visio");
                 VisioDiagnostics.Write("lifecycle", "PASS", "OnConnection;mode=" + connectMode);
                 ShowPalette();
             }

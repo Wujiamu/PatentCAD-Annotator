@@ -1,10 +1,10 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PatentOffice.PowerPoint
+namespace PatentOffice.Shared
 {
-    // Office's Extensibility type library interface. Declared locally so the
-    // add-in does not need a machine-wide Extensibility PIA installation.
+    // Office's Extensibility contract is declared locally to avoid a
+    // machine-wide Extensibility PIA dependency.
     [ComVisible(true)]
     [Guid("B65AD801-ABAF-11D0-BB8B-00A0C90F2744")]
     [InterfaceType(ComInterfaceType.InterfaceIsIDispatch)]

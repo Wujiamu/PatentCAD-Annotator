@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$DictionaryPath,
     [string]$OutputRoot = (Join-Path $PSScriptRoot 'test-evidence')
@@ -49,7 +49,6 @@ try {
         HostBitness = [IntPtr]::Size * 8
         DocumentPath = $documentPath
         DictionaryPath = $dictionaryFull
-        DictionarySha256Before = (Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash
         SelectedLineId = [int]$line.ID
         Preparation = 'PASS'
         Limitation = 'The line was prepared and selected through Visio COM; the panel actions remain to be exercised through the user interface.'

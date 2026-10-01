@@ -26,6 +26,9 @@
 #   Job 3 - Simulated host contracts:
 #     - Replays real PATMARK command orchestration for Leader and MLeader editions
 #       against strict fake editor/database/transaction hosts.
+#   Office job - Builds the SDK-free net40 add-ins, requires every code test to
+#     execute and pass, and exercises isolated installer rollback/uninstall.
+#     It does not replace installed Office UI or cold-reopen acceptance.
 # ============================================================================
 
 name: build
@@ -105,3 +108,19 @@ jobs:
       - name: Run simulated edition contracts
         shell: pwsh
         run: ./build.ps1 -Simulation
+
+  office-addins:
+    name: Office add-in code and installer gates
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Build and verify both Office add-ins
+        shell: pwsh
+        run: ./office-com-addin/verify-code.ps1

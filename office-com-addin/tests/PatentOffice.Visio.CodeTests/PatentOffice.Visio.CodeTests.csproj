@@ -20,4 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PatentOffice.Visio\PatentOffice.Visio.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Shared\OfficeDictionaryTests.cs" Link="Shared\OfficeDictionaryTests.cs" />
+  </ItemGroup>
 </Project>

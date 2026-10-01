@@ -1,0 +1,10 @@
+{
+    "Time":  "2026-10-01T14:28:51.6041775+08:00",
+    "Pid":  22664,
+    "StartUtc":  "2026-10-01T06:14:13.2184372Z",
+    "DrawingBEntities":  0,
+    "CommandActive":  0,
+    "DrawingAClosed":  true,
+    "OwnedProcessExited":  true,
+    "Result":  "PASS"
+}

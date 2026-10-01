@@ -8,10 +8,12 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ***
 
-## [Unreleased] - 1.0.3 candidate (2026-09-13)
+## [Unreleased] - 1.0.3 candidate (2026-10-01)
 
 ### Added
 
+- 新增独立的实验性 Word→PowerPoint 0.1.2.0 / Word→Visio 0.1.4.0 COM 加载项：手选只读字典、原生线绑定编号、文稿内持久化、两秒刷新及整稿漏标检查。PPT 使用形状组 / Tags / Custom XML，Visio 使用一维线与编号框配对 / ShapeSheet，前景页参与检查。两端有可恢复安装器及独立 CI 门禁；本机 Office 16 x64 通过限定 L3 面板与保存重开链路，原生鼠标绘制、Visio 原生选线及旧版宿主待验。
+- 提取 Office 专用字典模型、只读解析器、COM 接口和诊断链接源码；跨 CAD / Office 仅共享编号身份比较器。补齐只读解析与标注拒绝测试，PPT 7/7、Visio 24/24；共享编号比较修正经 CAD 122 项单测及五版编译验证，未加入本次独立验收的 CAD 部署 DLL。
 - CAD 的字典面板现在可以用“显示 JSON/隐藏 JSON”切换当前 `.dict.json` 的 Explorer 可见性；Word 面板提供对应的手动编辑开关。切换只改变 Hidden/System 文件属性，不改变 JSON 内容。
 - Word 与五个 CAD 版本的字典写回会保留用户选择的可见状态，新建字典仍默认隐藏；增加了 2025 版属性往返和写回保留测试。
 - 新增由根 VBA 真源构建的 `PatentMarker.dotm` 全局模板、配套 Startup 安装/卸载器、生命周期诊断日志，以及严格区分 L2 源码直导入与 L4 安装后正常启动的回归脚本。
@@ -19,6 +21,8 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ### Fixed
 
+- 修复 CAD 面板标注、大括号、对齐与检测间的交互命令切换，按图纸保留最新请求；修正四版 MLeader 的左右中部附着及连接方向，消除文字下方自动延伸线和新建样条回折，并补充形态诊断。最终 2025 部署候选在 AutoCAD 2026 x64 完成安装后 GUI、夹点及多图纸验收，同包命令矩阵 16/16；其他年份宿主待验，见 [CAD 验收](docs/cad-acceptance-20261001.md)。
+- 修正 Visio Windows PowerShell 5.1 脚本编码与负例跳过误报 PASS；完整反射诊断要求 Windows PowerShell 5.1 STA，Core 环境返回 SKIP。补齐选择拒绝的同场景故障注入，见 [Office 验证](office-com-addin/test-evidence/office-release-validation-20261001.md)。
 - 修复“手动导出有效、关闭并重新启动 Word 后普通保存仍不自动导出”：旧路径依赖文档 `AutoOpen`，既没有可靠的全局启动入口，旧回归又通过测试夹具直接启用钩子。现在 Startup 全局模板使用 `AutoExec` 幂等初始化模块级 `WithEvents` 保存钩子，并由 `AutoExit` 释放；本机 Word 16.0 64 位已用正常 `WINWORD.EXE` 全新进程验证普通保存直接生成并解析 JSON。
 - 修复 Word 安装器可能覆盖 `Normal.dotm`、进而丢失用户宏的架构风险。五套安装器不再导入或保存 Normal，只对预构建 `PatentMarker.dotm` 做暂存、逐字节校验、可恢复替换和所有权清单；卸载器只移动本项目文件。隔离故障注入已验证安装/卸载中途失败回滚，真实 Startup 验证中 Normal 与非产品模板 SHA-256 均不变。
 - 修复 `vba-sync.ps1 -Check` 发现漂移仍返回成功的问题，并增加 `sync-word-addin.ps1 -Check`；静态门禁会在临时副本中故意制造两类漂移，断言检查非零退出且不写文件，构建/打包同时校验规范 VBA、加载项、安装器和卸载器与五套部署包一致。

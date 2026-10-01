@@ -54,7 +54,6 @@ try {
         PresentationPath = $presentationPath
         ImagePath = $imagePath
         DictionaryPath = $dictionaryFull
-        DictionarySha256 = (Get-FileHash -LiteralPath $dictionaryFull -Algorithm SHA256).Hash
         SlideCount = [int]$presentation.Slides.Count
         SelectedLineName = [string]$line1.Name
     }

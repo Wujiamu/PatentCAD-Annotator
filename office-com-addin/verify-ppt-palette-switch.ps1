@@ -53,7 +53,7 @@ try {
     $assembly = [Reflection.Assembly]::LoadFrom($assemblyFull)
     $addinType = $assembly.GetType('PatentOffice.PowerPoint.PowerPointAddIn', $true)
     $formType = $assembly.GetType('PatentOffice.PowerPoint.PaletteForm', $true)
-    $readerType = $assembly.GetType('PatentOffice.PowerPoint.DictionaryReader', $true)
+    $readerType = $assembly.GetType('PatentOffice.Shared.DictionaryReader', $true)
     $flags = [Reflection.BindingFlags]'Instance,NonPublic'
     $publicStatic = [Reflection.BindingFlags]'Static,Public'
     $application = New-Object PatentMarkerPptSwitchTest.FakeApplication

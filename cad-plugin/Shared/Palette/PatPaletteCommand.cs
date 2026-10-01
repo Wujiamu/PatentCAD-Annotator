@@ -24,6 +24,11 @@ namespace PatentMarker.Palette
             public string Number;
             public string Name;
             public bool HasPending;
+            public string PendingPanelCommand = "";
+            public string QueuedPanelCommand = "";
+            public string ActivePanelCommand = "";
+            public bool CancelRequested;
+            public bool CommandEventsAttached;
             public bool LaunchQueued;
             public DateTime LaunchQueuedAtUtc;
         }
@@ -121,21 +126,41 @@ namespace PatentMarker.Palette
             IO.ConfigLoader.ReleaseDrawing(drawingPath);
         }
 
-        /// <summary>
-        /// 接收面板的一次标注请求。请求按图纸保存；如果当前没有命令运行，则只排队一次 PATMARK。
-        /// SendStringToExecute 是异步调用，因此这里不能对每次点击都无条件发送一条命令。
-        /// </summary>
+        /// <summary>接受面板标注请求，并按目标图纸保存待执行状态。</summary>
         public static bool RequestMark(Document doc, string number, string name)
         {
             if (doc == null || IsNullOrWhiteSpace(number)) return false;
 
             MarkDispatchState state = GetMarkDispatchState(doc, true);
+            AttachCommandEvents(doc, state);
             state.Number = number;
             state.Name = name != null ? name : "";
             state.HasPending = true;
+            state.PendingPanelCommand = "PATMARK";
 
             PatentMarkerApp.RawLog("PATMARK request accepted: doc=" + doc.Name
                 + ", number=" + number);
+            return TryDispatchPending(doc);
+        }
+
+        /// <summary>
+        /// 接受其他面板命令。面板启动的交互命令可以互相切换；外部或原生命令
+        /// 仍保持原状，待其结束后再由面板计时器提交最新请求。
+        /// </summary>
+        public static bool RequestPanelCommand(Document doc, string command)
+        {
+            if (doc == null) return false;
+            string normalized = NormalizePanelCommand(command);
+            if (!IsDrawingPanelCommand(normalized)) return false;
+
+            MarkDispatchState state = GetMarkDispatchState(doc, true);
+            AttachCommandEvents(doc, state);
+            state.Number = null;
+            state.Name = null;
+            state.HasPending = false;
+            state.PendingPanelCommand = normalized;
+            PatentMarkerApp.RawLog("Panel command request accepted: command="
+                + normalized + ", doc=" + doc.Name);
             return TryDispatchPending(doc);
         }
 
@@ -155,7 +180,11 @@ namespace PatentMarker.Palette
             state.Number = null;
             state.Name = null;
             state.HasPending = false;
+            if (string.Equals(state.PendingPanelCommand, "PATMARK",
+                StringComparison.OrdinalIgnoreCase))
+                state.PendingPanelCommand = null;
             state.LaunchQueued = false;
+            state.QueuedPanelCommand = null;
             state.LaunchQueuedAtUtc = DateTime.MinValue;
 
             // 不让空编号把命令实例锁死；畸形字典也只能影响本次请求。
@@ -175,7 +204,15 @@ namespace PatentMarker.Palette
             MarkDispatchState state;
             if (_markDispatchStates.TryGetValue(doc, out state))
             {
+                if (state.LaunchQueued && string.Equals(
+                    NormalizePanelCommand(state.QueuedPanelCommand), "PATMARK",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    state.ActivePanelCommand = "PATMARK";
+                    state.CancelRequested = false;
+                }
                 state.LaunchQueued = false;
+                state.QueuedPanelCommand = null;
                 state.LaunchQueuedAtUtc = DateTime.MinValue;
             }
             PatentMarkerApp.RawLog("PATMARK START: doc=" + doc.Name);
@@ -189,9 +226,17 @@ namespace PatentMarker.Palette
             if (_markDispatchStates.TryGetValue(doc, out state))
             {
                 state.LaunchQueued = false;
+                state.QueuedPanelCommand = null;
                 state.LaunchQueuedAtUtc = DateTime.MinValue;
+                if (string.Equals(state.ActivePanelCommand, "PATMARK",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    state.ActivePanelCommand = null;
+                    state.CancelRequested = false;
+                }
                 if (!state.HasPending)
-                    _markDispatchStates.Remove(doc);
+                    state.Number = state.Name = null;
+                RemoveDispatchStateIfIdle(doc, state);
             }
             PatentMarkerApp.RawLog("PATMARK END: doc=" + doc.Name);
         }
@@ -209,50 +254,225 @@ namespace PatentMarker.Palette
         private static bool TryDispatchPending(Document doc)
         {
             MarkDispatchState state;
-            if (doc == null || !_markDispatchStates.TryGetValue(doc, out state)
-                || !state.HasPending)
+            if (doc == null || !_markDispatchStates.TryGetValue(doc, out state))
                 return true;
 
+            if (IsNullOrWhiteSpace(state.PendingPanelCommand) && state.HasPending)
+                state.PendingPanelCommand = "PATMARK";
+            if (IsNullOrWhiteSpace(state.PendingPanelCommand))
+            {
+                RemoveDispatchStateIfIdle(doc, state);
+                return true;
+            }
+
+            string commandToQueue = "";
             try
             {
-                string command = doc.CommandInProgress;
-                if (IsPatMarkCommand(command))
+                string inProgress = doc.CommandInProgress;
+                string normalizedInProgress = NormalizePanelCommand(inProgress);
+                string activePanelCommand = NormalizePanelCommand(
+                    state.ActivePanelCommand);
+
+                // Preserve the existing PATMARK -> PATMARK behavior: the active
+                // command consumes the most recent dictionary row at its next
+                // prompt boundary instead of being restarted.
+                if (string.Equals(state.PendingPanelCommand, "PATMARK",
+                    StringComparison.OrdinalIgnoreCase) &&
+                    IsPatMarkCommand(inProgress))
                 {
-                    // 当前 PATMARK 会在下一个提示边界消费该请求，不再嵌套启动 PATMARK。
+                    state.PendingPanelCommand = null;
                     state.LaunchQueued = false;
+                    state.QueuedPanelCommand = null;
                     state.LaunchQueuedAtUtc = DateTime.MinValue;
                     PatentMarkerApp.RawLog("PATMARK request attached to active command: doc=" + doc.Name);
                     return true;
                 }
-                if (!IsNullOrWhiteSpace(command))
+
+                if (!IsNullOrWhiteSpace(state.ActivePanelCommand))
                 {
-                    PatentMarkerApp.RawLog("PATMARK request deferred; command in progress="
-                        + command + ", doc=" + doc.Name);
+                    bool activePanelPrompt =
+                        string.Equals(normalizedInProgress, activePanelCommand,
+                            StringComparison.OrdinalIgnoreCase) ||
+                        (IsNullOrWhiteSpace(inProgress) && !doc.Editor.IsQuiescent);
+                    if (activePanelPrompt)
+                    {
+                        if (!state.CancelRequested)
+                        {
+                            // This state is set only for a command launched by
+                            // this panel, so the cancel input cannot interrupt
+                            // an unrelated AutoCAD or user command.
+                            doc.SendStringToExecute("\x03\x03", true, false, false);
+                            state.CancelRequested = true;
+                            PatentMarkerApp.RawLog("Panel command cancel queued: active="
+                                + activePanelCommand + ", next="
+                                + state.PendingPanelCommand + ", doc=" + doc.Name);
+                        }
+                        return true;
+                    }
+
+                    if (!IsNullOrWhiteSpace(inProgress) || !doc.Editor.IsQuiescent)
+                    {
+                        PatentMarkerApp.RawLog("Panel command switch deferred; active panel command="
+                            + state.ActivePanelCommand + ", CAD command=" + inProgress
+                            + ", doc=" + doc.Name);
+                        return true;
+                    }
+
+                    // Fallback if this host did not deliver a terminal command event.
+                    state.ActivePanelCommand = null;
+                    state.CancelRequested = false;
+                }
+
+                if (!IsNullOrWhiteSpace(inProgress))
+                {
+                    PatentMarkerApp.RawLog("Panel request deferred; command in progress="
+                        + inProgress + ", doc=" + doc.Name);
+                    return true;
+                }
+                if (!doc.Editor.IsQuiescent)
+                {
+                    PatentMarkerApp.RawLog("Panel request deferred; editor is not quiescent: doc="
+                        + doc.Name);
                     return true;
                 }
                 if (state.LaunchQueued)
                 {
                     if (!IsLaunchQueueStale(state)) return true;
                     state.LaunchQueued = false;
+                    state.QueuedPanelCommand = null;
                     state.LaunchQueuedAtUtc = DateTime.MinValue;
-                    PatentMarkerApp.RawLog("PATMARK queued request considered stale; retrying: doc=" + doc.Name);
+                    PatentMarkerApp.RawLog("Panel queued request considered stale; retrying: doc=" + doc.Name);
                 }
 
+                string command = state.PendingPanelCommand;
+                state.PendingPanelCommand = null;
+                commandToQueue = command;
                 state.LaunchQueued = true;
+                state.QueuedPanelCommand = command;
                 state.LaunchQueuedAtUtc = DateTime.UtcNow;
                 // activate=true：确保 MDI 切换后请求仍投递给点击时对应的图纸。
-                doc.SendStringToExecute("PATMARK ", true, false, false);
-                PatentMarkerApp.RawLog("PATMARK queued: doc=" + doc.Name);
+                doc.SendStringToExecute(command + " ", true, false, false);
+                PatentMarkerApp.RawLog("Panel command queued: command=" + command
+                    + ", doc=" + doc.Name);
                 return true;
             }
             catch (System.Exception ex)
             {
                 state.LaunchQueued = false;
+                state.QueuedPanelCommand = null;
                 state.LaunchQueuedAtUtc = DateTime.MinValue;
-                PatentMarkerApp.RawLog("PATMARK queue failed: " + ex.GetType().FullName
+                if (!IsNullOrWhiteSpace(commandToQueue) &&
+                    IsNullOrWhiteSpace(state.PendingPanelCommand))
+                    state.PendingPanelCommand = commandToQueue;
+                PatentMarkerApp.RawLog("Panel command queue failed: " + ex.GetType().FullName
                     + ": " + ex.Message);
                 return false;
             }
+        }
+
+        private static void AttachCommandEvents(Document doc, MarkDispatchState state)
+        {
+            if (state.CommandEventsAttached) return;
+            doc.CommandWillStart += Document_CommandWillStart;
+            doc.CommandEnded += Document_CommandEnded;
+            doc.CommandCancelled += Document_CommandCancelled;
+            doc.CommandFailed += Document_CommandFailed;
+            state.CommandEventsAttached = true;
+        }
+
+        private static void DetachCommandEvents(Document doc, MarkDispatchState state)
+        {
+            if (!state.CommandEventsAttached) return;
+            doc.CommandWillStart -= Document_CommandWillStart;
+            doc.CommandEnded -= Document_CommandEnded;
+            doc.CommandCancelled -= Document_CommandCancelled;
+            doc.CommandFailed -= Document_CommandFailed;
+            state.CommandEventsAttached = false;
+        }
+
+        private static void Document_CommandWillStart(object sender, CommandEventArgs e)
+        {
+            Document doc = sender as Document;
+            if (doc == null || e == null) return;
+            MarkDispatchState state;
+            if (!_markDispatchStates.TryGetValue(doc, out state)) return;
+
+            string command = NormalizePanelCommand(e.GlobalCommandName);
+            string queued = NormalizePanelCommand(state.QueuedPanelCommand);
+            if (state.LaunchQueued &&
+                string.Equals(command, queued, StringComparison.OrdinalIgnoreCase))
+            {
+                state.LaunchQueued = false;
+                state.QueuedPanelCommand = null;
+                state.LaunchQueuedAtUtc = DateTime.MinValue;
+                state.ActivePanelCommand = command;
+                state.CancelRequested = false;
+                PatentMarkerApp.RawLog("Panel command started: command=" + command
+                    + ", doc=" + doc.Name);
+            }
+        }
+
+        private static void Document_CommandEnded(object sender, CommandEventArgs e)
+        {
+            FinishTrackedPanelCommand(sender, e, "ended");
+        }
+
+        private static void Document_CommandCancelled(object sender, CommandEventArgs e)
+        {
+            FinishTrackedPanelCommand(sender, e, "cancelled");
+        }
+
+        private static void Document_CommandFailed(object sender, CommandEventArgs e)
+        {
+            FinishTrackedPanelCommand(sender, e, "failed");
+        }
+
+        private static void FinishTrackedPanelCommand(object sender,
+            CommandEventArgs e, string outcome)
+        {
+            Document doc = sender as Document;
+            if (doc == null || e == null) return;
+            MarkDispatchState state;
+            if (!_markDispatchStates.TryGetValue(doc, out state)) return;
+
+            string command = NormalizePanelCommand(e.GlobalCommandName);
+            if (!string.Equals(state.ActivePanelCommand, command,
+                StringComparison.OrdinalIgnoreCase)) return;
+            state.ActivePanelCommand = null;
+            state.CancelRequested = false;
+            PatentMarkerApp.RawLog("Panel command " + outcome + ": command="
+                + command + ", doc=" + doc.Name);
+        }
+
+        private static bool IsDrawingPanelCommand(string command)
+        {
+            return string.Equals(command, "PATBRACE", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(command, "PATCHECK", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(command, "PATALIGN", StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string NormalizePanelCommand(string command)
+        {
+            if (IsNullOrWhiteSpace(command)) return "";
+            string normalized = command.Trim();
+            while (normalized.Length > 0 &&
+                (normalized[0] == '*' || normalized[0] == '.' || normalized[0] == '_'))
+                normalized = normalized.Substring(1);
+            normalized = normalized.ToUpperInvariant();
+            if (normalized == "BZM") return "PATMARK";
+            if (normalized == "DAGUOHAO") return "PATBRACE";
+            return normalized;
+        }
+
+        private static void RemoveDispatchStateIfIdle(Document doc,
+            MarkDispatchState state)
+        {
+            if (state.HasPending || !IsNullOrWhiteSpace(state.PendingPanelCommand) ||
+                !IsNullOrWhiteSpace(state.QueuedPanelCommand) ||
+                !IsNullOrWhiteSpace(state.ActivePanelCommand) || state.LaunchQueued)
+                return;
+            DetachCommandEvents(doc, state);
+            _markDispatchStates.Remove(doc);
         }
 
         private static MarkDispatchState GetMarkDispatchState(Document doc, bool create)
@@ -267,13 +487,17 @@ namespace PatentMarker.Palette
 
         private static void ClearMarkDispatchState(Document doc)
         {
-            if (doc != null) _markDispatchStates.Remove(doc);
+            if (doc == null) return;
+            MarkDispatchState state;
+            if (!_markDispatchStates.TryGetValue(doc, out state)) return;
+            DetachCommandEvents(doc, state);
+            _markDispatchStates.Remove(doc);
         }
 
         private static bool IsPatMarkCommand(string command)
         {
             if (IsNullOrWhiteSpace(command)) return false;
-            string normalized = command.Trim();
+            string normalized = NormalizePanelCommand(command);
             return string.Equals(normalized, "PATMARK", StringComparison.OrdinalIgnoreCase)
                 || string.Equals(normalized, "BZM", StringComparison.OrdinalIgnoreCase);
         }
@@ -326,6 +550,8 @@ namespace PatentMarker.Palette
                 _control.Dispose();
                 _control = null;
             }
+            foreach (KeyValuePair<Document, MarkDispatchState> entry in _markDispatchStates)
+                DetachCommandEvents(entry.Key, entry.Value);
             _markDispatchStates.Clear();
             Commands.PatCheckResult.ClearAll();
             _paletteSet = null;

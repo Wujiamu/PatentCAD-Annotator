@@ -193,6 +193,8 @@ void RequireMLeaderApi(bool requireExtendLeaderToText)
     RequireMethod($"{db}.MLeader", "AddLeaderLine", 1);
     RequireMethod($"{db}.MLeader", "AddLastVertex", 2);
     RequireMethod($"{db}.MLeader", "GetLastVertex", 1);
+    RequireMethod($"{db}.MLeader", "GetLeaderIndex", 1);
+    RequireMethod($"{db}.MLeader", "SetDogleg", 2);
     if (requireExtendLeaderToText)
         RequireProperty($"{db}.MLeader", "ExtendLeaderToText");
 }

@@ -1,0 +1,54 @@
+{
+    "Time":  "2026-10-01T14:31:37.2068895+08:00",
+    "Identity":  "<local-user>",
+    "Version":  "25.1",
+    "DrawingBEntities":  0,
+    "CommandActive":  0,
+    "DrawingAClosed":  true,
+    "OwnedProcessExited":  true,
+    "RegistryRestoration":  [
+                                {
+                                    "Path":  "HKCU:\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-6001:804\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "HKCU:\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101:804\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "HKCU:\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-6001:804\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "Microsoft.PowerShell.Core\\Registry::HKEY_LOCAL_MACHINE\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101:804\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                },
+                                {
+                                    "Path":  "Microsoft.PowerShell.Core\\Registry::HKEY_CURRENT_USER\\Software\\Autodesk\\AutoCAD\\R25.1\\ACAD-9101:804\\Applications\\PatentMarker",
+                                    "Result":  "PASS"
+                                }
+                            ],
+    "Dictionaries":  [
+                         {
+                             "Name":  "final-a.dict.json",
+                             "SHA256":  "987049B186AF76496352CC6CD96FC85D6DDA1B37E60E71C6774A849D12023727"
+                         },
+                         {
+                             "Name":  "final-b.dict.json",
+                             "SHA256":  "A29DE538281F17B275DF0D64A82CC06B5B482F1B249A92B97319C74655584ECA"
+                         }
+                     ],
+    "Result":  "PASS"
+}

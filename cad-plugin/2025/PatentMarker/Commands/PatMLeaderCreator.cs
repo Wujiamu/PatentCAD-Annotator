@@ -47,6 +47,14 @@ namespace PatentMarker.Commands
             ml.LandingGap = 0.0;
             ml.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
             ml.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
+            // AttachmentMiddle on the generic property does not initialize
+            // both directional values in AutoCAD. In particular, the unset
+            // RightLeader value defaults to AttachmentBottomOfTopLine and
+            // leaves a horizontal tail under left-side text.
+            ml.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle,
+                LeaderDirectionType.LeftLeader);
+            ml.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle,
+                LeaderDirectionType.RightLeader);
             ml.TextAngleType = TextAngleType.HorizontalAngle;
             ml.LeaderLineType = settings.IsSplined
                 ? LeaderType.SplineLeader : LeaderType.StraightLeader;
@@ -70,6 +78,14 @@ namespace PatentMarker.Commands
                 lastVertex, textPt, settings.TextHeight);
             if (!SamePoint(endpoint, lastVertex))
                 ml.AddLastVertex(line, endpoint);
+
+            // Even with dogleg geometry disabled, its direction selects the
+            // MText connection side. Leaving the default direction lets the
+            // host attach at the far edge and bend a spline across the text.
+            // Set it before assigning MText, so creation is deterministic for
+            // either side and does not depend on the previous callout.
+            ml.SetDogleg(ml.GetLeaderIndex(line), new Vector3d(
+                textPt.X >= lastVertex.X ? 1.0 : -1.0, 0.0, 0.0));
 
             // ---- 文字挂接（顺序与探针一致：先顶点后文字）----
             MText mt = new MText();
@@ -113,6 +129,10 @@ namespace PatentMarker.Commands
             style.ContentType = ContentType.MTextContent;
             style.TextHeight = IO.PatSettingsStore.Current.TextHeight;
             style.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
+            style.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle,
+                LeaderDirectionType.LeftLeader);
+            style.SetTextAttachmentType(TextAttachmentType.AttachmentMiddle,
+                LeaderDirectionType.RightLeader);
             style.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
             style.TextAngleType = TextAngleType.HorizontalAngle;
             style.LeaderLineType = LeaderType.StraightLeader;

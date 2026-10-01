@@ -1,0 +1,765 @@
+{
+  "Time": "2026-10-01T14:35:36.5578908+08:00",
+  "Timezone": "Asia/Shanghai",
+  "BaseCommit": "a1e888619f08452f87f69ca285f90a9688a45a3a",
+  "SourceFiles": [
+    {
+      "Path": "cad-plugin/Shared/Palette/PatPaletteCommand.cs",
+      "SHA256": "F5DE720275BA1DC3CBDA2C20E204DF9E4774CA76510D9968B9532A4CCC94E273"
+    },
+    {
+      "Path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+      "SHA256": "74789F46434DB8F4DCAAD34485E9273753DE519B6E434BC4E9B6CC949B18FAB7"
+    },
+    {
+      "Path": "cad-plugin/RuntimeContract.Tests/Shared/AutodeskSimulationStubs.cs",
+      "SHA256": "AB18B2C42C940BEAF0B724047336BC20AE88CCC6E5C6EA120A7AFD6329254886"
+    },
+    {
+      "Path": "cad-plugin/RuntimeContract.Tests/Shared/PatMarkSimulationTests.cs",
+      "SHA256": "68522B872BEA026C1FF418EA9FEAC89620A877CF38382C76D43EC4F98A321236"
+    },
+    {
+      "Path": "tools/ApiSurfaceCheck/Program.cs",
+      "SHA256": "DB06352248C92C9FAEE803B5DB3AAF2883A57286736E75DAA19030755B3D5057"
+    },
+    {
+      "Path": "cad-plugin/2010/PatentMarker/Commands/PatMLeaderCreator.cs",
+      "SHA256": "5A55BA5CAFEEACCAA30BDB8616583434D4DD9ED75340EBB99795292A97B77FA5"
+    },
+    {
+      "Path": "cad-plugin/2010/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+      "SHA256": "2671037A222E1AE15236DF4B0B8BA9BB0688CCF5AE43A4013DC1E3EE2FB830DF"
+    },
+    {
+      "Path": "cad-plugin/2013/PatentMarker/Commands/PatMLeaderCreator.cs",
+      "SHA256": "5A55BA5CAFEEACCAA30BDB8616583434D4DD9ED75340EBB99795292A97B77FA5"
+    },
+    {
+      "Path": "cad-plugin/2013/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+      "SHA256": "2671037A222E1AE15236DF4B0B8BA9BB0688CCF5AE43A4013DC1E3EE2FB830DF"
+    },
+    {
+      "Path": "cad-plugin/2015/PatentMarker/Commands/PatMLeaderCreator.cs",
+      "SHA256": "5A55BA5CAFEEACCAA30BDB8616583434D4DD9ED75340EBB99795292A97B77FA5"
+    },
+    {
+      "Path": "cad-plugin/2015/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+      "SHA256": "2671037A222E1AE15236DF4B0B8BA9BB0688CCF5AE43A4013DC1E3EE2FB830DF"
+    },
+    {
+      "Path": "cad-plugin/2025/PatentMarker/Commands/PatMLeaderCreator.cs",
+      "SHA256": "5A55BA5CAFEEACCAA30BDB8616583434D4DD9ED75340EBB99795292A97B77FA5"
+    },
+    {
+      "Path": "cad-plugin/2025/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+      "SHA256": "2671037A222E1AE15236DF4B0B8BA9BB0688CCF5AE43A4013DC1E3EE2FB830DF"
+    },
+    {
+      "Path": "tools/verify-word-sync-gates.ps1",
+      "SHA256": "1F00BFDE457123561E993929E17EDA1FC6625A67220E0B43C1FC1C21C438D698"
+    }
+  ],
+  "DLLs": [
+    {
+      "Edition": "2007",
+      "Hash": "4B0C719C85E5F841CC35BC5DC4E1FE34C95B513D87D4887CE67F3FFC351BE2AE"
+    },
+    {
+      "Edition": "2010",
+      "Hash": "1DB772CA29A3C368C65D3977DF92C34468ECA21B7B640DECC1A42EB0E3222D1B"
+    },
+    {
+      "Edition": "2013",
+      "Hash": "0ABC18E51B6FD758B0E3A2276A1AD7D7C5587ABA82E9361D66F0154614745C9C"
+    },
+    {
+      "Edition": "2015",
+      "Hash": "ADF0B26632239744AE9B5A83E60FD628383165FAEA13EF867DCA8ADC0B79D14F"
+    },
+    {
+      "Edition": "2025",
+      "Hash": "8864EE1D3B97AE4AF7FDFE66C0570F311A39D866122393A5935390BABA04F18C"
+    }
+  ],
+  "Host": "AutoCAD 2026 x64 / SDK25.1.0.0 / NET8.0.28 / Windows10 22H2 19045.7417",
+  "ActualDLL": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/installed/PatentMarker.dll",
+  "DesktopToolSHA256": "52C30D70B98A5600F6BE41B713DDB43B0AB21B235C4E92607505328A2E772782",
+  "Unit": {
+    "Passed": 120,
+    "Failed": 0,
+    "Skipped": 0
+  },
+  "Simulation": [
+    {
+      "Edition": "2007",
+      "Passed": 33,
+      "Failed": 0,
+      "Skipped": 0
+    },
+    {
+      "Edition": "2010",
+      "Passed": 33,
+      "Failed": 0,
+      "Skipped": 0
+    },
+    {
+      "Edition": "2013",
+      "Passed": 33,
+      "Failed": 0,
+      "Skipped": 0
+    },
+    {
+      "Edition": "2015",
+      "Passed": 33,
+      "Failed": 0,
+      "Skipped": 0
+    }
+  ],
+  "SDKBuilds": "PASS: all five",
+  "API": "PASS: 2010/2013/2015/2025",
+  "Static": "PASS: Windows PowerShell5 and PowerShell7",
+  "C9FaultDLL": "E828FBC424BB3392045F15EB39C4F0A41242DA2A6B089FA8E0160FF03F0B8D54",
+  "C9Fault": "FAIL: total16 passed15 failed1",
+  "FinalMatrix": "PASS: total16 passed16 failed0",
+  "MouseCreation": "PASS: total4 passed4 failed0",
+  "Screenshots": [
+    {
+      "Path": "final-isolated/cad001",
+      "TimeUtc": "2026-09-30T18:41:49.4813806Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "6DC6B88A3589EA452F0C5B336067B9B60A1BDD021706D4904D1CDE7A9FAE0C6B"
+    },
+    {
+      "Path": "final-isolated/cad002",
+      "TimeUtc": "2026-09-30T18:42:10.6046114Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "7DD1114F2BFE81F42993A88119157DBAADB1DA961148981313006DEC05819EA2"
+    },
+    {
+      "Path": "final-isolated/cad003",
+      "TimeUtc": "2026-09-30T18:42:25.2822569Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "76A4E97EB7291FC471CFF0F290CFE6AACE203B8978F65473DCA97440BCC93265"
+    },
+    {
+      "Path": "final-isolated/cad004",
+      "TimeUtc": "2026-09-30T18:42:54.6845982Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "9A40DD5FE54B0D2AFF719C4CCB61753E19B391D5ED5F5E8E48729C0552792FFA"
+    },
+    {
+      "Path": "final-isolated/cad005",
+      "TimeUtc": "2026-09-30T18:43:03.7655283Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "D5A403BA557EA375758CC7AE65C09844C4606344B13B40A19FBE6714F2A5E1FB"
+    },
+    {
+      "Path": "final-isolated/cad006",
+      "TimeUtc": "2026-09-30T18:43:11.9843512Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "CA9D60FF8058F4A1882D2ACDBA27D1AC6E3BEEAA33CE68BC05393BFF5F389E32"
+    },
+    {
+      "Path": "final-isolated/cad007",
+      "TimeUtc": "2026-09-30T18:43:20.1683213Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "D25AAFCFBF5369625A998F113E21627E67B36D6CB971165157EB42530F09A11B"
+    },
+    {
+      "Path": "final-isolated/cad008",
+      "TimeUtc": "2026-09-30T18:43:28.3507384Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "CA9D60FF8058F4A1882D2ACDBA27D1AC6E3BEEAA33CE68BC05393BFF5F389E32"
+    },
+    {
+      "Path": "final-isolated/cad009",
+      "TimeUtc": "2026-09-30T18:43:35.866057Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "D5A403BA557EA375758CC7AE65C09844C4606344B13B40A19FBE6714F2A5E1FB"
+    },
+    {
+      "Path": "final-isolated/cad010",
+      "TimeUtc": "2026-09-30T18:43:43.6022802Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "66C1DE6BBBCA8059CA4C72824FA9596144F72B1CB4359BDDFF50FE96068C38FF"
+    },
+    {
+      "Path": "final-isolated/cad011",
+      "TimeUtc": "2026-09-30T18:43:51.9035505Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "04AAAC9AF63F4B6AEADB6E28AECDFD499D0D33339E519850CDE0C975D04883CE"
+    },
+    {
+      "Path": "final-isolated/cad012",
+      "TimeUtc": "2026-09-30T18:43:59.7200685Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "74F1018E4E4D1900BA2A2EBEFA61628EE51B2BF4BBF7D05C91E27B51213ED02E"
+    },
+    {
+      "Path": "final-isolated/cad013",
+      "TimeUtc": "2026-09-30T18:44:14.4189576Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "68456A5918FE8502E02F015AD4B3EC14AF7457A91C2943D2429EA51040690D5B"
+    },
+    {
+      "Path": "final-isolated/cad014",
+      "TimeUtc": "2026-09-30T18:44:22.5021727Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "06C7FBCFBD8900D382079D99BEECD3464040B8E30E268CE6E00456B18DB4BC25"
+    },
+    {
+      "Path": "final-isolated/cad015",
+      "TimeUtc": "2026-09-30T18:44:30.5847915Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "5ADC89F501981B0610D5AFD1C904EB07E1B7D4FDC890D0E758EC2E3E02E4B3E0"
+    },
+    {
+      "Path": "final-isolated/cad016",
+      "TimeUtc": "2026-09-30T18:44:38.9234248Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "ABE9C42629F27FE8F1312A174CE469297E021B171BE1761DCDEB228AF990E315"
+    },
+    {
+      "Path": "final-isolated/cad017",
+      "TimeUtc": "2026-09-30T18:44:52.7544288Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "53D6A1BE9BE275AB3335181151482A4111E6E65D51AD1BBFB3A3778528DD2F51"
+    },
+    {
+      "Path": "final-isolated/cad018",
+      "TimeUtc": "2026-09-30T18:45:00.9860278Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "E19D2E03697D8DCA47803E26320A6EEA0C720999F2958CC8D53EB3498E9EC891"
+    },
+    {
+      "Path": "final-isolated/cad019",
+      "TimeUtc": "2026-09-30T18:45:08.9695862Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "5FB397BCFAB5FB13BCB9F7EF4C58C6F161D672A6D3E4D4F4BC282355E224A482"
+    },
+    {
+      "Path": "final-isolated/cad020",
+      "TimeUtc": "2026-09-30T18:45:19.0858713Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "EE5459F4B173602C737086763E226FB098B3E0280619E652E5982792C906ADAC"
+    },
+    {
+      "Path": "final-isolated/cad021",
+      "TimeUtc": "2026-09-30T18:45:28.8700473Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "357F5550AA47AEAB7C29FE13BE509C9186F930DBE387053F484FAD15EA03B6C7"
+    },
+    {
+      "Path": "final-isolated/cad022",
+      "TimeUtc": "2026-09-30T18:45:37.0030149Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "E104981D84E310679CBBD02B9766B30A58756D39181E79DE767760C98CCA1210"
+    },
+    {
+      "Path": "final-isolated/cad023",
+      "TimeUtc": "2026-09-30T18:45:44.289228Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "864BD0B98B0BB2CCD18FFD3F74E992BC0A970CF1B717A690B5CFD1953C2D54F6"
+    },
+    {
+      "Path": "final-isolated/cad024",
+      "TimeUtc": "2026-09-30T18:46:04.1534153Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "2C6390E8712E8A7CA561E2089AC4D5D887863998AF887DAC0551FDFCE32C87AA"
+    },
+    {
+      "Path": "final-isolated/cad025",
+      "TimeUtc": "2026-09-30T18:46:12.4553189Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "BA815F3BFC4BA886B5B9FF4FD97774C28981530897B84418F0EF2D18CE2F4ABC"
+    },
+    {
+      "Path": "final-isolated/cad026",
+      "TimeUtc": "2026-09-30T18:46:20.5227039Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "1138206BD10CDB5964C90DE71DDFF834C1F9989B2DAE99E244DEC1445C69D560"
+    },
+    {
+      "Path": "final-isolated/cad027",
+      "TimeUtc": "2026-09-30T18:46:29.7056769Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "FC65551BEE6B680F6B5F5D7A7A230D7C43B9988BC2FC4D482E63A8AE0B14BF91"
+    },
+    {
+      "Path": "final-isolated/cad028",
+      "TimeUtc": "2026-09-30T18:46:39.3714686Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "CD0804F69BC5969D44AC11DE5973D7A49ED2AFC3D11F5DA44E7BDDDF85E4E8D4"
+    },
+    {
+      "Path": "final-isolated/cad029",
+      "TimeUtc": "2026-09-30T18:46:47.7882745Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "268CFD0F2A8D74060DE20539346FFB1D230728FC16F9726FC9D6F3D8380138D1"
+    },
+    {
+      "Path": "final-isolated/cad030",
+      "TimeUtc": "2026-09-30T18:46:56.2576946Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "551640682EA45A628C4E9C0138841877E3204C99E9A24257E3D5C8D6D631E98E"
+    },
+    {
+      "Path": "final-isolated/cad031",
+      "TimeUtc": "2026-09-30T18:47:05.0055954Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "F0509DEE1C0875D038C07F47FDA9F4725D0D4B5C7226123BE40238FA29565E48"
+    },
+    {
+      "Path": "final-isolated/cad032",
+      "TimeUtc": "2026-09-30T18:47:14.1898653Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "6BE0D436D80F358FCE927A2FEDBCA9D9D770586AF3541DEB67B42A80E7C210CD"
+    },
+    {
+      "Path": "final-isolated/cad033",
+      "TimeUtc": "2026-09-30T18:47:29.3079306Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "3E3AFE61D86049FD52B9FF137B8CBE15A0BBFC1B5E7F15A581CCF6B9D1BDE865"
+    },
+    {
+      "Path": "final-isolated/cad034",
+      "TimeUtc": "2026-09-30T18:47:45.9273876Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "F6B187984B7FEF990F676083E843A199D614988A568FBECAB3BA65736BD8CD40"
+    },
+    {
+      "Path": "final-isolated/cad035",
+      "TimeUtc": "2026-09-30T18:47:54.7744334Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "35BD3D1EE0CED2F8CEC01B3A4B9F889F07C0F1C5504DE8D979538915553A2B6A"
+    },
+    {
+      "Path": "final-isolated/cad036",
+      "TimeUtc": "2026-09-30T18:48:03.610364Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "4BB6CD0AF93F340B5986936574EADE88DD1303B676F32439E85B1922DB67EFF4"
+    },
+    {
+      "Path": "final-isolated/cad037",
+      "TimeUtc": "2026-09-30T18:48:11.3754927Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "7E7F2EFDD3CC5FB900FB0C55D08609DAE52B3EC4465A5392EACA4999552BA5FF"
+    },
+    {
+      "Path": "final-isolated/cad038",
+      "TimeUtc": "2026-09-30T18:48:20.992942Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "348E20696EE39973A3A11EC995D870CCD11F8C267EA42DE8E19DDB5649BFB20A"
+    },
+    {
+      "Path": "final-isolated/cad039",
+      "TimeUtc": "2026-09-30T18:48:29.3281745Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "E95AE597BA2EDF26514FA70D3E5AF9DC7E53AA95CD99669D7529A37BEDFE060F"
+    },
+    {
+      "Path": "final-isolated/cad040",
+      "TimeUtc": "2026-09-30T18:48:38.5096544Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "C4FD1E0435F17C93487C385E35CD94D1B15C483BA60DAFAB04074DF479998F76"
+    },
+    {
+      "Path": "final-isolated/cad041",
+      "TimeUtc": "2026-09-30T18:48:46.1245164Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "54FF0D15D96BA2A15D4B477000EDE37A95E45AEA4D63AB0D8683FFE92CFBB62C"
+    },
+    {
+      "Path": "final-isolated/cad042",
+      "TimeUtc": "2026-09-30T18:48:55.3940036Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "840DAA76C150CA7882C7196C86DB996C9D8E1577E19660ECEFFF149A8DCC6D9B"
+    },
+    {
+      "Path": "final-isolated/cad043",
+      "TimeUtc": "2026-09-30T18:49:04.7441347Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "3061D0996469242EEC264064D88A19CE4654A5E690E13F6E85B468FCF8F3C1D7"
+    },
+    {
+      "Path": "final-isolated/cad044",
+      "TimeUtc": "2026-09-30T18:49:14.161793Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "64DE84EB8B065175AA3341962A6CE6545CF2FF7A193839329424615FA54B29A9"
+    },
+    {
+      "Path": "final-isolated/cad045",
+      "TimeUtc": "2026-09-30T18:49:22.7112191Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "3EE666CF3B3F7021B3B76EFCBA12BA9B10F88AD9C48CC6A8030F42A1B8B99079"
+    },
+    {
+      "Path": "final-isolated/cad046",
+      "TimeUtc": "2026-09-30T18:50:01.8278726Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "1BB3CF29BC9A338F00294D861CC6DBDF5E4640A93494FD725906D15EB790557C"
+    },
+    {
+      "Path": "final-isolated/cad047",
+      "TimeUtc": "2026-09-30T18:50:15.8787301Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "2AF46511F5FB817F8043EBDBB2F3320C3ABB64476BC16A4927F671BBCDB5B55C"
+    },
+    {
+      "Path": "final-isolated/cad048",
+      "TimeUtc": "2026-09-30T18:50:26.1101764Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "172C41076820EBE112CB63AA24B3859CA2BB29BE7E5A117A740E2E2D56CFADDF"
+    },
+    {
+      "Path": "final-isolated/cad049",
+      "TimeUtc": "2026-09-30T18:56:21.1216703Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "CC937476D754265C7CBA8D0E19B578C675D8331E1E7FB0DD6042B5C62A339675"
+    },
+    {
+      "Path": "final-isolated/cad050",
+      "TimeUtc": "2026-09-30T18:56:32.3900298Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "3C7A975F1AEF339731C30AAF9F1443B74EB568A217655E524E668F3FF7DF46B6"
+    },
+    {
+      "Path": "final-isolated/cad051",
+      "TimeUtc": "2026-09-30T18:56:46.8415947Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "E769A0EE87E3C1BC4D0C537BBBF9CB3E4F86B80F31261E1034085B58103B48D0"
+    },
+    {
+      "Path": "final-isolated/cad052",
+      "TimeUtc": "2026-09-30T18:56:58.6566142Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "33086678AA8A1D3EED8F74CB3B40A082BD24977CFB7C3A0816A37203EFBD87C2"
+    },
+    {
+      "Path": "final-isolated/cad053",
+      "TimeUtc": "2026-09-30T18:57:45.3571244Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "86F71B4E9FF11A795A5EA5CE8833EE9A183347677BC9566C43790538116E315D"
+    },
+    {
+      "Path": "final-isolated/cad054",
+      "TimeUtc": "2026-09-30T18:58:27.1955226Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "44839EB6E9F2E7598799F45AFFF60157480EDA8BD0022B1A8EE35827D4AEBACB"
+    },
+    {
+      "Path": "final-isolated/cad055",
+      "TimeUtc": "2026-09-30T18:58:37.4956629Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "B6386E45EDC21872C21B221A5365A21E3FADBD0E8DACF981243882622E7A9026"
+    },
+    {
+      "Path": "final-isolated/cad056",
+      "TimeUtc": "2026-09-30T18:58:56.6080435Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "D22432661A88136FEE87283390709494D6AFD79AC8471C065A6F82B24DB2CACF"
+    },
+    {
+      "Path": "final-isolated/cad057",
+      "TimeUtc": "2026-09-30T18:59:12.0765957Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "F6E7EF6ADF6DDD4C03145121800EA16A9C35376210B54F5ADC885B76C357641E"
+    },
+    {
+      "Path": "final-isolated/cad058",
+      "TimeUtc": "2026-09-30T18:59:31.4766027Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "AED80223D6CAC7FD1B2960881218AE6410FEB4716CD21F6E69B5A2BF1A11CCD9"
+    },
+    {
+      "Path": "final-isolated/cad059",
+      "TimeUtc": "2026-09-30T18:59:51.6272461Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "C528DB716DA23E5EFFFC631DD32CBDB525C3A1F1DCCE995373EB1D717ABD57D2"
+    },
+    {
+      "Path": "final-isolated/cad060",
+      "TimeUtc": "2026-09-30T19:00:05.0629162Z",
+      "Pid": 25884,
+      "Hwnd": 1706190,
+      "SHA256": "122CAEFA6423F1234551C8B6F436452F0F0C5AC016E0321AB86C0D25C5A8382F"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child001",
+      "TimeUtc": "2026-10-01T06:18:06.7114708Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "96D1E0C788E61FB41630AFC703F7487068E81D671C1C02386EFBA11EBBFA5B5B"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child002",
+      "TimeUtc": "2026-10-01T06:20:27.4955382Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "9850AE6F1F62F66E3A9FB1B7F3BF4503E1FF5B2ADCAB1784091D749AB70D569C"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child003",
+      "TimeUtc": "2026-10-01T06:20:37.2961281Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "104CDC158F6A7712EF4DE9A9D491276BE9FD4E7DD6847E313DFA11AF9AFC6E35"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child004",
+      "TimeUtc": "2026-10-01T06:20:46.1828889Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "4AB4F75607794656D049D97CAB32984383B6D1079E41D51F433AA5D0CD0C7A59"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child005",
+      "TimeUtc": "2026-10-01T06:20:58.965027Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "569DBD46C08C485E51AD4A604218BE2D111B5B3A53691A71604A0C008D1A2EAC"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child006",
+      "TimeUtc": "2026-10-01T06:21:08.6841488Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "3D28F5C0C23F6A70DCEB99DDA683887BF3D52766011F00CF3B39AFD01BE36FED"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child007",
+      "TimeUtc": "2026-10-01T06:21:19.8508965Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "61EF39920D2CF892C39BDF65E800015DE8EDE461C9344E5F9C080A04044FCB9C"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child008",
+      "TimeUtc": "2026-10-01T06:21:29.7680022Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "BB5E43F02ABED02501C5FFB63DEC55B973948CE13B622216FF40DD477DB95ED3"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child009",
+      "TimeUtc": "2026-10-01T06:21:39.6330325Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "3D4C31784859FE323BDED3B4BBE49102CAAF0FF33AD2C4195CA624358A0BE594"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child010",
+      "TimeUtc": "2026-10-01T06:21:48.6983897Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "5D0A312A396404E83778F51CC927FEB737337D4AB9A7D4A8F9D8DF3A6CC82672"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child011",
+      "TimeUtc": "2026-10-01T06:21:58.0959483Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "EBAD3C5F7530EE38AFE2F0D5399BE8A79840F8B62EBDA3FAC0BD3D663B2AF554"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child012",
+      "TimeUtc": "2026-10-01T06:22:17.8978161Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "EBAD3C5F7530EE38AFE2F0D5399BE8A79840F8B62EBDA3FAC0BD3D663B2AF554"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child013",
+      "TimeUtc": "2026-10-01T06:22:28.7726075Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "5E96309F71F1E7823F8D9C9BC34C862DCB7217EE430A5CFBD403E35A0B589E16"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child014",
+      "TimeUtc": "2026-10-01T06:22:43.3844643Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "5644B5FABD15DEED4C6E3C4238AAB9ECFE83E2047FF82088A5F9B65D51B6E9BD"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child015",
+      "TimeUtc": "2026-10-01T06:24:55.5549059Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "1D9B207F37886A53EFEE48D0953A2E295075893D28ABED3656FFE96134D8AE7F"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child016",
+      "TimeUtc": "2026-10-01T06:25:05.037405Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "46FFBAFFC058C54FDE4C31E5887F90594D124D6A788357CD976E426E6CD2E673"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child017",
+      "TimeUtc": "2026-10-01T06:25:22.0885141Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "A1B66BAAC3B28760D3210C40620F5FDDBA950CAD1D933CCCE19842F3CC18CC58"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child018",
+      "TimeUtc": "2026-10-01T06:25:31.5216251Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "55410DDC57E7EA4B29F7FDDCB828BA6D90EB368CD1628D4BC477A4307BC6A87A"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child019",
+      "TimeUtc": "2026-10-01T06:25:41.1723128Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "9C448862639A0A64FB4A7DB90A49F5342CC3396CC2D12A131ECBF607D3090D07"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child020",
+      "TimeUtc": "2026-10-01T06:25:57.5571304Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "84506D1066C0A6D1380588AF41446696C3C16D4DF878774BAAC5EA8201B1320B"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child021",
+      "TimeUtc": "2026-10-01T06:26:10.1915413Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "25D28777BAD4B36E174D98F39FED08B2F68083A134B171D0C1C0CBEA72C12F4B"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child022",
+      "TimeUtc": "2026-10-01T06:26:23.1730199Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "F267A874781AEE1E105EEE2448B22EE31F2753422178E294EEE820AD1B92D751"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child023",
+      "TimeUtc": "2026-10-01T06:26:33.5576163Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "7AADD7150E8C61FE648C4CEA98C64C35C4726A7EB2CA1BA5DDD54E06D69ADE84"
+    },
+    {
+      "Path": "final-isolated/resume-1413/child024",
+      "TimeUtc": "2026-10-01T06:26:44.8744241Z",
+      "Pid": 22664,
+      "Hwnd": 1837294,
+      "SHA256": "F7D6C36A6CABA31F8B2785668F166CA27894E843D52D3CAAEAAA031951288591"
+    }
+  ],
+  "RawScreenshotsUploaded": false,
+  "ArtifactHashes": [
+    {
+      "Name": "checks.txt",
+      "SHA256": "AC54316A81595F4DE42CE51CC8854698B4537617C021D86810E2ECAC8351E0C0"
+    },
+    {
+      "Name": "command-matrix.json",
+      "SHA256": "16A01FC0E1EC4A40DB77565162984F6B4C5C2E53333E6728EE26AE107818F47D"
+    },
+    {
+      "Name": "command-process.json",
+      "SHA256": "7D9CA96A0C7988CD9373F29927DA9C42C9698C758BE05B263977BCF64A40AE7D"
+    },
+    {
+      "Name": "environment-restored.json",
+      "SHA256": "E574866984BEE14EBD4F404A23E902878CA3A264B4DC94199A8B207DC8BB993B"
+    },
+    {
+      "Name": "geometry-c9-red.txt",
+      "SHA256": "691769CD5103B4BAE147FF296F637AD99220CD65BBE7C35522A56DD6A6E72BA6"
+    },
+    {
+      "Name": "geometry-final16.txt",
+      "SHA256": "B19981C1865363DEDB1E7EC4368FE8EBFC56ADED064105478C28047A47007AED"
+    },
+    {
+      "Name": "geometry-mouse4.txt",
+      "SHA256": "416BBCF03F3689F48B917D06E1315BCB68E93B0C61DEBC4D66B2DCFCB442B79A"
+    },
+    {
+      "Name": "gui-com-final.json",
+      "SHA256": "B2F714E57AE50E601DD70436922D501F2097BF8D709EBE44FAA4A3D7A253C3A3"
+    },
+    {
+      "Name": "gui-final.json",
+      "SHA256": "77DE0A4C6A79185ED52BFA67730B854C053AB82BC7E8CC6D8144B2BE0390AF17"
+    },
+    {
+      "Name": "initialization.txt",
+      "SHA256": "DB0C9B19ABC537D3521C70E9D2B122816B3B1DC0E9C7522AE02EB4840D540DFE"
+    },
+    {
+      "Name": "owned-close.json",
+      "SHA256": "D1C56671A642EBD89B47B25C76710902BA3D4A5EA6BF9F5421FC91210AC5E639"
+    }
+  ],
+  "DeliveryLocalPath": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/delivery",
+  "Result": "PASS"
+}

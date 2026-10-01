@@ -1,0 +1,204 @@
+{
+  "timeUtc": "2026-10-01T06:27:36.7272547Z",
+  "executionIdentity": "<local-user>",
+  "pid": 22664,
+  "startUtc": "2026-10-01T06:14:13.2184372Z",
+  "hwnd": 1837294,
+  "result": "PASS",
+  "scope": "AutoCAD2026 current candidate multi-document GUI via visible model thumbnail; earlier tab-only failure preserved",
+  "priorAttempt": {
+    "timeUtc": "2026-10-01T06:23:18.455221Z",
+    "executionIdentity": "<local-user>",
+    "pid": 22664,
+    "startUtc": "2026-10-01T06:14:13.2184372Z",
+    "hwnd": 1837294,
+    "result": "FAIL",
+    "failedStep": "2d B tab did not switch",
+    "history": {
+      "timeUtc": "2026-10-01T06:18:39.576187Z",
+      "pid": 22664,
+      "startUtc": "2026-10-01T06:14:13.2184372Z",
+      "hwnd": 1837294,
+      "result": "SKIP/BLOCKED",
+      "steps": [
+        {
+          "step": "0 show owned and verify A",
+          "result": "PASS",
+          "actual": "Fresh screenshot shows resume-a.dwg, four 901 leaders, idle command line"
+        },
+        {
+          "step": "1 required scripts presence",
+          "result": "FAIL",
+          "actual": "open-b.ps1 and prepare-b.ps1 do not exist at resumeRoot; stopped before BZ"
+        },
+        {
+          "step": "2 multi-document GUI",
+          "result": "SKIP/BLOCKED"
+        },
+        {
+          "step": "3 final COM guards",
+          "result": "SKIP/BLOCKED"
+        }
+      ],
+      "screenshots": [
+        "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child001/window.png"
+      ],
+      "appInputIssued": false,
+      "processClosed": false
+    },
+    "steps": [
+      {
+        "step": "0",
+        "action": "Show owned actual A window",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child001/window.png",
+        "actual": "resume-a title, four 901 MLeaders, idle"
+      },
+      {
+        "step": "1a",
+        "action": "BZ panel",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child005/window.png",
+        "actual": "901 Switch Test, idle"
+      },
+      {
+        "step": "1b",
+        "action": "Public COM Open B",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child006/window.png",
+        "actual": "resume-b title, 902 Document B, idle"
+      },
+      {
+        "step": "1c",
+        "action": "Public COM prepare B modelspace",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child007/window.png",
+        "actual": "resume-b modelspace blank, 902, idle; b-before.json asserts 0 entities"
+      },
+      {
+        "step": "2a",
+        "action": "Click A tab",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child008/window.png",
+        "actual": "resume-a four leaders,901,idle"
+      },
+      {
+        "step": "2b",
+        "action": "LINE",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child010/window.png",
+        "actual": "LINE waiting first point"
+      },
+      {
+        "step": "2c",
+        "action": "Click Brace while LINE",
+        "result": "PASS",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child012/window.png",
+        "actual": "after2300ms still LINE first point, no point clicked"
+      },
+      {
+        "step": "2d",
+        "action": "Click B tab",
+        "result": "FAIL",
+        "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child014/window.png",
+        "actual": "after2300ms active title remains resume-a;901;LINE first point; B hover thumbnails appear, document did not switch"
+      },
+      {
+        "step": "2e",
+        "action": "B doubleclick, return A BRACE, close A, B doubleclick/cancel",
+        "result": "SKIP/BLOCKED",
+        "screenshot": null,
+        "actual": "Stopped on result mismatch"
+      },
+      {
+        "step": "3",
+        "action": "Final COM B guards",
+        "result": "SKIP/BLOCKED",
+        "screenshot": null,
+        "actual": "Not executed"
+      }
+    ],
+    "screenshotRange": "child002 through child014",
+    "processClosed": false,
+    "noDrawingPointInput": true
+  },
+  "resumedSteps": [
+    {
+      "step": "2d-resume",
+      "action": "Click visible B model thumbnail; wait2300ms",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child017/window.png",
+      "observationTimeUtc": "2026-10-01T06:25:22.0885141Z",
+      "actual": "resume-b,902 Document B,idle; no PATBRACE on B"
+    },
+    {
+      "step": "2e",
+      "action": "Doubleclick902 on B",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child018/window.png",
+      "observationTimeUtc": "2026-10-01T06:25:31.5216251Z",
+      "actual": "PATMARK prompt902 Document B waiting marking point"
+    },
+    {
+      "step": "2f",
+      "action": "Click A tab;wait2300ms",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child020/window.png",
+      "observationTimeUtc": "2026-10-01T06:25:57.5571304Z",
+      "actual": "resume-a,901,PATBRACE waiting top"
+    },
+    {
+      "step": "2g",
+      "action": "Close A tab X",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child021/window.png",
+      "observationTimeUtc": "2026-10-01T06:26:10.1915413Z",
+      "actual": "only resume-b tab,902,idle; no save dialog"
+    },
+    {
+      "step": "2h",
+      "action": "Doubleclick902 after A closed",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child022/window.png",
+      "observationTimeUtc": "2026-10-01T06:26:23.1730199Z",
+      "actual": "PATMARK902 Document B waiting point"
+    },
+    {
+      "step": "2i",
+      "action": "Focus command line",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child023/window.png",
+      "observationTimeUtc": "2026-10-01T06:26:33.5576163Z",
+      "actual": "902 row selection inactive; command input focus"
+    },
+    {
+      "step": "2j",
+      "action": "Escape",
+      "result": "PASS",
+      "screenshot": "<WORKSPACE>/_paneltest/cad-final-20261001-0207/final-isolated/resume-1413/child024/window.png",
+      "observationTimeUtc": "2026-10-01T06:26:44.8744241Z",
+      "actual": "PATMARK prompt removed; idle; canvas blank"
+    }
+  ],
+  "finalCom": {
+    "timeUtc": "2026-10-01T06:27:07.9649121Z",
+    "identity": "<local-user>",
+    "pid": 22664,
+    "startUtc": "2026-10-01T06:14:13.2184372Z",
+    "hwnd": 1837294,
+    "documentsCount": 1,
+    "fullName": "<WORKSPACE>\\_paneltest\\cad-final-20261001-0207\\final-isolated\\resume-1413\\resume-b.dwg",
+    "commandActive": 0,
+    "modelSpaceCount": 0,
+    "result": "PASS"
+  },
+  "screenshots": "child015 through child024",
+  "candidateSha256": "8864EE1D3B97AE4AF7FDFE66C0570F311A39D866122393A5935390BABA04F18C",
+  "processClosed": false,
+  "noDrawingPointInput": true,
+  "uncovered": [
+    "Other AutoCAD versions",
+    "Cause of tab-only preview behavior",
+    "Cause of old PID disappearance"
+  ]
+}

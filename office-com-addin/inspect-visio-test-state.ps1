@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param([Parameter(Mandatory = $true)][string]$DocumentPath)
 
 $ErrorActionPreference = 'Stop'
@@ -34,6 +34,7 @@ $result = [ordered]@{
     ActivePage = [string]$application.ActivePage.NameU
     SelectionCount = [int]$selection.Count
     SelectionShapeId = if ([int]$selection.Count -eq 1) { [int]$selection.Item(1).ID } else { $null }
+    SelectionNameU = if ([int]$selection.Count -eq 1) { [string]$selection.Item(1).NameU } else { $null }
     SelectionOneD = if ([int]$selection.Count -eq 1) { [int]$selection.Item(1).OneD } else { $null }
     Saved = [bool]$document.Saved
 }

@@ -8,6 +8,7 @@ using Xunit;
 
 namespace PatentMarker.Tests
 {
+    [Collection(PatCheckResultCollection.Name)]
     public class DictPaletteViewRendererTests
     {
         [Fact]

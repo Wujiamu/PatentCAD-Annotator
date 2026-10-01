@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using PatentMarker.IO;
+using PatentOffice.Shared;
 
 namespace PatentOffice.PowerPoint
 {

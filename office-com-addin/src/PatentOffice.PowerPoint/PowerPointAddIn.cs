@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using PatentOffice.Shared;
 
 namespace PatentOffice.PowerPoint
 {
@@ -21,7 +22,7 @@ namespace PatentOffice.PowerPoint
                 string version = "unknown";
                 try { version = Convert.ToString(((dynamic)application).Version); }
                 catch { }
-                OfficeDiagnostics.Start(version);
+                OfficeDiagnostics.Start(version, "office-ppt");
                 OfficeDiagnostics.Write("lifecycle", "PASS",
                     "OnConnection;mode=" + connectMode + ";assembly=" + OfficeDiagnostics.AssemblyPath());
                 ShowPalette();

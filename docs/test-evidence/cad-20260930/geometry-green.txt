@@ -1,0 +1,37 @@
+=====================================================
+PATMLVERIFY — MLeader form verification
+Time: 2026-09-30 20:38:27
+AutoCAD: 25.1.0.0
+=====================================================
+
+-----------------------------------------------------
+MLeader (2486673468544)
+  recorded: attach=(0.00,0.00) doglegs=1 text=(10.00,20.00) arrow=False splined=False
+  entity: textLocation=(10.00,20.00) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+-----------------------------------------------------
+MLeader (2486673468592)
+  recorded: attach=(100.00,0.00) doglegs=1 text=(150.00,20.00) arrow=False splined=False
+  entity: textLocation=(150.00,20.00) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+SUMMARY: total=2 passed=2 failed=0

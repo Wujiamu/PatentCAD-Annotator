@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PatentMarker.IO;
+using PatentOffice.Shared;
 
 namespace PatentOffice.PowerPoint
 {

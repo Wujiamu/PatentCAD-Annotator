@@ -1,16 +1,18 @@
-# Word → PowerPoint 只读标图原型：可行性与验收记录
+# Word → Office 只读标图原型：可行性与验收记录
 
-- **记录日期**：2026-09-24；PowerPoint 0.1.1.0 更新于 2026-09-26
+- **记录日期**：2026-10-01；以下历史条目保留原测试日期与对应制品版本
 
-- **产品版本**：PowerPoint 0.1.1.0 发布候选；下文的 0.1.0.0 宿主记录是历史基线
+- **产品版本**：当前候选为 PowerPoint 0.1.2.0、Visio 0.1.4.0；0.1.1.0 / 0.1.3.0 的 L3 宿主结论是旧制品历史基线
 
-- **结论状态**：PowerPoint 0.1.1.0 已从最终 ZIP 安装，并在本机 PowerPoint 16 x64 通过限定 L3 面板主链：绑定安装版 Word UI 字典、跨两页标注、漏标检查、保存、退出和全新进程重开复核；多文稿切换、字典故障恢复及图片误选也已实测。新增回归还通过 PowerPoint 界面键盘插入原生直线、在另一页键盘选线，经面板标注及冷重开识别。鼠标拖拽定向画线、鼠标选线和视觉布局未验。独立 Visio 0.1.3.0 已完成其限定宿主验收。Office 2010 x86 与 Windows 7 未验。PowerPoint 当前候选详见 [发布验收记录](ppt-release-validation.md)。
+- **最新结论状态**：2026-10-01 干净源码构建、PPT 7/7 与 Visio 24/24 代码测试、两端隔离安装回滚/卸载检查通过。本机 Office 16 x64 的真实面板绑定、两页标注与整稿漏标检查通过；线条由公共 COM 准备，Visio 的原生画布选线仍待验。最终包、冷重开与限定 L3 子链见[推送前验证](test-evidence/office-release-validation-20261001.md)。2026-09-28 Visio 跳过必要负例的总体结果更正为 SKIP，代码负例覆盖声明也已更正，见[历史记录](test-evidence/office-cold-start-20260928.md)。Office 2010 x86 与 Windows 7 未验。
 
 - **PowerPoint 阶段边界**：只读 Word 导出的 `.dict.json`，写入 PowerPoint 演示文稿；不修改 Word/CAD 生产代码，不回写字典，不含 Visio、图片导入或 CAD 式画布点选。Visio 后续实现独立记录在本报告末尾
 
+- **2026-09-28 代码债校准**：PPT 和 Visio 仍独立编译为各自的 DLL，并没有复用 CAD 字典 IO、面板或宿主代码。二者现在链接同一组 Office 字典 DTO/只读解析器、COM 扩展接口和诊断日志源码；CAD 共享层只链接 `NumberIdentity.cs`。新的共享源码经 PPT/Visio 代码测试和五版 CAD 构建核对。本文历史 L3 结论仍绑定对应验收记录中的旧包哈希，不能外推到本次新构建。
+
 ## 结论
 
-PowerPoint 方向已有可构建的 .NET Framework 4.0 C# COM 加载项原型，功能路径包括手选字典并写入演示文稿 Custom XML、定时重读字典、把所选原生直线与编号文字分组并写入 Tags，以及扫描全部幻灯片的产品标注组检查漏标。项目只链接了不依赖 CAD 的 `NumberIdentity`，其余字典模型、解析、宿主交互和面板均为 Office 专用实现。
+PowerPoint 方向已有可构建的 .NET Framework 4.0 C# COM 加载项原型，功能路径包括手选字典并写入演示文稿 Custom XML、定时重读字典、把所选原生直线与编号文字分组并写入 Tags，以及扫描全部幻灯片的产品标注组检查漏标。Office 不复用 CAD 的字典 IO、宿主交互或面板。2026-09-28 起 PPT 与 Visio 共同链接 Office 专用的字典模型/解析器、COM 扩展接口和诊断实现；两端仍各自编译到独立 DLL。跨 CAD/Office 的源码复用限于 `NumberIdentity`。
 
 构建及隔离安装/卸载故障回归已通过。产品 DLL 已安装到当前用户目录；COM 注册修复后的 Office 16 x64 全新 PowerPoint 进程确实加载了产品 DLL。限定场景中，已通过面板绑定相对路径字典、在面板执行标注和整份漏标检查、保存演示文稿、关闭 PowerPoint、再以全新进程打开保存产物，并由面板检查到编号 1、2 均已标注。修复前 `SlideID` 和 `FlipH` 两项运行时错误均有已安装加载项的真实红灯日志；修复后同一标注操作及反向斜线场景转绿。
 
@@ -73,11 +75,11 @@ PowerPoint 方向已有可构建的 .NET Framework 4.0 C# COM 加载项原型，
 | 编译                          | `office-com-addin/build.ps1`；net40 Release 成功，0 warning、0 error；发布暂存 DLL 哈希核对通过                                                                                                       | L0 PASS                       |
 | 安装回归                        | 唯一临时目录和隔离 HKCU 分支；覆盖首次安装中途失败、重复安装、升级写注册表后故障回滚、卸载，并核对无关加载项哨兵值不变                                                                                                                        | 安装器回归 PASS；不是 Office 宿主证据     |
 | 实际部署                        | Office 64 位产品键 `HKCU\Software\Microsoft\Office\PowerPoint\Addins\PatentOffice.PowerPointAddIn` 的 `LoadBehavior=3`；COM CodeBase 指向用户 LocalAppData 产品 DLL；后续冷启动日志确认该 DLL 已加载 | 安装检查 PASS；宿主加载 PASS           |
-| 已部署加载项 DLL                  | `%LOCALAPPDATA%\PatentMarker\OfficeAddin\PowerPoint\PatentOffice.PowerPoint.dll`，当前 0.1.1.0 SHA-256 `11991315EF0631F1893B113415D5D4B4E975A33A8CFCAC9C616E5306B10EEC79`，与 2026-09-27 候选 ZIP 包内 DLL 一致；前一 0.1.1.0 候选为 `3135C19BEFAD7A8831347E8876867E9E68A8CA87A21DF884F41C232FDC4A287B` | 当前候选、部署及日志中的运行加载路径/外部哈希 PASS |
+| 已部署加载项 DLL                  | `%LOCALAPPDATA%\PatentMarker\OfficeAddin\PowerPoint\PatentOffice.PowerPoint.dll`，历史 0.1.1.0 SHA-256 `11991315EF0631F1893B113415D5D4B4E975A33A8CFCAC9C616E5306B10EEC79`，与 2026-09-27 候选 ZIP 包内 DLL 一致；前一 0.1.1.0 候选为 `3135C19BEFAD7A8831347E8876867E9E68A8CA87A21DF884F41C232FDC4A287B` | 当前候选、部署及日志中的运行加载路径/外部哈希 PASS |
 | Newtonsoft.Json DLL         | 同目录 `Newtonsoft.Json.dll`，SHA-256 `C69B18993D8236E5DFE3F0580A4392E7BC0B5F525911737318117C91D43B3EA5`                                                                                  | 安装后进程外哈希                      |
 | PowerPoint 冷启动与重开            | `ae932fa13c1a47409e968031fe2504ad` 冷重开保存的两页测试稿并通过面板检查；最终诊断版 run `4c5f2db795ef4585bf7f3c39e2a13cc1` 也全新启动、恢复绑定、读 2 项并经面板检查返回“均已标注”，日志 `missing=0;marked=2` | 冷启动、冷重开及宿主业务子链 PASS      |
 | PowerPoint 标注与漏标             | run `26634ed58381454d986e620aae86918f`：UI 面板标注 PASS（SlideID 256/257）；覆盖水平、VerticalFlip 及 HorizontalFlip 直线；漏标检查依次得到 `missing=1`、`missing=0`；普通未标记直线不能替代产品标注组 | 安装后宿主限定场景 PASS               |
-| Word → PPT 字典来源               | 历史 0.1.0.0 PPT 回归使用 `verify-vba-export.vbs` 的 `L2_SOURCE_IMPORT` 字典副本，SHA-256 `CF262EDAA81D4442FC58186107AD909185D5FD1CAB75AE98435884DE0DD4DC77`。当前 0.1.1.0 回归直接绑定安装版 Word 面板导出的 2 项字典，SHA-256 `74ADC14A23992785721CB366E13D313784D41CE2AFE26894C58F5019BF973479`，测试前后相同 | 历史输入 L2；当前跨宿主字典只读 PASS |
+| Word → PPT 字典来源               | 历史 0.1.0.0 PPT 回归使用 `verify-vba-export.vbs` 的 `L2_SOURCE_IMPORT` 字典副本，SHA-256 `CF262EDAA81D4442FC58186107AD909185D5FD1CAB75AE98435884DE0DD4DC77`。历史 0.1.1.0 回归直接绑定安装版 Word 面板导出的 2 项字典，SHA-256 `74ADC14A23992785721CB366E13D313784D41CE2AFE26894C58F5019BF973479`，测试前后相同 | 历史输入 L2；当前跨宿主字典只读 PASS |
 | 测试演示文稿产物                  | `ppt-ui-smoke-20260924.pptx`：两页，保存后 159586 字节，SHA-256 `EAC077925EAB6D1F1C6076AA8A918D1A37BBC38C73F3A0190F290F12779C1BCE`；冷重开后两页各有一个正确 Tags 产品组，普通线无 Tags | 保存及冷重开产物断言 PASS             |
 | Computer Use 交互               | `@oai/sky` 枚举并冷启动 PowerPoint，通过键盘执行面板绑定/标注/漏标；后续还由功能区键盘插入原生直线、切页并以 `Tab` 选中另一页已有直线。Windows 19045 截图捕获有已知接口错误，无截图时点按提示 `coordinate input geometry is unavailable`；未用坐标猜测 | 键盘交互 PASS；鼠标拖拽画线及视觉布局未覆盖 |
 | Word → PPT 前一候选面板场景             | 安装版 Word UI 导出 2 项字典；run `6ca260ba4806417bb5ecdd82a917a89e` 经面板绑定、两页标注和检查，PowerPoint UI 保存；run `659e3167c3ea4f708356e93662c58346` 冷重开后面板无漏标。第三份 PPT 的字典副本损坏/丢失与恢复、图片误选均通过。run `e3b2e9e083e842cb9e46114bec4eecdb` 将 UI 插入的原生直线标为 1；run `65cb01db81bb476c85d3c748473757e9` 键盘选中第二页已有直线并标为 2；run `a2b5d87696b54d06bbd81e01779a3b8b` 冷重开后面板无漏标。测试字典 SHA-256 不变 | 前一候选限定 L3 PASS；鼠标拖拽画线、鼠标选线和视觉布局待验 |
@@ -152,7 +154,7 @@ PowerPoint 方向已有可构建的 .NET Framework 4.0 C# COM 加载项原型，
 
 ## 完整 L3 用户路径剩余验收清单
 
-当前 0.1.1.0 已将安装版 Word 面板导出的 2 项字典用于真实 PPT 面板；不同主名、同卷相对路径、真实 C:/F: 跨卷绝对路径及异目录 PPTX 副本冷重开、多文稿切换、字典副本丢失/损坏后的恢复、跨页漏标、误选图片与箭头连接符的拒绝均有实测。后续键盘回归还覆盖界面插入原生直线及键盘选线。完整鼠标用户路径和目标旧环境仍有以下缺口：
+历史 0.1.1.0 已将安装版 Word 面板导出的 2 项字典用于真实 PPT 面板；不同主名、同卷相对路径、真实 C:/F: 跨卷绝对路径及异目录 PPTX 副本冷重开、多文稿切换、字典副本丢失/损坏后的恢复、跨页漏标、误选图片与箭头连接符的拒绝均有实测。后续键盘回归还覆盖界面插入原生直线及键盘选线。完整鼠标用户路径和目标旧环境仍有以下缺口：
 
 1. 在幻灯片画布上从编号文字位置向图片目标拖拽绘制普通直线，再用鼠标选中它；目前界面插线为默认尺寸，没有截图、坐标拖拽或视觉布局证据。
 2. 用安装版 Word 面板覆盖“同目录单 DWG”和“多个 DWG 手选”导出规则，再分别交给 PPT 面板读取；当前真实 Word UI 字典只证明已导出产物可被 PPT 只读使用。
@@ -203,7 +205,7 @@ Visio 已作为独立实现开始落地，未把 PowerPoint 的形状组、Tags 
 
 画线仍由 Visio COM 准备，第一页线由 COM 选中；面板绑定、标注、检查及重开是真实 UI 操作。此历史候选当时达到本机面板与持久化限定 L3 子链，但快速切换文档时仍有下节的竞态。
 
-### 0.1.3.0 当前发布候选
+### 0.1.3.0 历史发布候选
 
 代码复核发现：面板缓存 A 图字典后、两秒定时刷新之前切到 B 图，立即点“检查整份文档”会继续输出 A 图的漏标结果。同一真实 Visio 宿主对象/面板处理器回归下，0.1.2.0 稳定 `FAIL`；0.1.3.0 在标注和检查按钮入口先同步刷新活动文档，识别切换后取消本次操作并要求重新选择，转为 `PASS`。状态读取异常时也暂停缓存字典操作。这个脚本直接调用面板处理器，只记 L2；详见 [同场景红绿记录](test-evidence/visio-release-validation-20260925-v013.md)。
 

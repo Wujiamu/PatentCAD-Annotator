@@ -1,0 +1,13 @@
+{
+  "Time": "2026-10-01T14:31:36.2216473+08:00",
+  "PID": 97748,
+  "Assembly": "<WORKSPACE>\\_paneltest\\cad-final-20261001-0207\\final-isolated\\installed\\PatentMarker.dll",
+  "SHA256": "8864EE1D3B97AE4AF7FDFE66C0570F311A39D866122393A5935390BABA04F18C",
+  "Total": 16,
+  "Passed": 16,
+  "Failed": 0,
+  "Skipped": 0,
+  "C9Assertions": 16,
+  "DrawingSHA256": "D04318071A5697753106AABBEB31FE580D99E7C4A73F7D58F343B2254174778E",
+  "Result": "PASS"
+}

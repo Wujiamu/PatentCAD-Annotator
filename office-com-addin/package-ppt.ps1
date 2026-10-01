@@ -12,6 +12,8 @@ if ([string]::IsNullOrWhiteSpace($OutputDirectory)) {
 if (-not $SkipBuildAndTests) {
     & (Join-Path $PSScriptRoot 'build.ps1')
     if (-not $?) { throw 'PowerPoint 构建失败。' }
+    dotnet test (Join-Path $PSScriptRoot 'tests\PatentOffice.PowerPoint.CodeTests\PatentOffice.PowerPoint.CodeTests.csproj') --configuration Release --nologo -v minimal
+    if ($LASTEXITCODE -ne 0) { throw 'PowerPoint 代码测试失败。' }
     & (Join-Path $PSScriptRoot 'verify-installer.ps1')
     if (-not $?) { throw 'PowerPoint 安装器隔离回归失败。' }
 }

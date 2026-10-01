@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using System.Text;
 using PatentMarker.IO;
 using PatentOffice.Visio;
+using PatentOffice.Shared;
 using Xunit;
 
 namespace PatentOffice.Visio.CodeTests
@@ -50,41 +50,6 @@ namespace PatentOffice.Visio.CodeTests
             Assert.Equal(Path.GetFullPath(dictionary), BindingPath.Resolve("C:\\diagram.vsdx", stored, kind));
         }
 
-        [Fact]
-        public void DictionaryReader_AcceptsAnEmptyDictionary_AndDoesNotRewriteIt()
-        {
-            string path = Path.Combine(Path.GetTempPath(), "PatentMarker-empty-" + Guid.NewGuid().ToString("N") + ".dict.json");
-            byte[] content = Encoding.UTF8.GetBytes("{\"metadata\":{\"version\":\"1\"},\"entries\":[],\"warnings\":[]}");
-            try
-            {
-                File.WriteAllBytes(path, content);
-                DictionarySnapshot snapshot = DictionaryReader.Read(path);
-
-                Assert.Empty(snapshot.Dictionary.Entries);
-                Assert.Equal(path, snapshot.Path);
-                Assert.Equal(content, File.ReadAllBytes(path));
-            }
-            finally
-            {
-                if (File.Exists(path)) File.Delete(path);
-            }
-        }
-
-        [Fact]
-        public void DictionaryReader_RejectsAnEntryWithoutNumber()
-        {
-            string path = Path.Combine(Path.GetTempPath(), "PatentMarker-invalid-" + Guid.NewGuid().ToString("N") + ".dict.json");
-            try
-            {
-                File.WriteAllText(path, "{\"entries\":[{\"number\":\" \",\"name\":\"base\"}]}", new UTF8Encoding(false));
-                Assert.Throws<InvalidDataException>(() => DictionaryReader.Read(path));
-            }
-            finally
-            {
-                if (File.Exists(path)) File.Delete(path);
-            }
-        }
-
         [Theory]
         [InlineData(" 1342A ", "1342a", true)]
         [InlineData("S1", "s1", true)]
@@ -92,6 +57,15 @@ namespace PatentOffice.Visio.CodeTests
         public void NumberIdentity_MatchesTheCadComparisonRule(string left, string right, bool expected)
         {
             Assert.Equal(expected, NumberIdentity.AreEqual(left, right));
+        }
+
+        [Fact]
+        public void NumberIdentityComparer_TrimsKeysForSetAndDictionaryUse()
+        {
+            var numbers = new System.Collections.Generic.HashSet<string>(NumberIdentity.Comparer);
+
+            Assert.True(numbers.Add(" 1342A "));
+            Assert.False(numbers.Add("1342a"));
         }
     }
 }
