@@ -429,9 +429,9 @@ function Invoke-StaticCheck {
     $wordContractFailures = 0
 
     $requiredContracts = @(
-        @{ Label = "bootstrap AutoExec"; Text = $bootstrapText; Token = 'Public Sub AutoExec()' },
+        @{ Label = "bootstrap AutoExec"; Text = $bootstrapText; Token = 'Private Sub AutoExec()' },
         @{ Label = "bootstrap hook initialization"; Text = $bootstrapText; Token = 'AutoExport.InitializeAutoExport("AutoExec")' },
-        @{ Label = "bootstrap AutoExit"; Text = $bootstrapText; Token = 'Public Sub AutoExit()' },
+        @{ Label = "bootstrap AutoExit"; Text = $bootstrapText; Token = 'Private Sub AutoExit()' },
         @{ Label = "installer Startup path resolution"; Text = $wordInstallerText; Token = 'startupPath = app.StartupPath' },
         @{ Label = "installer exact product target"; Text = $wordInstallerText; Token = 'targetPath = fso.BuildPath(startupPath, "PatentMarker.dotm")' },
         @{ Label = "installer staged byte comparison"; Text = $wordInstallerText; Token = 'FilesEqual(sourcePath, targetPath' },
@@ -447,6 +447,22 @@ function Invoke-StaticCheck {
             Write-Err2 "Missing Word safety contract: $($contract.Label)"
             $wordContractFailures++
         }
+    }
+
+    # Alt+F8 lists public/default-public no-argument Subs. Keep one user entry.
+    $userEntries = @(foreach ($moduleFile in Get-ChildItem -LiteralPath (Join-Path $root "vba") -Filter *.bas) {
+        $moduleText = [IO.File]::ReadAllText($moduleFile.FullName, [Text.Encoding]::GetEncoding(936))
+        foreach ($entry in [regex]::Matches($moduleText, '(?im)^\s*(?:Public\s+)?(?:Static\s+)?Sub\s+(\w+)\s*(?:\(\s*\))?\s*(?:''[^\r\n]*)?$')) {
+            $entry.Groups[1].Value
+        }
+    })
+    if ($userEntries.Count -ne 1 -or $userEntries[0] -ne "ShowPatentDictPanel") {
+        Write-Err2 "Word user macro entry must be only ShowPatentDictPanel; found: $($userEntries -join ', ')"
+        $wordContractFailures++
+    }
+    if ($bootstrapText -match '(?im)^\s*Option\s+Private\s+Module') {
+        Write-Err2 "Word bootstrap must remain discoverable by AutoExec"
+        $wordContractFailures++
     }
 
     foreach ($forbiddenToken in @("NormalTemplate", "VBProject", "VBComponents", "OrganizerDelete")) {

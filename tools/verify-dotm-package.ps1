@@ -72,7 +72,7 @@ try {
         throw "DOTM macro discovery metadata count is $($macroNames.Count), expected $($expected.Count)"
     }
 
-    Write-Output "PASS|DOTM_PACKAGE|path=$resolved|vba_project=true|content_type=true|relationship=true|macro_metadata=true|public_macros=$($macroNames.Count)"
+    Write-Output "PASS|DOTM_PACKAGE|path=$resolved|vba_project=true|content_type=true|relationship=true|macro_metadata=true|macro_metadata_entries=$($macroNames.Count)"
 } finally {
     $archive.Dispose()
 }

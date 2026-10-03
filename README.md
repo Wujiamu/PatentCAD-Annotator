@@ -117,7 +117,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 1. **选择部署包**：按上表选择 `PatentMarker-<年份>-deploy/`，完整解压到可写且位置固定的目录。保留 DLL、脚本与整个 `vba/` 子目录，安装后不要随意移动。
 2. **安装 Word 工具**：先保存并关闭全部 Word 窗口，再运行包内 `install-vba.vbs`。脚本把同目录、预先构建好的 `PatentMarker.dotm` 逐字节校验后安装到 Word `Startup` 目录，**不会打开、修改或保存 `Normal.dotm`，也不要求“信任对 VBA 工程对象模型的访问”**。重复安装会保留旧产品加载项和所有权清单的可恢复备份；卸载使用 `uninstall-vba.vbs`。
-3. **导出字典**：重新启动 Word 后，Startup 加载项通过 `AutoExec` 自动挂接保存事件。打开并保存说明书，用 Alt+F8 运行 `ShowPatentDictPanel` 查看状态或手动导出。同目录有多个 DWG 时，第一次勾选“保存时自动导出”会先要求选择目标 DWG，也可以先点击“手动导出字典”完成选择；选择后普通保存即按该 DWG 名称自动生成 JSON。首次保存或另存为后，在最终目录再次保存或手动导出并确认对应图纸。
+3. **导出字典**：重新启动 Word 后，Startup 加载项通过 `AutoExec` 自动挂接保存事件。打开并保存说明书，用 Alt+F8 运行唯一的项目操作入口 `ShowPatentDictPanel`，在“专利标注字典工具”面板中选择手动导出、保存时自动导出或显示/隐藏 JSON。同目录有多个 DWG 时，第一次勾选“保存时自动导出”会先要求选择目标 DWG，也可以先点击“手动导出字典”完成选择；选择后普通保存即按该 DWG 名称自动生成 JSON。首次保存或另存为后，在最终目录再次保存或手动导出并确认对应图纸。
 4. **安装 CAD 插件**：运行所选包的 CAD 安装入口，见下方部署包表。打开目标 DWG，用 `BZ` 打开面板。
 5. **标注与检查**：单击选择条目，双击开始标注；也可用 `BZM`。F2/右键编辑条目，`BZC` 检查漏标，`BZS` 选择标注后用 `BZA` 对齐。
 
@@ -247,7 +247,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File ./tools/verify-vba-installed
 | `PatentDictPanel.frm` | Word 工具面板定义与事件代码 |
 | `PatentDictPanel.frx` | 配套二进制窗体资源，生成 `PatentMarker.dotm` 时与 `.frm` 一起导入 |
 
-共 8 个 VBA 组件、9 个物理源文件；唯一支持的手动宏入口为 `ShowPatentDictPanel`，`AutoExec` / `AutoExit` 仅供 Word 生命周期调用。生成的规范全局模板位于 `word-addin/PatentMarker.dotm`。
+共 8 个 VBA 组件、9 个物理源文件；Alt+F8 中本加载项只显示一个操作入口 `ShowPatentDictPanel`；`AutoExec` / `AutoExit` 为私有生命周期过程，仍由 Word 自动调用，包内保留其发现元数据。其他加载项或旧 Normal 中的宏不会由安装器自动清理。生成的规范全局模板位于 `word-addin/PatentMarker.dotm`。
 
 ### 目录结构
 
@@ -409,7 +409,7 @@ See [docs/version-plan.md](docs/version-plan.md) for full rationale.
 
 1. Choose `PatentMarker-<year>-deploy/` for your AutoCAD and extract the complete package into a writable, stable directory. Keep the DLL, scripts and entire `vba/` folder together.
 2. Save work and close every Word window, then run `install-vba.vbs`. It byte-verifies and installs the prebuilt `PatentMarker.dotm` into Word's Startup folder. It **does not open, edit, or save `Normal.dotm` and does not require AccessVBOM**. Repeated installs preserve recoverable backups; use `uninstall-vba.vbs` to remove only the owned add-in.
-3. Restart Word. The Startup add-in attaches the save event through `AutoExec`. Open and save the document, then use Alt+F8 → `ShowPatentDictPanel` to inspect status or export manually. With multiple DWGs, select a target once; later ordinary saves reuse it. After a first save or Save As, save again or export from the final location.
+3. Restart Word. The Startup add-in attaches the save event through `AutoExec`. Open and save the document, then use the add-in’s sole Alt+F8 entry, `ShowPatentDictPanel`, to choose manual export, export on save, or JSON visibility in the panel. The private `AutoExec` / `AutoExit` lifecycle procedures still run automatically; unrelated and legacy Normal macros are preserved. With multiple DWGs, select a target once; later ordinary saves reuse it. After a first save or Save As, save again or export from the final location.
 4. Run the matching CAD installer below. Open the target DWG and run `BZ`.
 5. Single-click selects; double-click or `BZM` starts marking. F2/right-click edits entries, `BZC` checks missing annotations, and `BZS` followed by `BZA` selects and aligns annotations.
 

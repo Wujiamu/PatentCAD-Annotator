@@ -258,13 +258,13 @@ End Function
 
 Sub WaitForWordProcessesToExit()
     Dim attempt, count, checkFailure
-    For attempt = 1 To 30
+    For attempt = 1 To 120
         count = CountWordProcesses(checkFailure)
         If count < 0 Then FailAfterWord "cannot verify that the owned Word process exited: " & checkFailure
         If count = 0 Then Exit Sub
         WScript.Sleep 500
     Next
-    FailAfterWord "owned Word process did not exit within 15 seconds"
+    FailAfterWord "owned Word process did not exit within 60 seconds"
 End Sub
 
 Sub CloseOwnedWord()

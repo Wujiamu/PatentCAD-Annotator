@@ -2,7 +2,7 @@ Option Explicit
 
 ' test-vba-panel.vbs - L2 source-import check for the PatentDictPanel workflow:
 '   1. All 8 VBA components / 9 physical files import or pair cleanly
-'   2. Standard modules expose one user macro plus AutoExec/AutoExit lifecycle Subs
+'   2. Standard modules expose one user macro; lifecycle Subs are private
 '   3. Manual export path (AutoExport.ExportDict) produces <name>.dict.json
 '   4. Auto-export toggle (AutoExport.IsAutoExportEnabled) works on/off
 '
@@ -70,8 +70,8 @@ Next
 doc.Save
 LogLine "ALL_IMPORTED"
 
-' --- 2. Source shape contains exactly three no-argument public Subs: one
-'        supported user entry plus AutoExec/AutoExit lifecycle entries.
+' --- 2. Source shape contains exactly one no-argument public Sub: the
+'        supported user entry. Lifecycle Subs must remain private.
 '        This is not visual evidence of the Alt+F8 macro dialog.
 Dim comp, comps, compType, src, lines, i, publicSubs, publicSubNames, procedureName, importErrNo, importErrDesc
 Set comps = doc.VBProject.VBComponents
@@ -91,15 +91,15 @@ For Each comp In comps
     End If
 Next
 LogLine "NO_ARG_PUBLIC_SUBS=" & publicSubs & " names=" & publicSubNames
-If publicSubs <> 3 Then Fail "EXPECTED_3_PUBLIC_SUBS_GOT_" & publicSubs
-For Each procedureName In Array("ShowPatentDictPanel", "AutoExec", "AutoExit")
+If publicSubs <> 1 Then Fail "EXPECTED_1_PUBLIC_SUB_GOT_" & publicSubs
+For Each procedureName In Array("ShowPatentDictPanel")
     If InStr(1, "," & publicSubNames & ",", "," & procedureName & ",", vbTextCompare) = 0 Then Fail "PUBLIC_SUB_MISSING_" & procedureName
 Next
 src = comps("AutoExport").CodeModule.Lines(1, comps("AutoExport").CodeModule.CountOfLines)
 If InStr(1, src, "Sub ShowPatentDictPanel", vbTextCompare) = 0 Then Fail "SHOW_MACRO_MISSING"
 src = comps("PatentMarkerBootstrap").CodeModule.Lines(1, comps("PatentMarkerBootstrap").CodeModule.CountOfLines)
-If InStr(1, src, "Public Sub AutoExec()", vbTextCompare) = 0 Then Fail "AUTOEXEC_MISSING"
-If InStr(1, src, "Public Sub AutoExit()", vbTextCompare) = 0 Then Fail "AUTOEXIT_MISSING"
+If InStr(1, src, "Private Sub AutoExec()", vbTextCompare) = 0 Then Fail "AUTOEXEC_MISSING"
+If InStr(1, src, "Private Sub AutoExit()", vbTextCompare) = 0 Then Fail "AUTOEXIT_MISSING"
 LogLine "MACRO_LIST_OK"
 
 ' --- 3. UserForm present with expected controls ---
