@@ -10,7 +10,7 @@ using System.Text.Json;
 internal static class Program
 {
     private static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
-    private static readonly HashSet<string> Targets = new(StringComparer.OrdinalIgnoreCase) { "acad", "notepad" };
+    private static readonly HashSet<string> Targets = new(StringComparer.OrdinalIgnoreCase) { "acad", "notepad", "POWERPNT", "VISIO" };
 
     [STAThread]
     private static int Main(string[] args)
@@ -124,7 +124,7 @@ internal static class Program
     private static Process Target(int pid)
     {
         Process process = Process.GetProcessById(pid);
-        if (!Targets.Contains(process.ProcessName)) throw new InvalidOperationException("Only acad.exe and notepad.exe are allowed.");
+        if (!Targets.Contains(process.ProcessName)) throw new InvalidOperationException("Only acad.exe, notepad.exe, POWERPNT.EXE and VISIO.EXE are allowed.");
         if (process.SessionId != Process.GetCurrentProcess().SessionId) throw new InvalidOperationException("Target is outside the current desktop session.");
         return process;
     }
@@ -260,12 +260,23 @@ internal static class Program
 
     private static Input[] KeyInputs(string name)
     {
+        // Fixed document shortcuts only; this is not an arbitrary chord parser.
+        var controlKeys = new Dictionary<string, ushort>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Ctrl+1"] = 0x31, ["Ctrl+3"] = 0x33, ["Ctrl+6"] = 0x36,
+            ["Ctrl+S"] = 0x53, ["Ctrl+Z"] = 0x5a, ["Ctrl+Y"] = 0x59,
+            ["Ctrl+A"] = 0x41, ["Ctrl+O"] = 0x4f
+        };
+        if (controlKeys.TryGetValue(name, out ushort controlKey))
+            return new[] { Input.Key(0x11, false), Input.Key(controlKey, false), Input.Key(controlKey, true), Input.Key(0x11, true) };
+        if (name.Equals("Ctrl+Shift+W", StringComparison.OrdinalIgnoreCase))
+            return new[] { Input.Key(0x11, false), Input.Key(0x10, false), Input.Key(0x57, false), Input.Key(0x57, true), Input.Key(0x10, true), Input.Key(0x11, true) };
         var keys = new Dictionary<string, ushort>(StringComparer.OrdinalIgnoreCase)
         {
             ["Escape"] = 0x1b, ["Enter"] = 0x0d, ["Tab"] = 0x09, ["Space"] = 0x20,
             ["Left"] = 0x25, ["Up"] = 0x26, ["Right"] = 0x27, ["Down"] = 0x28,
             ["Home"] = 0x24, ["End"] = 0x23, ["F2"] = 0x71, ["F8"] = 0x77, ["Delete"] = 0x2e,
-            ["Backspace"] = 0x08
+            ["Backspace"] = 0x08, ["PageUp"] = 0x21, ["PageDown"] = 0x22
         };
         if (!keys.TryGetValue(name, out ushort vk)) throw new ArgumentException("Unsupported key. Windows/security shortcuts are not provided.");
         return new[] { Input.Key(vk, false), Input.Key(vk, true) };
@@ -302,9 +313,17 @@ internal static class Program
         bool rejected = false; try { Normalize(1920, -1920, 3840); } catch (ArgumentOutOfRangeException) { rejected = true; }
         Assert(rejected, "out-of-bounds coordinate rejected");
         Assert(Input.Mouse(2).Type == 0 && Input.Key(0x1b, false).Type == 1 && Input.Unicode('中', true).Data.Keyboard.Flags == 6, "mouse/key/unicode input representation");
-        Assert(!Targets.Contains("powershell") && !Targets.Contains("Codex") && Targets.SetEquals(new[] { "acad", "notepad" }), "target allowlist");
+        Assert(!Targets.Contains("powershell") && !Targets.Contains("Codex") && Targets.SetEquals(new[] { "acad", "notepad", "POWERPNT", "VISIO" }), "target allowlist");
+        Input[] undo = KeyInputs("Ctrl+Z");
+        Assert(undo.Length == 4 && undo[0].Data.Keyboard.Vk == 0x11 && undo[1].Data.Keyboard.Vk == 0x5a &&
+            undo[2].Data.Keyboard.Flags == 2 && undo[3].Data.Keyboard.Flags == 2, "document shortcut presses and releases both keys");
+        Input[] fit = KeyInputs("Ctrl+Shift+W");
+        Assert(fit.Length == 6 && fit[0].Data.Keyboard.Vk == 0x11 && fit[1].Data.Keyboard.Vk == 0x10 &&
+            fit[3].Data.Keyboard.Flags == 2 && fit[4].Data.Keyboard.Flags == 2 && fit[5].Data.Keyboard.Flags == 2, "fit-to-window shortcut releases every modifier");
         rejected = false; try { KeyInputs("Windows"); } catch (ArgumentException) { rejected = true; }
         Assert(rejected, "unsupported shortcut rejected");
+        rejected = false; try { KeyInputs("Ctrl+Shift+Escape"); } catch (ArgumentException) { rejected = true; }
+        Assert(rejected, "unlisted system shortcut rejected");
         Console.WriteLine("L1_ONLY: No window, screenshot, keyboard, or mouse API executed. Desktop validation remains SKIP/BLOCKED until authorized.");
     }
 }

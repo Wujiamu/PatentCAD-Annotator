@@ -1,6 +1,10 @@
-# CAD 桌面验收备用工具
+# CAD / Office 桌面验收备用工具
 
-本工具供本项目的临时 AutoCAD 2026 / 记事本验收使用，不属于插件或发行包。由于本机官方 Computer Use 的 Windows Graphics Capture 请求持续超时，工具使用微软 GDI `BitBlt` 获取**当前可见窗口像素**，使用 `SendInput` 发送真实输入。它不修复或替换 Codex 的原生服务，不调用 helper 协议，不修改系统安全、隐私、显示驱动或产品加载配置。
+本工具供本项目的临时 AutoCAD 2026、PowerPoint、Visio 和记事本验收使用，不属于插件或发行包。由于本机官方 Computer Use 的 Windows Graphics Capture 请求持续超时，工具使用微软 GDI `BitBlt` 获取**当前可见窗口像素**，使用 `SendInput` 发送真实输入。它不修复或替换 Codex 的原生服务，不调用 helper 协议，不修改系统安全、隐私、显示驱动或产品加载配置。
+
+2026-10-03 为 PPT / Visio 鼠标验收增加受限扩展：`POWERPNT.EXE` / `VISIO.EXE` 进程白名单，以及固定的文稿编辑快捷键。用户已明确允许本轮使用该备用链路，仅操作临时 Office 文稿。新增编译与 10 项无桌面自检通过；Office 业务结论以各自实测记录为准，此前 CAD 授权和结果不能替代 Office 验收。
+
+本轮Office实测已完成：PPT四方向鼠标画线和选线；Visio原生直线/直角连接线、鼠标选线、连接点粘合、目标跟随、一次撤销与重做；两端默认/最低面板目检及正常冷启动后的界面重开通过。原始像素用于操作与目检，只读公共COM用于审计，未以COM预建引线、粘合或选择。具体L3范围及未覆盖项见[2026-10-03验收](../../office-com-addin/test-evidence/office-visual-validation-20261003.md)。
 
 ## 当前状态与启用条件
 
@@ -11,7 +15,7 @@
 
 ## 执行约束
 
-1. 只在本轮创建的临时 `acad.exe` 或 `notepad.exe` 进程使用；工具拒绝其他进程名称及其他会话。测试者必须记录 PID、启动时间和测试资料路径。
+1. 只在获准的本轮临时 `acad.exe`、`notepad.exe`、`POWERPNT.EXE` 或 `VISIO.EXE` 进程使用；工具拒绝其他进程名称及其他会话。测试者必须记录 PID、启动时间和测试资料路径。
 2. `windows <pid>` 枚举该进程的真实可见窗口。指定返回的唯一窗口句柄，激活后再截图。不得构造未知窗口句柄。
 3. `capture` 要求窗口在前台且未最小化，裁剪到真实虚拟桌面；输出 PNG 和包含 PID、启动时间、句柄、物理像素范围、DPI、时间及图像 SHA-256 的 JSON。保存目录必须是新的。
 4. 检视 PNG，再按其中的实际像素选择位置。一次操作消费一个观察记录；复用、超过两分钟、进程重启、窗口/DPI变化、图像被改写均拒绝。
@@ -41,6 +45,8 @@ dotnet $fallbackDll drag <observation.json> <image-x1> <image-y1> <image-x2> <im
 Windows 拒绝前台激活或 `SendInput` 时返回非零，不提高权限来绕过。所有截图和观察记录应置于本轮临时证据目录，不提交私人桌面图片。
 
 `command` 仅在 AutoCAD 中可用，发送一段不含控制字符的文字和 Enter，等价于一次命令提交。必须先通过截图确认当前命令行输入状态，提交后重新观察实际提示，不批量执行脚本。
+
+Office 可用固定快捷键 `Ctrl+1/3/6`（Visio 工具）、`Ctrl+Shift+W`（Visio 适应窗口）、`Ctrl+S/Z/Y/A/O` 和 `PageUp/PageDown`。不解析任意快捷键；系统和安全快捷键继续拒绝。快捷键进入工具后，实际绘制仍须用截图确定位置并执行鼠标拖动。
 
 ## 放行场景
 

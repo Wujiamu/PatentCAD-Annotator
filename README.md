@@ -18,7 +18,9 @@ PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 
 
 ### Office 只读标图加载项
 
-`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项，当前实验版本为 PowerPoint 0.1.2.0、Visio 0.1.4.0。2026-10-01 干净源码构建、PPT 7 项 / Visio 24 项代码测试、隔离安装回滚与卸载检查通过，CI 已增加独立 Office 门禁。本机 Office 16 x64 通过真实面板绑定、两页标注及全稿漏标检查；Visio 的选择对象由公共 COM 预先准备，原生画布选线仍待验。最终包、保存产物冷重开、限定 L3 范围与未覆盖项见[推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md)。鼠标画线、视觉布局、Windows 7 与 Office 2010 x86 仍待验。使用步骤见 [Office 加载项说明](office-com-addin/README.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
+`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项，当前实验版本为 PowerPoint 0.1.2.0、Visio 0.1.4.0。2026-10-01 干净源码构建、PPT 7 项 / Visio 24 项代码测试、隔离安装回滚与卸载检查通过，CI 已增加独立 Office 门禁。最终包及当时的面板与持久化范围见[推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md)。
+
+2026-10-03 同一安装版 DLL 在本机 Office 16 x64 补齐原生鼠标验收：PPT 四方向画线、取消后重新选线、重复编号及整稿漏标通过；Visio 原生直线和直角连接线的鼠标选线、目标连接点粘合、目标移动跟随、一次撤销和重做通过。两端默认及最低尺寸面板目检、保存后正常冷启动并从界面重开通过，字典字节及属性不变。用户授权的独立桌面备用工具取得真实截图并执行输入，官方 Computer Use 截图超时仍未修复。具体 L3 范围见[鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md)。Windows 7、Office 2010 x86、旧 VSD 和复杂组仍待验。使用步骤见 [Office 加载项说明](office-com-addin/README.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
 
 Office 代码共享范围有限：PPT 和 Visio 链接相同的字典模型/只读解析器、COM 扩展接口和诊断源码；CAD 侧仅链接编号身份比较源码。Office 没有复用 CAD 的字典 IO、面板或宿主适配。当前 Office DLL 分别为 0.1.2.0 和 0.1.4.0；旧包的 L3 证据仍只适用于其原记录中的版本。
 
@@ -167,7 +169,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
 | AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
 | AutoCAD 2026 x64 安装后 GUI | 2025 最终部署候选正常冷启动、真实双击、面板 12 个切换方向、左右直线/样条、夹点与多图纸通过；同包生产命令矩阵 16/16 | 旧年份宿主、旧图纸完整迁移或共享编号源码新规则已通过 |
-| Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 安装后正常冷启动，真实面板绑定、多页标注、全稿检查、字典故障恢复及保存冷重开通过；Visio 对象选择由公共 COM 准备 | 原生鼠标画线、视觉布局、Visio 原生选线/粘合跟随或 Win7 / Office 2010 x86 已通过 |
+| Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；同一安装 DLL 补齐 PPT 四方向鼠标画线/选线、Visio 原生直线/连接线选线、粘合跟随和一次撤销/重做，两端面板目检及从界面冷重开 | Win7 / Office 2010 x86、旧 VSD、复杂组、其他显示比例及大型真实文稿已通过 |
 
 CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测、四版 Simulation，以及独立 Office 门禁（两个 net40 构建、全部代码测试、隔离安装回滚/卸载与 PowerShell 5.1/7 语法检查）。Office 隔离安装测试固定使用测试用 64 位注册表视图，无需安装 Office；这不证明宿主兼容性。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
 
@@ -277,7 +279,7 @@ PatentCAD-Annotator/
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
 - [Office 加载项说明](office-com-addin/README.md) — PPT / Visio 构建、安装、使用及验收限制
-- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md) — 当前候选的证据范围
+- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md) / [Office 鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md) — 当前候选的证据范围
 - [docs/mleader-f-plan.md](docs/mleader-f-plan.md) — MLeader F 方案（三点顶点链）定义、实证与架构
 - [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题（v4.0 舍弃原因，已被 F 方案解决）
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
@@ -326,7 +328,9 @@ The independent C# COM add-ins in `office-com-addin/` are experimental **PowerPo
 
 PPT and Visio link the same Office dictionary model, read-only parser, COM contracts and diagnostics source. Across CAD and Office, only `NumberIdentity.cs` is shared. Panels, host adapters and persistence remain separate. The committed CAD deployment DLLs are the independently accepted CAD candidate; the new shared-number comparison change passed source tests and all five builds but is not included in those DLLs.
 
-On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within a limited L3 scope. Visio selection was prepared through public COM. Native Visio selection, mouse drawing, visual layout, glue behavior, Windows 7 and Office 2010 x86 remain unverified. See the [usage guide](office-com-addin/README.md), [Visio behavior](office-com-addin/visio-prototype.md), and [current acceptance evidence](office-com-addin/test-evidence/office-release-validation-20261001.md). Run `./office-com-addin/verify-code.ps1` for the source and isolated installer gates.
+On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within the scope recorded in the [release validation](office-com-addin/test-evidence/office-release-validation-20261001.md). Run `./office-com-addin/verify-code.ps1` for the source and isolated installer gates.
+
+On 2026-10-03, the same installed DLLs passed native mouse tests: four drawing directions and mouse selection in PPT; native straight lines and right-angle connectors, mouse selection, connection-point glue, target movement, single-action undo and redo in Visio. Both add-ins passed default/minimum panel visual checks and native file reopening after a full host restart; dictionary bytes and attributes were preserved. The user-approved desktop fallback provided real screenshots and input; official Computer Use capture still times out. See the [mouse and visual validation](office-com-addin/test-evidence/office-visual-validation-20261003.md), [usage guide](office-com-addin/README.md), and [Visio behavior](office-com-addin/visio-prototype.md). Windows 7, Office 2010 x86, old VSD and complex groups remain unverified.
 
 ### Data exchange and its limits
 
@@ -451,7 +455,7 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
 | AutoCAD 2026 | 2025 DLL command checks for marking, checking, alignment, chain validation and persistence; 1.0.2 marking/brace smoke checks | Interactive palette/dialogs, legacy drawings and older AutoCAD hosts |
 | AutoCAD 2026 x64 installed GUI | Final 2025 candidate: normal cold startup, real double-clicks, 12 palette switch directions, left/right straight and spline leaders, grips and multiple drawings; same-package command matrix: 16/16 | Older hosts, complete legacy-drawing migration or the new shared-number source behavior |
-| Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: normal cold startup, real panel binding, multiple pages, missing-label checks, dictionary recovery and cold reopening; Visio selection prepared through public COM | Mouse drawing, visual layout, native Visio selection/glue or Win7 / Office 2010 x86 |
+| Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: panel actions, dictionary recovery and cold reopening; the same installed DLLs also passed four-direction mouse drawing/selection in PPT, native line/connector selection, glue and single-action undo/redo in Visio, both panel visual checks and native cold reopening | Win7 / Office 2010 x86, old VSD, complex groups, other display scales or large real documents |
 
 [CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite, four simulated host suites and independent Office gates: two net40 builds, all code tests, isolated installer rollback/uninstall, and PowerShell 5.1/7 syntax checks. Isolated Office installers use a test-only 64-bit registry view without requiring Office; this does not prove host compatibility. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK or run Word/CAD/PPT/Visio GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
 

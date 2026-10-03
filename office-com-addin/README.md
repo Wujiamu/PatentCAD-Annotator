@@ -68,7 +68,9 @@ powershell.exe -NoProfile -STA -File ./office-com-addin/verify-visio-host-com.ps
 
 ## 当前本机验证状态
 
-2026-10-01 干净源码副本独立构建通过；PPT 7/7、Visio 24/24、两端隔离安装回滚/卸载检查通过。当前 DLL 在本机 Office 16 x64 通过真实面板绑定、两页标注及整稿漏标检查。PPT 第二页选线为键盘操作；Visio 测试对象选择由公共 COM 准备，原生选线交互仍待验。最终包、实际加载 DLL、保存产物冷重开及限定 L3 范围见[推送前验证](test-evidence/office-release-validation-20261001.md)。
+2026-10-01 干净源码副本独立构建通过；PPT 7/7、Visio 24/24、两端隔离安装回滚/卸载检查通过。最终包、实际加载 DLL、当时的面板场景及限定 L3 范围见[推送前验证](test-evidence/office-release-validation-20261001.md)。
+
+2026-10-03 同一安装 DLL 在本机 Office 16 x64 补齐鼠标与视觉验收：PPT 四方向原生画线、取消后鼠标选线、重复编号及整稿检查；Visio 原生直线/直角连接线、鼠标选线、连接点粘合、目标跟随、一次撤销和重做；两端默认及最低尺寸面板目检、保存及从界面冷重开均通过，字典字节/属性保持不变。普通目标由公共 COM 准备，所有引线、粘合、选择和业务面板动作均经真实输入。完整证据、运行 ID 和边界见[鼠标与视觉验收](test-evidence/office-visual-validation-20261003.md)。本轮未修改产品代码或重新安装，沿用既有包身份；官方截图仍超时，使用的是用户授权的受限桌面备用工具。
 
 历史 Visio 回归的三个必要负例曾跳过却输出总体 PASS，已将结论更正为 SKIP；当天代码测试也未覆盖这些标注入口负例，本次补齐并通过故障注入验证。详见[2026-09-28 历史记录](test-evidence/office-cold-start-20260928.md)。
 
