@@ -10,14 +10,14 @@ using System.Text.Json;
 internal static class Program
 {
     private static readonly JsonSerializerOptions Json = new() { WriteIndented = true };
-    private static readonly HashSet<string> Targets = new(StringComparer.OrdinalIgnoreCase) { "acad", "notepad", "POWERPNT", "VISIO" };
+    private static readonly HashSet<string> Targets = new(StringComparer.OrdinalIgnoreCase) { "acad", "notepad", "POWERPNT", "VISIO", "WINWORD" };
 
     [STAThread]
     private static int Main(string[] args)
     {
         try
         {
-            if (args.Length == 0) throw new ArgumentException("Use self-test, windows <pid>, activate <pid> <hwnd>, capture <pid> <hwnd> <new-directory>, click <observation> <x> <y> <1|2>, key <observation> <key>, text <observation> <text>, drag <observation> <x1> <y1> <x2> <y2>.");
+            if (args.Length == 0) throw new ArgumentException("Use self-test, windows <pid>, activate <pid> <hwnd>, capture <pid> <hwnd> <new-directory>, move <observation> <x> <y>, click <observation> <x> <y> <1|2>, key <observation> <key>, text <observation> <text>, drag <observation> <x1> <y1> <x2> <y2>.");
             if (args[0] == "self-test") { SelfTest(); return 0; }
             if (!Native.SetProcessDpiAwarenessContext(new IntPtr(-4)))
                 throw new Win32Exception(Marshal.GetLastWin32Error(), "Cannot enable physical-pixel DPI coordinates.");
@@ -49,6 +49,16 @@ internal static class Program
                     break;
                 case "capture":
                     Console.WriteLine(Capture(int.Parse(args[1]), new IntPtr(long.Parse(args[2])), args[3]));
+                    break;
+                case "move":
+                    var hover = Observation.Read(args[1]);
+                    int hoverX = int.Parse(args[2]), hoverY = int.Parse(args[3]);
+                    Guard(hover, hoverX, hoverY);
+                    Consume(args[1]);
+                    Move(hover.Left + hoverX, hover.Top + hoverY);
+                    GuardForeground(hover);
+                    GuardPoint(hover, hoverX, hoverY);
+                    Console.WriteLine("Cursor moved without a button press. Capture a new observation and verify the hover result.");
                     break;
                 case "click":
                     var click = Observation.Read(args[1]);
@@ -124,7 +134,7 @@ internal static class Program
     private static Process Target(int pid)
     {
         Process process = Process.GetProcessById(pid);
-        if (!Targets.Contains(process.ProcessName)) throw new InvalidOperationException("Only acad.exe, notepad.exe, POWERPNT.EXE and VISIO.EXE are allowed.");
+        if (!Targets.Contains(process.ProcessName)) throw new InvalidOperationException("Only acad.exe, notepad.exe, POWERPNT.EXE, VISIO.EXE and WINWORD.EXE are allowed.");
         if (process.SessionId != Process.GetCurrentProcess().SessionId) throw new InvalidOperationException("Target is outside the current desktop session.");
         return process;
     }
@@ -265,12 +275,14 @@ internal static class Program
         {
             ["Ctrl+1"] = 0x31, ["Ctrl+3"] = 0x33, ["Ctrl+6"] = 0x36,
             ["Ctrl+S"] = 0x53, ["Ctrl+Z"] = 0x5a, ["Ctrl+Y"] = 0x59,
-            ["Ctrl+A"] = 0x41, ["Ctrl+O"] = 0x4f
+            ["Ctrl+A"] = 0x41, ["Ctrl+O"] = 0x4f, ["Ctrl+W"] = 0x57
         };
         if (controlKeys.TryGetValue(name, out ushort controlKey))
             return new[] { Input.Key(0x11, false), Input.Key(controlKey, false), Input.Key(controlKey, true), Input.Key(0x11, true) };
         if (name.Equals("Ctrl+Shift+W", StringComparison.OrdinalIgnoreCase))
             return new[] { Input.Key(0x11, false), Input.Key(0x10, false), Input.Key(0x57, false), Input.Key(0x57, true), Input.Key(0x10, true), Input.Key(0x11, true) };
+        if (name.Equals("Alt+F8", StringComparison.OrdinalIgnoreCase))
+            return new[] { Input.Key(0x12, false), Input.Key(0x77, false), Input.Key(0x77, true), Input.Key(0x12, true) };
         var keys = new Dictionary<string, ushort>(StringComparer.OrdinalIgnoreCase)
         {
             ["Escape"] = 0x1b, ["Enter"] = 0x0d, ["Tab"] = 0x09, ["Space"] = 0x20,
@@ -313,13 +325,16 @@ internal static class Program
         bool rejected = false; try { Normalize(1920, -1920, 3840); } catch (ArgumentOutOfRangeException) { rejected = true; }
         Assert(rejected, "out-of-bounds coordinate rejected");
         Assert(Input.Mouse(2).Type == 0 && Input.Key(0x1b, false).Type == 1 && Input.Unicode('中', true).Data.Keyboard.Flags == 6, "mouse/key/unicode input representation");
-        Assert(!Targets.Contains("powershell") && !Targets.Contains("Codex") && Targets.SetEquals(new[] { "acad", "notepad", "POWERPNT", "VISIO" }), "target allowlist");
+        Assert(!Targets.Contains("powershell") && !Targets.Contains("Codex") && Targets.SetEquals(new[] { "acad", "notepad", "POWERPNT", "VISIO", "WINWORD" }), "target allowlist");
         Input[] undo = KeyInputs("Ctrl+Z");
         Assert(undo.Length == 4 && undo[0].Data.Keyboard.Vk == 0x11 && undo[1].Data.Keyboard.Vk == 0x5a &&
             undo[2].Data.Keyboard.Flags == 2 && undo[3].Data.Keyboard.Flags == 2, "document shortcut presses and releases both keys");
         Input[] fit = KeyInputs("Ctrl+Shift+W");
         Assert(fit.Length == 6 && fit[0].Data.Keyboard.Vk == 0x11 && fit[1].Data.Keyboard.Vk == 0x10 &&
             fit[3].Data.Keyboard.Flags == 2 && fit[4].Data.Keyboard.Flags == 2 && fit[5].Data.Keyboard.Flags == 2, "fit-to-window shortcut releases every modifier");
+        Input[] macros = KeyInputs("Alt+F8");
+        Assert(macros.Length == 4 && macros[0].Data.Keyboard.Vk == 0x12 && macros[1].Data.Keyboard.Vk == 0x77 &&
+            macros[2].Data.Keyboard.Flags == 2 && macros[3].Data.Keyboard.Flags == 2, "macro dialog shortcut releases every modifier");
         rejected = false; try { KeyInputs("Windows"); } catch (ArgumentException) { rejected = true; }
         Assert(rejected, "unsupported shortcut rejected");
         rejected = false; try { KeyInputs("Ctrl+Shift+Escape"); } catch (ArgumentException) { rejected = true; }

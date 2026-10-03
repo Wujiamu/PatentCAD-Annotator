@@ -72,6 +72,12 @@ powershell.exe -NoProfile -STA -File ./office-com-addin/verify-visio-host-com.ps
 
 2026-10-03 同一安装 DLL 在本机 Office 16 x64 补齐鼠标与视觉验收：PPT 四方向原生画线、取消后鼠标选线、重复编号及整稿检查；Visio 原生直线/直角连接线、鼠标选线、连接点粘合、目标跟随、一次撤销和重做；两端默认及最低尺寸面板目检、保存及从界面冷重开均通过，字典字节/属性保持不变。普通目标由公共 COM 准备，所有引线、粘合、选择和业务面板动作均经真实输入。完整证据、运行 ID 和边界见[鼠标与视觉验收](test-evidence/office-visual-validation-20261003.md)。本轮未修改产品代码或重新安装，沿用既有包身份；官方截图仍超时，使用的是用户授权的受限桌面备用工具。
 
+同日另通过本机 Visio 16 的旧 VSD 格式转换、新增原生标注、保存和冷重开，具体范围见[本机补充验收](test-evidence/office-local-validation-20261003.md)；真实旧版 Visio 宿主仍待验。
+
+安装版 Word 的单 DWG 手动导出、多 DWG 取消与手选，再交给 PPT 逐份读取、整稿检查、保存相对关联及独立冷重开也通过。两份真实输出均含 1 底座 / 2 支架、0 警告，字典字节/属性及非产品资产不变。仅验证 DWG 文件名选择和手动导出，未涉及真实 CAD 图纸内容或 Word 自动保存导出，见上述补充验收。
+
+Visio 补验带静态连接点的导入 PNG，原生粘合、标注、图片移动跟随及保存后独立冷重开通过，图像数据和普通形状不变。首次冷实例在文件打开前退出，原因仍未确认，后续一次独立重开完成用户路径；两次记录均保留。该结果不覆盖图片的动态粘合或插件图片导入。
+
 历史 Visio 回归的三个必要负例曾跳过却输出总体 PASS，已将结论更正为 SKIP；当天代码测试也未覆盖这些标注入口负例，本次补齐并通过故障注入验证。详见[2026-09-28 历史记录](test-evidence/office-cold-start-20260928.md)。
 
 2026-09-28 的 Office 公共源码抽取、PowerPoint 新代码测试和 `NumberIdentity.Comparer` 去空格比较已完成；PPT/Visio 代码测试、CAD 2025 单测和五版 CAD 编译记录见本报告历史条目。Windows 7 + Office 2010 x86 仍待目标环境验收。旧的 0.1.1.0 L3 结论仅适用于对应历史 ZIP/DLL，详见[PowerPoint 0.1.1 验收记录](ppt-release-validation.md)与[可行性报告](feasibility-report.md)。
