@@ -92,11 +92,6 @@ PatentMarker-*-deploy/load-patent-marker.lsp
 /snap_*.png
 /autocad_screen.png
 
-# Office add-in local host artifacts and private validation samples
-/office-com-addin/dist/
-/office-com-addin/release/
-/office-com-addin/test-evidence/*
-!/office-com-addin/test-evidence/*.md
 
 # ---- 测试产物 / 临时测试文件 ----
 test-single-export.vbs
