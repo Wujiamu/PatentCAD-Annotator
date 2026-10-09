@@ -1,10 +1,10 @@
 # PatentCAD-Annotator
 
-**Word 字典与专利图纸标注工具** — 从 Word 说明书提取附图标记，在 AutoCAD 中标注、编辑并对照变化；另提供实验性 PowerPoint、Visio 只读标图加载项。
+**Word 字典与专利图纸标注工具** — 从 Word 说明书提取附图标记，在 AutoCAD 中标注、编辑并对照变化；PowerPoint、Visio 只读标图加载项在独立仓库维护。
 
-**Word dictionary and patent drawing annotation tools** — Extract reference numerals from Word, annotate and edit in AutoCAD, with experimental read-only PowerPoint and Visio add-ins.
+**Word dictionary and patent drawing annotation tools** — Extract reference numerals from Word, annotate and edit in AutoCAD. PowerPoint and Visio add-ins live in a separate repository.
 
-CAD / Word 当前版本：**1.0.3 candidate（待发布 / unreleased）**；Office 实验版本：**PowerPoint 0.1.2.0 / Visio 0.1.4.0**。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
+CAD / Word 当前版本：**1.0.3 candidate（待发布 / unreleased）**。PowerPoint / Visio 实验加载项单独维护于[Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins)。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ---
 
@@ -16,19 +16,19 @@ PatentCAD-Annotator 用于减少专利图纸标注中的重复操作：从 Word 
 
 工作流：Word 面板手动导出或启用保存时自动导出 → 生成 `.dict.json` → CAD 中用 `BZ` 打开字典面板 → 双击条目或用 `BZM` 创建标注 → 字典更新后查看差异。
 
-### Office 只读标图加载项
+### 独立 Office 只读标图加载项
 
-`office-com-addin/` 下有独立的 Word→PowerPoint 和 Word→Visio 加载项，当前实验版本为 PowerPoint 0.1.2.0、Visio 0.1.4.0。2026-10-01 干净源码构建、PPT 7 项 / Visio 24 项代码测试、隔离安装回滚与卸载检查通过，CI 已增加独立 Office 门禁。最终包及当时的面板与持久化范围见[推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md)。
+PowerPoint 和 Visio 的独立只读标图加载项位于[Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins)，当前实验版本分别为 0.1.2.0 和 0.1.4.0。Office 代码、发布说明和专属 CI 由该仓库维护；CAD 仓库只保留 Word 字典导出器与 CAD 端实现。2026-10-01 构建、代码测试和隔离安装回滚/卸载记录见[推送前验证](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-release-validation-20261001.md)。
 
-2026-10-03 同一安装版 DLL 在本机 Office 16 x64 补齐原生鼠标验收：PPT 四方向画线、取消后重新选线、重复编号及整稿漏标通过；Visio 原生直线和直角连接线的鼠标选线、目标连接点粘合、目标移动跟随、一次撤销和重做通过。两端默认及最低尺寸面板目检、保存后正常冷启动并从界面重开通过，字典字节及属性不变。用户授权的独立桌面备用工具取得真实截图并执行输入，官方 Computer Use 截图超时仍未修复。具体 L3 范围见[鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md)。
+2026-10-03 同一安装版 DLL 在本机 Office 16 x64 补齐原生鼠标验收：PPT 四方向画线、取消后重新选线、重复编号及整稿漏标通过；Visio 原生直线和直角连接线的鼠标选线、目标连接点粘合、目标移动跟随、一次撤销和重做通过。两端默认及最低尺寸面板目检、保存后正常冷启动并从界面重开通过，字典字节及属性不变。用户授权的独立桌面备用工具取得真实截图并执行输入，官方 Computer Use 截图超时仍未修复。具体 L3 范围见[鼠标与视觉验收](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-visual-validation-20261003.md)。
 
-同日补验了本机 Visio 16 的旧 VSD 格式转换、鼠标新增标注、保存及冷重开，绑定与全部形状/连接字段保持一致，见[本机补充验收](office-com-addin/test-evidence/office-local-validation-20261003.md)。Windows 7、Office 2010 x86、真实旧版 Visio 宿主和复杂组仍待验。使用步骤见 [Office 加载项说明](office-com-addin/README.md)、[Visio 说明](office-com-addin/visio-prototype.md) 与 [可行性和验收报告](office-com-addin/feasibility-report.md)。
+同日补验了本机 Visio 16 的旧 VSD 格式转换、鼠标新增标注、保存及冷重开，绑定与全部形状/连接字段保持一致，见[本机补充验收](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-local-validation-20261003.md)。Windows 7、Office 2010 x86、真实旧版 Visio 宿主和复杂组仍待验。使用步骤见 [Office 加载项说明](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/README.md)、[Visio 说明](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/visio-prototype.md) 与 [可行性和验收报告](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/feasibility-report.md)。
 
 安装版 Word 的单 DWG 手动导出、多 DWG 取消与明确手选，再由 PPT 分别读取、检查漏标、保存关联及独立冷重开也已通过。不同主名的两份 PPT 自动恢复各自相对字典路径；字典和非产品文件不变。此轮只验证 DWG 文件名选择，范围见上述补充验收。
 
 Visio 另通过导入 PNG 的静态连接点粘合、编号标注、图片移动跟随和独立冷重开；图片数据、普通标题和字典不变。一次打开文件前的意外退出仍保留为原因未确认，后续一次独立冷重开完成实际验证；具体经过见补充验收。
 
-Office 代码共享范围有限：PPT 和 Visio 链接相同的字典模型/只读解析器、COM 扩展接口和诊断源码；CAD 侧仅链接编号身份比较源码。Office 没有复用 CAD 的字典 IO、面板或宿主适配。当前 Office DLL 分别为 0.1.2.0 和 0.1.4.0；旧包的 L3 证据仍只适用于其原记录中的版本。
+CAD 与 Office 通过 Word 导出的 `.dict.json` 文件交换数据，不共享源码或宿主程序集。Word 生产端留在本仓库；PowerPoint / Visio 消费端及编号比较实现由[Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins)独立维护。
 
 | 宿主 | 标注与绑定 | 检查范围 | 字典写入 |
 |---|---|---|---|
@@ -36,11 +36,11 @@ Office 代码共享范围有限：PPT 和 Visio 链接相同的字典模型/只�
 | PowerPoint | 原生直线与编号文字分组；Tags 识别；Custom XML 保存手选字典关联 | 整份演示文稿的产品标注组 | 只读 |
 | Visio | 一维线与编号框配对；ShapeSheet 保存身份及手选字典关联 | 整份文档前景页的产品配对 | 只读 |
 
-本次提交的 CAD 部署 DLL 来自已完成实机验收的 CAD 独立候选。共享编号比较器的新增源码修正通过单测和五版编译，但未加入这些部署 DLL；不能把新源码行为归入该候选的 GUI 验收。构建和验证 Office 源码可运行 `./office-com-addin/verify-code.ps1`。
+本次提交的 CAD 部署 DLL 来自已完成实机验收的 CAD 独立候选。共享编号比较器的新增源码修正通过单测和五版编译，但未加入这些部署 DLL；不能把新源码行为归入该候选的 GUI 验收。Office 源码构建和门禁见[独立 Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins)。
 
 ### Word 与 CAD 如何交换数据
 
-两端通过文件交换数据，正常使用不要求 Word 与 CAD 建立 COM 连接，也不要求两个程序同时打开。CAD 面板约每 2 秒检查字典变化。
+Word 与 CAD 通过 .dict.json 文件交换数据，正常使用不要求两个程序建立 COM 连接或同时打开。CAD 面板约每 2 秒检查字典变化。独立 Office 加载项也读取 Word 导出的字典；字段和编号比较约定见[Office 字典契约](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/docs/dictionary-contract.md)。
 
 | 操作 | 实际影响 |
 |---|---|
@@ -165,7 +165,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 
 ### 验证范围与开发命令
 
-以下汇总 [开发记录](docs/development-log.md)、[Word VBA 验收](docs/word-vba-acceptance-2026-09-13.md)、[CAD 验收](docs/cad-acceptance-20261001.md) 与 [Office 验收](office-com-addin/test-evidence/office-release-validation-20261001.md) 中的证据。源码直导入、单测及模拟宿主不能替代安装后正常启动：
+以下汇总 [开发记录](docs/development-log.md)、[Word VBA 验收](docs/word-vba-acceptance-2026-09-13.md)、[CAD 验收](docs/cad-acceptance-20261001.md) 与 Office 仓库中的 [验收记录](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-release-validation-20261001.md)。源码直导入、单测及模拟宿主不能替代安装后正常启动：
 
 | 层级 | 已有记录 | 不能据此推断 |
 |---|---|---|
@@ -175,9 +175,9 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
 | AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
 | AutoCAD 2026 x64 安装后 GUI | 2025 最终部署候选正常冷启动、真实双击、面板 12 个切换方向、左右直线/样条、夹点与多图纸通过；同包生产命令矩阵 16/16 | 旧年份宿主、旧图纸完整迁移或共享编号源码新规则已通过 |
-| Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；PPT 四方向鼠标画线/选线、Visio 原生直线/连接线、粘合跟随和一次撤销/重做、两端面板目检；旧 VSD 转换/新增标注/冷重开；Word 单/多 DWG 手动导出→PPT 读取与关联重开；导入 PNG 静态点粘合、移动跟随及冷重开 | Win7 / Office 2010 x86、真实旧版 Visio 宿主、复杂组、其他粘合方式/显示比例及大型真实文稿已通过 |
+| Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；PPT 四方向鼠标画线/选线、Visio 原生直线/连接线、粘合跟随和一次撤销/重做、两端面板目检；旧 VSD 转换/新增标注/冷重开；Word 单/多 DWG 手动导出→PPT 读取与关联重开；导入 PNG 静态点粘合、移动跟随及冷重开（[验收记录](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-local-validation-20261003.md)） | Win7 / Office 2010 x86、真实旧版 Visio 宿主、复杂组、其他粘合方式/显示比例及大型真实文稿未验 |
 
-CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行 Structure、Static、2025 单测、四版 Simulation，以及独立 Office 门禁（两个 net40 构建、全部代码测试、隔离安装回滚/卸载与 PowerShell 5.1/7 语法检查）。Office 隔离安装测试固定使用测试用 64 位注册表视图，无需安装 Office；这不证明宿主兼容性。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
+本仓库的 [CI](.github/workflows/build.yml) 执行 Structure、Static、2025 单测和四版 Simulation。Office 构建、代码测试与隔离安装门禁由[Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins/actions)独立运行。Autodesk SDK 不入库，因此本仓库 CI 不做五版真实 CAD 编译，也不运行 Word 或 CAD 的 GUI 验收。
 
 常用命令如下，按变更选择检查。仅文档调整无需构建；共享 C# 变更应编译受影响版本；Word 保存、窗体与 CAD 面板改动还需对应宿主验证。
 
@@ -185,7 +185,6 @@ CI 定义见 [.github/workflows/build.yml](.github/workflows/build.yml)：执行
 ./build.ps1 -Structure           # 项目引用、部署文件存在性
 ./build.ps1 -Static              # 源码/部署副本一致性与安装器静态契约
 ./build.ps1 -Simulation          # 2007/2010/2013/2015 生产命令的模拟宿主契约
-./office-com-addin/verify-code.ps1 # 两端 Office 构建、代码测试及隔离安装门禁
 dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
 ./build.ps1 -Version all -Check  # 五版 SDK 与工具链环境检查，不执行编译
 ./build.ps1 -Version 2025        # 编译对应版本；可换其他年份或 all
@@ -265,7 +264,6 @@ PatentCAD-Annotator/
 │   ├── 2015/               # AutoCAD 2015~2024（MLeader F 方案，.NET 4.5）
 │   └── 2025/               # AutoCAD 2025~2026+（MLeader F 方案，.NET 8.0）
 ├── vba/                     # 8 个组件、9 个 Word VBA 物理真源（含配对 .frm/.frx）
-├── office-com-addin/         # PPT / Visio 独立 COM 加载项与 Office 专用共享源码
 ├── PatentMarker-2007-deploy/   # 2007 版即装即用部署包（DLL + 脚本 + VBA）
 ├── PatentMarker-2010-deploy/   # 2010 版即装即用部署包
 ├── PatentMarker-2013-deploy/   # 2013 版即装即用部署包
@@ -284,8 +282,8 @@ PatentCAD-Annotator/
 
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
-- [Office 加载项说明](office-com-addin/README.md) — PPT / Visio 构建、安装、使用及验收限制
-- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md) / [Office 鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md) — 当前候选的证据范围
+- [独立 Office 仓库](https://github.com/Wujiamu/PatentMarker-OfficeAddins) — PPT / Visio 构建、安装、使用及验收限制
+- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-release-validation-20261001.md) / [Office 鼠标与视觉验收](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-visual-validation-20261003.md) — 当前候选的证据范围
 - [docs/mleader-f-plan.md](docs/mleader-f-plan.md) — MLeader F 方案（三点顶点链）定义、实证与架构
 - [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题（v4.0 舍弃原因，已被 F 方案解决）
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
@@ -324,7 +322,7 @@ Workflow: export from the Word panel, manually or with auto-export enabled → w
 
 ### Read-only Office annotation add-ins
 
-The independent C# COM add-ins in `office-com-addin/` are experimental **PowerPoint 0.1.2.0** and **Visio 0.1.4.0**, targeting .NET Framework 4.0. Save the document, manually bind a Word-exported `.dict.json`, draw a native line from the planned label position toward the target, select the line, and apply a number from the panel. The dictionary is never written back; duplicate labels are valid, and only product annotations count toward the missing-label check.
+The independent C# COM add-ins are maintained in [PatentMarker-OfficeAddins](https://github.com/Wujiamu/PatentMarker-OfficeAddins): experimental **PowerPoint 0.1.2.0** and **Visio 0.1.4.0**, targeting .NET Framework 4.0. Save the document, manually bind a Word-exported `.dict.json`, draw a native line from the planned label position toward the target, select the line, and apply a number from the panel. The dictionary is never written back; duplicate labels are valid, and only product annotations count toward the missing-label check.
 
 | Host | Annotation and binding | Check scope | Dictionary writes |
 |---|---|---|---|
@@ -332,13 +330,13 @@ The independent C# COM add-ins in `office-com-addin/` are experimental **PowerPo
 | PowerPoint | Line and label grouped; Tags identify annotations; Custom XML stores the chosen dictionary path | All slides | Read-only |
 | Visio | Paired one-dimensional line and label; ShapeSheet stores identity and dictionary path | All foreground pages | Read-only |
 
-PPT and Visio link the same Office dictionary model, read-only parser, COM contracts and diagnostics source. Across CAD and Office, only `NumberIdentity.cs` is shared. Panels, host adapters and persistence remain separate. The committed CAD deployment DLLs are the independently accepted CAD candidate; the new shared-number comparison change passed source tests and all five builds but is not included in those DLLs.
+PPT and Visio share Office dictionary models, parsers, COM contracts and diagnostics inside their own repository. CAD and Office exchange `.dict.json` files; they do not link source or host assemblies across repositories. Each repository maintains its own implementation of the documented number-comparison rule. The committed CAD deployment DLLs are the independently accepted CAD candidate; the new shared-number comparison change passed source tests and all five builds but is not included in those DLLs.
 
-On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within the scope recorded in the [release validation](office-com-addin/test-evidence/office-release-validation-20261001.md). Run `./office-com-addin/verify-code.ps1` for the source and isolated installer gates.
+On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within the scope recorded in the [release validation](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-release-validation-20261001.md). The Office source and isolated installer gates run in the [separate repository](https://github.com/Wujiamu/PatentMarker-OfficeAddins).
 
-On 2026-10-03, the same installed DLLs passed native mouse tests: four drawing directions and mouse selection in PPT; native straight lines and right-angle connectors, mouse selection, connection-point glue, target movement, single-action undo and redo in Visio. Both add-ins passed default/minimum panel visual checks and native file reopening after a full host restart; dictionary bytes and attributes were preserved. The user-approved desktop fallback provided real screenshots and input; official Computer Use capture still times out. See the [mouse and visual validation](office-com-addin/test-evidence/office-visual-validation-20261003.md), [usage guide](office-com-addin/README.md), and [Visio behavior](office-com-addin/visio-prototype.md).
+On 2026-10-03, the same installed DLLs passed native mouse tests: four drawing directions and mouse selection in PPT; native straight lines and right-angle connectors, mouse selection, connection-point glue, target movement, single-action undo and redo in Visio. Both add-ins passed default/minimum panel visual checks and native file reopening after a full host restart; dictionary bytes and attributes were preserved. The user-approved desktop fallback provided real screenshots and input; official Computer Use capture still times out. See the [mouse and visual validation](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-visual-validation-20261003.md), [usage guide](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/README.md), and [Visio behavior](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/visio-prototype.md).
 
-The same day, Visio 16 also passed native conversion to old VSD, new mouse annotations, saving and cold reopening, with all shape, connection and binding fields preserved; see the [local supplementary validation](office-com-addin/test-evidence/office-local-validation-20261003.md). Windows 7, Office 2010 x86, actual older Visio hosts and complex groups remain unverified.
+The same day, Visio 16 also passed native conversion to old VSD, new mouse annotations, saving and cold reopening, with all shape, connection and binding fields preserved; see the [local supplementary validation](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-local-validation-20261003.md). Windows 7, Office 2010 x86, actual older Visio hosts and complex groups remain unverified.
 
 Installed Word manual export with a single DWG, cancellation and explicit choice among multiple DWGs, followed by PPT reading, missing-number checks, saving bindings and independent cold reopening also passed. Both differently named PPT files restored their own relative dictionary paths; dictionaries and non-product assets stayed unchanged. This test covered DWG filename selection only; see the supplementary validation above.
 
@@ -457,7 +455,7 @@ All five installers and uninstallers merge HKCU/HKLM profile lists, process ever
 
 ### Verification and development
 
-The following summarizes the [development log](docs/development-log.md), [Word VBA acceptance](docs/word-vba-acceptance-2026-09-13.md), [CAD acceptance](docs/cad-acceptance-20261001.md), and [Office acceptance](office-com-addin/test-evidence/office-release-validation-20261001.md). Source imports, unit tests and simulated hosts do not prove normal post-install startup.
+The following summarizes the [development log](docs/development-log.md), [Word VBA acceptance](docs/word-vba-acceptance-2026-09-13.md), [CAD acceptance](docs/cad-acceptance-20261001.md), and [Office acceptance](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-release-validation-20261001.md). Source imports, unit tests and simulated hosts do not prove normal post-install startup.
 
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
@@ -469,7 +467,7 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | AutoCAD 2026 x64 installed GUI | Final 2025 candidate: normal cold startup, real double-clicks, 12 palette switch directions, left/right straight and spline leaders, grips and multiple drawings; same-package command matrix: 16/16 | Older hosts, complete legacy-drawing migration or the new shared-number source behavior |
 | Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: panel actions, dictionary recovery and cold reopening; PPT mouse drawing/selection in four directions; native Visio lines/connectors, glue, single-action undo/redo and both panel visual checks; old VSD conversion/annotation/reopening; installed Word single/multiple DWG manual export → PPT reading and binding restoration; imported PNG static-point glue, following a moved target and cold reopening | Win7 / Office 2010 x86, actual older Visio hosts, complex groups, other glue methods/display scales or large real documents |
 
-[CI](.github/workflows/build.yml) runs Structure, Static, the 2025 unit suite, four simulated host suites and independent Office gates: two net40 builds, all code tests, isolated installer rollback/uninstall, and PowerShell 5.1/7 syntax checks. Isolated Office installers use a test-only 64-bit registry view without requiring Office; this does not prove host compatibility. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK or run Word/CAD/PPT/Visio GUI tests. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
+[CI](.github/workflows/build.yml) runs CAD structure, static, unit and simulated host checks. Office builds, code tests and isolated installer gates run in the [separate Office repository](https://github.com/Wujiamu/PatentMarker-OfficeAddins/actions). Neither workflow runs Office host GUI acceptance. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
 
 Edit Word code only in root `vba/`, run `./vba-sync.ps1`, rebuild `word-addin/PatentMarker.dotm`, verify its VBA project and macro-discovery metadata with `tools/verify-dotm-package.ps1`, and then run `./sync-word-addin.ps1`. Both synchronization scripts return a nonzero exit code on `-Check` drift, while `build.ps1 -Static` independently compares every deployment copy with its canonical source. Edit the MLeader group in one chosen edition and run `./sync-mleader-group.ps1 -SourceVersion <year>` before the consistency check. The default source is 2010.
 
