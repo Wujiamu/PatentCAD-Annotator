@@ -4,6 +4,14 @@
 
 ***
 
+## 统一项目关系与 Office 面板指引（2026-10-10）
+
+- 从 Office 仓库 `bf471b1532768dcd61524773bb33ef8ca4c7be86` 纳回正式源码、脚本与历史证据；保留独立 DLL、安装身份和打包入口。统一仓库首页说明 Word → CAD / PPT / Visio 三条路线，增加共享边界文档，恢复 Office CI 作业。
+- Office 直接链接 `cad-plugin/Shared/IO/NumberIdentity.cs`，去掉 Office 目录的比较器副本；唯一真源内容没有变化。新增七个产品项目的引用检查，并纳入 Structure 与 Office 门禁。Word VBA / dotm 和 CAD 部署 DLL 未变。
+- 说明缺口的最短路径：安装后查找菜单命令或关闭面板，再查原 PPT 包说明；没有恢复面板的指引。静态核对表明两端 OnConnection 会打开浮动面板，关闭按钮将其最小化，未注册功能区按钮或宏。此问题属于指引缺失，本轮不声称复现宿主加载失败。
+- 主 README、Office README、两份发布 README、Visio 使用说明及发布说明补齐自动打开、任务栏 / Alt+Tab 恢复和 COM 加载项排查；安装完成输出直接指向面板和包内 README。没有新增 UI 控件，也没有改动宿主加载或面板行为。
+- 本轮检查结果、包哈希与未覆盖范围见[整合验证记录](project-unification-validation-20261010.md)。用户授权提交并推送，主仓库描述和原 Office 仓库的 README / 描述同步更新；既有发布资产未重发。
+
 ## Word 单一宏入口（2026-10-04）
 
 - `ShowPatentDictPanel` 继续作为唯一操作入口，打开现有面板选择手动导出、保存时自动导出、JSON 显示/隐藏。将 `PatentMarkerBootstrap.AutoExec/AutoExit` 改为私有生命周期过程；保留三个包内发现元数据项，避免损坏自动启动。未使用 `Option Private Module`，未改解析或保存策略。

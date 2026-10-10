@@ -89,6 +89,26 @@ jobs:
         shell: pwsh
         run: dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
 
+  office-addins:
+    name: PowerPoint and Visio build, tests and isolated installers
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Verify shared source links
+        shell: pwsh
+        run: ./tools/verify-project-family.ps1
+
+      - name: Build and verify Office add-ins
+        shell: pwsh
+        run: ./office-com-addin/verify-code.ps1
+
   simulated-host-contracts:
     name: Simulated host contract tests
     runs-on: windows-latest

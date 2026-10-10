@@ -14,7 +14,7 @@
 
 当前共享模块：
 
-- `IO/NumberIdentity.cs`：附图标记规范化和比较规则；
+- `IO/NumberIdentity.cs`：附图标记规范化和比较规则；五版 CAD 与 PPT / Visio 链接同一个文件，Office 不另存副本，见[项目共享边界](../../docs/project-family.md)；
 - `IO/PatSettings.cs`：按图纸隔离的运行设置；
 - `IO/DictDiff.cs`：字典 Diff 规则；
 - `IO/DictConflict.cs`：Word/CAD 字典冲突裁决的文件操作；

@@ -129,6 +129,12 @@ function Get-MSBuildPath {
 function Invoke-StructureCheck {
     Write-Section "Structure integrity check (no SDK DLL required)"
     $failCount = 0
+    try {
+        & (Join-Path $root "tools\verify-project-family.ps1") -RepositoryRoot $root
+    } catch {
+        Write-Err2 "Project family shared-source check failed: $_"
+        $failCount++
+    }
 
     # Release verification must not depend on ignored/local-only probes. Keep the
     # complete Word workflow present in a clean checkout before checking packages.

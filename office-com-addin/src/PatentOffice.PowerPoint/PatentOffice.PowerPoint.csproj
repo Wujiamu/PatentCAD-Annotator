@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net40</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>7.3</LangVersion>
+    <RootNamespace>PatentOffice.PowerPoint</RootNamespace>
+    <AssemblyName>PatentOffice.PowerPoint</AssemblyName>
+    <Version>0.1.2</Version>
+    <AssemblyVersion>0.1.2.0</AssemblyVersion>
+    <FileVersion>0.1.2.0</FileVersion>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RestoreIgnoreFailedSources>true</RestoreIgnoreFailedSources>
+    <NuGetAudit>false</NuGetAudit>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net40" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PatentOffice.Shared\ComContracts.cs" Link="Shared\ComContracts.cs" />
+    <Compile Include="..\PatentOffice.Shared\OfficeDiagnostics.cs" Link="Shared\OfficeDiagnostics.cs" />
+    <Compile Include="..\PatentOffice.Shared\PatentDictionary.cs" Link="Shared\PatentDictionary.cs" />
+    <Compile Include="..\PatentOffice.Shared\DictionaryReader.cs" Link="Shared\DictionaryReader.cs" />
+    <Compile Include="..\..\..\cad-plugin\Shared\IO\NumberIdentity.cs" Link="IO\NumberIdentity.cs" />
+  </ItemGroup>
+</Project>
