@@ -4,11 +4,11 @@
 
 2026-10-03 为 PPT / Visio 鼠标验收增加受限扩展：`POWERPNT.EXE` / `VISIO.EXE` 进程白名单，以及固定的文稿编辑快捷键。用户已明确允许本轮使用该备用链路，仅操作临时 Office 文稿。新增编译与 10 项无桌面自检通过；Office 业务结论以各自实测记录为准，此前 CAD 授权和结果不能替代 Office 验收。
 
-同日准备 Word 扩展：新增 `WINWORD.EXE` 白名单、`Alt+F8` 宏对话框与 `Ctrl+W` 文档关闭快捷键；编译零警告/错误、11 项无桌面自检通过。这只属于 L1；Word 实际输入必须先取得当前阶段的明确方法授权，既有 PPT / Visio 授权不自动覆盖 Word。测试范围、授权状态及结果见[本机补充验收](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-local-validation-20261003.md)。
+同日准备 Word 扩展：新增 `WINWORD.EXE` 白名单、`Alt+F8` 宏对话框与 `Ctrl+W` 文档关闭快捷键；编译零警告/错误、11 项无桌面自检通过。这只属于 L1；Word 实际输入必须先取得当前阶段的明确方法授权，既有 PPT / Visio 授权不自动覆盖 Word。测试范围、授权状态及结果见[本机补充验收](https://github.com/Wujiamu/PatentCAD-Annotator/blob/master/office-com-addin/test-evidence/office-local-validation-20261003.md)。
 
 在 Visio 连接线工具中，可通过[悬停观察连接点](https://support.microsoft.com/en-us/visio/edit-connector-lines-arrows-or-points)。新增 `move` 操作：消费一次新观察记录，仅移动鼠标，不发送按钮或按键，沿用点击的前台、像素、坐标及窗口归属检查。悬停后必须重新截图确认实际连接点，才可选择拖线落点。
 
-本轮Office实测已完成：PPT四方向鼠标画线和选线；Visio原生直线/直角连接线、鼠标选线、连接点粘合、目标跟随、一次撤销与重做；两端默认/最低面板目检及正常冷启动后的界面重开通过。原始像素用于操作与目检，只读公共COM用于审计，未以COM预建引线、粘合或选择。具体L3范围及未覆盖项见[2026-10-03验收](https://github.com/Wujiamu/PatentMarker-OfficeAddins/blob/main/test-evidence/office-visual-validation-20261003.md)。
+本轮Office实测已完成：PPT四方向鼠标画线和选线；Visio原生直线/直角连接线、鼠标选线、连接点粘合、目标跟随、一次撤销与重做；两端默认/最低面板目检及正常冷启动后的界面重开通过。原始像素用于操作与目检，只读公共COM用于审计，未以COM预建引线、粘合或选择。具体L3范围及未覆盖项见[2026-10-03验收](https://github.com/Wujiamu/PatentCAD-Annotator/blob/master/office-com-addin/test-evidence/office-visual-validation-20261003.md)。
 
 ## 当前状态与启用条件
 

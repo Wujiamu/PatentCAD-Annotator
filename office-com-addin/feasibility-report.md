@@ -2,7 +2,9 @@
 
 - **记录日期**：2026-10-09；历史条目保留原测试日期与对应制品版本
 
-- **仓库边界（2026-10-09）**：PowerPoint / Visio 加载项已独立至 PatentMarker-OfficeAddins 仓库，使用独立 `main` 和 Office 专属 CI；CAD 仓库保留 Word 字典导出器与 `.dict.json` 生产端。两仓通过[字典文件契约](docs/dictionary-contract.md)协作，Office 不再链接 CAD 源码。\r\n\r\n- **产品版本**：当前候选为 PowerPoint 0.1.2.0、Visio 0.1.4.0；0.1.1.0 / 0.1.3.0 的 L3 宿主结论是旧制品历史基线
+- **仓库边界（2026-10-10）**：Word、CAD、PowerPoint、Visio 统一在主仓库维护，PPT / Visio 位于 `office-com-addin/`，宿主 DLL 和安装包分别构建。C# 各端共用唯一编号比较源码，文件接口见[字典文件契约](docs/dictionary-contract.md)。
+
+- **产品版本**：当前候选为 PowerPoint 0.1.2.0、Visio 0.1.4.0；0.1.1.0 / 0.1.3.0 的 L3 宿主结论是旧制品历史基线
 
 - **最新结论状态**：2026-10-01 的干净源码构建、PPT 7/7 与 Visio 24/24 代码测试、隔离安装回滚/卸载通过；制品身份见[推送前验证](test-evidence/office-release-validation-20261001.md)。2026-10-03 同一安装 DLL 在本机 Office 16 x64 完成 PPT 四方向鼠标画线/选线，Visio 原生直线和直角连接线的鼠标选线、静态连接点粘合、目标跟随、一次撤销与重做；两端面板目检、保存及从界面冷重开通过，字典字节/属性不变。所列标图用户路径记为本机 L3，见[鼠标与视觉验收](test-evidence/office-visual-validation-20261003.md)。官方截图仍超时，实际输入使用用户授权的备用工具。同日补验本机 Visio 16 的旧 VSD 格式转换、原生新增标注、保存和冷重开，页面及绑定字段完全相同，见[本机补充验收](test-evidence/office-local-validation-20261003.md)。Office 2010 x86、Windows 7、真实旧版 Visio 宿主和复杂组未验。2026-09-28 必要负例跳过的总体结论仍保留更正为 SKIP，见[历史记录](test-evidence/office-cold-start-20260928.md)。
 

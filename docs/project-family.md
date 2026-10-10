@@ -2,7 +2,7 @@
 
 PatentMarker 是同一套专利附图标注工具，包含三条衍生路线：Word → AutoCAD、Word → PowerPoint、Word → Visio。Word 是共用的字典生产端，各标注宿主读取同一种 `.dict.json`。CAD 可编辑并回写字典，PPT / Visio 只读取字典；CAD 的修改不自动写回 Word 正文。
 
-主仓库沿用 [Wujiamu/PatentCAD-Annotator](https://github.com/Wujiamu/PatentCAD-Annotator) 地址。PPT / Visio 在 `office-com-addin/` 维护，各自的 DLL、COM 身份和安装包继续独立。原 [PatentMarker-OfficeAddins](https://github.com/Wujiamu/PatentMarker-OfficeAddins) 的代码来自短期拆仓；本次纳回的源码对应提交 `bf471b1532768dcd61524773bb33ef8ca4c7be86`。该仓库的 README 和描述指向主仓库，既有提交和发布资产保留。
+主仓库沿用 [Wujiamu/PatentCAD-Annotator](https://github.com/Wujiamu/PatentCAD-Annotator) 地址，统一维护 Word、CAD、PPT、Visio。PPT / Visio 在 `office-com-addin/` 维护，各自的 DLL、COM 身份和安装包继续独立；Office 源码整合基线为提交 `bf471b1532768dcd61524773bb33ef8ca4c7be86`。
 
 | 范围 | 唯一源码位置 | 使用端 |
 |---|---|---|
