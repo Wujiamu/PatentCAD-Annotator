@@ -1,10 +1,10 @@
 {
   "schema_version": "public-acceptance-summary/1",
-  "phase": "draft_before_GUI_completion",
-  "generated_utc": "2026-10-20T05:08:45.5803404Z",
-  "overall_result": "SKIP/BLOCKED",
+  "phase": "GUI_counterexample_under_repair",
+  "generated_utc": "2026-10-20T07:29:41.8717236Z",
+  "overall_result": "FAIL",
   "native_command_result": "PASS",
-  "gui_result": "SKIP/BLOCKED",
+  "gui_result": "FAIL",
   "verification_actor": "repair_author_with_separate_low_effort_GUI_operator",
   "independence_statement": "Repair author native/source verification; separate operator GUI phase still in progress. No external independent audit is claimed.",
   "source_snapshot_id": "00b71b75b5ef312a77adf328af745427753390856299eaff00b3a3f66d796ca3",
@@ -169,5 +169,27 @@
     "2013: SKIP/BLOCKED",
     "2015: SKIP/BLOCKED"
   ],
-  "evidence_policy": "Only sanitized report derivatives and original local hashes are public. No SDK, credentials, AGENTS, raw local logs, DWGs or screenshots uploaded. This summary is not input to the full local acceptance-report gate."
+  "evidence_policy": "Only sanitized report derivatives and original local hashes are public. No SDK, credentials, AGENTS, raw local logs, DWGs or screenshots uploaded. This summary is not input to the full local acceptance-report gate.",
+  "gui_findings": [
+    {
+      "id": "R7-G04",
+      "expected": "Four newly created MLeaders preserve text anchor/retracted endpoint and connect on facing edge",
+      "status": "FAIL",
+      "evidence": [
+        {
+          "sanitized_report": "docs/test-evidence/cad-20261020/G04-red-PatentMarker-geom-verify.txt",
+          "sanitized_sha256": "befb007d8cc23283e9691bec09aec62b89c283928ff47d50f36fb0d9d0677466",
+          "original_local_sha256": "f3929b4eb18d17b954c580e54d262d77510229d4b6e3ded235d6d655e8f1fa0b"
+        },
+        {
+          "sanitized_report": "docs/test-evidence/cad-20261020/G04-red-PatentMarker-mleader-verify.txt",
+          "sanitized_sha256": "03a7fbf9725432ca273a3958a955f199d27ce65ee5bd35eca67b746f79433600",
+          "original_local_sha256": "4b0acb29b1c3e7fceedf98b4f7ea0f589beebc74af0d06113c30976454bae40d"
+        }
+      ],
+      "actual": "Three T3 endpoint failures; one left spline C9 edge distance 5.7984 exceeds 0.350",
+      "scope": "Actual GUI user creation overrides earlier command-only positives; pending repair",
+      "repro": "Palette, no arrows/underline, 3 points, text 901 height 3.5: straight (0,100)(20,110)(40,110); straight (60,100)(80,110)(65,110); spline (0,140)(20,150)(40,150); spline (60,140)(80,150)(65,150). Run PATMLVERIFY then PATGEOMVERIFY before grip edits."
+    }
+  ]
 }
