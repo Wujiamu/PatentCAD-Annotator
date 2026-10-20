@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -72,9 +72,14 @@
     <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceAssertions.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomTextAssertions.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomVerifySummary.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomVerifyCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatReleaseManifest.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" />
     <Compile Include="Commands\PatSelectAllCommand.cs" />

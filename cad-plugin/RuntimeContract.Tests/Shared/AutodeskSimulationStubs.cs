@@ -92,6 +92,21 @@ namespace Autodesk.AutoCAD.Runtime
         Redraw = 2
     }
 
+    public enum ErrorStatus
+    {
+        InvalidInput
+    }
+
+    public sealed class Exception : System.Exception
+    {
+        public Exception(ErrorStatus status)
+        {
+            Status = status;
+        }
+
+        public ErrorStatus Status { get; private set; }
+    }
+
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class CommandMethodAttribute : Attribute
     {
@@ -450,6 +465,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public string Contents { get; set; } = "";
         public double TextHeight { get; set; }
         public Point3d Location { get; set; }
+        public Vector3d Direction { get; set; } = new Vector3d(1.0, 0.0, 0.0);
         public double Rotation { get; set; }
         public AttachmentPoint Attachment { get; set; }
         public ObjectId TextStyleId { get; set; }
@@ -463,6 +479,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
     public sealed class Polyline : Entity
     {
         private readonly List<Point2d> _vertices = new List<Point2d>();
+        private readonly List<double?> _vertexZ = new List<double?>();
 
         public int NumberOfVertices { get { return _vertices.Count; } }
         public double Elevation { get; set; }
@@ -475,6 +492,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
             if (index < 0 || index > _vertices.Count)
                 throw new ArgumentOutOfRangeException("index");
             _vertices.Insert(index, point);
+            _vertexZ.Insert(index, null);
         }
 
         public Point2d GetPointAt(int index)
@@ -482,9 +500,27 @@ namespace Autodesk.AutoCAD.DatabaseServices
             return _vertices[index];
         }
 
+        public Point2d GetPoint2dAt(int index)
+        {
+            return _vertices[index];
+        }
+
+        public Point3d GetPoint3dAt(int index)
+        {
+            Point2d point = _vertices[index];
+            double z = index >= 0 && index < _vertexZ.Count && _vertexZ[index].HasValue
+                ? _vertexZ[index].Value : Elevation;
+            return new Point3d(point.X, point.Y, z);
+        }
+
         public void SetPointAt(int index, Point2d point)
         {
             _vertices[index] = point;
+        }
+
+        public void SetVertexZ(int index, double z)
+        {
+            _vertexZ[index] = z;
         }
 
         public void RemoveVertexAt(int index)
@@ -495,6 +531,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
             if (_vertices.Count <= 2)
                 throw new InvalidOperationException("eDegenerateGeometry");
             _vertices.RemoveAt(index);
+            _vertexZ.RemoveAt(index);
         }
 
         public void UpgradeOpen() { }
@@ -546,6 +583,8 @@ namespace Autodesk.AutoCAD.DatabaseServices
         private readonly List<Point3d> _vertices = new List<Point3d>();
         private MText _mtext;
         private ObjectId _style;
+        private Point3d _textLocation;
+        public static bool SimulateHostTextRecalc { get; set; }
         private bool _leaderStarted;
         private TextAttachmentType _leftTextAttachment = TextAttachmentType.AttachmentMiddle;
         private TextAttachmentType _rightTextAttachment = TextAttachmentType.AttachmentBottomOfTopLine;
@@ -568,7 +607,16 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public TextAttachmentDirection TextAttachmentDirection { get; set; }
         public TextAttachmentType TextAttachmentType { get; set; }
         public TextAngleType TextAngleType { get; set; }
-        public Point3d TextLocation { get; set; }
+        public Point3d TextLocation
+        {
+            get { return _textLocation; }
+            set
+            {
+                _textLocation = value;
+                if (SimulateHostTextRecalc && _mtext != null)
+                    ApplyHostTextAttachment(_mtext);
+            }
+        }
         public void SetTextAttachmentType(TextAttachmentType attachment,
             LeaderDirectionType direction)
         {
@@ -599,7 +647,13 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public MText MText
         {
             get { return _mtext; }
-            set { _mtext = value; if (Database != null) Database.Trace.Add("mleader.mtext"); }
+            set
+            {
+                _mtext = value;
+                if (SimulateHostTextRecalc && value != null)
+                    ApplyHostTextAttachment(value);
+                if (Database != null) Database.Trace.Add("mleader.mtext");
+            }
         }
         public IReadOnlyList<Point3d> Vertices { get { return _vertices; } }
 
@@ -623,11 +677,55 @@ namespace Autodesk.AutoCAD.DatabaseServices
             if (Database != null) Database.Trace.Add("mleader.vertex");
         }
 
+        private void ApplyHostTextAttachment(MText text)
+        {
+            if (_vertices.Count == 0) return;
+            // Approximate AutoCAD 2026 MLeader attachment recalculation:
+            // the saved leader endpoint follows the text attachment point.
+            _vertices[_vertices.Count - 1] = new Point3d(
+                text.Location.X, text.Location.Y - text.TextHeight * 0.5101,
+                text.Location.Z);
+        }
+
         public Point3d GetLastVertex(int lineIndex)
         {
             if (!_leaderStarted || lineIndex != 0 || _vertices.Count == 0)
                 throw new InvalidOperationException("MLeader has no vertices for the requested leader line.");
             return _vertices[_vertices.Count - 1];
+        }
+
+
+        public void SetLastVertex(int lineIndex, Point3d point)
+        {
+            if (!_leaderStarted || lineIndex != 0 || _vertices.Count == 0)
+                throw new InvalidOperationException("MLeader has no vertices for the requested leader line.");
+            if (SimulateHostTextRecalc && _mtext != null)
+            {
+                Point3d old = _vertices[_vertices.Count - 1];
+                Point3d moved = new Point3d(_mtext.Location.X + point.X - old.X,
+                    _mtext.Location.Y + point.Y - old.Y, _mtext.Location.Z + point.Z - old.Z);
+                _mtext.Location = moved;
+                _textLocation = moved;
+            }
+            _vertices[_vertices.Count - 1] = point;
+        }
+        public void RemoveLastVertex(int lineIndex)
+        {
+            if (!_leaderStarted || lineIndex != 0 || _vertices.Count < 2)
+                throw new InvalidOperationException("MLeader terminal vertex cannot be removed.");
+            _vertices.RemoveAt(_vertices.Count - 1);
+        }
+        public Point3d GetVertex(int lineIndex, int index)
+        {
+            if (!_leaderStarted || lineIndex != 0 || index < 0 || index >= _vertices.Count)
+                throw new InvalidOperationException("MLeader vertex does not exist.");
+            return _vertices[index];
+        }
+        public int VerticesCount(int lineIndex)
+        {
+            if (!_leaderStarted || lineIndex != 0)
+                throw new InvalidOperationException("MLeader line does not exist.");
+            return _vertices.Count;
         }
     }
 

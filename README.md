@@ -49,7 +49,7 @@ Visio 另通过导入 PNG 的静态连接点粘合、编号标注、图片移动
 | PowerPoint | 原生直线与编号文字分组；Tags 识别；Custom XML 保存手选字典关联 | 整份演示文稿的产品标注组 | 只读 |
 | Visio | 一维线与编号框配对；ShapeSheet 保存身份及手选字典关联 | 整份文档前景页的产品配对 | 只读 |
 
-本次提交的 CAD 部署 DLL 来自已完成实机验收的 CAD 独立候选。共享编号比较器的新增源码修正通过单测和五版编译，但未加入这些部署 DLL；不能把新源码行为归入该候选的 GUI 验收。Office 源码构建和门禁见[Office 开发说明](office-com-addin/README.md)。本次恢复源码共享不改变编号比较器内容，历史宿主验收仍只适用于记录中的包与 DLL。
+本分支五套 CAD 部署 DLL 是本轮修复候选，随包附发布清单。AutoCAD 2026 实载结论见[候选验收](docs/cad-acceptance-20261020.md)；四个旧宿主仍待外部验证。清单保留原始 dirty 工作树构建身份，新上传提交不是原构建提交。Office 构建和门禁见[Office 开发说明](office-com-addin/README.md)。
 
 ### Word 与 CAD 如何交换数据
 
@@ -77,6 +77,7 @@ CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `
 ### 当前标注功能
 
 - 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 缩进端点`（末顶点沿最后一段方向缩进 0.4×字高，不直接触及文字），文字仍锚定在 `TextLocation`；并禁用全部自动几何（dogleg/landing/extend），引线路径沿用户点链构造，并在文字前保留间距；2007 无 MLeader API，保持 `Leader + MText`。
+- [当前候选验收](docs/cad-acceptance-20261020.md)与[四个旧宿主交接](docs/legacy-host-acceptance.md) — 真实宿主结果、候选身份和未覆盖项
 - 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
 - 无箭头时 `ArrowSize` 置 0（非零值会修剪引线起点，导致引线不触及零件），箭头用空箭头块 `_PAT_NO_ARROW` 实现；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问保持 2010-2012 兼容。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
@@ -110,7 +111,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
 | [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
 | [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader（F 方案） | 本地构建有记录；旧版宿主待验 |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader（F 方案） | 2026 x64 命令及安装后 GUI 通过；其他年份待验 |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader（F 方案） | 本轮2026结果见候选验收；其他年份待验 |
 
 表中范围是当前项目支持声明，不代表每个年份都已实测；系统基线也不能替代对应 AutoCAD/Office 的安装要求。未来年份需另行验证。
 
@@ -183,11 +184,11 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 层级 | 已有记录 | 不能据此推断 |
 |---|---|---|
 | 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
-| 自动化测试 | 当前源码 CAD 2025 单测 122/122；独立 CAD 部署候选 120/120；2007/2010/2013/2015 契约模拟各 33/33；PPT 7/7、Visio 24/24，均零跳过 | 真实宿主 API、面板交互或旧版 Office 安装结果已通过 |
+| 自动化测试 | 本分支独立工作区 353/353、零跳过：2025 为127，RuntimeContract 2007为55、2010/2013/2015各57；Structure/Static通过，VBA资产经过Git导出字节一致检查 | 模拟宿主替代真实旧CAD、GUI或Office验收 |
 | Word L2 源码宿主 | `verify-vba-export.vbs` 与已从忽略规则中放行的正式 `test-vba-panel.vbs` 直接导入根源码，覆盖路径映射、多 DWG 选择复用、普通保存/失败取消，以及组件类型、公开入口、UserForm 与手动导出 | 部署包安装、Startup、AutoExec 或重启持久化已通过 |
 | Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
-| AutoCAD 2026 命令级 | 2025 部署 DLL 的标注、检测、对齐、点链校验及保存重开记录；1.0.2 标注冒烟和大括号创建/尺寸编辑补测 | BZ 面板鼠标/对话框、旧图纸目检或 2007/2010/2013/2015 真宿主验证完成 |
-| AutoCAD 2026 x64 安装后 GUI | 2025 最终部署候选正常冷启动、真实双击、面板 12 个切换方向、左右直线/样条、夹点与多图纸通过；同包生产命令矩阵 16/16 | 旧年份宿主、旧图纸完整迁移或共享编号源码新规则已通过 |
+| AutoCAD 2026 命令级 | 9次原生宿主均正常退出；3次新建及对应Core复核、冷重开、brace-only均PASS；原错误图仍拒绝；身份SHA/MVID一致，PATDOCTOR四次7/0/0，安装恢复155项通过 | GUI、旧宿主或外部独立审计已完成 |
+| AutoCAD 2026 x64 GUI | 本轮GUI矩阵与实际结果见[候选验收](docs/cad-acceptance-20261020.md)，使用官方sky API及用户安装的本机兼容候选 | 仅截图或按键API成功等于业务通过 |
 | Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；PPT 四方向鼠标画线/选线、Visio 原生直线/连接线、粘合跟随和一次撤销/重做、两端面板目检；旧 VSD 转换/新增标注/冷重开；Word 单/多 DWG 手动导出→PPT 读取与关联重开；导入 PNG 静态点粘合、移动跟随及冷重开（[验收记录](office-com-addin/test-evidence/office-local-validation-20261003.md)） | Win7 / Office 2010 x86、真实旧版 Visio 宿主、复杂组、其他粘合方式/显示比例及大型真实文稿未验 |
 
 本仓库的 [CI](.github/workflows/build.yml) 执行 Structure、Static、2025 单测、四版 Simulation，以及 Office 构建、代码测试与隔离安装门禁。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
@@ -297,10 +298,12 @@ PatentCAD-Annotator/
 
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
+- [当前候选验收](docs/cad-acceptance-20261020.md) / [机器可读摘要](docs/acceptance-summary-20261020.json) — 本机修复后结果、候选身份、证据哈希及剩余范围；本地原始历史证据未上传
+- [四个旧宿主验收交接](docs/legacy-host-acceptance.md) — 固定矩阵、报告身份门禁和逐项结果要求
 - [架构与仓库说明](docs/project-family.md) — 三条衍生路线与共享代码边界
 - [Office 加载项](office-com-addin/README.md) — PPT / Visio 构建、安装、使用及验收限制
 - [面板入口与故障排查](office-com-addin/docs/open-annotation-panel.md) — 打开、恢复与加载项检查
-- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md) / [Office 鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md) — 当前候选的证据范围
+- [CAD 最终验收](docs/cad-acceptance-20261001.md) / [Office 推送前验证](office-com-addin/test-evidence/office-release-validation-20261001.md) / [Office 鼠标与视觉验收](office-com-addin/test-evidence/office-visual-validation-20261003.md) — 历史候选的证据范围
 - [docs/mleader-f-plan.md](docs/mleader-f-plan.md) — MLeader F 方案（三点顶点链）定义、实证与架构
 - [docs/mleader-attachment-grip-incident.md](docs/mleader-attachment-grip-incident.md) — MLeader 额外附着点问题（v4.0 舍弃原因，已被 F 方案解决）
 - 各版本详细文档：[2007](cad-plugin/2007/README.md) | [2010](cad-plugin/2010/README.md) | [2013](cad-plugin/2013/README.md) | [2015](cad-plugin/2015/README.md) | [2025](cad-plugin/2025/README.md)
@@ -347,7 +350,7 @@ The C# COM add-ins are maintained here under [office-com-addin](office-com-addin
 | PowerPoint | Line and label grouped; Tags identify annotations; Custom XML stores the chosen dictionary path | All slides | Read-only |
 | Visio | Paired one-dimensional line and label; ShapeSheet stores identity and dictionary path | All foreground pages | Read-only |
 
-PPT and Visio share Office dictionary models, parsers, COM contracts and diagnostics inside their own repository. CAD and Office exchange `.dict.json` files; they do not link source or host assemblies across repositories. Each repository maintains its own implementation of the documented number-comparison rule. The committed CAD deployment DLLs are the independently accepted CAD candidate; the new shared-number comparison change passed source tests and all five builds but is not included in those DLLs.
+PPT and Visio share Office dictionary models, parsers, COM contracts and diagnostics inside their own repository. CAD and Office exchange `.dict.json` files. This branch ships the repaired CAD candidate with release manifests; current native/GUI results and remaining scope are in the [candidate review](docs/cad-acceptance-20261020.md). The manifests retain the original dirty-tree build identity. Four legacy host groups still require actual validation; see the [handoff](docs/legacy-host-acceptance.md).
 
 On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within the scope recorded in the [release validation](office-com-addin/test-evidence/office-release-validation-20261001.md). The Office source and isolated installer gates are maintained in this repository under [office-com-addin](office-com-addin/README.md); all seven C# product projects link the same number comparison source. See the [project architecture](docs/project-family.md).
 
@@ -406,7 +409,7 @@ Because AutoCAD's managed API is tightly bound to the .NET runtime, a single DLL
 | [`cad-plugin/2010/`](cad-plugin/2010/) | **2010 ~ 2012** | 3.5 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
 | [`cad-plugin/2013/`](cad-plugin/2013/) | **2013 ~ 2014** | 4.0 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
 | [`cad-plugin/2015/`](cad-plugin/2015/) | **2015 ~ 2024** | 4.5 | Win7 | MLeader (Plan F) | Local build recorded; legacy host pending |
-| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader (Plan F) | 2026 x64 command and installed GUI checks passed; other years pending |
+| [`cad-plugin/2025/`](cad-plugin/2025/) | **2025 ~ 2026+** | 8.0 | Win10+ | MLeader (Plan F) | Current 2026 results in candidate review; other years pending |
 
 These are project support declarations, not proof that every year has been tested. The OS baseline does not replace the requirements of the installed AutoCAD/Office version; future releases need separate verification.
 
@@ -477,11 +480,11 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
-| Automated tests | Current CAD 2025 source: 122/122; independent CAD deployment candidate: 120/120; 2007/2010/2013/2015 simulations: 33/33 each; PPT: 7/7, Visio: 24/24; no skips | Real host APIs, GUI or older Office installations |
+| Automated tests | This branch passed 353/353 tests with zero skips: 127 portable 2025 tests and 55/57/57/57 simulated host tests; Structure and Static passed | Actual legacy hosts, GUI or Office acceptance |
 | Word L2 source host | `verify-vba-export.vbs` and the formal `test-vba-panel.vbs` (now explicitly unignored) import root source and check mapping, ordinary save/failure cancellation, component types, public entry points, the UserForm, and manual export | Deployment install, Startup loading, AutoExec or restart persistence |
 | Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
-| AutoCAD 2026 | 2025 DLL command checks for marking, checking, alignment, chain validation and persistence; 1.0.2 marking/brace smoke checks | Interactive palette/dialogs, legacy drawings and older AutoCAD hosts |
-| AutoCAD 2026 x64 installed GUI | Final 2025 candidate: normal cold startup, real double-clicks, 12 palette switch directions, left/right straight and spline leaders, grips and multiple drawings; same-package command matrix: 16/16 | Older hosts, complete legacy-drawing migration or the new shared-number source behavior |
+| AutoCAD 2026 | Nine native host processes exited normally; fresh creation and cold reopening preserve text and endpoint anchors, valid reports pass and the frozen negative report is rejected; identity and installation restoration verified | GUI, legacy hosts or external independent audit coverage |
+| AutoCAD 2026 x64 GUI | 本轮GUI矩阵与实际结果见[候选验收](docs/cad-acceptance-20261020.md)，使用官方sky API及用户安装的本机兼容候选 | 仅截图或按键API成功等于业务通过 |
 | Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: panel actions, dictionary recovery and cold reopening; PPT mouse drawing/selection in four directions; native Visio lines/connectors, glue, single-action undo/redo and both panel visual checks; old VSD conversion/annotation/reopening; installed Word single/multiple DWG manual export → PPT reading and binding restoration; imported PNG static-point glue, following a moved target and cold reopening | Win7 / Office 2010 x86, actual older Visio hosts, complex groups, other glue methods/display scales or large real documents |
 
 [CI](.github/workflows/build.yml) runs CAD structure, static, unit and simulated host checks, plus Office builds, code tests and isolated installer gates. It does not run host GUI acceptance. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.

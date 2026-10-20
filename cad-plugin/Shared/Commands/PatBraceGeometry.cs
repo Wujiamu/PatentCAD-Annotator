@@ -1,4 +1,4 @@
-using Autodesk.AutoCAD.Geometry;
+﻿using Autodesk.AutoCAD.Geometry;
 using System;
 using System.Collections.Generic;
 
@@ -150,6 +150,14 @@ namespace PatentMarker.Commands
 
         public static List<Point3d> BuildPoints(PatBraceDefinition definition)
         {
+            return BuildPoints(definition, CurveSamples);
+        }
+
+        public static List<Point3d> BuildPoints(
+            PatBraceDefinition definition, int curveSamples)
+        {
+            if (curveSamples < 1)
+                throw new ArgumentOutOfRangeException("curveSamples");
             double dx = definition.Bottom.X - definition.Top.X;
             double dy = definition.Bottom.Y - definition.Top.Y;
             double height = Math.Sqrt(dx * dx + dy * dy);
@@ -186,7 +194,7 @@ namespace PatentMarker.Commands
                 new LocalPoint(cornerAlong * (1.0 - CubicKappa),
                     stemOffset),
                 topShoulder, axisX, axisY, perpX, perpY,
-                definition, height, false);
+                definition, height, false, curveSamples);
 
             AddLocalPoint(points, upperStem, axisX, axisY, perpX, perpY,
                 definition, height);
@@ -199,14 +207,14 @@ namespace PatentMarker.Commands
                 new LocalPoint(centerAlong,
                     tipOffset - stemOffset * CubicKappa),
                 tip, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
             AppendCubic(points, tip,
                 new LocalPoint(centerAlong,
                     tipOffset - stemOffset * CubicKappa),
                 new LocalPoint(lowerStemAlong
                     - cornerAlong * CubicKappa, stemOffset),
                 lowerStem, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
 
             AddLocalPoint(points, bottomShoulder, axisX, axisY, perpX, perpY,
                 definition, height);
@@ -218,7 +226,7 @@ namespace PatentMarker.Commands
                 new LocalPoint(height,
                     stemOffset * CubicKappa),
                 bottom, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
 
             // Keep the endpoints exact even if the shape table changes later.
             points[0] = definition.Top;
@@ -238,12 +246,12 @@ namespace PatentMarker.Commands
             double perpY,
             PatBraceDefinition definition,
             double height,
-            bool skipFirst)
+            bool skipFirst, int curveSamples)
         {
             int start = skipFirst ? 1 : 0;
-            for (int i = start; i <= CurveSamples; i++)
+            for (int i = start; i <= curveSamples; i++)
             {
-                double t = (double)i / (double)CurveSamples;
+                double t = (double)i / (double)curveSamples;
                 double oneMinusT = 1.0 - t;
                 double b0 = oneMinusT * oneMinusT * oneMinusT;
                 double b1 = 3.0 * oneMinusT * oneMinusT * t;

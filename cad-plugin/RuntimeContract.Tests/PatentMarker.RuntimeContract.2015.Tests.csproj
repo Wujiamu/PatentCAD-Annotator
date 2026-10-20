@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
@@ -23,11 +23,17 @@
     <Compile Include="Shared\DictPaletteCadServiceTests.cs" />
     <Compile Include="Shared\PatBraceGeometryTests.cs" />
     <Compile Include="Shared\PatBraceEntityTests.cs" />
+    <Compile Include="Shared\PatGeomVerifyTests.cs" />
     <Compile Include="..\2015\PatentMarker\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
     <Compile Include="..\2015\PatentMarker\Commands\PatMLeaderCreator.cs" Link="Edition\Commands\PatMLeaderCreator.cs" />
     <Compile Include="..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Edition\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\Shared\Commands\PatBraceGeometry.cs" Link="Edition\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\Shared\Commands\PatBraceEntity.cs" Link="Edition\Commands\PatBraceEntity.cs" />
+    <Compile Include="..\Shared\Commands\PatBraceAssertions.cs" Link="Edition\Commands\PatBraceAssertions.cs" />
+    <Compile Include="..\Shared\Commands\PatGeomTextAssertions.cs" Link="Edition\Commands\PatGeomTextAssertions.cs" />
+    <Compile Include="..\Shared\Commands\PatGeomVerifySummary.cs" Link="Edition\Commands\PatGeomVerifySummary.cs" />
+    <Compile Include="..\Shared\Commands\PatGeomVerifyCommand.cs" Link="Edition\Commands\PatGeomVerifyCommand.cs" />
+    <Compile Include="..\Shared\Diagnostics\PatReleaseManifest.cs" Link="Edition\Diagnostics\PatReleaseManifest.cs" />
     <Compile Include="..\Shared\Cad\PatEntityHelper.cs" Link="Edition\IO\PatEntityHelper.cs" />
     <Compile Include="..\Shared\IO\NumberIdentity.cs" Link="Edition\IO\NumberIdentity.cs" />
     <Compile Include="..\Shared\IO\PatSettings.cs" Link="Edition\IO\PatSettings.cs" />

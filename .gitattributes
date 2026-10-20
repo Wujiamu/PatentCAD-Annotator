@@ -1,0 +1,14 @@
+# VBA assets are byte-addressed by the release manifest. Preserve their
+# existing encoding and line endings across checkout/clone platforms.
+/vba/*.bas -text
+/vba/*.cls -text
+/vba/*.frm -text
+/vba/*.frx -text
+/PatentMarker-*-deploy/vba/*.bas -text
+/PatentMarker-*-deploy/vba/*.cls -text
+/PatentMarker-*-deploy/vba/*.frm -text
+/PatentMarker-*-deploy/vba/*.frx -text
+# Hashed release manifests and public evidence are also byte-addressed.
+/PatentMarker-*-deploy/PatentMarker-release.txt -text
+/docs/acceptance-summary-20261020.json -text
+/docs/test-evidence/cad-20261020/* -text

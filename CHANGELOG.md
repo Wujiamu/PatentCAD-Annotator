@@ -34,6 +34,17 @@ Adopts [Semantic Versioning](https://semver.org/).
 - 修复 Word 退出时 VBA 状态已被宿主清空后，`AutoExit` 又创建一个仅含 `hook.release` 的伪 run ID。关闭路径现在只沿用已存在的诊断会话；L4 会比较退出前后日志并拒绝任何外来 run ID。
 - 修复 Word 回归 VBS 在异常路径未关闭测试文档、导致后续启动 Word 弹出多个 `.docm` 的问题。各脚本现在只清理自己创建的测试文档，同时保留日志和 JSON 诊断文件。
 - 修复 Word 面板复选框将 MSForms 的 `True/-1` 错判为数值 `1` 的问题。现在“保存时自动导出”勾选后会正常启用；多 DWG 文档还会先要求选择目标 DWG，选择成功后保存事件直接复用该目标，不猜测其他图纸；“显示 JSON”开关也同步修正。
+- 修复 `PATGEOMVERIFY` B9 只检查首末切向、会接受带假端点切向的尖锐折线：新增四段归一化四分之一椭圆参考轮廓检查，保留 11 点尖角反例，并验证 2/4/16/32 采样密度的正常轮廓。
+- 修复 `PATGEOMVERIFY` MLeader T3 使用 Xrecord 旧文字点、实际文字移动但点链未更新仍假绿：现在用实际 `MText.Location` 复算，并增加 T3a 点链锚点与 T3b MLeader 文字位置一致性检查。
+- 修复几何外部报告门禁漏检 B0c、REQUIRED、ASSERTIONS 计数和 MVID：`tools/verify-geometry.ps1` 现在逐项校验，完整运行保存 DWG/manifest 哈希、stdout/stderr 和成功/失败 `geometry-evidence.json`；SelfTest 增加对应负例。
+- 修复 `PATGEOMVERIFY` T3 仍按 Xrecord 倒数第二点计算、实际 MLeader 前一顶点变化仍假绿：通过反射读取实际 `GetVertex` 链，T3 使用实际前一顶点并新增 T3c/T3d 锚点；`MovedPreviousVertexWithoutChainUpdate_IsRejectedByT3` 覆盖四版 RuntimeContract。
+- 修复几何报告允许 `braces=0 passed=1` / `texts=0 passed=1` 的矛盾总数：外部校验器现在核对对象总数、passed/failed/unreadable 合法关系；结构化报告还按对象块交叉核对 SUMMARY。
+- 修复几何报告同一对象块内重复 assertion ID 仍被接受：`verify-geometry.ps1` 按 `LWPOLYLINE`/`MLEADER`/`LEADER`/`MTEXT` 对象块检查重复和必要断言；不同对象块重复相同 ID 保持合法。
+- 修复 R3-05：`PATGEOMVERIFY` 的 Core Console 崩溃边界被定位到读取 `acmgd Application` 的版本 helper；删除该引用和 `GetAutoCadVersion()`，报告不再在 Core Console 中加载/调用完整 UI Application。
+- 修复 R3-06：真实 MLeader 设置 `MText/TextLocation` 后宿主会把末点吸附到文字附件点；四版 MLeader 创建器在文字状态最终化和模型空间插入后移除并重新追加末顶点（RemoveLastVertex/AddLastVertex），并新增模拟宿主重算的 `HostTextAttachmentRecalc_DoesNotOverrideRetractedEndpoint` 回归；2026-10-20 真实 AutoCAD 2026 三次新建及冷重开保住文字/缩进端点，旧宿主仍待验。
+- 固定 VBA/.frm/.frx 资产的 Git 字节保留规则，避免检出时换行转换令发布清单漂移；五包 manifest、Static 和 54 份 Git 导出资产逐字节检查通过。
+- 验收报告标题披露实际角色；报告门禁自检按当前 PASS/FAIL/SKIP-BLOCKED 状态验证退出码，不能把仅剩未覆盖项误记为产品失败。
+- 修复部分受限 Windows 环境拒绝 `File.Replace` 导致 2025 字典写回测试失败：2025 `DictWriter` 在保持临时文件与目标同卷的前提下增加 `File.Move(..., overwrite: true)` 兜底，2025 单测恢复 127/127。
 
 - Fixed auto-export remaining inactive after a Word restart. The old document `AutoOpen` path and source-import harness did not prove global initialization; the Startup add-in now initializes the module-held `WithEvents` sink through `AutoExec` and releases it through `AutoExit`. A normal fresh `WINWORD.EXE` process on local 64-bit Word 16.0 created and parsed the expected JSON through an ordinary save without calling a test initializer or manual export.
 - Replaced the risky Normal-template installer architecture. All five packages now install a byte-verified prebuilt `PatentMarker.dotm` into Word Startup without opening, editing, or saving `Normal.dotm`; upgrades and uninstalls preserve recoverable product backups and use an ownership manifest. Isolation fault injection verifies install/uninstall rollback, while the real-Startup run verifies unchanged hashes for Normal and unrelated templates.
@@ -46,6 +57,13 @@ Adopts [Semantic Versioning](https://semver.org/).
 - Fixed Word shutdown creating a diagnostics-only foreign run ID after the VBA host had already cleared module state. Shutdown now reuses an existing session or stays silent, and L4 rejects any foreign run ID appended during process exit.
 - Fixed regression VBS cleanup on failure paths; each script now closes and deletes only its own generated `.docm` files while retaining logs and JSON diagnostics.
 - Fixed Word panel checkbox handling: MSForms checked values (`True/-1`) are no longer misread as numeric `1`, so “Auto-export on save” actually enables; the JSON visibility switch uses the same boolean-safe path. For multiple DWGs, enabling auto-export asks for a target when none has been selected, and later ordinary saves reuse it.
+
+### Verification / tooling
+
+- Added a release identity chain: `tools/ReleaseManifest`, `PatentMarker-release.txt` in all five deployment packages, `tools/verify-release-manifests.ps1`, and a PATDOCTOR check comparing the actually loaded DLL SHA-256/MVID/version with the package manifest. The existing deployment DLL bytes were not replaced.
+- Added `tools/ManagedSemanticDiff` and REA-assisted evidence showing the current deployment DLLs differ semantically from the source baseline only at `NumberIdentity.Comparer`; this is a release-provenance observation, not host acceptance.
+- Added candidate `PATGEOMVERIFY` with independent B0-B9/T1-T3 assertions, product-entity filtering, strict required-target semantics and `tools/verify-geometry.ps1`. RuntimeContract 2007 passed 51/51; 2010/2013/2015 passed 52/52 each; 2025 passed 127/127. The independent A01–A03 findings were fixed and re-probed; real AutoCAD/GUI validation remains pending.
+
 
 ***
 

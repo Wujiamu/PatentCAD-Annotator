@@ -99,9 +99,24 @@ namespace PatentMarker.Commands
             ml.MText = mt;
             ml.TextLocation = textPt;
             ml.TextHeight = settings.TextHeight;
+            // SetLastVertex (and SetVertex on the last index) translates the
+            // attached MText in real AutoCAD. Replace only the terminal vertex
+            // after text attachment so both picked text and 0.4H gap survive.
+            if (!SamePoint(endpoint, lastVertex))
+            {
+                ml.RemoveLastVertex(line);
+                ml.AddLastVertex(line, endpoint);
+            }
 
             ObjectId id = modelSpace.AppendEntity(ml);
             tr.AddNewlyCreatedDBObject(ml, true);
+            // Reapply once more after the entity has been added to model space;
+            // insertion/attachment recalculation can also move the last vertex.
+            if (!SamePoint(endpoint, lastVertex))
+            {
+                ml.RemoveLastVertex(line);
+                ml.AddLastVertex(line, endpoint);
+            }
             Mark(ml, tr, attachPt, doglegPts, textPt,
                 settings.HasArrowHead, settings.IsSplined);
             return id;

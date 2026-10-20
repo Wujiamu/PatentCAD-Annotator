@@ -1,0 +1,50 @@
+{
+  "scope": "sanitized derivatives only",
+  "files": [
+    {
+      "path": "docs/test-evidence/cad-20261020/core-fresh-1-geometry.txt",
+      "bytes": 2679,
+      "sha256": "42c0e146c0774e77f7da72c8046fd4467f5017cacabccd2a2366a98ff48e787c"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/core-fresh-2-geometry.txt",
+      "bytes": 2679,
+      "sha256": "d7666a9509dbfd20489a83fb3d511ccad0c4b415c2abc347b9c3e73399ed1ed5"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/core-fresh-3-geometry.txt",
+      "bytes": 2679,
+      "sha256": "85aa08c5c9d2705dd80bf6b9965d76dcfbf83cbe9be521d9f5f08225fbc91ec1"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/core-original-r3-input-geometry.txt",
+      "bytes": 2719,
+      "sha256": "10758c5fbd16651ba154b49a815f85d1ed4463db83b2ddde46568b9baf214240"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/core-positive-brace-only-geometry.txt",
+      "bytes": 1872,
+      "sha256": "4dc065d2be58a8dc1ee4957ea7d8d892bbcd4e96fc8a9bd9b65931134d1cfef3"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/full-cold-reopen-geometry.txt",
+      "bytes": 2683,
+      "sha256": "11f193fe827bff0867896baa67c9ee80b8828baa8ec6c4e9ab2202239f152b9f"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/full-create-1-geometry.txt",
+      "bytes": 2680,
+      "sha256": "d96c77abca9de7b31bf4ade3e0504bddeb13c070749e70f8c3e8f48479fd6287"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/full-create-2-geometry.txt",
+      "bytes": 2680,
+      "sha256": "b3be16d99434b104e209da67ba744e76a13c0864faec7bf385a8e136d92dea1e"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261020/full-create-3-geometry.txt",
+      "bytes": 2680,
+      "sha256": "dd632eeac6d3d806f8e825a2204c83d287add583974c16582ccfb9490112ac6f"
+    }
+  ]
+}

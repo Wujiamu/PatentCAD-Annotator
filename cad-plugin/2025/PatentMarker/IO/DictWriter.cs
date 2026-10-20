@@ -250,9 +250,26 @@ namespace PatentMarker.IO
                 try { if (File.Exists(path)) File.SetAttributes(path, FileAttributes.Normal); }
                 catch { }
                 if (File.Exists(path))
-                    File.Replace(tmp, path, null);
+                {
+                    try
+                    {
+                        File.Replace(tmp, path, null);
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        // Some hardened Windows environments deny File.Replace
+                        // even when the caller owns the target. The temp file is
+                        // beside the target, so an overwrite move remains a
+                        // same-volume replacement and keeps the old file until
+                        // the move succeeds.
+                        if (!File.Exists(tmp)) throw;
+                        File.Move(tmp, path, true);
+                    }
+                }
                 else
+                {
                     File.Move(tmp, path);
+                }
                 string visibilityError;
                 if (!DictFileVisibility.TrySetVisible(path, keepVisible, out visibilityError))
                 {

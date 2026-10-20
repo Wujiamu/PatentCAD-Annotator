@@ -93,6 +93,10 @@ $sharedSourceFiles = @(
     "I18n\Strings.cs",
     "Commands\PatLeaderTextAttachment.cs",
     "Commands\PatBraceGeometry.cs",
+    "Commands\PatBraceAssertions.cs",
+    "Commands\PatGeomTextAssertions.cs",
+    "Commands\PatGeomVerifySummary.cs",
+    "Commands\PatGeomVerifyCommand.cs",
     "Commands\PatBraceEntity.cs",
     "Commands\PatBraceCommand.cs",
     "Commands\PatCheckResult.cs",
@@ -109,7 +113,8 @@ $sharedSourceFiles = @(
     "Styles\PatStyleInitializer.cs",
     "Diagnostics\PatDiagnostics.cs",
     "Diagnostics\PatDoctorCommand.cs",
-    "Diagnostics\PatDoctorReport.cs"
+    "Diagnostics\PatDoctorReport.cs",
+    "Diagnostics\PatReleaseManifest.cs"
 )
 Write-Host "-- Canonical shared source layer --" -ForegroundColor Cyan
 function Get-SharedSourcePath {

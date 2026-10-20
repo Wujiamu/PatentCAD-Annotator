@@ -55,9 +55,14 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" Link="Palette\DictPaletteViewRenderer.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" Link="Commands\PatBraceGeometry.cs" />
+    <Compile Include="..\..\Shared\Commands\PatBraceAssertions.cs" Link="Commands\PatBraceAssertions.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomTextAssertions.cs" Link="Commands\PatGeomTextAssertions.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomVerifySummary.cs" Link="Commands\PatGeomVerifySummary.cs" />
+    <Compile Include="..\..\Shared\Commands\PatGeomVerifyCommand.cs" Link="Commands\PatGeomVerifyCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceEntity.cs" Link="Commands\PatBraceEntity.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceCommand.cs" Link="Commands\PatBraceCommand.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDiagnostics.cs" Link="Diagnostics\PatDiagnostics.cs" />
+    <Compile Include="..\..\Shared\Diagnostics\PatReleaseManifest.cs" Link="Diagnostics\PatReleaseManifest.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorReport.cs" Link="Diagnostics\PatDoctorReport.cs" />
     <Compile Include="..\..\Shared\Diagnostics\PatDoctorCommand.cs" Link="Diagnostics\PatDoctorCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" Link="Commands\PatCheckResult.cs" />

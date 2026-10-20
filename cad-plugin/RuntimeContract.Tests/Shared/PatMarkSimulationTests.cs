@@ -82,6 +82,44 @@ namespace PatentMarker.RuntimeContractTests
             }
         }
 
+#if !SIM_LEADER
+        [Fact]
+        public void HostTextAttachmentRecalc_DoesNotOverrideRetractedEndpoint()
+        {
+            MLeader.SimulateHostTextRecalc = true;
+            try
+            {
+                using (SimulationFixture fixture = new SimulationFixture())
+                {
+                    IO.PatSettingsStore.Current.ThreePointMode = true;
+                    IO.PatSettingsStore.Current.TextHeight = 3.5;
+                    IO.PatSettingsStore.Current.HasArrowHead = false;
+                    IO.PatSettingsStore.Current.IsSplined = true;
+                    fixture.QueueThreePointAnnotation("901",
+                        new Point3d(30, 0, 0),
+                        new Point3d(40, 10, 0),
+                        new Point3d(60, 10, 0));
+
+                    new PatMarkCommand().Run();
+
+                    MLeader leader = Assert.IsType<MLeader>(
+                        fixture.Database.CommittedEntities[0]);
+                    Point3d endpoint = leader.GetLastVertex(0);
+                    Assert.True(Math.Abs(endpoint.X - 58.6) < 1e-6,
+                        "expected retracted X=58.6, got " + endpoint);
+                    Assert.True(Math.Abs(endpoint.Y - 10.0) < 1e-6,
+                        "expected retracted Y=10, got " + endpoint);
+                    Assert.Equal(new Point3d(60, 10, 0), leader.MText.Location);
+                    Assert.Equal(new Point3d(60, 10, 0), leader.TextLocation);
+                }
+            }
+            finally
+            {
+                MLeader.SimulateHostTextRecalc = false;
+            }
+        }
+#endif
+
         [Fact]
         public void LowerLeftLeaderUsesBottomLeftAttachment()
         {
