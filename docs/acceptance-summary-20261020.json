@@ -1,12 +1,12 @@
 {
   "schema_version": "public-acceptance-summary/1",
   "phase": "GUI_counterexample_under_repair",
-  "generated_utc": "2026-10-20T07:29:41.8717236Z",
+  "generated_utc": "2026-10-20T07:41:42.2353426Z",
   "overall_result": "FAIL",
   "native_command_result": "PASS",
   "gui_result": "FAIL",
-  "verification_actor": "repair_author_with_separate_low_effort_GUI_operator",
-  "independence_statement": "Repair author native/source verification; separate operator GUI phase still in progress. No external independent audit is claimed.",
+  "verification_actor": "repair_author; separate low-effort GUI operator initially, primary takeover after operator quota exhaustion",
+  "independence_statement": "Same machine and candidate; separate GUI operator then repair-author takeover. Actual GUI counterexample overrides earlier command-only positives. No external independent audit.",
   "source_snapshot_id": "00b71b75b5ef312a77adf328af745427753390856299eaff00b3a3f66d796ca3",
   "candidate_lineage": "Binaries copied byte-for-byte from the tested R6 dirty-tree build. Manifests retain original build commit/tree/dirty; publication commit is not build commit.",
   "tests": {
@@ -191,5 +191,19 @@
       "scope": "Actual GUI user creation overrides earlier command-only positives; pending repair",
       "repro": "Palette, no arrows/underline, 3 points, text 901 height 3.5: straight (0,100)(20,110)(40,110); straight (60,100)(80,110)(65,110); spline (0,140)(20,150)(40,150); spline (60,140)(80,150)(65,150). Run PATMLVERIFY then PATGEOMVERIFY before grip edits."
     }
-  ]
+  ],
+  "brace_grip_result": {
+    "original_local_report_sha256": "f4f09680106df8df17a046cee2d7437a93b8cc51ff4adefe41a93ccb7fb16876",
+    "scope": "Brace native cusp movement/Undo/immediate Redo and canceled preview; restored saved DWG cold Core B0c-B9 pass. Not MLeader grip or overall GUI completion.",
+    "installation_restoration": "PASS",
+    "normal_exit": true,
+    "sanitized_report": "docs/test-evidence/cad-20261020/G06-restored-brace-geometry.txt",
+    "sanitized_report_sha256": "8fdd772703be4d0d4c21eaad9c112b3cdd23c682441d94ac3b3eaab48806f998",
+    "result": "PASS"
+  },
+  "report_gate_selftest": {
+    "failed": 0,
+    "passed": 8,
+    "scope": "Report gate self-tests, not product acceptance"
+  }
 }
