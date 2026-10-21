@@ -1,0 +1,26 @@
+[
+  {
+    "iteration": 1,
+    "positives": 24,
+    "negatives_rejected": 480,
+    "failures": 0,
+    "result": "PASS",
+    "case_signature_sha256": "a3bff11fc57496c2bc0e4ad899b38893dfc80bdc8b930cf5b1a9693f643d67c4"
+  },
+  {
+    "iteration": 2,
+    "positives": 24,
+    "negatives_rejected": 480,
+    "failures": 0,
+    "result": "PASS",
+    "case_signature_sha256": "a3bff11fc57496c2bc0e4ad899b38893dfc80bdc8b930cf5b1a9693f643d67c4"
+  },
+  {
+    "iteration": 3,
+    "positives": 24,
+    "negatives_rejected": 480,
+    "failures": 0,
+    "result": "PASS",
+    "case_signature_sha256": "a3bff11fc57496c2bc0e4ad899b38893dfc80bdc8b930cf5b1a9693f643d67c4"
+  }
+]

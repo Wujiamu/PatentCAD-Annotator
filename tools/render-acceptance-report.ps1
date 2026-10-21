@@ -6,7 +6,7 @@ param(
 $ErrorActionPreference='Stop'
 $repo=Split-Path -Parent $PSScriptRoot
 if(-not $FindingsPath){$FindingsPath=Join-Path $repo 'docs/acceptance-findings.json'}
-if(-not $OutputPath){$OutputPath=Join-Path $repo 'docs/acceptance-postfix-20261018.md'}
+if(-not $OutputPath){$OutputPath=Join-Path $repo 'docs/acceptance-current.md'}
 function Read-ProjectFile([string]$relative){
     $full=[IO.Path]::GetFullPath((Join-Path $repo $relative))
     if(-not $full.StartsWith($repo+[IO.Path]::DirectorySeparatorChar,[StringComparison]::OrdinalIgnoreCase)){throw "Evidence outside repository: $relative"}
@@ -30,7 +30,7 @@ try {
         if((Get-Item -LiteralPath $file).Length -ne $entry.bytes){throw "Evidence size changed: $($entry.path)"}
         $indexed[$entry.path]=$entry.sha256
     }
-    if($data.source_manifest.sha256 -ne $data.source_snapshot_id -or -not $indexed.ContainsKey($data.source_manifest.path)){throw 'Source snapshot/manifest binding invalid'}
+    if($data.source_manifest.sha256 -ne $data.source_snapshot_id -or -not $indexed.ContainsKey($data.source_manifest.path) -or $indexed[$data.source_manifest.path] -ne $data.source_manifest.sha256){throw 'Source snapshot/manifest binding invalid'}
     $sourceFiles=Get-Content (Read-ProjectFile $data.source_manifest.path) -Raw -Encoding utf8|ConvertFrom-Json
     # Reporting infrastructure is versioned separately below; changes to a
     # formatter/assembler do not redefine the compiled product snapshot.
@@ -97,8 +97,9 @@ try {
     } elseif (@($data.repeatability.selected_tests).Count -ne 12 -or @($data.repeatability.selected_tests|Where-Object {$_.result -ne 'PASS' -or $_.executed -ne 5 -or $_.notExecuted -ne 0}).Count) { throw 'Selected test collection incomplete or failed' }
     # A missing matrix assertion, timeout or skipped test cannot become a release PASS.
     foreach($hostRow in $data.host_matrix){if($hostRow.result -notin @('PASS','FAIL','SKIP/BLOCKED')){throw 'Invalid host result enum'}}
+    foreach($matrixRow in $data.negative_matrix){if($matrixRow.result -notin @('PASS','FAIL','SKIP/BLOCKED')){throw 'Missing or invalid matrix result enum'}}
     $hasFail=@($data.findings|Where-Object{$_.result -eq 'FAIL'}).Count -gt 0 -or @($data.negative_matrix|Where-Object{$_.required -and $_.result -eq 'FAIL'}).Count -gt 0 -or @($data.host_matrix|Where-Object{$_.required -and $_.result -eq 'FAIL'}).Count -gt 0
-    $hasBlocked=@($data.host_matrix|Where-Object{$_.required -and $_.result -ne 'PASS'}).Count -gt 0 -or @($data.negative_matrix|Where-Object{$_.required -and $_.result -eq 'SKIP/BLOCKED'}).Count -gt 0
+    $hasBlocked=@($data.findings|Where-Object{$_.result -eq 'SKIP/BLOCKED'}).Count -gt 0 -or @($data.host_matrix|Where-Object{$_.required -and $_.result -ne 'PASS'}).Count -gt 0 -or @($data.negative_matrix|Where-Object{$_.required -and $_.result -eq 'SKIP/BLOCKED'}).Count -gt 0
     $result=if($hasFail){'FAIL'}elseif($hasBlocked){'SKIP/BLOCKED'}else{'PASS'}
     if($data.overall_result -ne $result){throw "Stored result '$($data.overall_result)' disagrees with derived '$result'"}
     if(-not $CheckOnly){
@@ -112,6 +113,7 @@ try {
             $lines.Add('- 实际构建副本 snapshot：`'+$data.build_source_snapshot_id+'`；当前工作区 snapshot 与构建副本分别记录原始字节哈希，仅允许并逐文件核验 CRLF/LF 差异。实际构建源码完整归档于 `'+$data.build_source_archive+'`。')
         }
         $lines.Add('- diff SHA-256：`'+$data.source.diff_sha256+'`；未跟踪源码由 source manifest 单独覆盖，dirty diff 本身不能标识完整候选。')
+        if($data.historical_evidence_reconciliation){$lines.Add('- 历史日志完整性：两份旧候选运行日志曾追加内容；原始长度前缀与旧索引 SHA 完全一致，另存原始字节及追加后完整副本。旧现场文件及旧索引未改写；本轮绑定恢复副本，不声称旧候选目录始终只读。核对记录：'+(Evidence-Link $data.historical_evidence_reconciliation))}
         $lines.Add('- 红绿源码链：修复前 snapshot `'+$data.pre_fix_source_snapshot_id+'` → 修复后 snapshot `'+$data.source_snapshot_id+'`；修复前 diff SHA-256 `'+$data.pre_fix_source.diff_sha256+'`。')
         $lines.Add('- 同一命令判定：'+$(if($data.oracle_statement){[string]$data.oracle_statement}else{'两阶段调用同一 AcceptanceProbe 和 acceptance-report-cases 驱动器，夹具与判定标准不变；仅替换源码/程序集路径。报告脚本旧接口没有 ExpectedMvid 参数时省略该参数，完整实际 argv 保存在各命令记录。'}))
         $lines.Add('- 工具链：'+(Cell $data.toolchain));$lines.Add('- '+$(if($data.verification_scope){[string]$data.verification_scope}else{'本轮是 L0/L1/模拟命令验收，未安装或启动真实 CAD/Office。'}))
@@ -121,16 +123,30 @@ try {
         foreach($f in $data.findings){
             $before=if(@($f.evidence.before).Count){Evidence-Link $f.evidence.before[0]}else{'无历史前证据'}
             $after=if(@($f.evidence.after).Count){Evidence-Link $f.evidence.after[0]}else{'未执行'}
-            $lines.Add('| '+$f.finding_id+' / '+$f.severity+' | '+(Cell $f.actual)+' | '+(Cell ($f.repair_files -join ', '))+' | '+(Cell ($f.test_selectors -join '; '))+' | '+$f.result+' / '+$f.status+' | '+$before+' → '+$after+' | '+(Cell $f.residual_risk)+' |')
+            $original=if($f.original_counterexample){[string]$f.original_counterexample+'：'+[string]$f.pre_fix_outcome}else{[string]$f.actual}
+            $lines.Add('| '+$f.finding_id+' / '+$f.severity+' | '+(Cell $original)+' | '+(Cell ($f.repair_files -join ', '))+' | '+(Cell ($f.test_selectors -join '; '))+' | '+$f.result+' / '+$f.status+' | '+$before+' → '+$after+' | '+(Cell $f.residual_risk)+' |')
         }
         foreach($f in $data.findings){
-            $lines.Add('');$lines.Add('### '+$f.finding_id+'：'+$f.component);$lines.Add('');$lines.Add('预期：'+$f.expected);$lines.Add('');$lines.Add('状态：'+$f.status+'；结果：'+$f.result+'；关联未关闭项：'+($f.related_findings -join ', '))
+            $lines.Add('');$lines.Add('### '+$f.finding_id+'：'+$f.component);$lines.Add('');$lines.Add('预期：'+$f.expected);$lines.Add('');$lines.Add('状态：'+$f.status+'；结果：'+$f.result+'；关联项：'+($f.related_findings -join ', '))
+            if($f.before_source_snapshot_id -or $f.after_source_snapshot_id){
+                $lines.Add('');$lines.Add('本项源码快照：修复前 `'+$f.before_source_snapshot_id+'` → 本轮 `'+$f.after_source_snapshot_id+'`。历史 A01–A03 与本轮 MLeader 故障注入分别保留各自修复前快照，不共用一个旧源码身份。')
+            }
             foreach($source in $f.repair_source_sha256){$lines.Add('- 修复源码 `'+$source.path+'`，SHA-256 `'+$source.sha256+'`。')}
             $lines.Add('');$lines.Add('可复制命令（PowerShell 7；工作目录为项目根）：');$lines.Add('');$lines.Add('```powershell');foreach($command in $f.repro_command){$lines.Add($command)};$lines.Add('```')
             $lines.Add('');$lines.Add('| 阶段/次数 | 退出码 | 判定 | 关键输出 | 命令记录 |');$lines.Add('|---|---|---|---|---|')
             foreach($stage in @('pre_fix_runs','post_fix_runs')){foreach($run in $f.$stage){$lines.Add('| '+$stage+' / '+$run.iteration+' | '+$run.exit_code+' | '+$run.result+' | '+(Cell $run.key_output)+' | '+(Cell $run.command_record)+' |')}}
         }
-        $lines.Add('');$lines.Add('## 重复性、隔离与清理');$lines.Add('');foreach($property in $data.repeatability.PSObject.Properties){$lines.Add('- '+$property.Name+'：'+(Cell ($property.Value|ConvertTo-Json -Compress -Depth 5)))}
+        $lines.Add('');$lines.Add('## 重复性、隔离与清理');$lines.Add('')
+        if($data.repeatability.full_collections){
+            $lines.Add('| Runtime 集合 | 每轮测试数 | 重复次数 | 原始日志（含精确测试名和哈希） |');$lines.Add('|---|---|---|---|')
+            foreach($collection in $data.repeatability.full_collections){
+                $logLinks=@($collection.runs|ForEach-Object {Evidence-Link $_.stdout})
+                $lines.Add('| '+$collection.version+' | '+@($collection.test_selectors).Count+' | '+@($collection.runs).Count+' | '+($logLinks -join '<br>')+' |')
+            }
+            $lines.Add('');$lines.Add('完整选择器集合保存在 findings.repeatability.full_collections；生成器逐轮校验原始日志中的测试名、数量、退出码及零跳过。')
+        }
+        foreach($property in $data.repeatability.PSObject.Properties){if($property.Name -eq 'full_collections'){continue};$lines.Add('- '+$property.Name+'：'+(Cell ($property.Value|ConvertTo-Json -Compress -Depth 5)))}
+        if($data.test_assemblies){$lines.Add('');$lines.Add('测试程序集（实际归档字节）：');$lines.Add('');foreach($assembly in $data.test_assemblies){$lines.Add('- '+(Evidence-Link $assembly))}}
         $lines.Add('');$lines.Add('## 负例和状态组合矩阵');$lines.Add('');$lines.Add('| 场景 | 必需 | 结果 | 实际覆盖/缺口 |');$lines.Add('|---|---|---|---|');foreach($row in $data.negative_matrix){$lines.Add('| '+(Cell $row.case)+' | '+$row.required+' | '+$row.result+' | '+(Cell $row.detail)+' |')}
         $lines.Add('');$lines.Add('## 真实宿主矩阵');$lines.Add('');$lines.Add([string]$data.candidate_statement);$lines.Add('');$lines.Add('| 宿主 | Core Console | 候选 DLL | SHA-256 / MVID | manifest SHA | DWG SHA | NETLOAD / 实载身份 | PATDOCTOR | PATGEOMVERIFY / exit / RESULT | 冷启动 | 命令 Undo/Redo | GUI | 结论 |');$lines.Add('|---|---|---|---|---|---|---|---|---|---|---|---|---|')
         foreach($row in $data.host_matrix){$lines.Add('| '+$row.host+' | '+(Cell $row.core_console)+' | '+(Cell $row.candidate_path)+' | '+(Cell $row.candidate_identity)+' | '+$row.candidate_manifest.sha256+' | '+(Cell $row.drawing_sha256)+' | '+(Cell $row.actual_load)+' | '+$row.patdoctor+' | '+(Cell $row.patgeomverify)+' | '+(Cell $row.cold_start)+' | '+(Cell $row.undo_redo_command)+' | '+$row.gui+' | '+$row.result+' |')}

@@ -1,7 +1,7 @@
 {
   "schema_version": "public-acceptance-summary/1",
-  "phase": "R8_G04_pass_GUI_continuation",
-  "generated_utc": "2026-10-21T03:09:45.7184667Z",
+  "phase": "R8_final_local_review",
+  "generated_utc": "2026-10-21T15:23:38.4788731Z",
   "overall_result": "SKIP/BLOCKED",
   "gui_result": "SKIP/BLOCKED",
   "verification_actor": "repair_author and separate actual low-effort GUI operator",
@@ -35,8 +35,8 @@
   "G04": {
     "result": "PASS",
     "palette": "Four exact user point sets, leader ON arrow OFF underline OFF H3.5 three-point, before grips:4/4 form,38/38 geometry assertions",
-    "strict_flag": "Default GUI report strict=false; all required assertions executed, no N/A. This raw report is NOT claimed accepted by strict automated release gate. Strict native saved-GUI replay recorded separately when available.",
-    "persistence": "Previous GUI session interrupted before saving; screenshots/raw reports retained. Resumed grips use a frozen8-case geometry copy, new palette creation/persistence tested separately."
+    "strict_flag": "Original palette report strict=false retained as raw GUI proof. Separate saved actual GUI A/B replay strict=true, report hashes, final identity and external gate exits are listed in saved_gui_strict.",
+    "persistence": "Initial four-case GUI session interrupted before save; not claimed persisted. Resumed eight-case copy plus freshly palette-created annotations are saved and independently re-read by new native command-host processes on disposable copies. Final interactive A/B reopen remains blocked by Computer Use capture/geometry; see gui_checks and unexecuted_reports."
   },
   "candidates": [
     {
@@ -116,6 +116,144 @@
       "sanitized_report": "docs/test-evidence/cad-20261021-r8/G04-palette-form.txt",
       "sanitized_sha256": "57d4efd8dab09d84c03b32b9b51781d7c040ed87c3b8fbe6df7e090e4357aa71",
       "original_local_sha256": "2933dba31a04d235f1559478570c6c3331b65643d535fbc9da11116d8696ebf3"
+    },
+    {
+      "id": "G10-initial-A-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-geometry.txt",
+      "sanitized_sha256": "6d72e9f982471f09249957da72460dbe55b5562c805d9498a22b32e6a24bcde3",
+      "original_local_sha256": "b65119c4082eceea7d6e605bd72a9f586757674cb7dee672b03cd97cd99fa85c"
+    },
+    {
+      "id": "G10-initial-A-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-form.txt",
+      "sanitized_sha256": "9b8ea7c2fe393fa2d93ccfc04e55dc20a24cdc8f0c9932d6ba064c6f0277a3bf",
+      "original_local_sha256": "6acd13b1cf9c03a06c74681b16b6820b162cb33e716defa624f0a9c66bc053e9"
+    },
+    {
+      "id": "G10-initial-A-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G08-align-first-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-geometry.txt",
+      "sanitized_sha256": "c1722e6251ed7df36321d017fbafed0c1d712cd410abcb75d1d2b04d52c22f94",
+      "original_local_sha256": "f96a07497a5345fbc3c4e4ef434f11a5080f822ff0c4b52ee5334f888ddf0745"
+    },
+    {
+      "id": "G08-align-first-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-form.txt",
+      "sanitized_sha256": "0f11aa2767416fca2f7eb07130043821975c03b1559af239d14e81a2605588a9",
+      "original_local_sha256": "9117588af6f2739f140a70a6fbc55537c9e87c3ca398b42e5dbe8a1d5d1f46bd"
+    },
+    {
+      "id": "G08-align-first-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G08-left-flip-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-geometry.txt",
+      "sanitized_sha256": "65128086c1fd8ad3375e11c013b1e7a840b38fa519172c3e22b0e91debbe5de7",
+      "original_local_sha256": "67249ac827045104419070cd97b1608561393b1b35a9d70d15d99cd292238dff"
+    },
+    {
+      "id": "G08-left-flip-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-form.txt",
+      "sanitized_sha256": "2c790c2a7624b9c373c3f28bcc93c88b81f07aae6c8fc272aef23c25c71e21e5",
+      "original_local_sha256": "c924db551ea225807dfe1f9a0fa9bb2ebd2da17ef0833abe5d4489abb05953f2"
+    },
+    {
+      "id": "G08-left-flip-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G05-right-moved-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-right-moved-geometry.txt",
+      "sanitized_sha256": "6ada2854eac065ae4dd8a7045cdccd53cf365a81f94399e5a2713b099a98885e",
+      "original_local_sha256": "9d574aa7d4454b84b20b597b8995a80b275ec84e7cdc1f6228653989af4db3ba"
+    },
+    {
+      "id": "G05-right-moved-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-right-moved-form.txt",
+      "sanitized_sha256": "cd6b21578eb4705947165ad1f2f09bf421544ef7f59249c4c71193afd503813d",
+      "original_local_sha256": "b61b5e03de5728986e45dcc7cb38ec4e8717c109f36f257a85eebdd1ce0c6a9d"
+    },
+    {
+      "id": "G05-left-moved-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-left-moved-geometry.txt",
+      "sanitized_sha256": "1f3cc17d06b791eaf9001bb3e2e9b204db9b680a267a4b33163ca8690965dd3d",
+      "original_local_sha256": "515195515c3bad7b1053ba2db0129604cc2bdb5f28ac93207087e469f16fe463"
+    },
+    {
+      "id": "G05-left-moved-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-left-moved-form.txt",
+      "sanitized_sha256": "d2091330263ee165b334c1e14eafcf3dfc36b199f159411ec283ba0076b574db",
+      "original_local_sha256": "1e09c8c13fbd2a4d7ee372c779a04ad2f1e6dceb1350f7d083807aa522ccc4ed"
+    },
+    {
+      "id": "G05-restored-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-restored-geometry.txt",
+      "sanitized_sha256": "5db413cbec5856850f7a423f263f17c300a47eb8eb670317bd3cf9375d0d915d",
+      "original_local_sha256": "7bc1ecf192d886b20ed960a5257772c49c05ae7e01ebc3f598b161727234b002"
+    },
+    {
+      "id": "G05-restored-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-restored-form.txt",
+      "sanitized_sha256": "b2b6a4d6fe1bfbaeb799cf36605857f065abc97330b4503a5398d29ebd36370f",
+      "original_local_sha256": "99a8722ea2e035079d3da46958509fb1dc418e4914bcd61ef05f974562fb0b3c"
+    },
+    {
+      "id": "saved-gui-A-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-geometry.txt",
+      "sanitized_sha256": "13da2f8ad468650f14b4c01e7690656eba9de26d51885793eebdafb42badf1e7",
+      "original_local_sha256": "03560b5b1165a204f819233e3a6bb6075f1e7b1f5a908cdda485b257581b42fa"
+    },
+    {
+      "id": "saved-gui-A-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-form.txt",
+      "sanitized_sha256": "bf9d369f0b6e00f17ab16857cdc95e9cd80281ad67eb8313bd1a98e3d3f8ee47",
+      "original_local_sha256": "166fa2d20ea1f5e47bfe68c7c3fd7aa6cc7fde5f16129e9d8d5f888272cace4f"
+    },
+    {
+      "id": "saved-gui-A-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-doctor.txt",
+      "sanitized_sha256": "402daaaeb2de05c78c29eac6dcc2ffc2fd951883ef02fee86dc8e8fbf9b6eb7a",
+      "original_local_sha256": "dd693c5bdc3fd9b79f1cbd7ef5d97e81b7e96607733027719c543b9927b09706"
+    },
+    {
+      "id": "saved-gui-B-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-geometry.txt",
+      "sanitized_sha256": "0907ebe4af88b01cf54cde8eea628061179e2dd726ada813595535f146f3f221",
+      "original_local_sha256": "ef0d13938e41de73e92161539de69843710128bec74d658f22552c7527adfe19"
+    },
+    {
+      "id": "saved-gui-B-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-form.txt",
+      "sanitized_sha256": "041a7756352a8eac0fd19c3d4cc6fbafa106df7266f456d991c9cbe8ad75fca7",
+      "original_local_sha256": "02ce7658e7385986cbc58253d1998c338e2ee41186accac8d350b7f967ada918"
+    },
+    {
+      "id": "saved-gui-B-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-doctor.txt",
+      "sanitized_sha256": "4845959edda5d468a27a7aef7d89a281d8d14ed6d908b0ae6cca6403ccc5cffb",
+      "original_local_sha256": "89e38a8a0ee1d5c9cee37e5435cba89b891bcd6827b9dc0d45817e70507291f0"
+    },
+    {
+      "id": "final-CoreConsole-NETLOAD-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/final-CoreConsole-NETLOAD-geometry.txt",
+      "sanitized_sha256": "99ee9f2e8d6d0ec7c9ef19556d546b7ece2984dd3a20d731b54f0c156885dcd3",
+      "original_local_sha256": "1666c912419fe575dffc1314fafcf733abb9cad4229562a31def8ccc202075f9"
+    },
+    {
+      "id": "final-CoreConsole-negative-rejection",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/final-CoreConsole-negative-rejection.txt",
+      "sanitized_sha256": "7c9ed25a555a44c15a19cc9002c6028547ded2dc3621d35ed8b6778ee4a65d12",
+      "original_local_sha256": "ef433a953d988f3eed2dcca41d95801ee4a057299769f53e4053d611156caf37"
     }
   ],
   "legacy_hosts": [
@@ -126,9 +264,1737 @@
   ],
   "evidence_policy": "Sanitized text derivatives with separate original local SHA. No SDK, AGENTS, credentials, full private logs, DWGs, or screenshots uploaded. This public summary is NOT input to full local report renderer.",
   "remaining": [
-    "G05/G06/G07 native grips/Undo/Redo",
-    "G08 palette transitions",
-    "G09 A/B isolation",
-    "G10 final cold startup and strict saved-GUI replay"
-  ]
+    "File.Replace 强制允许/拒绝、锁定/只读、Hidden/System 属性: SKIP/BLOCKED 本轮未执行，不由常规测试或相邻用例外推",
+    "File.Move 兜底的 ACL、ADS 与元数据保留: SKIP/BLOCKED 本轮未执行，不由常规测试或相邻用例外推",
+    "备份存在/缺失和真实恢复路径: SKIP/BLOCKED 本轮未执行，不由常规测试或相邻用例外推",
+    "independent-review-of-authored-crash-fix: SKIP/BLOCKED Crash fix author disclosed; no independent post-repair code/host reviewer closure is claimed",
+    "G10-final-A: SKIP/BLOCKED A not opened. Screenshot capture failed twice; explicit Open index105 click rejected with geometry unavailable. Ctrl+O once returned null tree; subsequent readonly tree confirmed unchanged Home. No path text or business command sent.",
+    "G10-final-B: SKIP/BLOCKED B not opened; native report commands not executed because A opening blocked.",
+    "G10-final-visual-capture: SKIP/BLOCKED Official screenshot capture first FrameArrived timeout, one recovery window capture timeout. No coordinate input or visual verification.",
+    "AutoCAD 2007: SKIP/BLOCKED",
+    "AutoCAD 2010: SKIP/BLOCKED",
+    "AutoCAD 2013: SKIP/BLOCKED",
+    "AutoCAD 2015: SKIP/BLOCKED",
+    "AutoCAD 2026 x64 R25.1.60.0.0: SKIP/BLOCKED"
+  ],
+  "historical_log_integrity": {
+    "result": "PASS",
+    "statement": "Two historical candidate live logs had appended content. Original prefix lengths and SHA match the old index exactly; recovered original byte copies and full appended snapshots are retained locally without modifying original files/index. Historical live candidate folders are not claimed wholly immutable."
+  },
+  "stale_existing_output": {
+    "result": "PASS",
+    "scope": "Three independent fresh trials prepopulate an actual prior strict PASS report with the SAME expected run ID and final candidate identity. Runner must reject the existing run directory before any host launch and leave the valid old report bytes unchanged. Distinct from old-RUN_ID parser tests; no freshness claim for standalone report-only mode.",
+    "runs": [
+      {
+        "iteration": 1,
+        "result": "PASS",
+        "exit_code": 1,
+        "rejection": "run directory already exists",
+        "existing_valid_report_run_id": "final-netload",
+        "existing_report_sha256": "1666c912419fe575dffc1314fafcf733abb9cad4229562a31def8ccc202075f9",
+        "report_unchanged": true,
+        "no_CAD_process_before_or_after": true,
+        "command_record": "evidence/checks/stale-existing-output-1/command.json"
+      },
+      {
+        "iteration": 2,
+        "result": "PASS",
+        "exit_code": 1,
+        "rejection": "run directory already exists",
+        "existing_valid_report_run_id": "final-netload",
+        "existing_report_sha256": "1666c912419fe575dffc1314fafcf733abb9cad4229562a31def8ccc202075f9",
+        "report_unchanged": true,
+        "no_CAD_process_before_or_after": true,
+        "command_record": "evidence/checks/stale-existing-output-2/command.json"
+      },
+      {
+        "iteration": 3,
+        "result": "PASS",
+        "exit_code": 1,
+        "rejection": "run directory already exists",
+        "existing_valid_report_run_id": "final-netload",
+        "existing_report_sha256": "1666c912419fe575dffc1314fafcf733abb9cad4229562a31def8ccc202075f9",
+        "report_unchanged": true,
+        "no_CAD_process_before_or_after": true,
+        "command_record": "evidence/checks/stale-existing-output-3/command.json"
+      }
+    ]
+  },
+  "source_bindings": [
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/source-manifest.json",
+      "sha256": "a04bde9524f03b76c7778462bee405ae02f052b6a0980e847b521628d3c11252"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/build-source-manifest.json",
+      "sha256": "89daf8ca19bdf6ea6787e940cb5015e11a70268a5131abe9efb20b60842adf52"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/source-correspondence.json",
+      "sha256": "3a4a83fe2e327760b5a9603933b479339e50ee2200ce74bb807d13f0092e894c"
+    }
+  ],
+  "unexecuted_reports": [
+    {
+      "id": "G10-final-A-geometry",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    },
+    {
+      "id": "G10-final-A-form",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    },
+    {
+      "id": "G10-final-A-doctor",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    },
+    {
+      "id": "G10-final-B-geometry",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    },
+    {
+      "id": "G10-final-B-form",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    },
+    {
+      "id": "G10-final-B-doctor",
+      "result": "SKIP/BLOCKED",
+      "reason": "Interactive final reopen blocked by current Computer Use screenshot/geometry failure; no report was generated. Separate native saved-DWG strict replays do not replace this GUI step."
+    }
+  ],
+  "findings": [
+    {
+      "finding_id": "A01",
+      "severity": "P1",
+      "component": "PatBraceAssertions",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject original 11-point sharp elbows with all bulges zero",
+      "actual": "case=sharp accepted=False environment_restored=True; case=sharp accepted=False environment_restored=True; case=sharp accepted=False environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpElbowWithFakeEndTangents_IsRejectedByReferenceCurve",
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_WithDifferentCurveSamples_PassesReferenceCheck",
+        "SupplementalCornerMatrix::rectangle_corner_vertex[shape,side,samples,curve,position,corner]"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Commands/PatBraceAssertions.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "ORIGINAL_A01 accepted=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "ORIGINAL_A01 accepted=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "ORIGINAL_A01 accepted=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=sharp accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=sharp accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=sharp accepted=False environment_restored=True"
+        }
+      ],
+      "residual_risk": "仅检查采样顶点；未证明弧段/bulge、闭合状态或点间连续曲率；低密度轮廓接受是当前实现行为，规格是否允许尚待确认。"
+    },
+    {
+      "finding_id": "A02",
+      "severity": "P1",
+      "component": "PatGeomVerifyCommand",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject actual text moved to (2000,1000,0) while recorded chain unchanged",
+      "actual": "case=moved-text accepted=False environment_restored=True; case=moved-text accepted=False environment_restored=True; case=moved-text accepted=False environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedTextWithoutChainUpdate_IsRejectedByT3"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs",
+        "cad-plugin/Shared/Commands/PatGeomTextAssertions.cs",
+        "cad-plugin/Shared/Cad/PatEntityHelper.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-text actual_previous=(10,10,0) actual_endpoint=(18.6,10,0) actual_text=(2000,1000,0) RESULT: PASS"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-text actual_previous=(10,10,0) actual_endpoint=(18.6,10,0) actual_text=(2000,1000,0) RESULT: PASS"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-text actual_previous=(10,10,0) actual_endpoint=(18.6,10,0) actual_text=(2000,1000,0) RESULT: PASS"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-text accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-text accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-text accepted=False environment_restored=True"
+        }
+      ],
+      "residual_risk": "Original moved-text and moved-previous counterexamples plus R3-01 large-coordinate regression pass current repeated L1 checks. Actual AutoCAD2026 boundary geometry is verified separately; native text grips can leave creation Xrecord anchors stale, and those whole moved reports remain FAIL. Four legacy hosts and the entire mutation class are not closed by this original-case result."
+    },
+    {
+      "finding_id": "A03",
+      "severity": "P1",
+      "component": "verify-geometry.ps1",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject same incomplete report missing B0c/ASSERTIONS/REQUIRED and wrong MVID",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::original-A03",
+        "verify-geometry.ps1::-SelfTest",
+        "verify-geometry.ps1::existing-run-directory-with-valid-same-id-report"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        }
+      ],
+      "residual_risk": "Missing fields, contradictory counts, duplicates, flat targets, required status and empty blocks are all covered by the current23-case repeated report matrix; R3-02/03/04 no longer remain open in this run. Actual local loaded identity is separately evidenced by PATDOCTOR and SHA/MVID. Manifest generation alone does not prove loading in untested hosts."
+    },
+    {
+      "finding_id": "R2-01",
+      "severity": "P1",
+      "component": "PatGeomVerifyCommand actual previous vertex",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Changing actual previous vertex to (10,100,0) must fail endpoint check",
+      "actual": "case=moved-previous accepted=False environment_restored=True; case=moved-previous accepted=False environment_restored=True; case=moved-previous accepted=False environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedPreviousVertexWithoutChainUpdate_IsRejectedByT3"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-previous actual_previous=(10,100,0) actual_endpoint=(18.6,10,0) actual_text=(20,10,0) RESULT: PASS"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-previous actual_previous=(10,100,0) actual_endpoint=(18.6,10,0) actual_text=(20,10,0) RESULT: PASS"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=moved-previous actual_previous=(10,100,0) actual_endpoint=(18.6,10,0) actual_text=(20,10,0) RESULT: PASS"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-previous accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-previous accepted=False environment_restored=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=moved-previous accepted=False environment_restored=True"
+        }
+      ],
+      "residual_risk": "Moved-previous rejection and translated-coordinate regression pass current repeated probes. Native text-grip geometry was verified separately; this does not claim every native bend-grip mutation or any of the four unavailable legacy hosts."
+    },
+    {
+      "finding_id": "R2-02",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 object totals",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject braces=0 passed=1 and equivalent text-count contradiction",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::braces-zero-passed-one",
+        "acceptance-report-cases.ps1::texts-zero-passed-one"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        }
+      ],
+      "residual_risk": "Zero-total/nonzero-passed and unaccounted flat-target cases now pass the repeated negative report matrix. Parser correctness is separate from actual host business coverage; no remaining open R3-03 claim."
+    },
+    {
+      "finding_id": "A03-DUP",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 per-object assertion multiplicity",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject extra B9 PASS in a one-brace report even if ASSERTIONS count is updated",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::duplicate-pass"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        }
+      ],
+      "residual_risk": "Duplicate PASS, missing required status and empty block variants pass current negative matrix. R3-04 is covered; no extrapolation beyond the recorded variants or target environments."
+    },
+    {
+      "finding_id": "R3-01",
+      "severity": "P1",
+      "component": "PatEntityHelper actual previous vertex at large WCS coordinates",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "A valid annotation translated by +10000000 WCS X must retain PASS",
+      "actual": "case=translated-large accepted=True environment_restored=True; case=translated-large accepted=True environment_restored=True; case=translated-large accepted=True environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ActualPreviousVertex_UsesIndexAtLargeCoordinatesAndRepeatedVertices"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Cad/PatEntityHelper.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=translated-large actual_previous=(10000010,10,0) actual_endpoint=(10000018.6,10,0) actual_text=(10000020,10,0)   [FAIL] T3c actual-previous-anchor: actual=(10000000.0000,0.0000,0.0000) expected=(10000010.0000,10.0000,0.0000) error=14.1421 tol=0.0000   [FAIL] T3 leader-text-retract: actual=(10000018.6000,10.0000,0.0000) expected=(10000018.7478,9.3739,0.0000) error=0.6433 tol=0.0000 RESULT: FAIL"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=translated-large actual_previous=(10000010,10,0) actual_endpoint=(10000018.6,10,0) actual_text=(10000020,10,0)   [FAIL] T3c actual-previous-anchor: actual=(10000000.0000,0.0000,0.0000) expected=(10000010.0000,10.0000,0.0000) error=14.1421 tol=0.0000   [FAIL] T3 leader-text-retract: actual=(10000018.6000,10.0000,0.0000) expected=(10000018.7478,9.3739,0.0000) error=0.6433 tol=0.0000 RESULT: FAIL"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "CASE=translated-large actual_previous=(10000010,10,0) actual_endpoint=(10000018.6,10,0) actual_text=(10000020,10,0)   [FAIL] T3c actual-previous-anchor: actual=(10000000.0000,0.0000,0.0000) expected=(10000010.0000,10.0000,0.0000) error=14.1421 tol=0.0000   [FAIL] T3 leader-text-retract: actual=(10000018.6000,10.0000,0.0000) expected=(10000018.7478,9.3739,0.0000) error=0.6433 tol=0.0000 RESULT: FAIL"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=translated-large accepted=True environment_restored=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=translated-large accepted=True environment_restored=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=translated-large accepted=True environment_restored=True"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-02",
+      "severity": "P1",
+      "component": "Leader report producer/parser integration",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Accept an actual PASS report containing a valid product Leader + MText",
+      "actual": "case=legacy-leader accepted=True environment_restored=True; case=legacy-leader accepted=True environment_restored=True; case=legacy-leader accepted=True environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.LegacyLeader_ReportIncludesObjectHeader"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs",
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=True actual_acceptance=False"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=legacy-leader accepted=True environment_restored=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=legacy-leader accepted=True environment_restored=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "case=legacy-leader accepted=True environment_restored=True"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-03",
+      "severity": "P2",
+      "component": "Flat report total accounting",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject total=2 passed=1 failed=0 unreadable=0 for either target class",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::flat-unaccounted-braces",
+        "acceptance-report-cases.ps1::flat-unaccounted-texts"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-04",
+      "severity": "P2",
+      "component": "Per-object required assertion status and empty blocks",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Reject a required B9 marked N/A in one object, and reject an unverified object block",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::structured-required-na",
+        "acceptance-report-cases.ps1::structured-empty-object"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "expected_acceptance=False actual_acceptance=True"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "PASS",
+          "key_output": "expected_acceptance=False actual_acceptance=False"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-05",
+      "severity": "P1",
+      "component": "PATGEOMVERIFY Core command boundary",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Valid and invalid geometry must produce a fresh report and return safely; invalid reports remain rejected by the external gate",
+      "actual": "Final CoreConsole positive and expected-negative verdict: PASS. Saved GUI positive requires native exit0/gate0; frozen old invalid geometry requires native exit0/gate1 and actual final path/SHA/MVID. Input negative remains FAIL. One bounded replay of each, historical repeated evidence retained.",
+      "test_selectors": [
+        "Real AutoCAD CoreConsole::final-netload::PATGEOMVERIFY",
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.RequiredFailure_ReportsFailWithoutEscapingCommand",
+        "Real AutoCAD CoreConsole::final-core-rejection::PATGEOMVERIFY"
+      ],
+      "repair_files": [
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": -1073741819,
+          "result": "FAIL",
+          "key_output": "Same saved baseline: PATGEOMVERIFY -> 0xc0000005; no report"
+        },
+        {
+          "iteration": 2,
+          "exit_code": -1073741819,
+          "result": "FAIL",
+          "key_output": "Same saved baseline and official runner: process=-1073741819; runner exit=1; missing report"
+        },
+        {
+          "iteration": 3,
+          "exit_code": -1073741819,
+          "result": "FAIL",
+          "key_output": "FAIL report written, followed by native exception-filter crash"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final CoreConsole NETLOAD and PATGEOMVERIFY: process_exit=0 external_gate_exit=0 original_saved_GUI_unchanged=True"
+        },
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Same final Core oracle rejects four old terminal failures, input report=FAIL, gate=1, native exit=0"
+        }
+      ],
+      "residual_risk": "Final candidate CoreConsole positive and expected-negative paths are each replayed once, with actual exit/report identity recorded; historical repeated host evidence is separate. Repair author also performed this review. External independent code/host review and unavailable legacy environments remain BLOCKED."
+    },
+    {
+      "finding_id": "R3-06",
+      "severity": "P1",
+      "component": "Native MLeader facing-side boundary attachment and positive gap",
+      "status": "fixed_verified_by_repair_author_and_separate_gui_operator",
+      "result": "PASS",
+      "expected": "Keep the picked text anchor; terminal outside the actual text box on the side facing the preceding bend, at its middle/top/bottom corner, with 0.4H gap; no touching or terminal inside text.",
+      "actual": "Under the user-clarified boundary-gap contract, the SAME final oracle rejects frozen R7 geometry. Old Creator fails three runs; final Creator passes three runs. Actual final-candidate palette GUI: Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText",
+        "Real AutoCAD GUI::G04::PATMLVERIFY::C9",
+        "Real AutoCAD GUI::G04::PATGEOMVERIFY::T3"
+      ],
+      "repair_files": [
+        "cad-plugin/2025/PatentMarker/Commands/PatMLeaderCreator.cs",
+        "cad-plugin/2025/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+        "cad-plugin/Shared/Commands/PatGeomTextAssertions.cs",
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 1,
+          "exit_code": null,
+          "result": "PASS",
+          "key_output": "Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence."
+        }
+      ],
+      "residual_risk": "The user clarified the contract; this is not a claim that the contradictory old insertion-point and zero-gap C9 criteria are unchanged. The new oracle is identical for the R7 frozen red and R8 green. Native grip edits can leave recorded creation anchors stale; incoming user-picked paths that cross the text box are detected by C8 and are not auto-routed. Four legacy hosts remain untested."
+    },
+    {
+      "finding_id": "R5-01",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 applicability of global required assertion checks",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Accept a valid report when the other target class is absent and its required count is explicitly 0",
+      "actual": "expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::brace-only",
+        "acceptance-report-cases.ps1::standalone-only"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=real-brace-only expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=text-only expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=real-brace-only expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=text-only expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=real-brace-only expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=text-only expected_acceptance=True actual_acceptance=False"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R5-02",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 applicability of global required assertion checks",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Accept valid standalone MText with T3 marked N/A and both required object counts satisfied",
+      "actual": "expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::brace-and-standalone"
+      ],
+      "repair_files": [
+        "tools/verify-geometry.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=standalone-with-brace expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=standalone-with-brace expected_acceptance=True actual_acceptance=False"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "case=standalone-with-brace expected_acceptance=True actual_acceptance=False"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "expected_acceptance=True actual_acceptance=True"
+        }
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R7-G04",
+      "severity": "P1",
+      "component": "Native MLeader facing-side boundary attachment and positive gap",
+      "status": "fixed_verified_by_repair_author_and_separate_gui_operator",
+      "result": "PASS",
+      "expected": "Keep the picked text anchor; terminal outside the actual text box on the side facing the preceding bend, at its middle/top/bottom corner, with 0.4H gap; no touching or terminal inside text.",
+      "actual": "Under the user-clarified boundary-gap contract, the SAME final oracle rejects frozen R7 geometry. Old Creator fails three runs; final Creator passes three runs. Actual final-candidate palette GUI: Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText",
+        "Real AutoCAD GUI::G04::PATMLVERIFY::C9",
+        "Real AutoCAD GUI::G04::PATGEOMVERIFY::T3"
+      ],
+      "repair_files": [
+        "cad-plugin/2025/PatentMarker/Commands/PatMLeaderCreator.cs",
+        "cad-plugin/2025/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+        "cad-plugin/Shared/Commands/PatGeomTextAssertions.cs",
+        "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 1,
+          "result": "FAIL",
+          "key_output": "Old production Creator with final oracle: FourUserCreationCases / FreeMode / HostTextAttachmentRecalc fail; passed=56 failed=3 skipped=0"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 2,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 3,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "Final production Creator, same four point sets and final oracle: 59 passed/0 failed/0 skipped"
+        },
+        {
+          "iteration": 1,
+          "exit_code": null,
+          "result": "PASS",
+          "key_output": "Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence."
+        }
+      ],
+      "residual_risk": "The user clarified the contract; this is not a claim that the contradictory old insertion-point and zero-gap C9 criteria are unchanged. The new oracle is identical for the R7 frozen red and R8 green. Native grip edits can leave recorded creation anchors stale; incoming user-picked paths that cross the text box are detected by C8 and are not auto-routed. Four legacy hosts remain untested."
+    },
+    {
+      "finding_id": "R8-PACKAGE-ID",
+      "severity": "P2",
+      "component": "package.ps1 Git source identity",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Calling a worktree package.ps1 from another checkout must derive source identity from script repository root, not caller cwd.",
+      "actual": "Before: manifest source.commit=b945b1a (caller root), DLL informational commit=8c94b891 (built worktree). After same cross-CWD call: source.commit=8c94b891. DLL SHA e7ec…921a3 unchanged. Five publication manifests regenerated and verified; original tested manifests retained.",
+      "test_selectors": [
+        "R8 cross-CWD package.ps1 -Version 2025",
+        "ReleaseManifest verify::all five publication manifests"
+      ],
+      "repair_files": [
+        "package.ps1"
+      ],
+      "before": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "source.commit=b945b1a; expected8c94b891; artifact informational8c94b891"
+        }
+      ],
+      "after": [
+        {
+          "iteration": 1,
+          "exit_code": 0,
+          "result": "PASS",
+          "key_output": "source.commit=8c94b891; DLL unchanged"
+        }
+      ],
+      "residual_risk": "Manifest-only source provenance correction. Does not make a dirty build reproducible from HEAD alone; exact125-file build snapshot archived. Actual GUI used original tested manifest, whose hash differs from corrected delivery manifest. DLLs are byte-identical."
+    },
+    {
+      "finding_id": "R8-REPORT-BINDING",
+      "severity": "P1",
+      "component": "render-acceptance-report source binding and blocked finding verdict",
+      "status": "fixed_verified_by_repair_author",
+      "result": "PASS",
+      "expected": "Source snapshot ID must match actual indexed manifest hash; a blocked finding must prevent overall PASS; every matrix result must use an allowed enum",
+      "actual": "Same synthetic fixtures: old validator exit0, fixed validator exit2, three repetitions each. Seventeen quality-gate fixture self-tests pass; synthetic PASS is never product acceptance.",
+      "test_selectors": [
+        "test-acceptance-report.ps1::forged-source-binding",
+        "test-acceptance-report.ps1::blocked-finding-stored-pass",
+        "test-acceptance-report.ps1::synthetic-finding-blocked",
+        "test-acceptance-report.ps1::missing-matrix-result",
+        "test-acceptance-report.ps1::invalid-matrix-result"
+      ],
+      "repair_files": [
+        "tools/render-acceptance-report.ps1",
+        "tools/test-acceptance-report.ps1"
+      ],
+      "before": [
+        {
+          "iteration": "forged-source-binding/2",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "invalid-matrix-result/3",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "invalid-matrix-result/2",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "invalid-matrix-result/1",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "missing-matrix-result/3",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "missing-matrix-result/2",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "missing-matrix-result/1",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/2",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/3",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "forged-source-binding/1",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/1",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        },
+        {
+          "iteration": "forged-source-binding/3",
+          "exit_code": 0,
+          "result": "FAIL",
+          "key_output": "Old validator incorrectly accepts synthetic invalid asset (exit0)"
+        }
+      ],
+      "after": [
+        {
+          "iteration": "invalid-matrix-result/1",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "missing-matrix-result/3",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "missing-matrix-result/1",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "missing-matrix-result/2",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/2",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/3",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "blocked-finding-stored-pass/1",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "forged-source-binding/1",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "forged-source-binding/3",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "forged-source-binding/2",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "invalid-matrix-result/2",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        },
+        {
+          "iteration": "invalid-matrix-result/3",
+          "exit_code": 2,
+          "result": "PASS",
+          "key_output": "Fixed validator rejects the SAME synthetic invalid asset (exit2)"
+        }
+      ],
+      "residual_risk": "Quality-gate fixture validation only. Does not establish external review or product PASS. Frozen original validator is rebased only at repository bootstrap path; validation logic unchanged and both source hashes retained."
+    }
+  ],
+  "gui_checks": [
+    {
+      "case": "G01-installed-cold-start-identity",
+      "required": true,
+      "result": "PASS",
+      "detail": "Final candidate autoloaded in a new actual AutoCAD2026 process without NETLOAD; doctor7/0/0, form8/8, geometry4braces+8texts96/0/0. Earlier empty drawing doctor5/0/2 preserved; absent styles not called PASS."
+    },
+    {
+      "case": "G02-four-direction-braces",
+      "required": true,
+      "result": "PASS",
+      "detail": "Four directions created through actual panel; four B0c-B9 groups pass in restored report and survive the separately verified cold reopen. No continuous-curvature claim."
+    },
+    {
+      "case": "G03-PATBRACEEDIT-Undo-Redo",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual first brace edited60/12, Undo, immediate Redo with no intervening CAD command, Undo restored40/8; four screenshots plus restored numeric report. Redone is an actual edited state, not only a sent key."
+    },
+    {
+      "case": "G04-four-user-created-MLeaders",
+      "required": true,
+      "result": "PASS",
+      "detail": "Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence."
+    },
+    {
+      "case": "G05-native-MLeader-grips",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual right same-side and left cross-side native text-grip edits: all eight actual boundary-gap T3 and C9 assertions pass on both moved states. Each entire moved report correctly FAILS only stale creation anchor T3a/C3; it is not claimed full PASS. Undo restores8/8 and96/0/0. Hot-grip activation→Escape cancellation observed; displaced-hover cancellation not covered by this API."
+    },
+    {
+      "case": "G06-native-brace-grips",
+      "required": true,
+      "result": "PASS",
+      "detail": "Native cusp-grip movement committed, completed-state Undo, immediate Redo, Undo restored; independent hot-grip activation→Escape cancel. Earlier Undo while grip popup active was not counted as a completed-edit undo result. Displaced-hover preview cancellation not covered."
+    },
+    {
+      "case": "G07-native-grip-Undo-Redo",
+      "required": true,
+      "result": "PASS",
+      "detail": "Both native MLeader directions and brace have before/moved/undone/redone visual evidence. CtrlZ→immediateCtrlY had no intervening CAD command. Later measurement commands create their own undo entries; bounded recovery undid those entries before the grip edit and is recorded separately."
+    },
+    {
+      "case": "G08-exact-alignment-target",
+      "required": true,
+      "result": "PASS",
+      "detail": "Same actual spline/entity changes text65,150→100,150, keeps bend80,150, switches terminal to98.6,148.2147 with gap1.4; all9 forms/103 assertions PASS. Earlier all-green alignment report concerned a different selected901; selection guard rejects it. New palette-created901 remains40,340 and is saved/reopened separately."
+    },
+    {
+      "case": "G08-edit-and-command-dispatch",
+      "required": true,
+      "result": "PASS",
+      "detail": "F2/right-click edit Cancel; product command switches; native LINE completes normally then deferred PATCHECK runs"
+    },
+    {
+      "case": "G08-align-left-flip",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual original left spline text65,150→100,150; forepoint80,150 unchanged; gap1.4 left side. Parent froze 9/9 and103 assertions PASS."
+    },
+    {
+      "case": "G08-new901-align-selection",
+      "required": false,
+      "result": "SKIP/BLOCKED",
+      "detail": "First alignment selected old unlimited text20,250→100,250; new901 remains40,340. Scope deviation retained and documented; no claim new901 aligned. Historical attempt retained. Required behavior is judged by the separately recorded exact-target alignment and new-process cold-reopen cases."
+    },
+    {
+      "case": "G09-isolation-close-and-create",
+      "required": true,
+      "result": "PASS",
+      "detail": "A901/B902 panel isolation; normal close A then B902 second creation/save. Parent froze2text1brace24assertionsPASS."
+    },
+    {
+      "case": "G10-final-cold-reopen",
+      "required": false,
+      "result": "SKIP/BLOCKED",
+      "detail": "Normal main-window X once after B saved; old window remains and commandline grey. Paused with no further inputs pending parent diagnosis. Historical attempt retained. Required behavior is judged by the separately recorded exact-target alignment and new-process cold-reopen cases."
+    },
+    {
+      "case": "G10-final-cold-start",
+      "required": true,
+      "result": "PASS",
+      "detail": "Parent independently confirmed new PID1352 started23:00:30; unique formal CAD window525224 returned. This proves launch only."
+    },
+    {
+      "case": "G10-final-A",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "A not opened. Screenshot capture failed twice; explicit Open index105 click rejected with geometry unavailable. Ctrl+O once returned null tree; subsequent readonly tree confirmed unchanged Home. No path text or business command sent."
+    },
+    {
+      "case": "G10-final-B",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "B not opened; native report commands not executed because A opening blocked."
+    },
+    {
+      "case": "G10-final-normal-exit",
+      "required": true,
+      "result": "PASS",
+      "detail": "One native Alt+F4 from confirmed AutoCAD Home; CAD window disappeared, parent independently confirmed PID1352 absent and zero acad/accoreconsole processes. Proves this start-page instance normal UI exit only, not A/B reopen or earlier exit incident."
+    },
+    {
+      "case": "G10-final-visual-capture",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "Official screenshot capture first FrameArrived timeout, one recovery window capture timeout. No coordinate input or visual verification."
+    }
+  ],
+  "saved_gui_strict": [
+    {
+      "id": "saved-gui-A",
+      "result": "PASS",
+      "host_exit": 0,
+      "gate_exit": 0,
+      "source_sha256": "d896d2b6275b056af73344fd7eb2dc7ef9c7c58833674cf9cd8bbf202ef64c63",
+      "source_unchanged": true
+    },
+    {
+      "id": "saved-gui-B",
+      "result": "PASS",
+      "host_exit": 0,
+      "gate_exit": 0,
+      "source_sha256": "b30741f125024748ce354be5be6205f885d7564dddbbc75d0d7128e9a62b3e8e",
+      "source_unchanged": true
+    }
+  ],
+  "final_netload": {
+    "result": "PASS",
+    "process_exit": 0,
+    "gate_exit": 0,
+    "original_gui_dwg_unchanged": true,
+    "assembly_sha256": "e7ecbb3e08af9d02201c4295993a5e3f4b5014d6bdd8f6f579c6d1f679e921a3",
+    "assembly_mvid": "5be5b2e4-d78c-474d-9165-671394d00bd3",
+    "scope": "CoreConsole explicit NETLOAD of final candidate, PATGEOMVERIFY strict gate on a disposable saved-GUI copy. Does not replace GUI or prove exclusive DLL loading without autoload."
+  },
+  "final_core_rejection": {
+    "result": "PASS",
+    "process_exit": 0,
+    "gate_exit": 1,
+    "input_report_result": "FAIL",
+    "identity_matches_actual_report": true,
+    "original_dwg_unchanged": true,
+    "scope": "Expected rejection of frozen wrong geometry by the SAME final oracle in actual CoreConsole; input report remains FAIL. Native process must exit0 without an unhandled exception; external strict gate must exit1. One bounded replay after positive Core succeeds."
+  },
+  "alignment_target_guard": {
+    "result": "PASS",
+    "stage": "G08-left-flip",
+    "scope": "Target-selection guard in addition to generic all-PASS reports. Exact same preexisting spline/native entity must change text65,150→100,150, keep bend80,150 and switch terminal to the left outside edge gap1.4. Reject an all-green report for another selected901.",
+    "checks": {
+      "correct_spline_and_same_entity": true,
+      "picked_text_actual_and_recorded": true,
+      "preceding_bend_preserved": true,
+      "terminal_switched_to_left_outside_gap": true,
+      "all_product_reports_pass": true,
+      "new_palette_entity_preserved": true
+    },
+    "before_sha256": "6acd13b1cf9c03a06c74681b16b6820b162cb33e716defa624f0a9c66bc053e9",
+    "after_form_sha256": "c924db551ea225807dfe1f9a0fa9bb2ebd2da17ef0833abe5d4489abb05953f2",
+    "after_geometry_sha256": "67249ac827045104419070cd97b1608561393b1b35a9d70d15d99cd292238dff"
+  },
+  "report_gate_selftests": [
+    {
+      "case": "actual-result",
+      "expected_exit": 3,
+      "actual_exit": 3,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "synthetic-blocked",
+      "expected_exit": 3,
+      "actual_exit": 3,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "synthetic-finding-blocked",
+      "expected_exit": 3,
+      "actual_exit": 3,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "missing-matrix-result",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "synthetic-host-fail",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "synthetic-pass",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "wrong-stored-verdict",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "changed-evidence-hash",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "stale-source-id",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "forged-source-binding",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "changed-verification-tool",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "changed-build-snapshot",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "wrong-build-archive",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "missing-repeat-run",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    },
+    {
+      "case": "changed-test-selector",
+      "expected_exit": 2,
+      "actual_exit": 2,
+      "result": "PASS",
+      "scope": "gate self-test with synthetic copies; never an actual release PASS"
+    }
+  ],
+  "report_gate_differential": [
+    {
+      "case": "forged-source-binding",
+      "iteration": 2,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 1,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 3,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 3,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 2,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 1,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 3,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 1,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 2,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 2,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "112e4b942405625744deb3e2c03a78e691be0d7491fb09a48a8012aed68eeb27"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 3,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "112e4b942405625744deb3e2c03a78e691be0d7491fb09a48a8012aed68eeb27"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 2,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "missing-matrix-result",
+      "iteration": 1,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 2,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 3,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 1,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "112e4b942405625744deb3e2c03a78e691be0d7491fb09a48a8012aed68eeb27"
+    },
+    {
+      "case": "forged-source-binding",
+      "iteration": 1,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2f3ff0eda73a79c711ed8039733e5672d4c0243c2277f633125c58b33b03c48d"
+    },
+    {
+      "case": "forged-source-binding",
+      "iteration": 3,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2f3ff0eda73a79c711ed8039733e5672d4c0243c2277f633125c58b33b03c48d"
+    },
+    {
+      "case": "forged-source-binding",
+      "iteration": 2,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "2f3ff0eda73a79c711ed8039733e5672d4c0243c2277f633125c58b33b03c48d"
+    },
+    {
+      "case": "forged-source-binding",
+      "iteration": 1,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "blocked-finding-stored-pass",
+      "iteration": 1,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "forged-source-binding",
+      "iteration": 3,
+      "version": "old",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "result": "PASS",
+      "stdout_sha256": "c62d540973a6dae77ae197aa116619c46ce0ea66de7a1fcdd6337aee22936a47",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 2,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    },
+    {
+      "case": "invalid-matrix-result",
+      "iteration": 3,
+      "version": "new",
+      "exit_code": 2,
+      "expected_exit": 2,
+      "result": "PASS",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "0f7a685de20353487fdaf0a7a49aa4954b9e1be2020a7481ceac1f2c257922e3"
+    }
+  ],
+  "supplemental_corner_matrix": {
+    "failures": 0,
+    "negative_vertex_variants": 480,
+    "source": "docs/test-evidence/cad-20261021-r8/CornerMatrix.Program.cs",
+    "repetitions": 3,
+    "summary": "docs/test-evidence/cad-20261021-r8/corner-matrix-summary.json",
+    "scope": "Four curve locations, early/middle/late sample positions, two rectangle corners, both sides, three aspect/orientation/constant-Z variants, samples2/4/16/32. Not continuous-curvature or exhaustive proof.",
+    "positive_outlines": 24,
+    "project": "docs/test-evidence/cad-20261021-r8/CornerMatrix.csproj",
+    "layer": "L1 only"
+  }
 }

@@ -35,6 +35,144 @@
       "sanitized_report": "docs/test-evidence/cad-20261021-r8/G04-palette-form.txt",
       "sanitized_sha256": "57d4efd8dab09d84c03b32b9b51781d7c040ed87c3b8fbe6df7e090e4357aa71",
       "original_local_sha256": "2933dba31a04d235f1559478570c6c3331b65643d535fbc9da11116d8696ebf3"
+    },
+    {
+      "id": "G10-initial-A-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-geometry.txt",
+      "sanitized_sha256": "6d72e9f982471f09249957da72460dbe55b5562c805d9498a22b32e6a24bcde3",
+      "original_local_sha256": "b65119c4082eceea7d6e605bd72a9f586757674cb7dee672b03cd97cd99fa85c"
+    },
+    {
+      "id": "G10-initial-A-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-form.txt",
+      "sanitized_sha256": "9b8ea7c2fe393fa2d93ccfc04e55dc20a24cdc8f0c9932d6ba064c6f0277a3bf",
+      "original_local_sha256": "6acd13b1cf9c03a06c74681b16b6820b162cb33e716defa624f0a9c66bc053e9"
+    },
+    {
+      "id": "G10-initial-A-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G10-initial-A-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G08-align-first-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-geometry.txt",
+      "sanitized_sha256": "c1722e6251ed7df36321d017fbafed0c1d712cd410abcb75d1d2b04d52c22f94",
+      "original_local_sha256": "f96a07497a5345fbc3c4e4ef434f11a5080f822ff0c4b52ee5334f888ddf0745"
+    },
+    {
+      "id": "G08-align-first-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-form.txt",
+      "sanitized_sha256": "0f11aa2767416fca2f7eb07130043821975c03b1559af239d14e81a2605588a9",
+      "original_local_sha256": "9117588af6f2739f140a70a6fbc55537c9e87c3ca398b42e5dbe8a1d5d1f46bd"
+    },
+    {
+      "id": "G08-align-first-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-align-first-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G08-left-flip-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-geometry.txt",
+      "sanitized_sha256": "65128086c1fd8ad3375e11c013b1e7a840b38fa519172c3e22b0e91debbe5de7",
+      "original_local_sha256": "67249ac827045104419070cd97b1608561393b1b35a9d70d15d99cd292238dff"
+    },
+    {
+      "id": "G08-left-flip-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-form.txt",
+      "sanitized_sha256": "2c790c2a7624b9c373c3f28bcc93c88b81f07aae6c8fc272aef23c25c71e21e5",
+      "original_local_sha256": "c924db551ea225807dfe1f9a0fa9bb2ebd2da17ef0833abe5d4489abb05953f2"
+    },
+    {
+      "id": "G08-left-flip-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G08-left-flip-doctor.txt",
+      "sanitized_sha256": "caf594a0799353adc4b757e18eaca29bfbda08ab4b5bd6fce9c5928fb9f01702",
+      "original_local_sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+    },
+    {
+      "id": "G05-right-moved-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-right-moved-geometry.txt",
+      "sanitized_sha256": "6ada2854eac065ae4dd8a7045cdccd53cf365a81f94399e5a2713b099a98885e",
+      "original_local_sha256": "9d574aa7d4454b84b20b597b8995a80b275ec84e7cdc1f6228653989af4db3ba"
+    },
+    {
+      "id": "G05-right-moved-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-right-moved-form.txt",
+      "sanitized_sha256": "cd6b21578eb4705947165ad1f2f09bf421544ef7f59249c4c71193afd503813d",
+      "original_local_sha256": "b61b5e03de5728986e45dcc7cb38ec4e8717c109f36f257a85eebdd1ce0c6a9d"
+    },
+    {
+      "id": "G05-left-moved-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-left-moved-geometry.txt",
+      "sanitized_sha256": "1f3cc17d06b791eaf9001bb3e2e9b204db9b680a267a4b33163ca8690965dd3d",
+      "original_local_sha256": "515195515c3bad7b1053ba2db0129604cc2bdb5f28ac93207087e469f16fe463"
+    },
+    {
+      "id": "G05-left-moved-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-left-moved-form.txt",
+      "sanitized_sha256": "d2091330263ee165b334c1e14eafcf3dfc36b199f159411ec283ba0076b574db",
+      "original_local_sha256": "1e09c8c13fbd2a4d7ee372c779a04ad2f1e6dceb1350f7d083807aa522ccc4ed"
+    },
+    {
+      "id": "G05-restored-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-restored-geometry.txt",
+      "sanitized_sha256": "5db413cbec5856850f7a423f263f17c300a47eb8eb670317bd3cf9375d0d915d",
+      "original_local_sha256": "7bc1ecf192d886b20ed960a5257772c49c05ae7e01ebc3f598b161727234b002"
+    },
+    {
+      "id": "G05-restored-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G05-restored-form.txt",
+      "sanitized_sha256": "b2b6a4d6fe1bfbaeb799cf36605857f065abc97330b4503a5398d29ebd36370f",
+      "original_local_sha256": "99a8722ea2e035079d3da46958509fb1dc418e4914bcd61ef05f974562fb0b3c"
+    },
+    {
+      "id": "saved-gui-A-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-geometry.txt",
+      "sanitized_sha256": "13da2f8ad468650f14b4c01e7690656eba9de26d51885793eebdafb42badf1e7",
+      "original_local_sha256": "03560b5b1165a204f819233e3a6bb6075f1e7b1f5a908cdda485b257581b42fa"
+    },
+    {
+      "id": "saved-gui-A-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-form.txt",
+      "sanitized_sha256": "bf9d369f0b6e00f17ab16857cdc95e9cd80281ad67eb8313bd1a98e3d3f8ee47",
+      "original_local_sha256": "166fa2d20ea1f5e47bfe68c7c3fd7aa6cc7fde5f16129e9d8d5f888272cace4f"
+    },
+    {
+      "id": "saved-gui-A-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-A-doctor.txt",
+      "sanitized_sha256": "402daaaeb2de05c78c29eac6dcc2ffc2fd951883ef02fee86dc8e8fbf9b6eb7a",
+      "original_local_sha256": "dd693c5bdc3fd9b79f1cbd7ef5d97e81b7e96607733027719c543b9927b09706"
+    },
+    {
+      "id": "saved-gui-B-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-geometry.txt",
+      "sanitized_sha256": "0907ebe4af88b01cf54cde8eea628061179e2dd726ada813595535f146f3f221",
+      "original_local_sha256": "ef0d13938e41de73e92161539de69843710128bec74d658f22552c7527adfe19"
+    },
+    {
+      "id": "saved-gui-B-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-form.txt",
+      "sanitized_sha256": "041a7756352a8eac0fd19c3d4cc6fbafa106df7266f456d991c9cbe8ad75fca7",
+      "original_local_sha256": "02ce7658e7385986cbc58253d1998c338e2ee41186accac8d350b7f967ada918"
+    },
+    {
+      "id": "saved-gui-B-doctor",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/saved-gui-B-doctor.txt",
+      "sanitized_sha256": "4845959edda5d468a27a7aef7d89a281d8d14ed6d908b0ae6cca6403ccc5cffb",
+      "original_local_sha256": "89e38a8a0ee1d5c9cee37e5435cba89b891bcd6827b9dc0d45817e70507291f0"
+    },
+    {
+      "id": "final-CoreConsole-NETLOAD-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/final-CoreConsole-NETLOAD-geometry.txt",
+      "sanitized_sha256": "99ee9f2e8d6d0ec7c9ef19556d546b7ece2984dd3a20d731b54f0c156885dcd3",
+      "original_local_sha256": "1666c912419fe575dffc1314fafcf733abb9cad4229562a31def8ccc202075f9"
+    },
+    {
+      "id": "final-CoreConsole-negative-rejection",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/final-CoreConsole-negative-rejection.txt",
+      "sanitized_sha256": "7c9ed25a555a44c15a19cc9002c6028547ded2dc3621d35ed8b6778ee4a65d12",
+      "original_local_sha256": "ef433a953d988f3eed2dcca41d95801ee4a057299769f53e4053d611156caf37"
     }
   ],
   "candidates": [
@@ -77,6 +215,20 @@
       "mvid": "5be5b2e4-d78c-474d-9165-671394d00bd3",
       "manifest": "PatentMarker-2025-deploy/PatentMarker-release.txt",
       "manifest_sha256": "b1fc692b497caaf36131df4b1cb23f61eb143f414cc1c80601858e6c881deaca"
+    }
+  ],
+  "source_bindings": [
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/source-manifest.json",
+      "sha256": "a04bde9524f03b76c7778462bee405ae02f052b6a0980e847b521628d3c11252"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/build-source-manifest.json",
+      "sha256": "89daf8ca19bdf6ea6787e940cb5015e11a70268a5131abe9efb20b60842adf52"
+    },
+    {
+      "path": "docs/test-evidence/cad-20261021-r8/source-correspondence.json",
+      "sha256": "3a4a83fe2e327760b5a9603933b479339e50ee2200ce74bb807d13f0092e894c"
     }
   ]
 }

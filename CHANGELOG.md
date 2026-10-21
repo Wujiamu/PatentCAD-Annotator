@@ -43,7 +43,7 @@ Adopts [Semantic Versioning](https://semver.org/).
 - 修复几何报告允许 `braces=0 passed=1` / `texts=0 passed=1` 的矛盾总数：外部校验器现在核对对象总数、passed/failed/unreadable 合法关系；结构化报告还按对象块交叉核对 SUMMARY。
 - 修复几何报告同一对象块内重复 assertion ID 仍被接受：`verify-geometry.ps1` 按 `LWPOLYLINE`/`MLEADER`/`LEADER`/`MTEXT` 对象块检查重复和必要断言；不同对象块重复相同 ID 保持合法。
 - 修复 R3-05：`PATGEOMVERIFY` 的 Core Console 崩溃边界被定位到读取 `acmgd Application` 的版本 helper；删除该引用和 `GetAutoCadVersion()`，报告不再在 Core Console 中加载/调用完整 UI Application。
-- 修复 R3-06：真实 MLeader 设置 `MText/TextLocation` 后宿主会把末点吸附到文字附件点；四版 MLeader 创建器在文字状态最终化和模型空间插入后移除并重新追加末顶点（RemoveLastVertex/AddLastVertex），并新增模拟宿主重算的 `HostTextAttachmentRecalc_DoesNotOverrideRetractedEndpoint` 回归；2026-10-20 命令批测曾通过，但实际面板新建再次检出三项 T3 和一项 C9 失败，R3-06 重新打开；当前候选整体 FAIL，旧宿主仍待验。
+- R3-06 历史尝试（已由 R8 原生边框间隙方案替代）：真实 MLeader 设置 `MText/TextLocation` 后宿主会把末点吸附到文字附件点；四版 MLeader 创建器在文字状态最终化和模型空间插入后移除并重新追加末顶点（RemoveLastVertex/AddLastVertex），并新增模拟宿主重算的 `HostTextAttachmentRecalc_DoesNotOverrideRetractedEndpoint` 回归；2026-10-20 命令批测曾通过，但实际面板新建再次检出三项 T3 和一项 C9 失败，R3-06 重新打开；当时的候选整体 FAIL；当前状态见本轮 R8 验收，旧宿主仍待验。
 - 固定 VBA/.frm/.frx 资产的 Git 字节保留规则，避免检出时换行转换令发布清单漂移；五包 manifest、Static 和 54 份 Git 导出资产逐字节检查通过。
 - 验收报告标题披露实际角色；报告门禁自检按当前 PASS/FAIL/SKIP-BLOCKED 状态验证退出码，不能把仅剩未覆盖项误记为产品失败。
 - 修复部分受限 Windows 环境拒绝 `File.Replace` 导致 2025 字典写回测试失败：2025 `DictWriter` 在保持临时文件与目标同卷的前提下增加 `File.Move(..., overwrite: true)` 兜底，2025 单测恢复 127/127。
