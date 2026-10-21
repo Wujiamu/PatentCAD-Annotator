@@ -69,11 +69,12 @@ namespace PatentMarker.RuntimeContractTests
                     Assert.Equal(TextAttachmentType.AttachmentMiddle,
                         style.GetTextAttachmentType(LeaderDirectionType.RightLeader));
                 }
-                // 末顶点从文字点缩进 0.4×字高（gap=1.7），不直接触及文字。
+                // Gap is measured from the facing box edge, not insertion.
                 Point3d mle = leader.GetLastVertex(0);
-                double mx = mle.X - 5.0, my = mle.Y - 6.0;
-                Assert.True(Math.Abs(Math.Sqrt(mx * mx + my * my) - 1.7) < 0.01,
-                    "MLeader endpoint should be 1.7 from text, got " + mle);
+                var box = leader.MText.GeometricExtents;
+                Assert.True(PatGeomTextAssertions.VerifyBoundaryGap(true,
+                    box.MinPoint, box.MaxPoint, new Point3d(3,4,0), mle, 4.25,
+                    new System.Text.StringBuilder()));
                 Assert.Equal(new Point3d(5, 6, 0), leader.TextLocation);
                 Assert.NotNull(leader.MText);
                 Assert.Equal("1342A", leader.MText.Contents);
@@ -84,7 +85,7 @@ namespace PatentMarker.RuntimeContractTests
 
 #if !SIM_LEADER
         [Fact]
-        public void HostTextAttachmentRecalc_DoesNotOverrideRetractedEndpoint()
+        public void HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText()
         {
             MLeader.SimulateHostTextRecalc = true;
             try
@@ -105,10 +106,9 @@ namespace PatentMarker.RuntimeContractTests
                     MLeader leader = Assert.IsType<MLeader>(
                         fixture.Database.CommittedEntities[0]);
                     Point3d endpoint = leader.GetLastVertex(0);
-                    Assert.True(Math.Abs(endpoint.X - 58.6) < 1e-6,
-                        "expected retracted X=58.6, got " + endpoint);
-                    Assert.True(Math.Abs(endpoint.Y - 10.0) < 1e-6,
-                        "expected retracted Y=10, got " + endpoint);
+                    var box = leader.MText.GeometricExtents;
+                    Assert.True(Math.Abs(endpoint.X - (box.MinPoint.X - 1.4)) < 1e-6);
+                    Assert.True(Math.Abs(endpoint.Y - (box.MinPoint.Y + box.MaxPoint.Y)/2) < 1e-6);
                     Assert.Equal(new Point3d(60, 10, 0), leader.MText.Location);
                     Assert.Equal(new Point3d(60, 10, 0), leader.TextLocation);
                 }
@@ -320,9 +320,20 @@ namespace PatentMarker.RuntimeContractTests
                 Leader leader = Assert.IsType<Leader>(fixture.Database.CommittedEntities[1]);
                 Assert.Equal(2, leader.Vertices.Count);
                 Assert.True(leader.Annotation.IsNull);
+                var box = annotation.GeometricExtents;
+                Assert.True(PatGeomTextAssertions.VerifyBoundaryGap(true,
+                    box.MinPoint,box.MaxPoint,leader.VertexAt(0),
+                    leader.VertexAt(1),annotation.TextHeight,new System.Text.StringBuilder()));
 #else
                 MLeader leader = Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
                 Assert.Equal(new Point3d(2, 2, 0), leader.TextLocation);
+                using (Transaction tr = fixture.Database.TransactionManager.StartTransaction())
+                {
+                    bool arrow, spline;
+                    var chain = PatMLeaderCreator.ReadChain(leader,tr,out arrow,out spline);
+                    Assert.Equal(2,chain.Count);
+                    Assert.Equal(new Point3d(1,1,0),leader.GetVertex(0,leader.VerticesCount(0)-2));
+                }
 #endif
             }
         }

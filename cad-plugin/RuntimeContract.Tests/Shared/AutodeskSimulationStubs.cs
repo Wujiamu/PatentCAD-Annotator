@@ -460,6 +460,13 @@ namespace Autodesk.AutoCAD.DatabaseServices
         }
     }
 
+    public struct Extents3d
+    {
+        public Extents3d(Point3d min, Point3d max) { MinPoint = min; MaxPoint = max; }
+        public Point3d MinPoint { get; }
+        public Point3d MaxPoint { get; }
+    }
+
     public sealed class MText : Entity
     {
         public string Contents { get; set; } = "";
@@ -469,6 +476,20 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public double Rotation { get; set; }
         public AttachmentPoint Attachment { get; set; }
         public ObjectId TextStyleId { get; set; }
+        // Deterministic test box, not a font metrics simulation. Native tests
+        // use the actual host's measured extents independently.
+        public Extents3d GeometricExtents
+        {
+            get
+            {
+                double width = Math.Max(1, Contents.Length) * TextHeight * 0.6;
+                bool right = Attachment == AttachmentPoint.TopRight || Attachment == AttachmentPoint.MiddleRight || Attachment == AttachmentPoint.BottomRight;
+                bool bottom = Attachment == AttachmentPoint.BottomLeft || Attachment == AttachmentPoint.BottomCenter || Attachment == AttachmentPoint.BottomRight;
+                double x = Location.X - (right ? width : 0);
+                double y = Location.Y - (bottom ? 0 : TextHeight);
+                return new Extents3d(new Point3d(x,y,Location.Z), new Point3d(x+width,y+TextHeight,Location.Z));
+            }
+        }
     }
 
     public sealed class DBText : Entity
@@ -613,8 +634,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
             set
             {
                 _textLocation = value;
-                if (SimulateHostTextRecalc && _mtext != null)
+                if (_mtext != null)
+                {
+                    _mtext.Location = value;
                     ApplyHostTextAttachment(_mtext);
+                }
             }
         }
         public void SetTextAttachmentType(TextAttachmentType attachment,
@@ -643,6 +667,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
             if (!_leaderStarted || leaderIndex != 0)
                 throw new InvalidOperationException("MLeader cluster does not exist.");
             DoglegDirection = direction;
+            if (_mtext != null) ApplyHostTextAttachment(_mtext);
         }
         public MText MText
         {
@@ -650,8 +675,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
             set
             {
                 _mtext = value;
-                if (SimulateHostTextRecalc && value != null)
+                if (value != null)
+                {
+                    _textLocation = value.Location;
                     ApplyHostTextAttachment(value);
+                }
                 if (Database != null) Database.Trace.Add("mleader.mtext");
             }
         }
@@ -682,9 +710,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
             if (_vertices.Count == 0) return;
             // Approximate AutoCAD 2026 MLeader attachment recalculation:
             // the saved leader endpoint follows the text attachment point.
+            Extents3d box = text.GeometricExtents;
+            bool right = DoglegDirection.X >= 0;
             _vertices[_vertices.Count - 1] = new Point3d(
-                text.Location.X, text.Location.Y - text.TextHeight * 0.5101,
-                text.Location.Z);
+                (right ? box.MinPoint.X - LandingGap : box.MaxPoint.X + LandingGap),
+                (box.MinPoint.Y + box.MaxPoint.Y) / 2, text.Location.Z);
         }
 
         public Point3d GetLastVertex(int lineIndex)

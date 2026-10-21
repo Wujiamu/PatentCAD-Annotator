@@ -66,8 +66,10 @@ try {
             record.Data=new ResultBuffer(values.ToArray());tr.Commit();
         }
         if(mode=="all-synchronized") {
-            // Analytical expected endpoint from (10,10) to (2000,1000), gap=1.4.
-            double length=Math.Sqrt(1990.0*1990+990.0*990);vertices[vertices.Count-1]=new Point3d(2000-1.4*1990/length,1000-1.4*990/length,0);
+            // New boundary contract: insertion stays recorded, native terminal
+            // sits 1.4 outside the facing left edge at its vertical midpoint.
+            var bounds=ml.MText.GeometricExtents;
+            vertices[vertices.Count-1]=new Point3d(bounds.MinPoint.X-1.4,(bounds.MinPoint.Y+bounds.MaxPoint.Y)/2,0);
         }
         foreach(var pair in new Dictionary<string,string>{{"PATGEOM_REPORT_DIR",output},{"PATGEOM_RUN_ID","acceptance-"+mode},{"PATGEOM_REQUIRE_BRACES","1"},{"PATGEOM_REQUIRE_TEXTS","1"},{"PATGEOM_STRICT","1"}})Environment.SetEnvironmentVariable(pair.Key,pair.Value);
         Exception error=null;var timer=Stopwatch.StartNew();try{new PatGeomVerifyCommand().Run();}catch(Exception ex){error=ex;}timer.Stop();

@@ -128,6 +128,64 @@ namespace PatentMarker.Commands
                 textPoint.Z - dz * t);
         }
 
+        // The insertion point is not necessarily on the facing text edge.
+        // Accept a middle/corner connection on that edge, with an OUTSIDE gap.
+        // Horizontal gaps serve native MLeader; a ray towards the previous
+        // vertex also supports the detached Leader corner attachment.
+        public static bool VerifyBoundaryGap(bool readable, Point3d minimum,
+            Point3d maximum, Point3d previous, Point3d endpoint,
+            double textHeight, StringBuilder report)
+        {
+            double error = BoundaryGapError(readable, minimum, maximum,
+                previous, endpoint, textHeight);
+            double tolerance = Math.Max(1.0, Math.Abs(textHeight)) * 1e-4;
+            return Report(report, error <= tolerance, "T3 leader-text-retract",
+                "boundary-gap error=" + F(error) + " gap="
+                + F(textHeight * TextGapPerHeight) + " tol=" + F(tolerance));
+        }
+
+        public static double BoundaryGapError(bool readable, Point3d minimum,
+            Point3d maximum, Point3d previous, Point3d endpoint, double height)
+        {
+            if (!readable || !Finite(height) || height <= 0 ||
+                !FinitePoint(minimum) || !FinitePoint(maximum) ||
+                !FinitePoint(previous) || !FinitePoint(endpoint) ||
+                maximum.X <= minimum.X || maximum.Y <= minimum.Y)
+                return double.PositiveInfinity;
+            double center = minimum.X + (maximum.X - minimum.X) / 2.0;
+            bool left = previous.X <= center;
+            double edge = left ? minimum.X : maximum.X;
+            double sign = left ? -1.0 : 1.0;
+            // The terminal may never fall inside or on the text box.
+            if (sign * (endpoint.X - edge) <= 0)
+                return double.PositiveInfinity;
+            double gap = height * TextGapPerHeight;
+            double best = double.PositiveInfinity;
+            double[] levels = new double[] { minimum.Y,
+                minimum.Y + (maximum.Y - minimum.Y) / 2.0, maximum.Y };
+            foreach (double y in levels)
+            {
+                Point3d anchor = new Point3d(edge, y, minimum.Z);
+                best = Math.Min(best, Distance(endpoint,
+                    new Point3d(edge + sign * gap, y, minimum.Z)));
+                double dx = previous.X - edge, dy = previous.Y - y;
+                double length = Math.Sqrt(dx * dx + dy * dy);
+                if (length > 1e-9 && sign * dx > 0)
+                {
+                    double safe = gap < length ? gap : length * 0.5;
+                    best = Math.Min(best, Distance(endpoint, new Point3d(
+                        edge + dx * safe / length, y + dy * safe / length,
+                        anchor.Z)));
+                }
+            }
+            return best;
+        }
+
+        private static bool Finite(double n)
+        { return !double.IsNaN(n) && !double.IsInfinity(n); }
+        private static bool FinitePoint(Point3d p)
+        { return Finite(p.X) && Finite(p.Y) && Finite(p.Z); }
+
         private static bool Report(
             StringBuilder report, bool pass, string id, string detail)
         {

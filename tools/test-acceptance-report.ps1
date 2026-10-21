@@ -4,7 +4,11 @@ $repo=Split-Path -Parent $PSScriptRoot
 if(-not $FindingsPath){$FindingsPath=Join-Path $repo 'docs/acceptance-findings.json'}
 $work=Join-Path $repo ('_paneltest/acceptance-gate-selftest-'+[guid]::NewGuid().ToString('N'));New-Item -ItemType Directory -Path $work|Out-Null
 $renderer=Join-Path $repo 'tools/render-acceptance-report.ps1'
-$rows=foreach($case in @('actual-result','synthetic-blocked','synthetic-host-fail','synthetic-pass','wrong-stored-verdict','changed-evidence-hash','stale-source-id','changed-verification-tool')){
+$cases=@('actual-result','synthetic-blocked','synthetic-host-fail','synthetic-pass','wrong-stored-verdict','changed-evidence-hash','stale-source-id','changed-verification-tool')
+$baseline=Get-Content $FindingsPath -Raw -Encoding utf8|ConvertFrom-Json
+if($baseline.build_source_manifest){$cases+=@('changed-build-snapshot','wrong-build-archive')}
+if($baseline.repeatability.full_collections){$cases+=@('missing-repeat-run','changed-test-selector')}
+$rows=foreach($case in $cases){
     $data=Get-Content $FindingsPath -Raw -Encoding utf8|ConvertFrom-Json
     $expected=switch($data.overall_result){'PASS'{0};'FAIL'{1};'SKIP/BLOCKED'{3};default{throw 'Unknown acceptance result'}}
     switch($case){
@@ -14,6 +18,10 @@ $rows=foreach($case in @('actual-result','synthetic-blocked','synthetic-host-fai
         'wrong-stored-verdict' {$data.overall_result=if($data.overall_result -eq 'PASS'){'FAIL'}else{'PASS'};$expected=2}
         'stale-source-id' {$data.source_snapshot_id='0'*64;$expected=2}
         'changed-verification-tool' {$data.verification_tools[0].sha256='0'*64;$expected=2}
+        'changed-build-snapshot' {$data.build_source_snapshot_id='0'*64;$expected=2}
+        'wrong-build-archive' {$data.build_source_archive='docs/nonexistent-source-archive';$expected=2}
+        'missing-repeat-run' {$data.repeatability.full_collections[0].runs=@($data.repeatability.full_collections[0].runs | Select-Object -First 2);$expected=2}
+        'changed-test-selector' {$data.repeatability.full_collections[0].test_selectors[0]='Nonexistent.Test';$expected=2}
         'changed-evidence-hash' {
             $index=Get-Content (Join-Path $repo $data.evidence_index.path) -Raw -Encoding utf8|ConvertFrom-Json
             $index.files[0].sha256='0'*64;$indexPath=Join-Path $work 'tampered-index.json';$index|ConvertTo-Json -Depth 8|Set-Content $indexPath -Encoding utf8

@@ -356,8 +356,26 @@ namespace PatentMarker.Commands
                     }
                 }
             }
-            ok &= PatGeomTextAssertions.VerifyRetract(
-                retractReadable, previous, textPoint, actualEndpoint, textHeight, report);
+            Point3d boundsMin = new Point3d(0, 0, 0);
+            Point3d boundsMax = new Point3d(0, 0, 0);
+            bool boundsReadable = false;
+            try
+            {
+                Extents3d bounds = text.GeometricExtents;
+                boundsMin = bounds.MinPoint; boundsMax = bounds.MaxPoint;
+                boundsReadable = true;
+            }
+            catch { }
+            if (leader != null)
+            {
+                ok &= PatGeomTextAssertions.VerifyPointMatch(retractReadable,
+                    "T3e detached-corner-ray",
+                    PatGeomTextAssertions.ExpectedRetract(previous, textPoint, textHeight),
+                    actualEndpoint, textHeight, report);
+            }
+            ok &= PatGeomTextAssertions.VerifyBoundaryGap(
+                retractReadable && boundsReadable, boundsMin, boundsMax,
+                previous, actualEndpoint, textHeight, report);
             return ok;
 
         }

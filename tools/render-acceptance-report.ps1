@@ -37,6 +37,27 @@ try {
     $verificationPaths=@($data.verification_tools.path)
     foreach($source in $sourceFiles){if($source.path -in $verificationPaths){continue};if((Get-FileHash -LiteralPath (Read-ProjectFile $source.path)).Hash -ne $source.sha256){throw "Stale acceptance for current source: $($source.path)"}}
     foreach($tool in $data.verification_tools){if((Get-FileHash -LiteralPath (Read-ProjectFile $tool.path)).Hash -ne $tool.sha256){throw "Verification tool changed: $($tool.path)"}}
+    if ($data.build_source_manifest) {
+        if (-not $data.build_source_archive -or -not $data.build_source_snapshot_id) { throw 'Incomplete build-source binding' }
+        $buildManifest = Read-ProjectFile $data.build_source_manifest.path
+        if ((Get-FileHash $buildManifest).Hash -ne $data.build_source_manifest.sha256 -or
+            $data.build_source_manifest.sha256 -ne $data.build_source_snapshot_id -or
+            -not $indexed.ContainsKey($data.build_source_manifest.path)) { throw 'Build-source manifest binding invalid' }
+        $buildFiles = @(Get-Content $buildManifest -Raw -Encoding utf8 | ConvertFrom-Json)
+        if ($buildFiles.Count -ne @($sourceFiles).Count) { throw 'Build/root source sets differ' }
+        foreach ($entry in $buildFiles) {
+            $current = @($sourceFiles | Where-Object path -eq $entry.path)
+            if ($current.Count -ne 1) { throw 'Build/root source paths differ' }
+            $archived = Read-ProjectFile ($data.build_source_archive + '/' + $entry.path)
+            if ((Get-FileHash $archived).Hash -ne $entry.sha256) { throw "Build-source archive changed: $($entry.path)" }
+            # Git's CRLF checkout conversion changes byte identities, but must
+            # not permit any other source-content difference. Latin1 is used
+            # as a reversible byte mapping, not as the C# source encoding.
+            $rootBytes = [Text.Encoding]::Latin1.GetString([IO.File]::ReadAllBytes((Read-ProjectFile $entry.path))).Replace("`r`n","`n")
+            $buildBytes = [Text.Encoding]::Latin1.GetString([IO.File]::ReadAllBytes($archived)).Replace("`r`n","`n")
+            if ($rootBytes -cne $buildBytes) { throw "Current/build content differs beyond CRLF/LF: $($entry.path)" }
+        }
+    }
     $ids=@{}
     foreach($finding in $data.findings){
         foreach($field in @('finding_id','severity','component','status','result','expected','actual','repro_command','test_selectors','evidence','residual_risk')){if($null -eq $finding.$field){throw "$($finding.finding_id): missing $field"}}
@@ -54,7 +75,26 @@ try {
         }
     }
     if(-not $data.repeatability.same_case_set -or -not $data.repeatability.same_business_result_set -or -not $data.repeatability.probe_environment_restored -or -not $data.repeatability.parent_PATGEOM_restored){throw 'Repeatability or environment isolation assertion failed'}
-    if(@($data.repeatability.selected_tests).Count -ne 12 -or @($data.repeatability.selected_tests|Where-Object {$_.result -ne 'PASS' -or $_.executed -ne 5 -or $_.notExecuted -ne 0}).Count){throw 'Selected test collection incomplete or failed'}
+    if ($data.repeatability.full_collections) {
+        $collections = @($data.repeatability.full_collections)
+        if (($collections.version | Sort-Object) -join ',' -ne '2007,2010,2013,2015') { throw 'Required repeated runtime collections missing' }
+        foreach ($collection in $collections) {
+            $expectedNames = @($collection.test_selectors | Sort-Object)
+            if ($expectedNames.Count -eq 0 -or @($expectedNames | Select-Object -Unique).Count -ne $expectedNames.Count -or
+                @($collection.runs).Count -lt 3) { throw 'Incomplete repeated test collection' }
+            foreach ($run in $collection.runs) {
+                if ($run.exit_code -ne 0 -or $run.result -ne 'PASS' -or -not $indexed.ContainsKey($run.stdout.path) -or
+                    $indexed[$run.stdout.path] -ne $run.stdout.sha256) { throw 'Repeated test run failed or unindexed' }
+                $output = [IO.File]::ReadAllLines((Read-ProjectFile $run.stdout.path))
+                $actualNames = @($output | Where-Object { $_.StartsWith('PASS ') } | ForEach-Object { $_.Substring(5) } | Sort-Object)
+                if (($actualNames -join "`n") -cne ($expectedNames -join "`n") -or
+                    @($output | Where-Object { $_ -match '^(FAIL |SKIP )' }).Count -or
+                    @($output | Where-Object { $_ -eq ('SUMMARY: passed='+$expectedNames.Count+' failed=0 skipped=0') }).Count -ne 1) {
+                    throw 'Repeated test names/counts/results differ'
+                }
+            }
+        }
+    } elseif (@($data.repeatability.selected_tests).Count -ne 12 -or @($data.repeatability.selected_tests|Where-Object {$_.result -ne 'PASS' -or $_.executed -ne 5 -or $_.notExecuted -ne 0}).Count) { throw 'Selected test collection incomplete or failed' }
     # A missing matrix assertion, timeout or skipped test cannot become a release PASS.
     foreach($hostRow in $data.host_matrix){if($hostRow.result -notin @('PASS','FAIL','SKIP/BLOCKED')){throw 'Invalid host result enum'}}
     $hasFail=@($data.findings|Where-Object{$_.result -eq 'FAIL'}).Count -gt 0 -or @($data.negative_matrix|Where-Object{$_.required -and $_.result -eq 'FAIL'}).Count -gt 0 -or @($data.host_matrix|Where-Object{$_.required -and $_.result -eq 'FAIL'}).Count -gt 0
@@ -68,9 +108,12 @@ try {
         $lines.Add('');$lines.Add('## 运行身份与独立性');$lines.Add('')
         foreach($field in @('report_id','generated_at','verification_actor','operator','reviewer','independence_statement','source_snapshot_id')){$lines.Add('- **'+$field+'**：'+(Cell $data.$field))}
         $lines.Add('- 源码 commit / tree / dirty：`'+$data.source.commit+'` / `'+$data.source.tree+'` / `'+$data.source.dirty+'`。')
+        if ($data.build_source_manifest) {
+            $lines.Add('- 实际构建副本 snapshot：`'+$data.build_source_snapshot_id+'`；当前工作区 snapshot 与构建副本分别记录原始字节哈希，仅允许并逐文件核验 CRLF/LF 差异。实际构建源码完整归档于 `'+$data.build_source_archive+'`。')
+        }
         $lines.Add('- diff SHA-256：`'+$data.source.diff_sha256+'`；未跟踪源码由 source manifest 单独覆盖，dirty diff 本身不能标识完整候选。')
         $lines.Add('- 红绿源码链：修复前 snapshot `'+$data.pre_fix_source_snapshot_id+'` → 修复后 snapshot `'+$data.source_snapshot_id+'`；修复前 diff SHA-256 `'+$data.pre_fix_source.diff_sha256+'`。')
-        $lines.Add('- 同一命令判定：两阶段调用同一 AcceptanceProbe 和 acceptance-report-cases 驱动器，夹具与判定标准不变；仅替换源码/程序集路径。报告脚本旧接口没有 ExpectedMvid 参数时省略该参数，完整实际 argv 保存在各命令记录。')
+        $lines.Add('- 同一命令判定：'+$(if($data.oracle_statement){[string]$data.oracle_statement}else{'两阶段调用同一 AcceptanceProbe 和 acceptance-report-cases 驱动器，夹具与判定标准不变；仅替换源码/程序集路径。报告脚本旧接口没有 ExpectedMvid 参数时省略该参数，完整实际 argv 保存在各命令记录。'}))
         $lines.Add('- 工具链：'+(Cell $data.toolchain));$lines.Add('- '+$(if($data.verification_scope){[string]$data.verification_scope}else{'本轮是 L0/L1/模拟命令验收，未安装或启动真实 CAD/Office。'}))
         $lines.Add('');$lines.Add('## 原始快照 → 修复源码 → 同一反例');$lines.Add('')
         $lines.Add('| ID | 原始反例/结果 | 修复文件 | 精确测试选择器 | 修复后结果 | 证据 SHA-256（首组） | 剩余风险 |')

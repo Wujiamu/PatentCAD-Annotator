@@ -10,6 +10,8 @@ Adopts [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased] - 1.0.3 candidate (2026-10-01)
 
+- R8 边框间隙：按用户确认的面对拐点一侧实际文字边框加0.4H间隙，保留文字拾取位置；修正无限点Enter的重复末拐点并统一对齐附着。旧Creator稳定红、修复后三轮绿，实际面板四例通过；完整GUI与旧宿主状态见当前候选验收。另修正跨目录打包时Git身份误取调用目录，DLL保持实测字节，manifest身份单独校正。
+
 ### Added
 
 - 新增独立的实验性 Word→PowerPoint 0.1.2.0 / Word→Visio 0.1.4.0 COM 加载项：手选只读字典、原生线绑定编号、文稿内持久化、两秒刷新及整稿漏标检查。PPT 使用形状组 / Tags / Custom XML，Visio 使用一维线与编号框配对 / ShapeSheet，前景页参与检查。两端有可恢复安装器及独立 CI 门禁；本机 Office 16 x64 通过限定 L3 面板与保存重开链路，原生鼠标绘制、Visio 原生选线及旧版宿主待验。

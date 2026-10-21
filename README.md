@@ -76,7 +76,7 @@ CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `
 
 ### 当前标注功能
 
-- 2010/2013/2015/2025 四个版本使用 **MLeader（F 方案）** 创建标注：单个多重引线实体自持 MText 文字，顶点链为 `附着点 → 拐点… → 缩进端点`（末顶点沿最后一段方向缩进 0.4×字高，不直接触及文字），文字仍锚定在 `TextLocation`；并禁用全部自动几何（dogleg/landing/extend），引线路径沿用户点链构造，并在文字前保留间距；2007 无 MLeader API，保持 `Leader + MText`。
+- 2010/2013/2015/2025 四版使用单个 **MLeader（F 方案）** 自持 MText，保留用户附着点及拐点。文字保持在拾取点，引线末端连接朝向最后拐点的实际文字边框中点或上/下角外侧，保留 0.4×字高间隙；使用原生 LandingGap，不直接按文字插入点缩进。dogleg/landing 延伸关闭；2007 保持 `Leader + MText`。
 - [当前候选验收](docs/cad-acceptance-20261020.md)与[四个旧宿主交接](docs/legacy-host-acceptance.md) — 真实宿主结果、候选身份和未覆盖项
 - 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
 - 无箭头时 `ArrowSize` 置 0（非零值会修剪引线起点，导致引线不触及零件），箭头用空箭头块 `_PAT_NO_ARROW` 实现；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问保持 2010-2012 兼容。
@@ -85,7 +85,7 @@ CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `
 - 三点或无限点标注过程中，按 ESC 或右键菜单中的“确认/取消”都可以退出当前标注命令；无限点采集到一半时也可以直接取消。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 面板标注、大括号、对齐和检测共用按图纸隔离的命令调度：切换按钮会取消面板启动的交互命令，再执行最新请求；连续点击以最后一次为准。用户直接启动的原生或其他命令结束后，面板才补发请求。
-- 新建 MLeader 在样式和实体上分别设置左右方向为 `AttachmentMiddle`，并按文字所在侧设置连接方向，保持文字位置及末顶点缩进，消除文字下方的自动延伸线及新建样条在文字侧的回折。旧图纸实体不自动迁移；`PATMLVERIFY` 增加左右附着、文字下边几何及面对文字边缘的端点检查。2025 包已在 AutoCAD 2026 x64 完成安装后冷启动、真实双击、按钮切换、左右绘制、夹点与多图纸验收；其他年份宿主未实测。范围及包哈希见 [CAD 验收记录](docs/cad-acceptance-20261001.md)。
+- 新建 MLeader 设置左右 `AttachmentMiddle`，按实际文字边框确定连接侧，并保留原生间隙。旧实体不自动迁移。当前候选的实际GUI、夹点及冷启动结论见[本轮候选验收](docs/cad-acceptance-20261020.md)；早期记录不替代当前候选验收。
 - 面板检测到 Word 覆盖 CAD 修改时会启用“裁决”按钮，可选择采用 Word 版、恢复 CAD 版或稍后处理；PATCHECK 结果按图纸隔离，重载字典时只清理当前图纸的高亮状态。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
 - `PATSELECTALL`/`BZS` 通过扩展字典标记 `PATENTMARKER_MLEADER` 识别新建 MLeader（并记录用户点链），同时兼容旧图纸的 Leader 标注与独立文字。
@@ -184,11 +184,11 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | 层级 | 已有记录 | 不能据此推断 |
 |---|---|---|
 | 本地编译与发行暂存 | 五版构建；2013/2015 ILRepack 合并及发行暂存检查 | 所有目标年份的 AutoCAD 均能实际加载 |
-| 自动化测试 | 本分支独立工作区 353/353、零跳过：2025 为127，RuntimeContract 2007为55、2010/2013/2015各57；Structure/Static通过，VBA资产经过Git导出字节一致检查 | 模拟宿主替代真实旧CAD、GUI或Office验收 |
+| 自动化测试 | 本分支独立工作区 360/360、零跳过：2025 为127，RuntimeContract 2007为55、2010/2013/2015各57；Structure/Static通过，VBA资产经过Git导出字节一致检查 | 模拟宿主替代真实旧CAD、GUI或Office验收 |
 | Word L2 源码宿主 | `verify-vba-export.vbs` 与已从忽略规则中放行的正式 `test-vba-panel.vbs` 直接导入根源码，覆盖路径映射、多 DWG 选择复用、普通保存/失败取消，以及组件类型、公开入口、UserForm 与手动导出 | 部署包安装、Startup、AutoExec 或重启持久化已通过 |
 | Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
 | AutoCAD 2026 命令级 | 9次原生宿主均正常退出；3次新建及对应Core复核、冷重开、brace-only均PASS；原错误图仍拒绝；身份SHA/MVID一致，PATDOCTOR四次7/0/0，安装恢复155项通过 | GUI、旧宿主或外部独立审计已完成 |
-| AutoCAD 2026 x64 GUI | 实际面板创建发现 R7-G04：三项 T3 和一项 C9 失败；大括号原生夹点/Undo/Redo/取消通过。整体 FAIL，见[候选验收](docs/cad-acceptance-20261020.md) | 仅截图或按键API成功等于业务通过 |
+| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261020.md) | 单阶段通过替代整套GUI或旧宿主验收 |
 | Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；PPT 四方向鼠标画线/选线、Visio 原生直线/连接线、粘合跟随和一次撤销/重做、两端面板目检；旧 VSD 转换/新增标注/冷重开；Word 单/多 DWG 手动导出→PPT 读取与关联重开；导入 PNG 静态点粘合、移动跟随及冷重开（[验收记录](office-com-addin/test-evidence/office-local-validation-20261003.md)） | Win7 / Office 2010 x86、真实旧版 Visio 宿主、复杂组、其他粘合方式/显示比例及大型真实文稿未验 |
 
 本仓库的 [CI](.github/workflows/build.yml) 执行 Structure、Static、2025 单测、四版 Simulation，以及 Office 构建、代码测试与隔离安装门禁。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
@@ -377,14 +377,14 @@ Dictionaries and conflict backups default to Hidden+System attributes. The CAD p
 
 ### Current annotation features
 
-- Editions 2010/2013/2015/2025 create annotations as a single **MLeader (Plan F)** entity that carries its own MText: the vertex chain is `attach → bend(s) → shortened endpoint`; the last vertex is pulled back by 0.4× text height while text remains anchored at `TextLocation`. Automatic geometry (dogleg/landing/extend) is disabled, preserving the picked path with a gap before the text. Edition 2007 has no MLeader API and keeps `Leader + MText`.
+- Editions 2010/2013/2015/2025 create one **MLeader (Plan F)** carrying MText. Picked attachment/bends and text position are preserved; the terminal attaches outside the actual facing text-box edge at middle/top/bottom corner with a native 0.4×text-height gap. Dogleg/landing extensions stay disabled. Edition 2007 keeps `Leader + MText`.
 - v4.0 rolled MLeader back because of the "fishhook" distortion; the 2026-08-15 form probe traced the root cause to an incomplete vertex chain (attach→dogleg only). Plan F fixes it by appending the text point — see the [Plan F document](docs/mleader-f-plan.md).
 - `ArrowSize` is set to 0 when the arrow is off (a non-zero value trims the leader start away from the part); the arrow-off look uses an empty arrow block `_PAT_NO_ARROW`. `ExtendLeaderToText` is a 2014+ SDK property and is accessed via reflection so one source file serves 2010-2012 as well.
 - The palette supports a three-point / unlimited-point mode switch. Three-point mode collects exactly the three points selected by the user; unlimited-point mode accepts any number of user-selected dogleg points. Neither mode adds a text attachment point to the user's geometry.
 - Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
 - Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Marking, braces, alignment and checks share a per-drawing command scheduler. A palette switch cancels an interactive command started by the palette and runs the latest request; requests wait for native or other commands to finish.
-- New MLeaders set `AttachmentMiddle` for both sides on the style and entity, plus the connection direction for the text side. This removes the automatic line below the text and the text-side fold in new splines while preserving text position and endpoint shortening. `PATMLVERIFY` now checks side attachments and text-edge geometry. The 2025 candidate passed installed cold startup, real double-clicks, palette switching, left/right drawing, grips and multiple drawings in AutoCAD 2026 x64; older hosts remain untested. See [CAD acceptance](docs/cad-acceptance-20261001.md).
+- New MLeaders use side-specific `AttachmentMiddle`, facing-side direction, and native outside gap. Old entities are not automatically migrated. See the [current candidate review](docs/cad-acceptance-20261020.md) for actual GUI/grip/cold-start results; historical acceptance does not establish current-candidate coverage.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
 - `PATSELECTALL` recognizes the new MLeaders through the extension-dictionary marker `PATENTMARKER_MLEADER` (which also records the user point chain), while remaining compatible with legacy Leader annotations and standalone text in old drawings.
 - New commands: `PATMLSET` (scriptable switches) and `PATMLVERIFY` (form diagnostic: explodes all PAT MLeaders and reports against the recorded chains — the regression tool).
@@ -480,11 +480,11 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
-| Automated tests | This branch passed 353/353 tests with zero skips: 127 portable 2025 tests and 55/57/57/57 simulated host tests; Structure and Static passed | Actual legacy hosts, GUI or Office acceptance |
+| Automated tests | This branch passed 360/360 tests with zero skips: 127 portable 2025 tests and 56/59/59/59 simulated host tests; Structure and Static passed | Actual legacy hosts, GUI or Office acceptance |
 | Word L2 source host | `verify-vba-export.vbs` and the formal `test-vba-panel.vbs` (now explicitly unignored) import root source and check mapping, ordinary save/failure cancellation, component types, public entry points, the UserForm, and manual export | Deployment install, Startup loading, AutoExec or restart persistence |
 | Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
-| AutoCAD 2026 | Nine native host processes exited normally; command-only fresh creation and cold reopening passed, but actual GUI creation later failed T3/C9; valid command reports pass and the frozen negative report is rejected; identity and installation restoration verified | GUI, legacy hosts or external independent audit coverage |
-| AutoCAD 2026 x64 GUI | 实际面板创建发现 R7-G04：三项 T3 和一项 C9 失败；大括号原生夹点/Undo/Redo/取消通过。整体 FAIL，见[候选验收](docs/cad-acceptance-20261020.md) | 仅截图或按键API成功等于业务通过 |
+| AutoCAD 2026 | R8同判定器：旧错误图拒绝，新八例冷重开通过；实际候选路径/SHA/MVID匹配。完整状态见候选验收 | GUI、旧宿主或外部独立审计 |
+| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261020.md) | 单阶段通过替代整套GUI或旧宿主验收 |
 | Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: panel actions, dictionary recovery and cold reopening; PPT mouse drawing/selection in four directions; native Visio lines/connectors, glue, single-action undo/redo and both panel visual checks; old VSD conversion/annotation/reopening; installed Word single/multiple DWG manual export → PPT reading and binding restoration; imported PNG static-point glue, following a moved target and cold reopening | Win7 / Office 2010 x86, actual older Visio hosts, complex groups, other glue methods/display scales or large real documents |
 
 [CI](.github/workflows/build.yml) runs CAD structure, static, unit and simulated host checks, plus Office builds, code tests and isolated installer gates. It does not run host GUI acceptance. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.

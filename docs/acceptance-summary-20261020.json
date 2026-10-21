@@ -1,166 +1,121 @@
 {
   "schema_version": "public-acceptance-summary/1",
-  "phase": "GUI_counterexample_under_repair",
-  "generated_utc": "2026-10-20T07:41:42.2353426Z",
-  "overall_result": "FAIL",
-  "native_command_result": "PASS",
-  "gui_result": "FAIL",
-  "verification_actor": "repair_author; separate low-effort GUI operator initially, primary takeover after operator quota exhaustion",
-  "independence_statement": "Same machine and candidate; separate GUI operator then repair-author takeover. Actual GUI counterexample overrides earlier command-only positives. No external independent audit.",
-  "source_snapshot_id": "00b71b75b5ef312a77adf328af745427753390856299eaff00b3a3f66d796ca3",
-  "candidate_lineage": "Binaries copied byte-for-byte from the tested R6 dirty-tree build. Manifests retain original build commit/tree/dirty; publication commit is not build commit.",
+  "phase": "R8_G04_pass_GUI_continuation",
+  "generated_utc": "2026-10-21T03:09:45.7184667Z",
+  "overall_result": "SKIP/BLOCKED",
+  "gui_result": "SKIP/BLOCKED",
+  "verification_actor": "repair_author and separate actual low-effort GUI operator",
+  "independence_statement": "Separate copied source/build worktree and GUI operator, same machine/account/cache. Primary authored repairs and final oracle; no external independent audit.",
+  "source_snapshot_id": "a04bde9524f03b76c7778462bee405ae02f052b6a0980e847b521628d3c11252",
+  "build_source_snapshot_id": "89daf8ca19bdf6ea6787e940cb5015e11a70268a5131abe9efb20b60842adf52",
+  "candidate_lineage": "DLLs exactly equal tested R8 final build. Original tested manifests retained locally. Delivery manifest metadata corrects cross-CWD source identity to actual build worktree8c94b891 dirty; publication commit is not build commit. Root/build byte hashes differ only CRLF/LF, verified per file.",
+  "contract": "Actual text box facing the preceding bend: middle/top/bottom corner with positive0.4H outside gap, preserve text pick. User superseded conflicting insertion-point/zero-gap criteria; same final oracle on red/green.",
   "tests": {
-    "total": 353,
-    "passed": 353,
+    "total": 360,
+    "passed": 360,
     "failed": 0,
     "skipped": 0,
+    "executions": 826,
     "portable_2025": 127,
-    "simulated_2007": 55,
-    "simulated_2010": 57,
-    "simulated_2013": 57,
-    "simulated_2015": 57
+    "simulated_2007": 56,
+    "simulated_2010": 59,
+    "simulated_2013": 59,
+    "simulated_2015": 59,
+    "runner": "Existing FactRunner: exact Fact names, runtime sets three processes, portable once; standard xUnit CI separate"
+  },
+  "regression": {
+    "probe_cases": 12,
+    "report_cases": 23,
+    "repetitions": 3,
+    "all_expected_results": "PASS",
+    "old_creator_red": "Same final oracle, three stable runs:56 passed3 failed",
+    "order": "Probe order randomized seed20261020; Fact names sorted, not randomized",
+    "environment": "All36 probe JSONs restored environment; three extra parent isolation child runs preserve exact parent PATGEOM values"
+  },
+  "G04": {
+    "result": "PASS",
+    "palette": "Four exact user point sets, leader ON arrow OFF underline OFF H3.5 three-point, before grips:4/4 form,38/38 geometry assertions",
+    "strict_flag": "Default GUI report strict=false; all required assertions executed, no N/A. This raw report is NOT claimed accepted by strict automated release gate. Strict native saved-GUI replay recorded separately when available.",
+    "persistence": "Previous GUI session interrupted before saving; screenshots/raw reports retained. Resumed grips use a frozen8-case geometry copy, new palette creation/persistence tested separately."
   },
   "candidates": [
     {
       "edition": "2007",
       "dll": "PatentMarker-2007-deploy/PatentMarker.dll",
-      "dll_sha256": "a1f67c852bbddb1355d39b2b5c14b6fc22e86bf2facda44e3a425a95d0ecc1d6",
-      "mvid": "55fee5bb-a5c2-4e40-957f-9ccc8aa225f5",
+      "dll_sha256": "2f87c96b460f73bc86651e7273632178cc41e643884e48fae0775be21436bcd9",
+      "mvid": "0b059f3a-9a03-4499-8bda-959cfe73db0f",
       "manifest": "PatentMarker-2007-deploy/PatentMarker-release.txt",
-      "manifest_sha256": "6ed8ba91a1ca3b174bd03685628756a2e7d663186e7c11cb44047a124c44d87d"
+      "manifest_sha256": "f8199942d5b9fdbe38ed80da516718d9b86bf390082c2ccdad32658bc3b8129c"
     },
     {
       "edition": "2010",
       "dll": "PatentMarker-2010-deploy/PatentMarker.dll",
-      "dll_sha256": "a38cf0395fe6352798edd6b1afd9792f5b5a879fdae2f1b1a02d6bd2ebcf613c",
-      "mvid": "c3b2d9b8-1cba-4ea8-bbfe-e93ebe9b3969",
+      "dll_sha256": "12db6b085e3924e640a0cd0f65bb001b607fab24ad8d4e80aa3740a783d4b60b",
+      "mvid": "67843366-a2b1-453f-bab5-72b519943d14",
       "manifest": "PatentMarker-2010-deploy/PatentMarker-release.txt",
-      "manifest_sha256": "54806253b9d84878b9c3f22de135fb53f6df6609e16b9abfee3fe3cfc3cf1353"
+      "manifest_sha256": "520209e7db21877d136db7353ea0a08c330a4d0ad0d1fc5648d4070294493237"
     },
     {
       "edition": "2013",
       "dll": "PatentMarker-2013-deploy/PatentMarker.dll",
-      "dll_sha256": "af8e96a68a1376dd40dd2d7701d15d6fa11842be908a36258e8fbe280d83e93f",
-      "mvid": "8e25c605-bb70-4199-8b0d-e44d9ff78635",
+      "dll_sha256": "e44a9e32e4f47261527fadc6cf062ba89e04e77a05f960545fa7ba54e57c14cf",
+      "mvid": "0793bd8b-a585-43f3-890a-bff49c731e94",
       "manifest": "PatentMarker-2013-deploy/PatentMarker-release.txt",
-      "manifest_sha256": "51af95539228d4aba971769b2bd5c55aadb1e914b35f90afd494c39a24ea98ad"
+      "manifest_sha256": "3c195ede8f23660d2cae7be4a2271730cda7d0065022a7d58ca341c2d4a77f67"
     },
     {
       "edition": "2015",
       "dll": "PatentMarker-2015-deploy/PatentMarker.dll",
-      "dll_sha256": "16440b9a8228d49984c2cf1ff10e8b965b1fa6120775ca5a65af9efb6bb306b1",
-      "mvid": "5544a439-8aab-4530-9b45-1262a0169ee4",
+      "dll_sha256": "3bbbf98a30db73f66cb9ec5a5da5828c91cf0ef3c8381e36a75866663d0064d0",
+      "mvid": "922c5c4b-a4fd-4609-b1d5-39f26a4ebacd",
       "manifest": "PatentMarker-2015-deploy/PatentMarker-release.txt",
-      "manifest_sha256": "da7a6c36a95bb10ee720cbfb0c062916ba2e14af3183c37ce230cdba2fa701eb"
+      "manifest_sha256": "623d6d32798d8ed45cae833a9edde365274942b42f31ab54fa62d75fa155c0ed"
     },
     {
       "edition": "2025",
       "dll": "PatentMarker-2025-deploy/PatentMarker.dll",
-      "dll_sha256": "a78b0dbdbd938ff14f804f7514b8fec2ae5751f35a119ee14c7f570bb8d92cdd",
-      "mvid": "05dc0b57-02e0-45a0-9c2e-c0a3dfe9d3cd",
+      "dll_sha256": "e7ecbb3e08af9d02201c4295993a5e3f4b5014d6bdd8f6f579c6d1f679e921a3",
+      "mvid": "5be5b2e4-d78c-474d-9165-671394d00bd3",
       "manifest": "PatentMarker-2025-deploy/PatentMarker-release.txt",
-      "manifest_sha256": "b07517e6cc05babcbdb2f9e2da31e9986c7b1967a7855c34450ead9ee43a1db8"
+      "manifest_sha256": "b1fc692b497caaf36131df4b1cb23f61eb143f414cc1c80601858e6c881deaca"
     }
   ],
-  "native_reports": [
+  "reports": [
     {
-      "id": "full-create-1",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "73222e46d3a16235da241756adc76558adf1464aa0f4b3916aa7d96445f62fa5",
-      "sanitized_report": "docs/test-evidence/cad-20261020/full-create-1-geometry.txt",
-      "sanitized_report_sha256": "d96c77abca9de7b31bf4ade3e0504bddeb13c070749e70f8c3e8f48479fd6287"
+      "id": "red-frozen-G04-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/red-frozen-G04-geometry.txt",
+      "sanitized_sha256": "811372e9c2345874afd87edd308e20608f8e6dad7e428d5b4643686a5ce89744",
+      "original_local_sha256": "0623ec86ff57d67a79927cbf60ae592bdeb19adf03b6c00c440537922d5c2575"
     },
     {
-      "id": "core-fresh-1",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "d1fb5cc96adfa66dbb4439c67d2629e249dacbda63a1f31a8a82c3108df0f344",
-      "sanitized_report": "docs/test-evidence/cad-20261020/core-fresh-1-geometry.txt",
-      "sanitized_report_sha256": "42c0e146c0774e77f7da72c8046fd4467f5017cacabccd2a2366a98ff48e787c"
+      "id": "red-frozen-G04-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/red-frozen-G04-form.txt",
+      "sanitized_sha256": "8b44163bc4c797861bf2eb53db424b063620724f88c8f8c0f5d694a82896eb50",
+      "original_local_sha256": "022b84ce20b7cbbe48c24f46ccdf5bdaefda0e5db057157584c2af81fe767701"
     },
     {
-      "id": "full-create-2",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "da7df5c1d4524c1fe347e2e0061e2fb531b0e6f6fcfc11d549e3a4ba54db2b18",
-      "sanitized_report": "docs/test-evidence/cad-20261020/full-create-2-geometry.txt",
-      "sanitized_report_sha256": "b3be16d99434b104e209da67ba744e76a13c0864faec7bf385a8e136d92dea1e"
+      "id": "eight-case-reopen-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/eight-case-reopen-geometry.txt",
+      "sanitized_sha256": "a42a69d4b04a13cb9660339d13c153b4b72b271ef716ad60a8eb903cf553a51f",
+      "original_local_sha256": "fd70dba67715dbef166a5f667a8954253bed58749d1e923b98f2085db0094aab"
     },
     {
-      "id": "core-fresh-2",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "27e0a5a2d1650db4fb3a514a3d1dd69a4e014ea97818fff3293e96d70a86d9b2",
-      "sanitized_report": "docs/test-evidence/cad-20261020/core-fresh-2-geometry.txt",
-      "sanitized_report_sha256": "d7666a9509dbfd20489a83fb3d511ccad0c4b415c2abc347b9c3e73399ed1ed5"
+      "id": "eight-case-reopen-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/eight-case-reopen-form.txt",
+      "sanitized_sha256": "ea0cec5dc26ac87622f40614e04190b1e9ca3d074d6e09174472554463c3e343",
+      "original_local_sha256": "13f03f2d511b30bbd6958613680d141163d7afbed3a336a8a11e9f16711b2b3b"
     },
     {
-      "id": "full-create-3",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "449f1036ea45ee5967dc21f31e7217fe8e00ae5f74aa8ca28ded42c9dd46d07b",
-      "sanitized_report": "docs/test-evidence/cad-20261020/full-create-3-geometry.txt",
-      "sanitized_report_sha256": "dd632eeac6d3d806f8e825a2204c83d287add583974c16582ccfb9490112ac6f"
+      "id": "G04-palette-geometry",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G04-palette-geometry.txt",
+      "sanitized_sha256": "e37d6f57523f893a184fe5eb8ed9900e521301428b229d4fad19f9ba07c963b1",
+      "original_local_sha256": "f4ecd8130a0d0d541e7460a2584c3e6132334f37a743aab13b4615355167167a"
     },
     {
-      "id": "core-fresh-3",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "6efe958fc92dd4d4c081b04a6a4a9b18bedf44fea9bdccfcc5bc0a9040919849",
-      "sanitized_report": "docs/test-evidence/cad-20261020/core-fresh-3-geometry.txt",
-      "sanitized_report_sha256": "85aa08c5c9d2705dd80bf6b9965d76dcfbf83cbe9be521d9f5f08225fbc91ec1"
-    },
-    {
-      "id": "core-original-r3-input",
-      "result": "PASS",
-      "expected_geometry_result": "FAIL",
-      "host_exit": 0,
-      "gate_exit": 1,
-      "identity_matches": true,
-      "original_local_report_sha256": "6afcf0646a24a4dc406ffdf9a6a8f8cde97998a7520339a107126e060e93370d",
-      "sanitized_report": "docs/test-evidence/cad-20261020/core-original-r3-input-geometry.txt",
-      "sanitized_report_sha256": "10758c5fbd16651ba154b49a815f85d1ed4463db83b2ddde46568b9baf214240"
-    },
-    {
-      "id": "full-cold-reopen",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "f27490b7c688238b8a8a73cd91519c0de6b02174baada002b9128619d4cdde6e",
-      "sanitized_report": "docs/test-evidence/cad-20261020/full-cold-reopen-geometry.txt",
-      "sanitized_report_sha256": "11f193fe827bff0867896baa67c9ee80b8828baa8ec6c4e9ab2202239f152b9f"
-    },
-    {
-      "id": "core-positive-brace-only",
-      "result": "PASS",
-      "expected_geometry_result": "PASS",
-      "host_exit": 0,
-      "gate_exit": 0,
-      "identity_matches": true,
-      "original_local_report_sha256": "94d34152f38c6699b502936c53dbd939f1b273558f874229566f9d732777f2e1",
-      "sanitized_report": "docs/test-evidence/cad-20261020/core-positive-brace-only-geometry.txt",
-      "sanitized_report_sha256": "4dc065d2be58a8dc1ee4957ea7d8d892bbcd4e96fc8a9bd9b65931134d1cfef3"
+      "id": "G04-palette-form",
+      "sanitized_report": "docs/test-evidence/cad-20261021-r8/G04-palette-form.txt",
+      "sanitized_sha256": "57d4efd8dab09d84c03b32b9b51781d7c040ed87c3b8fbe6df7e090e4357aa71",
+      "original_local_sha256": "2933dba31a04d235f1559478570c6c3331b65643d535fbc9da11116d8696ebf3"
     }
   ],
   "legacy_hosts": [
@@ -169,41 +124,11 @@
     "2013: SKIP/BLOCKED",
     "2015: SKIP/BLOCKED"
   ],
-  "evidence_policy": "Only sanitized report derivatives and original local hashes are public. No SDK, credentials, AGENTS, raw local logs, DWGs or screenshots uploaded. This summary is not input to the full local acceptance-report gate.",
-  "gui_findings": [
-    {
-      "id": "R7-G04",
-      "expected": "Four newly created MLeaders preserve text anchor/retracted endpoint and connect on facing edge",
-      "status": "FAIL",
-      "evidence": [
-        {
-          "sanitized_report": "docs/test-evidence/cad-20261020/G04-red-PatentMarker-geom-verify.txt",
-          "sanitized_sha256": "befb007d8cc23283e9691bec09aec62b89c283928ff47d50f36fb0d9d0677466",
-          "original_local_sha256": "f3929b4eb18d17b954c580e54d262d77510229d4b6e3ded235d6d655e8f1fa0b"
-        },
-        {
-          "sanitized_report": "docs/test-evidence/cad-20261020/G04-red-PatentMarker-mleader-verify.txt",
-          "sanitized_sha256": "03a7fbf9725432ca273a3958a955f199d27ce65ee5bd35eca67b746f79433600",
-          "original_local_sha256": "4b0acb29b1c3e7fceedf98b4f7ea0f589beebc74af0d06113c30976454bae40d"
-        }
-      ],
-      "actual": "Three T3 endpoint failures; one left spline C9 edge distance 5.7984 exceeds 0.350",
-      "scope": "Actual GUI user creation overrides earlier command-only positives; pending repair",
-      "repro": "Palette, no arrows/underline, 3 points, text 901 height 3.5: straight (0,100)(20,110)(40,110); straight (60,100)(80,110)(65,110); spline (0,140)(20,150)(40,150); spline (60,140)(80,150)(65,150). Run PATMLVERIFY then PATGEOMVERIFY before grip edits."
-    }
-  ],
-  "brace_grip_result": {
-    "original_local_report_sha256": "f4f09680106df8df17a046cee2d7437a93b8cc51ff4adefe41a93ccb7fb16876",
-    "scope": "Brace native cusp movement/Undo/immediate Redo and canceled preview; restored saved DWG cold Core B0c-B9 pass. Not MLeader grip or overall GUI completion.",
-    "installation_restoration": "PASS",
-    "normal_exit": true,
-    "sanitized_report": "docs/test-evidence/cad-20261020/G06-restored-brace-geometry.txt",
-    "sanitized_report_sha256": "8fdd772703be4d0d4c21eaad9c112b3cdd23c682441d94ac3b3eaab48806f998",
-    "result": "PASS"
-  },
-  "report_gate_selftest": {
-    "failed": 0,
-    "passed": 8,
-    "scope": "Report gate self-tests, not product acceptance"
-  }
+  "evidence_policy": "Sanitized text derivatives with separate original local SHA. No SDK, AGENTS, credentials, full private logs, DWGs, or screenshots uploaded. This public summary is NOT input to full local report renderer.",
+  "remaining": [
+    "G05/G06/G07 native grips/Undo/Redo",
+    "G08 palette transitions",
+    "G09 A/B isolation",
+    "G10 final cold startup and strict saved-GUI replay"
+  ]
 }

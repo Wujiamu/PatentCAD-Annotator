@@ -30,7 +30,7 @@ function Get-ReleaseVersion {
         return $env:PATENTMARKER_RELEASE_VERSION.Trim()
     }
     if (Get-Command git -ErrorAction SilentlyContinue) {
-        $described = (& git describe --tags --always --dirty 2>$null)
+        $described = (& git -C $root describe --tags --always --dirty 2>$null)
         if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($described)) {
             return ([string]$described).Trim()
         }
@@ -60,9 +60,9 @@ function Ensure-ReleaseManifestTool {
 
 function Write-ReleaseManifest($ver, $stage) {
     Ensure-ReleaseManifestTool
-    $commit = (& git rev-parse HEAD 2>$null)
-    $tree = (& git rev-parse 'HEAD^{tree}' 2>$null)
-    $dirty = if ((& git status --porcelain --untracked-files=normal 2>$null)) { "true" } else { "false" }
+    $commit = (& git -C $root rev-parse HEAD 2>$null)
+    $tree = (& git -C $root rev-parse 'HEAD^{tree}' 2>$null)
+    $dirty = if ((& git -C $root status --porcelain --untracked-files=normal 2>$null)) { "true" } else { "false" }
     $command = "package.ps1 -Version $ver"
     $toolchain = "PowerShell $($PSVersionTable.PSVersion); dotnet $(& dotnet --version 2>$null)"
     $args = @(

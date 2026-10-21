@@ -105,6 +105,16 @@ namespace PatentMarker.Commands
         /// </summary>
         public static void AppendTextEndpoint(Leader leader, Point3d textPoint, double textHeight)
         {
+            // In unlimited mode Enter makes the final pick the text anchor.
+            // Replace that coincident terminal rather than retaining a vertex
+            // on the text corner (zero gap).
+            if (leader.NumVertices > 1 && SamePoint(
+                leader.VertexAt(leader.NumVertices - 1), textPoint))
+            {
+                leader.SetVertexAt(leader.NumVertices - 1, Retract(
+                    leader.VertexAt(leader.NumVertices - 2), textPoint, textHeight));
+                return;
+            }
             Point3d retracted = textPoint;
             if (leader.NumVertices > 0)
                 retracted = Retract(leader.VertexAt(leader.NumVertices - 1), textPoint, textHeight);

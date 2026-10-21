@@ -13,6 +13,51 @@ namespace PatentMarker.RuntimeContract.Tests
     public class PatGeomVerifyTests
     {
         [Fact]
+        public void FacingBoundaryGap_RejectsTouchInsideWrongSideAndWrongLevel()
+        {
+            foreach (double h in new double[] { 1, 3.5, 20 })
+            foreach (double x in new double[] { 0, 10000000 })
+            foreach (bool left in new bool[] { true, false })
+            {
+                Point3d min = new Point3d(x, 10, 7), max = new Point3d(x + 4*h, 10+h, 7);
+                Point3d prev = new Point3d(left ? x-10*h : x+14*h, 10+h/2, 7);
+                double edge = left ? min.X : max.X, sign = left ? -1 : 1;
+                foreach(double y in new double[]{min.Y,(min.Y+max.Y)/2,max.Y})
+                {
+                    Assert.True(PatGeomTextAssertions.VerifyBoundaryGap(true,min,max,prev,new Point3d(edge+sign*.4*h,y,7),h,new StringBuilder()));
+                    Assert.False(PatGeomTextAssertions.VerifyBoundaryGap(true,min,max,prev,new Point3d(edge,y,7),h,new StringBuilder()));
+                    Assert.False(PatGeomTextAssertions.VerifyBoundaryGap(true,min,max,prev,new Point3d(edge-sign*.4*h,y,7),h,new StringBuilder()));
+                }
+                Assert.False(PatGeomTextAssertions.VerifyBoundaryGap(true,min,max,prev,new Point3d(edge+sign*.4*h,10+2*h,7),h,new StringBuilder()));
+                Assert.False(PatGeomTextAssertions.VerifyBoundaryGap(true,min,max,prev,new Point3d(edge+sign*.4*h,10+h/2,8),h,new StringBuilder()));
+            }
+        }
+
+#if !SIM_LEADER
+        [Fact]
+        public void FourUserCreationCases_KeepFacingBoundaryGapAndPickedText()
+        {
+            for(int c=0;c<4;c++)
+            using(SimulationFixture fixture = new SimulationFixture())
+            {
+                IO.PatSettingsStore.Current.TextHeight=3.5;
+                IO.PatSettingsStore.Current.HasArrowHead=false;
+                IO.PatSettingsStore.Current.UnderlineText=false;
+                IO.PatSettingsStore.Current.ThreePointMode=true;
+                IO.PatSettingsStore.Current.IsSplined=c>=2;
+                Point3d pick=new Point3d(c%2==0?40:65,c<2?110:150,0);
+                Point3d dog=new Point3d(c%2==0?20:80,c<2?110:150,0);
+                fixture.QueueThreePointAnnotation("901",new Point3d(c%2==0?0:60,c<2?100:140,0),dog,pick);
+                new PatMarkCommand().Run();
+                MLeader ml=Assert.IsType<MLeader>(fixture.Database.CommittedEntities[0]);
+                Assert.Equal(pick,ml.TextLocation); Assert.Equal(pick,ml.MText.Location);
+                var box=ml.MText.GeometricExtents;
+                var report=new StringBuilder();
+                Assert.True(PatGeomTextAssertions.VerifyBoundaryGap(true,box.MinPoint,box.MaxPoint,dog,ml.GetLastVertex(0),3.5,report),"case="+c+" "+report);
+            }
+        }
+#endif
+        [Fact]
         public void LegacyLeader_ReportIncludesObjectHeader()
         {
             WithFailureEnvironment((fixture, directory) =>
@@ -196,9 +241,10 @@ namespace PatentMarker.RuntimeContract.Tests
 
                 string report = File.ReadAllText(
                     Path.Combine(reportDir, "PatentMarker-geom-verify.txt"));
-                Assert.Contains("[FAIL] T3 leader-text-retract", report);
                 Assert.Contains("RESULT: FAIL", report);
-#if !SIM_LEADER
+#if SIM_LEADER
+                Assert.Contains("[FAIL] T3e detached-corner-ray", report);
+#else
                 Assert.Contains("[FAIL] T3a recorded-text-anchor", report);
 #endif
             }
@@ -263,9 +309,10 @@ namespace PatentMarker.RuntimeContract.Tests
 
                 string report = File.ReadAllText(
                     Path.Combine(reportDir, "PatentMarker-geom-verify.txt"));
-                Assert.Contains("[FAIL] T3 leader-text-retract", report);
                 Assert.Contains("RESULT: FAIL", report);
-#if !SIM_LEADER
+#if SIM_LEADER
+                Assert.Contains("[FAIL] T3e detached-corner-ray", report);
+#else
                 Assert.Contains("[FAIL] T3c actual-previous-anchor", report);
 #endif
             }
