@@ -59,8 +59,10 @@ namespace PatentMarker.IO
         {return (value??"").Trim().TrimStart('_','.','\'','*').ToUpperInvariant();}
         private static bool Native(string name)
         {
-            return name=="GRIP_STRETCH"||name=="GRIP_MOVE"||name=="STRETCH"||name=="MOVE"||
-                name=="U"||name=="UNDO"||name=="REDO"||name=="MREDO";
+            // Native history playback owns both geometry and recorded data.
+            // Even a read-only transaction/lock after U can discard Redo.
+            // Do not open transactions from UNDO/REDO event callbacks.
+            return name=="GRIP_STRETCH"||name=="GRIP_MOVE"||name=="STRETCH"||name=="MOVE";
         }
         private static void Beginning(object sender,CommandEventArgs e)
         {State s;Document doc=sender as Document;if(doc!=null&&e!=null&&States.TryGetValue(doc,out s))s.Commands.Push(Name(e.GlobalCommandName));}
