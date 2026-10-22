@@ -1,0 +1,1418 @@
+=====================================================
+PATGEOMVERIFY - geometry regression verification
+RUN_ID: r9-1-entities-100
+Time: 2026-10-22 10:27:17
+AutoCAD: (not queried in this build)
+ASSEMBLY_PATH: <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\candidate-release\2025\PatentMarker.dll
+ASSEMBLY_SHA256: 7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21
+ASSEMBLY_MVID: ce03cc0c-4f1b-4d9e-a243-b877cf29b2e3
+ASSEMBLY_VERSION: 1.0.0+01ed4ca7bc0f102fa6a6e6f937b6f4912274ded6
+REQUIRED: braces>=100 texts>=0 strict=true
+=====================================================
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369136)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369184)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369232)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369280)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369328)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369376)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369424)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369472)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369520)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369568)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369616)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369664)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369712)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721580369760)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497040)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497088)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497136)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497184)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497232)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497280)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497328)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497376)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497424)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497472)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497520)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497568)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497616)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497664)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497712)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497760)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497808)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497856)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497904)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754497952)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498000)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498048)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498096)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498144)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498192)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498240)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498288)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498336)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498384)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498432)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498480)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498528)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498576)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498624)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498672)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498720)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498768)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498816)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498864)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721754498912)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802704)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802752)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802800)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802848)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802896)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802944)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746802992)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803040)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803088)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803136)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803184)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803232)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803280)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803328)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803376)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803424)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803472)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803520)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803568)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803616)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803664)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803712)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803760)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803808)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803856)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803904)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746803952)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804000)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804048)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804096)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804144)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804192)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804240)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804288)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804336)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804384)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804432)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804480)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804528)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721746804576)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084240)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084288)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084336)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084384)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084432)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (1721756084480)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+SUMMARY: braces=100 passed=100 failed=0 unreadable=0; texts=0 passed=0 failed=0 unreadable=0; requiredBraces=100 requiredTexts=0; strict=true
+ASSERTIONS: pass=1000 fail=0 n/a=0
+COVERAGE: brace(B0-B9); text(T1-T2); leader-text(T3 when applicable)
+NOTE: display, grips and other GUI behaviour are NOT covered.
+RESULT: PASS

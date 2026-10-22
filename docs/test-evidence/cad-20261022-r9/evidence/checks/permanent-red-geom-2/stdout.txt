@@ -1,0 +1,99 @@
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.50
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.76
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ActualPreviousVertex_UsesIndexAtLargeCoordinatesAndRepeatedVertices
+FAIL PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ClosedOrBulgedBrace_IsRejectedDespiteIdenticalVertices : FalseException:   [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.CommandLevelRun_GeneratesPassReportForBraceAndAnnotation
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Direction_RequiresPositiveWcsXAxis
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.DoubleCuspProfile_IsRejectedByStructureCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.EmptyDrawing_IsSkipNotPass_AndStrictRunFails
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.EndpointDrift_IsRejectedByExactEndpointCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FacingBoundaryGap_RejectsTouchInsideWrongSideAndWrongLevel
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.HistoricalSharpPolygon_IsRejected
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.LegacyLeader_ReportIncludesObjectHeader
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MirroredStem_IsRejectedByAxisRule
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedPreviousVertexWithoutChainUpdate_IsRejectedByT3
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedTextWithoutChainUpdate_IsRejectedByT3
+FAIL PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonFiniteBraceInputs_AndExcessiveSamples_AreRejected : ThrowsException: Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonPlanarPolyline_IsRejectedByPlanarContract
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductMarkerHelpers_DoNotClaimOrdinaryEntities
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_PassesBraceAssertions
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_WithDifferentCurveSamples_PassesReferenceCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ReportWriteFailure_DoesNotEscapeCommand
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.RequiredFailure_ReportsFailWithoutEscapingCommand
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Retract_HandlesLongShortAndDegenerateSegments
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Rotation_UsesRadiansAndRejectsNonFinite
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpCornerLandmarks_AreRejectedByCurvatureCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpElbowWithFakeEndTangents_IsRejectedByReferenceCurve
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.UnexpectedFailure_ReplacesStalePassAndDoesNotEscapeCommand
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.DeleteAllErasesPatLeaderAndAnnotationButSkipsOtherLeader
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameAndDeleteIncludePlanFMLeader
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameAndDeleteIncludeStandalonePatText
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameNumberChangesOnlyMatchingPatAnnotation
+PASS PatentMarker.RuntimeContractTests.PatBraceEntityTests.ReplaceGeometryKeepsPolylineValidAndUpdatesDefinition
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.CenterTipIsSharpAndProfileStaysOnSelectedSide
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.EndpointEditPreservesWidthAndSide
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.HorizontalEndpointsSupportUpAndDownCenterTips
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.PptDefaultUsesHalfWidthStemsAndShortSideCornerDepth
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.RotatedProfileStaysInsideSelectedBoundingStrip
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.SizeEditKeepsTopAndOrientationWhileRebuildingShape
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.ThreePointsCreateExactEndpointsAndPositiveWidth
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.WidthPointControlsTipAndKeepsProfileOnSelectedSide
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.CancellationBeforeTextDoesNotCommitPartialAnnotation
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.DrawingSettingsRemainIsolatedAcrossHostSwitches
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeCancelAfterAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeCancelDuringDoglegCollectionExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeConfirmAfterAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeExplicitTextPointUsesTheFacingCorner
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeHorizontalTieUsesACornerInsteadOfMiddleSide
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.InvalidPendingNumberDoesNotLatchTheNextCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LeaderOffCreatesStandaloneUnderlinedText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LowerLeftLeaderUsesBottomLeftAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LowerRightLeaderUsesBottomRightAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.PostCommitReapplyRestoresUpperQuadrantAfterLegacyNormalization
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointCancelAfterCompletedAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointConfirmAfterCompletedAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointInputCreatesOneEditionSpecificAnnotation
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.TransactionFailureRollsBackTheSimulatedEntitySet
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UnderlineSwitchAlsoFormatsLeaderText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UpperLeftLastLeaderPointUsesTopLeftAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UpperRightLastLeaderPointUsesTopRightAttachment
+SUMMARY: passed=59 failed=2 skipped=0
+FAILURES:
+ - PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ClosedOrBulgedBrace_IsRejectedDespiteIdenticalVertices : FalseException:   [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+
+ - PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonFiniteBraceInputs_AndExcessiveSamples_AreRejected : ThrowsException: Assert.Throws() Failure: No exception was thrown
+Expected: typeof(System.ArgumentException)

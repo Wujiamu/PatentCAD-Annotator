@@ -103,6 +103,7 @@ function Test-GeometryReport {
     if (($textsPassed + $textsFailed + $textsUnreadable) -ne $texts) {
         throw "text totals contradict SUMMARY: total=$texts passed=$textsPassed failed=$textsFailed unreadable=$textsUnreadable"
     }
+    if (($braces + $texts) -eq 0) { throw "report has no applicable business targets" }
     $requiredLine = Read-ReportField $lines "REQUIRED"
     if ($requiredLine -notmatch '^braces>=(\d+)\s+texts>=(\d+)\s+strict=(true|false)$') {
         throw "report REQUIRED line cannot be parsed: $requiredLine"
@@ -357,7 +358,20 @@ RESULT: PASS
     try { Test-GeometryReport -Path $nonStrict -ExpectedRunId "selftest-run" -ExpectedSha256 "abc123" -ExpectedMvid "selftest-mvid" | Out-Null; throw "non-strict report was accepted" }
     catch { if ($_.Exception.Message -eq "non-strict report was accepted") { throw } }
 
-    Write-Output "PASS self-test: good report accepted; stale/Fail/wrong-hash/wrong-path/wrong-mvid/missing-B0c/missing-ASSERTIONS/wrong-count/wrong-required/non-strict/bad-totals/duplicate-PASS/missing-B9 reports rejected"
+    $empty = Join-Path $dir "empty-pass.txt"
+    @"
+RUN_ID: selftest-run
+ASSEMBLY_SHA256: abc123
+ASSEMBLY_MVID: selftest-mvid
+REQUIRED: braces>=0 texts>=0 strict=true
+SUMMARY: braces=0 passed=0 failed=0 unreadable=0; texts=0 passed=0 failed=0 unreadable=0
+ASSERTIONS: pass=0 fail=0 n/a=0
+RESULT: PASS
+"@ | Set-Content -Encoding utf8 $empty
+    try { Test-GeometryReport -Path $empty -ExpectedRunId "selftest-run" -ExpectedSha256 "abc123" -ExpectedMvid "selftest-mvid" -ExpectedBraces 0 -ExpectedTexts 0 | Out-Null; throw "empty PASS was accepted" }
+    catch { if ($_.Exception.Message -eq "empty PASS was accepted") { throw } }
+
+    Write-Output "PASS self-test: good report accepted; stale/Fail/wrong-hash/wrong-path/wrong-mvid/missing-B0c/missing-ASSERTIONS/wrong-count/wrong-required/non-strict/bad-totals/duplicate-PASS/missing-B9/empty-PASS reports rejected"
     exit 0
 }
 

@@ -92,6 +92,76 @@ namespace PatentMarker.IO
     {
         private const FileAttributes HiddenSystem = FileAttributes.Hidden | FileAttributes.System;
 
+        /// <summary>
+        /// Stage a complete UTF-8 file beside the target without changing the
+        /// target's attributes. ReplaceFile preserves the target's ACL, named
+        /// streams and creation metadata. A denied replace must fail closed:
+        /// overwrite-move can silently discard that metadata.
+        /// </summary>
+        public static bool TryWriteAtomic(string path, string json, out string error)
+        {
+            error = "";
+            string temporary = null;
+            bool ownsTemporary = false;
+            try
+            {
+                string directory = Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(directory) || !Directory.Exists(directory))
+                {
+                    error = "字典目录不存在: " + (directory ?? "");
+                    return false;
+                }
+                bool existing = File.Exists(path);
+                FileAttributes attributes = existing
+                    ? File.GetAttributes(path) : FileAttributes.Hidden | FileAttributes.System | FileAttributes.Archive;
+                if (existing && (attributes & FileAttributes.ReadOnly) != 0)
+                {
+                    error = "字典文件为只读: " + path;
+                    return false;
+                }
+                temporary = path + ".pat-" + Guid.NewGuid().ToString("N") + ".tmp";
+                using (FileStream stream = new FileStream(temporary, FileMode.CreateNew,
+                    FileAccess.Write, FileShare.None))
+                {
+                    ownsTemporary = true;
+                    using (StreamWriter writer = new StreamWriter(stream, new System.Text.UTF8Encoding(false)))
+                        writer.Write(json);
+                }
+                // Set all requested DOS attributes on our own staged file;
+                // never normalize the user's original, even temporarily.
+                File.SetAttributes(temporary, attributes);
+                if (existing)
+                    File.Replace(temporary, path, null);
+                else
+                    File.Move(temporary, path);
+                ownsTemporary = false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                error = ex.GetType().Name + ": " + ex.Message;
+                return false;
+            }
+            finally
+            {
+                if (ownsTemporary && temporary != null)
+                {
+                    try
+                    {
+                        if (File.Exists(temporary))
+                        {
+                            File.SetAttributes(temporary, FileAttributes.Normal);
+                            File.Delete(temporary);
+                        }
+                    }
+                    catch (Exception cleanup)
+                    {
+                        error += "; 临时文件清理失败: " + cleanup.Message;
+                    }
+                }
+            }
+        }
+
         public static bool IsVisible(string path)
         {
             if (string.IsNullOrEmpty(path) || !File.Exists(path))

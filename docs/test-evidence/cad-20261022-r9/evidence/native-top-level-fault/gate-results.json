@@ -1,0 +1,32 @@
+[
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-1-False"
+  },
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-1-True"
+  },
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-2-False"
+  },
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-2-True"
+  },
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-3-False"
+  },
+  {
+    "result": "PASS",
+    "exit_code": 1,
+    "id": "top-fault-gate-3-True"
+  }
+]

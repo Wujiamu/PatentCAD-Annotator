@@ -1,0 +1,9 @@
+{
+  "environment_restored": true,
+  "scope": "L2 native fixture construction \u002B production PATGEOMVERIFY; no GUI/installation proof",
+  "reference_points_per_corner": 257,
+  "max_curve_samples": 4096,
+  "maximum_generated_vertices": 16387,
+  "entity_upper_limit": "No product hard cap; measured through 5000 only",
+  "sampling_note": "even vertex-count cases include one coincident straight-stem junction"
+}

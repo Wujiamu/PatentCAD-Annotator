@@ -1,0 +1,32 @@
+# PatentMarker Doctor Report
+
+- Generated: 2026-10-22 10:28:48
+- Drawing: <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\evidence\cold-saved\A\input.dwg
+
+## Environment
+
+- Assembly: <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\candidate-release\2025\PatentMarker.dll
+- Assembly SHA-256: 7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21
+- Assembly MVID: ce03cc0c-4f1b-4d9e-a243-b877cf29b2e3
+- Assembly version: 1.0.0.0
+- Informational version: 1.0.0+01ed4ca7bc0f102fa6a6e6f937b6f4912274ded6
+- .NET Runtime: 8.0.28
+- BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+
+## Checks
+
+| # | Check | Result | Detail |
+|---|-------|--------|--------|
+| 1 | 报告目录可写 | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\candidate-release\2025 |
+| 2 | 发布清单身份 | PASS | identity matched: PatentMarker.dll \| MVID ce03cc0c-4f1b-4d9e-a243-b877cf29b2e3 \| SHA-256 7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21 |
+| 3 | PAT_DIM 标注样式 | PASS | 箭头=2.5, 文字高度=3.5 |
+| 4 | TIMES_ROMAN 文字样式 | PASS | TIMES_ROMAN |
+| 5 | 运行设置 | PASS | 箭头大小=2.5, 文字高度=3.5 |
+| 6 | 字典 (.dict.json) | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\evidence\cold-saved\A\input.dict.json \| 1 条 \| 文件存在 |
+| 7 | 模型空间扫描 | PASS | 14 个实体，0 条引线，0 个多行文字 |
+
+Summary: PASS 7 / FAIL 0 / SKIP 0 | recent errors: 0
+
+## Recent errors
+
+(none)

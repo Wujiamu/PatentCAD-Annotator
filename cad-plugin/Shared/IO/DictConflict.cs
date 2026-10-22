@@ -14,6 +14,28 @@ namespace PatentMarker.IO
     /// </summary>
     public static class DictConflict
     {
+        private static void DeleteBackup(string path)
+        {
+            if (!File.Exists(path)) return;
+            FileAttributes original = File.GetAttributes(path);
+            try
+            {
+                // Delete accepts hidden/system files. Only ReadOnly needs
+                // temporary removal, and failed cleanup must restore it.
+                if ((original & FileAttributes.ReadOnly) != 0)
+                    File.SetAttributes(path, original & ~FileAttributes.ReadOnly);
+                File.Delete(path);
+            }
+            catch (Exception deletion)
+            {
+                try { if (File.Exists(path)) File.SetAttributes(path, original); }
+                catch (Exception restoration)
+                {
+                    throw new IOException(deletion.Message + "; backup attributes could not be restored: " + restoration.Message, deletion);
+                }
+                throw;
+            }
+        }
         /// <summary>备份文件名中缀（VBA 与 CAD 共用约定）</summary>
         public const string BackupInfix = ".word-";
 
@@ -65,10 +87,7 @@ namespace PatentMarker.IO
             error = "";
             try
             {
-                // v5.2：清除隐藏/系统属性后再删除（备份文件为隐藏文件）
-                try { if (File.Exists(backupPath)) File.SetAttributes(backupPath, FileAttributes.Normal); }
-                catch { }
-                if (File.Exists(backupPath)) File.Delete(backupPath);
+                DeleteBackup(backupPath);
                 return true;
             }
             catch (Exception ex)
@@ -113,12 +132,7 @@ namespace PatentMarker.IO
                 // Word creates the backup as hidden/system.  Normalize the
                 // attributes before cleanup so a successful restore does not
                 // leave a stale backup that reopens the conflict prompt.
-                if (File.Exists(backupPath))
-                {
-                    try { File.SetAttributes(backupPath, FileAttributes.Normal); }
-                    catch { }
-                    File.Delete(backupPath);
-                }
+                DeleteBackup(backupPath);
                 return restored;
             }
             catch (Exception ex)

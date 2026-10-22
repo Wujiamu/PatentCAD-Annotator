@@ -50,6 +50,23 @@ namespace PatentMarker.Commands
                 Fail(report, "B0b polyline-readable", vertices.Count + " vertices");
                 return false;
             }
+            // Vertices alone do not describe a lightweight polyline: closing
+            // it adds an axis segment and a bulge replaces a chord by an arc.
+            if (polyline.Closed)
+            {
+                Fail(report, "B0b polyline-readable", "brace must be open");
+                return false;
+            }
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                Point3d vertex = vertices[i];
+                if (!IsFinite(vertex.X) || !IsFinite(vertex.Y) || !IsFinite(vertex.Z)
+                    || !IsFinite(polyline.GetBulgeAt(i)) || polyline.GetBulgeAt(i) != 0.0)
+                {
+                    Fail(report, "B0b polyline-readable", "non-finite vertex or nonzero bulge at " + i);
+                    return false;
+                }
+            }
 
             double height = definition.Height;
             double width = definition.Width;

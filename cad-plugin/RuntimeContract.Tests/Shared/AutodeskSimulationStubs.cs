@@ -501,6 +501,10 @@ namespace Autodesk.AutoCAD.DatabaseServices
     {
         private readonly List<Point2d> _vertices = new List<Point2d>();
         private readonly List<double?> _vertexZ = new List<double?>();
+        private readonly List<double> _bulges = new List<double>();
+        public bool Closed { get; set; }
+        public double GetBulgeAt(int index) { return _bulges[index]; }
+        public void SetBulgeAt(int index, double bulge) { _bulges[index] = bulge; }
 
         public int NumberOfVertices { get { return _vertices.Count; } }
         public double Elevation { get; set; }
@@ -514,6 +518,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
                 throw new ArgumentOutOfRangeException("index");
             _vertices.Insert(index, point);
             _vertexZ.Insert(index, null);
+            _bulges.Insert(index, bulge);
         }
 
         public Point2d GetPointAt(int index)
@@ -553,6 +558,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
                 throw new InvalidOperationException("eDegenerateGeometry");
             _vertices.RemoveAt(index);
             _vertexZ.RemoveAt(index);
+            _bulges.RemoveAt(index);
         }
 
         public void UpgradeOpen() { }

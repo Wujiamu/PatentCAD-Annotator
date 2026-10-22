@@ -27,7 +27,7 @@ try {
         $file=Read-ProjectFile $entry.path
         if(-not(Test-Path -LiteralPath $file -PathType Leaf)){throw "Missing indexed evidence: $($entry.path)"}
         if((Get-FileHash -LiteralPath $file).Hash -ne $entry.sha256){throw "Evidence changed: $($entry.path)"}
-        if((Get-Item -LiteralPath $file).Length -ne $entry.bytes){throw "Evidence size changed: $($entry.path)"}
+        if((Get-Item -LiteralPath $file -Force).Length -ne $entry.bytes){throw "Evidence size changed: $($entry.path)"}
         $indexed[$entry.path]=$entry.sha256
     }
     if($data.source_manifest.sha256 -ne $data.source_snapshot_id -or -not $indexed.ContainsKey($data.source_manifest.path) -or $indexed[$data.source_manifest.path] -ne $data.source_manifest.sha256){throw 'Source snapshot/manifest binding invalid'}
@@ -106,6 +106,10 @@ try {
         $lines=[Collections.Generic.List[string]]::new()
         $lines.Add('# 修复后验收报告');$lines.Add('');$lines.Add('<!-- Generated from docs/acceptance-findings.json. Do not edit by hand. -->')
         $lines.Add('');$lines.Add('**整体结论：'+$result+'。** 逐项结论见下表；原始场景的 PASS 不替代其关联剩余项及真实宿主验收，未执行项不计为通过。')
+        if($data.execution_scope_statement){
+            $lines.Add('');$lines.Add([string]$data.execution_scope_statement)
+            $lines.Add('');$lines.Add('本机结论：**'+$data.local_execution_result+'**；GitHub 外部旧宿主：**'+$data.external_host_execution_result+'**。外部宿主不属于本机待办，整体放行仍保留真实缺口。')
+        }
         $lines.Add('');$lines.Add('## 运行身份与独立性');$lines.Add('')
         foreach($field in @('report_id','generated_at','verification_actor','operator','reviewer','independence_statement','source_snapshot_id')){$lines.Add('- **'+$field+'**：'+(Cell $data.$field))}
         $lines.Add('- 源码 commit / tree / dirty：`'+$data.source.commit+'` / `'+$data.source.tree+'` / `'+$data.source.dirty+'`。')
@@ -149,7 +153,13 @@ try {
         if($data.test_assemblies){$lines.Add('');$lines.Add('测试程序集（实际归档字节）：');$lines.Add('');foreach($assembly in $data.test_assemblies){$lines.Add('- '+(Evidence-Link $assembly))}}
         $lines.Add('');$lines.Add('## 负例和状态组合矩阵');$lines.Add('');$lines.Add('| 场景 | 必需 | 结果 | 实际覆盖/缺口 |');$lines.Add('|---|---|---|---|');foreach($row in $data.negative_matrix){$lines.Add('| '+(Cell $row.case)+' | '+$row.required+' | '+$row.result+' | '+(Cell $row.detail)+' |')}
         $lines.Add('');$lines.Add('## 真实宿主矩阵');$lines.Add('');$lines.Add([string]$data.candidate_statement);$lines.Add('');$lines.Add('| 宿主 | Core Console | 候选 DLL | SHA-256 / MVID | manifest SHA | DWG SHA | NETLOAD / 实载身份 | PATDOCTOR | PATGEOMVERIFY / exit / RESULT | 冷启动 | 命令 Undo/Redo | GUI | 结论 |');$lines.Add('|---|---|---|---|---|---|---|---|---|---|---|---|---|')
-        foreach($row in $data.host_matrix){$lines.Add('| '+$row.host+' | '+(Cell $row.core_console)+' | '+(Cell $row.candidate_path)+' | '+(Cell $row.candidate_identity)+' | '+$row.candidate_manifest.sha256+' | '+(Cell $row.drawing_sha256)+' | '+(Cell $row.actual_load)+' | '+$row.patdoctor+' | '+(Cell $row.patgeomverify)+' | '+(Cell $row.cold_start)+' | '+(Cell $row.undo_redo_command)+' | '+$row.gui+' | '+$row.result+' |')}
+        foreach($row in @($data.host_matrix|Where-Object execution_location -ne 'github_external_only')){$lines.Add('| '+$row.host+' | '+(Cell $row.core_console)+' | '+(Cell $row.candidate_path)+' | '+(Cell $row.candidate_identity)+' | '+$row.candidate_manifest.sha256+' | '+(Cell $row.drawing_sha256)+' | '+(Cell $row.actual_load)+' | '+$row.patdoctor+' | '+(Cell $row.patgeomverify)+' | '+(Cell $row.cold_start)+' | '+(Cell $row.undo_redo_command)+' | '+$row.gui+' | '+$row.result+' |')}
+        $external=@($data.host_matrix|Where-Object execution_location -eq 'github_external_only')
+        if($external.Count){
+            $lines.Add('');$lines.Add('## GitHub 外部旧宿主验收（不在本机执行）');$lines.Add('')
+            $lines.Add('| 宿主组 | 候选 SHA-256 / MVID | manifest SHA-256 | 执行位置 | 状态 |');$lines.Add('|---|---|---|---|---|')
+            foreach($row in $external){$lines.Add('| '+$row.host+' | '+(Cell $row.candidate_identity)+' | '+$row.candidate_manifest.sha256+' | GitHub 候选包交接；外部对应版本 | '+$row.result+' |')}
+        }
         if($data.real_host_evidence){$lines.Add('');$lines.Add('真实宿主逐次命令、安装恢复、GUI 阻碍和最短复现：'+(Evidence-Link $data.real_host_evidence))}
         $lines.Add('');$lines.Add('## 性能与规模边界');$lines.Add('');$lines.Add((Cell $data.performance.statement));$lines.Add('');$lines.Add('| 请求规模 | 实测顶点数 | 重复次数 | 最小/中位/最大 ms | 断言结果 |');$lines.Add('|---|---|---|---|---|');foreach($row in $data.performance.measurements){$lines.Add('| '+$row.requested_scale+' | '+$row.actual_vertices+' | '+$row.runs+' | '+$row.min_ms+' / '+$row.median_ms+' / '+$row.max_ms+' | '+$row.result+' |')}
         $lines.Add('');$lines.Add('## 残余风险与未证明边界');$lines.Add('');foreach($risk in $data.residual_risks){$lines.Add('- **'+$risk.id+'**：'+$risk.description+'；当前状态：'+$risk.status)}

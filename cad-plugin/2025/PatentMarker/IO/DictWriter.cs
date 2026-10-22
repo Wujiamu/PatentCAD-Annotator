@@ -228,60 +228,11 @@ namespace PatentMarker.IO
             error = "";
             try
             {
-                string json = Serialize(model);
-                string dir = Path.GetDirectoryName(path);
-                if (string.IsNullOrEmpty(dir))
-                {
-                    error = "路径无目录部分: " + path;
-                    return false;
-                }
-                if (!Directory.Exists(dir))
-                {
-                    error = "目录不存在: " + dir;
-                    return false;
-                }
-
-                string tmp = path + ".tmp";
-                // Keep the user's explicit visibility choice across atomic rewrites.
-                bool keepVisible = File.Exists(path) && DictFileVisibility.IsVisible(path);
-                // 不输出 BOM（与 VBA ADODB.Stream 输出一致）
-                File.WriteAllText(tmp, json, new UTF8Encoding(false));
-                // v5.2：清除目标文件的隐藏/系统属性，否则 File.Replace 覆盖隐藏文件失败
-                try { if (File.Exists(path)) File.SetAttributes(path, FileAttributes.Normal); }
-                catch { }
-                if (File.Exists(path))
-                {
-                    try
-                    {
-                        File.Replace(tmp, path, null);
-                    }
-                    catch (UnauthorizedAccessException)
-                    {
-                        // Some hardened Windows environments deny File.Replace
-                        // even when the caller owns the target. The temp file is
-                        // beside the target, so an overwrite move remains a
-                        // same-volume replacement and keeps the old file until
-                        // the move succeeds.
-                        if (!File.Exists(tmp)) throw;
-                        File.Move(tmp, path, true);
-                    }
-                }
-                else
-                {
-                    File.Move(tmp, path);
-                }
-                string visibilityError;
-                if (!DictFileVisibility.TrySetVisible(path, keepVisible, out visibilityError))
-                {
-                    error = "字典可见性恢复失败: " + visibilityError;
-                    return false;
-                }
-                return true;
+                return DictFileVisibility.TryWriteAtomic(path, Serialize(model), out error);
             }
             catch (Exception ex)
             {
                 error = ex.GetType().Name + ": " + ex.Message;
-                try { if (File.Exists(path + ".tmp")) File.Delete(path + ".tmp"); } catch { }
                 return false;
             }
         }

@@ -1,0 +1,32 @@
+=====================================================
+PATGEOMVERIFY - geometry regression verification
+RUN_ID: r9-1-vertices-100
+Time: 2026-10-22 10:27:16
+AutoCAD: (not queried in this build)
+ASSEMBLY_PATH: <WORKSPACE>\docs\test-evidence\acceptance-r9-20261022-boundaries\candidate-release\2025\PatentMarker.dll
+ASSEMBLY_SHA256: 7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21
+ASSEMBLY_MVID: ce03cc0c-4f1b-4d9e-a243-b877cf29b2e3
+ASSEMBLY_VERSION: 1.0.0+01ed4ca7bc0f102fa6a6e6f937b6f4912274ded6
+REQUIRED: braces>=1 texts>=0 strict=true
+=====================================================
+
+-----------------------------------------------------
+LWPOLYLINE (1721580368992)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=40.0000 width=40.0000
+  [PASS] B2 tip-at-full-width: max=40.0000 tol=0.0004
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=5 upper=3 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0004
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=3.3332 extents=3.3332,3.3332,3.3332,3.3332 worstExtentErr=0.0000 turns=86.1402,86.1402,86.1402,86.1402 refErr=0.0029
+  => PASS
+
+-----------------------------------------------------
+SUMMARY: braces=1 passed=1 failed=0 unreadable=0; texts=0 passed=0 failed=0 unreadable=0; requiredBraces=1 requiredTexts=0; strict=true
+ASSERTIONS: pass=10 fail=0 n/a=0
+COVERAGE: brace(B0-B9); text(T1-T2); leader-text(T3 when applicable)
+NOTE: display, grips and other GUI behaviour are NOT covered.
+RESULT: PASS

@@ -1,0 +1,5 @@
+Exception: <BUILD_WORKTREE>\tools\verify-geometry.ps1:106
+Line |
+ 106 |  ��  $texts) -eq 0) { throw "report has no applicable business targets" }
+     |                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | report has no applicable business targets

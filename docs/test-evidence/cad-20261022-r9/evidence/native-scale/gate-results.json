@@ -1,0 +1,146 @@
+[
+  {
+    "id": "native-gate-1-vertices-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-vertices-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-vertices-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-entities-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-entities-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-entities-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-closed",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-1-bulged",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-vertices-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-vertices-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-vertices-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-entities-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-entities-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-entities-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-closed",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-2-bulged",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-vertices-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-vertices-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-vertices-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-entities-100",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-entities-1000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-entities-5000",
+    "actual_exit": 0,
+    "expected_exit": 0,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-closed",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  },
+  {
+    "id": "native-gate-3-bulged",
+    "actual_exit": 1,
+    "expected_exit": 1,
+    "result": "PASS"
+  }
+]

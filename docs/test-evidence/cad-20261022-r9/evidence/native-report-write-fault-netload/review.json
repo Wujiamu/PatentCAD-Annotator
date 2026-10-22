@@ -1,0 +1,8 @@
+{
+  "scope": "Inner report writer exception handling; not top-level catch injection",
+  "result": "PASS",
+  "original_results_preserved": true,
+  "original_harness_failure": "Expected top-level IOException prefix, but the correctly functioning inner writer caught the error earlier. No new host run required to correct classification.",
+  "native_exit": 0,
+  "observed_safe_report_write_failures": 3
+}

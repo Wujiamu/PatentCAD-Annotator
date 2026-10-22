@@ -13,6 +13,36 @@ namespace PatentMarker.RuntimeContract.Tests
     public class PatGeomVerifyTests
     {
         [Fact]
+        public void ClosedOrBulgedBrace_IsRejectedDespiteIdenticalVertices()
+        {
+            var definition = PatBraceGeometry.Create(new Point3d(0,0,0), new Point3d(0,100,0), 40, 1);
+            foreach (bool closed in new[] { false, true })
+            {
+                var polyline = MakePolyline(PatBraceGeometry.BuildPoints(definition), 0);
+                if (closed) polyline.Closed = true;
+                else polyline.SetBulgeAt(3, 0.25);
+                var report = new StringBuilder();
+                Assert.False(PatBraceAssertions.Verify(polyline, definition, report), report.ToString());
+                Assert.Contains("[FAIL] B0b polyline-readable", report.ToString());
+            }
+        }
+
+        [Fact]
+        public void NonFiniteBraceInputs_AndExcessiveSamples_AreRejected()
+        {
+            foreach (double value in new[] { double.NaN, double.PositiveInfinity, double.NegativeInfinity })
+            {
+                Assert.Throws<ArgumentException>(() => PatBraceGeometry.Create(new Point3d(0,0,0), new Point3d(0,100,0), value, 1));
+                Assert.Throws<ArgumentException>(() => PatBraceGeometry.FromPoints(new Point3d(value,0,0), new Point3d(0,100,0), new Point3d(40,50,0)));
+                Assert.Throws<ArgumentException>(() => PatBraceGeometry.BuildPoints(new PatBraceDefinition(new Point3d(0,0,0), new Point3d(0,100,0), value, 1)));
+            }
+            var valid = PatBraceGeometry.Create(new Point3d(0,0,0), new Point3d(0,100,0), 40, 1);
+            Assert.Throws<ArgumentOutOfRangeException>(() => PatBraceGeometry.BuildPoints(valid, 4097));
+            Assert.Throws<ArgumentException>(() => PatBraceGeometry.WithSize(valid, double.NaN, 40));
+            Assert.Equal(16387, PatBraceGeometry.BuildPoints(valid, 4096).Count);
+        }
+
+        [Fact]
         public void FacingBoundaryGap_RejectsTouchInsideWrongSideAndWrongLevel()
         {
             foreach (double h in new double[] { 1, 3.5, 20 })
