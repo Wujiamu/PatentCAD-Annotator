@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
 
 namespace PatentMarker.IO
 {
@@ -92,17 +95,57 @@ namespace PatentMarker.IO
     {
         private const FileAttributes HiddenSystem = FileAttributes.Hidden | FileAttributes.System;
 
+        [DllImport("advapi32.dll", EntryPoint = "SetFileSecurityW", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetFileSecurity(string path, uint information, byte[] descriptor);
+
+        [DllImport("kernel32.dll", EntryPoint = "MoveFileExW", CharSet = CharSet.Unicode, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool MoveFileEx(string from, string to, uint flags);
+
+        private static string ReadSecurity(string path)
+        {
+            return new FileInfo(path).GetAccessControl().GetSecurityDescriptorSddlForm(
+                AccessControlSections.Owner | AccessControlSections.Group | AccessControlSections.Access);
+        }
+
+        private static void VerifyAndRestoreSecurity(string path, byte[] descriptor, string expected)
+        {
+            if (ReadSecurity(path) == expected) return;
+            RawSecurityDescriptor original = new RawSecurityDescriptor(descriptor, 0);
+            if ((original.ControlFlags & ControlFlags.DiscretionaryAclAutoInherited) == 0)
+            {
+                // ReplaceFile can convert a legacy inherited DACL to the
+                // automatic-inheritance model, adding explicit ACEs. The old
+                // API deliberately avoids that conversion. It is used only
+                // when the original descriptor also lacked AUTO_INHERITED.
+                // Write the DACL only: never owner/group/SACL or privileges.
+                if (!SetFileSecurity(path, 4, descriptor))
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+            else
+            {
+                FileSecurity restored = new FileSecurity();
+                restored.SetSecurityDescriptorBinaryForm(descriptor, AccessControlSections.Access);
+                new FileInfo(path).SetAccessControl(restored);
+            }
+            if (ReadSecurity(path) != expected)
+                throw new IOException("Original dictionary security descriptor was not preserved.");
+        }
+
         /// <summary>
         /// Stage a complete UTF-8 file beside the target without changing the
-        /// target's attributes. ReplaceFile preserves the target's ACL, named
-        /// streams and creation metadata. A denied replace must fail closed:
-        /// overwrite-move can silently discard that metadata.
+        /// target's attributes. ReplaceFile retains streams and creation
+        /// metadata. Verify exact file security after its ACL merge and keep
+        /// the original file until that verification and cleanup succeed.
         /// </summary>
         public static bool TryWriteAtomic(string path, string json, out string error)
         {
             error = "";
             string temporary = null;
+            string rollback = null;
             bool ownsTemporary = false;
+            bool ownsRollback = false;
             try
             {
                 string directory = Path.GetDirectoryName(path);
@@ -119,6 +162,9 @@ namespace PatentMarker.IO
                     error = "字典文件为只读: " + path;
                     return false;
                 }
+                byte[] security = existing
+                    ? new FileInfo(path).GetAccessControl().GetSecurityDescriptorBinaryForm() : null;
+                string expectedSecurity = existing ? ReadSecurity(path) : null;
                 temporary = path + ".pat-" + Guid.NewGuid().ToString("N") + ".tmp";
                 using (FileStream stream = new FileStream(temporary, FileMode.CreateNew,
                     FileAccess.Write, FileShare.None))
@@ -131,7 +177,17 @@ namespace PatentMarker.IO
                 // never normalize the user's original, even temporarily.
                 File.SetAttributes(temporary, attributes);
                 if (existing)
-                    File.Replace(temporary, path, null);
+                {
+                    rollback = temporary + ".rollback";
+                    if (File.Exists(rollback))
+                        throw new IOException("Dictionary rollback path already exists.");
+                    ownsRollback = true;
+                    File.Replace(temporary, path, rollback);
+                    ownsTemporary = false;
+                    VerifyAndRestoreSecurity(path, security, expectedSecurity);
+                    File.Delete(rollback);
+                    rollback = null;
+                }
                 else
                     File.Move(temporary, path);
                 ownsTemporary = false;
@@ -140,6 +196,17 @@ namespace PatentMarker.IO
             catch (Exception ex)
             {
                 error = ex.GetType().Name + ": " + ex.Message;
+                if (ownsRollback && rollback != null && File.Exists(rollback))
+                {
+                    // This renames the ORIGINAL file back, including its
+                    // streams and ACL. It is never a new-data overwrite
+                    // fallback for a denied ReplaceFile operation.
+                    if (!MoveFileEx(rollback, path, 1 | 8))
+                        error += "; 原文件恢复失败: " + new Win32Exception(Marshal.GetLastWin32Error()).Message
+                            + "; 原文件保留于: " + rollback;
+                    else
+                        error += "; 原文件已恢复";
+                }
                 return false;
             }
             finally

@@ -526,3 +526,5 @@ This project is licensed under the [MIT License](LICENSE).
 Note: The `acdbmgd.dll` / `acmgd.dll` / `accoremgd.dll` referenced at build time are Autodesk SDK assemblies and are NOT included in this repository — users must supply them from their local AutoCAD installation or [ObjectARX SDK](https://aps.autodesk.com/developer/overview/autocad-objectarx-sdk-downloads).
 
 R9 文件写回使用唯一临时文件和原子替换；只读、锁定或替换拒绝时保留原字节及属性，不再使用覆盖式 Move 兜底。四个旧宿主未在本机执行，只通过 GitHub 候选包交接。完整边界、红绿证据和剩余风险见[本轮验收](docs/cad-acceptance-20261022.md)。
+
+R10 ACL修复验证中：替换前保留原文件，替换后严格核对原ACL；仅旧式继承描述需要恢复时写回DACL，失败即将原文件连同属性和数据流恢复。R9反例和判定标准保留，待独立Windows CI及最终候选复验后更新结论。
