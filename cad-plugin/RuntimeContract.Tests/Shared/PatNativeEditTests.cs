@@ -22,6 +22,27 @@ namespace PatentMarker.RuntimeContract.Tests
 
 #if !SIM_LEADER
         [Fact]
+        public void EquivalentDatabaseWrapperEvent_StillSynchronizesRecord()
+        {
+            using (SimulationFixture f = new SimulationFixture())
+            {
+                Application.DocumentManager.MdiActiveDocument=f.Document;
+                IO.PatSettingsStore.Current.ThreePointMode=true;
+                f.QueueThreePointAnnotation("901",new Point3d(0,0,0),new Point3d(20,10,0),new Point3d(40,10,0));new PatMarkCommand().Run();
+                MLeader ml=Assert.IsType<MLeader>(f.Database.CommittedEntities[0]);Tracking(true);
+                try
+                {
+                    f.Document.BeginCommand("GRIP_STRETCH");ml.TextLocation=new Point3d(60,20,0);
+                    f.Database.NotifyModifiedFromEquivalentWrapper(ml);f.Document.EndCommand("GRIP_STRETCH");
+                    using(Transaction tr=f.Database.TransactionManager.StartTransaction())
+                    {bool arrow,spline;var chain=PatMLeaderCreator.ReadChain(ml,tr,out arrow,out spline);Assert.Equal(ml.TextLocation,chain[chain.Count-1]);}
+                    Assert.True(f.Database.UndoRecording);
+                }
+                finally{Tracking(false);}
+            }
+        }
+
+        [Fact]
         public void ImpossibleNativePick_RestoresOriginalAttachmentAndRecord()
         {
             using(SimulationFixture f=new SimulationFixture())

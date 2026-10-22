@@ -850,8 +850,18 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public sealed class Database
     {
+        private object _nativeIdentity = new object();
+        public override bool Equals(object other) { return other is Database && ReferenceEquals(_nativeIdentity, ((Database)other)._nativeIdentity); }
+        public override int GetHashCode() { return _nativeIdentity.GetHashCode(); }
         public event EventHandler<ObjectEventArgs> ObjectModified;
         public void NotifyModified(DBObject obj) { ObjectModified?.Invoke(this,new ObjectEventArgs(obj)); }
+        public void NotifyModifiedFromEquivalentWrapper(DBObject obj)
+        {
+            // Real AutoCAD may supply a fresh managed Database wrapper for
+            // the same native database. Reference identity is insufficient.
+            Database wrapper = new Database(); wrapper._nativeIdentity = _nativeIdentity;
+            ObjectModified?.Invoke(wrapper, new ObjectEventArgs(obj));
+        }
         public bool UndoRecording { get; private set; } = true;
         public void DisableUndoRecording(bool disable) { UndoRecording=!disable;Trace.Add("undo.recording:"+UndoRecording); }
         private int _nextId = 10;

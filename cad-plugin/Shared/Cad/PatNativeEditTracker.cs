@@ -68,7 +68,10 @@ namespace PatentMarker.IO
         {
             if(e==null)return;Entity entity=e.DBObject as Entity;if(entity==null||entity.ObjectId.IsNull)return;
             foreach(State s in States.Values)
-                if(!s.Busy&&object.ReferenceEquals(s.Database,sender)&&s.Commands.Count>0&&Native(s.Commands.Peek()))
+                // AutoCAD can create distinct managed wrappers for the same
+                // native database. DisposableWrapper.Equals compares native
+                // identity; ReferenceEquals silently drops real grip events.
+                if(!s.Busy&&object.Equals(s.Database,sender)&&s.Commands.Count>0&&Native(s.Commands.Peek()))
                     s.Changed[entity.ObjectId]=true;
         }
         private static void Finished(object sender,CommandEventArgs e)
