@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.AccessControl;
 
 namespace PatentMarker.IO
 {
@@ -119,6 +120,8 @@ namespace PatentMarker.IO
                     error = "字典文件为只读: " + path;
                     return false;
                 }
+                FileSecurity originalSecurity = existing
+                    ? new FileInfo(path).GetAccessControl() : null;
                 temporary = path + ".pat-" + Guid.NewGuid().ToString("N") + ".tmp";
                 using (FileStream stream = new FileStream(temporary, FileMode.CreateNew,
                     FileAccess.Write, FileShare.None))
@@ -130,6 +133,17 @@ namespace PatentMarker.IO
                 // Set all requested DOS attributes on our own staged file;
                 // never normalize the user's original, even temporarily.
                 File.SetAttributes(temporary, attributes);
+                if (originalSecurity != null)
+                {
+                    // Stage the destination DACL as well as its DOS flags.
+                    // Some Windows ReplaceFile versions otherwise merge the
+                    // temporary file's inherited ACL into the destination.
+                    FileSecurity stagedSecurity = new FileSecurity();
+                    stagedSecurity.SetSecurityDescriptorBinaryForm(
+                        originalSecurity.GetSecurityDescriptorBinaryForm(),
+                        AccessControlSections.Access);
+                    new FileInfo(temporary).SetAccessControl(stagedSecurity);
+                }
                 if (existing)
                     File.Replace(temporary, path, null);
                 else
