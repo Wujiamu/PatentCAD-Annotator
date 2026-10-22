@@ -1,0 +1,23 @@
+{
+  "id": "accepted-source-ci-push-portable",
+  "exe": "gh",
+  "arguments": [
+    "run",
+    "view",
+    "--repo",
+    "Wujiamu/PatentCAD-Annotator",
+    "--job",
+    "119879434992",
+    "--log"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T22:45:42.8548743+08:00",
+  "finished": "2026-10-22T22:45:44.8549691+08:00",
+  "owned_pid": 4724,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 2000.0782,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-source-ci-push-portable\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-source-ci-push-portable\\stderr.txt"
+}

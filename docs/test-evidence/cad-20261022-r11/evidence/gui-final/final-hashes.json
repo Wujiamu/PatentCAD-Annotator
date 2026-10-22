@@ -1,0 +1,182 @@
+[
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\01-ready\\window.png",
+    "Hash": "78F852F131E22D5FD026AE32960382156D9D871969D7AC3815A9BEA7626F0DB9"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\02-selected\\window.png",
+    "Hash": "B75B7B10F3034C585136CDC97C32E7005A96DDDE1AC3DFF6AD0F3F7C50D92721"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\03-hot\\window.png",
+    "Hash": "6439F47C1458C7F9BB8A8F253B92EC34EED026F7594033C490046DF2E1ABB70F"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\04-preview\\window.png",
+    "Hash": "F2A0F93509313EC38FAD2EC03BEF64F2C4A45C2E57124BF314DD45441AE38AAA"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\05-committed\\window.png",
+    "Hash": "5413184FCCD083F78361C08B25555B12562282858DD91063E9759C4C3E929419"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\06-idle\\window.png",
+    "Hash": "9CC8279DAD2E0343FAD16176EFE8BCEC0FA6EB245AC40E96FC1D9B3ACA1F4831"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\07-focus\\window.png",
+    "Hash": "CC3E6517FFAFB6E0E4E838AD5A94FD2FDE4166206A85A5B110AC6F704DD66A18"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\08-ml-literal\\window.png",
+    "Hash": "9DACA9D7C963CCC2F1C822AA34382BA0772584716EDF8E34047087F9C80C4A82"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\09-moved-ml\\window.png",
+    "Hash": "221C2952D7903CE0EDA7869B7F926C6F3C002A431CF5474B14915619F710C18A"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\10-geom-literal\\window.png",
+    "Hash": "BF569B7BD1CF8D908D3E198409BDF468BBC77521E323CFEE41E4B25B144EF35B"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\11-moved-geom\\window.png",
+    "Hash": "A031F6539E1E333096D8D2C9810445F32DDF57FCF69D22B32C905F9799C76E2B"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\12-cancel-select\\window.png",
+    "Hash": "DD221182AF4FBD62A3AC63BF2835B80FC813BCE6EE08793E2FCBA21402FC9B3D"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\13-cancel-grips\\window.png",
+    "Hash": "7F2C8579757B7B9E1A840A0BE13B1204E16551B86B134010CA060372431FC7DC"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\14-cancel-hot\\window.png",
+    "Hash": "2F459783AE2B932904EB825A11E11163F0ECB9A227E1C98F7A037CC3855EEFF6"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\15-cancel-hot-ready\\window.png",
+    "Hash": "0E5EB41541CD9E67A9FC3D92DC9B3115261EDAD27BCDB90E04DA9F48D98857D5"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\16-cancel-displaced\\window.png",
+    "Hash": "B754B11A9D255FC421E309A0D2FF19159A86FF3A75835937ADC04CB5E6D88918"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\17-cancelled\\window.png",
+    "Hash": "E8E900B074F0B5340544E097639C5729EBA3B29550AD2F3D42C34AE617ACD5D7"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\18-cancel-idle\\window.png",
+    "Hash": "50AAB52A083747AE3AAA1F181DF5F82E894458102B1E6023AB14E3C2A91369FC"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\19-cancel-focus\\window.png",
+    "Hash": "DBC3AF75E59D3EDF277A82270DEB317B8EC0ECB3963DCD676E73CE27CB912581"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\20-cancel-literal\\window.png",
+    "Hash": "5C8BC640464C124F1C2B69DBB1127971F5D49BB06AE6DBEB41D572637B8F19CE"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\21-cancel-report\\window.png",
+    "Hash": "7728173838C7150D48AF7B6692C70CDAA1DF8AA054DD56E3FC67804675743F67"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\22-redo-select\\window.png",
+    "Hash": "7594C1E4DA901BB9CCB8E627DDFB06F9D38C61ED58214465588C0DB817172B41"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\23-redo-select-ready\\window.png",
+    "Hash": "3CCB12A5D3BF0104AECC30C92C278209D75CA04AA9275FA46FEC32A22EA8ABBC"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\24-redo-grips\\window.png",
+    "Hash": "3CCB12A5D3BF0104AECC30C92C278209D75CA04AA9275FA46FEC32A22EA8ABBC"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\25-redo-grips-ready\\window.png",
+    "Hash": "1B9FB2606C7A87128F642EE0D701F8E055D210143FB3CB54599FD5209C59097D"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\26-redo-hot\\window.png",
+    "Hash": "0D494B4FB3B94CE575E59CA166E1FE53116A751840F5B98D63E90FB60DD7C662"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\27-redo-hot-ready\\window.png",
+    "Hash": "60530E70AA8530014B488A2F6CC5DEE5C2F20D0A039754F2C3A180B90996A22F"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\28-redo-preview\\window.png",
+    "Hash": "F10D34405710318842BE1746FBC727727FFF8746D710F7A7B187258FCC20E0FB"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\29-redo-commit\\window.png",
+    "Hash": "9989DC78A9B8AD6BFAE289167C73B9950B5205990C4A60D79CC265F8F10E4991"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\30-resume\\window.png",
+    "Hash": "89F9C8F4FAD0D73FA62FFEF816170554F4C4FA2926137F9CC63B5F0D3B52CC0A"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\31-redo-idle\\window.png",
+    "Hash": "4B579493FB455D0FB88436CC02D6030C2979A7778E8611BCF44E4EEA9AB67631"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\32-undo\\window.png",
+    "Hash": "F8295C2CFCFBF4557C8C36597FA17ADFE16802AB54476959C9FFB06513BAD189"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\33-redo\\window.png",
+    "Hash": "70BB23A143F228BDD38D0541B0F57F06633C1A32491198C98E62B603AAE0981F"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\34-cleanup\\window.png",
+    "Hash": "E94DC0241B4A0DC2F99C3918BA7813F519CD7DA3EC4BEC2822E04D0697B4F205"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\35-close-prompt\\window.png",
+    "Hash": "1CDE932D5D3CD6FE39A3979067C80D652FD76513B0B2C06457963936CABB5E36"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\active\\PatentMarker-geom-verify.txt",
+    "Hash": "11F667D4B2EF106142C688D09232AB43811EF0ACD8261D09CD19CCBA282D394E"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\active\\PatentMarker-mleader-verify.txt",
+    "Hash": "F2C0979E7285C723E4444E4638F37D53F52FFB41FED3ABA0B66F3E6D14380EA5"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\before\\A\\PatentMarker-doctor-report.txt",
+    "Hash": "FCFB679A7C10A6E64CCD8D0CC733B51B90F4606518FA3A7B8C3DB250D172D3BF"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\before\\A\\PatentMarker-geom-verify.txt",
+    "Hash": "FB7EC23D5448275FEC17CA0B264DCF509CC65BB07B70E5D304D36EC0220AE112"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\before\\A\\PatentMarker-mleader-verify.txt",
+    "Hash": "C29A69B7AA710DD4527D3AB2ED8078F63DBA3F902B9709A73AD288AECA7286E6"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\cancel\\PatentMarker-geom-verify.txt",
+    "Hash": "11F667D4B2EF106142C688D09232AB43811EF0ACD8261D09CD19CCBA282D394E"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\drawings\\final-A.dwg",
+    "Hash": "95B7DD83C8FEAAEDD01AFC33DBFA5837659C2F046D870CA41E1198302277D848"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\drawings\\final-B.dwg",
+    "Hash": "E5BE2753545E690ED8F249501D224F19BFF5506C287CFDE1540D05854B0641E4"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\moved\\PatentMarker-geom-verify.txt",
+    "Hash": "38B3B8EA5840D369A2849E21D610CEADE78F9DDFA663176889EFE6BF057EC3DA"
+  },
+  {
+    "Path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\moved\\PatentMarker-mleader-verify.txt",
+    "Hash": "F2C0979E7285C723E4444E4638F37D53F52FFB41FED3ABA0B66F3E6D14380EA5"
+  }
+]

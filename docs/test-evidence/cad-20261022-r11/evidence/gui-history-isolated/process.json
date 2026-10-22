@@ -1,0 +1,21 @@
+{
+  "exe": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "source": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+  "environment": {
+    "PATGEOM_REQUIRE_TEXTS": "1",
+    "PATGEOM_REQUIRE_BRACES": "1",
+    "PATGEOM_STRICT": "1",
+    "PATML_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated/active",
+    "PATGEOM_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated/active"
+  },
+  "assembly_sha": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "pid": 25404,
+  "start_utc": "2026-10-22T14:20:39.2013943Z",
+  "args": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated/drawings/isolated-A.dwg",
+    "/nologo",
+    "/b",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated/baseline.scr"
+  ],
+  "scope": "Fresh installed candidate; Undo/Redo callbacks do not transact"
+}

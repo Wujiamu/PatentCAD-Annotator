@@ -1,0 +1,127 @@
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(17,46): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(26,43): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(26,57): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(44,38): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(44,52): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.GetAccessControl(FileInfo)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,77): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Access" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,17): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Owner" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,47): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Group" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(129,17): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.SetSecurityDescriptorBinaryForm(byte[], AccessControlSections)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(130,17): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.SetAccessControl(FileInfo, FileSecurity)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(128,41): warning CA1416: 可在所有平台上访问此调用站点�?FileSecurity" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(129,70): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Access" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(116,18): warning CA1416: 可在所有平台上访问此调用站点�?RawSecurityDescriptor.ControlFlags" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(116,42): warning CA1416: 可在所有平台上访问此调用站点�?ControlFlags.DiscretionaryAclAutoInherited" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(115,46): warning CA1416: 可在所有平台上访问此调用站点�?RawSecurityDescriptor" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.GetSecurityDescriptorBinaryForm()" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.GetAccessControl(FileInfo)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\Shared\PatGeomVerifyTests.cs(751,25): warning xUnit2020: Do not use Assert.True(false, message) to fail a test. Use Assert.Fail(message) instead. (https://xunit.net/xunit.analyzers/rules/xUnit2020) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+已成功生成�?
+
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(17,46): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(26,43): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(26,57): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(44,38): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\NumberIdentity.cs(44,52): warning CS8632: 只能�?"#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释�?[<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.GetAccessControl(FileInfo)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,77): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Access" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,17): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Owner" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(109,47): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Group" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(129,17): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.SetSecurityDescriptorBinaryForm(byte[], AccessControlSections)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(130,17): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.SetAccessControl(FileInfo, FileSecurity)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(128,41): warning CA1416: 可在所有平台上访问此调用站点�?FileSecurity" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(129,70): warning CA1416: 可在所有平台上访问此调用站点�?AccessControlSections.Access" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(116,18): warning CA1416: 可在所有平台上访问此调用站点�?RawSecurityDescriptor.ControlFlags" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(116,42): warning CA1416: 可在所有平台上访问此调用站点�?ControlFlags.DiscretionaryAclAutoInherited" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(115,46): warning CA1416: 可在所有平台上访问此调用站点�?RawSecurityDescriptor" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: 可在所有平台上访问此调用站点�?ObjectSecurity.GetSecurityDescriptorBinaryForm()" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: 可在所有平台上访问此调用站点�?FileSystemAclExtensions.GetAccessControl(FileInfo)" 仅在 'windows' 上受支持�?(https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\Shared\PatGeomVerifyTests.cs(751,25): warning xUnit2020: Do not use Assert.True(false, message) to fail a test. Use Assert.Fail(message) instead. (https://xunit.net/xunit.analyzers/rules/xUnit2020) [<BUILD_WORKTREE>\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+    20 个警�?
+    0 个错�?
+
+已用时间 00:00:02.00
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.25
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ActualPreviousVertex_UsesIndexAtLargeCoordinatesAndRepeatedVertices
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ClosedOrBulgedBrace_IsRejectedDespiteIdenticalVertices
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.CommandLevelRun_GeneratesPassReportForBraceAndAnnotation
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Direction_RequiresPositiveWcsXAxis
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.DoubleCuspProfile_IsRejectedByStructureCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.EmptyDrawing_IsSkipNotPass_AndStrictRunFails
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.EndpointDrift_IsRejectedByExactEndpointCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FacingBoundaryGap_RejectsTouchInsideWrongSideAndWrongLevel
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.HistoricalSharpPolygon_IsRejected
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.LegacyLeader_ReportIncludesObjectHeader
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MirroredStem_IsRejectedByAxisRule
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedPreviousVertexWithoutChainUpdate_IsRejectedByT3
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedTextWithoutChainUpdate_IsRejectedByT3
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonFiniteBraceInputs_AndExcessiveSamples_AreRejected
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonPlanarPolyline_IsRejectedByPlanarContract
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductMarkerHelpers_DoNotClaimOrdinaryEntities
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_PassesBraceAssertions
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_WithDifferentCurveSamples_PassesReferenceCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ReportWriteFailure_DoesNotEscapeCommand
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.RequiredFailure_ReportsFailWithoutEscapingCommand
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Retract_HandlesLongShortAndDegenerateSegments
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Rotation_UsesRadiansAndRejectsNonFinite
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpCornerLandmarks_AreRejectedByCurvatureCheck
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpElbowWithFakeEndTangents_IsRejectedByReferenceCurve
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures
+PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.UnexpectedFailure_ReplacesStalePassAndDoesNotEscapeCommand
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.CancelledGripAtOriginalPosition_PreservesRecordedChain
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.ConsistentNativeHistoryEvents_AreReadOnlyAndLeaveUndoRecorderAlone
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.CrossingPickedChain_IsRoutedOutsideTextKeepingPickedBend
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.EquivalentDatabaseWrapperEvent_StillSynchronizesRecord
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.HistoryCommands_NeverOpenDatabaseTransactions
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.ImpossibleNativePick_RestoresOriginalAttachmentAndRecord
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.NativeEdit_DoesNotDisableHostUndoRecording
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.NativeEdits_ResyncWithoutChangingUndoRecordingState
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.NativeTextGrip_SynchronizesOnlyTheEditedDocument
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.PickInsideText_IsRejectedWithoutPartialAnnotation
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.StoppedTracker_DoesNotHandleLaterNativeEdits
+PASS PatentMarker.RuntimeContract.Tests.PatNativeEditTests.VerificationAndUntrackedMutation_DoNotHealTamperedRecords
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.DeleteAllErasesPatLeaderAndAnnotationButSkipsOtherLeader
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameAndDeleteIncludePlanFMLeader
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameAndDeleteIncludeStandalonePatText
+PASS PatentMarker.RuntimeContractTests.DictPaletteCadServiceTests.RenameNumberChangesOnlyMatchingPatAnnotation
+PASS PatentMarker.RuntimeContractTests.PatBraceEntityTests.ReplaceGeometryKeepsPolylineValidAndUpdatesDefinition
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.CenterTipIsSharpAndProfileStaysOnSelectedSide
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.EndpointEditPreservesWidthAndSide
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.HorizontalEndpointsSupportUpAndDownCenterTips
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.PptDefaultUsesHalfWidthStemsAndShortSideCornerDepth
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.RotatedProfileStaysInsideSelectedBoundingStrip
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.SizeEditKeepsTopAndOrientationWhileRebuildingShape
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.ThreePointsCreateExactEndpointsAndPositiveWidth
+PASS PatentMarker.RuntimeContractTests.PatBraceGeometryTests.WidthPointControlsTipAndKeepsProfileOnSelectedSide
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.CancellationBeforeTextDoesNotCommitPartialAnnotation
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.DrawingSettingsRemainIsolatedAcrossHostSwitches
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeCancelAfterAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeCancelDuringDoglegCollectionExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeConfirmAfterAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeExplicitTextPointUsesTheFacingCorner
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeHorizontalTieUsesACornerInsteadOfMiddleSide
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.InvalidPendingNumberDoesNotLatchTheNextCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LeaderOffCreatesStandaloneUnderlinedText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LowerLeftLeaderUsesBottomLeftAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.LowerRightLeaderUsesBottomRightAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.PostCommitReapplyRestoresUpperQuadrantAfterLegacyNormalization
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointCancelAfterCompletedAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointConfirmAfterCompletedAnnotationExitsCommand
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.ThreePointInputCreatesOneEditionSpecificAnnotation
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.TransactionFailureRollsBackTheSimulatedEntitySet
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UnderlineSwitchAlsoFormatsLeaderText
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UpperLeftLastLeaderPointUsesTopLeftAttachment
+PASS PatentMarker.RuntimeContractTests.PatMarkSimulationTests.UpperRightLastLeaderPointUsesTopRightAttachment
+SUMMARY: passed=73 failed=0 skipped=0

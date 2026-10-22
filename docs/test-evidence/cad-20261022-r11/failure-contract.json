@@ -1,0 +1,46 @@
+{
+  "legacy_execution": "github_external_only",
+  "baseline_source_commit": "1d56652ef54ad3772ee2e16d26b51849843ae82f",
+  "pre_fix_evidence": "candidate-before; evidence/red-gui",
+  "desktop_method": "Existing user-authorized CadDesktopFallback, not a repair of official sky",
+  "host": "AutoCAD2026 x64",
+  "verification_actor": "repair_author plus separate actual low desktop operator",
+  "created_utc": "2026-10-22T05:00:06.7007113Z",
+  "ids": [
+    "R11-GRIP-01",
+    "R11-ROUTE-01"
+  ],
+  "expected": [
+    "Native grip edits/Undo/Redo keep actual geometry and point record consistent without verifier auto-healing",
+    "Valid user picks preserve0.4H facing-side gap and do not leave a path through text; impossible picks rejected before committing"
+  ],
+  "actual": [
+    "R8 native moved text leaves Xrecord stale; same final old DLL GUI repro pending",
+    "R8 frozen crossing input retained with C8 FAIL; same creation repro pending"
+  ],
+  "baseline_publication_commit": "1c042443e1d06c06070be3cca22eba3e25e0d4bc",
+  "dll_sha256": "5b65191eb6ab9b8666df0c9a173dac83047d2169fe6e962e8f3c6598327f4460",
+  "status": "fixed_verified_in_final_candidate",
+  "closure": {
+    "verified_utc": "2026-10-22T14:56:35.967286+00:00",
+    "source_commit": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+    "dll_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+    "initial_contract": {
+      "path": "evidence/failure-contract-initial/failure-contract.json",
+      "sha256": "c885fd0b2d09348980320087c7950f9dcd1dcd1775987dd71acce8b18e573d7d"
+    },
+    "gui": {
+      "path": "evidence/gui-completed-result.json",
+      "sha256": "82bcac9ea26d3fd03c350f09f82fcf53e0a93e7a2e2d70ae16c8eaee51cefa70"
+    },
+    "cold": {
+      "path": "evidence/cold-saved/results.json",
+      "sha256": "442bb0ae13173f02572bdc4c0eddde2dee3303a2acbf6512047dd0bb426c7f76"
+    },
+    "native_eight": {
+      "path": "evidence/native-routing/green-final/result.json",
+      "sha256": "b519d5ecfdaa2377a7af653ba12d8ecffb8163c99466493431f7c56009009760"
+    },
+    "conclusion": "Same original counterexamples and strict criteria pass. Initial fixes that failed real wrapper identity or Redo remain failed historical evidence. GUI uses separate operator; repair author owns code/tests; not an unaffiliated audit."
+  }
+}

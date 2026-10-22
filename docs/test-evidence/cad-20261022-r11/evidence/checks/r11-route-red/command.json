@@ -1,0 +1,27 @@
+{
+  "id": "r11-route-red",
+  "exe": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\native-routing\\red\\input.dwg",
+    "/nologo",
+    "/b",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\native-routing\\red\\commands.scr"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\native-routing\\red",
+  "started": "2026-10-22T15:21:54.0161006+08:00",
+  "finished": "2026-10-22T15:22:15.5311071+08:00",
+  "owned_pid": 24196,
+  "environment": {
+    "PATGEOM_REQUIRE_TEXTS": "8",
+    "PATGEOM_RUN_ID": "r11-route-red",
+    "PATGEOM_STRICT": "1",
+    "PATGEOM_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\native-routing\\red",
+    "PATML_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\native-routing\\red",
+    "PATGEOM_REQUIRE_BRACES": "0"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 21514.8928,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-route-red\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-route-red\\stderr.txt"
+}

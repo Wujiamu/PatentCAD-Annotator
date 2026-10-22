@@ -1,0 +1,33 @@
+{
+  "id": "r11-route-green-final-gate",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>/tools/verify-geometry.ps1",
+    "-ReportPath",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/native-routing/green-final/PatentMarker-geom-verify.txt",
+    "-RunId",
+    "r11-route-green-final",
+    "-RequireBraces",
+    "0",
+    "-RequireTexts",
+    "8",
+    "-ExpectedDllSha256",
+    "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+    "-ExpectedMvid",
+    "798e256e-31a5-4599-80ad-97f7778de32a",
+    "-ExpectedAssemblyPath",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/candidate-history-isolated/2025/PatentMarker.dll"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:56:56.4535649+08:00",
+  "finished": "2026-10-22T22:56:57.3335192+08:00",
+  "owned_pid": 28592,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 880.0322,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-route-green-final-gate\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-route-green-final-gate\\stderr.txt"
+}

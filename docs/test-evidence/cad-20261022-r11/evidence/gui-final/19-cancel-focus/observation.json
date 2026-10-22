@@ -1,0 +1,13 @@
+{
+  "Pid": 25296,
+  "Hwnd": 6162550,
+  "ProcessStartUtcTicks": 639282522669769134,
+  "Utc": "2026-10-22T07:58:21.0844648Z",
+  "Left": 0,
+  "Top": 0,
+  "Width": 1920,
+  "Height": 1048,
+  "Dpi": 96,
+  "Image": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final\\19-cancel-focus\\window.png",
+  "Sha256": "DBC3AF75E59D3EDF277A82270DEB317B8EC0ECB3963DCD676E73CE27CB912581"
+}

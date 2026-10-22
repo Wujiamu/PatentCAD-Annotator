@@ -1,0 +1,6 @@
+Exception: <WORKSPACE>\tools\verify-geometry.ps1:522
+Line |
+ 522 |      throw "geometry verification failed: $runError (evidence: $eviden ��
+     |      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     | geometry verification failed: report RESULT is 'FAIL', not PASS (evidence:
+     | <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\core-negative\r11-core-negative\geometry-evidence.json)

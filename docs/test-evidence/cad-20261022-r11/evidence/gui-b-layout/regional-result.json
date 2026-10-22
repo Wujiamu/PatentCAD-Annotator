@@ -1,0 +1,79 @@
+{
+  "result": "PASS",
+  "scope": "Regional pixel coverage of 1 brace and 2 MLeaders; near saved view persistence",
+  "pid": 33356,
+  "hwnd": 2165144,
+  "candidateSha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "source": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+  "checks": [
+    {
+      "evidence": [
+        "15-near/window.png",
+        "33-near-complete/window.png",
+        "39-reopened/window.png"
+      ],
+      "name": "near MLeader",
+      "actual": "complete spline and readable forward-facing902 with visible pre-text gap; window -20,-80 to160,160",
+      "result": "PASS"
+    },
+    {
+      "evidence": "21-far-path/window.png",
+      "name": "far complete path",
+      "actual": "window2850,1320 to3650,1660 shows attach at x441 beyond palette edge436 through complete spline to902",
+      "result": "PASS"
+    },
+    {
+      "evidence": "27-far-detail/window.png",
+      "name": "far902 detail",
+      "actual": "window3535,1535 to3620,1600; forward-facing902 clearly readable; leader ends before digit with visible gap, no crossing",
+      "result": "PASS"
+    },
+    {
+      "evidence": "44-brace-unobscured/window.png",
+      "name": "complete brace",
+      "actual": "near window contains whole brace; UCSICON temporarily OFF exposes top endpoint, two long sections, center cusp and bottom endpoint; no palette/canvas clipping",
+      "result": "PASS"
+    },
+    {
+      "evidence": [
+        "34-saved/window.png",
+        "36-closed/window.png",
+        "38-file-focus/window.png",
+        "39-reopened/window.png"
+      ],
+      "name": "same B save close reopen near view",
+      "actual": "34 saved;36 actual Start page with no drawing and unloaded dictionary;38 full sameB default path;39 reopen preserves near view and902 Manual-B",
+      "result": "PASS"
+    },
+    {
+      "evidence": [
+        "42-ucs-prompt/window.png",
+        "44-brace-unobscured/window.png",
+        "48-ucs-restored/window.png",
+        "49-final-saved/window.png"
+      ],
+      "name": "temporary UCS icon restored",
+      "actual": "initialON; OFF only for44 pixel observation;48 ON visibly restored;49 saved",
+      "result": "PASS"
+    },
+    {
+      "evidence": "active/PatentMarker-geom-verify.txt",
+      "name": "current startup strict geometry identity",
+      "actual": "run20261022-223656-429d29f6 correct4b9e;1brace2texts;strict24/0",
+      "result": "PASS"
+    }
+  ],
+  "cleanup": {
+    "time": "2026-10-22T22:55:56.1662188+08:00",
+    "actual": "normal main titlebar exit; PID33356 absent and no acad process remains; installation not changed",
+    "result": "PASS"
+  },
+  "drawing": {
+    "path": "<WORKSPACE>/docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/drawings/isolated-B.dwg",
+    "sha256": "A7F9881026DD1C27EF2FBAF8045D293C543C58D5F070AEB4AD7BCEE2E96FDDF4"
+  },
+  "notes": [
+    "Previous final-result.json whole-drawing discernibility BLOCKED preserved as historical observation; this regional method does not claim all objects readable on one screen.",
+    "Only view/zoom,UCS icon toggles,save,close/open performed; no entity edits in this phase."
+  ]
+}

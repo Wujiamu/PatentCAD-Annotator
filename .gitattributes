@@ -15,5 +15,5 @@
 /docs/test-evidence/cad-20261021-r8/* -text whitespace=cr-at-eol
 /docs/acceptance-summary-20261022-r10.json -text
 /docs/test-evidence/cad-20261022-r10/** -text whitespace=cr-at-eol
-/docs/acceptance-summary-20261022-r11.json -text
-/docs/test-evidence/cad-20261022-r11/** -text whitespace=cr-at-eol
+/docs/acceptance-summary-20261022-r11.json -text whitespace=cr-at-eol
+/docs/test-evidence/cad-20261022-r11/** -text whitespace=-trailing-space,-blank-at-eof,cr-at-eol

@@ -1,0 +1,7 @@
+{
+  "result": "PASS_CURRENT_BINDING_ONLY",
+  "issue": "Earlier unsealed R11 probe iterations reused evidence/probes. Historical console command records were preserved but those case files identify only the last run, not all earlier candidates.",
+  "scope": "Do not use reused directory as before/old-candidate evidence. Historical A01-A03 pre-fix proofs remain unchanged in sealed R5/R8/R10. Current final source uses unique probes-accepted directory and accepted-bound-probe commands.",
+  "current": "evidence/probes-accepted",
+  "historical_proof": "Original before/after counterexamples retain their original source IDs; R11 older console logs are process history only."
+}

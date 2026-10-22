@@ -1,0 +1,22 @@
+[
+  {
+    "original_unchanged": true,
+    "result": "PASS",
+    "drawing": "A",
+    "gate_exit": 0,
+    "native_exit": 0,
+    "source": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-A.dwg",
+    "scope": "L3 fresh full acad process with installed candidate autoload, saved GUI drawing read through disposable copy; no new visual/G10 claim",
+    "original_sha256": "3a66466d94dd44bf3351f8415c4f61d21fba23c9475db40aa81ead2aee0de1c2"
+  },
+  {
+    "original_unchanged": true,
+    "result": "PASS",
+    "drawing": "B",
+    "gate_exit": 0,
+    "native_exit": 0,
+    "source": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-B.dwg",
+    "scope": "L3 fresh full acad process with installed candidate autoload, saved GUI drawing read through disposable copy; no new visual/G10 claim",
+    "original_sha256": "a7f9881026dd1c27ef2fbaf8045d293c543c58d5f070aeb4ad7bcee2e96fddf4"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "Pid": 33356,
+  "Hwnd": 2165144,
+  "ProcessStartUtcTicks": 639282766062948549,
+  "Utc": "2026-10-22T14:42:43.3812284Z",
+  "Left": 0,
+  "Top": 0,
+  "Width": 1920,
+  "Height": 1048,
+  "Dpi": 96,
+  "Image": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-b-layout\\10-w-literal\\window.png",
+  "Sha256": "CF8D6D311617C2706BCC64A60601A82EA91B04C7EC73A98A84167F5FAFAD8E87"
+}

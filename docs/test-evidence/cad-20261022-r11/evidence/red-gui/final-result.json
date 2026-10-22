@@ -1,0 +1,16 @@
+{
+  "result": "FAIL",
+  "scenario": "R11-GRIP-01 red reproduction confirmed",
+  "operator": "independent low desktop operator, root recovery 16-23 explicitly handed back",
+  "loadedDllSHA256": "5b65191eb6ab9b8666df0c9a173dac83047d2169fe6e962e8f3c6598327f4460",
+  "mleader": "total9 passed8 failed1; C3 text-location39.030",
+  "geometry": "2026-10-22 15:05:25; pass102 fail1; T3a actual(74.7624,272.2548) expected(40,290), error39.0297; strict=false",
+  "redSample": "drawings/red-moved.dwg",
+  "redSampleSHA256": "61099B58C4AECC596D183147694BF7785B8873B7ADB0D58928EC948C6920CA46",
+  "undoRedo": "PASS visual only: 35 Undo grip returns text near869,269; immediate36 CtrlY restores near988,329;37 CtrlZ restores original. No report commands between35and36.",
+  "replay": "1920x1040 maximized: click top spline text869,269; drag text grip856,261 to976,323 then click976,323 commits. Observed resulting actual WCS74.7624,272.2548.",
+  "inputLesson": "command immediate-submit lost text once and enteredPAN; excluded from product defect. Resolved focus click +250ms capture; text +capture complete literal;Enter +300ms capture.",
+  "cleanup": "PASS own PID21888 normal UI close; Get-Process acad empty",
+  "restoredSample": "drawings/red-A.dwg original grip position saved, SHA0A4C96424D48801A86FABFF4DC36574AEF49EF004430F8BFC7D25FE4EF93B290",
+  "uncovered": "No crossing creation GUI; no strict gate claim; no post-fix green yet"
+}

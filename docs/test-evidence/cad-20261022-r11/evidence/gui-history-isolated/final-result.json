@@ -1,0 +1,120 @@
+{
+  "result": "PASS",
+  "scope": "Executed business assertions pass; B complete visual layout remains SKIP/BLOCKED",
+  "role": "independent low desktop operator",
+  "pid": 25404,
+  "hwnd": 330228,
+  "source": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+  "candidateSha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "host": "AutoCAD2026 25.1 Windows x64",
+  "checks": [
+    {
+      "expected": "Undo returns original; immediate Redo restores moved geometry",
+      "name": "native text grip undo then immediate redo",
+      "actual": "04/05 moved 901 from (865,188) to (1110,240); 06 returned; 07 restored; only capture/view between",
+      "result": "PASS",
+      "evidence": [
+        "02-selected/window.png",
+        "03-hot/window.png",
+        "04-commit/window.png",
+        "05-idle/window.png",
+        "06-undo/window.png",
+        "07-redo/window.png",
+        "redo/PatentMarker-geom-verify.txt",
+        "redo/PatentMarker-mleader-verify.txt"
+      ]
+    },
+    {
+      "expected": "Single immediate Undo returns prior geometry and stored anchor remains consistent",
+      "name": "independent fresh grip undo record consistency",
+      "actual": "18 moved (1110,240) to (1260,354); 20 immediate Undo restored prior; ML9/9 strict103/0",
+      "result": "PASS",
+      "evidence": [
+        "18-commit/window.png",
+        "19-idle/window.png",
+        "20-undo-real/window.png",
+        "undo-audit/PatentMarker-mleader-verify.txt",
+        "undo-audit/PatentMarker-geom-verify.txt"
+      ]
+    },
+    {
+      "name": "hot grip displaced ghost then Escape",
+      "actual": "29 displaced ghost at (1330,450);30/31 cancellation restored geometry; strict103/0",
+      "result": "PASS",
+      "evidence": [
+        "28-hot/window.png",
+        "29-ghost/window.png",
+        "30-cancel/window.png",
+        "31-cancel-idle/window.png",
+        "cancel/PatentMarker-geom-verify.txt"
+      ]
+    },
+    {
+      "name": "A save close reopen persistence",
+      "actual": "35 saved;37 Start page no A tab;40 reopened same default full A path;43 strict103/0 with saved moved geometry",
+      "result": "PASS",
+      "evidence": [
+        "35-a-saved/window.png",
+        "37-a-closed/window.png",
+        "39-file-focus/window.png",
+        "40-a-reopened/window.png",
+        "a-reopened/PatentMarker-geom-verify.txt"
+      ]
+    },
+    {
+      "name": "A B dictionary isolation",
+      "actual": "45 A901 Manual-A;49 B902 Manual-B;59 closing B returns A901;62 B reopen902",
+      "result": "PASS",
+      "evidence": [
+        "45-a-palette/window.png",
+        "49-b-open/window.png",
+        "59-b-closed-a-active/window.png",
+        "62-b-reopened/window.png"
+      ]
+    },
+    {
+      "name": "B save close reopen numeric persistence",
+      "actual": "B1brace2texts strict24/0 before save and after actual close and reopen",
+      "result": "PASS",
+      "evidence": [
+        "b-before-save/PatentMarker-geom-verify.txt",
+        "57-b-saved/window.png",
+        "59-b-closed-a-active/window.png",
+        "62-b-reopened/window.png",
+        "b-reopened/PatentMarker-geom-verify.txt"
+      ]
+    },
+    {
+      "name": "B complete visible layout",
+      "actual": "ZOOM E left geometry at view edges; whole 1brace2texts not simultaneously confirmed. Additional view request arrived after normal process exit; no geometry edits made.",
+      "result": "SKIP/BLOCKED",
+      "evidence": [
+        "54-b-fit/window.png",
+        "62-b-reopened/window.png"
+      ]
+    }
+  ],
+  "notes": [
+    "13 CtrlZ only undid PATGEOMVERIFY Undo record; not counted as geometry Undo; replaced by fresh isolated grip action 14-25.",
+    "Copied active report directories may include previous-stage ML report; geometry reports are stage fresh."
+  ],
+  "cleanup": {
+    "time": "2026-10-22T22:35:47.5195637+08:00",
+    "actual": "Normal titlebar close after A/B had been saved. PID25404 absent; no acad remains. Installation left for parent restore.",
+    "result": "PASS",
+    "evidence": [
+      "66-exit/window.png"
+    ]
+  },
+  "drawings": [
+    {
+      "sha256": "3A66466D94DD44BF3351F8415C4F61D21FBA23C9475DB40AA81EAD2AEE0DE1C2",
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-A.dwg"
+    },
+    {
+      "sha256": "5CEC18CE6A4B57FE78B15B195F32D0CFADBC71EAC7A0A79206674B71A5A248D8",
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-B.dwg"
+    }
+  ]
+}

@@ -60,10 +60,14 @@ pwsh -NoProfile -File ./tools/verify-geometry.ps1 `
 
 ## R10 固定交接范围
 
-四旧组本机没有，只允许GitHub外部真实宿主执行；不要回到本机重复探测或安装。当前候选及SHA/MVID见[cad-acceptance-20261022.md](cad-acceptance-20261022-r10.md)。新增必测：只读/锁定字典失败保护与解除后恢复、隐藏/系统/其他属性保留、外来`.tmp`不变、备份缺失/损坏/占用与重试；闭合/带bulge的PAT大括号必须FAIL；空图无业务目标不能作为PASS。仍需真实Leader与MLeader差异、正常GUI/夹点/Undo/Redo与安装后冷启动证据。
+四旧组本机没有，只允许GitHub外部真实宿主执行；不要回到本机重复探测或安装。当前候选及SHA/MVID见[cad-acceptance-20261022.md](cad-acceptance-20261022-r11.md)。新增必测：只读/锁定字典失败保护与解除后恢复、隐藏/系统/其他属性保留、外来`.tmp`不变、备份缺失/损坏/占用与重试；闭合/带bulge的PAT大括号必须FAIL；空图无业务目标不能作为PASS。仍需真实Leader与MLeader差异、正常GUI/夹点/Undo/Redo与安装后冷启动证据。
 
 R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
 
 R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
 
 R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
+
+## R11 候选交接
+
+当前五包构建源码：`e24c9b141f687c5bfd36fd1e6fec354c904bd315`（clean）。旧组不在本机测试、探测或安装，只由GitHub交接到真实目标环境。请以同PR各组manifest的SHA/MVID为准，不沿用R10身份。除既有安装、PATDOCTOR、严格几何、保存重开外，2010/2013/2015补真实文字夹点、热夹点位移取消、立即Undo/Redo、三点/无限点/直线/样条/大小字高绕行；2007验证Leader+MText创建绕行与不可行拾取点拒绝，不把MLeader事件机制外推。原生编辑应更新产品记录；验证命令仍须拒绝未授权篡改。

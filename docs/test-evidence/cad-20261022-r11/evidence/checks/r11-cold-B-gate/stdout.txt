@@ -1,0 +1,9 @@
+{
+  "RunId": "r11-cold-B",
+  "AssemblyPath": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\candidate-history-isolated\\2025\\PatentMarker.dll",
+  "Sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "Mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "Braces": 1,
+  "Texts": 2,
+  "Summary": "braces=1 passed=1 failed=0 unreadable=0; texts=2 passed=2 failed=0 unreadable=0; requiredBraces=1 requiredTexts=1; strict=true"
+}

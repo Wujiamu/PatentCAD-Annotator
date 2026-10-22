@@ -1,0 +1,12 @@
+{
+  "created_utc": "2026-10-22T14:59:19.192104+00:00",
+  "monitor_started": false,
+  "graphics_security_or_service_changes": false,
+  "cad_processes": [],
+  "installation_restoration": {
+    "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/history-isolated-installed/installation-restoration.json",
+    "sha256": "235b850661e5d6e43c6bde1035bbf4b9dc41d111ba5506287b50cf2f4057b36b"
+  },
+  "restored_checks": 155,
+  "gui_cleanup": "PASS: both owned GUI instances exited normally; no acad/accoreconsole remains; installation still retained until final native reads then mandatory restoration"
+}

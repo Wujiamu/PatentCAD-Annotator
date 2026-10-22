@@ -1,0 +1,164 @@
+=====================================================
+PATGEOMVERIFY - geometry regression verification
+RUN_ID: 20261022-155609-00b87c3a
+Time: 2026-10-22 15:56:09
+AutoCAD: (not queried in this build)
+ASSEMBLY_PATH: <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\candidate-final\2025\PatentMarker.dll
+ASSEMBLY_SHA256: d112a428ced3b188c685f2d683f451c5c59c44f0bf074605cb70b4a21d8caf37
+ASSEMBLY_MVID: ab26a5b8-1257-49ab-ac34-d42a1dd1085f
+ASSEMBLY_VERSION: 1.0.0+59395901b3426f31ebf3e1523ae73fa2c7535b13
+REQUIRED: braces>=1 texts>=1 strict=true
+=====================================================
+
+-----------------------------------------------------
+MLEADER (2985145552096)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(40.0000,110.0000,0.0000) expected=(40.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(40.0000,110.0000,0.0000) expected=(40.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(20.0000,110.0000,0.0000) expected=(20.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(38.6000,108.2147,0.0000) expected=(38.6000,108.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+MLEADER (2985145552144)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(65.0000,110.0000,0.0000) expected=(65.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(65.0000,110.0000,0.0000) expected=(65.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(80.0000,110.0000,0.0000) expected=(80.0000,110.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(73.3167,108.2147,0.0000) expected=(73.3167,108.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+MLEADER (2985145552192)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(40.0000,150.0000,0.0000) expected=(40.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(40.0000,150.0000,0.0000) expected=(40.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(20.0000,150.0000,0.0000) expected=(20.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(38.6000,148.2147,0.0000) expected=(38.6000,148.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+MLEADER (2985145552240)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(100.0000,150.0000,0.0000) expected=(100.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(100.0000,150.0000,0.0000) expected=(100.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(80.0000,150.0000,0.0000) expected=(80.0000,150.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(98.6000,148.2147,0.0000) expected=(98.6000,148.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+MLEADER (2985145552288)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(40.0000,200.0000,0.0000) expected=(40.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(40.0000,200.0000,0.0000) expected=(40.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(20.0000,200.0000,0.0000) expected=(20.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(37.2000,195.8000,0.0000) expected=(37.2000,195.8000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=2.8000 tol=0.0007
+
+-----------------------------------------------------
+MLEADER (2985145552336)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(65.0000,200.0000,0.0000) expected=(65.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(65.0000,200.0000,0.0000) expected=(65.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(100.0000,200.0000,0.0000) expected=(100.0000,200.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(81.6335,195.8000,0.0000) expected=(81.6335,195.8000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=2.8000 tol=0.0007
+
+-----------------------------------------------------
+MLEADER (2985145552384)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(100.0000,250.0000,0.0000) expected=(100.0000,250.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(100.0000,250.0000,0.0000) expected=(100.0000,250.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(0.0000,240.0000,0.0000) expected=(0.0000,240.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(98.6000,248.2147,0.0000) expected=(98.6000,248.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+MLEADER (2985145552432)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(74.2629,272.2979,0.0000) expected=(74.2629,272.2979,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(74.2629,272.2979,0.0000) expected=(74.2629,272.2979,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(20.0000,290.0000,0.0000) expected=(20.0000,290.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(72.8629,270.5126,0.0000) expected=(72.8629,270.5126,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+LWPOLYLINE (2985145552512)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=8.0000 width=8.0000
+  [PASS] B2 tip-at-full-width: max=8.0000 tol=0.0001
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=20.0000 expected=20.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0001
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=0.6666 extents=0.6666,0.6666,0.6666,0.6666 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (2985145552560)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=-0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=8.0000 width=8.0000
+  [PASS] B2 tip-at-full-width: max=8.0000 tol=0.0001
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=20.0000 expected=20.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0001
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=0.6666 extents=0.6666,0.6666,0.6666,0.6666 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (2985145552608)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=8.0000 width=8.0000
+  [PASS] B2 tip-at-full-width: max=8.0000 tol=0.0001
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=20.0000 expected=20.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0001
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=0.6666 extents=0.6666,0.6666,0.6666,0.6666 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+LWPOLYLINE (2985145552656)
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=-0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=8.0000 width=8.0000
+  [PASS] B2 tip-at-full-width: max=8.0000 tol=0.0001
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=20.0000 expected=20.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0001
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [PASS] B9 corner-curves: expectedAlong=0.6666 extents=0.6666,0.6666,0.6666,0.6666 worstExtentErr=0.0000 turns=78.4871,78.4871,78.4871,78.4871 refErr=0.0019
+  => PASS
+
+-----------------------------------------------------
+MLEADER (2985145522208)
+  [PASS] T1 text-horizontal: rotation=0 rad
+  [PASS] T2 text-x-direction: unit=(1.0000,0.0000,0.0000)
+  [PASS] T3a recorded-text-anchor: actual=(40.0000,340.0000,0.0000) expected=(40.0000,340.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3b mleader-text-location: actual=(40.0000,340.0000,0.0000) expected=(40.0000,340.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3c actual-previous-anchor: actual=(20.0000,340.0000,0.0000) expected=(20.0000,340.0000,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3d actual-endpoint-anchor: actual=(38.6000,338.2147,0.0000) expected=(38.6000,338.2147,0.0000) error=0.0000 tol=0.0000
+  [PASS] T3 leader-text-retract: boundary-gap error=0.0000 gap=1.4000 tol=0.0003
+
+-----------------------------------------------------
+SUMMARY: braces=4 passed=4 failed=0 unreadable=0; texts=9 passed=9 failed=0 unreadable=0; requiredBraces=1 requiredTexts=1; strict=true
+ASSERTIONS: pass=103 fail=0 n/a=0
+COVERAGE: brace(B0-B9); text(T1-T2); leader-text(T3 when applicable)
+NOTE: display, grips and other GUI behaviour are NOT covered.
+RESULT: PASS

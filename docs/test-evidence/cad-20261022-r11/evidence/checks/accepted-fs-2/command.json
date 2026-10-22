@@ -1,0 +1,19 @@
+{
+  "id": "accepted-fs-2",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/fs-probe/bin/Release/net8.0-windows/FsProbe.dll",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/candidate-history-isolated/2025/PatentMarker.dll",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/actual-fs/accepted/2"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:28:05.0401197+08:00",
+  "finished": "2026-10-22T22:28:05.4543440+08:00",
+  "owned_pid": 9076,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 413.7778,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-fs-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-fs-2\\stderr.txt"
+}

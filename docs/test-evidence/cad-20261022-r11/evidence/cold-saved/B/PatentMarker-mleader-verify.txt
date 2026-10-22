@@ -1,0 +1,37 @@
+=====================================================
+PATMLVERIFY — MLeader form verification
+Time: 2026-10-22 22:56:10
+AutoCAD: 25.1.0.0
+=====================================================
+
+-----------------------------------------------------
+MLeader (2153456995552)
+  recorded: attach=(2918.36,1402.73) doglegs=1 text=(3578.97,1567.76) arrow=False splined=True
+  entity: textLocation=(3578.97,1567.76) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=351 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.001 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+-----------------------------------------------------
+MLeader (2153456995888)
+  recorded: attach=(0.00,100.00) doglegs=1 text=(40.00,110.00) arrow=False splined=True
+  entity: textLocation=(40.00,110.00) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=21 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.023 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+SUMMARY: total=2 passed=2 failed=0

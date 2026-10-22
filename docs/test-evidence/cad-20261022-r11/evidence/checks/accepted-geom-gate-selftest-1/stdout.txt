@@ -1,0 +1,1 @@
+PASS self-test: good report accepted; stale/Fail/wrong-hash/wrong-path/wrong-mvid/missing-B0c/missing-ASSERTIONS/wrong-count/wrong-required/non-strict/bad-totals/duplicate-PASS/missing-B9/empty-PASS reports rejected

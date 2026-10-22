@@ -1,0 +1,10 @@
+{
+  "case": "moved-text",
+  "layer": "L1_SIMULATED_COMMAND",
+  "accepted": false,
+  "command_exception": null,
+  "command_elapsed_ms": 46.8105,
+  "report_bytes": 2716,
+  "environment_restored": true,
+  "result": "PASS"
+}
