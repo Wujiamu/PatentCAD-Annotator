@@ -82,14 +82,12 @@ namespace PatentMarker.IO
             if(s.Commands.Count>0)s.Commands.Pop();
             if(!Native(name)||s.Commands.Count>0||s.Changed.Count==0)return;
             ObjectId[] ids=new ObjectId[s.Changed.Count];s.Changed.Keys.CopyTo(ids,0);s.Changed.Clear();s.Busy=true;
-            bool undo=s.Database.UndoRecording;
             try
             {
                 using(DocumentLock docLock=doc.LockDocument())
                 {
-                    // These are derived records/attachment geometry. Do not
-                    // add an extra undo step or enable a disabled recorder.
-                    s.Database.DisableUndoRecording(true);
+                    // Keep the host's recorder unchanged: normal edit records
+                    // must undo/redo together with native entity geometry.
                     using(Transaction tr=s.Database.TransactionManager.StartTransaction())
                     {
                         foreach(ObjectId id in ids)
@@ -98,11 +96,12 @@ namespace PatentMarker.IO
                             if(ent==null||ent.IsErased)continue;
                             if(PatEntityHelper.IsPatMLeader(ent,tr))
                             {
-                                ent=tr.GetObject(id,OpenMode.ForWrite) as Entity;
                                 Type creator=typeof(PatNativeEditTracker).Assembly.GetType("PatentMarker.Commands.PatMLeaderCreator");
+                                MethodInfo needs=creator==null?null:creator.GetMethod("NeedsNativeEditSynchronization");
                                 MethodInfo sync=creator==null?null:creator.GetMethod("SynchronizeNativeEdit");
-                                if(sync!=null)
+                                if(needs!=null&&sync!=null&&(bool)needs.Invoke(null,new object[]{ent,tr}))
                                 {
+                                    ent=tr.GetObject(id,OpenMode.ForWrite) as Entity;
                                     object result=sync.Invoke(null,new object[]{ent,tr});
                                     if(result is int&&(int)result<0)
                                         doc.Editor.WriteMessage("\n文字与拾取点重叠，已还原本次标注编辑；请调整文字或拐点位置。\n");
@@ -117,8 +116,6 @@ namespace PatentMarker.IO
             catch(System.Exception ex){PatentMarkerApp.RawLog("Native annotation tracker FAIL: "+ex.Message);}
             finally
             {
-                try{s.Database.DisableUndoRecording(!undo);}
-                catch(System.Exception ex){PatentMarkerApp.RawLog("Native annotation undo-state restore FAIL: "+ex.Message);}
                 s.Busy=false;
             }
         }

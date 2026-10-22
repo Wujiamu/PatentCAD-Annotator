@@ -149,21 +149,34 @@ namespace PatentMarker.Commands
             return routed.GetRange(1,routed.Count-2);
         }
 
-        /// <summary>Called only by the bounded native-edit event tracker.
-        /// Verification never calls this method.</summary>
-        public static int SynchronizeNativeEdit(Entity entity,Transaction tr)
+        /// <summary>Read-only preflight. Merely opening a consistent entity
+        /// for write after U/REDO can discard the host's redo history.</summary>
+        public static bool NeedsNativeEditSynchronization(Entity entity,Transaction tr)
         {
             MLeader ml=entity as MLeader;
-            if(ml==null||!IsPatMLeader(ml,tr)||ml.VerticesCount(0)<2)return 0;
+            if(ml==null||!IsPatMLeader(ml,tr)||ml.VerticesCount(0)<2)return false;
             bool arrow,spline;List<Point3d> before=ReadChain(ml,tr,out arrow,out spline);
-            if(before.Count<2)return 0;
+            if(before.Count<2)return false;
             Point3d text=ml.TextLocation;
             if(SamePoint(text,before[before.Count-1])&&!SamePoint(ml.MText.Location,text))text=ml.MText.Location;
             int count=ml.VerticesCount(0);bool same=before.Count==count&&SamePoint(before[before.Count-1],text);
             for(int i=0;same&&i<count-1;i++)same=SamePoint(before[i],ml.GetVertex(0,i));
             Extents3d box=ml.MText.GeometricExtents;
             if(same&&PatGeomTextAssertions.BoundaryGapError(true,box.MinPoint,box.MaxPoint,
-                ml.GetVertex(0,count-2),ml.GetLastVertex(0),ml.TextHeight)<1e-7)return 0;
+                ml.GetVertex(0,count-2),ml.GetLastVertex(0),ml.TextHeight)<1e-7)return false;
+            return true;
+        }
+
+        /// <summary>Called only by the bounded native-edit event tracker.
+        /// Verification never calls this method.</summary>
+        public static int SynchronizeNativeEdit(Entity entity,Transaction tr)
+        {
+            if(!NeedsNativeEditSynchronization(entity,tr))return 0;
+            MLeader ml=(MLeader)entity;
+            bool arrow,spline;List<Point3d> before=ReadChain(ml,tr,out arrow,out spline);
+            Point3d text=ml.TextLocation;
+            if(SamePoint(text,before[before.Count-1])&&!SamePoint(ml.MText.Location,text))text=ml.MText.Location;
+            int count=ml.VerticesCount(0);
             Point3d attach=ml.GetVertex(0,0);List<Point3d> bends=new List<Point3d>();
             for(int i=1;i<count-1;i++)bends.Add(ml.GetVertex(0,i));
             try

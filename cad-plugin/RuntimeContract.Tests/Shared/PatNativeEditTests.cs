@@ -22,6 +22,43 @@ namespace PatentMarker.RuntimeContract.Tests
 
 #if !SIM_LEADER
         [Fact]
+        public void ConsistentNativeHistoryEvents_AreReadOnlyAndLeaveUndoRecorderAlone()
+        {
+            using(SimulationFixture f=new SimulationFixture())
+            {
+                Application.DocumentManager.MdiActiveDocument=f.Document;IO.PatSettingsStore.Current.ThreePointMode=true;
+                f.QueueThreePointAnnotation("901",new Point3d(0,0,0),new Point3d(20,10,0),new Point3d(40,10,0));new PatMarkCommand().Run();
+                MLeader ml=Assert.IsType<MLeader>(f.Database.CommittedEntities[0]);Tracking(true);
+                try
+                {
+                    foreach(string name in new[]{"U","UNDO","REDO","MREDO"})
+                    {
+                        f.Database.Trace.Clear();f.Document.BeginCommand(name);f.Database.NotifyModified(ml);f.Document.EndCommand(name);
+                        foreach(string item in f.Database.Trace){Assert.False(item.StartsWith("open.write:"));Assert.False(item.StartsWith("undo.recording:"));}
+                    }
+                }
+                finally{Tracking(false);}
+            }
+        }
+
+        [Fact]
+        public void NativeEdit_DoesNotDisableHostUndoRecording()
+        {
+            using(SimulationFixture f=new SimulationFixture())
+            {
+                Application.DocumentManager.MdiActiveDocument=f.Document;IO.PatSettingsStore.Current.ThreePointMode=true;
+                f.QueueThreePointAnnotation("901",new Point3d(0,0,0),new Point3d(20,10,0),new Point3d(40,10,0));new PatMarkCommand().Run();
+                MLeader ml=Assert.IsType<MLeader>(f.Database.CommittedEntities[0]);Tracking(true);
+                try
+                {
+                    f.Database.Trace.Clear();f.Document.BeginCommand("GRIP_STRETCH");ml.TextLocation=new Point3d(60,20,0);f.Database.NotifyModified(ml);f.Document.EndCommand("GRIP_STRETCH");
+                    foreach(string item in f.Database.Trace)Assert.False(item.StartsWith("undo.recording:"));
+                }
+                finally{Tracking(false);}
+            }
+        }
+
+        [Fact]
         public void EquivalentDatabaseWrapperEvent_StillSynchronizesRecord()
         {
             using (SimulationFixture f = new SimulationFixture())

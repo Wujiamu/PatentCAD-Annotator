@@ -1013,7 +1013,9 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
         public DBObject GetObject(ObjectId id, OpenMode mode)
         {
-            return _database.Resolve(id);
+            DBObject obj = _database.Resolve(id);
+            if (mode == OpenMode.ForWrite) _database.Trace.Add("open.write:" + obj.GetType().Name);
+            return obj;
         }
 
         public void AddNewlyCreatedDBObject(DBObject obj, bool add)
