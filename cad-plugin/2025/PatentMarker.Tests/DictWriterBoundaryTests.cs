@@ -87,9 +87,7 @@ public sealed class DictWriterBoundaryTests : IDisposable
         string acl = new FileInfo(path).GetAccessControl().GetSecurityDescriptorSddlForm(AccessControlSections.All);
         Assert.True(DictWriter.Write(path, Model(), out string error), error);
         Assert.Equal("STREAM", File.ReadAllText(path + ":sentinel"));
-        string actualAcl = new FileInfo(path).GetAccessControl().GetSecurityDescriptorSddlForm(AccessControlSections.All);
-        Assert.True(acl == actualAcl, "ACL before=" + acl + " after=" + actualAcl
-            + " parent=" + new DirectoryInfo(directory).GetAccessControl().GetSecurityDescriptorSddlForm(AccessControlSections.All));
+        Assert.Equal(acl, new FileInfo(path).GetAccessControl().GetSecurityDescriptorSddlForm(AccessControlSections.All));
         Assert.Equal(creation, File.GetCreationTimeUtc(path));
     }
 

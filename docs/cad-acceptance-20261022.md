@@ -1,18 +1,18 @@
 # R9 修复后验收报告（2026-10-22）
 
-本机自动校验 **PASS**，完整本机交互验收 **SKIP/BLOCKED**；全支持范围放行 **SKIP/BLOCKED**。当前没有未修复的已登记失败；22项 findings 为限定范围PASS。
+整体 **FAIL**：23项 findings中22项限定范围PASS，新增R9-ACL-01未关闭。Win10本机自动校验PASS；GitHub独立Windows环境135/136、1项FAIL；当前本机交互验收SKIP/BLOCKED。
 
-本机自动边界、真实命令与冷启动校验通过；当前视觉复核仍受官方截图链路阻断。2007/2010/2013/2015 四组本机不存在，仅交 GitHub 外部验收，绝不列为本机待测。历史GUI证据按原候选身份保留，不冒充本次候选新GUI通过。
+本机Win10自动边界、真实命令与冷启动校验通过；GitHub独立Windows环境发现未关闭的ACL继承反例R9-ACL-01，因此整体FAIL。当前视觉复核另受官方截图超时阻断。2007/2010/2013/2015四组本机不存在，仅交GitHub外部验收，绝不列为本机待测。历史GUI证据按原候选身份保留，不冒充新候选GUI通过。
 
-- 377/377 唯一测试、零跳过：136项2025；58/61/61/61项模拟宿主。重复次数不累计为测试数量。
+- Win10本机377/377唯一测试、零跳过：136项2025；58/61/61/61项模拟宿主。此数字不外推GitHub环境；重复次数不累计。
 - 五版SDK编译、API门禁和Static通过。SDK编译与模拟运行不算四旧版真实宿主通过。
 - 最终候选真实CAD2026两个全新进程：A103/103、B24/24，PATDOCTOR各7/0/0；实载SHA/MVID匹配。
-- 实际候选NTFS14场景×3；原子替换拒绝、锁定、只读、全属性、ACL/ADS/创建时间/压缩、中文空格、新文件与临时文件清理通过。
+- 本机实际候选NTFS14场景×3通过；保护DACL的ACL证据不能关闭GitHub未保护继承ACL失败，见R9-ACL-01。
 - 真实CoreConsole24次规模/负例与24个外部门禁一致；6次顶层常规异常注入安全返回，错误/缺失报告均拒绝。
 - 当前官方截图两次超时，未输入画布、未打开GUI测试图；本轮A/B目检与有位移热夹点预览取消仍BLOCKED。历史R8 GUI不冒充新候选通过。
 - 所有临时安装恢复155/155，无后台监看，不改图形/安全设置。
 
-## 本轮红绿闭环
+## 本轮红绿闭环与开放反例
 
 |ID|缺陷与修复|同一反例结果|
 |---|---|---|
@@ -21,6 +21,7 @@
 |R9-GEOM-01|PatBraceAssertions|红3次→绿3次；PASS|
 |R9-GEOM-02|PatBraceGeometry finite inputs / bounded sampling|红3次→绿3次；PASS|
 |R9-GATE-01|verify-geometry empty report acceptance|红3次→绿3次；PASS|
+|R9-ACL-01|DictWriter / Windows2025 inherited ACL preservation|GitHub相同判定重复FAIL；未关闭|
 
 完整精确选择器、预期/实际、角色和证据双哈希见[机器可读汇总](acceptance-summary-20261022.json)。原始失败日志保留；预期被拒绝的负例报告继续为FAIL，不修改预期来取得PASS。
 
@@ -51,6 +52,7 @@ Actual AutoCAD2026 CoreConsole production PATGEOMVERIFY including report generat
 
 ## 剩余风险与外部交接
 
+- **R9-ACL-01**：Known unprotected ACL inheritance counterexample in independent GitHub Windows environment; local NTFS protected-DACL tests do not close it.
 - **sampled-polyline-boundary**：Closed/bulged/nonfinite input rejected. Samples2 remain allowed by the current polyline approximation; no continuous-curvature proof between sampled vertices.
 - **GUI-final-capture**：Current final-candidate interactive A/B reopen, visual layout and displaced-hover cancel unavailable because official sky capture failed twice; no guessed coordinate input. Native cold-read passes do not replace it.
 - **native-grip-recorded-anchor**：R8 native grip movement may leave creation Xrecord anchors stale; T3a/C3 correctly reject them. No automatic Xrecord synchronization is claimed.

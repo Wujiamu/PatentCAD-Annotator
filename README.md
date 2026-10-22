@@ -480,7 +480,7 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
-| Automated tests | This branch passed 377/377 tests with zero skips: 136 portable 2025 tests and 58/61/61/61 simulated host tests; Structure and Static passed | Actual legacy hosts, GUI or Office acceptance |
+| Automated tests | Local Windows10 passed377/377 (136+58/61/61/61), zero skips; GitHub Windows2025 portable135/136 FAIL at inherited ACL (R9-ACL-01); Structure/Static passed | Actual legacy hosts, GUI or Office acceptance |
 | Word L2 source host | `verify-vba-export.vbs` and the formal `test-vba-panel.vbs` (now explicitly unignored) import root source and check mapping, ordinary save/failure cancellation, component types, public entry points, the UserForm, and manual export | Deployment install, Startup loading, AutoExec or restart persistence |
 | Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
 | AutoCAD 2026 | R9最终候选：A/B真实冷启动严格校验通过，NTFS与规模边界通过；当前视觉项BLOCKED，旧宿主仅GitHub外部验收 | GUI、旧宿主或外部独立审计 |

@@ -1,13 +1,13 @@
 {
   "schema": "public_acceptance_summary_v1",
   "report_id": "acceptance-r9-20261022-boundaries",
-  "generated_at": "2026-10-22T02:43:24.265357+00:00",
-  "canonical_local_findings_sha256": "f72d2832a2d4a191918ac063944a503f946effba7030e7fd5de1405d17845513",
+  "generated_at": "2026-10-22T03:01:14.928940+00:00",
+  "canonical_local_findings_sha256": "db4918316224fe94c050f2f66bd06f3bf56a96c7b9c5aa7356f9ff2b2b279bbc",
   "local_automated_result": "PASS",
   "local_execution_result": "SKIP/BLOCKED",
   "external_host_execution_result": "SKIP/BLOCKED",
-  "overall_result": "SKIP/BLOCKED",
-  "scope_statement": "本机自动边界、真实命令与冷启动校验通过；当前视觉复核仍受官方截图链路阻断。2007/2010/2013/2015 四组本机不存在，仅交 GitHub 外部验收，绝不列为本机待测。历史GUI证据按原候选身份保留，不冒充本次候选新GUI通过。",
+  "overall_result": "FAIL",
+  "scope_statement": "本机Win10自动边界、真实命令与冷启动校验通过；GitHub独立Windows环境发现未关闭的ACL继承反例R9-ACL-01，因此整体FAIL。当前视觉复核另受官方截图超时阻断。2007/2010/2013/2015四组本机不存在，仅交GitHub外部验收，绝不列为本机待测。历史GUI证据按原候选身份保留，不冒充新候选GUI通过。",
   "independence_statement": "Same machine/account; independently frozen pre-R9 published source plus identical new tests, separately built final source archive. Repair author performed fixes and primary acceptance; a separate operator reviewed crash/gate evidence and attempted GUI. This is not an unaffiliated external audit.",
   "source_snapshot_id": "70f3af5acd363637b6084c05a890ceed919c88171a6c1e05b654cdf78a189cb7",
   "build_source_snapshot_id": "300c8fdd1cf7fb2b2af23d37a503535d27877c32f05549035b6f499a2a9e0678",
@@ -24,7 +24,8 @@
       "2013_simulated": 61,
       "2015_simulated": 61
     },
-    "note": "Repeated executions not counted as additional unique tests; simulated edition labels never mean actual legacy hosts."
+    "note": "Repeated executions not counted as additional unique tests; simulated edition labels never mean actual legacy hosts.",
+    "scope": "Local Windows10 only; GitHub Windows2025 portable135/136, so no cross-environment377/377 claim."
   },
   "findings": [
     {
@@ -287,7 +288,7 @@
         "PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime",
         "PatentMarker.Tests.DictWriterBoundaryTests.DeniedReplace_DoesNotUseMetadataLosingOverwriteMove"
       ],
-      "residual_risk": "NTFS isolated actual DLL IO entry, not GUI. No EFS certificate provisioning/test; no cross-file transaction or concurrent-writer locking claim."
+      "residual_risk": "NTFS isolated actual DLL IO entry, not GUI. No EFS certificate provisioning/test; no cross-file transaction or concurrent-writer locking claim. Exact unprotected inheritance preservation fails on GitHub Windows2025; tracked separately as open R9-ACL-01. Local protected-DACL PASS must not close that case."
     },
     {
       "finding_id": "R9-BACKUP-01",
@@ -342,6 +343,19 @@
         "verify-geometry.ps1::SelfTest::empty-PASS"
       ],
       "residual_risk": "Report gate validates evidence consistency and expected candidate identity; not a cryptographic signature against an attacker forging all evidence."
+    },
+    {
+      "finding_id": "R9-ACL-01",
+      "severity": "P1",
+      "component": "DictWriter / Windows2025 inherited ACL preservation",
+      "result": "FAIL",
+      "status": "open",
+      "expected": "Same existing-file replacement preserves original ACL inheritance/explicit ACE representation, ADS and creation time.",
+      "actual": "Same exact regression passes locally but fails in GitHub windows-2025-vs2026:135 PASS/1 FAIL/0 SKIP. Before inherited ACEs become explicit entries after replacement. Staging the destination DACL did not fix the counterexample; unsuccessful production attempt reverted. Original criterion retained.",
+      "test_selectors": [
+        "PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime"
+      ],
+      "residual_risk": "Release-blocking known counterexample on GitHub Windows environment. Local protected-DACL proof does not close unprotected inheritance. It is unrelated to missing legacy CAD hosts."
     }
   ],
   "host_matrix": [
@@ -1355,6 +1369,12 @@
       ]
     },
     {
+      "case": "GitHub Windows2025 inherited ACL preservation",
+      "required": true,
+      "result": "FAIL",
+      "detail": "R9-ACL-01; exact same normal replacement regression fails. Failed DACL staging trial reverted; no criterion weakened."
+    },
+    {
       "case": "R9 closed/bulged and finite/sample bounds",
       "required": true,
       "result": "PASS",
@@ -1468,6 +1488,11 @@
   },
   "residual_risks": [
     {
+      "id": "R9-ACL-01",
+      "status": "FAIL",
+      "description": "Known unprotected ACL inheritance counterexample in independent GitHub Windows environment; local NTFS protected-DACL tests do not close it."
+    },
+    {
       "id": "sampled-polyline-boundary",
       "status": "SKIP/BLOCKED",
       "description": "Closed/bulged/nonfinite input rejected. Samples2 remain allowed by the current polyline approximation; no continuous-curvature proof between sampled vertices."
@@ -1578,6 +1603,24 @@
       "local_sha256": "939c2ad454e7cce88c5204adc8f91b86acc8b62e2a588e3e07f230e0bf356854",
       "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-report-write-fault-netload/review.json",
       "published_sanitized_sha256": "939c2ad454e7cce88c5204adc8f91b86acc8b62e2a588e3e07f230e0bf356854"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-portable-failure.txt",
+      "local_sha256": "c2e844d76496c09e5ba2a400cf894a50a0d6bd98965df972bb2ed4d7922c1a52",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-portable-failure.txt",
+      "published_sanitized_sha256": "c2e844d76496c09e5ba2a400cf894a50a0d6bd98965df972bb2ed4d7922c1a52"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-acl-stage-failure.txt",
+      "local_sha256": "972692de41f6c285f57348842ff4e842fb4028b77fded31f961f4e6693450dac",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-acl-stage-failure.txt",
+      "published_sanitized_sha256": "ac5d34f20f45d8502a344e8950867ebc730ed2f253cef29dc95e8c157367d680"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-acl-full-diagnostic.txt",
+      "local_sha256": "63d84e4f9a53b4083af664ea88fd93e729015ff6dea7aca7814d4c0be9f77622",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-acl-full-diagnostic.txt",
+      "published_sanitized_sha256": "1d6721c370b38c6c9395e8234f355b7140648217c615a56a6c561756bfa6cdcd"
     },
     {
       "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-1/command.json",
