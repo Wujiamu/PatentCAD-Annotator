@@ -72,12 +72,16 @@ namespace PatentMarker
                 RawLog("Stack: " + ex.StackTrace);
             }
 
+            try { IO.PatNativeEditTracker.Start(); }
+            catch (Exception ex) { RawLog("Native annotation tracker START FAILED: " + ex.Message); }
             RawLog("=== PatentMarker Initialize END ===");
         }
 
         public void Terminate()
         {
             RawLog("PatentMarker Terminate()");
+            try { IO.PatNativeEditTracker.Stop(); }
+            catch (Exception ex) { RawLog("Native annotation tracker STOP FAILED: " + ex.Message); }
             try
             {
                 Palette.PatPaletteCommand.DisposePalette();

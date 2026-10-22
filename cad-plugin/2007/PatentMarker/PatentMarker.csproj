@@ -52,6 +52,8 @@
     <Compile Include="..\..\Shared\Cad\PatEntityHelper.cs" />
     <Compile Include="..\..\Shared\Styles\PatStyleInitializer.cs" />
     <Compile Include="..\..\Shared\Commands\PatMarkCommand.cs" />
+    <Compile Include="..\..\Shared\Cad\PatNativeEditTracker.cs"><Link>IO\PatNativeEditTracker.cs</Link></Compile>
+    <Compile Include="..\..\Shared\Commands\PatTextPathRouting.cs"><Link>Commands\PatTextPathRouting.cs</Link></Compile>
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceAssertions.cs" />

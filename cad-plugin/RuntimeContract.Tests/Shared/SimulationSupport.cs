@@ -97,6 +97,7 @@ namespace PatentMarker.RuntimeContractTests
 
         public void Dispose()
         {
+            Application.DocumentManager.RemoveDocument(Document);
             IO.RuntimeHost.ClearActiveDocumentOverride();
             IO.PatSettingsStore.Release(Document.Name);
             Palette.PatPaletteCommand.PendingNumber = null;

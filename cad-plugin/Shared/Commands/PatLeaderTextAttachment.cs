@@ -1,6 +1,7 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PatentMarker.Commands
@@ -139,6 +140,17 @@ namespace PatentMarker.Commands
                 : leader.VertexAt(leader.NumVertices - 2);
             leader.SetVertexAt(leader.NumVertices - 1,
                 Retract(previous, textPoint, textHeight));
+        }
+
+        public static void RouteTextPath(Leader leader,MText text)
+        {
+            List<Point3d> original=new List<Point3d>();
+            for(int i=0;i<leader.NumVertices;i++)original.Add(leader.VertexAt(i));
+            Extents3d box=text.GeometricExtents;
+            List<Point3d> route=PatTextPathRouting.Route(original,box.MinPoint,box.MaxPoint,text.TextHeight);
+            if(route.Count==original.Count)return;
+            for(int i=0;i<route.Count;i++)
+                if(i<leader.NumVertices)leader.SetVertexAt(i,route[i]);else leader.AppendVertex(route[i]);
         }
 
         /// <summary>

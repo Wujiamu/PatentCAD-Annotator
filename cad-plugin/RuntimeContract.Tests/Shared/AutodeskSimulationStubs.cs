@@ -131,9 +131,40 @@ namespace Autodesk.AutoCAD.ApplicationServices
         public static DocumentManager DocumentManager { get; } = new DocumentManager();
     }
 
-    public sealed class DocumentManager
+    public sealed class DocumentCollectionEventArgs : EventArgs
     {
-        public Document MdiActiveDocument { get; set; }
+        public DocumentCollectionEventArgs(Document document) { Document = document; }
+        public Document Document { get; }
+    }
+
+    public sealed class CommandEventArgs : EventArgs
+    {
+        public CommandEventArgs(string name) { GlobalCommandName = name; }
+        public string GlobalCommandName { get; }
+    }
+
+    public sealed class DocumentManager : IEnumerable
+    {
+        private Document _active;
+        private readonly List<Document> _documents = new List<Document>();
+        public event EventHandler<DocumentCollectionEventArgs> DocumentCreated;
+        public event EventHandler<DocumentCollectionEventArgs> DocumentToBeDestroyed;
+        public Document MdiActiveDocument
+        {
+            get { return _active; }
+            set
+            {
+                _active = value;
+                if (value != null && !_documents.Contains(value))
+                { _documents.Add(value); DocumentCreated?.Invoke(this,new DocumentCollectionEventArgs(value)); }
+            }
+        }
+        public IEnumerator GetEnumerator() { return _documents.GetEnumerator(); }
+        public void RemoveDocument(Document doc)
+        {
+            DocumentToBeDestroyed?.Invoke(this,new DocumentCollectionEventArgs(doc));
+            _documents.Remove(doc);if(_active==doc)_active=null;
+        }
     }
 
     public sealed class Document
@@ -141,6 +172,14 @@ namespace Autodesk.AutoCAD.ApplicationServices
         public string Name { get; set; } = "simulation.dwg";
         public Editor Editor { get; set; } = new Editor();
         public Database Database { get; set; } = new Database();
+        public event EventHandler<CommandEventArgs> CommandWillStart;
+        public event EventHandler<CommandEventArgs> CommandEnded;
+        public event EventHandler<CommandEventArgs> CommandCancelled;
+        public event EventHandler<CommandEventArgs> CommandFailed;
+        public void BeginCommand(string name) { CommandWillStart?.Invoke(this,new CommandEventArgs(name)); }
+        public void EndCommand(string name) { CommandEnded?.Invoke(this,new CommandEventArgs(name)); }
+        public void CancelCommand(string name) { CommandCancelled?.Invoke(this,new CommandEventArgs(name)); }
+        public void FailCommand(string name) { CommandFailed?.Invoke(this,new CommandEventArgs(name)); }
 
         public DocumentLock LockDocument()
         {
@@ -360,6 +399,12 @@ namespace Autodesk.AutoCAD.DatabaseServices
         public static bool operator ==(ObjectId left, ObjectId right) { return left.Equals(right); }
         public static bool operator !=(ObjectId left, ObjectId right) { return !left.Equals(right); }
         public override string ToString() { return Value.ToString(); }
+    }
+
+    public sealed class ObjectEventArgs : EventArgs
+    {
+        public ObjectEventArgs(DBObject obj) { DBObject=obj; }
+        public DBObject DBObject { get; }
     }
 
     public abstract class DBObject
@@ -730,6 +775,9 @@ namespace Autodesk.AutoCAD.DatabaseServices
             return _vertices[_vertices.Count - 1];
         }
 
+        public void SetFirstVertex(int lineIndex,Point3d point)
+        { if(lineIndex!=0||_vertices.Count==0)throw new InvalidOperationException();_vertices[0]=point; }
+
 
         public void SetLastVertex(int lineIndex, Point3d point)
         {
@@ -802,6 +850,10 @@ namespace Autodesk.AutoCAD.DatabaseServices
 
     public sealed class Database
     {
+        public event EventHandler<ObjectEventArgs> ObjectModified;
+        public void NotifyModified(DBObject obj) { ObjectModified?.Invoke(this,new ObjectEventArgs(obj)); }
+        public bool UndoRecording { get; private set; } = true;
+        public void DisableUndoRecording(bool disable) { UndoRecording=!disable;Trace.Add("undo.recording:"+UndoRecording); }
         private int _nextId = 10;
         private readonly Dictionary<int, DBObject> _objects = new Dictionary<int, DBObject>();
         private readonly List<Entity> _pending = new List<Entity>();

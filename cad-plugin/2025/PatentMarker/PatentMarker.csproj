@@ -54,6 +54,8 @@
     <Compile Include="..\..\Shared\Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
     <Compile Include="..\..\Shared\Palette\DictPaletteViewRenderer.cs" Link="Palette\DictPaletteViewRenderer.cs" />
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Commands\PatLeaderTextAttachment.cs" />
+    <Compile Include="..\..\Shared\Commands\PatTextPathRouting.cs" Link="Commands\PatTextPathRouting.cs" />
+    <Compile Include="..\..\Shared\Cad\PatNativeEditTracker.cs" Link="IO\PatNativeEditTracker.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" Link="Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceAssertions.cs" Link="Commands\PatBraceAssertions.cs" />
     <Compile Include="..\..\Shared\Commands\PatGeomTextAssertions.cs" Link="Commands\PatGeomTextAssertions.cs" />

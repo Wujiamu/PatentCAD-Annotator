@@ -70,6 +70,8 @@
     <Compile Include="Commands\PatCheckCommand.cs" />
     <Compile Include="Commands\PatAlignCommand.cs" />
     <Compile Include="..\..\Shared\Commands\PatCheckResult.cs" />
+    <Compile Include="..\..\Shared\Cad\PatNativeEditTracker.cs"><Link>IO\PatNativeEditTracker.cs</Link></Compile>
+    <Compile Include="..\..\Shared\Commands\PatTextPathRouting.cs"><Link>Commands\PatTextPathRouting.cs</Link></Compile>
     <Compile Include="..\..\Shared\Commands\PatLeaderTextAttachment.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\..\Shared\Commands\PatBraceAssertions.cs" />

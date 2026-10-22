@@ -24,9 +24,12 @@
     <Compile Include="Shared\PatBraceGeometryTests.cs" />
     <Compile Include="Shared\PatBraceEntityTests.cs" />
     <Compile Include="Shared\PatGeomVerifyTests.cs" />
+    <Compile Include="Shared\PatNativeEditTests.cs" />
     <Compile Include="..\2010\PatentMarker\Commands\PatMarkCommand.cs" Link="Edition\Commands\PatMarkCommand.cs" />
     <Compile Include="..\2010\PatentMarker\Commands\PatMLeaderCreator.cs" Link="Edition\Commands\PatMLeaderCreator.cs" />
     <Compile Include="..\Shared\Commands\PatLeaderTextAttachment.cs" Link="Edition\Commands\PatLeaderTextAttachment.cs" />
+    <Compile Include="..\Shared\Commands\PatTextPathRouting.cs" Link="Edition\Commands\PatTextPathRouting.cs" />
+    <Compile Include="..\Shared\Cad\PatNativeEditTracker.cs" Link="Edition\IO\PatNativeEditTracker.cs" />
     <Compile Include="..\Shared\Commands\PatBraceGeometry.cs" Link="Edition\Commands\PatBraceGeometry.cs" />
     <Compile Include="..\Shared\Commands\PatBraceEntity.cs" Link="Edition\Commands\PatBraceEntity.cs" />
     <Compile Include="..\Shared\Commands\PatBraceAssertions.cs" Link="Edition\Commands\PatBraceAssertions.cs" />

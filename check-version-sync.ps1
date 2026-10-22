@@ -92,6 +92,8 @@ $sharedSourceFiles = @(
     "I18n\Language.cs",
     "I18n\Strings.cs",
     "Commands\PatLeaderTextAttachment.cs",
+    "Commands\PatTextPathRouting.cs",
+    "Cad\PatNativeEditTracker.cs",
     "Commands\PatBraceGeometry.cs",
     "Commands\PatBraceAssertions.cs",
     "Commands\PatGeomTextAssertions.cs",
