@@ -1,0 +1,11 @@
+ORIGINAL_A01 accepted=False
+  [PASS] B0c planar-contract: constant Z=0.0000
+  [PASS] B1 no-axis-crossing: min=0.0000 tol=0.0000
+  [PASS] B4 within-selected-width: max=50.0000 width=50.0000
+  [PASS] B2 tip-at-full-width: max=50.0000 tol=0.0005
+  [PASS] B5 endpoints-exact: topErr=0.000E+000 bottomErr=0.000E+000
+  [PASS] B6 cusp-at-half-height: along=50.0000 expected=50.0000
+  [PASS] B3 stems-at-half-width: count=4 upper=2 lower=2 worst=0.0000
+  [PASS] B7 mirror-symmetry: worstOffsetError=0.0000 tol=0.0005
+  [PASS] B8 single-cusp-no-self-intersection: monotonic=True rising=True falling=True cusps=1 selfIntersection=False
+  [FAIL] B9 corner-curves: expectedAlong=4.1665 extents=4.1665,4.1665,4.1665,4.1665 worstExtentErr=0.0000 turns=89.9633,89.9633,89.9633,89.9633 refErr=0.4138

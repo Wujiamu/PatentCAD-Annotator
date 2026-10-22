@@ -1,0 +1,19 @@
+{
+  "id": "final-probe-sharp-3",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/probe-final/AcceptanceProbe.dll",
+    "sharp",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/evidence/probes/3/sharp"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T11:48:29.1909790+08:00",
+  "finished": "2026-10-22T11:48:29.4328334+08:00",
+  "owned_pid": 24280,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 241.8371,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\final-probe-sharp-3\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\final-probe-sharp-3\\stderr.txt"
+}

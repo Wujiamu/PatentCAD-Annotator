@@ -1,0 +1,5 @@
+FILEDIA 0
+NETLOAD "<WORKSPACE>\docs\test-evidence\acceptance-r10-20261022-acl\candidate-release\2025\PatentMarker.dll"
+PATGEOMVERIFY
+QUIT
+Y

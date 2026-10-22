@@ -1,0 +1,19 @@
+{
+  "id": "final-probe-moved-text-1",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/probe-final/AcceptanceProbe.dll",
+    "moved-text",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/evidence/probes/1/moved-text"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T11:48:23.7740612+08:00",
+  "finished": "2026-10-22T11:48:24.2083373+08:00",
+  "owned_pid": 29772,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 434.2579,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\final-probe-moved-text-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\final-probe-moved-text-1\\stderr.txt"
+}

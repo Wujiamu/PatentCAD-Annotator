@@ -1,13 +1,17 @@
-# R10 ACL修复验证记录（进行中）
+# R10 ACL修复闭环
 
-原R9-ACL-01在GitHub Windows2025上失败，精确SDDL断言不变。通过在隔离临时目录设置旧式继承状态，本机也稳定复现该类变化；三个新测试覆盖精确ACL/ADS/创建时间、ACL恢复被拒绝时回滚、上级撤销权限后的继承传播。
+R9-ACL-01已按原精确SDDL断言修复。原GitHub Windows2025反例在push、PR各139/139通过；本机139+58+61+61+61=380项唯一测试零跳过，五集合三轮结果一致。实际旧/新DLL使用同一16项NTFS矩阵，旧两项失败，新全部通过，各三轮。
 
-修复：使用有原文件备份的ReplaceFile；保留其对ADS、压缩、创建时间的处理，合并后严格校验Owner/Group/DACL。只有原描述不带AUTO_INHERITED且合并改变它时，使用低层DACL写入避免再次转换；现代继承走标准API；仍不一致则原文件完整回滚。未申请SACL权限，不改全局系统设置。不存在覆盖新数据的Move兜底；MoveFileEx只恢复原备份文件。
+共享写入在替换后核对原Owner/Group/DACL；原描述没有AUTO_INHERITED且被替换API转换时，DACL-only恢复旧式状态；恢复拒绝则移回原备份文件，保留字节、属性、ADS、创建时间和权限。没有SACL或系统权限变更。新增父目录撤权传播检查防止继承变成持久显式权限。
 
-本机新用例红136PASS/2FAIL；修复后139/139连续三轮通过，五版SDK编译通过。独立GitHub同一原反例正在重跑，最终候选尚未冻结。R9已封存FAIL报告保留，不能拿这份进行中记录当发布PASS。
+原选择器：`PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime`。
 
-原始选择器：`PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime`。
+新增同类选择器：`LegacyInheritedAcl_WithStreamsAndCreationTime_IsPreservedExactly`、`LegacyAclRepairDenied_RollsBackOriginalBytesSecurityAndStreams`、`LegacyInheritedPermission_RemainsInheritedAfterParentRevocation`，均属于`PatentMarker.Tests.DictWriterBoundaryTests`。前两项有相同夹具红绿，第三项为新增邻界正向检查。
 
-新选择器：`LegacyInheritedAcl_WithStreamsAndCreationTime_IsPreservedExactly`、`LegacyAclRepairDenied_RollsBackOriginalBytesSecurityAndStreams`、`LegacyInheritedPermission_RemainsInheritedAfterParentRevocation`（均属于DictWriterBoundaryTests）。
+```powershell
+dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj -c Release --filter FullyQualifiedName~PatentMarker.Tests.DictWriterBoundaryTests --nologo
+```
 
-参考：[ReplaceFile](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew)、[SetFileSecurity](https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-setfilesecurityw)。低层API限定于恢复原有旧式状态，恢复后还要用同一SDDL判定，避免放宽测试。
+实际候选、身份、证据与未覆盖边界见[修复后验收](cad-acceptance-20261022-r10.md)；R9封存FAIL保留。GUI工具仍BLOCKED，四旧组仅GitHub外部实机；代码修复通过不冒充全支持范围放行。
+
+参考：[ReplaceFile](https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-replacefilew)、[SetFileSecurity](https://learn.microsoft.com/en-us/windows/win32/api/securitybaseapi/nf-securitybaseapi-setfilesecurityw)。

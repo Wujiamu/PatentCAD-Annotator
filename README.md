@@ -49,7 +49,7 @@ Visio 另通过导入 PNG 的静态连接点粘合、编号标注、图片移动
 | PowerPoint | 原生直线与编号文字分组；Tags 识别；Custom XML 保存手选字典关联 | 整份演示文稿的产品标注组 | 只读 |
 | Visio | 一维线与编号框配对；ShapeSheet 保存身份及手选字典关联 | 整份文档前景页的产品配对 | 只读 |
 
-本分支五套 CAD 部署 DLL 是本轮修复候选，随包附发布清单。AutoCAD 2026 实载结论见[候选验收](docs/cad-acceptance-20261022.md)；四个旧宿主仍待外部验证。清单保留原始 dirty 工作树构建身份，新上传提交不是原构建提交。Office 构建和门禁见[Office 开发说明](office-com-addin/README.md)。
+本分支五套 CAD 部署 DLL 是本轮修复候选，随包附发布清单。AutoCAD 2026 实载结论见[候选验收](docs/cad-acceptance-20261022-r10.md)；四个旧宿主仍待外部验证。R10清单标识clean source commit1d56652，新上传文档提交不是原构建提交。Office 构建和门禁见[Office 开发说明](office-com-addin/README.md)。
 
 ### Word 与 CAD 如何交换数据
 
@@ -77,7 +77,7 @@ CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `
 ### 当前标注功能
 
 - 2010/2013/2015/2025 四版使用单个 **MLeader（F 方案）** 自持 MText，保留用户附着点及拐点。文字保持在拾取点，引线末端连接朝向最后拐点的实际文字边框中点或上/下角外侧，保留 0.4×字高间隙；使用原生 LandingGap，不直接按文字插入点缩进。dogleg/landing 延伸关闭；2007 保持 `Leader + MText`。
-- [当前候选验收](docs/cad-acceptance-20261020.md)与[四个旧宿主交接](docs/legacy-host-acceptance.md) — 真实宿主结果、候选身份和未覆盖项
+- [当前候选验收](docs/cad-acceptance-20261022-r10.md)与[四个旧宿主交接](docs/legacy-host-acceptance.md) — 真实宿主结果、候选身份和未覆盖项
 - 历史上 v4.0 曾因 MLeader“鱼钩形态”回退到 `Leader + MText`；2026-08-15 形态探针定位根因为顶点链不完整（只给 attach→dogleg 两点），F 方案补全文字点后问题消除（详见 [F 方案文档](docs/mleader-f-plan.md)）。
 - 无箭头时 `ArrowSize` 置 0（非零值会修剪引线起点，导致引线不触及零件），箭头用空箭头块 `_PAT_NO_ARROW` 实现；`ExtendLeaderToText` 为 2014+ SDK 属性，代码中以反射访问保持 2010-2012 兼容。
 - 面板支持“三点 / 无限点”模式切换。三点模式只采集用户指定的 3 个点；无限点模式允许连续采集多个拐点；两种模式都不会额外写入文字附着点。
@@ -85,7 +85,7 @@ CAD 优先读取当前 DWG 同目录同主名的字典，其次读取存在的 `
 - 三点或无限点标注过程中，按 ESC 或右键菜单中的“确认/取消”都可以退出当前标注命令；无限点采集到一半时也可以直接取消。
 - 面板条目单击只选择，双击直接开始标注；右键选择“编辑条目”或选中后按 `F2` 才进入修改，不再需要先打开编辑框再点击“保存并标注”。
 - 面板标注、大括号、对齐和检测共用按图纸隔离的命令调度：切换按钮会取消面板启动的交互命令，再执行最新请求；连续点击以最后一次为准。用户直接启动的原生或其他命令结束后，面板才补发请求。
-- 新建 MLeader 设置左右 `AttachmentMiddle`，按实际文字边框确定连接侧，并保留原生间隙。旧实体不自动迁移。当前候选的实际GUI、夹点及冷启动结论见[本轮候选验收](docs/cad-acceptance-20261020.md)；早期记录不替代当前候选验收。
+- 新建 MLeader 设置左右 `AttachmentMiddle`，按实际文字边框确定连接侧，并保留原生间隙。旧实体不自动迁移。当前候选的实际GUI、夹点及冷启动结论见[本轮候选验收](docs/cad-acceptance-20261022-r10.md)；早期记录不替代当前候选验收。
 - 面板检测到 Word 覆盖 CAD 修改时会启用“裁决”按钮，可选择采用 Word 版、恢复 CAD 版或稍后处理；PATCHECK 结果按图纸隔离，重载字典时只清理当前图纸的高亮状态。
 - 标注文字始终保持水平。引线可以按面板设置使用直线或样条形式。
 - `PATSELECTALL`/`BZS` 通过扩展字典标记 `PATENTMARKER_MLEADER` 识别新建 MLeader（并记录用户点链），同时兼容旧图纸的 Leader 标注与独立文字。
@@ -188,7 +188,7 @@ v4.0 放弃 MLeader 的问题现象、日志证据见 [MLeader 额外附着点�
 | Word L2 源码宿主 | `verify-vba-export.vbs` 与已从忽略规则中放行的正式 `test-vba-panel.vbs` 直接导入根源码，覆盖路径映射、多 DWG 选择复用、普通保存/失败取消，以及组件类型、公开入口、UserForm 与手动导出 | 部署包安装、Startup、AutoExec 或重启持久化已通过 |
 | Word L4（本机 Word 16.0 64 位） | 同一候选包经真实 Startup 安装后连续两次正常启动；不调用初始化器/手动导出，覆盖普通保存、多文档隔离、Save As 改名/换目录及后续保存、锁定/只读字典的取消保存与恢复、运行中拒绝安装及卸载；JSON、事件日志、退出阶段 run ID、Normal 和非产品 Startup 哈希均有断言 | Word 2010、32 位 Office、交互式 Save As 取消、ACL 拒绝、VBA Reset 或宏策略阻止已经通过 |
 | AutoCAD 2026 命令级 | 9次原生宿主均正常退出；3次新建及对应Core复核、冷重开、brace-only均PASS；原错误图仍拒绝；身份SHA/MVID一致，PATDOCTOR四次7/0/0，安装恢复155项通过 | GUI、旧宿主或外部独立审计已完成 |
-| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261022.md) | 单阶段通过替代整套GUI或旧宿主验收 |
+| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261022-r10.md) | 单阶段通过替代整套GUI或旧宿主验收 |
 | Office 16 x64 限定 L3 | PPT 0.1.2.0 / Visio 0.1.4.0 最终 ZIP 的面板、故障恢复及冷重开；PPT 四方向鼠标画线/选线、Visio 原生直线/连接线、粘合跟随和一次撤销/重做、两端面板目检；旧 VSD 转换/新增标注/冷重开；Word 单/多 DWG 手动导出→PPT 读取与关联重开；导入 PNG 静态点粘合、移动跟随及冷重开（[验收记录](office-com-addin/test-evidence/office-local-validation-20261003.md)） | Win7 / Office 2010 x86、真实旧版 Visio 宿主、复杂组、其他粘合方式/显示比例及大型真实文稿未验 |
 
 本仓库的 [CI](.github/workflows/build.yml) 执行 Structure、Static、2025 单测、四版 Simulation，以及 Office 构建、代码测试与隔离安装门禁。Autodesk SDK 不入库，因此 CI 不做五版真实 CAD 编译，也不运行 Word、CAD、PPT 或 Visio 的 GUI 验收。
@@ -298,7 +298,7 @@ PatentCAD-Annotator/
 
 - [docs/version-plan.md](docs/version-plan.md) — 版本规划与分版理由
 - [docs/development-log.md](docs/development-log.md) — 变更记录
-- [当前候选验收](docs/cad-acceptance-20261020.md) / [机器可读摘要](docs/acceptance-summary-20261020.json) — 本机修复后结果、候选身份、证据哈希及剩余范围；本地原始历史证据未上传
+- [当前候选验收](docs/cad-acceptance-20261022-r10.md) / [机器可读摘要](docs/acceptance-summary-20261022-r10.json) — 本机修复后结果、候选身份、证据哈希及剩余范围；本地原始历史证据未上传
 - [四个旧宿主验收交接](docs/legacy-host-acceptance.md) — 固定矩阵、报告身份门禁和逐项结果要求
 - [架构与仓库说明](docs/project-family.md) — 三条衍生路线与共享代码边界
 - [Office 加载项](office-com-addin/README.md) — PPT / Visio 构建、安装、使用及验收限制
@@ -350,7 +350,7 @@ The C# COM add-ins are maintained here under [office-com-addin](office-com-addin
 | PowerPoint | Line and label grouped; Tags identify annotations; Custom XML stores the chosen dictionary path | All slides | Read-only |
 | Visio | Paired one-dimensional line and label; ShapeSheet stores identity and dictionary path | All foreground pages | Read-only |
 
-PPT and Visio share Office dictionary models, parsers, COM contracts and diagnostics inside their own repository. CAD and Office exchange `.dict.json` files. This branch ships the repaired CAD candidate with release manifests; current native/GUI results and remaining scope are in the [candidate review](docs/cad-acceptance-20261020.md). The manifests retain the original dirty-tree build identity. Four legacy host groups still require actual validation; see the [handoff](docs/legacy-host-acceptance.md).
+PPT and Visio share Office dictionary models, parsers, COM contracts and diagnostics inside their own repository. CAD and Office exchange `.dict.json` files. This branch ships the repaired CAD candidate with release manifests; current native/GUI results and remaining scope are in the [candidate review](docs/cad-acceptance-20261022-r10.md). R10 manifests identify clean source commit1d56652; the publication commit is recorded separately. Four legacy host groups still require actual validation; see the [handoff](docs/legacy-host-acceptance.md).
 
 On 2026-10-01, clean builds, PPT 7/7 and Visio 24/24 code tests, and isolated installer rollback/uninstall checks passed. Final ZIPs passed normal cold startup, panel actions and reopening saved products on Office 16 x64, within the scope recorded in the [release validation](office-com-addin/test-evidence/office-release-validation-20261001.md). The Office source and isolated installer gates are maintained in this repository under [office-com-addin](office-com-addin/README.md); all seven C# product projects link the same number comparison source. See the [project architecture](docs/project-family.md).
 
@@ -384,7 +384,7 @@ Dictionaries and conflict backups default to Hidden+System attributes. The CAD p
 - Three-point mode is the default; clicking the point-count button switches to unlimited mode for the current drawing session.
 - Single-click selects an entry and double-click starts marking directly. Right-clicking an entry or pressing `F2` opens editing; the edit dialog no longer contains a separate Save & Mark action.
 - Marking, braces, alignment and checks share a per-drawing command scheduler. A palette switch cancels an interactive command started by the palette and runs the latest request; requests wait for native or other commands to finish.
-- New MLeaders use side-specific `AttachmentMiddle`, facing-side direction, and native outside gap. Old entities are not automatically migrated. See the [current candidate review](docs/cad-acceptance-20261020.md) for actual GUI/grip/cold-start results; historical acceptance does not establish current-candidate coverage.
+- New MLeaders use side-specific `AttachmentMiddle`, facing-side direction, and native outside gap. Old entities are not automatically migrated. See the [current candidate review](docs/cad-acceptance-20261022-r10.md) for actual GUI/grip/cold-start results; historical acceptance does not establish current-candidate coverage.
 - Annotation text is forced to remain horizontal. The leader can still be configured as straight or spline through the palette.
 - `PATSELECTALL` recognizes the new MLeaders through the extension-dictionary marker `PATENTMARKER_MLEADER` (which also records the user point chain), while remaining compatible with legacy Leader annotations and standalone text in old drawings.
 - New commands: `PATMLSET` (scriptable switches) and `PATMLVERIFY` (form diagnostic: explodes all PAT MLeaders and reports against the recorded chains — the regression tool).
@@ -480,11 +480,11 @@ The following summarizes the [development log](docs/development-log.md), [Word V
 | Layer | Recorded evidence | Remaining boundary |
 |---|---|---|
 | Build/package | Five local builds; 2013/2015 ILRepack and release staging | Loading in each target AutoCAD year |
-| Automated tests | Local Windows10 passed377/377 (136+58/61/61/61), zero skips; GitHub Windows2025 portable135/136 FAIL at inherited ACL (R9-ACL-01); Structure/Static passed | Actual legacy hosts, GUI or Office acceptance |
+| Automated tests | R10 local380/380 (139+58/61/61/61), zero skips; independent GitHub Windows2025 portable139/139 on push+PR, all10checks PASS; R9-ACL-01 closed with unchanged exact criterion | Actual legacy hosts, GUI or Office acceptance |
 | Word L2 source host | `verify-vba-export.vbs` and the formal `test-vba-panel.vbs` (now explicitly unignored) import root source and check mapping, ordinary save/failure cancellation, component types, public entry points, the UserForm, and manual export | Deployment install, Startup loading, AutoExec or restart persistence |
 | Word L4 (local Word 16.0 64-bit) | The same candidate passed two normal post-install starts without calling the initializer or manual export; assertions cover ordinary save, multi-document isolation, rename/move Save As plus follow-up save, locked/read-only cancellation and recovery, install/uninstall refusal while Word is running, shutdown run-ID continuity, JSON/log content, and unchanged Normal/unrelated Startup hashes | Word 2010, 32-bit Office, interactive Save As cancellation, ACL denial, VBA Reset, or blocked-macro policy |
-| AutoCAD 2026 | R9最终候选：A/B真实冷启动严格校验通过，NTFS与规模边界通过；当前视觉项BLOCKED，旧宿主仅GitHub外部验收 | GUI、旧宿主或外部独立审计 |
-| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261022.md) | 单阶段通过替代整套GUI或旧宿主验收 |
+| AutoCAD 2026 | R10最终候选：A/B真实冷启动与身份通过，实际DLL NTFS16项×3通过；当前视觉项BLOCKED，旧宿主仅GitHub外部验收 | GUI、旧宿主或外部独立审计 |
+| AutoCAD 2026 x64 GUI | R8实际面板四例PATMLVERIFY 4/4、几何38断言通过；完整GUI矩阵 SKIP/BLOCKED，见[候选验收](docs/cad-acceptance-20261022-r10.md) | 单阶段通过替代整套GUI或旧宿主验收 |
 | Office 16 x64 limited L3 | Final PPT 0.1.2.0 / Visio 0.1.4.0 ZIPs: panel actions, dictionary recovery and cold reopening; PPT mouse drawing/selection in four directions; native Visio lines/connectors, glue, single-action undo/redo and both panel visual checks; old VSD conversion/annotation/reopening; installed Word single/multiple DWG manual export → PPT reading and binding restoration; imported PNG static-point glue, following a moved target and cold reopening | Win7 / Office 2010 x86, actual older Visio hosts, complex groups, other glue methods/display scales or large real documents |
 
 [CI](.github/workflows/build.yml) runs CAD structure, static, unit and simulated host checks, plus Office builds, code tests and isolated installer gates. It does not run host GUI acceptance. CI does not compile the five production CAD DLLs without the locally supplied Autodesk SDK. See the Chinese development command block above for exact commands: `-Check` is environment inspection, and API `-Version all` currently covers 2010/2013/2015/2025 only.
@@ -525,6 +525,6 @@ This project is licensed under the [MIT License](LICENSE).
 
 Note: The `acdbmgd.dll` / `acmgd.dll` / `accoremgd.dll` referenced at build time are Autodesk SDK assemblies and are NOT included in this repository — users must supply them from their local AutoCAD installation or [ObjectARX SDK](https://aps.autodesk.com/developer/overview/autocad-objectarx-sdk-downloads).
 
-R9 文件写回使用唯一临时文件和原子替换；只读、锁定或替换拒绝时保留原字节及属性，不再使用覆盖式 Move 兜底。四个旧宿主未在本机执行，只通过 GitHub 候选包交接。完整边界、红绿证据和剩余风险见[本轮验收](docs/cad-acceptance-20261022.md)。
+R9 文件写回使用唯一临时文件和原子替换；只读、锁定或替换拒绝时保留原字节及属性，不再使用覆盖式 Move 兜底。四个旧宿主未在本机执行，只通过 GitHub 候选包交接。完整边界、红绿证据和剩余风险见[本轮验收](docs/cad-acceptance-20261022-r10.md)。
 
-R10 ACL修复验证中：替换前保留原文件，替换后严格核对原ACL；仅旧式继承描述需要恢复时写回DACL，失败即将原文件连同属性和数据流恢复。R9反例和判定标准保留，待独立Windows CI及最终候选复验后更新结论。
+R10 ACL修复已闭环：替换前保留原文件，替换后严格核对原ACL；旧式继承恢复被拒绝时恢复原文件对象。原判定保留，本机红绿、独立Windows CI及最终候选NTFS/真实冷启动均通过；GUI和四旧组实机仍按各自缺口记录。

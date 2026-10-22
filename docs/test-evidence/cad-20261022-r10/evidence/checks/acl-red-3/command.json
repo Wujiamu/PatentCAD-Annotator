@@ -1,0 +1,21 @@
+{
+  "id": "acl-red-3",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<BUILD_WORKTREE>/tools/run-fact-tests.ps1",
+    "-TestProject",
+    "<BUILD_WORKTREE>/cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T11:35:23.6557270+08:00",
+  "finished": "2026-10-22T11:35:29.9829617+08:00",
+  "owned_pid": 26732,
+  "environment": {},
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_ms": 6327.2151,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\acl-red-3\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\acl-red-3\\stderr.txt"
+}

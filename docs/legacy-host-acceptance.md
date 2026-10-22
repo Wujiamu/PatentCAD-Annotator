@@ -2,7 +2,7 @@
 
 这是待验证的候选包交接，不代表旧宿主已通过。分别在真实 AutoCAD 2007–2009、2010–2012、2013–2014、2015–2024 的许可环境执行；记录实际年份、完整版本和位数，不跨组混装。2007 使用 Leader + MText，其他组使用 MLeader。
 
-候选位于仓库根目录 `PatentMarker-<edition>-deploy`。同目录的 `PatentMarker-release.txt` 记录 DLL SHA-256/MVID。候选由有修改的工作树生成；manifest 中的原始 commit 和 dirty 状态保留，不能把上传后的新 commit 当作原构建 commit。执行前把 DLL 哈希与 manifest 比较；不重新打包或替换候选后沿用旧证据。
+候选位于仓库根目录 `PatentMarker-<edition>-deploy`。同目录的 `PatentMarker-release.txt` 记录 DLL SHA-256/MVID。R10候选由clean source commit1d56652构建；manifest保留该原构建身份，上传文档提交不冒充构建提交。执行前把 DLL 哈希与 manifest 比较；不重新打包或替换候选后沿用旧证据。
 
 只使用本轮新建的可丢弃图纸与脱敏字典。先保存并正常退出既有 CAD，备份已有本产品加载路径、DLL、配置及本产品安装注册项。安装/恢复按对应包说明执行；不更改图形、宏、安全策略或其他插件。安装后使用全新进程，不以再次 NETLOAD 冒充冷启动切换。若已有产品无法安全备份或恢复，先记录 BLOCKED，不覆盖它。
 
@@ -58,6 +58,12 @@ pwsh -NoProfile -File ./tools/verify-geometry.ps1 `
 
 门禁退出码 0 只证明这份报告满足给定身份与几何契约，不能替代 GUI 和安装证明。旧 run ID、错误身份、缺必需断言、重复断言、计数矛盾都应拒绝。提交结果时附原报告、截图、脱敏图纸、哈希索引和逐项 PASS/FAIL/SKIP/BLOCKED 表；分享前移除账号、私有路径和正文，不发送 Autodesk SDK、凭据或本机协作说明。
 
-## R9 固定交接范围
+## R10 固定交接范围
 
-四旧组本机没有，只允许GitHub外部真实宿主执行；不要回到本机重复探测或安装。当前候选及SHA/MVID见[cad-acceptance-20261022.md](cad-acceptance-20261022.md)。新增必测：只读/锁定字典失败保护与解除后恢复、隐藏/系统/其他属性保留、外来`.tmp`不变、备份缺失/损坏/占用与重试；闭合/带bulge的PAT大括号必须FAIL；空图无业务目标不能作为PASS。仍需真实Leader与MLeader差异、正常GUI/夹点/Undo/Redo与安装后冷启动证据。
+四旧组本机没有，只允许GitHub外部真实宿主执行；不要回到本机重复探测或安装。当前候选及SHA/MVID见[cad-acceptance-20261022.md](cad-acceptance-20261022-r10.md)。新增必测：只读/锁定字典失败保护与解除后恢复、隐藏/系统/其他属性保留、外来`.tmp`不变、备份缺失/损坏/占用与重试；闭合/带bulge的PAT大括号必须FAIL；空图无业务目标不能作为PASS。仍需真实Leader与MLeader差异、正常GUI/夹点/Undo/Redo与安装后冷启动证据。
+
+R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
+
+R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
+
+R10补充：共享写回新增旧式继承DACL保留与安全恢复失败回滚；Windows2025 CI已通过原反例，但不替代目标旧CAD运行。请核对本轮manifest，再执行权限拒绝/只读/占用与恢复；2007 Leader关联和其他组MLeader分别保留真实证据。
