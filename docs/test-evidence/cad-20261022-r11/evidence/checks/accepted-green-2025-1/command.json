@@ -1,0 +1,21 @@
+{
+  "id": "accepted-green-2025-1",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<BUILD_WORKTREE>/tools/run-fact-tests.ps1",
+    "-TestProject",
+    "<BUILD_WORKTREE>/cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T22:26:28.0853012+08:00",
+  "finished": "2026-10-22T22:26:33.5652052+08:00",
+  "owned_pid": 11128,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 5479.8946,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-green-2025-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-green-2025-1\\stderr.txt"
+}

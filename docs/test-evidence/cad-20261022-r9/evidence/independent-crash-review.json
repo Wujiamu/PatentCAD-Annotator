@@ -1,0 +1,756 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-22T10:38:36.4201919+08:00",
+  "reviewer": "independent operation subagent /root/r9_desktop_operator",
+  "identity": "desktop-3vj2a3b\\wjm",
+  "independence": "Same machine and account; reviewer did not author this repair. This is separate agent review, not external human audit.",
+  "scope": "Completed independent read-only review of source and frozen native/gate evidence; no desktop input or host execution by this reviewer. Scope is ordinary managed command boundary and evidence interpretation, not universal crash immunity or GUI/legacy acceptance.",
+  "overall_result": "PASS",
+  "historical_item": {
+    "case": "independent-review-of-authored-crash-fix",
+    "prior_result": "SKIP/BLOCKED",
+    "prior_detail": "Crash fix author disclosed; no independent post-repair code/host reviewer closure is claimed",
+    "specific_unverified_counterexample_listed": false,
+    "interpretation": "The original row records role/evidence independence, not an additional concrete failing scenario. R3-05 historic crashes and post-fix runs are separately indexed."
+  },
+  "source_findings": [
+    {
+      "case": "ordinary-managed-exception-containment",
+      "result": "PASS",
+      "level": "L0",
+      "detail": "RunVerification is called inside try/catch(System.Exception). Error logger, editor diagnostic and fallback FAIL report writing each have nested catch. No explicit throw after summary FAIL/SKIP. Ordinary managed failures from verification or the inner report-write diagnostic are contained."
+    },
+    {
+      "case": "absolute-no-exception-escape",
+      "result": "SKIP/BLOCKED",
+      "level": "L0 only",
+      "detail": "Cannot assert all exceptions are sealed: catch constructs message at lines38-39 outside its nested safeguards and reads virtual ex.Message. A custom Exception whose Message getter throws would escape that handler. This is a source-derived counterexample, not observed/injected in native CAD. Native corrupted-state/access-violation, stack overflow and process termination are also not guaranteed catchable by this managed boundary."
+    },
+    {
+      "case": "fallback-report-write",
+      "result": "PASS",
+      "level": "L0",
+      "detail": "Fallback contains RUN_ID, ERROR and RESULT: FAIL; write failures are swallowed to preserve host boundary. Report persistence is best effort, so missing report must remain failure externally. Fallback lacks full assembly/summary/assertion identity and is correctly rejected by strict verifier."
+    },
+    {
+      "case": "normal-missing-report-and-empty-production-result-gate",
+      "result": "PASS",
+      "level": "L0",
+      "detail": "Missing file throws. Gate requires current run/SHA/MVID and optional path; RESULT exactly PASS, parsed summary and counts, strict REQUIRED, declaration/actual assertion counts, required per-object IDs and totals. Run has no doc -> no report -> rejected; Summary.Evaluate empty targets -> SKIP or FAIL -> rejected. Fresh host run directory prevents stale report success. Nonzero/unknown native exit and timeout also fail."
+    },
+    {
+      "case": "explicit-zero-requirements-no-business-assertions",
+      "result": "PASS",
+      "level": "L1 gate red/green evidence, independently reviewed",
+      "detail": "Fixed: verifier line106 rejects braces+texts=0 before PASS return, with empty-PASS selftest. Same forged report and run/identity requirements accepted by frozen before script three times exit0; current byte-identical worktree/project script rejects three times exit1 with explicit no applicable business targets. Three selftests exit0. Prior static counterexample now has retained red/green evidence."
+    },
+    {
+      "case": "native-unexpected-exception-and-write-denial-injection",
+      "result": "PASS",
+      "detail": "Reviewed real AutoCAD2026 native L2 seam injection using actual candidate DLL: RuntimeHost._override throws ordinary InvalidOperationException. Three fallback FAIL reports have matching run/error text; three fallback-denied runs preserve FAULT-SENTINEL and produce no report. All six escaped_exception=null, host override/env restored, native exit0 without timeout. Seam deliberately forces failure and does not represent GUI/user path."
+    }
+  ],
+  "native_scale": {
+    "result": "PASS",
+    "level": "L2 native constructed fixtures",
+    "reports": 24,
+    "positive_reports": 18,
+    "expected_negative_reports": 6,
+    "all_report_hashes_match": true,
+    "all_identity_run_and_assertion_counts_match": true,
+    "process_exit": 0,
+    "timed_out": false,
+    "interpretation": "One CoreConsole process ran 24 production Run invocations via native fixture probe. Six closed/bulged reports remain RESULT FAIL with one real failure assertion each; results.json PASS means expected rejection, not geometry passed. exit0 matches no escaped exception; does not mean every report PASS.",
+    "gate_limitation": "Probe.cs uses text.Contains RESULT PASS for expected acceptance; the 24 cases were not each executed through verify-geometry.ps1. This review independently checks reports/hash/assertion counts, not new gate execution."
+  },
+  "r8_exit_alignment": {
+    "result": "PASS",
+    "positive": "final-netload: native exit0; wrapper exit0; RESULT PASS",
+    "negative": "final-core-rejection: native exit0; wrapper exit1; report RESULT FAIL; review PASS means expected rejection",
+    "historical": "R3 twice native -1073741819/no report; R4 native -1073741819 after FAIL report. These historical failures remain raw evidence, not relabeled."
+  },
+  "required_remaining": [],
+  "evidence": [
+    {
+      "path": "./cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs",
+      "sha256": "f256ab946c8d0d5db2e9e982ff358d033a8432ffeeaa2e40f12fb7f0c3e6c7f4"
+    },
+    {
+      "path": "./cad-plugin/Shared/Commands/PatGeomVerifySummary.cs",
+      "sha256": "705f662fead2a1a59734b14f39ddafacff42c26c42747f6b1fb5258a6379ec93"
+    },
+    {
+      "path": "./tools/verify-geometry.ps1",
+      "sha256": "f6a00b6fecdb23bb901f017e15b7e677972e18a3a5673f22b411e4fdd37c3eb0"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/command.json",
+      "sha256": "d876d6c498ecdff890652abf8765020c55d82ff3efa83c838f67df375e183bf2"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/results.json",
+      "sha256": "47c7350aefa93573cde33e659fd63f578878d2d494eae3ce2f60f4c5ff64c7c0"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/native-probe/Probe.cs",
+      "sha256": "4baeee55a5721042eb57e9980e2ac9b9aec28f20446baa6b9c73de3b553480c6"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/independent-native-report-audit.json",
+      "sha256": "1a1e66ec846c736558c8c542da01616580323041a5151ffb7fa87ab8dbea8ce6"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/final-netload/review.json",
+      "sha256": "41144c18398893544ff8feab1ec24a49ca52e98cd1109a67655e9f78da8f0678"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/final-core-rejection/review.json",
+      "sha256": "961539665b4931430169f1d476561f7fe679bd72963c4ccc49bf3d58407121c5"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/exception-probe/Probe.cs",
+      "sha256": "bc30c6127537dd784c9ca0c846c46c766a6baa7fa7f6c7e758f6ec7abbd0ef38"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-top-level-fault/command.json",
+      "sha256": "03e7ed310e442f2b28141f6cdc4b29b636ec8595d3a9b3f9a81cdcebde11e311"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-top-level-fault/results.json",
+      "sha256": "3680ead82b2abab1a7faf2432afe3fa509d634b25d17b5a39fd5a9cb5b9e22ac"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-top-level-fault/PatentMarker-doctor-report.txt",
+      "sha256": "68765b74c39b187b9a7350649215e009d97e74d2a5c66d26c1119416d13774fc"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-report-write-fault-netload/results.json",
+      "sha256": "6fb0bd0c6e9130847d8ee5490eb16479e1fde587d2a38eec919052a5cf1620f5"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-report-write-fault-netload/stdout.txt",
+      "sha256": "6393452b7838f5cbfc2a2147414732b47bf427100dbdd1a3554b40cf13ad02d0"
+    },
+    {
+      "path": "./docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+      "sha256": "9aad0c63d325f7cf544e261d19fecf348de64d94fc5b75b79c51f4c288c75054"
+    },
+    {
+      "path": "./tools/verify-geometry.ps1",
+      "sha256": "3539a2c423e3fc9cb39da0f1ac1b4065cea1d9d23d76434fd383ad635901afb9"
+    }
+  ],
+  "report_audit": [
+    {
+      "case": "1-vertices-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-vertices-100\\PatentMarker-geom-verify.txt",
+      "sha256": "77ebc76f0f414bc459392646904314b4cbc9728d6a8c5063de2df3b2f41a33cf",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-vertices-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-vertices-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "542893fbf64ed7b5835289883776c1da35286c932dc1bab121201afd7966d7af",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-vertices-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-vertices-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "b28f982a19115e8bbbcf3ae4a9a22f8edcb660af0384931f4a2acb0fdb580836",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-entities-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-entities-100\\PatentMarker-geom-verify.txt",
+      "sha256": "5fb524ac04867061498cbb95502b85e1176a2f645b5835e550ef89fadf2f121f",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 1000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-entities-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-entities-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "929128fe1bbaa2d95b49a93ccaddb889e12d350db984861bdd5c1acf24e93691",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-entities-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-entities-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "53f367eb86cc0eede2c1cbf07f34dcbc1ef13fa6e46d09821c4df02de1ed23d7",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 50000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-closed",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-closed\\PatentMarker-geom-verify.txt",
+      "sha256": "10532c5bc2e875c6ab14dd8b9e835ec4356ef3dc9d853598e9a03aa59b29c062",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "1-bulged",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\1-bulged\\PatentMarker-geom-verify.txt",
+      "sha256": "8a5433ae6dfd8298d4b4b01c7ac1385ff2a73955db992c33a0113406f502b445",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-vertices-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-vertices-100\\PatentMarker-geom-verify.txt",
+      "sha256": "00c428d5eb2af632b73b0fc59cd76fa83fe9c0b0f31a9d7f820cf8567f95d20a",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-vertices-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-vertices-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "b25baef0ff74eaba05d6efe6ecf215a91fc95d34a8ca329977cbc80283be3e65",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-vertices-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-vertices-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "51a44b18fae4c6b0c1d1c3e7628f56ed25e6ca9885577d4cc972f587c18ad364",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-entities-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-entities-100\\PatentMarker-geom-verify.txt",
+      "sha256": "c85a69676de9b3b5c4676b21797e346163c63ccefea29377e87984018af23363",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 1000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-entities-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-entities-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "c370b6393188475b5294ac159ebcb71f8ea7bc2a10256b09f2ca7a9173378f43",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-entities-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-entities-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "75bfdd5261bc47727cb9b50a130283c02d209002f1bd2ae651436d05a991a60b",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 50000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-closed",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-closed\\PatentMarker-geom-verify.txt",
+      "sha256": "edfa824940dbe14555d62ea1ce689714b2e2c3832ddf51947522a6aa4d123944",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "2-bulged",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\2-bulged\\PatentMarker-geom-verify.txt",
+      "sha256": "e1feccd95e36be0e83bfadb75999ecc9fe7fa0509dd39beda7e1be1c090cbb65",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-vertices-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-vertices-100\\PatentMarker-geom-verify.txt",
+      "sha256": "404954fa3fdabe62c1b5512e8976597c620eb6a3ecddd7bee9d8865a496599e7",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-vertices-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-vertices-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "d496e047fc582fbf0ee317352e842fc9f3f0ce31833ab0591612bc943a578ef3",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-vertices-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-vertices-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "614ccb25ea3f504bfb0e1df67d26c1b8247d0765265ccf1761a044e61b4333f3",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-entities-100",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-entities-100\\PatentMarker-geom-verify.txt",
+      "sha256": "25bb78307d7c71f9834098816893cc7b3ca1694a91f6a119079ff1c3892a0049",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 1000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-entities-1000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-entities-1000\\PatentMarker-geom-verify.txt",
+      "sha256": "a9daa4cd5fdd74718dcb82ab6aa5b93a06b87c3e482f11c5b000fade3863a194",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 10000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-entities-5000",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-entities-5000\\PatentMarker-geom-verify.txt",
+      "sha256": "1ae019793487a2fea3cbf079fd6fca10bb5650616d7589f4dc4abf990504798f",
+      "hash_matches": true,
+      "report_result": "PASS",
+      "expected_report_result": "PASS",
+      "outcome_matches": true,
+      "assertion_pass": 50000,
+      "assertion_fail": 0,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-closed",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-closed\\PatentMarker-geom-verify.txt",
+      "sha256": "91c0923dd738cbec74d39fd0e0b7f85e560adf116a32fbdbce059944335c2927",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    },
+    {
+      "case": "3-bulged",
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-scale\\3-bulged\\PatentMarker-geom-verify.txt",
+      "sha256": "4da6249072a18a0174d187821d7e9a2eab64cfdd06d0731e0cd464a7aeac6af0",
+      "hash_matches": true,
+      "report_result": "FAIL",
+      "expected_report_result": "FAIL",
+      "outcome_matches": true,
+      "assertion_pass": 0,
+      "assertion_fail": 1,
+      "assertion_na": 0,
+      "assertion_counts_match": true,
+      "run_id_matches": true,
+      "candidate_matches": true
+    }
+  ],
+  "review_completion": {
+    "result": "PASS",
+    "statement": "Independent same-account agent review task completed for supplied managed failure boundary and gate closure. Local GUI BLOCKED and external legacy host acceptance are separate findings and do not change review execution status.",
+    "theoretical_risk": "The ex.Message override possibility is a theoretical unexecuted edge, not observed ordinary exception escape; native fatal exceptions are outside tested managed containment. No external human audit claimed."
+  },
+  "new_fault_audit": [
+    {
+      "iteration": 1,
+      "denied": false,
+      "escaped": null,
+      "report_exists": true,
+      "run_id_matches": true,
+      "fail_matches": true,
+      "denial_sentinel_matches": null,
+      "sha256": "3703b0d749eb94b9fc3d6f8271ec147927b54963a6cc5c88cb75ecc8b3a07a02"
+    },
+    {
+      "iteration": 1,
+      "denied": true,
+      "escaped": null,
+      "report_exists": false,
+      "run_id_matches": null,
+      "fail_matches": null,
+      "denial_sentinel_matches": true,
+      "sha256": null
+    },
+    {
+      "iteration": 2,
+      "denied": false,
+      "escaped": null,
+      "report_exists": true,
+      "run_id_matches": true,
+      "fail_matches": true,
+      "denial_sentinel_matches": null,
+      "sha256": "e7117f0ac148dd87e5685bf85f9568a7d71e7ecf6b6ce6c3f89f61f116e1501b"
+    },
+    {
+      "iteration": 2,
+      "denied": true,
+      "escaped": null,
+      "report_exists": false,
+      "run_id_matches": null,
+      "fail_matches": null,
+      "denial_sentinel_matches": true,
+      "sha256": null
+    },
+    {
+      "iteration": 3,
+      "denied": false,
+      "escaped": null,
+      "report_exists": true,
+      "run_id_matches": true,
+      "fail_matches": true,
+      "denial_sentinel_matches": null,
+      "sha256": "7d2caa41c1df7c237b84d6ab512996a42c711cc75754ee056543aa7a0532b05b"
+    },
+    {
+      "iteration": 3,
+      "denied": true,
+      "escaped": null,
+      "report_exists": false,
+      "run_id_matches": null,
+      "fail_matches": null,
+      "denial_sentinel_matches": true,
+      "sha256": null
+    }
+  ],
+  "empty_gate_audit": [
+    {
+      "id": "empty-report-green-1",
+      "exit_code": 1,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": true
+    },
+    {
+      "id": "empty-report-green-2",
+      "exit_code": 1,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": true
+    },
+    {
+      "id": "empty-report-green-3",
+      "exit_code": 1,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": true
+    },
+    {
+      "id": "empty-report-red-1",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/verify-geometry-before.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": []
+    },
+    {
+      "id": "empty-report-red-2",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/verify-geometry-before.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": []
+    },
+    {
+      "id": "empty-report-red-3",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/verify-geometry-before.ps1",
+        "-ReportPath",
+        "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+        "-RunId",
+        "r9-empty",
+        "-ExpectedDllSha256",
+        "abc123",
+        "-ExpectedMvid",
+        "selftest-mvid",
+        "-RequireBraces",
+        "0",
+        "-RequireTexts",
+        "0"
+      ],
+      "rejects_no_business": []
+    },
+    {
+      "id": "geom-gate-selftest-1",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-SelfTest"
+      ],
+      "rejects_no_business": []
+    },
+    {
+      "id": "geom-gate-selftest-2",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-SelfTest"
+      ],
+      "rejects_no_business": []
+    },
+    {
+      "id": "geom-gate-selftest-3",
+      "exit_code": 0,
+      "timed_out": false,
+      "report_arguments": [
+        "-NoProfile",
+        "-File",
+        "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+        "-SelfTest"
+      ],
+      "rejects_no_business": []
+    }
+  ],
+  "inner_write_fault_interpretation": {
+    "result": "PASS",
+    "scope": "Independent interpretation of frozen evidence only",
+    "native_exit": 0,
+    "observed_inner_report_write_failed": 3,
+    "original_harness_result": "FAIL preserved",
+    "detail": "stdout contains three PATGEOMVERIFY report write failed messages. They come from RunVerification inner catch, not the Run top catch. Initial harness counted expected top-level IOException wording, so observed_caught_faults=0/result FAIL is a harness oracle mismatch. Sentinel unchanged; fallback absent as expected for inner report write rejection. No historical rewrite."
+  }
+}

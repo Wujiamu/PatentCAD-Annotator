@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><TargetFramework>net8.0-windows</TargetFramework><ImplicitUsings>enable</ImplicitUsings></PropertyGroup><ItemGroup>
+<Reference Include="PatentMarker"><HintPath>../candidate-release/2025/PatentMarker.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="acdbmgd"><HintPath>C:/Program Files/Autodesk/AutoCAD 2026/acdbmgd.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="acmgd"><HintPath>C:/Program Files/Autodesk/AutoCAD 2026/acmgd.dll</HintPath><Private>false</Private></Reference>
+<Reference Include="accoremgd"><HintPath>C:/Program Files/Autodesk/AutoCAD 2026/accoremgd.dll</HintPath><Private>false</Private></Reference>
+</ItemGroup></Project>

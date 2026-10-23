@@ -1,0 +1,21 @@
+{
+  "id": "accepted-red-2010-1",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/red-source/tools/run-fact-tests.ps1",
+    "-TestProject",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/red-source/cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/red-source",
+  "started": "2026-10-22T22:25:20.2031380+08:00",
+  "finished": "2026-10-22T22:25:24.9533652+08:00",
+  "owned_pid": 30148,
+  "environment": {},
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_ms": 4750.3314,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-red-2010-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-red-2010-1\\stderr.txt"
+}

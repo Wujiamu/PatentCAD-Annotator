@@ -1,0 +1,2077 @@
+{
+  "schema": "public_acceptance_summary_v1",
+  "report_id": "acceptance-r9-20261022-boundaries",
+  "generated_at": "2026-10-22T03:01:14.928940+00:00",
+  "canonical_local_findings_sha256": "db4918316224fe94c050f2f66bd06f3bf56a96c7b9c5aa7356f9ff2b2b279bbc",
+  "local_automated_result": "PASS",
+  "local_execution_result": "SKIP/BLOCKED",
+  "external_host_execution_result": "SKIP/BLOCKED",
+  "overall_result": "FAIL",
+  "scope_statement": "本机Win10自动边界、真实命令与冷启动校验通过；GitHub独立Windows环境发现未关闭的ACL继承反例R9-ACL-01，因此整体FAIL。当前视觉复核另受官方截图超时阻断。2007/2010/2013/2015四组本机不存在，仅交GitHub外部验收，绝不列为本机待测。历史GUI证据按原候选身份保留，不冒充新候选GUI通过。",
+  "independence_statement": "Same machine/account; independently frozen pre-R9 published source plus identical new tests, separately built final source archive. Repair author performed fixes and primary acceptance; a separate operator reviewed crash/gate evidence and attempted GUI. This is not an unaffiliated external audit.",
+  "source_snapshot_id": "70f3af5acd363637b6084c05a890ceed919c88171a6c1e05b654cdf78a189cb7",
+  "build_source_snapshot_id": "300c8fdd1cf7fb2b2af23d37a503535d27877c32f05549035b6f499a2a9e0678",
+  "build_source_commit": "01ed4ca7bc0f102fa6a6e6f937b6f4912274ded6",
+  "build_source_dirty": true,
+  "full_tests": {
+    "result": "PASS",
+    "unique_tests": 377,
+    "zero_skips": true,
+    "collections": {
+      "2025": 136,
+      "2007_simulated": 58,
+      "2010_simulated": 61,
+      "2013_simulated": 61,
+      "2015_simulated": 61
+    },
+    "note": "Repeated executions not counted as additional unique tests; simulated edition labels never mean actual legacy hosts.",
+    "scope": "Local Windows10 only; GitHub Windows2025 portable135/136, so no cross-environment377/377 claim."
+  },
+  "findings": [
+    {
+      "finding_id": "A01",
+      "severity": "P1",
+      "component": "PatBraceAssertions",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject original 11-point sharp elbows with all bulges zero",
+      "actual": "case=sharp accepted=False environment_restored=True; case=sharp accepted=False environment_restored=True; case=sharp accepted=False environment_restored=True R9 final source independently re-executed same counterexample/oracle three times; role disclosure remains repair-author plus separate reviewer.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.SharpElbowWithFakeEndTangents_IsRejectedByReferenceCurve",
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ProductionGeometry_WithDifferentCurveSamples_PassesReferenceCheck",
+        "SupplementalCornerMatrix::rectangle_corner_vertex[shape,side,samples,curve,position,corner]"
+      ],
+      "residual_risk": "Closed/nonzero bulge now rejected in R9; B9 remains sampled polyline verification and does not guarantee smooth inter-sample curvature; samples2 accepted by current approximation contract."
+    },
+    {
+      "finding_id": "A02",
+      "severity": "P1",
+      "component": "PatGeomVerifyCommand",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject actual text moved to (2000,1000,0) while recorded chain unchanged",
+      "actual": "case=moved-text accepted=False environment_restored=True; case=moved-text accepted=False environment_restored=True; case=moved-text accepted=False environment_restored=True R9 final source independently re-executed same counterexample/oracle three times; role disclosure remains repair-author plus separate reviewer.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedTextWithoutChainUpdate_IsRejectedByT3"
+      ],
+      "residual_risk": "Original moved-text and moved-previous counterexamples plus R3-01 large-coordinate regression pass current repeated L1 checks. Actual AutoCAD2026 boundary geometry is verified separately; native text grips can leave creation Xrecord anchors stale, and those whole moved reports remain FAIL. Four legacy hosts and the entire mutation class are not closed by this original-case result."
+    },
+    {
+      "finding_id": "A03",
+      "severity": "P1",
+      "component": "verify-geometry.ps1",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject same incomplete report missing B0c/ASSERTIONS/REQUIRED and wrong MVID",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False R9 final source independently re-executed same counterexample/oracle three times; role disclosure remains repair-author plus separate reviewer.",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::original-A03",
+        "verify-geometry.ps1::-SelfTest",
+        "verify-geometry.ps1::existing-run-directory-with-valid-same-id-report"
+      ],
+      "residual_risk": "Missing fields, contradictory counts, duplicates, flat targets, required status and empty blocks are all covered by the current23-case repeated report matrix; R3-02/03/04 no longer remain open in this run. Actual local loaded identity is separately evidenced by PATDOCTOR and SHA/MVID. Manifest generation alone does not prove loading in untested hosts."
+    },
+    {
+      "finding_id": "R2-01",
+      "severity": "P1",
+      "component": "PatGeomVerifyCommand actual previous vertex",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Changing actual previous vertex to (10,100,0) must fail endpoint check",
+      "actual": "case=moved-previous accepted=False environment_restored=True; case=moved-previous accepted=False environment_restored=True; case=moved-previous accepted=False environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.MovedPreviousVertexWithoutChainUpdate_IsRejectedByT3"
+      ],
+      "residual_risk": "Moved-previous rejection and translated-coordinate regression pass current repeated probes. Native text-grip geometry was verified separately; this does not claim every native bend-grip mutation or any of the four unavailable legacy hosts."
+    },
+    {
+      "finding_id": "R2-02",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 object totals",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject braces=0 passed=1 and equivalent text-count contradiction",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::braces-zero-passed-one",
+        "acceptance-report-cases.ps1::texts-zero-passed-one"
+      ],
+      "residual_risk": "Zero-total/nonzero-passed and unaccounted flat-target cases now pass the repeated negative report matrix. Parser correctness is separate from actual host business coverage; no remaining open R3-03 claim."
+    },
+    {
+      "finding_id": "A03-DUP",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 per-object assertion multiplicity",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject extra B9 PASS in a one-brace report even if ASSERTIONS count is updated",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::duplicate-pass"
+      ],
+      "residual_risk": "Duplicate PASS, missing required status and empty block variants pass current negative matrix. R3-04 is covered; no extrapolation beyond the recorded variants or target environments."
+    },
+    {
+      "finding_id": "R3-01",
+      "severity": "P1",
+      "component": "PatEntityHelper actual previous vertex at large WCS coordinates",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "A valid annotation translated by +10000000 WCS X must retain PASS",
+      "actual": "case=translated-large accepted=True environment_restored=True; case=translated-large accepted=True environment_restored=True; case=translated-large accepted=True environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ActualPreviousVertex_UsesIndexAtLargeCoordinatesAndRepeatedVertices"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-02",
+      "severity": "P1",
+      "component": "Leader report producer/parser integration",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Accept an actual PASS report containing a valid product Leader + MText",
+      "actual": "case=legacy-leader accepted=True environment_restored=True; case=legacy-leader accepted=True environment_restored=True; case=legacy-leader accepted=True environment_restored=True",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.LegacyLeader_ReportIncludesObjectHeader"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-03",
+      "severity": "P2",
+      "component": "Flat report total accounting",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject total=2 passed=1 failed=0 unreadable=0 for either target class",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::flat-unaccounted-braces",
+        "acceptance-report-cases.ps1::flat-unaccounted-texts"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-04",
+      "severity": "P2",
+      "component": "Per-object required assertion status and empty blocks",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Reject a required B9 marked N/A in one object, and reject an unverified object block",
+      "actual": "expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False; expected_acceptance=False actual_acceptance=False",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::structured-required-na",
+        "acceptance-report-cases.ps1::structured-empty-object"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R3-05",
+      "severity": "P1",
+      "component": "PATGEOMVERIFY Core command boundary",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Valid and invalid geometry must produce a fresh report and return safely; invalid reports remain rejected by the external gate",
+      "actual": "Final CoreConsole positive and expected-negative verdict: PASS. Saved GUI positive requires native exit0/gate0; frozen old invalid geometry requires native exit0/gate1 and actual final path/SHA/MVID. Input negative remains FAIL. One bounded replay of each, historical repeated evidence retained.",
+      "test_selectors": [
+        "Real AutoCAD CoreConsole::final-netload::PATGEOMVERIFY",
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.RequiredFailure_ReportsFailWithoutEscapingCommand",
+        "Real AutoCAD CoreConsole::final-core-rejection::PATGEOMVERIFY"
+      ],
+      "residual_risk": "Final candidate CoreConsole positive and expected-negative paths are each replayed once, with actual exit/report identity recorded; historical repeated host evidence is separate. Repair author also performed this review. External independent code/host review and unavailable legacy environments remain BLOCKED."
+    },
+    {
+      "finding_id": "R3-06",
+      "severity": "P1",
+      "component": "Native MLeader facing-side boundary attachment and positive gap",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author_and_separate_gui_operator",
+      "expected": "Keep the picked text anchor; terminal outside the actual text box on the side facing the preceding bend, at its middle/top/bottom corner, with 0.4H gap; no touching or terminal inside text.",
+      "actual": "Under the user-clarified boundary-gap contract, the SAME final oracle rejects frozen R7 geometry. Old Creator fails three runs; final Creator passes three runs. Actual final-candidate palette GUI: Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText",
+        "Real AutoCAD GUI::G04::PATMLVERIFY::C9",
+        "Real AutoCAD GUI::G04::PATGEOMVERIFY::T3"
+      ],
+      "residual_risk": "The user clarified the contract; this is not a claim that the contradictory old insertion-point and zero-gap C9 criteria are unchanged. The new oracle is identical for the R7 frozen red and R8 green. Native grip edits can leave recorded creation anchors stale; incoming user-picked paths that cross the text box are detected by C8 and are not auto-routed. Four legacy hosts remain untested."
+    },
+    {
+      "finding_id": "R5-01",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 applicability of global required assertion checks",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Accept a valid report when the other target class is absent and its required count is explicitly 0",
+      "actual": "expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::brace-only",
+        "acceptance-report-cases.ps1::standalone-only"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R5-02",
+      "severity": "P2",
+      "component": "verify-geometry.ps1 applicability of global required assertion checks",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Accept valid standalone MText with T3 marked N/A and both required object counts satisfied",
+      "actual": "expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True; expected_acceptance=True actual_acceptance=True",
+      "test_selectors": [
+        "acceptance-report-cases.ps1::brace-and-standalone"
+      ],
+      "residual_risk": "原 R5 反例与当前修复已形成红绿映射；适用性仅限记录的 L1/真实 2026 场景，四个旧宿主仍待验。修复作者复验，不声明外部独立审计。"
+    },
+    {
+      "finding_id": "R7-G04",
+      "severity": "P1",
+      "component": "Native MLeader facing-side boundary attachment and positive gap",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author_and_separate_gui_operator",
+      "expected": "Keep the picked text anchor; terminal outside the actual text box on the side facing the preceding bend, at its middle/top/bottom corner, with 0.4H gap; no touching or terminal inside text.",
+      "actual": "Under the user-clarified boundary-gap contract, the SAME final oracle rejects frozen R7 geometry. Old Creator fails three runs; final Creator passes three runs. Actual final-candidate palette GUI: Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.FourUserCreationCases_KeepFacingBoundaryGapAndPickedText",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.FreeModeUsesLastDoglegWhenTextPointIsNone",
+        "PatentMarker.RuntimeContractTests.PatMarkSimulationTests.HostTextAttachmentRecalc_KeepsFacingBoundaryGapAndPickedText",
+        "Real AutoCAD GUI::G04::PATMLVERIFY::C9",
+        "Real AutoCAD GUI::G04::PATGEOMVERIFY::T3"
+      ],
+      "residual_risk": "The user clarified the contract; this is not a claim that the contradictory old insertion-point and zero-gap C9 criteria are unchanged. The new oracle is identical for the R7 frozen red and R8 green. Native grip edits can leave recorded creation anchors stale; incoming user-picked paths that cross the text box are detected by C8 and are not auto-routed. Four legacy hosts remain untested."
+    },
+    {
+      "finding_id": "R8-PACKAGE-ID",
+      "severity": "P2",
+      "component": "package.ps1 Git source identity",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Calling a worktree package.ps1 from another checkout must derive source identity from script repository root, not caller cwd.",
+      "actual": "Before: manifest source.commit=b945b1a (caller root), DLL informational commit=8c94b891 (built worktree). After same cross-CWD call: source.commit=8c94b891. DLL SHA e7ec…921a3 unchanged. Five publication manifests regenerated and verified; original tested manifests retained.",
+      "test_selectors": [
+        "R8 cross-CWD package.ps1 -Version 2025",
+        "ReleaseManifest verify::all five publication manifests"
+      ],
+      "residual_risk": "Manifest-only source provenance correction. Does not make a dirty build reproducible from HEAD alone; exact125-file build snapshot archived. Actual GUI used original tested manifest, whose hash differs from corrected delivery manifest. DLLs are byte-identical."
+    },
+    {
+      "finding_id": "R8-REPORT-BINDING",
+      "severity": "P1",
+      "component": "render-acceptance-report source binding and blocked finding verdict",
+      "result": "PASS",
+      "status": "fixed_verified_by_repair_author",
+      "expected": "Source snapshot ID must match actual indexed manifest hash; a blocked finding must prevent overall PASS; every matrix result must use an allowed enum",
+      "actual": "Same synthetic fixtures: old validator exit0, fixed validator exit2, three repetitions each. Seventeen quality-gate fixture self-tests pass; synthetic PASS is never product acceptance.",
+      "test_selectors": [
+        "test-acceptance-report.ps1::forged-source-binding",
+        "test-acceptance-report.ps1::blocked-finding-stored-pass",
+        "test-acceptance-report.ps1::synthetic-finding-blocked",
+        "test-acceptance-report.ps1::missing-matrix-result",
+        "test-acceptance-report.ps1::invalid-matrix-result"
+      ],
+      "residual_risk": "Quality-gate fixture validation only. Does not establish external review or product PASS. Frozen original validator is rebased only at repository bootstrap path; validation logic unchanged and both source hashes retained."
+    },
+    {
+      "finding_id": "R9-IO-01",
+      "severity": "P1",
+      "component": "DictWriter / shared atomic writer",
+      "result": "PASS",
+      "status": "fixed_verified_with_same_counterexamples",
+      "expected": "ReadOnly/locked/Replace-denied must fail without changing original bytes, attributes, ACL or ADS; foreign temp remains untouched",
+      "actual": "Old writer violates protections; final actual DLL 14-case NTFS matrix PASS three times, including compressed files, ADS, ACL, creation time and unique temp cleanup. Overwrite Move fallback removed; denied Replace fails closed.",
+      "test_selectors": [
+        "PatentMarker.Tests.DictWriterBoundaryTests.ReadOnlyTarget_IsRejectedWithoutChangingBytesOrAttributes",
+        "PatentMarker.Tests.DictWriterBoundaryTests.AtomicRewrite_PreservesAllSettableAttributes",
+        "PatentMarker.Tests.DictWriterBoundaryTests.LockedTarget_RetainsBytesAndAttributes_ThenRecovers",
+        "PatentMarker.Tests.DictWriterBoundaryTests.ExistingForeignTemp_IsNeverOverwrittenOrDeleted",
+        "PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime",
+        "PatentMarker.Tests.DictWriterBoundaryTests.DeniedReplace_DoesNotUseMetadataLosingOverwriteMove"
+      ],
+      "residual_risk": "NTFS isolated actual DLL IO entry, not GUI. No EFS certificate provisioning/test; no cross-file transaction or concurrent-writer locking claim. Exact unprotected inheritance preservation fails on GitHub Windows2025; tracked separately as open R9-ACL-01. Local protected-DACL PASS must not close that case."
+    },
+    {
+      "finding_id": "R9-BACKUP-01",
+      "severity": "P2",
+      "component": "DictConflict cleanup/recovery",
+      "result": "PASS",
+      "status": "fixed_verified_with_same_counterexamples",
+      "expected": "Failed backup deletion must preserve backup bytes and all attributes; missing/corrupt/locked/read-only source paths retain recoverability",
+      "actual": "Old cleanup changes retained backup attributes to Normal; three final full collections PASS with missing/corrupt backups, read-only/locked target, successful recovery and marker removal, locked backup cleanup and retry.",
+      "test_selectors": [
+        "PatentMarker.Tests.DictConflictBoundaryTests.RestoreMissingOrCorruptBackup_PreservesCurrent",
+        "PatentMarker.Tests.DictConflictBoundaryTests.RestoreReadOnlyAndLockedCurrent_PreservesBackupThenRecovers",
+        "PatentMarker.Tests.DictConflictBoundaryTests.LockedBackupCleanup_PreservesFullAttributesAndAllowsRetry"
+      ],
+      "residual_risk": "Restore can commit target before backup deletion fails; retained backup enables retry, not transaction rollback. Real NTFS with unmodified IO source in portable test assembly; CAD UI not claimed."
+    },
+    {
+      "finding_id": "R9-GEOM-01",
+      "severity": "P1",
+      "component": "PatBraceAssertions",
+      "result": "PASS",
+      "status": "fixed_verified_with_same_counterexamples",
+      "expected": "Identical vertices must not permit closed or bulged braces",
+      "actual": "Old verifier accepts both mutations; final same tests reject them, and native reports reject each three times, external gates exit1.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.ClosedOrBulgedBrace_IsRejectedDespiteIdenticalVertices"
+      ],
+      "residual_risk": "B9 checks sampled polyline geometry; it does not prove smooth continuous curvature between samples."
+    },
+    {
+      "finding_id": "R9-GEOM-02",
+      "severity": "P2",
+      "component": "PatBraceGeometry finite inputs / bounded sampling",
+      "result": "PASS",
+      "status": "fixed_verified_with_same_counterexamples",
+      "expected": "Reject NaN/Infinity and excessive sampling before allocation",
+      "actual": "Old creation accepts non-finite width; same new test fails before fix and passes three times after. Max4096 curve samples /16387 generated vertices, default8 unchanged.",
+      "test_selectors": [
+        "PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.NonFiniteBraceInputs_AndExcessiveSamples_AreRejected"
+      ],
+      "residual_risk": "Cap bounds generation, not the total number of externally authored entities/vertices. Very large drawings beyond measured scale remain unproven."
+    },
+    {
+      "finding_id": "R9-GATE-01",
+      "severity": "P1",
+      "component": "verify-geometry empty report acceptance",
+      "result": "PASS",
+      "status": "fixed_verified_with_same_counterexamples",
+      "expected": "No applicable business targets must never pass even with RequireBraces=0 and RequireTexts=0",
+      "actual": "Same forged empty PASS accepted before (exit0) three times; final script rejects it (exit1) three times, and permanent -SelfTest includes empty-PASS.",
+      "test_selectors": [
+        "verify-geometry.ps1::SelfTest::empty-PASS"
+      ],
+      "residual_risk": "Report gate validates evidence consistency and expected candidate identity; not a cryptographic signature against an attacker forging all evidence."
+    },
+    {
+      "finding_id": "R9-ACL-01",
+      "severity": "P1",
+      "component": "DictWriter / Windows2025 inherited ACL preservation",
+      "result": "FAIL",
+      "status": "open",
+      "expected": "Same existing-file replacement preserves original ACL inheritance/explicit ACE representation, ADS and creation time.",
+      "actual": "Same exact regression passes locally but fails in GitHub windows-2025-vs2026:135 PASS/1 FAIL/0 SKIP. Before inherited ACEs become explicit entries after replacement. Staging the destination DACL did not fix the counterexample; unsuccessful production attempt reverted. Original criterion retained.",
+      "test_selectors": [
+        "PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime"
+      ],
+      "residual_risk": "Release-blocking known counterexample on GitHub Windows environment. Local protected-DACL proof does not close unprotected inheritance. It is unrelated to missing legacy CAD hosts."
+    }
+  ],
+  "host_matrix": [
+    {
+      "host": "AutoCAD 2007",
+      "execution_location": "github_external_only",
+      "candidate_identity": "0f57c0d2309bf00d8d3179453836358fda37177f3c0bc4547f93fbf3618a38c8 / 10da5c59-4fc3-4f85-b819-5b7e8d950241",
+      "patdoctor": "SKIP/BLOCKED",
+      "patgeomverify": "SKIP/BLOCKED",
+      "gui": "SKIP/BLOCKED",
+      "result": "SKIP/BLOCKED"
+    },
+    {
+      "host": "AutoCAD 2010",
+      "execution_location": "github_external_only",
+      "candidate_identity": "c709eaf1e13a979fb1b264b96dfc774f6add5850a110421b2e86a22477117a50 / 36686f29-3165-43cd-a919-93583227bed9",
+      "patdoctor": "SKIP/BLOCKED",
+      "patgeomverify": "SKIP/BLOCKED",
+      "gui": "SKIP/BLOCKED",
+      "result": "SKIP/BLOCKED"
+    },
+    {
+      "host": "AutoCAD 2013",
+      "execution_location": "github_external_only",
+      "candidate_identity": "730eb00153ca234157a8e25f5f139634e9b6d636b9505b1cc24e10eda7028840 / 095c098d-f237-4470-92ca-f35f5ab0d16f",
+      "patdoctor": "SKIP/BLOCKED",
+      "patgeomverify": "SKIP/BLOCKED",
+      "gui": "SKIP/BLOCKED",
+      "result": "SKIP/BLOCKED"
+    },
+    {
+      "host": "AutoCAD 2015",
+      "execution_location": "github_external_only",
+      "candidate_identity": "33de9e57b677cd59a39d3dde744de110b2bf7a13e973615c8c55b64ef2527e3d / 2f7c67a8-d342-4ca6-bbec-dc8854900672",
+      "patdoctor": "SKIP/BLOCKED",
+      "patgeomverify": "SKIP/BLOCKED",
+      "gui": "SKIP/BLOCKED",
+      "result": "SKIP/BLOCKED"
+    },
+    {
+      "host": "AutoCAD 2026 x64 R25.1.60.0.0",
+      "execution_location": "local",
+      "candidate_identity": "7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21 / ce03cc0c-4f1b-4d9e-a243-b877cf29b2e3",
+      "patdoctor": "PASS full host A/B7/0/0; Core Console acmgd-not-loaded expected FAIL retained separately",
+      "patgeomverify": "PASS A103/103 B24/24, strict gates0; native expected negatives gate1",
+      "gui": "SKIP/BLOCKED current official capture; R8 original GUI scope preserved",
+      "result": "SKIP/BLOCKED"
+    }
+  ],
+  "negative_matrix": [
+    {
+      "case": "baseline",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "original-A03",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "missing-b0c",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "missing-assertions",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "missing-required",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "wrong-mvid",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "wrong-count",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "wrong-strict",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "old-run-id",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "duplicate-pass",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "braces-zero-passed-one",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "texts-zero-passed-one",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "flat-unaccounted-braces",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "flat-unaccounted-texts",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "structured-baseline",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "structured-required-na",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "structured-empty-object",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "brace-only",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "standalone-only",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "brace-and-standalone",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "leader-required-na",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "actual-baseline",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "actual-legacy",
+      "required": true,
+      "result": "PASS",
+      "detail": "R8 three repetitions; expected accept/reject and actual exit retained. Negative rejection is a passing test, not a passing input report.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/1/results.json",
+          "sha256": "94d458e427c5910a652f63609bd384a86fe39578aa636e2452548828aa37464e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/2/results.json",
+          "sha256": "6ab605c0ea351a4b090369fdad83a6964c794a1536db3e582ae11a10cb754032"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/regression/evidence/report-cases/post/3/results.json",
+          "sha256": "ed64b50fc126d5fddabc8b36ece2d7204639a1a2df502f89eb23a394bdaaa7db"
+        }
+      ]
+    },
+    {
+      "case": "真正旧报告文件重用/runner 陈旧目录拒绝（区别于旧 run ID）",
+      "required": true,
+      "result": "PASS",
+      "detail": "Three independent fresh trials prepopulate an actual prior strict PASS report with the SAME expected run ID and final candidate identity. Runner must reject the existing run directory before any host launch and leave the valid old report bytes unchanged. Distinct from old-RUN_ID parser tests; no freshness claim for standalone report-only mode.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/stale-existing-output/review.json",
+          "sha256": "8419e37fba6fec1ddcb061bd1ede56079e75f7d3f50b1ea59318bdc3084aebef"
+        }
+      ]
+    },
+    {
+      "case": "File.Replace 强制允许/拒绝、锁定/只读、Hidden/System 属性",
+      "required": true,
+      "result": "PASS",
+      "detail": "R9 actual final DLL NTFS14-case matrix x3: allowed/actual ACL-denied Replace, locked/read-only, HS/Archive/NotContentIndexed, ADS/ACL/creation/compression, unicode-space create and owned temp cleanup."
+    },
+    {
+      "case": "File.Move 兜底的 ACL、ADS 与元数据保留",
+      "required": true,
+      "result": "PASS",
+      "detail": "Unsafe overwrite fallback removed. Same ACL controls deny actual Replace; final writer returns failure and preserves old bytes/ACL/ADS. Ordinary first-create Move remains tested."
+    },
+    {
+      "case": "备份存在/缺失和真实恢复路径",
+      "required": true,
+      "result": "PASS",
+      "detail": "R9 portable production IO source on real NTFS x3: missing/corrupt/locked/read-only, hidden/system retained backup, retry and successful marker cleanup. Not a CAD UI verdict."
+    },
+    {
+      "detail": "Separate non-author operator read-only review; actual native top-level seam6/6 and report-write refusal3x, fail-closed external gates. Same account/machine; not unaffiliated audit.",
+      "case": "independent-review-of-authored-crash-fix",
+      "result": "PASS",
+      "required": true
+    },
+    {
+      "case": "G01-installed-cold-start-identity",
+      "required": true,
+      "result": "PASS",
+      "detail": "Final candidate autoloaded in a new actual AutoCAD2026 process without NETLOAD; doctor7/0/0, form8/8, geometry4braces+8texts96/0/0. Earlier empty drawing doctor5/0/2 preserved; absent styles not called PASS.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G10-initial-A-reports/freeze.json",
+          "sha256": "c92dbace2a92266f8f238565c9d54641d18a07798dd678353ceeef1f099c5029"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G10-initial-A-reports/PatentMarker-doctor-report.txt",
+          "sha256": "6a3aaa3d346aa81a4c794a14913e51e9feac37c17a1746e1fa32678d36320455"
+        }
+      ]
+    },
+    {
+      "case": "G02-four-direction-braces",
+      "required": true,
+      "result": "PASS",
+      "detail": "Four directions created through actual panel; four B0c-B9 groups pass in restored report and survive the separately verified cold reopen. No continuous-curvature claim.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G02-four-braces.jpg",
+          "sha256": "b73c3f124dea3f8b3fa1481c969e16c16e43d9bbf401f5467ed811d26fb0bd43"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-restored-reports/PatentMarker-geom-verify.txt",
+          "sha256": "7bc1ecf192d886b20ed960a5257772c49c05ae7e01ebc3f598b161727234b002"
+        }
+      ]
+    },
+    {
+      "case": "G03-PATBRACEEDIT-Undo-Redo",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual first brace edited60/12, Undo, immediate Redo with no intervening CAD command, Undo restored40/8; four screenshots plus restored numeric report. Redone is an actual edited state, not only a sent key.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G03-edited.jpg",
+          "sha256": "c58af16187ef59e4d370265ca72544ca567bc49e25471f2fe347999ee4c403f8"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G03-undone.jpg",
+          "sha256": "4e282d4f03081e202754aab99a8618aee2e67dc7204f82f790e6242b057c2799"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G03-redone.jpg",
+          "sha256": "4d66d7e8d8cd359ec49daf2b6a09e18445e8d671a0eb83f026f3a2e64bf0aaee"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G03-restored.jpg",
+          "sha256": "0da247d737a9a8e854bc6f3397d5ac3c84293efa36443500743a4995ca3dd1b9"
+        }
+      ]
+    },
+    {
+      "case": "G04-four-user-created-MLeaders",
+      "required": true,
+      "result": "PASS",
+      "detail": "Four exact user point sets created through palette, arrow/underlineOFF,H3.5, straight and spline,left/right, before any grip edit: PATML4/4 and geometry38/0/0. Raw GUI strict=false retained; does not pass strict automated report gate. Initial session interrupted before QSAVE, so original four-case DWG persistence is not claimed. Resumed saved geometry and new palette creation have separate evidence.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui/G04-reports/PatentMarker-geom-verify.txt",
+          "sha256": "f4ecd8130a0d0d541e7460a2584c3e6132334f37a743aab13b4615355167167a"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui/G04-reports/PatentMarker-mleader-verify.txt",
+          "sha256": "2933dba31a04d235f1559478570c6c3331b65643d535fbc9da11116d8696ebf3"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui/G01-G04-actions.json",
+          "sha256": "0bdb6e56b0dfc38b203f4fadd78014cd3431dbece3920e37a53c13ba2fefce80"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui/G03-four-created.jpg",
+          "sha256": "e525818a42959614dfd4977bd94be8783f7adc48ddc99ffebff21c6ceefb333e"
+        }
+      ]
+    },
+    {
+      "case": "G05-native-MLeader-grips",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual right same-side and left cross-side native text-grip edits: all eight actual boundary-gap T3 and C9 assertions pass on both moved states. Each entire moved report correctly FAILS only stale creation anchor T3a/C3; it is not claimed full PASS. Undo restores8/8 and96/0/0. Hot-grip activation→Escape cancellation observed; displaced-hover cancellation not covered by this API.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-right-moved-reports/PatentMarker-geom-verify.txt",
+          "sha256": "9d574aa7d4454b84b20b597b8995a80b275ec84e7cdc1f6228653989af4db3ba"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-left-moved-reports/PatentMarker-geom-verify.txt",
+          "sha256": "515195515c3bad7b1053ba2db0129604cc2bdb5f28ac93207087e469f16fe463"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-right-moved-reports/PatentMarker-mleader-verify.txt",
+          "sha256": "b61b5e03de5728986e45dcc7cb38ec4e8717c109f36f257a85eebdd1ce0c6a9d"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-left-moved-reports/PatentMarker-mleader-verify.txt",
+          "sha256": "1e09c8c13fbd2a4d7ee372c779a04ad2f1e6dceb1350f7d083807aa522ccc4ed"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G05-restored-reports/PatentMarker-geom-verify.txt",
+          "sha256": "7bc1ecf192d886b20ed960a5257772c49c05ae7e01ebc3f598b161727234b002"
+        }
+      ]
+    },
+    {
+      "case": "G06-native-brace-grips",
+      "required": true,
+      "result": "PASS",
+      "detail": "Native cusp-grip movement committed, completed-state Undo, immediate Redo, Undo restored; independent hot-grip activation→Escape cancel. Earlier Undo while grip popup active was not counted as a completed-edit undo result. Displaced-hover preview cancellation not covered.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-before.jpg",
+          "sha256": "b9cf8cad58168f6bde4715bc6d13e18429d003d3fe8aa023223dac2e58480fda"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-committed-move.jpg",
+          "sha256": "bcf6062ef26e973fe5497d9446e09e3152eb286191e64b3c1bfd98511b9ead8a"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-undone.jpg",
+          "sha256": "af7f49066599e6183383823f22ba0a56fb1d5fabd95157eb4a35a417e4b608eb"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-redone.jpg",
+          "sha256": "1ab8b854c6e7a138665139895eaab352dd32c5b3d87f67ffbbe335841f7cc5e7"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-restored.jpg",
+          "sha256": "a3c8b6f196783d4fa181ae2608130e75f82e87834a41f4389914da7d7b2b151b"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/G06-preview-cancelled.jpg",
+          "sha256": "ef35ff84e68bff472a7217d30bc0b5b484707f54a8ef65592cb65687599e8364"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/operator-stage2-complete.json",
+          "sha256": "2b2bd9acff327ecdd4288a757b51e33b0c063464f4e64342dde9caa6e6c25453"
+        }
+      ]
+    },
+    {
+      "case": "G07-native-grip-Undo-Redo",
+      "required": true,
+      "result": "PASS",
+      "detail": "Both native MLeader directions and brace have before/moved/undone/redone visual evidence. CtrlZ→immediateCtrlY had no intervening CAD command. Later measurement commands create their own undo entries; bounded recovery undid those entries before the grip edit and is recorded separately.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/right-spline-moved.jpg",
+          "sha256": "ced8f9596d2232a0cb6c589703ecdc2da8396ec890865c517bba3600c7638376"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/right-spline-undone.jpg",
+          "sha256": "3c858d61299ac799c9226649ed3ebd8ce65b3cac379a3e92ab369574089b0d6f"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/right-spline-redone.jpg",
+          "sha256": "eb9fde760471bedbd6b75b3bccc3a99e81e6dc5f3d14a8f63df3752ad67fc078"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/left-spline-cross-moved.jpg",
+          "sha256": "04584ba4e6be91eb3ccb8c6ba2f7337ba8025b67de675748d31db85ea12c2b00"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/left-spline-undone.jpg",
+          "sha256": "2bf502d432b920c16ca14902648ff5db23b300497035f4df24db269a18313945"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/left-spline-redone.jpg",
+          "sha256": "55d0a1ee3d5c7417d110014c1f3c89eea33e203d4865d2d7a9fe5a2614e92c2a"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/operator-stage.json",
+          "sha256": "3d7600ea43fdc6a4598be7c965f377a4115dd2cb56108ea579a8a2b53134f7c6"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-resume-20261021/operator-stage2-complete.json",
+          "sha256": "2b2bd9acff327ecdd4288a757b51e33b0c063464f4e64342dde9caa6e6c25453"
+        }
+      ]
+    },
+    {
+      "case": "G08-exact-alignment-target",
+      "required": true,
+      "result": "PASS",
+      "detail": "Same actual spline/entity changes text65,150→100,150, keeps bend80,150, switches terminal to98.6,148.2147 with gap1.4; all9 forms/103 assertions PASS. Earlier all-green alignment report concerned a different selected901; selection guard rejects it. New palette-created901 remains40,340 and is saved/reopened separately.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-selection-guard-comparison.json",
+          "sha256": "e923125c80d188d6fe1b29aa176d68dfd9c43aabc89116b56866cc8a100189eb"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-selector-positive.json",
+          "sha256": "1bcabe5b7a5753e4a67675353d3f125300726aa142be1bbea11490901fe4d98a"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-left-flip-reports/PatentMarker-geom-verify.txt",
+          "sha256": "67249ac827045104419070cd97b1608561393b1b35a9d70d15d99cd292238dff"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-left-flip-reports/PatentMarker-mleader-verify.txt",
+          "sha256": "c924db551ea225807dfe1f9a0fa9bb2ebd2da17ef0833abe5d4489abb05953f2"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-cancel-dictionary-identity.json",
+          "sha256": "9ac218705f504459016afe8e93fbe1e1e1e59e87a7e97e0045271decf46301f2"
+        }
+      ]
+    },
+    {
+      "case": "G08-edit-and-command-dispatch",
+      "required": true,
+      "result": "PASS",
+      "detail": "F2/right-click edit Cancel; product command switches; native LINE completes normally then deferred PATCHECK runs",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-F2-edit.jpg",
+          "sha256": "72cf65170ae35ac0ee316d31e1568332f98b438d8446ca73358bef8b2778f751"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-right-edit.jpg",
+          "sha256": "0c9aa826b8522676b7a7f4748dd608aef5ac3c23f6b5024dad269b6c4a68492b"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-LINE-history.jpg",
+          "sha256": "7a91332d5490f63cebd676719a9c2a42d010ba5a77a34519d108d3d4bf8981b2"
+        }
+      ]
+    },
+    {
+      "case": "G08-align-left-flip",
+      "required": true,
+      "result": "PASS",
+      "detail": "Actual original left spline text65,150→100,150; forepoint80,150 unchanged; gap1.4 left side. Parent froze 9/9 and103 assertions PASS.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-left-target-selected.jpg",
+          "sha256": "50d77d3667f2ed29fbb57556438a5686cd071d537c3fc7926691aaafb9e75ea9"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-left-flipped.jpg",
+          "sha256": "1b0d708db26262d666ad37f3682693e6bdbd4ab21b8da4686ba324edd8e3d7ee"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G08-A-saved.jpg",
+          "sha256": "c5988905ffa8da6e080b4a89c71901d64e004552f7f1590cd25e2412365bd89b"
+        }
+      ]
+    },
+    {
+      "case": "G08-new901-align-selection",
+      "required": false,
+      "result": "SKIP/BLOCKED",
+      "detail": "First alignment selected old unlimited text20,250→100,250; new901 remains40,340. Scope deviation retained and documented; no claim new901 aligned. Historical attempt retained. Required behavior is judged by the separately recorded exact-target alignment and new-process cold-reopen cases.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/selection-deviation.json",
+          "sha256": "8b298d59b654cfd2039dbaa450b1849515f56dd622f3a67c8d4015ebd2417253"
+        }
+      ]
+    },
+    {
+      "case": "G09-isolation-close-and-create",
+      "required": true,
+      "result": "PASS",
+      "detail": "A901/B902 panel isolation; normal close A then B902 second creation/save. Parent froze2text1brace24assertionsPASS.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G09-A-isolated.jpg",
+          "sha256": "dd698e5b4d6f4e2d0dbd4f1c21cab8adf1c1e027b4d47c73b1ca820bf1ce7f7c"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G09-Aclosed-B-correct.jpg",
+          "sha256": "2ffe5f01fcccd7176d82dc2b2f8d411c8c8656cb5b3e349661887d3a0b934e13"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G09-B-after-Aclose-created.jpg",
+          "sha256": "8b37c415bc8fa75699e11dd26952efa2c8cd055982f853a74550569f322580c6"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-cold-reopen",
+      "required": false,
+      "result": "SKIP/BLOCKED",
+      "detail": "Normal main-window X once after B saved; old window remains and commandline grey. Paused with no further inputs pending parent diagnosis. Historical attempt retained. Required behavior is judged by the separately recorded exact-target alignment and new-process cold-reopen cases.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-finish-20261021/G10-exit-pending.jpg",
+          "sha256": "e14ab82eb319714069d0fd2ea71cdd846e9a72a2f504c4d4ffa7305e668ac210"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-cold-start",
+      "required": true,
+      "result": "PASS",
+      "detail": "Parent independently confirmed new PID1352 started23:00:30; unique formal CAD window525224 returned. This proves launch only.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/first-state-failure.json",
+          "sha256": "298da287b00cc88488453540f8a1775013d823602fa5b1efa1f6d13c498ffddd"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/state-retry-failure.json",
+          "sha256": "f6f4cfd9eef83cf286bcb7e0a1215a20b6445b876fa068b42b168e29aefbb7f7"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/process-cold.json",
+          "sha256": "d6d2a1a346abd4bd1eac50b98acab758c122542d544e48f5b1dbc213e1f9e00c"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-A",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "R9 official sky capture timed out twice including one bounded recovery; no drawing opened by operator, no visual assertions. Final full native A/B cold-read PASS independently, but does not close interactive reopen/layout.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/first-state-failure.json",
+          "sha256": "298da287b00cc88488453540f8a1775013d823602fa5b1efa1f6d13c498ffddd"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/state-retry-failure.json",
+          "sha256": "f6f4cfd9eef83cf286bcb7e0a1215a20b6445b876fa068b42b168e29aefbb7f7"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/process-cold.json",
+          "sha256": "d6d2a1a346abd4bd1eac50b98acab758c122542d544e48f5b1dbc213e1f9e00c"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-B",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "R9 official sky capture timed out twice including one bounded recovery; no drawing opened by operator, no visual assertions. Final full native A/B cold-read PASS independently, but does not close interactive reopen/layout.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/first-state-failure.json",
+          "sha256": "298da287b00cc88488453540f8a1775013d823602fa5b1efa1f6d13c498ffddd"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/state-retry-failure.json",
+          "sha256": "f6f4cfd9eef83cf286bcb7e0a1215a20b6445b876fa068b42b168e29aefbb7f7"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/process-cold.json",
+          "sha256": "d6d2a1a346abd4bd1eac50b98acab758c122542d544e48f5b1dbc213e1f9e00c"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-normal-exit",
+      "required": true,
+      "result": "PASS",
+      "detail": "One native Alt+F4 from confirmed AutoCAD Home; CAD window disappeared, parent independently confirmed PID1352 absent and zero acad/accoreconsole processes. Proves this start-page instance normal UI exit only, not A/B reopen or earlier exit incident.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/G10-normal-exit-final-windows.json",
+          "sha256": "af0185a60fbf16e0da56daacfcbd99d559df2b536be9d2db67b62e027d4a6113"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/G10-normal-exit-windows.json",
+          "sha256": "05c4e21c3c5561c628a6983658684bdaac31c150b4acc082c36d5117cd721c81"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/G10-pre-exit-tree.json",
+          "sha256": "44cd59cda3f61dd9d1d60fcd42478d9d455ec5740d4c49ae14e30d6c7a6271ee"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/process-exit.json",
+          "sha256": "297aab38461cad6a895941cf75ed4872fc39c3a88eb2906297c5ae54df974fdf"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/process-exit.json",
+          "sha256": "297aab38461cad6a895941cf75ed4872fc39c3a88eb2906297c5ae54df974fdf"
+        }
+      ]
+    },
+    {
+      "case": "G10-final-visual-capture",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "R9 official sky capture timed out twice including one bounded recovery; no drawing opened by operator, no visual assertions. Final full native A/B cold-read PASS independently, but does not close interactive reopen/layout.",
+      "evidence": [
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/first-state-failure.json",
+          "sha256": "298da287b00cc88488453540f8a1775013d823602fa5b1efa1f6d13c498ffddd"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/G10-open-index-failure-tree.json",
+          "sha256": "1bcb55e98da57fb13e9745e3a5b7b20fd098c98b88fa83294c94bda0b816b70e"
+        },
+        {
+          "path": "<WORKSPACE>/docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/gui-final-cold-20261021/state-retry-failure.json",
+          "sha256": "f6f4cfd9eef83cf286bcb7e0a1215a20b6445b876fa068b42b168e29aefbb7f7"
+        }
+      ]
+    },
+    {
+      "case": "Saved actual GUI DWG strict report gate",
+      "required": true,
+      "result": "PASS",
+      "detail": "Separate native strict=true replay of saved actual GUI A/B; default GUI strict=false raw reports are never passed through as strict gate positives."
+    },
+    {
+      "case": "Final candidate CoreConsole NETLOAD and strict PATGEOMVERIFY",
+      "required": true,
+      "result": "PASS",
+      "detail": "Explicit NETLOAD of final candidate on a disposable copy of saved GUI A; actual process exit, loaded path/SHA/MVID and report assertions required. Autoload may load the same DLL; no exclusive-load claim.",
+      "evidence": {
+        "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/final-netload/review.json",
+        "sha256": "41144c18398893544ff8feab1ec24a49ca52e98cd1109a67655e9f78da8f0678"
+      }
+    },
+    {
+      "case": "Text facing boundary matrix",
+      "required": true,
+      "result": "PASS",
+      "detail": "H=1/3.5/20, small/large translation, left/right, middle/top/bottom levels; rejects contact/interior/wrong side/wrong level/nonfinite/invalid bounds; production four user point sets and Enter unlimited normalization red/green."
+    },
+    {
+      "case": "User-picked incoming segment crossing text",
+      "required": true,
+      "result": "PASS",
+      "detail": "Retained H=7 left negative (60,190)(100,200)(65,200): C8 FAIL is expected detection while C9/T3 positive gap pass. Positive same-direction sample uses attachment (120,190), no routing claim."
+    },
+    {
+      "case": "Final CoreConsole rejects invalid geometry without crash",
+      "required": true,
+      "result": "PASS",
+      "detail": "Frozen original R7 geometry, same final candidate and oracle: four T3 failures, input RESULT FAIL, external gate1 and actual native process exit0 required. Original frozen DWG must remain unchanged.",
+      "evidence": {
+        "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/final-core-rejection/review.json",
+        "sha256": "961539665b4931430169f1d476561f7fe679bd72963c4ccc49bf3d58407121c5"
+      }
+    },
+    {
+      "case": "A01 four-curve sharp-vertex position/aspect/orientation/sample matrix",
+      "required": true,
+      "result": "PASS",
+      "detail": "L1:24 normal outlines pass and480 rectangle-corner vertex mutations rejected by B9 in EACH of3 fresh runs. Four curve locations, early/middle/late indices, both corner choices, both sides,3 aspect/orientation/constant-Z variants, samples2/4/16/32. Same case/result signatures all3. Does not establish continuous curvature or exhaust all polygons.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/corner-matrix-summary.json",
+          "sha256": "eac4866bf9ca134bfc274aefd3c337f4512425116643de935d03c72dc1b0ed9b"
+        }
+      ]
+    },
+    {
+      "case": "Saved actual GUI A/B exact counts and positions in new native command hosts",
+      "required": true,
+      "result": "PASS",
+      "detail": "A4 braces+9texts103 assertions, B1brace+2texts24 assertions; form9/9 and2/2, doctor7/0/0 each. Native strict=true replay, original DWG bytes unchanged; interactive G10 reopen remains separately blocked.",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r8-20261020-facing-gap/evidence/saved-gui-strict/numeric-review.json",
+          "sha256": "a62bdb69c2c1ff334748f1fcb1d6986fe3268220b8f195a56b664ae208909ef6"
+        }
+      ]
+    },
+    {
+      "case": "GitHub Windows2025 inherited ACL preservation",
+      "required": true,
+      "result": "FAIL",
+      "detail": "R9-ACL-01; exact same normal replacement regression fails. Failed DACL staging trial reverted; no criterion weakened."
+    },
+    {
+      "case": "R9 closed/bulged and finite/sample bounds",
+      "required": true,
+      "result": "PASS",
+      "detail": "Same new tests red3/green3; actual native closed/bulged rejected3x each."
+    },
+    {
+      "case": "R9 native throughput / report generation",
+      "required": true,
+      "result": "PASS",
+      "detail": "24 native command results and24 external gates match expectations; exact100/1000/5000vertices and100/1000/5000entities, three repetitions each."
+    },
+    {
+      "case": "R9 no-target forged PASS",
+      "required": true,
+      "result": "PASS",
+      "detail": "Identical empty report before exit0/after exit1, three times each."
+    },
+    {
+      "case": "R9 native top-level exception + diagnostic-write refusal",
+      "required": true,
+      "result": "PASS",
+      "detail": "6 L2 native seam faults, no escaped exception; three FAIL error reports and three intentionally missing reports all rejected externally; seam/env restored."
+    },
+    {
+      "case": "G06 displaced hot-grip hover preview then Escape",
+      "required": true,
+      "result": "SKIP/BLOCKED",
+      "detail": "Prior hot-grip Escape without displacement does not establish displaced preview cancellation; R9 official capture unavailable, no coordinate input."
+    }
+  ],
+  "performance": {
+    "statement": "Actual AutoCAD2026 CoreConsole production PATGEOMVERIFY including report generation, three repetitions. Exact even vertex cases include one coincident straight-stem junction. Largest measured5000 default35-vertex entities; process peak402.1MiB, maximum report4,311,039bytes. Stopwatch includes production verification/report write but excludes process startup. Process peak is cumulative, not per-case allocation. Generation cap4096samples/16387vertices; reference257points per corner. No hard entity cap or guarantee beyond measured sizes, and no5000x16387 cross-product claim.",
+    "measurements": [
+      {
+        "requested_scale": "vertices-100",
+        "actual_vertices": 100,
+        "entities": 1,
+        "runs": 3,
+        "min_ms": 3.688,
+        "median_ms": 4.03,
+        "max_ms": 40.878,
+        "report_bytes": 1885,
+        "peak_working_set_bytes": 394866688,
+        "result": "PASS"
+      },
+      {
+        "requested_scale": "vertices-1000",
+        "actual_vertices": 1000,
+        "entities": 1,
+        "runs": 3,
+        "min_ms": 11.481,
+        "median_ms": 11.59,
+        "max_ms": 13.981,
+        "report_bytes": 1886,
+        "peak_working_set_bytes": 394866688,
+        "result": "PASS"
+      },
+      {
+        "requested_scale": "vertices-5000",
+        "actual_vertices": 5000,
+        "entities": 1,
+        "runs": 3,
+        "min_ms": 109.326,
+        "median_ms": 114.179,
+        "max_ms": 124.939,
+        "report_bytes": 1889,
+        "peak_working_set_bytes": 394866688,
+        "result": "PASS"
+      },
+      {
+        "requested_scale": "entities-100",
+        "actual_vertices": 35,
+        "entities": 100,
+        "runs": 3,
+        "min_ms": 22.909,
+        "median_ms": 33.332,
+        "max_ms": 38.858,
+        "report_bytes": 87233,
+        "peak_working_set_bytes": 394866688,
+        "result": "PASS"
+      },
+      {
+        "requested_scale": "entities-1000",
+        "actual_vertices": 35,
+        "entities": 1000,
+        "runs": 3,
+        "min_ms": 258.786,
+        "median_ms": 271.213,
+        "max_ms": 333.638,
+        "report_bytes": 863039,
+        "peak_working_set_bytes": 394866688,
+        "result": "PASS"
+      },
+      {
+        "requested_scale": "entities-5000",
+        "actual_vertices": 35,
+        "entities": 5000,
+        "runs": 3,
+        "min_ms": 1156.062,
+        "median_ms": 1178.914,
+        "max_ms": 1577.946,
+        "report_bytes": 4311039,
+        "peak_working_set_bytes": 421662720,
+        "result": "PASS"
+      }
+    ],
+    "evidence": {
+      "path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/results.json",
+      "sha256": "47c7350aefa93573cde33e659fd63f578878d2d494eae3ce2f60f4c5ff64c7c0"
+    }
+  },
+  "residual_risks": [
+    {
+      "id": "R9-ACL-01",
+      "status": "FAIL",
+      "description": "Known unprotected ACL inheritance counterexample in independent GitHub Windows environment; local NTFS protected-DACL tests do not close it."
+    },
+    {
+      "id": "sampled-polyline-boundary",
+      "status": "SKIP/BLOCKED",
+      "description": "Closed/bulged/nonfinite input rejected. Samples2 remain allowed by the current polyline approximation; no continuous-curvature proof between sampled vertices."
+    },
+    {
+      "id": "GUI-final-capture",
+      "status": "SKIP/BLOCKED",
+      "description": "Current final-candidate interactive A/B reopen, visual layout and displaced-hover cancel unavailable because official sky capture failed twice; no guessed coordinate input. Native cold-read passes do not replace it."
+    },
+    {
+      "id": "native-grip-recorded-anchor",
+      "status": "SKIP/BLOCKED",
+      "description": "R8 native grip movement may leave creation Xrecord anchors stale; T3a/C3 correctly reject them. No automatic Xrecord synchronization is claimed."
+    },
+    {
+      "id": "text-crossing-user-path",
+      "status": "SKIP/BLOCKED",
+      "description": "User-picked incoming path may cross text despite valid terminal gap. C8 detects retained negative input; no automatic rerouting is implemented."
+    },
+    {
+      "id": "filesystem-scope",
+      "status": "SKIP/BLOCKED",
+      "description": "NTFS ACL/ADS/creation/compression/fullDOSattributes tested. EFS not provisioned/tested; no certificate/security changes. Replace fails closed, and no double-writer lock or JSON-DWG transaction is claimed."
+    },
+    {
+      "id": "backup-post-commit-cleanup",
+      "status": "PASS",
+      "description": "Verified partial-success boundary: target may already be restored when backup cleanup fails; backup bytes/attributes retained and retry works. Not a rollback guarantee."
+    },
+    {
+      "id": "scale-beyond-measurement",
+      "status": "SKIP/BLOCKED",
+      "description": "Native measured5000vertices or5000defaultentities. No combined worst-case or unlimited-size/time/memory guarantee; verifier has quadratic geometry checks."
+    },
+    {
+      "id": "external-host-editions",
+      "status": "SKIP/BLOCKED",
+      "description": "Four legacy groups are GitHub external execution only. Not local unfinished work; no claim that build/simulation/CI is actual legacy runtime PASS."
+    },
+    {
+      "id": "independence-limit",
+      "status": "SKIP/BLOCKED",
+      "description": "Separate non-author reviewer and operator, same account/machine/model family. No unaffiliated human auditor. Native top-level seam faults are L2, not ordinary user-path evidence."
+    },
+    {
+      "id": "absolute-process-survival",
+      "status": "SKIP/BLOCKED",
+      "description": "Ordinary injected managed faults contained. Native AV/stack overflow/process termination not guaranteed; hostile custom Exception.Message getter is source-derived theoretical edge, not observed/injected user failure."
+    }
+  ],
+  "evidence_bindings": [
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/results.json",
+      "local_sha256": "47c7350aefa93573cde33e659fd63f578878d2d494eae3ce2f60f4c5ff64c7c0",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/results.json",
+      "published_sanitized_sha256": "e52d80bdd3d522a549ea5a296f2459db99e59fb2ea097c3bfc7c77b6ac015e4c"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/gate-results.json",
+      "local_sha256": "e6c194e50af0dd23bcf744c93b470fbe1eabae5db2ae583b9dc85dbc9e168915",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/gate-results.json",
+      "published_sanitized_sha256": "e6c194e50af0dd23bcf744c93b470fbe1eabae5db2ae583b9dc85dbc9e168915"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/isolation.json",
+      "local_sha256": "ddd56c8c5c30f97ee5235aa2d9232b56324a620a61404e0ce2d0f65a4231b735",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/isolation.json",
+      "published_sanitized_sha256": "ddd56c8c5c30f97ee5235aa2d9232b56324a620a61404e0ce2d0f65a4231b735"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/results.json",
+      "local_sha256": "d91bd32de30fd259b42864eadc2622a947cb0334809b590dae858a71893a35f6",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/results.json",
+      "published_sanitized_sha256": "76d7de9a935c89371046879a5a218630913f8c92a18837d33c3345f51bd0f9c5"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/independent-crash-review.json",
+      "local_sha256": "39a561b7a83eabde281741930b0fa795d6a6d303e28004e98709a524fda187da",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/independent-crash-review.json",
+      "published_sanitized_sha256": "6bd9935c5351d17731a188354cb5254dc308456f6eeca4f79fb71baec6a012d4"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/independent-crash-review.md",
+      "local_sha256": "d7f6efb37ba452c57bd9526e74873aa607aa0402b135124fc312c7daab6787d6",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/independent-crash-review.md",
+      "published_sanitized_sha256": "bcefa6dc105f4b11e10e2397eaf635c63ad6b7e1780dfafdcc3490ec355ef5be"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/gui-final/official-sky-preflight-blocked.json",
+      "local_sha256": "28e4071136d5c9e7b241b8c32ac9ffc811dad5936e303d437e57c72fe8cc06d0",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/gui-final/official-sky-preflight-blocked.json",
+      "published_sanitized_sha256": "1f0173ec4ca3f1e8ac924ec541b3821c03a7f2bee734d6800c465a6abb74622f"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-top-level-fault/results.json",
+      "local_sha256": "3680ead82b2abab1a7faf2432afe3fa509d634b25d17b5a39fd5a9cb5b9e22ac",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-top-level-fault/results.json",
+      "published_sanitized_sha256": "a886e53de65073c1375eef947e97dd8e8cd18b38a8b65016e27dba11b35c76a5"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-top-level-fault/gate-results.json",
+      "local_sha256": "e8407a75a8947646a809d4a19aa721c2037827efea6f2fc944a877d04bd3ca62",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-top-level-fault/gate-results.json",
+      "published_sanitized_sha256": "e8407a75a8947646a809d4a19aa721c2037827efea6f2fc944a877d04bd3ca62"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-report-write-fault-netload/review.json",
+      "local_sha256": "939c2ad454e7cce88c5204adc8f91b86acc8b62e2a588e3e07f230e0bf356854",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-report-write-fault-netload/review.json",
+      "published_sanitized_sha256": "939c2ad454e7cce88c5204adc8f91b86acc8b62e2a588e3e07f230e0bf356854"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-portable-failure.txt",
+      "local_sha256": "c2e844d76496c09e5ba2a400cf894a50a0d6bd98965df972bb2ed4d7922c1a52",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-portable-failure.txt",
+      "published_sanitized_sha256": "c2e844d76496c09e5ba2a400cf894a50a0d6bd98965df972bb2ed4d7922c1a52"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-acl-stage-failure.txt",
+      "local_sha256": "972692de41f6c285f57348842ff4e842fb4028b77fded31f961f4e6693450dac",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-acl-stage-failure.txt",
+      "published_sanitized_sha256": "ac5d34f20f45d8502a344e8950867ebc730ed2f253cef29dc95e8c157367d680"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/publication/ci-acl-full-diagnostic.txt",
+      "local_sha256": "63d84e4f9a53b4083af664ea88fd93e729015ff6dea7aca7814d4c0be9f77622",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/publication/ci-acl-full-diagnostic.txt",
+      "published_sanitized_sha256": "1d6721c370b38c6c9395e8234f355b7140648217c615a56a6c561756bfa6cdcd"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-1/command.json",
+      "local_sha256": "177d8d7ac0bdbb1bfc6a1ebb3dab93206a682b719c5b3a0cc007cffec60ed0bc",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-1/command.json",
+      "published_sanitized_sha256": "d86853892a6879b76123d69f76bc1900f3b1b19e27e5fb2bf96c7af62d56c2f2"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-1/stdout.txt",
+      "local_sha256": "6af809ed7ac1d82a16ad8fa994aa819e48320e3ce68eecc4c8b75ae090ab79a1",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-1/stdout.txt",
+      "published_sanitized_sha256": "20d22f736664b64596e782774cbbc3b8f37b082516084a51c038e4146307e7bc"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-1/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-1/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-1/command.json",
+      "local_sha256": "27be24af9d97a31a912b38065d645405ef16cd08e8f84740a3652da440e206a5",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-1/command.json",
+      "published_sanitized_sha256": "6bd27804e6519dcccc93f476cb7facbaf33443f1173c64ad83589c226b5c2c77"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-1/stdout.txt",
+      "local_sha256": "dcb21c3b665878dbed59bb8aecb4b5f44b15834e1cc3e55e99c01eea771d302e",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-1/stdout.txt",
+      "published_sanitized_sha256": "da9e776693cf7a57a159c695819cdbd7894a73ba8b91b8203b763133819efbc8"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-1/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-1/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-1/command.json",
+      "local_sha256": "36f5dbdd3f0165af55ceb10336712cdc0557aa5add008e824d1e4c19a3a834ed",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-1/command.json",
+      "published_sanitized_sha256": "0f2c5976e9793a5f424b13abe308ad652c53d8fe461fca3cd61647e74e73c2be"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-1/stdout.txt",
+      "local_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-1/stdout.txt",
+      "published_sanitized_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-1/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-1/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-2/command.json",
+      "local_sha256": "f000250f507c90d8270e97e965dd4154f31f63acad6ace622cb351e7f91be8be",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-2/command.json",
+      "published_sanitized_sha256": "aaae668dbd0c55b95bda0dac26b54b1fa5366d0afca55e4c39e2ddd9c1e4563f"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-2/stdout.txt",
+      "local_sha256": "30abe01174b5774b49e1007f951a7ca292e07d9a973d348394c2982c80ad763d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-2/stdout.txt",
+      "published_sanitized_sha256": "f4e5c3bee1f945c6831b22e3e08b3cf96b1a96ac33d7a6df76409b0c0b05d27d"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-2/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-2/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-2/command.json",
+      "local_sha256": "ebad0f03bc98d742340694c5da1ffb4ddc38d19e296d053b6eebc9bb20e27be8",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-2/command.json",
+      "published_sanitized_sha256": "32a35d8431b5caa91bddedbbdc0404f38908d3bb677c3c3071f4319948ba46a7"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-2/stdout.txt",
+      "local_sha256": "a5c81d687e5193008850d543efbef2f6053950b8fe3c3bbe8cec1c63f2f88d63",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-2/stdout.txt",
+      "published_sanitized_sha256": "a5c81d687e5193008850d543efbef2f6053950b8fe3c3bbe8cec1c63f2f88d63"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-2/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-2/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-2/command.json",
+      "local_sha256": "4ba0893210ee472a78edb0ea36895633375033ac2c051a13a77ef745bd078745",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-2/command.json",
+      "published_sanitized_sha256": "c45615b01b79fa1f082bae4b491fe28040e036305b84fb28869f74a913203cc2"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-2/stdout.txt",
+      "local_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-2/stdout.txt",
+      "published_sanitized_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-2/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-2/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-3/command.json",
+      "local_sha256": "793a90540bef84abc50c30dc207ae4d1d1a646b2c9fcbb978493e78bd72e3481",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-3/command.json",
+      "published_sanitized_sha256": "80762fec532b3fbd3e63751e2f215252f73e473da9fa83fa666eaa61d0879bad"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-3/stdout.txt",
+      "local_sha256": "dc1d63bbcf52f6519b25b0bf5ab803156b5c8806f622d17e4fb2f8d3512dc982",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-3/stdout.txt",
+      "published_sanitized_sha256": "0aeb9ce3bd7a3bbd0a5d05146f9264368bf8336a36673db76b65cea4f0e1d279"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-io-3/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-io-3/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-3/command.json",
+      "local_sha256": "2ec70e552840215020fd5ac1199c4e4a50e026fbbca24007513ac2d48c6e9bdb",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-3/command.json",
+      "published_sanitized_sha256": "9387181a2c0baf32c23af8527a844372d52377205b24fec24a52951c310032de"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-3/stdout.txt",
+      "local_sha256": "277ce2ea5d0b3cf44b397a1b89bc0fcd7637f22328ca178bc6db388089991155",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-3/stdout.txt",
+      "published_sanitized_sha256": "277ce2ea5d0b3cf44b397a1b89bc0fcd7637f22328ca178bc6db388089991155"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-red-geom-3/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-red-geom-3/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-3/command.json",
+      "local_sha256": "9e96a62116f6d1365c81741aea26171e94386c89993bf4d5de396e874b300ad2",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-3/command.json",
+      "published_sanitized_sha256": "5e6ff4844dfdbcf14bc6a003636b2eb4ef9b82524ed1f39d0fa49e6e8725f05e"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-3/stdout.txt",
+      "local_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-3/stdout.txt",
+      "published_sanitized_sha256": "2eb482682e609094b515ac884979c8783cbed0a804c78bc63cacd72222d41d89"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-red-3/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-red-3/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-1/command.json",
+      "local_sha256": "732f149dbe445601faa6a2ac7d73d83d55481716a57a2dff5fc2fc680df7130e",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-1/command.json",
+      "published_sanitized_sha256": "46d344399f675346ae79417a88757dded8f79a3ea82b58ec2691aa30f66a43e3"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-1/stdout.txt",
+      "local_sha256": "0b9c4a8b91e50266a3300e9b3b8fea7b5251c725477a9daac49988ccc9e7d318",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-1/stdout.txt",
+      "published_sanitized_sha256": "3077c27aa6d8900328245a029427ff9a0f625bb52844b38ddc95011582738f0a"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-1/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-1/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-1/command.json",
+      "local_sha256": "0b58cd1a318cfd32721a4e60d2de49d006688c0eeb4d29f58999d54d1421fae0",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-1/command.json",
+      "published_sanitized_sha256": "eba22c73835a9b3510823cc1d3e4234a904ccf81e15a688faffc877c875399d6"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-1/stdout.txt",
+      "local_sha256": "4aa745658e7b1334abedcf5f95ef895018622515ae0d814e88f754a447673d86",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-1/stdout.txt",
+      "published_sanitized_sha256": "4aa745658e7b1334abedcf5f95ef895018622515ae0d814e88f754a447673d86"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-1/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-1/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-1/command.json",
+      "local_sha256": "ce9159d9d71ecbad0e57ee07cbfff8298d341be59707c01498a04697919aa881",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-1/command.json",
+      "published_sanitized_sha256": "e660b48a2678fbe096a240dc4218e7d978ab1e07cb342df6429f8589e9173be0"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-1/stdout.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-1/stdout.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-1/stderr.txt",
+      "local_sha256": "9842773a5aa0abb3750301f4956c1239f0f70a2e1b4ba4f1c5dcac40728c0758",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-1/stderr.txt",
+      "published_sanitized_sha256": "b1e4c9bf47028a30f7406fe59782c48e3403829ffdc71d12cfc143c887081cab"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-2/command.json",
+      "local_sha256": "c3d07d39544e055c7a5321c1a6b09a98fc4374eed070eb8c458b7d5b880e8942",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-2/command.json",
+      "published_sanitized_sha256": "d5473aa54b80b88419e59b7a5a24798c1d93c03af6a17124ee38057b3979e745"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-2/stdout.txt",
+      "local_sha256": "57e67132180d367f4e3f88bbb3c821f0751e268f50d44b16433e99eb97b1e466",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-2/stdout.txt",
+      "published_sanitized_sha256": "57e67132180d367f4e3f88bbb3c821f0751e268f50d44b16433e99eb97b1e466"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-2/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-2/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-2/command.json",
+      "local_sha256": "f5e926a64b32824b12ebd2de98a4deecc14c9420d98e92d10d9e01c953ef951d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-2/command.json",
+      "published_sanitized_sha256": "f7e7dbbb6c23b5f2f7329ee7c33efd539c3a79fefa8c140df48c0a9078aa915f"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-2/stdout.txt",
+      "local_sha256": "dec61f435816790a60ae3d11f4f19f8b7db815b5591c63bc750ceb8256a0fc61",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-2/stdout.txt",
+      "published_sanitized_sha256": "dec61f435816790a60ae3d11f4f19f8b7db815b5591c63bc750ceb8256a0fc61"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-2/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-2/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-2/command.json",
+      "local_sha256": "880c8e75b4ef7ac95cc3bb9bea20bae03111b7daa9c2d8a2efe2d41a1c46d325",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-2/command.json",
+      "published_sanitized_sha256": "67f5104062686de77e0adda8347bb79234ab3ddee5c814e08a2d831e559ce974"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-2/stdout.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-2/stdout.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-2/stderr.txt",
+      "local_sha256": "9842773a5aa0abb3750301f4956c1239f0f70a2e1b4ba4f1c5dcac40728c0758",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-2/stderr.txt",
+      "published_sanitized_sha256": "b1e4c9bf47028a30f7406fe59782c48e3403829ffdc71d12cfc143c887081cab"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-3/command.json",
+      "local_sha256": "7dc5e65bd7afa38d9b35de59edf5d5d2739658e24daef631f7935c238ab8663d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-3/command.json",
+      "published_sanitized_sha256": "46f9ec6d4ceb08c5e400782c35b7fe941f5fd500f896f86e6277eba6f3342400"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-3/stdout.txt",
+      "local_sha256": "a8dea6913a7b69650d9bf3681d89331231ab05f1ceb33a72abd1710d43af4d6c",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-3/stdout.txt",
+      "published_sanitized_sha256": "a8dea6913a7b69650d9bf3681d89331231ab05f1ceb33a72abd1710d43af4d6c"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/backup-green-3/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/backup-green-3/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-3/command.json",
+      "local_sha256": "54606bd2a5003061ab814642414bac6fe671adf60a8662f6f0363f92d8c6cd56",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-3/command.json",
+      "published_sanitized_sha256": "6ecbed9ebd75e04b5d55bd30de7882011860679744804ceb2a1b6127cdad6ffb"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-3/stdout.txt",
+      "local_sha256": "a2e1861aef0e3d2c2c17dcff6969162c1a4a37e6412a5d22f24f4ba0a8646905",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-3/stdout.txt",
+      "published_sanitized_sha256": "a2e1861aef0e3d2c2c17dcff6969162c1a4a37e6412a5d22f24f4ba0a8646905"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/permanent-green-geom-3/stderr.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/permanent-green-geom-3/stderr.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-3/command.json",
+      "local_sha256": "dced9a6dd94987925f68791a9dc0667314d31d8bff80151061bda4afddf41c49",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-3/command.json",
+      "published_sanitized_sha256": "c8276af9ca6ee6914e7cafffaefc3926853822a7ee1d4d3ac350de8fbd9f861f"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-3/stdout.txt",
+      "local_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-3/stdout.txt",
+      "published_sanitized_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/checks/empty-report-green-3/stderr.txt",
+      "local_sha256": "9842773a5aa0abb3750301f4956c1239f0f70a2e1b4ba4f1c5dcac40728c0758",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/checks/empty-report-green-3/stderr.txt",
+      "published_sanitized_sha256": "b1e4c9bf47028a30f7406fe59782c48e3403829ffdc71d12cfc143c887081cab"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/candidate/1/results.json",
+      "local_sha256": "902c4ebb2be38fdf672eb2f188925fb605db4c50b33fa2ed99feeb721c22a1d9",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/candidate/1/results.json",
+      "published_sanitized_sha256": "4566a118574187c8bf8b449a031f6179c29f99ce0e5346b384b3a82454b5d54e"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/red/1/results.json",
+      "local_sha256": "cfef5e874d4eb3532458861321619bb1d5a613f4f8e717edf66d83bc7742138d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/red/1/results.json",
+      "published_sanitized_sha256": "627cf822e1748ce017595fc5004453151b738f80ba78c24d4f3582ece86b3f65"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/candidate/2/results.json",
+      "local_sha256": "aa76cd7dd04d6b171303983b6b13456efb8215bf49092d5845e8b8af15a90c0e",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/candidate/2/results.json",
+      "published_sanitized_sha256": "d9cb3c661afcd32010b41caf892820039407b2d083e00ab22b32c635065952c7"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/red/2/results.json",
+      "local_sha256": "cfef5e874d4eb3532458861321619bb1d5a613f4f8e717edf66d83bc7742138d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/red/2/results.json",
+      "published_sanitized_sha256": "627cf822e1748ce017595fc5004453151b738f80ba78c24d4f3582ece86b3f65"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/candidate/3/results.json",
+      "local_sha256": "89f18983214f6af47d132d7f958285d8c0dc692045cebff08df3eae77bea8005",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/candidate/3/results.json",
+      "published_sanitized_sha256": "8c12c154b05ec37115fd5fb297ba4c48ef3225f4afdc0de91d160c1e67232726"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/fs-final/red/3/results.json",
+      "local_sha256": "cfef5e874d4eb3532458861321619bb1d5a613f4f8e717edf66d83bc7742138d",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/fs-final/red/3/results.json",
+      "published_sanitized_sha256": "627cf822e1748ce017595fc5004453151b738f80ba78c24d4f3582ece86b3f65"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/A/PatentMarker-geom-verify.txt",
+      "local_sha256": "46fb6f4cdc265048f97df62db0bae4056ef26a78b2b409af9aa6645afa7b2d53",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/A/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "a02bed4838432adaeb927a2184ddb2d56716a5185259ef00bea766e53b888dcd"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/A/PatentMarker-mleader-verify.txt",
+      "local_sha256": "9a9400f03968aa9f27c69a83d2a58b82bd97165c0b572f6ddc9d867dfaf5734e",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/A/PatentMarker-mleader-verify.txt",
+      "published_sanitized_sha256": "9a9400f03968aa9f27c69a83d2a58b82bd97165c0b572f6ddc9d867dfaf5734e"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/A/PatentMarker-doctor-report.txt",
+      "local_sha256": "28edeeea28fa7a9672c5c9a809c0b0ff749291470b67095816d37df7b9a59764",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/A/PatentMarker-doctor-report.txt",
+      "published_sanitized_sha256": "a6f4072c35b1d06454bb24432f1dcd7d5b7fedfa6047104551aed097877a34ff"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/B/PatentMarker-geom-verify.txt",
+      "local_sha256": "a0e85857e3c46477d10f7b679cd5113f3f10a99d18de7d4187751336cc40a1c3",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/B/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "562037a6039620f3df80bb6bf3241907a5ae6ff346ad51803c4c79996ef64831"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/B/PatentMarker-mleader-verify.txt",
+      "local_sha256": "d92e04daf9bf1c5d69929bdd5abce30def3d9179575190a9c0a6dc466ccea880",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/B/PatentMarker-mleader-verify.txt",
+      "published_sanitized_sha256": "d92e04daf9bf1c5d69929bdd5abce30def3d9179575190a9c0a6dc466ccea880"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/cold-saved/B/PatentMarker-doctor-report.txt",
+      "local_sha256": "f68a4d5133479be8ee2cd3fd079d8bc385c7744bd4da9c68c0ab052d6febe334",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/cold-saved/B/PatentMarker-doctor-report.txt",
+      "published_sanitized_sha256": "f44ee53fad47d6ff795a85eb8f55f91961e0f37114ab163b76ec5fb6fb3982d1"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-vertices-100/PatentMarker-geom-verify.txt",
+      "local_sha256": "77ebc76f0f414bc459392646904314b4cbc9728d6a8c5063de2df3b2f41a33cf",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-vertices-100/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "c392d3fd6c86c5b212c205c0bdb715bb42738648ec9b3d5ecd6817df037c8f90"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-vertices-1000/PatentMarker-geom-verify.txt",
+      "local_sha256": "542893fbf64ed7b5835289883776c1da35286c932dc1bab121201afd7966d7af",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-vertices-1000/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "735f38c5c1599e2ad24416366b62c72a1e2ac4420cb4fa957dff0d5fadbf3c6a"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-vertices-5000/PatentMarker-geom-verify.txt",
+      "local_sha256": "b28f982a19115e8bbbcf3ae4a9a22f8edcb660af0384931f4a2acb0fdb580836",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-vertices-5000/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "71e03ea20e7ba0e53b388b227bf8a975ffc08262fd626225d934b9764d88a238"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-entities-100/PatentMarker-geom-verify.txt",
+      "local_sha256": "5fb524ac04867061498cbb95502b85e1176a2f645b5835e550ef89fadf2f121f",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-entities-100/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "e3af7520680b2cefdc19e04b7470eb33e9b1d7c9686326361d061ef24dcc309a"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-entities-1000/PatentMarker-geom-verify.txt",
+      "local_sha256": "929128fe1bbaa2d95b49a93ccaddb889e12d350db984861bdd5c1acf24e93691",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-entities-1000/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "e22d81cfa81d9cd7fd302c734d027c5efc028575fd51f63d4220f9a9ea88ca1c"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-entities-5000/PatentMarker-geom-verify.txt",
+      "local_sha256": "53f367eb86cc0eede2c1cbf07f34dcbc1ef13fa6e46d09821c4df02de1ed23d7",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-entities-5000/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "7abe9edc995346494545cd5cf689adab9b86be879ca754db16e8768be7a683dd"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-closed/PatentMarker-geom-verify.txt",
+      "local_sha256": "10532c5bc2e875c6ab14dd8b9e835ec4356ef3dc9d853598e9a03aa59b29c062",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-closed/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "97b549928a81c0e3e4722577830ee96b69f7d849893713a7488896288522604c"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/native-scale/1-bulged/PatentMarker-geom-verify.txt",
+      "local_sha256": "8a5433ae6dfd8298d4b4b01c7ac1385ff2a73955db992c33a0113406f502b445",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/native-scale/1-bulged/PatentMarker-geom-verify.txt",
+      "published_sanitized_sha256": "908d74dc281a62e3d749264f861f1b0452bd7c422d84eb9fcbd86390b7d56f1d"
+    },
+    {
+      "local_relative_path": "docs/test-evidence/acceptance-r9-20261022-boundaries/evidence/report-selftests/results.json",
+      "local_sha256": "779aaab7134bfec6e3753361de0ecd4f2da7224ac40a5ec9ddaf3c9716b13b70",
+      "published_relative_path": "docs/test-evidence/cad-20261022-r9/evidence/report-selftests/results.json",
+      "published_sanitized_sha256": "779aaab7134bfec6e3753361de0ecd4f2da7224ac40a5ec9ddaf3c9716b13b70"
+    }
+  ],
+  "note": "Sanitized reproducible handoff subset; full immutable local evidence6256+ files is not uploaded. Local and sanitized byte hashes both retained; this subset is not the full local render-acceptance release gate."
+}

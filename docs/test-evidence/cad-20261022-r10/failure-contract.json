@@ -1,0 +1,18 @@
+{
+  "finding_id": "R9-ACL-01",
+  "original_candidate_sha256": "7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21",
+  "baseline_commit": "4b08a5c54fa82f91a54c0c828b4dad7687804bba",
+  "red_test_assembly_sha256": "a7933025133ab9d40d2d2c7fde27c0e976999c7cea9c824512ec405cd67b892c",
+  "verification_actor": "repair_author",
+  "scope": "Same production IO source, real NTFS; exact SDDL predicate unchanged. Isolated legacy inheritance fixture reproduces change on local Windows10 without modifying system settings.",
+  "selectors": [
+    "PatentMarker.Tests.DictWriterBoundaryTests.LegacyInheritedAcl_WithStreamsAndCreationTime_IsPreservedExactly",
+    "PatentMarker.Tests.DictWriterBoundaryTests.LegacyAclRepairDenied_RollsBackOriginalBytesSecurityAndStreams",
+    "PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime"
+  ],
+  "expected": "Preserve exact owner/group/DACL SDDL, named streams, creation time; security repair denial rolls original bytes/security back; no owned temporary/rollback leaks",
+  "observed": "New local fixtures:136 pass2fail; ordinary original test still passes locally but fails in GitHub Windows2025. Both retained as independent counterexamples.",
+  "evidence": "evidence/checks/new-acl-cases-red",
+  "no_oracle_relaxation": true,
+  "created_utc": "2026-10-22T11:35:17.9212728+08:00"
+}

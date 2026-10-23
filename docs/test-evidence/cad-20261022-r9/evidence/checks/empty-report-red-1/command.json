@@ -1,0 +1,31 @@
+{
+  "id": "empty-report-red-1",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/verify-geometry-before.ps1",
+    "-ReportPath",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+    "-RunId",
+    "r9-empty",
+    "-ExpectedDllSha256",
+    "abc123",
+    "-ExpectedMvid",
+    "selftest-mvid",
+    "-RequireBraces",
+    "0",
+    "-RequireTexts",
+    "0"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries",
+  "started": "2026-10-22T10:29:44.2553802+08:00",
+  "finished": "2026-10-22T10:29:45.2626294+08:00",
+  "owned_pid": 20056,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 1007.3196,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\empty-report-red-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\empty-report-red-1\\stderr.txt"
+}

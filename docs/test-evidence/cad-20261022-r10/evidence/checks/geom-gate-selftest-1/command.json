@@ -1,0 +1,20 @@
+{
+  "id": "geom-gate-selftest-1",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>/tools/verify-geometry.ps1",
+    "-SelfTest"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T11:48:24.2415748+08:00",
+  "finished": "2026-10-22T11:48:26.4397750+08:00",
+  "owned_pid": 15108,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 2198.1804,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\geom-gate-selftest-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\geom-gate-selftest-1\\stderr.txt"
+}

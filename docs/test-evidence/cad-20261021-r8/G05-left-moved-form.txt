@@ -1,0 +1,128 @@
+=====================================================
+PATMLVERIFY — MLeader form verification
+Time: 2026-10-21 11:57:00
+AutoCAD: 25.1.0.0
+=====================================================
+
+-----------------------------------------------------
+MLeader (3154670169312)
+  recorded: attach=(0.00,100.00) doglegs=1 text=(40.00,110.00) arrow=False splined=False
+  entity: textLocation=(40.00,110.00) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169360)
+  recorded: attach=(60.00,100.00) doglegs=1 text=(65.00,110.00) arrow=False splined=False
+  entity: textLocation=(65.00,110.00) height=3.50 leaderType=StraightLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=2 curveTypes=[Polyline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  [PASS] C6 straight-all-lines: curves=[Polyline]
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169408)
+  recorded: attach=(0.00,140.00) doglegs=1 text=(40.00,150.00) arrow=False splined=True
+  entity: textLocation=(40.00,150.00) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=21 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.023 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169456)
+  recorded: attach=(60.00,140.00) doglegs=1 text=(65.00,150.00) arrow=False splined=True
+  entity: textLocation=(97.44,161.06) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=21 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.002 (tol=1.0)
+  [FAIL] C3 text-location: 34.273
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => FAIL
+
+-----------------------------------------------------
+MLeader (3154670169504)
+  recorded: attach=(0.00,190.00) doglegs=1 text=(40.00,200.00) arrow=True splined=True
+  entity: textLocation=(40.00,200.00) height=7.00 leaderType=SplineLeader arrowSize=2.50 dogleg=False landing=False
+  drawn segments=19 curveTypes=[Spline] otherTypes=[] solids=1 blockRefs=0
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=2.800 terminalError=0.000000 (tol=0.000700)
+  [PASS] C1 attach-on-path-start: 2.500 (tol=3.0)
+  [PASS] C2 dogleg0-on-path: 0.002 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=True solids=1
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169552)
+  recorded: attach=(120.00,190.00) doglegs=1 text=(65.00,200.00) arrow=True splined=True
+  entity: textLocation=(65.00,200.00) height=7.00 leaderType=SplineLeader arrowSize=2.50 dogleg=False landing=False
+  drawn segments=20 curveTypes=[Spline] otherTypes=[] solids=1 blockRefs=0
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=2.800 terminalError=0.000000 (tol=0.000700)
+  [PASS] C1 attach-on-path-start: 2.500 (tol=3.0)
+  [PASS] C2 dogleg0-on-path: 0.022 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 0
+  [PASS] C5 arrow-consistency: recorded=True solids=1
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169600)
+  recorded: attach=(0.00,240.00) doglegs=0 text=(20.00,250.00) arrow=False splined=True
+  entity: textLocation=(20.00,250.00) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=11 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+-----------------------------------------------------
+MLeader (3154670169648)
+  recorded: attach=(0.00,280.00) doglegs=1 text=(40.00,290.00) arrow=False splined=True
+  entity: textLocation=(40.00,290.00) height=3.50 leaderType=SplineLeader arrowSize=0.00 dogleg=False landing=False
+  drawn segments=21 curveTypes=[Spline] otherTypes=[] solids=0 blockRefs=1
+  [PASS] C7 directional-middle-attachment: left=AttachmentMiddle right=AttachmentMiddle
+  [PASS] C8 no-line-under-text: 0
+  [PASS] C9 facing-text-boundary-gap: error=0.000000 gap=1.400 terminalError=0.000000 (tol=0.000350)
+  [PASS] C1 attach-on-path-start: 0.000 (tol=0.5)
+  [PASS] C2 dogleg0-on-path: 0.023 (tol=1.0)
+  [PASS] C3 text-location: 0.000
+  [PASS] C4 single-attachment: 1
+  [PASS] C5 arrow-consistency: recorded=False solids=0
+  => PASS
+
+SUMMARY: total=8 passed=7 failed=1

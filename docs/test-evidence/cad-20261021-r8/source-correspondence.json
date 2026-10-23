@@ -1,0 +1,877 @@
+[
+  {
+    "path": "cad-plugin/2007/PatentMarker/IO/ConfigLoader.cs",
+    "normalized_sha256": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "build_sha256": "f61fe0d9605083b4a695a19d6d9092af9a2bc078e5a3b5dd03d6acb82773127d",
+    "root_sha256": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/IO/DictEntry.cs",
+    "normalized_sha256": "761aa0a478922150db8f03b79e186b0f731c05dda574e0763d79f9e2347b9dda",
+    "build_sha256": "15a9c2d395f30e229b236e1c6a998f0d180c490a8b5b6f23d1786b8639d0c16e",
+    "root_sha256": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/IO/DictWriter.cs",
+    "normalized_sha256": "071970a81f404133254ad01e06bbec2c94da48734f23410c5eb4d12cc700a5eb",
+    "build_sha256": "595c9d2098b4b7b5394355c7fade3326189c3b4348ff856426d1f5b34aa0b65a",
+    "root_sha256": "3533af6b1ebe3865ce49043b8e300a7b559c5a24e27fe772f0b34d7c4e32a34e",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/IO/RuntimeHost.cs",
+    "normalized_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "build_sha256": "76273df6c3b56df6847f78ba955251b697e657ce014dc7dce6af2a20c690ae8d",
+    "root_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/IO/SimpleJson.cs",
+    "normalized_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+    "build_sha256": "8e4421fc9dc91d08e1d7b469e82664cc6ec8b93c99b112c84c0ec51f9713c770",
+    "root_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/PatentMarker.csproj",
+    "normalized_sha256": "7334da4a00db8e46f4708633b91ecb7ec717cb0eced497f42494cc032de88efb",
+    "build_sha256": "1836c28189975d3642937d65451a898dd9786c40270bbe1a8abf6679e680e6c8",
+    "root_sha256": "1836c28189975d3642937d65451a898dd9786c40270bbe1a8abf6679e680e6c8",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2007/PatentMarker/PatentMarkerApp.cs",
+    "normalized_sha256": "e584991c9ffd6c279824a4e4cfa7c7d7be629e37ae547ff936d69185ed66c95d",
+    "build_sha256": "7816a372ab35c79541feaff46bfb69d1d70f04ff8afd50e7a6faf4d23a45c045",
+    "root_sha256": "e584991c9ffd6c279824a4e4cfa7c7d7be629e37ae547ff936d69185ed66c95d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatAlignCommand.cs",
+    "normalized_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "build_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "root_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatCheckCommand.cs",
+    "normalized_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "build_sha256": "e7cef72068433165f58d9d3438247b2ea994516d9f0bab1d4b3aaf68421d9912",
+    "root_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatMarkCommand.cs",
+    "normalized_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "build_sha256": "fbda0a99a6251c3dc96933228a0398c87f9f26148ecb38a35291cc9620fb7a86",
+    "root_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatMLeaderCreator.cs",
+    "normalized_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "build_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "root_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatMLeaderSetCommand.cs",
+    "normalized_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "build_sha256": "fb3f679aa589188c7cdec2ad85af3fd82ab69e54b99f293141259dfed01c2787",
+    "root_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+    "normalized_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "build_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "root_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/Commands/PatSelectAllCommand.cs",
+    "normalized_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "build_sha256": "60c26bc0e0688e933fe0d06a930fe896ab0d8f5917333a4675f859348c2785f6",
+    "root_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/IO/ConfigLoader.cs",
+    "normalized_sha256": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "build_sha256": "f61fe0d9605083b4a695a19d6d9092af9a2bc078e5a3b5dd03d6acb82773127d",
+    "root_sha256": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/IO/DictEntry.cs",
+    "normalized_sha256": "761aa0a478922150db8f03b79e186b0f731c05dda574e0763d79f9e2347b9dda",
+    "build_sha256": "15a9c2d395f30e229b236e1c6a998f0d180c490a8b5b6f23d1786b8639d0c16e",
+    "root_sha256": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/IO/DictWriter.cs",
+    "normalized_sha256": "071970a81f404133254ad01e06bbec2c94da48734f23410c5eb4d12cc700a5eb",
+    "build_sha256": "595c9d2098b4b7b5394355c7fade3326189c3b4348ff856426d1f5b34aa0b65a",
+    "root_sha256": "3533af6b1ebe3865ce49043b8e300a7b559c5a24e27fe772f0b34d7c4e32a34e",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/IO/RuntimeHost.cs",
+    "normalized_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "build_sha256": "76273df6c3b56df6847f78ba955251b697e657ce014dc7dce6af2a20c690ae8d",
+    "root_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/IO/SimpleJson.cs",
+    "normalized_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+    "build_sha256": "8e4421fc9dc91d08e1d7b469e82664cc6ec8b93c99b112c84c0ec51f9713c770",
+    "root_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/PatentMarker.csproj",
+    "normalized_sha256": "b570e1430b0ef656a81190fee24e5771c82c127d04347f1ea2f3cb9e58530e72",
+    "build_sha256": "2429845ac1ea8564c4956ada693e89ec082a5b3040fa5153161ba465e5092891",
+    "root_sha256": "2429845ac1ea8564c4956ada693e89ec082a5b3040fa5153161ba465e5092891",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2010/PatentMarker/PatentMarkerApp.cs",
+    "normalized_sha256": "dac38d9e13410aa8eb36d42ca9070811038452ad109bb28e9d545e20247ded3d",
+    "build_sha256": "ac52fc14d9156eeb74a0436b0815bc95c6aef04da786885f5aa78a71a194409a",
+    "root_sha256": "dac38d9e13410aa8eb36d42ca9070811038452ad109bb28e9d545e20247ded3d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatAlignCommand.cs",
+    "normalized_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "build_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "root_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatCheckCommand.cs",
+    "normalized_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "build_sha256": "e7cef72068433165f58d9d3438247b2ea994516d9f0bab1d4b3aaf68421d9912",
+    "root_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatMarkCommand.cs",
+    "normalized_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "build_sha256": "fbda0a99a6251c3dc96933228a0398c87f9f26148ecb38a35291cc9620fb7a86",
+    "root_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatMLeaderCreator.cs",
+    "normalized_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "build_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "root_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatMLeaderSetCommand.cs",
+    "normalized_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "build_sha256": "fb3f679aa589188c7cdec2ad85af3fd82ab69e54b99f293141259dfed01c2787",
+    "root_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+    "normalized_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "build_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "root_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/Commands/PatSelectAllCommand.cs",
+    "normalized_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "build_sha256": "60c26bc0e0688e933fe0d06a930fe896ab0d8f5917333a4675f859348c2785f6",
+    "root_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/IO/ConfigLoader.cs",
+    "normalized_sha256": "b1b342d2c0a1b136ada11c3ddf5b983f36d4c8cd7e73e493eb03e4aebbd84f17",
+    "build_sha256": "dbb34c70de5b04f22bb05cf8045d3b7be6ca47f9fc1ad3a82c3e261348237ec0",
+    "root_sha256": "9ee7e8f9169e2bb30cb0174825d677a87a84ebad4998489c5403ebabf7047945",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/IO/DictEntry.cs",
+    "normalized_sha256": "c48c612399849172e2451bfce3aee26921e1a623cc067d23c8447907151b50e1",
+    "build_sha256": "3a5acae307784144e7abd60d467acb189238d4f2264b85728f14cea793157172",
+    "root_sha256": "bfe87682281f7c1fcacfcb2480a3999cc9f4b5eccf97bc7e61c73f987b723cae",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/IO/DictWriter.cs",
+    "normalized_sha256": "7ee9b19231ebbae7ff79bb95d863f3fafdf6569c623488dcb0a19aee89745a3e",
+    "build_sha256": "32df1a458df029fff6fa21ef371622a3f1dea0c6195c945807c914da0c29b4d2",
+    "root_sha256": "14426600cf22de360e46dbe12ce72da5c5a0b9aa531fcde500d93c44a0a7cf01",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/IO/RuntimeHost.cs",
+    "normalized_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "build_sha256": "76273df6c3b56df6847f78ba955251b697e657ce014dc7dce6af2a20c690ae8d",
+    "root_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/PatentMarker.csproj",
+    "normalized_sha256": "cd1c0635326d5ebbafbc8b5f4ed1f037b321067c85d92c4795d22734ce50b2fc",
+    "build_sha256": "7b8655f86c617fa02b3063a48e5e3a329ad80c07de502f50f5c723aa4f5994e7",
+    "root_sha256": "7b8655f86c617fa02b3063a48e5e3a329ad80c07de502f50f5c723aa4f5994e7",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2013/PatentMarker/PatentMarkerApp.cs",
+    "normalized_sha256": "f4cf4d4478a82d6662caf4d1875820a3acd2373acf24cf246565b4b798a827cb",
+    "build_sha256": "b83f2a3b92a887e86030ee074fc7216c6d55ec11dddaa3e9c56e2299b2f27d25",
+    "root_sha256": "54b5e8f6c454aab4ee4ce69127d29dab8cf421571c49554cd7bfc2dbcb0477b4",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatAlignCommand.cs",
+    "normalized_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "build_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "root_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatCheckCommand.cs",
+    "normalized_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "build_sha256": "e7cef72068433165f58d9d3438247b2ea994516d9f0bab1d4b3aaf68421d9912",
+    "root_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatMarkCommand.cs",
+    "normalized_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "build_sha256": "fbda0a99a6251c3dc96933228a0398c87f9f26148ecb38a35291cc9620fb7a86",
+    "root_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatMLeaderCreator.cs",
+    "normalized_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "build_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "root_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatMLeaderSetCommand.cs",
+    "normalized_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "build_sha256": "fb3f679aa589188c7cdec2ad85af3fd82ab69e54b99f293141259dfed01c2787",
+    "root_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+    "normalized_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "build_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "root_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/Commands/PatSelectAllCommand.cs",
+    "normalized_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "build_sha256": "60c26bc0e0688e933fe0d06a930fe896ab0d8f5917333a4675f859348c2785f6",
+    "root_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/IO/ConfigLoader.cs",
+    "normalized_sha256": "b1b342d2c0a1b136ada11c3ddf5b983f36d4c8cd7e73e493eb03e4aebbd84f17",
+    "build_sha256": "dbb34c70de5b04f22bb05cf8045d3b7be6ca47f9fc1ad3a82c3e261348237ec0",
+    "root_sha256": "9ee7e8f9169e2bb30cb0174825d677a87a84ebad4998489c5403ebabf7047945",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/IO/DictEntry.cs",
+    "normalized_sha256": "c48c612399849172e2451bfce3aee26921e1a623cc067d23c8447907151b50e1",
+    "build_sha256": "3a5acae307784144e7abd60d467acb189238d4f2264b85728f14cea793157172",
+    "root_sha256": "bfe87682281f7c1fcacfcb2480a3999cc9f4b5eccf97bc7e61c73f987b723cae",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/IO/DictWriter.cs",
+    "normalized_sha256": "7ee9b19231ebbae7ff79bb95d863f3fafdf6569c623488dcb0a19aee89745a3e",
+    "build_sha256": "32df1a458df029fff6fa21ef371622a3f1dea0c6195c945807c914da0c29b4d2",
+    "root_sha256": "14426600cf22de360e46dbe12ce72da5c5a0b9aa531fcde500d93c44a0a7cf01",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/IO/RuntimeHost.cs",
+    "normalized_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "build_sha256": "76273df6c3b56df6847f78ba955251b697e657ce014dc7dce6af2a20c690ae8d",
+    "root_sha256": "8220321480b62791463d52dd54640e6263d064ca7e4f24425b3727e58e7b2523",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/PatentMarker.csproj",
+    "normalized_sha256": "b1dd0c96ee3a06965360a7dab51f916550e76b9ea39a1f3788150431dfeee31b",
+    "build_sha256": "96bf01a6f410e86f470cf1a62428825aa76cb7f1143b31fc4a7faef1bf9dcacf",
+    "root_sha256": "96bf01a6f410e86f470cf1a62428825aa76cb7f1143b31fc4a7faef1bf9dcacf",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2015/PatentMarker/PatentMarkerApp.cs",
+    "normalized_sha256": "f4cf4d4478a82d6662caf4d1875820a3acd2373acf24cf246565b4b798a827cb",
+    "build_sha256": "b83f2a3b92a887e86030ee074fc7216c6d55ec11dddaa3e9c56e2299b2f27d25",
+    "root_sha256": "54b5e8f6c454aab4ee4ce69127d29dab8cf421571c49554cd7bfc2dbcb0477b4",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/CorpusComparisonTests.cs",
+    "normalized_sha256": "293a177a14a504097025ce4fc9412382654c2909e33bfbee6b0036c45050ea1f",
+    "build_sha256": "f09698ff2c64d2544be25327100454bd494180180345f4507763cc3cf80ef757",
+    "root_sha256": "1b41a326cef9d6648d2f2f99c57346f94899aa5db18f2f32781ec346baeb701c",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictConflictTests.cs",
+    "normalized_sha256": "98987186cc1a3526eaf815a89041abe0f6aa66394d841b8d28c5be5a5ccec46f",
+    "build_sha256": "7cd8e3433581061e87ce6c0824ed6188c86a16936face39f05772e5e1b9bd0ce",
+    "root_sha256": "2f19d815e11d6a706dedd2f99572f5f819f8ded7ec9564e720e0fabd796a6ab1",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictDiffTests.cs",
+    "normalized_sha256": "cf99c449f8ab6772531ec172ae09e57cb1999826f6d535cef6cdb2743afd2cf8",
+    "build_sha256": "200a5bc0a0b12348ddf7aee4f4bf45b5283f13e6de0aedf23cb2fa23204adf40",
+    "root_sha256": "200a5bc0a0b12348ddf7aee4f4bf45b5283f13e6de0aedf23cb2fa23204adf40",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictLoaderTests.cs",
+    "normalized_sha256": "016fe5333f6e56108c35a50a7468914e70675c81cc53c1672009ada361144d63",
+    "build_sha256": "5ca919ba1684f99c1972ec8d415aa3645ec47c7425325d7392a8c6944d370d2a",
+    "root_sha256": "b475ba0b4bc7560b4b4467d7dd9bee28fdc6d3d83ba9f01c84f3b9d33dd96882",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictPaletteSessionTests.cs",
+    "normalized_sha256": "0371e7be2469f974a8e2adc67efcf0db0a30c8e19727c63444542477b1a1ec95",
+    "build_sha256": "b785a47bacc1b6480869765b586682a9781db710eb53b018f32a5f17cf33300a",
+    "root_sha256": "0371e7be2469f974a8e2adc67efcf0db0a30c8e19727c63444542477b1a1ec95",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictPaletteViewRendererTests.cs",
+    "normalized_sha256": "de61e0cc108ef6801e3df841b3c9f674baaa7b36a7cdbb6700fec6eeeced4563",
+    "build_sha256": "f3903eb00fd7036d15b174fe7b989f146748b6f0ae41215e3369f8dc1fcd65ed",
+    "root_sha256": "de61e0cc108ef6801e3df841b3c9f674baaa7b36a7cdbb6700fec6eeeced4563",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictPaletteWorkflowTests.cs",
+    "normalized_sha256": "2ac169e9d0f7c6fc34fae9164cd3cfc49e3030d73ae57451ef92c77c93bc737d",
+    "build_sha256": "94f173dd8bf6d2d699f9b8d7e9e19f5882e2b339b7f885e71e0795e9e961a5f7",
+    "root_sha256": "2ac169e9d0f7c6fc34fae9164cd3cfc49e3030d73ae57451ef92c77c93bc737d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/DictWriterTests.cs",
+    "normalized_sha256": "3a5196f2580619903b0a78eb9ce65f7b337184d37dbee414129704e2485e7526",
+    "build_sha256": "b0ad667d8b85b0dff2a6141bfcc679f53a41d5a156e4a0431b11ae25ed7ccbf3",
+    "root_sha256": "4ee7edbf6fc6c1724cf75f6eb470674a6d93e521e4e386f3994e84675fea197d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/MarkingTextParserTests.cs",
+    "normalized_sha256": "d20f5c617d608eecb03aaf5b8aa2be1c1ef0b22e2cb81d99f330ad2a204bdd62",
+    "build_sha256": "f431aa964103755c8be9274d0f3cfbd62763b44ef023a8fb4bc0c230a40ba441",
+    "root_sha256": "9095ac7ca1259767386cdfdc86dc062da908a61b5fa3998fbc65b04289c95f32",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/NumberIdentityTests.cs",
+    "normalized_sha256": "ca2726184fca6797ef2035204e9ed8a70b8979b45670682f7a580c37b0b52e64",
+    "build_sha256": "57871fe5008e2daec4fda19456af54a1003cd7e4c32b5b643a1c36fae7fdd0ba",
+    "root_sha256": "ca2726184fca6797ef2035204e9ed8a70b8979b45670682f7a580c37b0b52e64",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/ParserContractTests.cs",
+    "normalized_sha256": "2004547a2e62f8118abfb039bc247a661f75f1003eea382cf0911a20a09ebdb4",
+    "build_sha256": "f9231e5797efde9f08466926e016df23f2c0859fb719a9d5201920312e1fef32",
+    "root_sha256": "2004547a2e62f8118abfb039bc247a661f75f1003eea382cf0911a20a09ebdb4",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatCheckResultCollection.cs",
+    "normalized_sha256": "5be0fcd083b9294e6c7599a4c1b008063f98314ae47ea5732a49f1c461fcdd37",
+    "build_sha256": "c89b93f0fd1625b6a0878581ae01fb663f4bb045531ffeab2381a08a9e41a12e",
+    "root_sha256": "5be0fcd083b9294e6c7599a4c1b008063f98314ae47ea5732a49f1c461fcdd37",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatCheckResultTests.cs",
+    "normalized_sha256": "aad8efb5ff87e8ccaca13cf03107f93fbad5b7c26ce3c4d219618242da415878",
+    "build_sha256": "33c44457cbba53537a305587c425b5c2b6d588cc5336c15344f018f238a35164",
+    "root_sha256": "aad8efb5ff87e8ccaca13cf03107f93fbad5b7c26ce3c4d219618242da415878",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj",
+    "normalized_sha256": "99ea43632621fd5dc759ae3ad5fb77c22dfd9417aa5ebcb06375f0af7154374a",
+    "build_sha256": "211eda72bee9e96843fb700ff2429c24f91fa23cc455e4d574f6b71c2cf9e451",
+    "root_sha256": "211eda72bee9e96843fb700ff2429c24f91fa23cc455e4d574f6b71c2cf9e451",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatReleaseManifestTests.cs",
+    "normalized_sha256": "fd47f2ecbb0d041320138e139c87745ac1db159489008ffd6433d6e27a62b3bf",
+    "build_sha256": "6fe4c65c89413d658bab72965af8f5ef1dc871076eecc4c6b8c0792644b9038b",
+    "root_sha256": "6fe4c65c89413d658bab72965af8f5ef1dc871076eecc4c6b8c0792644b9038b",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatSettingsTests.cs",
+    "normalized_sha256": "6e0cc04421d414350248e47de0244b5ea3a8a5b675bb3cebc9ff0c407c9e33c5",
+    "build_sha256": "284df662813601df44693ebd6d68d9cb9252ac2347ae2dfb4400c12311d77165",
+    "root_sha256": "6e0cc04421d414350248e47de0244b5ea3a8a5b675bb3cebc9ff0c407c9e33c5",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/RuntimeHostTests.cs",
+    "normalized_sha256": "883b734e160936ede96a3580de801752cd40f01563cfd8ec60409abcf4ebd382",
+    "build_sha256": "48e1ceef3d4523e8c5575ab7d616a89e130facd9854e0b15de80c3a0339d69ef",
+    "root_sha256": "883b734e160936ede96a3580de801752cd40f01563cfd8ec60409abcf4ebd382",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/Stubs/AutodeskStubs.cs",
+    "normalized_sha256": "5c1e588e89c204222109c67ee95fbd0be3563c7b8d45fe1539690a72a69e29bb",
+    "build_sha256": "11e8c5f662ed427998c92bb9259a474bb66fac3815d5f053000fcff751a3190e",
+    "root_sha256": "11e8c5f662ed427998c92bb9259a474bb66fac3815d5f053000fcff751a3190e",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/Stubs/PatentMarkerStubs.cs",
+    "normalized_sha256": "2303b12e302a89b2454d1ed7b6f6d82e2348e06e365498107e9c4ea21b5f26a4",
+    "build_sha256": "fd91a55223b57610b1edf8f71a2908fd92fbddf94a1bf66f6954ecb6393a5803",
+    "root_sha256": "a954e066f527925835f0db80d49a5a505327ff89c3ba131800b82626b818a876",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatAlignCommand.cs",
+    "normalized_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "build_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "root_sha256": "132b093f729e847aa14ebe99ed42081067b158730a81ebb29bbde6e0fbc8493d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatCheckCommand.cs",
+    "normalized_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "build_sha256": "e7cef72068433165f58d9d3438247b2ea994516d9f0bab1d4b3aaf68421d9912",
+    "root_sha256": "9bb1913e774103a7da7efc8de3863a2f492ce083d5c22d2dd18db0a547aea993",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatMarkCommand.cs",
+    "normalized_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "build_sha256": "fbda0a99a6251c3dc96933228a0398c87f9f26148ecb38a35291cc9620fb7a86",
+    "root_sha256": "775dccdf61ae748207bc4332baf29ff83fa5e9f6b62b1987506b6d81812005c3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatMLeaderCreator.cs",
+    "normalized_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "build_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "root_sha256": "48dd2e8bef0a2e247edeb983ebc0e4258de16ccb7884e740065c3751b865f211",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatMLeaderSetCommand.cs",
+    "normalized_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "build_sha256": "fb3f679aa589188c7cdec2ad85af3fd82ab69e54b99f293141259dfed01c2787",
+    "root_sha256": "684991ad44a2c29f3e0cafe5cfff734cc70e8b23dd89793d94a7cb10f134e3f3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatMLeaderVerifyCommand.cs",
+    "normalized_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "build_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "root_sha256": "0f96dd5282cee6fb5fc095b0f94111e1564005179c79cca32df2104e286462ab",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/Commands/PatSelectAllCommand.cs",
+    "normalized_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "build_sha256": "60c26bc0e0688e933fe0d06a930fe896ab0d8f5917333a4675f859348c2785f6",
+    "root_sha256": "2e9f985175a348442ee07000ed9151e46531c7ae6b70427d74b8a454f8b4d538",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/ConfigLoader.cs",
+    "normalized_sha256": "5827772490552a1f78e57d37ac987ee530136d50fcf8cf6b875ba47aaa43c9d5",
+    "build_sha256": "a195790c07874356eb7127807e4e89185cbe7203ebd2134b6b1603ac284c5af4",
+    "root_sha256": "3a86a0b3a2643427f28092bec9c7dc60085ff470b59ab8cea395b96ccd336786",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+    "normalized_sha256": "a2c62233157969f28b9bd58641f60701012d488de561ad20425471b15c3c9121",
+    "build_sha256": "865835593f48acb8647e98bf0da388c042af1b6e33efe76be3a840135b6b8f3e",
+    "root_sha256": "d6ae2c730a2a068cc81be2e6fa1bd66217681156c4dde96f1d8c47e946471984",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictWriter.cs",
+    "normalized_sha256": "bca8e16b9aabd2d4f4fb8e2ec90b612e2b75604d519b8dee51c73010feac748e",
+    "build_sha256": "90c1523828fded2e1bfca9837bc4a70541ad511c255a583f01b5136b4b097f84",
+    "root_sha256": "90c1523828fded2e1bfca9837bc4a70541ad511c255a583f01b5136b4b097f84",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/RuntimeHost.cs",
+    "normalized_sha256": "9c457ea517be8ea19564dcbacfacb0066fd6c1a271afbc7ab305b4a514763770",
+    "build_sha256": "c6ad1dca92329ec5a73957ef7221ca87ed6c8a38705c5717e2b7cf7117f224ea",
+    "root_sha256": "9c457ea517be8ea19564dcbacfacb0066fd6c1a271afbc7ab305b4a514763770",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/PatentMarker.csproj",
+    "normalized_sha256": "02737340ad8402c441c23e5fbe9efbdf3be16ac9648d864d777041412566cf6b",
+    "build_sha256": "615810b563cabb6bdad6d522eefee2d3dcde9c44cfc0496fa047a6aac7b2eb71",
+    "root_sha256": "615810b563cabb6bdad6d522eefee2d3dcde9c44cfc0496fa047a6aac7b2eb71",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/PatentMarkerApp.cs",
+    "normalized_sha256": "fd3f58c4c7fc7c9258b501b87d3e4a724321c9700a5f0ab5f4d76efdda2b5e0f",
+    "build_sha256": "1ab6f06d11a7a10c06ac7a5f7bed7cb89719cb5e094a66c7b2ff1e4b0d9859ff",
+    "root_sha256": "e4297cab24d8078f4f566a4695c4a495d78524072f0acfd21aff80e7e38e1104",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj",
+    "normalized_sha256": "93ba8a44fa4ff328ebdd13cf1ee8d6b8a13ec371163862e6e1f393749012e239",
+    "build_sha256": "b213178c537fe25b8d2814e77eff094b205e9bf8adc95ec39a2fcc20047d7a75",
+    "root_sha256": "b213178c537fe25b8d2814e77eff094b205e9bf8adc95ec39a2fcc20047d7a75",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj",
+    "normalized_sha256": "bcb4a20b60b91d4143b67341d2c1e2b5fd889711a681c7efcdcab956d0d679a9",
+    "build_sha256": "8ea62eb1187c4a383522e9a6bedbe07217ed398d8c66476cbe530fc3d0ee9e8a",
+    "root_sha256": "8ea62eb1187c4a383522e9a6bedbe07217ed398d8c66476cbe530fc3d0ee9e8a",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2013.Tests.csproj",
+    "normalized_sha256": "58f50367c0f3450a481666771f13ffe8545d338f2f3227caf00807edcf10926d",
+    "build_sha256": "5a51de81967f0f8ebe91e5afce7278a84ac3667906dcb8aef033bfc0a0543133",
+    "root_sha256": "5a51de81967f0f8ebe91e5afce7278a84ac3667906dcb8aef033bfc0a0543133",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj",
+    "normalized_sha256": "8eaf239ca200cf1f78b082bc64aa24adddab06c427f79c67fa56a4457a7bf124",
+    "build_sha256": "c76332934af032ebbb349f558eb2389bd2fec0046fe871852d3dba2f54d51246",
+    "root_sha256": "c76332934af032ebbb349f558eb2389bd2fec0046fe871852d3dba2f54d51246",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/AutodeskSimulationStubs.cs",
+    "normalized_sha256": "733286632e558055f30cfba1a4a0745b570f802d56389f099d5f2ee1ae821049",
+    "build_sha256": "1cf6d380c8e1bfb9842923d06a244e4f268817a28105d1805685be266e9af110",
+    "root_sha256": "1cf6d380c8e1bfb9842923d06a244e4f268817a28105d1805685be266e9af110",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/DictPaletteCadServiceTests.cs",
+    "normalized_sha256": "e02517fa1b61e8d9e050239cd10b70f1d93f45e26291012c7eee3a859d2c2c2f",
+    "build_sha256": "706301e1cc52c9517b885f5745370c10876506dd06e3b61be0bc1b5ef62f0f60",
+    "root_sha256": "e02517fa1b61e8d9e050239cd10b70f1d93f45e26291012c7eee3a859d2c2c2f",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/PatBraceEntityTests.cs",
+    "normalized_sha256": "9a4a1c38c81d826861f151765a2a3bba2ba1ed21f5819114298bf1d989d0304c",
+    "build_sha256": "7ca56bef6ba08cdcadbf9c312058cf976e124eb4e8520de9c9d0d462decf59af",
+    "root_sha256": "9a4a1c38c81d826861f151765a2a3bba2ba1ed21f5819114298bf1d989d0304c",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/PatBraceGeometryTests.cs",
+    "normalized_sha256": "d465d0d63088220951425d730e9d7d2a3fa1746d609e3c780d8f607a1bf4a318",
+    "build_sha256": "f4058d5adcd75f6e49f7987f286fe0b83322eafdb7390f1cd4a749ad8e13ee0c",
+    "root_sha256": "d465d0d63088220951425d730e9d7d2a3fa1746d609e3c780d8f607a1bf4a318",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/PatGeomVerifyTests.cs",
+    "normalized_sha256": "076a1c2e8aecf7f1a9fac882bdcb64b676f77c2da1ad07a34b51e3c826af7ece",
+    "build_sha256": "66f808d383780b54d6a37b24cfa75f227c42de1de0b75f557dc3661dcae9d3d9",
+    "root_sha256": "66f808d383780b54d6a37b24cfa75f227c42de1de0b75f557dc3661dcae9d3d9",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/PatMarkSimulationTests.cs",
+    "normalized_sha256": "461bc84c000144bcb052e208c94cf919cea85afc8a8f8d8cde05c002eb04171d",
+    "build_sha256": "461bc84c000144bcb052e208c94cf919cea85afc8a8f8d8cde05c002eb04171d",
+    "root_sha256": "461bc84c000144bcb052e208c94cf919cea85afc8a8f8d8cde05c002eb04171d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/RuntimeContract.Tests/Shared/SimulationSupport.cs",
+    "normalized_sha256": "5a0f330cb1e93e636109ef7a61f929463fd521abc7d15578d1ae32b1d29a7e16",
+    "build_sha256": "317aa79efb77c4e7d9be022363dd9e2a3fc4a20c7c0f36fc0cd327f6b3a6e79e",
+    "root_sha256": "5a0f330cb1e93e636109ef7a61f929463fd521abc7d15578d1ae32b1d29a7e16",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Cad/PatEntityHelper.cs",
+    "normalized_sha256": "097d1aefac5c753a2810f3d059991659b21d9d85ab4543250e46ff8ea79405c7",
+    "build_sha256": "e9e561084547307fd8760389c74a2a1099bbfa6f0da25c2f8bf66a016961c497",
+    "root_sha256": "e9e561084547307fd8760389c74a2a1099bbfa6f0da25c2f8bf66a016961c497",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatAlignCommand.cs",
+    "normalized_sha256": "7aeca1ec88904cff449d36261c3aa4aa73fcb39c30b08945f8aad5b2437f615c",
+    "build_sha256": "db7343924b07c92b099e7a7ac0b97ebfda1b36f1f9cc03f280040066df0e71e0",
+    "root_sha256": "7aeca1ec88904cff449d36261c3aa4aa73fcb39c30b08945f8aad5b2437f615c",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatBraceAssertions.cs",
+    "normalized_sha256": "8e9d65a5ac53fb0a9d1afa41951fa88c5dfab17020c4903a9a0519daf1082119",
+    "build_sha256": "ae2f867e6bfd45ae5120a3e98a315e1c420261adb67bb6133677ed3fcde61c5e",
+    "root_sha256": "ae2f867e6bfd45ae5120a3e98a315e1c420261adb67bb6133677ed3fcde61c5e",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatBraceCommand.cs",
+    "normalized_sha256": "87ec15a36ff2c0b641795b634b4f8078887944a37f412b74bb50e38507aa9abb",
+    "build_sha256": "d4b8fdf8fcd61fe63e7346f761ce2c51482a671690449381848305dc8295d2f2",
+    "root_sha256": "87ec15a36ff2c0b641795b634b4f8078887944a37f412b74bb50e38507aa9abb",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatBraceEntity.cs",
+    "normalized_sha256": "b137f18c13a4e705f4c6268955317763cc0351a05ce98f1019f85118945bc010",
+    "build_sha256": "a314f1965559251e9e822320e735b28d25441aeda7a89254aa1e438693525d1f",
+    "root_sha256": "b137f18c13a4e705f4c6268955317763cc0351a05ce98f1019f85118945bc010",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatBraceGeometry.cs",
+    "normalized_sha256": "4608539ff4aadb31685c8d63ac12cf773f83954ec7ba0d4e0c31adcf022adb0d",
+    "build_sha256": "efadb3073d6e9c13275ecb87fa6574d734639ccb3937ae0af0fbe6f6a856e8cf",
+    "root_sha256": "efadb3073d6e9c13275ecb87fa6574d734639ccb3937ae0af0fbe6f6a856e8cf",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatCheckCommand.cs",
+    "normalized_sha256": "096d9dbe8631d8d7de31c02c731817b99f66cb309c3093a83d9737ee2ab4c8d0",
+    "build_sha256": "a8cffc546754d6f51e502af2d4ffdeae36a6bd32af1fade4db31fa676fd70738",
+    "root_sha256": "096d9dbe8631d8d7de31c02c731817b99f66cb309c3093a83d9737ee2ab4c8d0",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatCheckResult.cs",
+    "normalized_sha256": "e605adb9bea32d4c2ab54279ef2c5c870c7d22c426f3a0412b2a8438b27d1bcd",
+    "build_sha256": "da01c8f0ecb192df840070bb6eb693b797574b4cf5966180e7dbe1efa69b43b7",
+    "root_sha256": "e605adb9bea32d4c2ab54279ef2c5c870c7d22c426f3a0412b2a8438b27d1bcd",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatGeomTextAssertions.cs",
+    "normalized_sha256": "e6661a921a8318a9f3be85ffb86b20a9f1d2cad50a34585154bd67cdf5dca5a8",
+    "build_sha256": "e6661a921a8318a9f3be85ffb86b20a9f1d2cad50a34585154bd67cdf5dca5a8",
+    "root_sha256": "e6661a921a8318a9f3be85ffb86b20a9f1d2cad50a34585154bd67cdf5dca5a8",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs",
+    "normalized_sha256": "34250927783b867e70b8f197504d7fce8557c5935478e3346f673e9508a65c99",
+    "build_sha256": "f256ab946c8d0d5db2e9e982ff358d033a8432ffeeaa2e40f12fb7f0c3e6c7f4",
+    "root_sha256": "f256ab946c8d0d5db2e9e982ff358d033a8432ffeeaa2e40f12fb7f0c3e6c7f4",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatGeomVerifySummary.cs",
+    "normalized_sha256": "705f662fead2a1a59734b14f39ddafacff42c26c42747f6b1fb5258a6379ec93",
+    "build_sha256": "705f662fead2a1a59734b14f39ddafacff42c26c42747f6b1fb5258a6379ec93",
+    "root_sha256": "705f662fead2a1a59734b14f39ddafacff42c26c42747f6b1fb5258a6379ec93",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatLeaderTextAttachment.cs",
+    "normalized_sha256": "048688d504507c949099b6e77445a85b76f1e78badae4415c7337ad6c2b9ae30",
+    "build_sha256": "048688d504507c949099b6e77445a85b76f1e78badae4415c7337ad6c2b9ae30",
+    "root_sha256": "048688d504507c949099b6e77445a85b76f1e78badae4415c7337ad6c2b9ae30",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatMarkCommand.cs",
+    "normalized_sha256": "35b0e1a4b4b0bc9a1f5cb5f83f9e46caff529e86df925c959cc0b2eab2497885",
+    "build_sha256": "aab5c1349034a9abbec62c6b1e429bd21cd8e78c12a2b6a95591fe66e06a2797",
+    "root_sha256": "35b0e1a4b4b0bc9a1f5cb5f83f9e46caff529e86df925c959cc0b2eab2497885",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatSelectAllCommand.cs",
+    "normalized_sha256": "8f4cd9867606581264786f383aadf3df0049ed8a40f4f1acb2f2f49abe4d76ae",
+    "build_sha256": "55a2e7afaa8abda9aee01a4810a71965d157cc4d91b96a26e3dd97a735cf8363",
+    "root_sha256": "8f4cd9867606581264786f383aadf3df0049ed8a40f4f1acb2f2f49abe4d76ae",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Diagnostics/PatDiagnostics.cs",
+    "normalized_sha256": "3ef59da97a25bf4816565c272a88259721795dfba8305dd7592be8b538b5e40a",
+    "build_sha256": "99d3a5f048e6f04d887b684d865fbf288c08f900f9672f5e203ad1fea7028569",
+    "root_sha256": "3ef59da97a25bf4816565c272a88259721795dfba8305dd7592be8b538b5e40a",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Diagnostics/PatDoctorCommand.cs",
+    "normalized_sha256": "6255caea1ca89d24495a7f8f5d3ea02a2c6d29108c5fa54f2e22bd3e891f3338",
+    "build_sha256": "6255caea1ca89d24495a7f8f5d3ea02a2c6d29108c5fa54f2e22bd3e891f3338",
+    "root_sha256": "6255caea1ca89d24495a7f8f5d3ea02a2c6d29108c5fa54f2e22bd3e891f3338",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Diagnostics/PatDoctorReport.cs",
+    "normalized_sha256": "de54f6022fabeffca7cf2f5bbb12d88525426451f7f39188c46bd955a540ca65",
+    "build_sha256": "66b842c1847575ad646bf16e5e2b0c55fe45e48f2374abdca6cc1dad18cc244b",
+    "root_sha256": "de54f6022fabeffca7cf2f5bbb12d88525426451f7f39188c46bd955a540ca65",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Diagnostics/PatReleaseManifest.cs",
+    "normalized_sha256": "5dcd157e4f61a2ab0609919383b46af0c0c6ae0589aff514bec2469d89004c19",
+    "build_sha256": "acab4394dfef6807dabdc8ddeaa488ee368775d298803892873573f08f44661b",
+    "root_sha256": "acab4394dfef6807dabdc8ddeaa488ee368775d298803892873573f08f44661b",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Language.cs",
+    "normalized_sha256": "2b48685a891ab34983b7a617e420e43cb38dc2247deff40d40fd2ca913869181",
+    "build_sha256": "fd53051e385f5dd1e871513e5487fecc2f6dcb341f3f76c270cbe1860d1e5e09",
+    "root_sha256": "2b48685a891ab34983b7a617e420e43cb38dc2247deff40d40fd2ca913869181",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Strings.cs",
+    "normalized_sha256": "237f17ed819efc1364719b889cecd8af51db2e8a31db81c78a71caeb2c35fe0a",
+    "build_sha256": "8fb8332ca9ac066d0436a58a177f2a027e28a86dfe9fc25c533fc77e14f236d2",
+    "root_sha256": "8b082d61446fba0aef7c44dc4fff495294efc1f644aed09e5fddff1ffbde34a3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictConflict.cs",
+    "normalized_sha256": "51f12d44ad80e7ee3b4a804edf5700e579b0ca299bbb6e780e23dd580395cd24",
+    "build_sha256": "ddc82fa3edd7d1c1853255487b91e5de0b946d5ca7c37afc4665cb9cd821a8e1",
+    "root_sha256": "51f12d44ad80e7ee3b4a804edf5700e579b0ca299bbb6e780e23dd580395cd24",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictDiff.cs",
+    "normalized_sha256": "605207616a1903d59ad5d54d76ebaa7c65c0839d7ed942387562504861694526",
+    "build_sha256": "b3476d130073404343272d43153bc5a3521e32c0d5aad786027d828d5ae65385",
+    "root_sha256": "605207616a1903d59ad5d54d76ebaa7c65c0839d7ed942387562504861694526",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/IO/MarkingTextParser.cs",
+    "normalized_sha256": "a88f75539fbcd207989bb62cd73e3aaab0152396d10098c754ec4be828368562",
+    "build_sha256": "d702a06255184fee249c09af1ef14cbedb3749fc0826ecbd39b31798e6598cd7",
+    "root_sha256": "a88f75539fbcd207989bb62cd73e3aaab0152396d10098c754ec4be828368562",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/IO/NumberIdentity.cs",
+    "normalized_sha256": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "build_sha256": "f9fe919f6cd539065e4d24ad04e03b299ace3d95ed27e87f65e1c11fcbc1b988",
+    "root_sha256": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/IO/PatSettings.cs",
+    "normalized_sha256": "3ea0a7239b6e7e41149e9e84814c7af6d99a34805ea2466cc9d96b8f318f35f1",
+    "build_sha256": "3ee126d9bf2f0ef0a4f0578111dfd5088c1e543b70b6d2e4bf58e92bfa47e7b3",
+    "root_sha256": "3ea0a7239b6e7e41149e9e84814c7af6d99a34805ea2466cc9d96b8f318f35f1",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/ArbitrateDialog.cs",
+    "normalized_sha256": "e43a237522edbd6d03032574f5c092f96fb62e541caddaaa7536ba68e34fcb1c",
+    "build_sha256": "b7bfd128b3186cc1036656cb83ce1fa0225293f6f080cdd609ef268c4599c0ef",
+    "root_sha256": "b7bfd128b3186cc1036656cb83ce1fa0225293f6f080cdd609ef268c4599c0ef",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteCadService.cs",
+    "normalized_sha256": "6a0227661fd83e2ae3627995c733cb5b012abc5e7622e633efec983c306f23dd",
+    "build_sha256": "974bca2641023b51d025d573cc7ad2b20030570c9243dacb8590d1c9987cd6a0",
+    "root_sha256": "6a0227661fd83e2ae3627995c733cb5b012abc5e7622e633efec983c306f23dd",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+    "normalized_sha256": "dfc39714d433b6df833464ae7ebed1f9721c78a44499f731e39c5593a276a5b6",
+    "build_sha256": "64cc4d043e03cbf0c1cfc6369047fcea1620113f390c3792d81ec45877071bcc",
+    "root_sha256": "74789f46434db8f4dcaad34485e9273753de519b6e434bc4e9b6cc949b18fab7",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteSession.cs",
+    "normalized_sha256": "fe9f19bd2b440415974d13242afa1922649f68087aeec750261eecc2dfcc2d85",
+    "build_sha256": "165600a83ec1695193a997f43a97d2e4f21ca94613084bf1daec905f37001998",
+    "root_sha256": "fe9f19bd2b440415974d13242afa1922649f68087aeec750261eecc2dfcc2d85",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteViewRenderer.cs",
+    "normalized_sha256": "c3a62e7eb87ed77e595f05a5b8e29f08a5ff2e52af8eed1da9df498c9881d50d",
+    "build_sha256": "9ad64502555892808ef91b39e096cd8697f38b299cc37f0ada552bd1dc7ece2a",
+    "root_sha256": "c3a62e7eb87ed77e595f05a5b8e29f08a5ff2e52af8eed1da9df498c9881d50d",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs",
+    "normalized_sha256": "722667442e4945564cf739a78bf4daa9b1723fcf140533d8adc103d6fd94cc6c",
+    "build_sha256": "e03609ed5d6ac37700965a637ce03df25908c5e5d3825a60562fbf6796073a8b",
+    "root_sha256": "722667442e4945564cf739a78bf4daa9b1723fcf140533d8adc103d6fd94cc6c",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/EditEntryDialog.cs",
+    "normalized_sha256": "c8bcce3cc23482b8779c2ac2eb64e5983ec1625a0c0b1761fd1eb0241c87d6d7",
+    "build_sha256": "b6779c61bf5b3625772c46c9f5c298e24dd5ce6594d7570b7f2b27c9b2ec5b90",
+    "root_sha256": "153a9199399a82e88d19dddf5885139f17d5854debb5e5e0cdeee02f612804e3",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/PasteRecognizeDialog.cs",
+    "normalized_sha256": "781355689292a711c8f3fc8a39201016abff1fd2e055db2bab7ba70a426e84cf",
+    "build_sha256": "85d23fb6ce6ca74602926fb0bf6fee946e383592cf46bd9c5878393d3b48ae56",
+    "root_sha256": "85d23fb6ce6ca74602926fb0bf6fee946e383592cf46bd9c5878393d3b48ae56",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/PatPaletteCommand.cs",
+    "normalized_sha256": "f5de720275ba1dc3cbda2c20e204df9e4774ca76510d9968b9532a4ccc94e273",
+    "build_sha256": "87e0a9966a5ead6d6f7e1069c0598923e5fa02f8c06f3a820c1bede934df51b9",
+    "root_sha256": "f5de720275ba1dc3cbda2c20e204df9e4774ca76510d9968b9532a4ccc94e273",
+    "only_CRLF_LF_difference": true
+  },
+  {
+    "path": "cad-plugin/Shared/Styles/PatStyleInitializer.cs",
+    "normalized_sha256": "3cb985c13bbeee99c9f4cddf4721cd3d331c333fbed15fa7268ddcd779e78cc6",
+    "build_sha256": "7e0370467c58380d13197c66951996bb320bf392a672f64335a2b875ff75bb68",
+    "root_sha256": "3cb985c13bbeee99c9f4cddf4721cd3d331c333fbed15fa7268ddcd779e78cc6",
+    "only_CRLF_LF_difference": true
+  }
+]

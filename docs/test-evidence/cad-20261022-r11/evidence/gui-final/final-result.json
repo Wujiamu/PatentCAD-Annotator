@@ -1,0 +1,57 @@
+{
+  "result": "FAIL",
+  "cleanup": "PASS: normal UI quit; own final-A save prompt No; PID25296 exited; Get-Process acad empty",
+  "checks": [
+    {
+      "actual": "doctor7/0/0 d112a428... MVIDab26a5b8...;ML9/9;strict geom103/0",
+      "result": "PASS",
+      "name": "cold startup identity baseline",
+      "evidence": "before/A"
+    },
+    {
+      "actual": "real visible displacement;ML9/9 strict geom103/0",
+      "result": "PASS",
+      "name": "same-side native grip synchronization",
+      "evidence": [
+        "05-committed/window.png",
+        "09-moved-ml/window.png",
+        "11-moved-geom/window.png",
+        "moved"
+      ]
+    },
+    {
+      "actual": "ghost1070,300;Esc restores946,350;strict103/0",
+      "result": "PASS",
+      "name": "hot grip displaced ghost cancellation",
+      "evidence": [
+        "16-cancel-displaced/window.png",
+        "17-cancelled/window.png",
+        "18-cancel-idle/window.png",
+        "cancel/PatentMarker-geom-verify.txt"
+      ]
+    },
+    {
+      "actual": "Second grip1040,370 committed;Escape;CtrlZ restores946,350;immediateCtrlY only snapshots between reports No operations to redo and stays946,350",
+      "result": "FAIL",
+      "name": "immediate native grip UndoRedo",
+      "evidence": [
+        "29-redo-commit/window.png",
+        "31-redo-idle/window.png",
+        "32-undo/window.png",
+        "33-redo/window.png",
+        "afterUndoRedo/PatentMarker.log"
+      ]
+    },
+    {
+      "result": "SKIP/BLOCKED",
+      "name": "A/B save-close-reopen",
+      "reason": "Stopped on UndoRedo product failure"
+    }
+  ],
+  "drawings": {
+    "A": "drawings/final-A.dwg",
+    "state": "Original on-disk A/B retained; unsaved test modification discarded on UI exit",
+    "B": "drawings/final-B.dwg"
+  },
+  "helperSHA256": "FADCAA1A14A5EBC24AFD70F63450CA6251E1382A58E5894733E6318B524AA597"
+}

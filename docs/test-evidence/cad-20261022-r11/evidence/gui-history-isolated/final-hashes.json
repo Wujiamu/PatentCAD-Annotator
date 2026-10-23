@@ -1,0 +1,890 @@
+[
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\baseline.scr",
+    "sha256": "4A6017E27BD5F3C536FE27A530D449B58F5CA2A925ADBD8C930CDD071EDF37A4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\final-result.json",
+    "sha256": "96F85651C41DF25EAE02FD90B4C6EC5BA96FA9E651471EE7EB8C2868581AF789"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\process.json",
+    "sha256": "3CB70E4B12D4DFEA10D5D18D838A6F631E40E28D448EBD97F108E303BFA829D5"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\01-ready\\observation.json",
+    "sha256": "61A0BE63D6D16D9B40557ABA4A52F65988807AEB85BD78DAD444CC01558CFA2B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\01-ready\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\01-ready\\window.png",
+    "sha256": "D2FD145617D354C704317092DDD13935F9A8D15034B38C47B9AAB65F6B972ED2"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\02-selected\\observation.json",
+    "sha256": "44BC90F9083522D2727A7ECD7B239A40315F72DF9BC5D6633D4C5FAFC252FCCC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\02-selected\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\02-selected\\window.png",
+    "sha256": "71B0A923534410ECF6B77E86F023A2AA7C5FBF467186074B2AAC74A8CC7F209E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\03-hot\\observation.json",
+    "sha256": "5FF43E03FE0D8DAD4476207A5D9301956F9C280BDC558A08B0AE97343B597175"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\03-hot\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\03-hot\\window.png",
+    "sha256": "14692C3D17AD6BE07810ACABD1AFC12A8BC265CB08C69D2363D3A1E9D52F7F02"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\04-commit\\observation.json",
+    "sha256": "147FCCABA47112242D11811331F26390644B0706D789A36655C2FDFC5D01D122"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\04-commit\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\04-commit\\window.png",
+    "sha256": "10A748E61A744C37087669334E7B7171AAC1CD12BA4DDA49559F7F0F6D941FA3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\05-idle\\observation.json",
+    "sha256": "4F242BE12A1F0E3A2EF269D273BC15C8FB11C0DB31A228F3C5553D3F3756E4BA"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\05-idle\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\05-idle\\window.png",
+    "sha256": "B13AC6096FF91B4624CF998069F2AC0C5A307182E7D5622C4051EFFA247BBFAE"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\06-undo\\observation.json",
+    "sha256": "632DEFA71791B6AE199D9F3A8FFC2CAB32817A897B5CB23E2C17FCDA9F9C0F66"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\06-undo\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\06-undo\\window.png",
+    "sha256": "2A757179678C2206346D0606EC095E30F68944BEDA1EFDA335AE422CA03582E6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\07-redo\\observation.json",
+    "sha256": "148AC868E0676603A3A920917A2C3C9114537B594CF2543C4B3B1AE74963BACC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\07-redo\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\07-redo\\window.png",
+    "sha256": "AFBEF28744E2FF60124498F2EC79F4E7CA707539A339A209D3AD128CD2063EE8"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\08-command-focus\\observation.json",
+    "sha256": "E61C8B3AAF092A9BE502AF9B8E83D30556728C7770639A7EF47783F5C67EF56D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\08-command-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\08-command-focus\\window.png",
+    "sha256": "360EFC1296728F02E73BC1F501C73B7167818869808BBA380208597E7575DF9D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\09-ml-literal\\observation.json",
+    "sha256": "C61A04C64476C4B1D94182EEA8BFD3E7D6648E51E416641E6F8DDEC0FC7D9270"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\09-ml-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\09-ml-literal\\window.png",
+    "sha256": "6BB86DB78BE8B31D4A07176AEA09B532D46A8F6C2AC1375960C7A3793C970DD1"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\10-ml-result\\observation.json",
+    "sha256": "D97BCC0A7F7FD4B35D9A4D846426FA95C8264AB5378DC69155F20E39C7D60925"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\10-ml-result\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\10-ml-result\\window.png",
+    "sha256": "F4CD501E757DF130CD288FDB0DE4450F52950B0DBFA711BA67CFB98D256CDE9B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\11-geom-literal\\observation.json",
+    "sha256": "A79603FB331FFA0EFCF9C54DD9A3A8941A2B332F9DC1EF792F0DBE25E4CF0DB8"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\11-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\11-geom-literal\\window.png",
+    "sha256": "60B57129F656401E69E9A244D56924286C719331109212AFBD64CF48C6F80B29"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\12-geom-result\\observation.json",
+    "sha256": "37D5B1BD18FF58B8462D397A84CC9A53BF7B9E53F6C5E2B479E0F852E600A4F9"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\12-geom-result\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\12-geom-result\\window.png",
+    "sha256": "EDF1AE76657A30C25CD870106F0B3D80EA83442365CD1A0ADFB6100E88B0EB05"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\13-undo-audit\\observation.json",
+    "sha256": "6A819D7F7CBE18C6FB6B26C92239ECFDEE6E7F7EC9D00DA54DF909C89B242BC3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\13-undo-audit\\window.png",
+    "sha256": "EB19B02E02C34C18517FC030260C53A1758827BCBD4F2AA19AE7F3345467DFC4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\14-new-grip-ready\\observation.json",
+    "sha256": "FDAE83CCCDC7188C75A8834D865694D80F7A88FFE47858DF3464E7036ADA8661"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\14-new-grip-ready\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\14-new-grip-ready\\window.png",
+    "sha256": "FDACD3D65247DBC631C880A63EE993BF702C3B29BCF1A3E91B8771D06D22051B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\15-selected\\observation.json",
+    "sha256": "F75D4BEE275264EF8E05ABFA563E4401896B0272B5527347ECBFCE42455BC75B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\15-selected\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\15-selected\\window.png",
+    "sha256": "B702929F974623A56172A8E1E41453F75F672CEB099C107248314372F313B629"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\16-selected\\observation.json",
+    "sha256": "8D00AE0EADB8D08C3BE46CCA3A6F0FC0D72B0F3A37326B14351F5D6500A1EDD6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\16-selected\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\16-selected\\window.png",
+    "sha256": "B9C27320ABC43599C9D45F09689C34BFA28A423B3D8959D8B8549CD0B278D39D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\17-hot\\observation.json",
+    "sha256": "5AFF0757CB4CA13492A9779461637A882B4E1A6787500C9F5E36BD712144040E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\17-hot\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\17-hot\\window.png",
+    "sha256": "907A137CBABFB0AB8390E9426912C0B7EE1ED6F78F49BD0D8FBBEFCEA4597B74"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\18-commit\\observation.json",
+    "sha256": "2EA57306D532C02270F0E164B4A301753E710B5F58B6717FE75A079CA93490F8"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\18-commit\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\18-commit\\window.png",
+    "sha256": "DBC926014A2E71BD363234BD2A2A0BF204F25D2F1DFBECD0D157B73B0D3A6CAB"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\19-idle\\observation.json",
+    "sha256": "2071B49623CDB17BA09AECFBF4D620CD99D53FA5E0325B747C3320C69B30B9C6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\19-idle\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\19-idle\\window.png",
+    "sha256": "EB7C58723D4544165B5CA56411450252847BD0437E0363255675440BBBDD99F6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\20-undo-real\\observation.json",
+    "sha256": "341007B42607322DEF9268A8DD9F90584AC3EA10BD773CF3B570C8E6A72A1862"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\20-undo-real\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\20-undo-real\\window.png",
+    "sha256": "0ECA1A01A7877E737B9F409CDCEDB8319E0F019E1521AF06BE5E4D9935DDD99D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\21-focus\\observation.json",
+    "sha256": "EF06AB733BA0D8848A32A093C2F2BD8543BCC1DCE6252DC9AFC800C45DB1A303"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\21-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\21-focus\\window.png",
+    "sha256": "678962EDE2ACEAB36EBC88437FB8998A8485938349883CC5ABD1D60E9BF33F16"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\22-ml-literal\\observation.json",
+    "sha256": "4A042DD37F59F131B10E24292BED3368A3A7153958CE183625E68C9472F92B0A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\22-ml-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\22-ml-literal\\window.png",
+    "sha256": "61395AE008EA56E48EFD1C4368A97E6DEA633B4A32F86E9AC33C5DB85922136A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\23-ml-result\\observation.json",
+    "sha256": "45C61DDF45DF48A2E4644E6F8930254E1F1BE1F3525B2BD4C6C84A76D7487F4E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\23-ml-result\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\23-ml-result\\window.png",
+    "sha256": "0E99F46A2935736C43E07B45CA97E5A93509F7934EE0ACA95F30E8B956DD7E0A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\24-geom-literal\\observation.json",
+    "sha256": "692739CCF267B266415AF80E34797F0DF407D8C0FB42EC4ACBF411DAC8013639"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\24-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\24-geom-literal\\window.png",
+    "sha256": "C3562B5979296B255141D850FB370B4FE6E341089BF2ED79E85DF4A8DDE5ADF3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\25-geom-result\\observation.json",
+    "sha256": "4538CEB8920C5CE404782D81A8139F943ACCA3FE4A0CBE73D38F49E1A0502B31"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\25-geom-result\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\25-geom-result\\window.png",
+    "sha256": "0392B9441A9E5BB8A4C7CA35BF48A22C8F769649EDFB4E7E16AD0F22A76D3500"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\26-select\\observation.json",
+    "sha256": "56BBD5CAFC121344CC93E22859173D71B966189C2972DEE9541ED48C03565480"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\26-select\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\26-select\\window.png",
+    "sha256": "6B64A06C79F6FD53A368C916A4575D383DE9675A38F015F2DCEE4BB25173D3E9"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\27-selected\\observation.json",
+    "sha256": "DEE909A283C98B6BCFA3DD083AA6FC0CC438DF84A0C82CE04B323138D7AEE5BB"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\27-selected\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\27-selected\\window.png",
+    "sha256": "EF0095A3ADABF60D3FFD1D2EED334BF8C9D5AB1E7D23CB74D64A1A56068D0C94"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\28-hot\\observation.json",
+    "sha256": "A8A518190A43DE948E7E4453E3F10E597A34DDB3B2817169D6E283E694493068"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\28-hot\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\28-hot\\window.png",
+    "sha256": "CCED2AD4E1066F22ABD91597E65F2DA19E3A8527A3AF94252C166876259C50D0"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\29-ghost\\observation.json",
+    "sha256": "6513144BE4A6EF44BBEB017A05EF5638A3DE5E7D6F0C12195298A45B21974365"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\29-ghost\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\29-ghost\\window.png",
+    "sha256": "EBA19696B93BA2A563635A977279595A9A686F91128CB301FB1650AB5DBB0D87"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\30-cancel\\observation.json",
+    "sha256": "91D307CF21B7BA1A9124131C4E77F53CE21260966DB6B603D9D98E4AA70636D2"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\30-cancel\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\30-cancel\\window.png",
+    "sha256": "8C61C613BB70E6EC7FC853D70C753431B2202AD57B5D1A7782E10503CABA5AE4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\31-cancel-idle\\observation.json",
+    "sha256": "EB8F928160E3641F48CD2C3C64215B0CE37BC83E9AA758A3997BB0477B006FF7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\31-cancel-idle\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\31-cancel-idle\\window.png",
+    "sha256": "43625D19635B93D80EB5C57C46ED2312D645545DA8B997276CF310E82B4207E7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\32-focus\\observation.json",
+    "sha256": "9E330FA193C0C3BD813202627B32E10E0C8CB95141C65EBD7197060A39E09FD4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\32-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\32-focus\\window.png",
+    "sha256": "17F273F7619DC9254BAFF11F9954304000A1B31324A47D721742579FAFB128BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\33-geom-literal\\observation.json",
+    "sha256": "A90C828598DD5DD9794EC58B918D1AB34C59A39ED4074023C826CD1A6519FED7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\33-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\33-geom-literal\\window.png",
+    "sha256": "18473FD51961A79C20E20193374B1B2994A286DD16829479C1845052FC8178E7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\34-geom-cancel\\observation.json",
+    "sha256": "978990BE8303226B8D80F3E46B2A886BDE86900069CF1BF2D8000A89050C6AC7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\34-geom-cancel\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\34-geom-cancel\\window.png",
+    "sha256": "455E71766720F64882F9A5B775D6864568796BC27D70F55533F626D23A8067C6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\35-a-saved\\observation.json",
+    "sha256": "67CC90ECB8729E88BA6D9CFDA6EE7DDC3B1C505BDBB6DCF37DF719360512178F"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\35-a-saved\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\35-a-saved\\window.png",
+    "sha256": "62B8F4AA92D681E422C7BD9EF0DB76F5521985A3DE05E9616EC4AE0E23C5F944"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\36-a-closed\\observation.json",
+    "sha256": "9249019BF7ABEB1F38B4DDAFBBE24A1A285156645C43D55FD63F43CD146259CA"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\36-a-closed\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\36-a-closed\\window.png",
+    "sha256": "8620A4B7FF068B210F9512F4075909B7FBB81D39EC651DA457B32DF0BBE32628"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\37-a-closed\\observation.json",
+    "sha256": "486FF927C5F1A33CB62AE7F61306C75968007011B9B8A04F6E171ED1FBDB5317"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\37-a-closed\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\37-a-closed\\window.png",
+    "sha256": "AAAB12FAF2CFBF2D48010E8D8789155B129CF9F0E520A5671FC8B522EF2D1EB5"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\38-open\\observation.json",
+    "sha256": "EAC023B85C34248A615943A75A12A58B7BCD2CF074CD7988F274EEF316BE238D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\38-open\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\38-open\\window.png",
+    "sha256": "6643E912857A7DA4852494A9764F54F73E90C4843604CAD26DBAF1E8BCAA81BD"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\39-file-focus\\observation.json",
+    "sha256": "385AE3483A88FFE0B072C91F701FC8F0E6B1FD4D9C1B490177BBEB2C4273DE8D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\39-file-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\39-file-focus\\window.png",
+    "sha256": "6643E912857A7DA4852494A9764F54F73E90C4843604CAD26DBAF1E8BCAA81BD"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\40-a-reopened\\observation.json",
+    "sha256": "14E8E8A2FE61A0C2A363A5597A3666AEF1E668AF16FBD37141A7F3A702CB9EAF"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\40-a-reopened\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\40-a-reopened\\window.png",
+    "sha256": "98E641766A41E258997062E84F12740192A6779A6E063B7EFC04E9EF4BD0C66C"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\41-focus\\observation.json",
+    "sha256": "A1510391A0AA0CAFBBBF14A8D95CAFDD2BBC77D339DC624F42B6F22AA013C4D5"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\41-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\41-focus\\window.png",
+    "sha256": "4193D51F1047DDA9C520A03E1B9878D820C680B31DE42B693689FC57785F790A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\42-geom-literal\\observation.json",
+    "sha256": "3C1D0556F22D43E65E1F568376AB231BB89DA6BC994FE6E98BC1FC59AC61A6F1"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\42-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\42-geom-literal\\window.png",
+    "sha256": "F9F4B9C715B073692214B584BCE5B6EC2D7AE279BC414643EAA7714FD783674B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\43-a-reopen-geom\\observation.json",
+    "sha256": "ED19C6289999534CA23F7B9BA0650CDFB90CC03EDFD7B8017313D8D69C04128E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\43-a-reopen-geom\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\43-a-reopen-geom\\window.png",
+    "sha256": "F808A3E728ABCC94644F679855E3B200CFCE3942BEEF966D529A498E5FF54396"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\44-palette-literal\\observation.json",
+    "sha256": "46E280A3D9F4BDB3ADE5952894AECF9CE5D74C2F6DAD3810BF982ED1FAE4B751"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\44-palette-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\44-palette-literal\\window.png",
+    "sha256": "676B401CFAE4DB57462882384D84CE8924A88CA381AD599CD930EAD90A666262"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\45-a-palette\\observation.json",
+    "sha256": "79996945ABB0444E28FD888010E449783D5E2D3D1B71197ABB51D1A5EBE2C6B6"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\45-a-palette\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\45-a-palette\\window.png",
+    "sha256": "DC3D737B3CFE977C385EA2D589766152182327842E104DF6CE643BAA8C32F002"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\46-open-b\\observation.json",
+    "sha256": "10347ED3495F3B6752F46A84AEF8040EF9AD42968E69D7F991F18EE1856B9EFA"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\46-open-b\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\46-open-b\\window.png",
+    "sha256": "4830D2E6F2E893655A8E7F0EA3841D20615B1B9B84C2CDBB260B178B4A7E532B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\47-path-focus\\observation.json",
+    "sha256": "B73BBEEF65033D82FEBE70909DAD2E765162CF897654D3617DFBA5963337D8F4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\47-path-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\47-path-focus\\window.png",
+    "sha256": "0CD71CD5B379A9B7B2D0C4F5BA33CC8646C7F6C1373A45D00A82F8B2AE527461"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\48-b-path\\observation.json",
+    "sha256": "73330F197B62F8303E8DAB6B77E467D185DF750A0B654FB40E134306E31B573E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\48-b-path\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\48-b-path\\window.png",
+    "sha256": "98BED558517F0EA8197A7B0A27C6C92F894623418FC729FBAA6209DF213AF215"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\49-b-open\\observation.json",
+    "sha256": "676DBD6CC16DF6868DABF268D83D9FEEBAD119E0967E2A7ADD0CBE2FF4E874DA"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\49-b-open\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\49-b-open\\window.png",
+    "sha256": "523F88F8287ED87D016B21D766B504FA3515C8A8F7F7AA0E30E9493B14D7EE63"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\50-focus\\observation.json",
+    "sha256": "6DC1D2F6E9F7CCB588AFCF074656B2FEA3933628B9A0BB000888ADFA48A61115"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\50-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\50-focus\\window.png",
+    "sha256": "AFD73A3F9B7E2085AE8A2A425D03B6ED2E4AA42B1F513A785396F86408E5EBF2"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\51-zoom-literal\\observation.json",
+    "sha256": "F2FB989B2B9C19EE51987ACFF3132A32ECF6C4DB58C3C9D68F27E2492C9E2E93"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\51-zoom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\51-zoom-literal\\window.png",
+    "sha256": "76A0108B951E213FAAF7AB12B885F5FE890E86C30648ADAB4DCDBD91A3EF9E58"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\52-zoom-prompt\\observation.json",
+    "sha256": "3CDDC7267D456FC20939B59D936E56C78742E8D40FFE4DAF2A8A8290F635AEE9"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\52-zoom-prompt\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\52-zoom-prompt\\window.png",
+    "sha256": "0CBB8577568B1540F0907DF8866D9A4E6F125F58594D7BF89C060B1CDA989E3C"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\53-e-literal\\observation.json",
+    "sha256": "2A666AC8E8FABA5C4C6BC3CDFA2982B5C401628449611A7B2F0C82CB5B5C992E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\53-e-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\53-e-literal\\window.png",
+    "sha256": "F85F5A980AB7354A7A463F8335B349F72432B85F13E7C742AEAE0F0B088DB730"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\54-b-fit\\observation.json",
+    "sha256": "B9573B3CA3D3F4D275ECCF42FB08019A7D4E6F04A027D0DAD5E96CF76779857E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\54-b-fit\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\54-b-fit\\window.png",
+    "sha256": "92309F88D50BD07F13A05E3171B3A5A7923C6C99F7F2F7695FFF0029EF9EE1FC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\55-geom-literal\\observation.json",
+    "sha256": "617C223BD35D2F3F6E9214F30C43EA00263D2CB6435FE796FC294383CFE41F04"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\55-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\55-geom-literal\\window.png",
+    "sha256": "7D4587F3799ADB6A32423A6A8ADBB4584871EE13ADD4BB015B510525BD1F7D53"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\56-b-geom\\observation.json",
+    "sha256": "AAFB602BC3A8675280D175342C1F82DFDF4BFA062789E643D492B6C63209CB3E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\56-b-geom\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\56-b-geom\\window.png",
+    "sha256": "6CCB15F322BA23626C4154F34C3460AC915A14C8F0F208DB425E0D2408A8835D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\57-b-saved\\observation.json",
+    "sha256": "3DF2EF45A3451C775FA52339DE9BC7409F9A5FE6BE8FC6174004A62DFE35A7CC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\57-b-saved\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\57-b-saved\\window.png",
+    "sha256": "75480FFC342BDE422EC59BABC7CA611F602B690FA32F1770D085538BDD30B09F"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\58-b-close\\observation.json",
+    "sha256": "FC4ABB57AFBB3ECE61783925E68D5F801BE6078296679D298C736A07A2822F4B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\58-b-close\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\58-b-close\\window.png",
+    "sha256": "E26B16BF097EBF6E5B50047AF1D0846EE5098EDD8A6F5407D49B4E1C1692A188"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\59-b-closed-a-active\\observation.json",
+    "sha256": "512FB77122126704D9CA5F12A78D043D81A64B0DD030FD3A6E9C3874A31F419F"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\59-b-closed-a-active\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\59-b-closed-a-active\\window.png",
+    "sha256": "BC852E660446D10675C49B3CEA582F46F3E9DA90FDFA63D936369F9331B4907E"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\60-reopen-b-prompt\\observation.json",
+    "sha256": "57BAE883B1A9F1B14473371551B799845C6DC0664D6BC224174A5A43046D74E3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\60-reopen-b-prompt\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\60-reopen-b-prompt\\window.png",
+    "sha256": "780912027380F029CA640EBB50CAEAF9CB777E47322A5AECB3565562FCC0CA6A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\61-file-focus\\observation.json",
+    "sha256": "D83B84BF757601EB781607AE218F07FE1D6B71488C094E168185FFA73ADC01B3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\61-file-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\61-file-focus\\window.png",
+    "sha256": "803261F0F2B8926DD0384CE5F1C954D00CAE6D6E1588D6B7824259827750BB65"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\62-b-reopened\\observation.json",
+    "sha256": "FC120F476503FF36A978F78F51BDB39B13BD5A0CFCDD77EE62D6E4859AFDFAD0"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\62-b-reopened\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\62-b-reopened\\window.png",
+    "sha256": "C4FA58A3E95AC82D7C7DB23D2B6FEFC1B2D190DEB8444A6255267691F12DF7A8"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\63-focus\\observation.json",
+    "sha256": "39F498B868E8717CEF142110C5F0D9FD9DCA1AEA36E34CE25970C5AE7C4445BD"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\63-focus\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\63-focus\\window.png",
+    "sha256": "8A16D8BC25375A16840742108BFB536121AA6CEEAD9DA392D2C3D6AF36764D08"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\64-geom-literal\\observation.json",
+    "sha256": "B99A7F2FA4CEDA25D4CEE78C435095EB49C211D0332E25B467CB9550959AF91B"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\64-geom-literal\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\64-geom-literal\\window.png",
+    "sha256": "579AF5E884B981F748AC890D9CAAFE8CE5794DF62AD7CE6DE5C5A8BF0012CFDC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\65-b-reopened-geom\\observation.json",
+    "sha256": "8AD7B0EF5D65AD48659DA3AF909D1D693A84CDF1E536BF60C325134EC14A6349"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\65-b-reopened-geom\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\65-b-reopened-geom\\window.png",
+    "sha256": "0F3101F169D2D2C5C6EAACE38E7B8143FEC4D97AF07EA7618084F4E28FBA2B2D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\66-exit\\observation.json",
+    "sha256": "7AA86CC52AC33570AD807517D5B102AF3DD4BD3196626E7C48E4E31BECDD3859"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\66-exit\\observation.json.used",
+    "sha256": "4BF5122F344554C53BDE2EBB8CD2B7E3D1600AD631C385A5D7CCE23C7785459A"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\66-exit\\window.png",
+    "sha256": "5EA5975029FCB0670A375FC76D0AB62345E238F3DEEBF8D3AC33E39765C89AEF"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\a-reopened\\PatentMarker-geom-verify.txt",
+    "sha256": "070788F994E253C21206826A547200D49A98E740E572EBF498A3938973CA6142"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\a-reopened\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\active\\PatentMarker-geom-verify.txt",
+    "sha256": "CCE66769E6A47C6CC5393B7EC4A0F3F99962311A764FD0F9E8E41F23475B5935"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\active\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\b-before-save\\PatentMarker-geom-verify.txt",
+    "sha256": "D0A595F6AE400FE751B532A63A599C62B1AC168EEDFD2F5A302BF48AF96F090C"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\b-before-save\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\b-reopened\\PatentMarker-geom-verify.txt",
+    "sha256": "CCE66769E6A47C6CC5393B7EC4A0F3F99962311A764FD0F9E8E41F23475B5935"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\b-reopened\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\before\\active\\PatentMarker-geom-verify.txt",
+    "sha256": "63A8E1246992EE2A0682638AA93CC09CE3415F26DA382401EE7BA4248A4E0074"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\before\\active\\PatentMarker-mleader-verify.txt",
+    "sha256": "46438417F24D5C1378FB23A135F606E4390E94DE2F5C90096A6F8F2C365A2BB3"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\cancel\\PatentMarker-geom-verify.txt",
+    "sha256": "F32DFE45071F0D7CD7D9117EA672F05DA5836A7D226ED0520012550904B78517"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\cancel\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-A.bak",
+    "sha256": "95B7DD83C8FEAAEDD01AFC33DBFA5837659C2F046D870CA41E1198302277D848"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-A.dict.json",
+    "sha256": "BE6B71A862890F66CD28E9ED7CAA445E76CE49A830B7AA7D5879FE3880E0210D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-A.dwg",
+    "sha256": "3A66466D94DD44BF3351F8415C4F61D21FBA23C9475DB40AA81EAD2AEE0DE1C2"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-B.bak",
+    "sha256": "E5BE2753545E690ED8F249501D224F19BFF5506C287CFDE1540D05854B0641E4"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-B.dict.json",
+    "sha256": "A8437773AB0131F5F42E564404D3114C50C9828F373F8429F33608D27911597D"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\drawings\\isolated-B.dwg",
+    "sha256": "5CEC18CE6A4B57FE78B15B195F32D0CFADBC71EAC7A0A79206674B71A5A248D8"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\redo\\PatentMarker-geom-verify.txt",
+    "sha256": "B67892308D47E7DD8DEB557EC0979BC754DF90DB3FAB5BC63C5A7A33E78CE150"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\redo\\PatentMarker-mleader-verify.txt",
+    "sha256": "91174001665CB0373D92E82C23022F3007AADE564BAC5B57D0184D9BF225F564"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\undo-audit\\PatentMarker-geom-verify.txt",
+    "sha256": "BB7CF07B2E46121FB37A5224B331BF4869D59C0F885AC8C5926A4130C1E0C5E7"
+  },
+  {
+    "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-isolated\\undo-audit\\PatentMarker-mleader-verify.txt",
+    "sha256": "DE298F0A32BC369C3E4534D760C1B4BFA799C66C6B34B96FA9E2871717D836BC"
+  }
+]

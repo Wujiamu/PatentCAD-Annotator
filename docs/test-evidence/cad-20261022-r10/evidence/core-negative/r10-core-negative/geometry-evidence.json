@@ -1,0 +1,23 @@
+{
+  "run_id": "r10-core-negative",
+  "package_directory": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/candidate-release/2025",
+  "drawing": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\core-negative\\input.dwg",
+  "drawing_sha256": "be2802a0e4f3aad163a195db4842541cfbdc44a4c132a92dbdc56e3fc2b70582",
+  "manifest_sha256": "0fb67ff2759bb22cc3664a70195e3b270b2a94a82cf128943b8ddf9303ca308c",
+  "accoreconsole": "C:\\Program Files\\Autodesk\\AutoCAD 2026\\accoreconsole.exe",
+  "accore_stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\core-negative\\r10-core-negative\\accoreconsole.stdout.txt",
+  "accore_stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\core-negative\\r10-core-negative\\accoreconsole.stderr.txt",
+  "run_script": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\core-negative\\r10-core-negative\\run.scr",
+  "candidate_dll_sha256": "5b65191eb6ab9b8666df0c9a173dac83047d2169fe6e962e8f3c6598327f4460",
+  "expected_mvid": "e8eb2160-24dd-4f27-84c9-1aa6035d9187",
+  "assembly_sha256": "5b65191eb6ab9b8666df0c9a173dac83047d2169fe6e962e8f3c6598327f4460",
+  "assembly_mvid": "e8eb2160-24dd-4f27-84c9-1aa6035d9187",
+  "assembly_path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\candidate-release\\2025\\PatentMarker.dll",
+  "braces": null,
+  "texts": null,
+  "process_exit": 0,
+  "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\core-negative\\r10-core-negative\\report\\PatentMarker-geom-verify.txt",
+  "summary": null,
+  "result": "FAIL",
+  "error": "report RESULT is 'FAIL', not PASS"
+}

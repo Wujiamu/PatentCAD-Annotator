@@ -1,0 +1,54 @@
+{
+  "result": "FAIL",
+  "cleanup": "PASS: normal UI exit; own green-A save prompt No; Get-Process acad empty after shutdown",
+  "checks": [
+    {
+      "evidence": [
+        "04-paced-resume/window.png",
+        "07-paced-literal/window.png",
+        "08-doctor/window.png"
+      ],
+      "name": "paced text input regression",
+      "result": "PASS"
+    },
+    {
+      "mvid": "b8ecfcb0-b041-4ec5-9a63-cfd31b3c3673",
+      "evidence": "before/A/PatentMarker-doctor-report.txt",
+      "sha256": "45be93c6ec1ae2be1f849ef5e3411e1c3af7c7eeb8a18caae83e4a804750a73f",
+      "name": "cold startup identity",
+      "result": "PASS"
+    },
+    {
+      "evidence": [
+        "before/A/PatentMarker-mleader-verify.txt",
+        "before/A/PatentMarker-geom-verify.txt"
+      ],
+      "name": "baseline",
+      "result": "PASS",
+      "actual": "9/9 MLeader,103/0 geometry strict=false"
+    },
+    {
+      "steps": "WCS(40,290) text grip; observed866,305 hot -> move947,347 -> click947,347 commit ->Escape ->PATMLVERIFY",
+      "evidence": [
+        "21-move-preview/window.png",
+        "22-moved/window.png",
+        "23-moved-idle/window.png",
+        "moved/PatentMarker-mleader-verify.txt"
+      ],
+      "name": "same-side native text grip sync",
+      "result": "FAIL",
+      "actual": "entity textLocation=(74.67,272.26); C3 text-location38.944;9 total8 passed1 failed"
+    },
+    {
+      "name": "remaining GUI cancel/UndoRedo/reopen/B",
+      "result": "SKIP/BLOCKED",
+      "reason": "Required stop on product failure"
+    }
+  ],
+  "drawings": {
+    "B": "drawings/green-B.dwg",
+    "state": "Unmodified on-disk A/B; unsaved GUI move discarded after retaining screenshots and numeric reports",
+    "A": "drawings/green-A.dwg"
+  },
+  "helperSHA256": "FADCAA1A14A5EBC24AFD70F63450CA6251E1382A58E5894733E6318B524AA597"
+}

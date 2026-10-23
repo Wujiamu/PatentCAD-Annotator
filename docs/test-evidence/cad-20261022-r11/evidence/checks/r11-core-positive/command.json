@@ -1,0 +1,31 @@
+{
+  "id": "r11-core-positive",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>/tools/verify-geometry.ps1",
+    "-PackageDirectory",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/candidate-history-isolated/2025",
+    "-Drawing",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-positive/input.dwg",
+    "-AcCoreConsole",
+    "C:/Program Files/Autodesk/AutoCAD 2026/accoreconsole.exe",
+    "-OutputRoot",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-positive",
+    "-RunId",
+    "r11-core-positive",
+    "-TimeoutSeconds",
+    "45"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:56:16.8004734+08:00",
+  "finished": "2026-10-22T22:56:20.9193442+08:00",
+  "owned_pid": 33272,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 4118.8475,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-core-positive\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-core-positive\\stderr.txt"
+}

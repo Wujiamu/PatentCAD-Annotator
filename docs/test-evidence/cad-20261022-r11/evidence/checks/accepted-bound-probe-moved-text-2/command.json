@@ -1,0 +1,19 @@
+{
+  "id": "accepted-bound-probe-moved-text-2",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/probe-accepted/AcceptanceProbe.dll",
+    "moved-text",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/probes-accepted/2/moved-text"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:47:03.3219487+08:00",
+  "finished": "2026-10-22T22:47:03.5468220+08:00",
+  "owned_pid": 7464,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 224.854,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-bound-probe-moved-text-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-bound-probe-moved-text-2\\stderr.txt"
+}

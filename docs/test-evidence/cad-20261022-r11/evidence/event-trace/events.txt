@@ -1,0 +1,17 @@
+2026-10-22T15:45:38.6326707+08:00 START
+2026-10-22T15:45:38.6338256+08:00 ATTACH <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg
+2026-10-22T15:45:38.6390271+08:00 PRODUCT doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg matches=True dbMatches=False stack=NETLOAD
+2026-10-22T15:45:38.6402187+08:00 END raw=[NETLOAD] events=0
+2026-10-22T15:45:38.6428658+08:00 BEGIN raw=[ZOOM] sender=Autodesk.AutoCAD.ApplicationServices.Document doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg
+2026-10-22T15:45:38.6436282+08:00 PRODUCT doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg matches=True dbMatches=False stack=ZOOM
+2026-10-22T15:45:38.6458640+08:00 END raw=[ZOOM] events=0
+2026-10-22T15:45:38.6830405+08:00 BEGIN raw=[COMMANDMACROSCLOSE] sender=Autodesk.AutoCAD.ApplicationServices.Document doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg
+2026-10-22T15:45:38.6836906+08:00 PRODUCT doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg matches=True dbMatches=False stack=COMMANDMACROSCLOSE
+2026-10-22T15:45:38.8053316+08:00 END raw=[COMMANDMACROSCLOSE] events=0
+2026-10-22T15:46:50.8854106+08:00 BEGIN raw=[GRIP_STRETCH] sender=Autodesk.AutoCAD.ApplicationServices.Document doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg
+2026-10-22T15:46:50.8861233+08:00 PRODUCT doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg matches=True dbMatches=False stack=GRIP_STRETCH
+2026-10-22T15:47:41.5658513+08:00 MOD type=MLeader sender=Autodesk.AutoCAD.DatabaseServices.Database senderRef=False entityDbRef=False senderEquals=True
+2026-10-22T15:47:41.5675130+08:00 END raw=[GRIP_STRETCH] events=1
+2026-10-22T15:48:44.4619091+08:00 BEGIN raw=[QUIT] sender=Autodesk.AutoCAD.ApplicationServices.Document doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg
+2026-10-22T15:48:44.4627504+08:00 PRODUCT doc=<WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\event-trace\input.dwg matches=True dbMatches=False stack=QUIT
+2026-10-22T15:49:30.5321499+08:00 END raw=[QUIT] events=0

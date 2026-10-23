@@ -1,0 +1,135 @@
+{
+  "assembly_path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\candidate-before\\PatentMarker.dll",
+  "assembly_sha256": "e7ecbb3e08af9d02201c4295993a5e3f4b5014d6bdd8f6f579c6d1f679e921a3",
+  "assembly_mvid": "5be5b2e4-d78c-474d-9165-671394d00bd3",
+  "filesystem": "NTFS",
+  "layer": "Actual candidate DLL IO entry on real isolated NTFS; no CAD/UI claim",
+  "rows": [
+    {
+      "id": "replace-attributes-32",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 32,
+        "attributes_after": 32
+      }
+    },
+    {
+      "id": "replace-attributes-38",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 38,
+        "attributes_after": 38
+      }
+    },
+    {
+      "id": "replace-attributes-8230",
+      "result": "FAIL",
+      "failures": [
+        "full attributes changed"
+      ],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 8230,
+        "attributes_after": 38
+      }
+    },
+    {
+      "id": "readonly-protection",
+      "result": "FAIL",
+      "failures": [
+        "readonly file should reject write",
+        "readonly original bytes changed",
+        "readonly attributes changed"
+      ],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_after": 38,
+        "sha_before": "619e63d45ec697f5e41b7cc700912d739439fa2998a5f1f7ef18d526f8f82ea8",
+        "sha_after": "634a2c7ce474ea6a2e28defb77e2d66f238c8b6a12f5520c525ba5dbdbe06c97"
+      }
+    },
+    {
+      "id": "locked-preservation-and-recovery",
+      "result": "FAIL",
+      "failures": [
+        "locked original attributes changed",
+        "recovery attributes changed"
+      ],
+      "details": {
+        "locked_write": false,
+        "error": "IOException: The process cannot access the file because it is being used by another process."
+      }
+    },
+    {
+      "id": "foreign-temp-sentinel",
+      "result": "FAIL",
+      "failures": [
+        "preexisting foreign temp file overwritten/deleted"
+      ],
+      "details": {
+        "write_result": true,
+        "error": ""
+      }
+    },
+    {
+      "id": "replace-acl-ads-creation",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": ""
+      }
+    },
+    {
+      "id": "replace-denied-control-ListDirectory",
+      "result": "FAIL",
+      "failures": [
+        "ADS lost under denied Replace control"
+      ],
+      "details": {
+        "control_replace_denied": true,
+        "control_replace_error": "Access to the path is denied.",
+        "write_result": true,
+        "error": "",
+        "acl_preserved": true,
+        "ads_preserved": false
+      }
+    },
+    {
+      "id": "replace-denied-control-ChangePermissions",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "control_replace_denied": false,
+        "control_replace_error": "",
+        "write_result": true,
+        "error": "",
+        "acl_preserved": true,
+        "ads_preserved": true
+      }
+    },
+    {
+      "id": "replace-denied-control-CreateFiles",
+      "result": "FAIL",
+      "failures": [
+        "ADS lost under denied Replace control"
+      ],
+      "details": {
+        "control_replace_denied": true,
+        "control_replace_error": "Access to the path is denied.",
+        "write_result": true,
+        "error": "",
+        "acl_preserved": true,
+        "ads_preserved": false
+      }
+    }
+  ]
+}

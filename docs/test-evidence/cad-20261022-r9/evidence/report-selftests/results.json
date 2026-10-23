@@ -1,0 +1,121 @@
+[
+  {
+    "case": "actual-result",
+    "expected_exit": 3,
+    "actual_exit": 3,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "synthetic-blocked",
+    "expected_exit": 3,
+    "actual_exit": 3,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "synthetic-finding-blocked",
+    "expected_exit": 3,
+    "actual_exit": 3,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "blocked-finding-stored-pass",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "missing-matrix-result",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "invalid-matrix-result",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "synthetic-host-fail",
+    "expected_exit": 1,
+    "actual_exit": 1,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "synthetic-pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "wrong-stored-verdict",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "changed-evidence-hash",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "stale-source-id",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "forged-source-binding",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "changed-verification-tool",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "changed-build-snapshot",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "wrong-build-archive",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "missing-repeat-run",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  },
+  {
+    "case": "changed-test-selector",
+    "expected_exit": 2,
+    "actual_exit": 2,
+    "result": "PASS",
+    "scope": "gate self-test with synthetic copies; never an actual release PASS"
+  }
+]

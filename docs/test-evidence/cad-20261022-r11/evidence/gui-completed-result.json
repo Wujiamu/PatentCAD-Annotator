@@ -1,0 +1,231 @@
+{
+  "result": "PASS",
+  "generated_utc": "2026-10-22T14:56:35.843058+00:00",
+  "verification_actor": "separate low desktop operators; root verifies numeric reports and immutable evidence bindings",
+  "source": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+  "candidate_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "checks": [
+    {
+      "expected": "Undo returns original; immediate Redo restores moved geometry",
+      "name": "native text grip undo then immediate redo",
+      "actual": "04/05 moved 901 from (865,188) to (1110,240); 06 returned; 07 restored; only capture/view between",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/02-selected/window.png",
+          "sha256": "71b0a923534410ecf6b77e86f023a2aa7c5fbf467186074b2aac74a8cc7f209e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/03-hot/window.png",
+          "sha256": "14692c3d17ad6be07810acabd1afc12a8bc265cb08c69d2363d3a1e9d52f7f02"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/04-commit/window.png",
+          "sha256": "10a748e61a744c37087669334e7b7171aac1cd12ba4dda49559f7f0f6d941fa3"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/05-idle/window.png",
+          "sha256": "b13ac6096ff91b4624cf998069f2ac0c5a307182e7d5622c4051effa247bbfae"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/06-undo/window.png",
+          "sha256": "2a757179678c2206346d0606ec095e30f68944beda1efda335ae422ca03582e6"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/07-redo/window.png",
+          "sha256": "afbef28744e2ff60124498f2ec79f4e7ca707539a339a209d3ad128cd2063ee8"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/redo/PatentMarker-geom-verify.txt",
+          "sha256": "b67892308d47e7dd8deb557ec0979bc754df90db3fab5bc63c5a7a33e78ce150"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/redo/PatentMarker-mleader-verify.txt",
+          "sha256": "91174001665cb0373d92e82c23022f3007aade564bac5b57d0184d9bf225f564"
+        }
+      ]
+    },
+    {
+      "expected": "Single immediate Undo returns prior geometry and stored anchor remains consistent",
+      "name": "independent fresh grip undo record consistency",
+      "actual": "18 moved (1110,240) to (1260,354); 20 immediate Undo restored prior; ML9/9 strict103/0",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/18-commit/window.png",
+          "sha256": "dbc926014a2e71bd363234bd2a2a0bf204f25d2f1dfbecd0d157b73b0d3a6cab"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/19-idle/window.png",
+          "sha256": "eb7c58723d4544165b5ca56411450252847bd0437e0363255675440bbbdd99f6"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/20-undo-real/window.png",
+          "sha256": "0eca1a01a7877e737b9f409cdcedb8319e0f019e1521af06be5e4d9935ddd99d"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/undo-audit/PatentMarker-mleader-verify.txt",
+          "sha256": "de298f0a32bc369c3e4534d760c1b4bfa799c66c6b34b96fa9e2871717d836bc"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/undo-audit/PatentMarker-geom-verify.txt",
+          "sha256": "bb7cf07b2e46121fb37a5224b331bf4869d59c0f885ac8c5926a4130c1e0c5e7"
+        }
+      ]
+    },
+    {
+      "name": "hot grip displaced ghost then Escape",
+      "actual": "29 displaced ghost at (1330,450);30/31 cancellation restored geometry; strict103/0",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/28-hot/window.png",
+          "sha256": "cced2ad4e1066f22abd91597e65f2da19e3a8527a3af94252c166876259c50d0"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/29-ghost/window.png",
+          "sha256": "eba19696b93ba2a563635a977279595a9a686f91128cb301fb1650ab5dbb0d87"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/30-cancel/window.png",
+          "sha256": "8c61c613bb70e6ec7fc853d70c753431b2202ad57b5d1a7782e10503caba5ae4"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/31-cancel-idle/window.png",
+          "sha256": "43625d19635b93d80eb5c57c46ed2312d645545da8b997276cf310e82b4207e7"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/cancel/PatentMarker-geom-verify.txt",
+          "sha256": "f32dfe45071f0d7cd7d9117ea672f05da5836a7d226ed0520012550904b78517"
+        }
+      ]
+    },
+    {
+      "name": "A save close reopen persistence",
+      "actual": "35 saved;37 Start page no A tab;40 reopened same default full A path;43 strict103/0 with saved moved geometry",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/35-a-saved/window.png",
+          "sha256": "62b8f4aa92d681e422c7bd9ef0db76f5521985a3de05e9616ec4ae0e23c5f944"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/37-a-closed/window.png",
+          "sha256": "aaab12faf2cfbf2d48010e8d8789155b129cf9f0e520a5671fc8b522ef2d1eb5"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/39-file-focus/window.png",
+          "sha256": "6643e912857a7da4852494a9764f54f73e90c4843604cad26dbaf1e8bcaa81bd"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/40-a-reopened/window.png",
+          "sha256": "98e641766a41e258997062e84f12740192a6779a6e063b7efc04e9ef4bd0c66c"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/a-reopened/PatentMarker-geom-verify.txt",
+          "sha256": "070788f994e253c21206826a547200d49a98e740e572ebf498a3938973ca6142"
+        }
+      ]
+    },
+    {
+      "name": "A B dictionary isolation",
+      "actual": "45 A901 Manual-A;49 B902 Manual-B;59 closing B returns A901;62 B reopen902",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/45-a-palette/window.png",
+          "sha256": "dc3d737b3cfe977c385ea2d589766152182327842e104df6ce643baa8c32f002"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/49-b-open/window.png",
+          "sha256": "523f88f8287ed87d016b21d766b504fa3515c8a8f7f7aa0e30e9493b14d7ee63"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/59-b-closed-a-active/window.png",
+          "sha256": "bc852e660446d10675c49b3cea582f46f3e9da90fdfa63d936369f9331b4907e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/62-b-reopened/window.png",
+          "sha256": "c4fa58a3e95ac82d7c7db23d2b6fefc1b2d190deb8444a6255267691f12df7a8"
+        }
+      ]
+    },
+    {
+      "name": "B save close reopen numeric persistence",
+      "actual": "B1brace2texts strict24/0 before save and after actual close and reopen",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/b-before-save/PatentMarker-geom-verify.txt",
+          "sha256": "d0a595f6ae400fe751b532a63a599c62b1ac168eedfd2f5a302bf48af96f090c"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/57-b-saved/window.png",
+          "sha256": "75480ffc342bde422ec59babc7ca611f602b690fa32f1770d085538bdd30b09f"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/59-b-closed-a-active/window.png",
+          "sha256": "bc852e660446d10675c49b3cea582f46f3e9da90fdfa63d936369f9331b4907e"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/62-b-reopened/window.png",
+          "sha256": "c4fa58a3e95ac82d7c7db23d2b6fefc1b2d190deb8444a6255267691f12df7a8"
+        },
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/b-reopened/PatentMarker-geom-verify.txt",
+          "sha256": "cce66769e6a47c6cc5393b7ec4a0f3f99962311a764fd0f9e8e41f23475b5935"
+        }
+      ]
+    },
+    {
+      "name": "B complete visible layout",
+      "actual": "Two distant annotation regions and the brace inspected at readable scales. Far full path, far text/gap detail, near complete brace/text, saved near view and actual reopen. Same drawing geometry; global simultaneous readability is not a product requirement.",
+      "result": "PASS",
+      "evidence": [
+        {
+          "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-b-layout/regional-result.json",
+          "sha256": "49e0f720d3089e43fd6dd43ed298c07b71f55369845a9945b0b6a7a2889da0d2"
+        }
+      ],
+      "superseded_scope": {
+        "name": "B complete visible layout",
+        "actual": "ZOOM E left geometry at view edges; whole 1brace2texts not simultaneously confirmed. Additional view request arrived after normal process exit; no geometry edits made.",
+        "result": "SKIP/BLOCKED",
+        "evidence": [
+          "54-b-fit/window.png",
+          "62-b-reopened/window.png"
+        ]
+      }
+    }
+  ],
+  "drawings": [
+    {
+      "drawing": "A",
+      "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/drawings/isolated-A.dwg",
+      "sha256": "3a66466d94dd44bf3351f8415c4f61d21fba23c9475db40aa81ead2aee0de1c2",
+      "bytes": 77456
+    },
+    {
+      "drawing": "B",
+      "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/drawings/isolated-B.dwg",
+      "sha256": "a7f9881026dd1c27ef2fbaf8045d293c543c58d5f070aeb4ad7bcee2e96fddf4",
+      "bytes": 46365
+    }
+  ],
+  "cleanup": "PASS: both owned GUI instances exited normally; no acad/accoreconsole remains; installation still retained until final native reads then mandatory restoration",
+  "phase_evidence": [
+    {
+      "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/final-result.json",
+      "sha256": "96f85651c41df25eae02fd90b4c6ec5ba96fa9e651471ee7eb8c2868581af789"
+    },
+    {
+      "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-b-layout/final-result.json",
+      "sha256": "12fb69b1674072fbde367f944a41f0079ea7e8bb876e823137e69d94b16e12fa"
+    },
+    {
+      "path": "docs/test-evidence/acceptance-r11-20261022-grip-routing/evidence/gui-b-layout/regional-result.json",
+      "sha256": "49e0f720d3089e43fd6dd43ed298c07b71f55369845a9945b0b6a7a2889da0d2"
+    }
+  ],
+  "scope": "Affected R11 GUI behavior and existing saved A/B. Widely separated B entities verified through regional views, not a claim of simultaneous legibility at full-drawing scale. Original blocked snapshots retained unchanged."
+}

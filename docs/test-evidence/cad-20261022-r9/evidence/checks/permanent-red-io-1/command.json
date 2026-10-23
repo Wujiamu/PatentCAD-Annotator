@@ -1,0 +1,21 @@
+{
+  "id": "permanent-red-io-1",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/red-source/tools/run-fact-tests.ps1",
+    "-TestProject",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/red-source/cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/red-source",
+  "started": "2026-10-22T10:22:29.9424158+08:00",
+  "finished": "2026-10-22T10:22:45.8702536+08:00",
+  "owned_pid": 21424,
+  "environment": {},
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_ms": 15927.9099,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\permanent-red-io-1\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\permanent-red-io-1\\stderr.txt"
+}

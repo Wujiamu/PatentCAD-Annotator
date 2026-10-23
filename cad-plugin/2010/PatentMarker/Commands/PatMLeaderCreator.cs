@@ -14,9 +14,8 @@ namespace PatentMarker.Commands
 {
     /// <summary>
     /// Plan-F MLeader creation. All automatic geometry is disabled and the
-    /// user-picked text point is appended as the LAST leader vertex, so the
-    /// drawn path matches the picked points instead of MLeader's own landing
-    /// computation (which produced the historical "fishhook" distortion).
+    /// user-picked bends are preserved. The terminal is derived by the host
+    /// from the facing MText edge with a text-height-proportional outside gap.
     /// </summary>
     public static class PatMLeaderCreator
     {
@@ -32,6 +31,13 @@ namespace PatentMarker.Commands
             List<Point3d> doglegPts, Point3d textPt, string number)
         {
             IO.PatRuntimeSettings settings = IO.PatSettingsStore.Current;
+            // Enter in unlimited mode uses the last pick as the text anchor.
+            // That coincident point is content, not another bend to preserve.
+            List<Point3d> bends = new List<Point3d>(doglegPts);
+            while (bends.Count > 0 && SamePoint(bends[bends.Count - 1], textPt))
+                bends.RemoveAt(bends.Count - 1);
+            if (bends.Count == 0 && SamePoint(attachPt, textPt))
+                throw new ArgumentException("Leader attachment and text must differ.");
             ObjectId styleId = EnsureStyle(db, tr);
 
             MLeader ml = new MLeader();
@@ -44,7 +50,7 @@ namespace PatentMarker.Commands
             ml.EnableLanding = false;
             SetExtendLeaderToText(ml, false);
             ml.DoglegLength = 0.0;
-            ml.LandingGap = 0.0;
+            ml.LandingGap = settings.TextHeight * PatLeaderTextAttachment.TextGapPerHeight;
             ml.TextAttachmentDirection = TextAttachmentDirection.AttachmentHorizontal;
             ml.TextAttachmentType = TextAttachmentType.AttachmentMiddle;
             // AttachmentMiddle on the generic property does not initialize
@@ -65,17 +71,17 @@ namespace PatentMarker.Commands
                 ? ObjectId.Null
                 : EnsureNoArrowBlock(db, tr);
 
-            // ---- F 方案顶点链：attach → dogleg… → 缩进端点（贴近但不触及文字）----
+            // ---- F chain: attach → picked bends → native text-side terminal ----
             int line = ml.AddLeaderLine(attachPt);
             Point3d lastVertex = attachPt;
-            foreach (Point3d dogleg in doglegPts)
+            foreach (Point3d dogleg in bends)
             {
                 ml.AddLastVertex(line, dogleg);
                 lastVertex = dogleg;
             }
-            // 末顶点从最后一个稳定顶点向文字点缩进 gap=0.4×字高，使引线不直接顶住文字。
-            Point3d endpoint = PatLeaderTextAttachment.Retract(
-                lastVertex, textPt, settings.TextHeight);
+            // Seed the terminal; native attachment derives its final location
+            // from the actual text box, rather than from this insertion point.
+            Point3d endpoint = textPt;
             if (!SamePoint(endpoint, lastVertex))
                 ml.AddLastVertex(line, endpoint);
 
@@ -99,12 +105,98 @@ namespace PatentMarker.Commands
             ml.MText = mt;
             ml.TextLocation = textPt;
             ml.TextHeight = settings.TextHeight;
-
             ObjectId id = modelSpace.AppendEntity(ml);
             tr.AddNewlyCreatedDBObject(ml, true);
-            Mark(ml, tr, attachPt, doglegPts, textPt,
+            RefreshTextAttachment(ml, lastVertex, textPt);
+            bends = RouteTextPath(ml, attachPt, bends, textPt);
+            Mark(ml, tr, attachPt, bends, textPt,
                 settings.HasArrowHead, settings.IsSplined);
             return id;
+        }
+
+        // Use native boundary attachment rather than overriding the last
+        // vertex relative to MText's insertion point (which can be inside the
+        // text on its right side). Native LandingGap also survives grip edits.
+        public static void RefreshTextAttachment(MLeader ml, Point3d previous,
+            Point3d pickedText)
+        {
+            ml.LandingGap = ml.TextHeight * PatLeaderTextAttachment.TextGapPerHeight;
+            ml.TextLocation = pickedText;
+            Extents3d bounds = ml.MText.GeometricExtents;
+            double center = bounds.MinPoint.X +
+                (bounds.MaxPoint.X - bounds.MinPoint.X) / 2.0;
+            ml.SetDogleg(ml.GetLeaderIndex(0), new Vector3d(
+                previous.X <= center ? 1.0 : -1.0, 0.0, 0.0));
+            // Changing a gap/direction can shift native content. Restore the
+            // user pick LAST, then let the host derive the terminal from bounds.
+            ml.TextLocation = pickedText;
+        }
+
+        private static List<Point3d> RouteTextPath(MLeader ml,Point3d attach,
+            List<Point3d> bends,Point3d text)
+        {
+            List<Point3d> path=new List<Point3d>();path.Add(attach);path.AddRange(bends);
+            path.Add(ml.GetLastVertex(0));
+            Extents3d box=ml.MText.GeometricExtents;
+            List<Point3d> routed=PatTextPathRouting.Route(path,box.MinPoint,box.MaxPoint,ml.TextHeight);
+            if(routed.Count!=path.Count)
+            {
+                while(ml.VerticesCount(0)>1)ml.RemoveLastVertex(0);
+                for(int i=1;i<routed.Count;i++)ml.AddLastVertex(0,routed[i]);
+                RefreshTextAttachment(ml,routed[routed.Count-2],text);
+                PatentMarkerApp.RawLog("Annotation path detour: added="+(routed.Count-path.Count));
+            }
+            return routed.GetRange(1,routed.Count-2);
+        }
+
+        /// <summary>Read-only preflight. Merely opening a consistent entity
+        /// for write after U/REDO can discard the host's redo history.</summary>
+        public static bool NeedsNativeEditSynchronization(Entity entity,Transaction tr)
+        {
+            MLeader ml=entity as MLeader;
+            if(ml==null||!IsPatMLeader(ml,tr)||ml.VerticesCount(0)<2)return false;
+            bool arrow,spline;List<Point3d> before=ReadChain(ml,tr,out arrow,out spline);
+            if(before.Count<2)return false;
+            Point3d text=ml.TextLocation;
+            if(SamePoint(text,before[before.Count-1])&&!SamePoint(ml.MText.Location,text))text=ml.MText.Location;
+            int count=ml.VerticesCount(0);bool same=before.Count==count&&SamePoint(before[before.Count-1],text);
+            for(int i=0;same&&i<count-1;i++)same=SamePoint(before[i],ml.GetVertex(0,i));
+            Extents3d box=ml.MText.GeometricExtents;
+            if(same&&PatGeomTextAssertions.BoundaryGapError(true,box.MinPoint,box.MaxPoint,
+                ml.GetVertex(0,count-2),ml.GetLastVertex(0),ml.TextHeight)<1e-7)return false;
+            return true;
+        }
+
+        /// <summary>Called only by the bounded native-edit event tracker.
+        /// Verification never calls this method.</summary>
+        public static int SynchronizeNativeEdit(Entity entity,Transaction tr)
+        {
+            if(!NeedsNativeEditSynchronization(entity,tr))return 0;
+            MLeader ml=(MLeader)entity;
+            bool arrow,spline;List<Point3d> before=ReadChain(ml,tr,out arrow,out spline);
+            Point3d text=ml.TextLocation;
+            if(SamePoint(text,before[before.Count-1])&&!SamePoint(ml.MText.Location,text))text=ml.MText.Location;
+            int count=ml.VerticesCount(0);
+            Point3d attach=ml.GetVertex(0,0);List<Point3d> bends=new List<Point3d>();
+            for(int i=1;i<count-1;i++)bends.Add(ml.GetVertex(0,i));
+            try
+            {
+                RefreshTextAttachment(ml,bends.Count==0?attach:bends[bends.Count-1],text);
+                bends=RouteTextPath(ml,attach,bends,text);
+                Mark(ml,tr,attach,bends,text,arrow,spline);
+                return 1;
+            }
+            catch(ArgumentException)
+            {
+                // A picked vertex inside the new text rectangle cannot be
+                // preserved by a detour. Restore the last valid point chain.
+                while(ml.VerticesCount(0)>1)ml.RemoveLastVertex(0);
+                ml.SetFirstVertex(0,before[0]);
+                for(int i=1;i<before.Count;i++)ml.AddLastVertex(0,before[i]);
+                RefreshTextAttachment(ml,before[before.Count-2],before[before.Count-1]);
+                PatentMarkerApp.RawLog("Native annotation edit rejected: text overlaps a picked vertex; previous chain restored");
+                return -1;
+            }
         }
 
         /// <summary>Creates or refreshes the all-off PAT_MLEADER style.</summary>
@@ -140,7 +232,8 @@ namespace PatentMarker.Commands
             style.EnableLanding = false;
             SetExtendLeaderToText(style, false);
             style.DoglegLength = 0.0;
-            style.LandingGap = 0.0;
+            style.LandingGap = IO.PatSettingsStore.Current.TextHeight *
+                PatLeaderTextAttachment.TextGapPerHeight;
             style.ArrowSize = IO.PatSettingsStore.Current.ArrowSize;
             style.ArrowSymbolId = ObjectId.Null;
             style.TextStyleId = GetOrCreateTextStyleId(db, tr);
@@ -275,7 +368,7 @@ namespace PatentMarker.Commands
         {
             bool hasArrow, isSplined;
             List<Point3d> chain = ReadChain(ml, tr, out hasArrow, out isSplined);
-            if (chain.Count < 3) return;
+            if (chain.Count < 2) return;
             Point3d attach = chain[0];
             List<Point3d> doglegs = chain.GetRange(1, chain.Count - 2);
             Mark(ml, tr, attach, doglegs, newTextPt, hasArrow, isSplined);

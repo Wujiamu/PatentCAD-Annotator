@@ -1,0 +1,22 @@
+{
+  "source": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+  "assembly_sha": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "start_utc": "2026-10-22T14:36:46.2948549Z",
+  "dwg": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/drawings/isolated-B.dwg",
+  "scope": "Only complete B visual coverage and persisted view; no geometry edits",
+  "environment": {
+    "PATGEOM_STRICT": "1",
+    "PATGEOM_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-b-layout/active",
+    "PATGEOM_REQUIRE_BRACES": "1",
+    "PATML_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-b-layout/active",
+    "PATGEOM_REQUIRE_TEXTS": "1"
+  },
+  "args": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/gui-history-isolated/drawings/isolated-B.dwg",
+    "/nologo",
+    "/b",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-b-layout/commands.scr"
+  ],
+  "exe": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "pid": 33356
+}

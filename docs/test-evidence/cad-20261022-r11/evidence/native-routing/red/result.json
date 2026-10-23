@@ -1,0 +1,11 @@
+{
+  "actual_mleader_summary": "SUMMARY: total=8 passed=7 failed=1\r",
+  "geometry_pass": true,
+  "drawing_sha256": "bd5549e4d0fb733a48a3fe8f6d0f8f1423999b0a23b7c344fd9cd3a80205dde0",
+  "native_exit": 0,
+  "expected_mleader_summary": "SUMMARY: total=8 passed=7 failed=1",
+  "phase": "red",
+  "scope": "L3 final installed candidate, new full acad process; exact original eight user-command inputs; no GUI claim",
+  "assembly_sha256": "5b65191eb6ab9b8666df0c9a173dac83047d2169fe6e962e8f3c6598327f4460",
+  "result": "PASS"
+}

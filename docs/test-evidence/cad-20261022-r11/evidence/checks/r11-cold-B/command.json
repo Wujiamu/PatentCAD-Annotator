@@ -1,0 +1,27 @@
+{
+  "id": "r11-cold-B",
+  "exe": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\cold-saved\\B\\input.dwg",
+    "/nologo",
+    "/b",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\cold-saved\\B\\commands.scr"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\cold-saved\\B",
+  "started": "2026-10-22T22:56:00.7955695+08:00",
+  "finished": "2026-10-22T22:56:15.8869223+08:00",
+  "owned_pid": 10600,
+  "environment": {
+    "PATGEOM_REQUIRE_TEXTS": "1",
+    "PATML_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\cold-saved\\B",
+    "PATGEOM_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\cold-saved\\B",
+    "PATGEOM_STRICT": "1",
+    "PATGEOM_RUN_ID": "r11-cold-B",
+    "PATGEOM_REQUIRE_BRACES": "1"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 15091.3225,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-cold-B\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\r11-cold-B\\stderr.txt"
+}

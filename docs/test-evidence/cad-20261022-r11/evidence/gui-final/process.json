@@ -1,0 +1,21 @@
+{
+  "environment": {
+    "PATML_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final/active",
+    "PATGEOM_REQUIRE_TEXTS": "1",
+    "PATGEOM_REQUIRE_BRACES": "1",
+    "PATGEOM_STRICT": "1",
+    "PATGEOM_REPORT_DIR": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final/active"
+  },
+  "args": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final/drawings/final-A.dwg",
+    "/nologo",
+    "/b",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-final/baseline.scr"
+  ],
+  "exe": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "pid": 25296,
+  "source": "59395901b3426f31ebf3e1523ae73fa2c7535b13",
+  "start_utc": "2026-10-22T07:51:06.9769134Z",
+  "assembly_sha": "d112a428ced3b188c685f2d683f451c5c59c44f0bf074605cb70b4a21d8caf37",
+  "scope": "Fresh installed product only; no diagnostic assembly; preexisting actual-GUI test drawing copy"
+}

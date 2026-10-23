@@ -1,0 +1,181 @@
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.79
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.51
+PASS PatentMarker.Tests.CorpusComparisonTests.Corpus_CSharpMatchesVbaExpected
+FAIL PatentMarker.Tests.DictConflictBoundaryTests.LockedBackupCleanup_PreservesFullAttributesAndAllowsRetry : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Normal
+PASS PatentMarker.Tests.DictConflictBoundaryTests.RestoreMissingOrCorruptBackup_PreservesCurrent
+FAIL PatentMarker.Tests.DictConflictBoundaryTests.RestoreReadOnlyAndLockedCurrent_PreservesBackupThenRecovers : NullException: Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   DictModel { Entries = [DictEntry { Conflicts = [������], Name = "cad", Number = "901", Occurrences = 0 }], Metadata = DictMetadata { ExtractedAt = "", ModifiedAt = null, ModifiedBy = null, SourceFile = "", Version = "" }, Warnings = [] }
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresLongMalformedTimestamp
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresMalformedTimestamp
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresOtherBackups
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_NoBackup_ReturnsNull
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_NullOrEmptyPath_ReturnsNull
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_PicksLatestByName
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_BackupAndCadMark_False
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_BackupAndNoCadMark_True
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_NoBackup_False
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_NullPath_False
+PASS PatentMarker.Tests.DictConflictTests.ResolveKeepWord_DeletesBackup
+PASS PatentMarker.Tests.DictConflictTests.ResolveKeepWord_MissingBackup_StillTrue
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_InvalidBackup_DoesNotOverwriteCurrent
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_MissingBackup_ReturnsNullWithError
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_RestoresBackupAndClearsMark
+PASS PatentMarker.Tests.DictDiffTests.Compute_BothChanged_DetectedAsBothUnmatched
+PASS PatentMarker.Tests.DictDiffTests.Compute_BothNull_ReturnsEmpty
+PASS PatentMarker.Tests.DictDiffTests.Compute_EmptyEntries_ReturnsEmpty
+PASS PatentMarker.Tests.DictDiffTests.Compute_EntryAdded_DetectedAsAdded
+PASS PatentMarker.Tests.DictDiffTests.Compute_EntryRemoved_DetectedAsRemoved
+PASS PatentMarker.Tests.DictDiffTests.Compute_IdicalEntries_AllUnchanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_MixedChanges_CorrectCounts
+PASS PatentMarker.Tests.DictDiffTests.Compute_NameChanged_DetectedAsNameChanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_NewNull_AllRemoved
+PASS PatentMarker.Tests.DictDiffTests.Compute_NumberChanged_DetectedAsNumberChanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_OldNull_AllAdded
+PASS PatentMarker.Tests.DictDiffTests.DictDiffEntry_AddedEntry_OldFieldsAreEmpty
+PASS PatentMarker.Tests.DictDiffTests.DictDiffEntry_RemovedEntry_NewFieldsAreEmpty
+PASS PatentMarker.Tests.DictDiffTests.Summarize_EnglishLang_ReturnsEnglishString
+PASS PatentMarker.Tests.DictDiffTests.Summarize_MixedChanges_ReturnsFormattedString
+PASS PatentMarker.Tests.DictLoaderTests.ClearPrevious_ClearsOnlyPreviousModel
+PASS PatentMarker.Tests.DictLoaderTests.InvalidateCache_ClearsAllState
+PASS PatentMarker.Tests.DictLoaderTests.Load_EmptyEntries_ReturnsEmptyList
+PASS PatentMarker.Tests.DictLoaderTests.Load_EmptyObject_ReturnsEmptyModel
+PASS PatentMarker.Tests.DictLoaderTests.Load_FileNotFound_ReturnsNull
+PASS PatentMarker.Tests.DictLoaderTests.Load_InvalidJson_ReturnsNull
+PASS PatentMarker.Tests.DictLoaderTests.Load_NullCollectionsAndNestedValues_AreNormalized
+PASS PatentMarker.Tests.DictLoaderTests.Load_RealWorldFormat_ParsesCorrectly
+PASS PatentMarker.Tests.DictLoaderTests.Load_TrailingCommas_ParsesSuccessfully
+PASS PatentMarker.Tests.DictLoaderTests.Load_ValidJson_ParsesEntries
+PASS PatentMarker.Tests.DictLoaderTests.Load_ValidJson_ParsesMetadata
+PASS PatentMarker.Tests.DictLoaderTests.Load_WithConflicts_ParsesConflictInfo
+PASS PatentMarker.Tests.DictLoaderTests.Load_WithWarnings_ParsesWarnings
+PASS PatentMarker.Tests.DictLoaderTests.PaletteWorkflow_UsesConfiguredFallbackPath
+PASS PatentMarker.Tests.DictPaletteSessionTests.LoadComputesDiffAndClearDropsDocumentState
+PASS PatentMarker.Tests.DictPaletteSessionTests.LoadProjectsEntriesAndFiltersWithoutUi
+PASS PatentMarker.Tests.DictPaletteViewRendererTests.CompareRowsKeepRemovedEntriesAndFilteringKeepsDiffColumns
+PASS PatentMarker.Tests.DictPaletteViewRendererTests.RendererUsesTheSelectedDocumentCheckResult
+PASS PatentMarker.Tests.DictPaletteWorkflowTests.FindEntryReturnsNullForMissingOrEmptyDictionary
+PASS PatentMarker.Tests.DictPaletteWorkflowTests.FindEntryUsesSharedNumberIdentityRules
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.AtomicRewrite_PreservesAllSettableAttributes : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Hidden | System | Archive
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.DeniedReplace_DoesNotUseMetadataLosingOverwriteMove : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.ExistingForeignTemp_IsNeverOverwrittenOrDeleted : FileNotFoundException: Could not find file '<USERPROFILE>\AppData\Local\Temp\PatentWriterBoundary_3bda8bd86e2a442cbea222ec51681b06\test.dict.json.tmp'.
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.LockedTarget_RetainsBytesAndAttributes_ThenRecovers : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Normal
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.ReadOnlyTarget_IsRejectedWithoutChangingBytesOrAttributes : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True
+PASS PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_EmptyRows_ReturnsNull
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_CaseInsensitiveNumberMatch
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_DoesNotMutateCurrentModel
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_UpdatesExistingAppendsNew_KeepsOrder
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Overwrite_DropsOldEntries
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Overwrite_ReplacesAllWithRows
+PASS PatentMarker.Tests.DictWriterTests.Serialize_ChineseNotEscaped_Utf8Plain
+PASS PatentMarker.Tests.DictWriterTests.Serialize_CrlfLineEndings
+PASS PatentMarker.Tests.DictWriterTests.Serialize_EmptyCollections
+PASS PatentMarker.Tests.DictWriterTests.Serialize_EntryKeyOrder
+PASS PatentMarker.Tests.DictWriterTests.Serialize_IncludesModifiedFields_WhenSet
+PASS PatentMarker.Tests.DictWriterTests.Serialize_IndentedTwoSpaces
+PASS PatentMarker.Tests.DictWriterTests.Serialize_KeyOrder_MetadataFirst
+PASS PatentMarker.Tests.DictWriterTests.Serialize_NoModifiedFields_WhenNull
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_AddNewEntry
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_CaseInsensitive
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_IgnoreSelf
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_Rejects
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_EmptyFields_Rejected
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_ModifyNumberAndName
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_NullMetadata_IsRecovered
+PASS PatentMarker.Tests.DictWriterTests.TryRemoveEntry_NotInModel_ReturnsFalse
+PASS PatentMarker.Tests.DictWriterTests.TryRemoveEntry_RemovesAndMarks
+PASS PatentMarker.Tests.DictWriterTests.Write_MissingDirectory_ReturnsFalse
+PASS PatentMarker.Tests.DictWriterTests.Write_NewFileDefaultsToHidden
+PASS PatentMarker.Tests.DictWriterTests.Write_NoBom_Utf8
+PASS PatentMarker.Tests.DictWriterTests.Write_OverwritesExistingFile
+PASS PatentMarker.Tests.DictWriterTests.Write_PreservesVisibleManualEditChoice
+PASS PatentMarker.Tests.DictWriterTests.Write_ThenLoad_RoundTrip
+PASS PatentMarker.Tests.MarkingTextParserTests.Crlf_NormalizedForBareList
+PASS PatentMarker.Tests.MarkingTextParserTests.Dedupe_SameNumberName_KeepsFirst
+PASS PatentMarker.Tests.MarkingTextParserTests.EmptyText_ReturnsEmpty
+PASS PatentMarker.Tests.MarkingTextParserTests.EndToEnd_SectionExtractThenParse
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_HeaderVariants
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_NoHeader_FallsBackToFullText
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_StopsAtSentenceEndBeforeFollowingBody
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_WithHeader_ReturnsSectionText
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_WordCrOnly_StopsAtSentenceEnd
+PASS PatentMarker.Tests.MarkingTextParserTests.HtmlLineBreaks_DirectExtract_TreatedAsSpace
+PASS PatentMarker.Tests.MarkingTextParserTests.HtmlLineBreaks_DocumentPath_NormalizedToLineBreak
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_BareLineSkippedWhenPunctuated
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_MixedFormats_NoOverlapKept
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_NewFormatDroppedWhenOverlappingOld
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_EnglishSemicolonDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_LetterDigitSuffix_StopsAtDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_NumberName_Delimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_LetterDigitSuffix_StopsAtDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_NameNumber
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_SubNumberWithHyphen
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_UppercaseSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern3_BareListPerLine
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern3_LetterDigitSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.PatternA_NameParenNumber
+PASS PatentMarker.Tests.MarkingTextParserTests.PatternB_NumberParenName
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_LetterDigitSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_MixedRows_ThenExtract
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_NameCellFirst
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_NumberCellFirst
+PASS PatentMarker.Tests.NumberIdentityTests.AreEqual_TrimsAndIgnoresCase
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_MatchesNormalizedDictionaryKeys
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_ProducesTheSameHashCodeForEqualValues
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_UsesTheSameRuleAsAreEqual
+PASS PatentMarker.Tests.NumberIdentityTests.Normalize_NullBecomesEmpty
+PASS PatentMarker.Tests.ParserContractTests.TrackedContractSamplesMatchExpectedHits
+PASS PatentMarker.Tests.PatCheckResultTests.ResultsAreIndependentPerDocumentAndReleaseRemovesState
+PASS PatentMarker.Tests.PatCheckResultTests.UnmarkedLookupIsCaseInsensitiveLikeNumberIdentity
+PASS PatentMarker.Tests.PatReleaseManifestTests.HashMismatch_ReturnsFail
+PASS PatentMarker.Tests.PatReleaseManifestTests.MalformedManifest_ReturnsFail
+PASS PatentMarker.Tests.PatReleaseManifestTests.MatchingManifest_ReturnsPass
+PASS PatentMarker.Tests.PatReleaseManifestTests.MissingManifest_ReturnsSkip
+PASS PatentMarker.Tests.PatReleaseManifestTests.MvidMismatch_ReturnsFail
+PASS PatentMarker.Tests.PatSettingsTests.Activate_IsolatesRuntimeSettingsByDrawing
+PASS PatentMarker.Tests.PatSettingsTests.Apply_UsesConfigValuesAndResetRestoresDefaults
+PASS PatentMarker.Tests.PatSettingsTests.DictFileVisibility_RoundTripsExplicitChoice
+PASS PatentMarker.Tests.RuntimeHostTests.ActiveDocument_UsesInjectedHostDocument
+PASS PatentMarker.Tests.RuntimeHostTests.ClearOverride_ReturnsToApplicationHost
+SUMMARY: passed=129 failed=7 skipped=0
+FAILURES:
+ - PatentMarker.Tests.DictConflictBoundaryTests.LockedBackupCleanup_PreservesFullAttributesAndAllowsRetry : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Normal
+ - PatentMarker.Tests.DictConflictBoundaryTests.RestoreReadOnlyAndLockedCurrent_PreservesBackupThenRecovers : NullException: Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   DictModel { Entries = [DictEntry { Conflicts = [������], Name = "cad", Number = "901", Occurrences = 0 }], Metadata = DictMetadata { ExtractedAt = "", ModifiedAt = null, ModifiedBy = null, SourceFile = "", Version = "" }, Warnings = [] }
+ - PatentMarker.Tests.DictWriterBoundaryTests.AtomicRewrite_PreservesAllSettableAttributes : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Hidden | System | Archive
+ - PatentMarker.Tests.DictWriterBoundaryTests.DeniedReplace_DoesNotUseMetadataLosingOverwriteMove : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True
+ - PatentMarker.Tests.DictWriterBoundaryTests.ExistingForeignTemp_IsNeverOverwrittenOrDeleted : FileNotFoundException: Could not find file '<USERPROFILE>\AppData\Local\Temp\PatentWriterBoundary_3bda8bd86e2a442cbea222ec51681b06\test.dict.json.tmp'.
+ - PatentMarker.Tests.DictWriterBoundaryTests.LockedTarget_RetainsBytesAndAttributes_ThenRecovers : EqualException: Assert.Equal() Failure: Values differ
+Expected: Hidden | System | Archive | NotContentIndexed
+Actual:   Normal
+ - PatentMarker.Tests.DictWriterBoundaryTests.ReadOnlyTarget_IsRejectedWithoutChangingBytesOrAttributes : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True

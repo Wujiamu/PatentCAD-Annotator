@@ -1,6 +1,7 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PatentMarker.Commands
@@ -105,6 +106,16 @@ namespace PatentMarker.Commands
         /// </summary>
         public static void AppendTextEndpoint(Leader leader, Point3d textPoint, double textHeight)
         {
+            // In unlimited mode Enter makes the final pick the text anchor.
+            // Replace that coincident terminal rather than retaining a vertex
+            // on the text corner (zero gap).
+            if (leader.NumVertices > 1 && SamePoint(
+                leader.VertexAt(leader.NumVertices - 1), textPoint))
+            {
+                leader.SetVertexAt(leader.NumVertices - 1, Retract(
+                    leader.VertexAt(leader.NumVertices - 2), textPoint, textHeight));
+                return;
+            }
             Point3d retracted = textPoint;
             if (leader.NumVertices > 0)
                 retracted = Retract(leader.VertexAt(leader.NumVertices - 1), textPoint, textHeight);
@@ -129,6 +140,17 @@ namespace PatentMarker.Commands
                 : leader.VertexAt(leader.NumVertices - 2);
             leader.SetVertexAt(leader.NumVertices - 1,
                 Retract(previous, textPoint, textHeight));
+        }
+
+        public static void RouteTextPath(Leader leader,MText text)
+        {
+            List<Point3d> original=new List<Point3d>();
+            for(int i=0;i<leader.NumVertices;i++)original.Add(leader.VertexAt(i));
+            Extents3d box=text.GeometricExtents;
+            List<Point3d> route=PatTextPathRouting.Route(original,box.MinPoint,box.MaxPoint,text.TextHeight);
+            if(route.Count==original.Count)return;
+            for(int i=0;i<route.Count;i++)
+                if(i<leader.NumVertices)leader.SetVertexAt(i,route[i]);else leader.AppendVertex(route[i]);
         }
 
         /// <summary>

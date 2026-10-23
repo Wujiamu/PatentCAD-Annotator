@@ -1,0 +1,16 @@
+{
+  "result": "PASS",
+  "scope": "Observed real GUI native grip event reproduction only, no product pass claim",
+  "pid": 7672,
+  "hwnd": 984940,
+  "steps": [
+    "01 formal input.dwg idle no modal",
+    "02 select text873,309",
+    "03 hot text grip865,304",
+    "04 move946,346 ghost preview",
+    "05 click946,346 commit",
+    "06 Escape idle; visible moved text remains"
+  ],
+  "state": "Normal UI close; observed save prompt No; own PID7672 exited and Get-Process acad empty; control returned root",
+  "toolSHA256": "FADCAA1A14A5EBC24AFD70F63450CA6251E1382A58E5894733E6318B524AA597"
+}

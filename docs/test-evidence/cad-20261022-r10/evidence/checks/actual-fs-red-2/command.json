@@ -1,0 +1,19 @@
+{
+  "id": "actual-fs-red-2",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/fs-probe/bin/Release/net8.0-windows/FsProbe.dll",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\candidate-release\\2025\\PatentMarker.dll",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl/evidence/actual-fs/red/2"
+  ],
+  "cwd": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl",
+  "started": "2026-10-22T11:42:16.5594980+08:00",
+  "finished": "2026-10-22T11:42:17.3623025+08:00",
+  "owned_pid": 16324,
+  "environment": {},
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_ms": 802.779,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\actual-fs-red-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\actual-fs-red-2\\stderr.txt"
+}

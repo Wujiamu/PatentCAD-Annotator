@@ -1,0 +1,20 @@
+{
+  "recorded_utc": "2026-10-22T14:58:51.2716656+00:00",
+  "identity": "<LOCAL-REVIEWER>",
+  "powershell": "7.6.5",
+  "dotnet_sdks": [
+    "8.0.422 [C:\\Program Files\\dotnet\\sdk]"
+  ],
+  "os": "Microsoft Windows NT 10.0.19045.0",
+  "host_path": "C:/Program Files/Autodesk/AutoCAD 2026/acad.exe",
+  "host_product_version": "R25.1.60.0.0",
+  "core_product_version": "25.1.60.0.0",
+  "candidate_path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/candidate-history-isolated/2025/PatentMarker.dll",
+  "candidate_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "candidate_mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "capture_method": "previously authorized CadDesktopFallback GDI/SendInput",
+  "capture_dll_sha256": "fadcaa1a14a5ebc24afd70f63450ca6251e1382a58e5894733e6318b524aa597",
+  "monitor_started": false,
+  "graphics_security_service_changes": false,
+  "view_note": "Only B test view zoom and temporary UCSICON OFF, restored ON and saved"
+}

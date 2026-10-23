@@ -1,0 +1,220 @@
+2026-10-22T02:57:42.3620771Z Current runner version: '2.338.0'
+2026-10-22T02:57:42.3648892Z ##[group]Runner Image Provisioner
+2026-10-22T02:57:42.3649720Z Hosted Compute Agent
+2026-10-22T02:57:42.3650392Z Version: 20261015.610
+2026-10-22T02:57:42.3651076Z Commit: 267fdb4e8bbec4ab5ea31367f3a00d5c480c7656
+2026-10-22T02:57:42.3651842Z Build Date: 2026-10-14T17:06:54Z
+2026-10-22T02:57:42.3652534Z Worker ID: {0cf1b7e4-b7aa-48d6-9bd2-40d27b92265d}
+2026-10-22T02:57:42.3653190Z Region: westus
+2026-10-22T02:57:42.3653722Z Cloud: Azure
+2026-10-22T02:57:42.3654228Z ##[endgroup]
+2026-10-22T02:57:42.3655586Z ##[group]Operating System
+2026-10-22T02:57:42.3656260Z Microsoft Windows Server 2025
+2026-10-22T02:57:42.3656831Z 10.0.26100
+2026-10-22T02:57:42.3657345Z Datacenter
+2026-10-22T02:57:42.3657851Z ##[endgroup]
+2026-10-22T02:57:42.3658336Z ##[group]Runner Image
+2026-10-22T02:57:42.3658900Z Image: windows-2025-vs2026
+2026-10-22T02:57:42.3659458Z Version: 20261018.275.1
+2026-10-22T02:57:42.3660976Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261018.275/images/windows/Windows2025-VS2026-Readme.md
+2026-10-22T02:57:42.3662673Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261018.275
+2026-10-22T02:57:42.3663660Z ##[endgroup]
+2026-10-22T02:57:42.3664814Z ##[group]GITHUB_TOKEN Permissions
+2026-10-22T02:57:42.3667197Z Contents: read
+2026-10-22T02:57:42.3667841Z Metadata: read
+2026-10-22T02:57:42.3668395Z Packages: read
+2026-10-22T02:57:42.3668916Z ##[endgroup]
+2026-10-22T02:57:42.3671008Z Secret source: Actions
+2026-10-22T02:57:42.3671946Z Cache mode: write
+2026-10-22T02:57:42.3672646Z Prepare workflow directory
+2026-10-22T02:57:42.4051313Z Prepare all required actions
+2026-10-22T02:57:42.4103160Z Getting action download info
+2026-10-22T02:57:42.7321244Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-22T02:57:42.8669171Z Download action repository 'actions/setup-dotnet@v4' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+2026-10-22T02:57:43.4539278Z Complete job name: Portable unit tests
+2026-10-22T02:57:43.6118426Z ##[group]Run actions/checkout@v4
+2026-10-22T02:57:43.6119793Z with:
+2026-10-22T02:57:43.6120318Z   repository: Wujiamu/PatentCAD-Annotator
+2026-10-22T02:57:43.6124457Z   token: ***
+2026-10-22T02:57:43.6124916Z   ssh-strict: true
+2026-10-22T02:57:43.6125366Z   ssh-user: git
+2026-10-22T02:57:43.6125827Z   persist-credentials: true
+2026-10-22T02:57:43.6126328Z   clean: true
+2026-10-22T02:57:43.6126788Z   sparse-checkout-cone-mode: true
+2026-10-22T02:57:43.6127388Z   fetch-depth: 1
+2026-10-22T02:57:43.6127826Z   fetch-tags: false
+2026-10-22T02:57:43.6128302Z   show-progress: true
+2026-10-22T02:57:43.6128769Z   lfs: false
+2026-10-22T02:57:43.6129187Z   submodules: false
+2026-10-22T02:57:43.6129644Z   set-safe-directory: true
+2026-10-22T02:57:43.6130174Z   allow-unsafe-pr-checkout: false
+2026-10-22T02:57:43.6131035Z ##[endgroup]
+2026-10-22T02:57:43.7694014Z Syncing repository: Wujiamu/PatentCAD-Annotator
+2026-10-22T02:57:43.7696057Z ##[group]Getting Git version info
+2026-10-22T02:57:43.7696971Z Working directory is 'D:\a\PatentCAD-Annotator\PatentCAD-Annotator'
+2026-10-22T02:57:43.8658794Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-22T02:57:44.1780203Z git version 2.56.0.windows.2
+2026-10-22T02:57:44.1833871Z ##[endgroup]
+2026-10-22T02:57:44.1852698Z Temporarily overriding HOME='D:\a\_temp\dc551eae-8cc8-46fe-b955-d86e8b4d8457' before making global git config changes
+2026-10-22T02:57:44.1854638Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T02:57:44.1863307Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+2026-10-22T02:57:44.2536790Z Deleting the contents of 'D:\a\PatentCAD-Annotator\PatentCAD-Annotator'
+2026-10-22T02:57:44.2543751Z ##[group]Initializing the repository
+2026-10-22T02:57:44.2552653Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+2026-10-22T02:57:44.3503326Z Initialized empty Git repository in D:/a/PatentCAD-Annotator/PatentCAD-Annotator/.git/
+2026-10-22T02:57:44.3551775Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/Wujiamu/PatentCAD-Annotator
+2026-10-22T02:57:44.4411302Z ##[endgroup]
+2026-10-22T02:57:44.4414023Z ##[group]Disabling automatic garbage collection
+2026-10-22T02:57:44.4423298Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-22T02:57:44.4868663Z ##[endgroup]
+2026-10-22T02:57:44.4871248Z ##[group]Setting up auth
+2026-10-22T02:57:44.4883169Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T02:57:44.5303745Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-22T02:57:45.9703008Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T02:57:46.0088609Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-22T02:57:46.5864786Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T02:57:46.6287235Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-22T02:57:47.2153791Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-22T02:57:47.2559607Z ##[endgroup]
+2026-10-22T02:57:47.2560329Z ##[group]Fetching the repository
+2026-10-22T02:57:47.2576098Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +ba765aaf2567bc01dd0e3192a9348f592ed44ca3:refs/remotes/pull/3/merge
+2026-10-22T02:57:48.5977929Z From https://github.com/Wujiamu/PatentCAD-Annotator
+2026-10-22T02:57:48.5979124Z  * [new ref]         ba765aaf2567bc01dd0e3192a9348f592ed44ca3 -> pull/3/merge
+2026-10-22T02:57:48.6021370Z ##[endgroup]
+2026-10-22T02:57:48.6022434Z ##[group]Determining the checkout info
+2026-10-22T02:57:48.6024514Z ##[endgroup]
+2026-10-22T02:57:48.6034541Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-22T02:57:48.6559685Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-22T02:57:48.6995761Z ##[group]Checking out the ref
+2026-10-22T02:57:48.7007325Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/3/merge
+2026-10-22T02:57:49.0095244Z Note: switching to 'refs/remotes/pull/3/merge'.
+2026-10-22T02:57:49.0095968Z 
+2026-10-22T02:57:49.0096400Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-22T02:57:49.0097876Z changes and commit them, and you can discard any commits you make in this
+2026-10-22T02:57:49.0099317Z state without impacting any branches by switching back to a branch.
+2026-10-22T02:57:49.0100439Z 
+2026-10-22T02:57:49.0100921Z If you want to create a new branch to retain commits you create, you may
+2026-10-22T02:57:49.0101918Z do so (now or later) by using -c with the switch command. Example:
+2026-10-22T02:57:49.0102463Z 
+2026-10-22T02:57:49.0102753Z   git switch -c <new-branch-name>
+2026-10-22T02:57:49.0103162Z 
+2026-10-22T02:57:49.0103428Z Or undo this operation with:
+2026-10-22T02:57:49.0103850Z 
+2026-10-22T02:57:49.0104057Z   git switch -
+2026-10-22T02:57:49.0104374Z 
+2026-10-22T02:57:49.0104828Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-22T02:57:49.0105517Z 
+2026-10-22T02:57:49.0107702Z HEAD is now at ba765aa Merge 8eae5e2c7f26ae47afb5f3c37da4ba633002c1b3 into b945b1a68fec26ada268b5a4ee3ac066386e96ab
+2026-10-22T02:57:49.0745843Z ##[endgroup]
+2026-10-22T02:57:49.0754299Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-22T02:57:49.1115925Z ba765aaf2567bc01dd0e3192a9348f592ed44ca3
+2026-10-22T02:57:49.1690497Z ##[group]Run actions/setup-dotnet@v4
+2026-10-22T02:57:49.1690914Z with:
+2026-10-22T02:57:49.1691125Z   dotnet-version: 8.0.x
+2026-10-22T02:57:49.1691370Z   cache: false
+2026-10-22T02:57:49.1691565Z ##[endgroup]
+2026-10-22T02:57:49.3449481Z (node:8160) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T02:57:49.3450370Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T02:57:49.4558862Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Runtime dotnet -Channel LTS
+2026-10-22T02:57:50.7505765Z dotnet-install: .NET Core Runtime with version '10.0.13' is already installed.
+2026-10-22T02:57:50.9053666Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Channel 8.0
+2026-10-22T02:57:51.6887598Z dotnet-install: .NET Core SDK with version '8.0.426' is already installed.
+2026-10-22T02:57:51.7999786Z ##[group]Run dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
+2026-10-22T02:57:51.8000872Z [36;1mdotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal[0m
+2026-10-22T02:57:51.8479671Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-22T02:57:51.8480183Z env:
+2026-10-22T02:57:51.8480490Z   DOTNET_ROOT: C:\Program Files\dotnet
+2026-10-22T02:57:51.8480850Z ##[endgroup]
+2026-10-22T02:57:59.6892155Z   Determining projects to restore...
+2026-10-22T02:58:05.2947294Z   Restored D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj (in 4.87 sec).
+2026-10-22T02:58:12.3682295Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(57,42): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3691881Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(83,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3695046Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(87,50): warning CS8602: Dereference of a possibly null reference. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3698079Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(112,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3701242Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(214,48): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3704703Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,51): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3708138Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,57): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3712014Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(94,53): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3718617Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(123,57): warning CS8604: Possible null reference argument for parameter 'current' in 'bool DictConflict.IsPendingConflict(DictModel current, string dictPath)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3731883Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(129,74): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3742719Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(105,32): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3747442Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(109,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3760159Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(123,49): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3772193Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(48,56): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3793239Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(49,26): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3814661Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(50,63): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3822324Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(53,29): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3834551Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(65,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3840195Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(112,28): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3861447Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(117,38): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3876479Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(121,28): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3886999Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(129,32): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3895885Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(136,24): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3906123Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(141,24): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3917225Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteSessionTests.cs(16,32): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3927534Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\MarkingTextParser.cs(124,33): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3939779Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\MarkingTextParser.cs(133,35): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3948412Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteWorkflowTests.cs(26,44): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3952679Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3957502Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8602: Dereference of a possibly null reference. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3962734Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(59,33): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3969473Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(102,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3974871Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(82,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3980187Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(109,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3985471Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(166,26): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3991335Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(174,26): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.3996816Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(15,26): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4001861Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(25,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4006894Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(31,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4012644Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(36,27): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4017709Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(40,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4022664Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(60,62): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4027729Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(65,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4033391Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(69,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4040183Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(70,85): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4047407Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(71,59): warning CS8604: Possible null reference argument for parameter 'diff' in 'ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4055476Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(119,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4060202Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(120,85): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4071820Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(121,58): warning CS8604: Possible null reference argument for parameter 'diff' in 'ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4077032Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(133,37): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4083057Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(111,26): warning CS8618: Non-nullable field 'Source' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4090290Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(31,28): warning CS8601: Possible null reference assignment. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4097471Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(65,28): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4109026Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(66,28): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4120404Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(25,26): warning CS8618: Non-nullable field 'NewEntry' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4125924Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(27,26): warning CS8618: Non-nullable field 'OldEntry' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4130616Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(15,27): warning CS8618: Non-nullable field '_currentDict' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4134797Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(16,37): warning CS8618: Non-nullable field '_currentDiff' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4139228Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictWriterTests.cs(285,41): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+2026-10-22T02:58:12.4902174Z   PatentMarker.Tests -> D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\bin\Release\net8.0-windows\PatentMarker.Tests.dll
+2026-10-22T02:58:12.5041908Z Test run for D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\bin\Release\net8.0-windows\PatentMarker.Tests.dll (.NETCoreApp,Version=v8.0)
+2026-10-22T02:58:13.2238589Z A total of 1 test files matched the specified pattern.
+2026-10-22T02:58:16.5866628Z [xUnit.net 00:00:00.80]     PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime [FAIL]
+2026-10-22T02:58:17.2432544Z   Failed PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime [32 ms]
+2026-10-22T02:58:17.2433607Z   Error Message:
+2026-10-22T02:58:17.2436079Z    ACL before=O:BAG:<RUNNER-SID>D:(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;LA) after=O:BAG:<RUNNER-SID>D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;LA)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;LA) parent=O:BAG:<RUNNER-SID>D:(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;LA)
+2026-10-22T02:58:17.2438778Z   Stack Trace:
+2026-10-22T02:58:17.2440420Z      at PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime() in D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictWriterBoundaryTests.cs:line 91
+2026-10-22T02:58:17.2443536Z    at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+2026-10-22T02:58:17.2444871Z    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-10-22T02:58:17.3066821Z 
+2026-10-22T02:58:17.3118721Z Failed!  - Failed:     1, Passed:   135, Skipped:     0, Total:   136, Duration: 1 s - PatentMarker.Tests.dll (net8.0)
+2026-10-22T02:58:17.7245351Z ##[error]Process completed with exit code 1.
+2026-10-22T02:58:17.7520385Z Post job cleanup.
+2026-10-22T02:58:17.9631497Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-22T02:58:18.0017202Z git version 2.56.0.windows.2
+2026-10-22T02:58:18.0097768Z Temporarily overriding HOME='D:\a\_temp\a50013db-1b26-45eb-b108-182079c35be7' before making global git config changes
+2026-10-22T02:58:18.0099162Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T02:58:18.0111385Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+2026-10-22T02:58:18.0546032Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T02:58:18.0978363Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-22T02:58:18.6855925Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T02:58:18.7206281Z http.https://github.com/.extraheader
+2026-10-22T02:58:18.7254838Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-22T02:58:18.7646285Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-22T02:58:19.3243977Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-22T02:58:19.3629610Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+2026-10-22T02:58:19.9628103Z Cleaning up orphan processes
+2026-10-22T02:58:19.9929260Z Terminate orphan process: pid (2672) (VBCSCompiler)
+2026-10-22T02:58:19.9984445Z Terminate orphan process: pid (2668) (conhost)
+2026-10-22T02:58:20.0020561Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-dotnet@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,4 +1,4 @@
-using Autodesk.AutoCAD.Geometry;
+﻿using Autodesk.AutoCAD.Geometry;
 using System;
 using System.Collections.Generic;
 
@@ -56,6 +56,19 @@ namespace PatentMarker.Commands
         private const double CornerAlongRatio = 8333.0 / 100000.0;
         private const double CubicKappa = 0.5522847498307936;
         private const int CurveSamples = 8;
+        // Bound allocations and the verifier's quadratic segment checks.
+        public const int MaxCurveSamples = 4096;
+
+        private static bool IsFinite(double value)
+        {
+            return !double.IsNaN(value) && !double.IsInfinity(value);
+        }
+
+        private static void RequireFinite(Point3d point)
+        {
+            if (!IsFinite(point.X) || !IsFinite(point.Y) || !IsFinite(point.Z))
+                throw new ArgumentException("Brace coordinates must be finite.");
+        }
 
         private struct LocalPoint
         {
@@ -72,6 +85,7 @@ namespace PatentMarker.Commands
         public static PatBraceDefinition FromPoints(
             Point3d top, Point3d bottom, Point3d widthPoint)
         {
+            RequireFinite(top); RequireFinite(bottom); RequireFinite(widthPoint);
             double dx = bottom.X - top.X;
             double dy = bottom.Y - top.Y;
             double height = Math.Sqrt(dx * dx + dy * dy);
@@ -96,8 +110,12 @@ namespace PatentMarker.Commands
         public static PatBraceDefinition Create(
             Point3d top, Point3d bottom, double width, int side)
         {
+            RequireFinite(top); RequireFinite(bottom);
+            if (!IsFinite(width)) throw new ArgumentException("Brace width must be finite.");
             double dx = bottom.X - top.X;
             double dy = bottom.Y - top.Y;
+            if (!IsFinite(Math.Sqrt(dx * dx + dy * dy)))
+                throw new ArgumentException("Brace height must be finite.");
             if (Math.Sqrt(dx * dx + dy * dy) < Epsilon)
                 throw new ArgumentException("Brace endpoints must be different.");
             if (Math.Abs(width) < Epsilon)
@@ -114,6 +132,8 @@ namespace PatentMarker.Commands
         public static PatBraceDefinition WithSize(
             PatBraceDefinition current, double height, double width)
         {
+            if (!IsFinite(height) || !IsFinite(width))
+                throw new ArgumentException("Brace size must be finite.");
             if (height < Epsilon)
                 throw new ArgumentException("Brace height must be greater than zero.");
             if (width < Epsilon)
@@ -150,6 +170,16 @@ namespace PatentMarker.Commands
 
         public static List<Point3d> BuildPoints(PatBraceDefinition definition)
         {
+            return BuildPoints(definition, CurveSamples);
+        }
+
+        public static List<Point3d> BuildPoints(
+            PatBraceDefinition definition, int curveSamples)
+        {
+            if (curveSamples < 1 || curveSamples > MaxCurveSamples)
+                throw new ArgumentOutOfRangeException("curveSamples");
+            if (definition == null) throw new ArgumentNullException("definition");
+            Create(definition.Top, definition.Bottom, definition.Width, definition.Side);
             double dx = definition.Bottom.X - definition.Top.X;
             double dy = definition.Bottom.Y - definition.Top.Y;
             double height = Math.Sqrt(dx * dx + dy * dy);
@@ -186,7 +216,7 @@ namespace PatentMarker.Commands
                 new LocalPoint(cornerAlong * (1.0 - CubicKappa),
                     stemOffset),
                 topShoulder, axisX, axisY, perpX, perpY,
-                definition, height, false);
+                definition, height, false, curveSamples);
 
             AddLocalPoint(points, upperStem, axisX, axisY, perpX, perpY,
                 definition, height);
@@ -199,14 +229,14 @@ namespace PatentMarker.Commands
                 new LocalPoint(centerAlong,
                     tipOffset - stemOffset * CubicKappa),
                 tip, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
             AppendCubic(points, tip,
                 new LocalPoint(centerAlong,
                     tipOffset - stemOffset * CubicKappa),
                 new LocalPoint(lowerStemAlong
                     - cornerAlong * CubicKappa, stemOffset),
                 lowerStem, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
 
             AddLocalPoint(points, bottomShoulder, axisX, axisY, perpX, perpY,
                 definition, height);
@@ -218,7 +248,7 @@ namespace PatentMarker.Commands
                 new LocalPoint(height,
                     stemOffset * CubicKappa),
                 bottom, axisX, axisY, perpX, perpY,
-                definition, height, true);
+                definition, height, true, curveSamples);
 
             // Keep the endpoints exact even if the shape table changes later.
             points[0] = definition.Top;
@@ -238,12 +268,12 @@ namespace PatentMarker.Commands
             double perpY,
             PatBraceDefinition definition,
             double height,
-            bool skipFirst)
+            bool skipFirst, int curveSamples)
         {
             int start = skipFirst ? 1 : 0;
-            for (int i = start; i <= CurveSamples; i++)
+            for (int i = start; i <= curveSamples; i++)
             {
-                double t = (double)i / (double)CurveSamples;
+                double t = (double)i / (double)curveSamples;
                 double oneMinusT = 1.0 - t;
                 double b0 = oneMinusT * oneMinusT * oneMinusT;
                 double b1 = 3.0 * oneMinusT * oneMinusT * t;

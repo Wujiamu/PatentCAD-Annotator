@@ -1,0 +1,19 @@
+{
+  "id": "accepted-bound-probe-sharp-2",
+  "exe": "dotnet",
+  "arguments": [
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/probe-accepted/AcceptanceProbe.dll",
+    "sharp",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/evidence/probes-accepted/2/sharp"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:47:03.1504198+08:00",
+  "finished": "2026-10-22T22:47:03.3150766+08:00",
+  "owned_pid": 31228,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 164.64,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-bound-probe-sharp-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-bound-probe-sharp-2\\stderr.txt"
+}

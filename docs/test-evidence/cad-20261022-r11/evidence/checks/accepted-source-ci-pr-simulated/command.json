@@ -1,0 +1,23 @@
+{
+  "id": "accepted-source-ci-pr-simulated",
+  "exe": "gh",
+  "arguments": [
+    "run",
+    "view",
+    "--repo",
+    "Wujiamu/PatentCAD-Annotator",
+    "--job",
+    "119879513014",
+    "--log"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T22:45:38.6179936+08:00",
+  "finished": "2026-10-22T22:45:40.7756097+08:00",
+  "owned_pid": 22260,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 2157.5736,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-source-ci-pr-simulated\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-source-ci-pr-simulated\\stderr.txt"
+}

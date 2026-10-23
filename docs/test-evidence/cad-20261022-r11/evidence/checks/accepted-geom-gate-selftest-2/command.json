@@ -1,0 +1,20 @@
+{
+  "id": "accepted-geom-gate-selftest-2",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<WORKSPACE>/tools/verify-geometry.ps1",
+    "-SelfTest"
+  ],
+  "cwd": "<WORKSPACE>",
+  "started": "2026-10-22T22:28:10.3825211+08:00",
+  "finished": "2026-10-22T22:28:11.4045765+08:00",
+  "owned_pid": 10272,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 1022.0264,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-geom-gate-selftest-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\checks\\accepted-geom-gate-selftest-2\\stderr.txt"
+}

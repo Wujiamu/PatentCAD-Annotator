@@ -1,0 +1,9 @@
+{
+  "RunId": "r9-empty",
+  "AssemblyPath": "C:\\selftest\\PatentMarker.dll",
+  "Sha256": "abc123",
+  "Mvid": "selftest-mvid",
+  "Braces": 0,
+  "Texts": 0,
+  "Summary": "braces=0 passed=0 failed=0 unreadable=0; texts=0 passed=0 failed=0 unreadable=0; requiredBraces=0 requiredTexts=0; strict=true"
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "original_unchanged": true,
+    "scope": "L3 fresh full acad process with installed candidate autoload, saved GUI drawing read through disposable copy; no new visual/G10 claim",
+    "original_sha256": "d896d2b6275b056af73344fd7eb2dc7ef9c7c58833674cf9cd8bbf202ef64c63",
+    "result": "PASS",
+    "native_exit": 0,
+    "drawing": "A",
+    "gate_exit": 0,
+    "source": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r8-20261020-facing-gap\\evidence\\gui-resume-20261021\\drawings\\r8-resume-A.dwg"
+  },
+  {
+    "original_unchanged": true,
+    "scope": "L3 fresh full acad process with installed candidate autoload, saved GUI drawing read through disposable copy; no new visual/G10 claim",
+    "original_sha256": "b30741f125024748ce354be5be6205f885d7564dddbbc75d0d7128e9a62b3e8e",
+    "result": "PASS",
+    "native_exit": 0,
+    "drawing": "B",
+    "gate_exit": 0,
+    "source": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r8-20261020-facing-gap\\evidence\\gui-resume-20261021\\drawings\\r8-resume-B.dwg"
+  }
+]

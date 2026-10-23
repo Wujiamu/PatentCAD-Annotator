@@ -1,0 +1,32 @@
+# PatentMarker Doctor Report
+
+- Generated: 2026-10-22 22:55:54
+- Drawing: <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\cold-saved\A\input.dwg
+
+## Environment
+
+- Assembly: <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\candidate-history-isolated\2025\PatentMarker.dll
+- Assembly SHA-256: 4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946
+- Assembly MVID: 798e256e-31a5-4599-80ad-97f7778de32a
+- Assembly version: 1.0.0.0
+- Informational version: 1.0.0+e24c9b141f687c5bfd36fd1e6fec354c904bd315
+- .NET Runtime: 8.0.28
+- BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+
+## Checks
+
+| # | Check | Result | Detail |
+|---|-------|--------|--------|
+| 1 | 报告目录可写 | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\candidate-history-isolated\2025 |
+| 2 | 发布清单身份 | PASS | identity matched: PatentMarker.dll \| MVID 798e256e-31a5-4599-80ad-97f7778de32a \| SHA-256 4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946 |
+| 3 | PAT_DIM 标注样式 | PASS | 箭头=2.5, 文字高度=3.5 |
+| 4 | TIMES_ROMAN 文字样式 | PASS | TIMES_ROMAN |
+| 5 | 运行设置 | PASS | 箭头大小=2.5, 文字高度=3.5 |
+| 6 | 字典 (.dict.json) | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r11-20261022-grip-routing\evidence\cold-saved\A\input.dict.json \| 1 条 \| 文件存在 |
+| 7 | 模型空间扫描 | PASS | 14 个实体，0 条引线，0 个多行文字 |
+
+Summary: PASS 7 / FAIL 0 / SKIP 0 | recent errors: 0
+
+## Recent errors
+
+(none)

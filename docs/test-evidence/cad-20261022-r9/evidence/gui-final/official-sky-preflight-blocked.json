@@ -1,0 +1,57 @@
+{
+  "recordedAt": "2026-10-22T10:25:28.2646543+08:00",
+  "operatorRole": "independent low reasoning desktop operator",
+  "interface": "official @oai/sky via node_repl",
+  "candidateSha256": "7aa122c8551c8ce0ae4b640e6f9e1a198fb971840ebc2294ababdd98de242f21",
+  "host": "AutoCAD 2026 Simplified Chinese",
+  "result": "SKIP/BLOCKED",
+  "stage": "official screenshot prerequisite",
+  "steps": [
+    "list_apps: AutoCAD2026 not running; no target window",
+    "launch_app using returned AutoCAD2026 app ID",
+    "transition window activation: foreground window did not report a process id",
+    "list_windows: unique formal window id525308 title Autodesk AutoCAD 2026 - [开始]",
+    "get_window_state: window capture timed out: timed out waiting on channel",
+    "bounded recovery list_windows: same unique formal window",
+    "retry get_window_state once: window capture timed out: timed out waiting on channel"
+  ],
+  "businessActionsExecuted": [],
+  "blockedAssertions": [
+    "A/B full drawing visual layout",
+    "PATDOCTOR/PATGEOMVERIFY final candidate reports",
+    "B-to-A dictionary isolation 901/902",
+    "A brace hot grip displacement preview and Escape restoration",
+    "G10 A/B save close GUI reopen persistence"
+  ],
+  "currentState": "Owned CAD instance normally exited from start page via Alt+F4; official list_apps confirms AutoCAD2026 isRunning=false windows=[]; Get-Process acad returned no process.",
+  "copiedFiles": [
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\gui-final\\drawings\\A.dict.json",
+      "sha256": "BE6B71A862890F66CD28E9ED7CAA445E76CE49A830B7AA7D5879FE3880E0210D",
+      "length": 294
+    },
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\gui-final\\drawings\\A.dwg",
+      "sha256": "D896D2B6275B056AF73344FD7EB2DC7EF9C7C58833674CF9CD8BBF202EF64C63",
+      "length": 43284
+    },
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\gui-final\\drawings\\B.dict.json",
+      "sha256": "A8437773AB0131F5F42E564404D3114C50C9828F373F8429F33608D27911597D",
+      "length": 294
+    },
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\gui-final\\drawings\\B.dwg",
+      "sha256": "B30741F125024748CE354BE5BE6205F885D7564DDDBBC75D0D7128E9A62B3E8E",
+      "length": 44338
+    }
+  ],
+  "cleanup": {
+    "result": "PASS",
+    "observation": "get_window_state include_screenshot=false include_text=true confirmed AutoCAD Home start page",
+    "action": "Alt_L+F4",
+    "verification": "official list_apps isRunning=false windows=[]; no acad process",
+    "drawingsOpened": false,
+    "settingsChanged": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "result": "FAIL",
+  "role": "independent low desktop operator",
+  "pid": 25792,
+  "hwnd": 7210218,
+  "candidateSha256": "6182c08b6c14da1b066bb8ad6bcf98bba435d2b870b7d5f74364cb69a4acaac1",
+  "checks": [
+    {
+      "result": "PASS",
+      "name": "native text grip commit",
+      "actual": "moved from (865,188) to (1110,240)",
+      "expected": "901 text visibly moves",
+      "evidence": [
+        "03-selected/window.png",
+        "04-hot/window.png",
+        "05-commit/window.png",
+        "06-idle/window.png"
+      ]
+    },
+    {
+      "result": "PASS",
+      "name": "single undo",
+      "actual": "original curve and 901 position restored",
+      "expected": "restores original position",
+      "evidence": [
+        "07-undo/window.png"
+      ]
+    },
+    {
+      "result": "FAIL",
+      "name": "immediate redo",
+      "actual": "original position remains; command line _mredo reports no operations to redo",
+      "expected": "restores moved position",
+      "evidence": [
+        "08-redo/window.png"
+      ]
+    },
+    {
+      "result": "SKIP/BLOCKED",
+      "name": "cancel and A/B persistence",
+      "actual": "stopped at product failure as required"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "actual": "Normal application close via titlebar; clicked No on save prompt for temporary history-A.dwg; PID25792 exited and no acad process remains",
+    "evidence": [
+      "09-cleanup-ready/window.png",
+      "10-exit-prompt/window.png"
+    ],
+    "checkedAt": "2026-10-22T22:19:59.6847942+08:00"
+  },
+  "drawings": [
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-resume\\drawings\\history-A.dwg",
+      "sha256": "95B7DD83C8FEAAEDD01AFC33DBFA5837659C2F046D870CA41E1198302277D848"
+    },
+    {
+      "path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\gui-history-resume\\drawings\\history-B.dwg",
+      "sha256": "E5BE2753545E690ED8F249501D224F19BFF5506C287CFDE1540D05854B0641E4"
+    }
+  ]
+}

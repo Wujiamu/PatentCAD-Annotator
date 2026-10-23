@@ -1,0 +1,275 @@
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(57,42): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(83,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(87,50): warning CS8602: 解引用可能出现空引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(15,26): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(25,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(112,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(31,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(36,27): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(40,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(60,62): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(65,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(104,32): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,51): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,57): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(48,56): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(49,26): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(50,63): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(53,29): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(65,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(214,48): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(111,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "Source" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(31,28): warning CS8601: 可能�?null 引用赋值�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(65,28): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(66,28): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(15,27): warning CS8618: 在退出构造函数时，不可为 null �?字段 "_currentDict" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(16,37): warning CS8618: 在退出构造函数时，不可为 null �?字段 "_currentDiff" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(112,28): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(117,38): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(121,28): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(129,32): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(136,24): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(141,24): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(69,28): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(70,85): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(71,59): warning CS8604: “ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)”中的形参“diff”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(94,53): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(123,57): warning CS8604: “bool DictConflict.IsPendingConflict(DictModel current, string dictPath)”中的形参“current”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(129,74): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(119,28): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(120,85): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(121,58): warning CS8604: “ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)”中的形参“diff”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(133,37): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\MarkingTextParser.cs(124,33): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\MarkingTextParser.cs(133,35): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteWorkflowTests.cs(26,44): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(82,40): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(109,40): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(166,26): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(174,26): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteSessionTests.cs(16,32): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8602: 解引用可能出现空引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(59,33): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(102,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(25,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "NewEntry" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(27,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "OldEntry" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictWriterTests.cs(285,41): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+
+已成功生成�?
+
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(57,42): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(83,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(87,50): warning CS8602: 解引用可能出现空引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(15,26): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(25,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(112,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(31,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(36,27): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(40,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(60,62): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(65,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(104,32): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\PatSettings.cs(108,36): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,51): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,57): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(48,56): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(49,26): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(50,63): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(53,29): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(65,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(214,48): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(111,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "Source" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(31,28): warning CS8601: 可能�?null 引用赋值�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(65,28): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(66,28): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(15,27): warning CS8618: 在退出构造函数时，不可为 null �?字段 "_currentDict" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteSession.cs(16,37): warning CS8618: 在退出构造函数时，不可为 null �?字段 "_currentDiff" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(112,28): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(117,38): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(121,28): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(129,32): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(136,24): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictConflict.cs(141,24): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(69,28): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(70,85): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(71,59): warning CS8604: “ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)”中的形参“diff”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(94,53): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(123,57): warning CS8604: “bool DictConflict.IsPendingConflict(DictModel current, string dictPath)”中的形参“current”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(129,74): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(119,28): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(120,85): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(121,58): warning CS8604: “ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)”中的形参“diff”可能传�?null 引用实参�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(133,37): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\MarkingTextParser.cs(124,33): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\MarkingTextParser.cs(133,35): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteWorkflowTests.cs(26,44): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(82,40): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(109,40): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(166,26): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(174,26): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteSessionTests.cs(16,32): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8602: 解引用可能出现空引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(59,33): warning CS8625: 无法�?null 字面量转换为�?null 的引用类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(102,20): warning CS8603: 可能返回 null 引用�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(25,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "NewEntry" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\Shared\IO\DictDiff.cs(27,26): warning CS8618: 在退出构造函数时，不可为 null �?字段 "OldEntry" 必须包含�?null 值。请考虑添加 "required" 修饰符或将该 字段 声明为可�?null�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\DictWriterTests.cs(285,41): warning CS8600: �?null 文本或可能的 null 值转换为不可�?null 类型�?[<BUILD_WORKTREE>\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+    58 个警�?
+    0 个错�?
+
+已用时间 00:00:03.68
+
+已成功生成�?
+    0 个警�?
+    0 个错�?
+
+已用时间 00:00:01.90
+PASS PatentMarker.Tests.CorpusComparisonTests.Corpus_CSharpMatchesVbaExpected
+PASS PatentMarker.Tests.DictConflictBoundaryTests.LockedBackupCleanup_PreservesFullAttributesAndAllowsRetry
+PASS PatentMarker.Tests.DictConflictBoundaryTests.RestoreMissingOrCorruptBackup_PreservesCurrent
+PASS PatentMarker.Tests.DictConflictBoundaryTests.RestoreReadOnlyAndLockedCurrent_PreservesBackupThenRecovers
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresLongMalformedTimestamp
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresMalformedTimestamp
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_IgnoresOtherBackups
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_NoBackup_ReturnsNull
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_NullOrEmptyPath_ReturnsNull
+PASS PatentMarker.Tests.DictConflictTests.FindWordBackup_PicksLatestByName
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_BackupAndCadMark_False
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_BackupAndNoCadMark_True
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_NoBackup_False
+PASS PatentMarker.Tests.DictConflictTests.IsPendingConflict_NullPath_False
+PASS PatentMarker.Tests.DictConflictTests.ResolveKeepWord_DeletesBackup
+PASS PatentMarker.Tests.DictConflictTests.ResolveKeepWord_MissingBackup_StillTrue
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_InvalidBackup_DoesNotOverwriteCurrent
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_MissingBackup_ReturnsNullWithError
+PASS PatentMarker.Tests.DictConflictTests.ResolveRestoreCad_RestoresBackupAndClearsMark
+PASS PatentMarker.Tests.DictDiffTests.Compute_BothChanged_DetectedAsBothUnmatched
+PASS PatentMarker.Tests.DictDiffTests.Compute_BothNull_ReturnsEmpty
+PASS PatentMarker.Tests.DictDiffTests.Compute_EmptyEntries_ReturnsEmpty
+PASS PatentMarker.Tests.DictDiffTests.Compute_EntryAdded_DetectedAsAdded
+PASS PatentMarker.Tests.DictDiffTests.Compute_EntryRemoved_DetectedAsRemoved
+PASS PatentMarker.Tests.DictDiffTests.Compute_IdicalEntries_AllUnchanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_MixedChanges_CorrectCounts
+PASS PatentMarker.Tests.DictDiffTests.Compute_NameChanged_DetectedAsNameChanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_NewNull_AllRemoved
+PASS PatentMarker.Tests.DictDiffTests.Compute_NumberChanged_DetectedAsNumberChanged
+PASS PatentMarker.Tests.DictDiffTests.Compute_OldNull_AllAdded
+PASS PatentMarker.Tests.DictDiffTests.DictDiffEntry_AddedEntry_OldFieldsAreEmpty
+PASS PatentMarker.Tests.DictDiffTests.DictDiffEntry_RemovedEntry_NewFieldsAreEmpty
+PASS PatentMarker.Tests.DictDiffTests.Summarize_EnglishLang_ReturnsEnglishString
+PASS PatentMarker.Tests.DictDiffTests.Summarize_MixedChanges_ReturnsFormattedString
+PASS PatentMarker.Tests.DictLoaderTests.ClearPrevious_ClearsOnlyPreviousModel
+PASS PatentMarker.Tests.DictLoaderTests.InvalidateCache_ClearsAllState
+PASS PatentMarker.Tests.DictLoaderTests.Load_EmptyEntries_ReturnsEmptyList
+PASS PatentMarker.Tests.DictLoaderTests.Load_EmptyObject_ReturnsEmptyModel
+PASS PatentMarker.Tests.DictLoaderTests.Load_FileNotFound_ReturnsNull
+PASS PatentMarker.Tests.DictLoaderTests.Load_InvalidJson_ReturnsNull
+PASS PatentMarker.Tests.DictLoaderTests.Load_NullCollectionsAndNestedValues_AreNormalized
+PASS PatentMarker.Tests.DictLoaderTests.Load_RealWorldFormat_ParsesCorrectly
+PASS PatentMarker.Tests.DictLoaderTests.Load_TrailingCommas_ParsesSuccessfully
+PASS PatentMarker.Tests.DictLoaderTests.Load_ValidJson_ParsesEntries
+PASS PatentMarker.Tests.DictLoaderTests.Load_ValidJson_ParsesMetadata
+PASS PatentMarker.Tests.DictLoaderTests.Load_WithConflicts_ParsesConflictInfo
+PASS PatentMarker.Tests.DictLoaderTests.Load_WithWarnings_ParsesWarnings
+PASS PatentMarker.Tests.DictLoaderTests.PaletteWorkflow_UsesConfiguredFallbackPath
+PASS PatentMarker.Tests.DictPaletteSessionTests.LoadComputesDiffAndClearDropsDocumentState
+PASS PatentMarker.Tests.DictPaletteSessionTests.LoadProjectsEntriesAndFiltersWithoutUi
+PASS PatentMarker.Tests.DictPaletteViewRendererTests.CompareRowsKeepRemovedEntriesAndFilteringKeepsDiffColumns
+PASS PatentMarker.Tests.DictPaletteViewRendererTests.RendererUsesTheSelectedDocumentCheckResult
+PASS PatentMarker.Tests.DictPaletteWorkflowTests.FindEntryReturnsNullForMissingOrEmptyDictionary
+PASS PatentMarker.Tests.DictPaletteWorkflowTests.FindEntryUsesSharedNumberIdentityRules
+PASS PatentMarker.Tests.DictWriterBoundaryTests.AtomicRewrite_PreservesAllSettableAttributes
+PASS PatentMarker.Tests.DictWriterBoundaryTests.DeniedReplace_DoesNotUseMetadataLosingOverwriteMove
+PASS PatentMarker.Tests.DictWriterBoundaryTests.ExistingForeignTemp_IsNeverOverwrittenOrDeleted
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.LegacyAclRepairDenied_RollsBackOriginalBytesSecurityAndStreams : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True
+FAIL PatentMarker.Tests.DictWriterBoundaryTests.LegacyInheritedAcl_WithStreamsAndCreationTime_IsPreservedExactly : TrueException: ACL before=O:<RUNNER-SID>G:<RUNNER-SID>D:(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>) after=O:<RUNNER-SID>G:<RUNNER-SID>D:AI(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)
+PASS PatentMarker.Tests.DictWriterBoundaryTests.LockedTarget_RetainsBytesAndAttributes_ThenRecovers
+PASS PatentMarker.Tests.DictWriterBoundaryTests.ReadOnlyTarget_IsRejectedWithoutChangingBytesOrAttributes
+PASS PatentMarker.Tests.DictWriterBoundaryTests.Replace_PreservesNamedStreamAclAndCreationTime
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_EmptyRows_ReturnsNull
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_CaseInsensitiveNumberMatch
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_DoesNotMutateCurrentModel
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Merge_UpdatesExistingAppendsNew_KeepsOrder
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Overwrite_DropsOldEntries
+PASS PatentMarker.Tests.DictWriterTests.BuildWriteModel_Overwrite_ReplacesAllWithRows
+PASS PatentMarker.Tests.DictWriterTests.Serialize_ChineseNotEscaped_Utf8Plain
+PASS PatentMarker.Tests.DictWriterTests.Serialize_CrlfLineEndings
+PASS PatentMarker.Tests.DictWriterTests.Serialize_EmptyCollections
+PASS PatentMarker.Tests.DictWriterTests.Serialize_EntryKeyOrder
+PASS PatentMarker.Tests.DictWriterTests.Serialize_IncludesModifiedFields_WhenSet
+PASS PatentMarker.Tests.DictWriterTests.Serialize_IndentedTwoSpaces
+PASS PatentMarker.Tests.DictWriterTests.Serialize_KeyOrder_MetadataFirst
+PASS PatentMarker.Tests.DictWriterTests.Serialize_NoModifiedFields_WhenNull
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_AddNewEntry
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_CaseInsensitive
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_IgnoreSelf
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_Conflict_Rejects
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_EmptyFields_Rejected
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_ModifyNumberAndName
+PASS PatentMarker.Tests.DictWriterTests.TryApplyEdit_NullMetadata_IsRecovered
+PASS PatentMarker.Tests.DictWriterTests.TryRemoveEntry_NotInModel_ReturnsFalse
+PASS PatentMarker.Tests.DictWriterTests.TryRemoveEntry_RemovesAndMarks
+PASS PatentMarker.Tests.DictWriterTests.Write_MissingDirectory_ReturnsFalse
+PASS PatentMarker.Tests.DictWriterTests.Write_NewFileDefaultsToHidden
+PASS PatentMarker.Tests.DictWriterTests.Write_NoBom_Utf8
+PASS PatentMarker.Tests.DictWriterTests.Write_OverwritesExistingFile
+PASS PatentMarker.Tests.DictWriterTests.Write_PreservesVisibleManualEditChoice
+PASS PatentMarker.Tests.DictWriterTests.Write_ThenLoad_RoundTrip
+PASS PatentMarker.Tests.MarkingTextParserTests.Crlf_NormalizedForBareList
+PASS PatentMarker.Tests.MarkingTextParserTests.Dedupe_SameNumberName_KeepsFirst
+PASS PatentMarker.Tests.MarkingTextParserTests.EmptyText_ReturnsEmpty
+PASS PatentMarker.Tests.MarkingTextParserTests.EndToEnd_SectionExtractThenParse
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_HeaderVariants
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_NoHeader_FallsBackToFullText
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_StopsAtSentenceEndBeforeFollowingBody
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_WithHeader_ReturnsSectionText
+PASS PatentMarker.Tests.MarkingTextParserTests.ExtractSection_WordCrOnly_StopsAtSentenceEnd
+PASS PatentMarker.Tests.MarkingTextParserTests.HtmlLineBreaks_DirectExtract_TreatedAsSpace
+PASS PatentMarker.Tests.MarkingTextParserTests.HtmlLineBreaks_DocumentPath_NormalizedToLineBreak
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_BareLineSkippedWhenPunctuated
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_MixedFormats_NoOverlapKept
+PASS PatentMarker.Tests.MarkingTextParserTests.OverlapFilter_NewFormatDroppedWhenOverlappingOld
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_EnglishSemicolonDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_LetterDigitSuffix_StopsAtDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern1_NumberName_Delimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_LetterDigitSuffix_StopsAtDelimiter
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_NameNumber
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_SubNumberWithHyphen
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern2_UppercaseSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern3_BareListPerLine
+PASS PatentMarker.Tests.MarkingTextParserTests.Pattern3_LetterDigitSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.PatternA_NameParenNumber
+PASS PatentMarker.Tests.MarkingTextParserTests.PatternB_NumberParenName
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_LetterDigitSuffix
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_MixedRows_ThenExtract
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_NameCellFirst
+PASS PatentMarker.Tests.MarkingTextParserTests.TablePreprocess_NumberCellFirst
+PASS PatentMarker.Tests.NumberIdentityTests.AreEqual_TrimsAndIgnoresCase
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_MatchesNormalizedDictionaryKeys
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_ProducesTheSameHashCodeForEqualValues
+PASS PatentMarker.Tests.NumberIdentityTests.Comparer_UsesTheSameRuleAsAreEqual
+PASS PatentMarker.Tests.NumberIdentityTests.Normalize_NullBecomesEmpty
+PASS PatentMarker.Tests.ParserContractTests.TrackedContractSamplesMatchExpectedHits
+PASS PatentMarker.Tests.PatCheckResultTests.ResultsAreIndependentPerDocumentAndReleaseRemovesState
+PASS PatentMarker.Tests.PatCheckResultTests.UnmarkedLookupIsCaseInsensitiveLikeNumberIdentity
+PASS PatentMarker.Tests.PatReleaseManifestTests.HashMismatch_ReturnsFail
+PASS PatentMarker.Tests.PatReleaseManifestTests.MalformedManifest_ReturnsFail
+PASS PatentMarker.Tests.PatReleaseManifestTests.MatchingManifest_ReturnsPass
+PASS PatentMarker.Tests.PatReleaseManifestTests.MissingManifest_ReturnsSkip
+PASS PatentMarker.Tests.PatReleaseManifestTests.MvidMismatch_ReturnsFail
+PASS PatentMarker.Tests.PatSettingsTests.Activate_IsolatesRuntimeSettingsByDrawing
+PASS PatentMarker.Tests.PatSettingsTests.Apply_UsesConfigValuesAndResetRestoresDefaults
+PASS PatentMarker.Tests.PatSettingsTests.DictFileVisibility_RoundTripsExplicitChoice
+PASS PatentMarker.Tests.RuntimeHostTests.ActiveDocument_UsesInjectedHostDocument
+PASS PatentMarker.Tests.RuntimeHostTests.ClearOverride_ReturnsToApplicationHost
+SUMMARY: passed=136 failed=2 skipped=0
+FAILURES:
+ - PatentMarker.Tests.DictWriterBoundaryTests.LegacyAclRepairDenied_RollsBackOriginalBytesSecurityAndStreams : FalseException: Assert.False() Failure
+Expected: False
+Actual:   True
+ - PatentMarker.Tests.DictWriterBoundaryTests.LegacyInheritedAcl_WithStreamsAndCreationTime_IsPreservedExactly : TrueException: ACL before=O:<RUNNER-SID>G:<RUNNER-SID>D:(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>) after=O:<RUNNER-SID>G:<RUNNER-SID>D:AI(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)

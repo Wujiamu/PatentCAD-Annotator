@@ -1,0 +1,16 @@
+replace-attributes-32 PASS
+replace-attributes-38 PASS
+replace-attributes-8230 PASS
+readonly-protection PASS
+locked-preservation-and-recovery PASS
+foreign-temp-sentinel PASS
+replace-acl-ads-creation PASS
+replace-denied-control-ListDirectory PASS
+replace-denied-control-ChangePermissions PASS
+replace-denied-control-CreateFiles PASS
+new-unicode-space-path PASS
+missing-parent-fails-cleanly PASS
+ntfs-compression-preserved PASS
+legacy-inheritance-exact PASS
+legacy-repair-denied-rollback PASS
+unique-owned-temp-cleanup PASS

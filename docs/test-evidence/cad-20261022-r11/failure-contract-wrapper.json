@@ -1,0 +1,47 @@
+{
+  "finding_id": "R11-GRIP-01",
+  "iteration": "First R11 repair did not handle real wrapper identity",
+  "source_commit": "2e6409c2699a77044f88d27c1a7be57c8a5ec158",
+  "dll_sha256": "45be93c6ec1ae2be1f849ef5e3411e1c3af7c7eeb8a18caae83e4a804750a73f",
+  "host": "AutoCAD2026 x64 25.1",
+  "before_evidence": "evidence/gui-green/moved/PatentMarker-mleader-verify.txt",
+  "steps": [
+    "Fresh installed candidate, open copied actual GUI A",
+    "Physically move native text grip at originalWCS40,290 to74.67,272.26",
+    "Commit and Escape; execute PATMLVERIFY"
+  ],
+  "expected": "C3 location consistent with record",
+  "actual": "8PASS1C3FAIL, drift38.944",
+  "first_break": "ObjectModified arrived during GRIP_STRETCH, senderRef=False and senderEquals=True; ReferenceEquals discarded event",
+  "diagnostic": "evidence/event-trace/events.txt",
+  "same_fixture_red": "wrapper-red-1..3:69PASS1FAIL each",
+  "fix": "Use DisposableWrapper.Equals native database identity, not managed wrapper reference",
+  "fixed_source_commit": "59395901b3426f31ebf3e1523ae73fa2c7535b13",
+  "fixed_dll_sha256": "d112a428ced3b188c685f2d683f451c5c59c44f0bf074605cb70b4a21d8caf37",
+  "status": "fixed_verified_in_final_candidate",
+  "reference": "https://help.autodesk.com/cloudhelp/2019/ENU/OARX-DevGuide-Managed/files/GUID-DB165894-208B-490E-8382-6BEF5BCA2452.htm",
+  "previous_test_gap": "Simulation always passed exact same Database wrapper; it did not model real native wrapper identity",
+  "initial_status": "pending_same_gui_rerun",
+  "closure": {
+    "verified_utc": "2026-10-22T14:56:35.972210+00:00",
+    "source_commit": "e24c9b141f687c5bfd36fd1e6fec354c904bd315",
+    "dll_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+    "initial_contract": {
+      "path": "evidence/failure-contract-initial/failure-contract-wrapper.json",
+      "sha256": "ba700601b7a246ad04a84539c53be1ecdcc40bbe6bb34c9127d12e744b82c1ae"
+    },
+    "gui": {
+      "path": "evidence/gui-completed-result.json",
+      "sha256": "82bcac9ea26d3fd03c350f09f82fcf53e0a93e7a2e2d70ae16c8eaee51cefa70"
+    },
+    "cold": {
+      "path": "evidence/cold-saved/results.json",
+      "sha256": "442bb0ae13173f02572bdc4c0eddde2dee3303a2acbf6512047dd0bb426c7f76"
+    },
+    "native_eight": {
+      "path": "evidence/native-routing/green-final/result.json",
+      "sha256": "b519d5ecfdaa2377a7af653ba12d8ecffb8163c99466493431f7c56009009760"
+    },
+    "conclusion": "Same original counterexamples and strict criteria pass. Initial fixes that failed real wrapper identity or Redo remain failed historical evidence. GUI uses separate operator; repair author owns code/tests; not an unaffiliated audit."
+  }
+}

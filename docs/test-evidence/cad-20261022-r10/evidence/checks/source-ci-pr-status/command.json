@@ -1,0 +1,23 @@
+{
+  "id": "source-ci-pr-status",
+  "exe": "gh",
+  "arguments": [
+    "run",
+    "view",
+    "39718009026",
+    "--repo",
+    "Wujiamu/PatentCAD-Annotator",
+    "--json",
+    "headSha,conclusion,status,jobs"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T11:47:43.5715936+08:00",
+  "finished": "2026-10-22T11:47:45.5721686+08:00",
+  "owned_pid": 32188,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 2000.5632,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\source-ci-pr-status\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\source-ci-pr-status\\stderr.txt"
+}

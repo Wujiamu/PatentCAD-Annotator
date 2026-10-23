@@ -1,0 +1,60 @@
+{
+  "rows": [
+    {
+      "iteration": 1,
+      "report_write_denied": false,
+      "escaped_exception": null,
+      "report_exists": true,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\1-fallback\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    },
+    {
+      "iteration": 1,
+      "report_write_denied": true,
+      "escaped_exception": null,
+      "report_exists": false,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\1-denied\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    },
+    {
+      "iteration": 2,
+      "report_write_denied": false,
+      "escaped_exception": null,
+      "report_exists": true,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\2-fallback\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    },
+    {
+      "iteration": 2,
+      "report_write_denied": true,
+      "escaped_exception": null,
+      "report_exists": false,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\2-denied\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    },
+    {
+      "iteration": 3,
+      "report_write_denied": false,
+      "escaped_exception": null,
+      "report_exists": true,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\3-fallback\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    },
+    {
+      "iteration": 3,
+      "report_write_denied": true,
+      "escaped_exception": null,
+      "report_exists": false,
+      "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\native-top-level-fault\\3-denied\\PatentMarker-geom-verify.txt",
+      "result": "PASS",
+      "scope": "L2 actual production DLL \u002B native host; internal resolver seam injected only to force top-level failure; no user-path claim"
+    }
+  ],
+  "host_override_restored": true,
+  "environment_restored": true
+}

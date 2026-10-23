@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using PatentMarker.Commands;
@@ -26,21 +27,36 @@ namespace PatentMarker.IO
             Leader leader = ent as Leader;
             if (leader != null)
             {
-                if (leader.DimensionStyle.IsNull) return false;
                 try
                 {
-                    DimStyleTableRecord dsr = (DimStyleTableRecord)tr.GetObject(
-                        leader.DimensionStyle, OpenMode.ForRead);
-                    return dsr.Name == Styles.PatStyleInitializer.DimStyleName;
+                    if (!leader.DimensionStyle.IsNull)
+                    {
+                        DimStyleTableRecord dsr = (DimStyleTableRecord)tr.GetObject(
+                            leader.DimensionStyle, OpenMode.ForRead);
+                        if (dsr.Name == Styles.PatStyleInitializer.DimStyleName)
+                            return true;
+                    }
                 }
-                catch
-                {
-                    return false;
-                }
+                catch { }
+                // Old or host-normalized Leaders can lose the temporary
+                // dimension-style identity while retaining the product link.
+                return HasLeaderAnnotationLink(leader, tr);
             }
 
             MText text = ent as MText;
             return text != null && IsStandaloneText(text, tr);
+        }
+
+        private static bool HasLeaderAnnotationLink(Leader leader, Transaction tr)
+        {
+            if (leader == null || leader.ExtensionDictionary.IsNull) return false;
+            try
+            {
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    leader.ExtensionDictionary, OpenMode.ForRead);
+                return dictionary.Contains("PATENTMARKER_MTEXT");
+            }
+            catch { return false; }
         }
 
         /// <summary>
@@ -73,6 +89,115 @@ namespace PatentMarker.IO
             catch { }
             return false;
         }
+
+        /// <summary>
+        /// Reads the Plan-F MLeader point chain without referencing the
+        /// MLeader type. The chain is attach, zero or more doglegs, then the
+        /// recorded text point as its final element.
+        /// </summary>
+        public static bool TryReadMLeaderChain(
+            Entity mleader,
+            Transaction tr,
+            out List<Point3d> chain,
+            out bool hasArrow,
+            out bool isSplined)
+        {
+            chain = new List<Point3d>();
+            hasArrow = false;
+            isSplined = false;
+            if (mleader == null || mleader.ExtensionDictionary.IsNull) return false;
+            try
+            {
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    mleader.ExtensionDictionary, OpenMode.ForRead);
+                if (!dictionary.Contains(MLeaderMarkerKey)) return false;
+                Xrecord record = (Xrecord)tr.GetObject(
+                    dictionary.GetAt(MLeaderMarkerKey), OpenMode.ForRead);
+                using (ResultBuffer data = record.Data)
+                {
+                    if (data == null) return false;
+                    foreach (TypedValue value in data)
+                    {
+                        if (value.TypeCode == 70)
+                            hasArrow = Convert.ToInt32(value.Value) == 1;
+                        else if (value.TypeCode == 71)
+                            isSplined = Convert.ToInt32(value.Value) == 1;
+                        else if (value.TypeCode == 10 && value.Value is Point3d)
+                            chain.Add((Point3d)value.Value);
+                    }
+                }
+                return chain.Count > 0;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Reads GetLastVertex(0) from a Plan-F MLeader via reflection.</summary>
+        public static bool TryGetMLeaderLastVertex(Entity mleader, out Point3d point)
+        {
+            point = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                MethodInfo method = mleader.GetType().GetMethod(
+                    "GetLastVertex", new Type[] { typeof(int) });
+                if (method == null) return false;
+                object value = method.Invoke(mleader, new object[] { 0 });
+                if (!(value is Point3d)) return false;
+                point = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Reads MLeader.TextLocation via reflection.</summary>
+        /// <summary>Reads the actual penultimate and final MLeader vertices via reflection.</summary>
+        public static bool TryReadMLeaderActualPreviousVertex(
+            Entity mleader, out Point3d previous, out Point3d last)
+        {
+            previous = new Point3d(0, 0, 0);
+            last = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                Type type = mleader.GetType();
+                MethodInfo getLast = type.GetMethod(
+                    "GetLastVertex", new Type[] { typeof(int) });
+                MethodInfo getVertex = type.GetMethod(
+                    "GetVertex", new Type[] { typeof(int), typeof(int) });
+                MethodInfo getCount = type.GetMethod(
+                    "VerticesCount", new Type[] { typeof(int) });
+                if (getLast == null || getVertex == null || getCount == null) return false;
+                object lastValue = getLast.Invoke(mleader, new object[] { 0 });
+                if (!(lastValue is Point3d)) return false;
+                last = (Point3d)lastValue;
+
+                int count = (int)getCount.Invoke(mleader, new object[] { 0 });
+                if (count < 2) return false;
+                object value = getVertex.Invoke(mleader, new object[] { 0, count - 2 });
+                if (!(value is Point3d)) return false;
+                previous = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
+
+        public static bool TryGetMLeaderTextLocation(Entity mleader, out Point3d point)
+        {
+            point = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                PropertyInfo property = mleader.GetType().GetProperty("TextLocation");
+                if (property == null || !property.CanRead) return false;
+                object value = property.GetValue(mleader, null);
+                if (!(value is Point3d)) return false;
+                point = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
 
         /// <summary>
         /// Returns true for a standalone PAT MText created when the leader

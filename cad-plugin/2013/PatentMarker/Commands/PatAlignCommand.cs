@@ -413,8 +413,10 @@ namespace PatentMarker.Commands
                 if (t.IsMLeader)
                 {
                     MLeader ml = (MLeader)tr.GetObject(t.EntityId, OpenMode.ForWrite);
-                    ml.TextLocation = newPos;
-                    if (ml.MText != null) ml.MText.Location = newPos;
+                    int count = ml.VerticesCount(0);
+                    if (count < 2) return false;
+                    PatMLeaderCreator.RefreshTextAttachment(ml,
+                        ml.GetVertex(0, count - 2), newPos);
                     PatMLeaderCreator.UpdateChainTextPoint(ml, tr, newPos);
                     return true;
                 }

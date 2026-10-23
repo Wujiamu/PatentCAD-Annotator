@@ -1,0 +1,231 @@
+Portable unit tests	Set up job	﻿2026-10-22T14:20:51.9973537Z Current runner version: '2.338.0'
+Portable unit tests	Set up job	2026-10-22T14:20:52.0033085Z ##[group]Runner Image Provisioner
+Portable unit tests	Set up job	2026-10-22T14:20:52.0034308Z Hosted Compute Agent
+Portable unit tests	Set up job	2026-10-22T14:20:52.0035232Z Version: 20261002.596
+Portable unit tests	Set up job	2026-10-22T14:20:52.0036608Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+Portable unit tests	Set up job	2026-10-22T14:20:52.0037751Z Build Date: 2026-10-02T22:28:27Z
+Portable unit tests	Set up job	2026-10-22T14:20:52.0038805Z Worker ID: {1f8db51e-18b2-45ea-9af1-4fed4bd5910b}
+Portable unit tests	Set up job	2026-10-22T14:20:52.0039929Z Region: eastus
+Portable unit tests	Set up job	2026-10-22T14:20:52.0040712Z Cloud: Azure
+Portable unit tests	Set up job	2026-10-22T14:20:52.0041523Z ##[endgroup]
+Portable unit tests	Set up job	2026-10-22T14:20:52.0043418Z ##[group]Operating System
+Portable unit tests	Set up job	2026-10-22T14:20:52.0044454Z Microsoft Windows Server 2025
+Portable unit tests	Set up job	2026-10-22T14:20:52.0045541Z 10.0.26100
+Portable unit tests	Set up job	2026-10-22T14:20:52.0046419Z Datacenter
+Portable unit tests	Set up job	2026-10-22T14:20:52.0047314Z ##[endgroup]
+Portable unit tests	Set up job	2026-10-22T14:20:52.0048191Z ##[group]Runner Image
+Portable unit tests	Set up job	2026-10-22T14:20:52.0049091Z Image: windows-2025-vs2026
+Portable unit tests	Set up job	2026-10-22T14:20:52.0049831Z Version: 20261007.264.1
+Portable unit tests	Set up job	2026-10-22T14:20:52.0050944Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md
+Portable unit tests	Set up job	2026-10-22T14:20:52.0053175Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261007.264
+Portable unit tests	Set up job	2026-10-22T14:20:52.0055224Z ##[endgroup]
+Portable unit tests	Set up job	2026-10-22T14:20:52.0056553Z ##[group]GITHUB_TOKEN Permissions
+Portable unit tests	Set up job	2026-10-22T14:20:52.0058414Z Contents: read
+Portable unit tests	Set up job	2026-10-22T14:20:52.0059056Z Metadata: read
+Portable unit tests	Set up job	2026-10-22T14:20:52.0059592Z Packages: read
+Portable unit tests	Set up job	2026-10-22T14:20:52.0060122Z ##[endgroup]
+Portable unit tests	Set up job	2026-10-22T14:20:52.0062269Z Secret source: Actions
+Portable unit tests	Set up job	2026-10-22T14:20:52.0063210Z Cache mode: write
+Portable unit tests	Set up job	2026-10-22T14:20:52.0063890Z Prepare workflow directory
+Portable unit tests	Set up job	2026-10-22T14:20:52.0412535Z Prepare all required actions
+Portable unit tests	Set up job	2026-10-22T14:20:52.0483858Z Getting action download info
+Portable unit tests	Set up job	2026-10-22T14:20:52.1800095Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+Portable unit tests	Set up job	2026-10-22T14:20:52.3511482Z Download action repository 'actions/setup-dotnet@v4' (SHA:67a3573c9a986a3f9c594539f4ab511d57bb3ce9)
+Portable unit tests	Set up job	2026-10-22T14:20:52.8185992Z Complete job name: Portable unit tests
+Portable unit tests	Checkout	﻿2026-10-22T14:20:52.9520520Z ##[group]Run actions/checkout@v4
+Portable unit tests	Checkout	2026-10-22T14:20:52.9521563Z with:
+Portable unit tests	Checkout	2026-10-22T14:20:52.9522012Z   repository: Wujiamu/PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:52.9526155Z   token: ***
+Portable unit tests	Checkout	2026-10-22T14:20:52.9526557Z   ssh-strict: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9526968Z   ssh-user: git
+Portable unit tests	Checkout	2026-10-22T14:20:52.9527386Z   persist-credentials: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9527844Z   clean: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9528258Z   sparse-checkout-cone-mode: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9528765Z   fetch-depth: 1
+Portable unit tests	Checkout	2026-10-22T14:20:52.9529162Z   fetch-tags: false
+Portable unit tests	Checkout	2026-10-22T14:20:52.9530013Z   show-progress: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9530437Z   lfs: false
+Portable unit tests	Checkout	2026-10-22T14:20:52.9530822Z   submodules: false
+Portable unit tests	Checkout	2026-10-22T14:20:52.9531242Z   set-safe-directory: true
+Portable unit tests	Checkout	2026-10-22T14:20:52.9531711Z   allow-unsafe-pr-checkout: false
+Portable unit tests	Checkout	2026-10-22T14:20:52.9532453Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:53.1107690Z Syncing repository: Wujiamu/PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:53.1109489Z ##[group]Getting Git version info
+Portable unit tests	Checkout	2026-10-22T14:20:53.1110229Z Working directory is 'D:\a\PatentCAD-Annotator\PatentCAD-Annotator'
+Portable unit tests	Checkout	2026-10-22T14:20:53.2081118Z [command]"C:\Program Files\Git\bin\git.exe" version
+Portable unit tests	Checkout	2026-10-22T14:20:53.5232245Z git version 2.56.0.windows.2
+Portable unit tests	Checkout	2026-10-22T14:20:53.5295551Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:53.5319689Z Temporarily overriding HOME='D:\a\_temp\223c7092-f333-420d-8062-82942d12d7e3' before making global git config changes
+Portable unit tests	Checkout	2026-10-22T14:20:53.5321175Z Adding repository directory to the temporary git global config as a safe directory
+Portable unit tests	Checkout	2026-10-22T14:20:53.5333902Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:53.5992364Z Deleting the contents of 'D:\a\PatentCAD-Annotator\PatentCAD-Annotator'
+Portable unit tests	Checkout	2026-10-22T14:20:53.6001441Z ##[group]Initializing the repository
+Portable unit tests	Checkout	2026-10-22T14:20:53.6010853Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:53.6940350Z Initialized empty Git repository in D:/a/PatentCAD-Annotator/PatentCAD-Annotator/.git/
+Portable unit tests	Checkout	2026-10-22T14:20:53.6992138Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/Wujiamu/PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:53.7671001Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:53.7673365Z ##[group]Disabling automatic garbage collection
+Portable unit tests	Checkout	2026-10-22T14:20:53.7679300Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+Portable unit tests	Checkout	2026-10-22T14:20:53.8202784Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:53.8204350Z ##[group]Setting up auth
+Portable unit tests	Checkout	2026-10-22T14:20:53.8213967Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Portable unit tests	Checkout	2026-10-22T14:20:53.8597046Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Portable unit tests	Checkout	2026-10-22T14:20:55.2340120Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Portable unit tests	Checkout	2026-10-22T14:20:55.2775052Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Portable unit tests	Checkout	2026-10-22T14:20:55.8736616Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Portable unit tests	Checkout	2026-10-22T14:20:55.9128245Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Portable unit tests	Checkout	2026-10-22T14:20:56.4811748Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+Portable unit tests	Checkout	2026-10-22T14:20:56.5248371Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:56.5249149Z ##[group]Fetching the repository
+Portable unit tests	Checkout	2026-10-22T14:20:56.5265413Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +cd2c608f1307b3c91227e69561490535c37d70eb:refs/remotes/pull/3/merge
+Portable unit tests	Checkout	2026-10-22T14:20:57.7311687Z From https://github.com/Wujiamu/PatentCAD-Annotator
+Portable unit tests	Checkout	2026-10-22T14:20:57.7313538Z  * [new ref]         cd2c608f1307b3c91227e69561490535c37d70eb -> pull/3/merge
+Portable unit tests	Checkout	2026-10-22T14:20:57.7362101Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:57.7363472Z ##[group]Determining the checkout info
+Portable unit tests	Checkout	2026-10-22T14:20:57.7365418Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:57.7376095Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+Portable unit tests	Checkout	2026-10-22T14:20:57.7915471Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+Portable unit tests	Checkout	2026-10-22T14:20:57.8318441Z ##[group]Checking out the ref
+Portable unit tests	Checkout	2026-10-22T14:20:57.8327467Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force refs/remotes/pull/3/merge
+Portable unit tests	Checkout	2026-10-22T14:20:58.1275927Z Note: switching to 'refs/remotes/pull/3/merge'.
+Portable unit tests	Checkout	2026-10-22T14:20:58.1276433Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1276658Z You are in 'detached HEAD' state. You can look around, make experimental
+Portable unit tests	Checkout	2026-10-22T14:20:58.1277231Z changes and commit them, and you can discard any commits you make in this
+Portable unit tests	Checkout	2026-10-22T14:20:58.1278080Z state without impacting any branches by switching back to a branch.
+Portable unit tests	Checkout	2026-10-22T14:20:58.1278750Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1279112Z If you want to create a new branch to retain commits you create, you may
+Portable unit tests	Checkout	2026-10-22T14:20:58.1279746Z do so (now or later) by using -c with the switch command. Example:
+Portable unit tests	Checkout	2026-10-22T14:20:58.1280149Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1280446Z   git switch -c <new-branch-name>
+Portable unit tests	Checkout	2026-10-22T14:20:58.1280726Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1280872Z Or undo this operation with:
+Portable unit tests	Checkout	2026-10-22T14:20:58.1281122Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1281225Z   git switch -
+Portable unit tests	Checkout	2026-10-22T14:20:58.1281401Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1281633Z Turn off this advice by setting config variable advice.detachedHead to false
+Portable unit tests	Checkout	2026-10-22T14:20:58.1282010Z 
+Portable unit tests	Checkout	2026-10-22T14:20:58.1283476Z HEAD is now at cd2c608 Merge e24c9b141f687c5bfd36fd1e6fec354c904bd315 into b945b1a68fec26ada268b5a4ee3ac066386e96ab
+Portable unit tests	Checkout	2026-10-22T14:20:58.1406675Z ##[endgroup]
+Portable unit tests	Checkout	2026-10-22T14:20:58.1902718Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+Portable unit tests	Checkout	2026-10-22T14:20:58.2274221Z cd2c608f1307b3c91227e69561490535c37d70eb
+Portable unit tests	Setup .NET 8	﻿2026-10-22T14:20:58.2829910Z ##[group]Run actions/setup-dotnet@v4
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.2830318Z with:
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.2830517Z   dotnet-version: 8.0.x
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.2830740Z   cache: false
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.2830916Z ##[endgroup]
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.4587953Z (node:8588) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.4589379Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Portable unit tests	Setup .NET 8	2026-10-22T14:20:58.5986642Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Runtime dotnet -Channel LTS
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:00.7416066Z dotnet-install: Downloaded file https://builds.dotnet.microsoft.com/dotnet/Runtime/10.0.13/dotnet-runtime-10.0.13-win-x64.zip size is 36970749 bytes.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:00.7418301Z dotnet-install: Either downloaded or local package size can not be measured. One of them may be corrupted.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:00.7439375Z dotnet-install: Extracting the archive.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:02.6657477Z dotnet-install: Note that the script does not ensure your Windows version is supported during the installation.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:02.6664317Z dotnet-install: To check the list of supported versions, go to https://learn.microsoft.com/dotnet/core/install/windows#supported-versions
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:02.6671974Z dotnet-install: Installed version is 10.0.13
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:02.6679660Z dotnet-install: Installation finished
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:02.8300609Z [command]"C:\Program Files\PowerShell\7\pwsh.exe" -NoLogo -Sta -NoProfile -NonInteractive -ExecutionPolicy Unrestricted -Command & 'D:\a\_actions\actions\setup-dotnet\v4\externals\install-dotnet.ps1' -SkipNonVersionedFiles -Channel 8.0
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:09.3385625Z dotnet-install: Downloaded file https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.426/dotnet-sdk-8.0.426-win-x64.zip size is 285292840 bytes.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:09.3394572Z dotnet-install: Either downloaded or local package size can not be measured. One of them may be corrupted.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:09.3422700Z dotnet-install: Extracting the archive.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:31.6399240Z dotnet-install: Note that the script does not ensure your Windows version is supported during the installation.
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:31.6404170Z dotnet-install: To check the list of supported versions, go to https://learn.microsoft.com/dotnet/core/install/windows#supported-versions
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:31.6410506Z dotnet-install: Installed version is 8.0.426
+Portable unit tests	Setup .NET 8	2026-10-22T14:21:31.6417300Z dotnet-install: Installation finished
+Portable unit tests	Run portable tests	﻿2026-10-22T14:21:31.7168917Z ##[group]Run dotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal
+Portable unit tests	Run portable tests	2026-10-22T14:21:31.7170018Z ^[[36;1mdotnet test ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj --configuration Release --nologo -v minimal^[[0m
+Portable unit tests	Run portable tests	2026-10-22T14:21:31.7763579Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+Portable unit tests	Run portable tests	2026-10-22T14:21:31.7764027Z env:
+Portable unit tests	Run portable tests	2026-10-22T14:21:31.7764268Z   DOTNET_ROOT: C:\Program Files\dotnet
+Portable unit tests	Run portable tests	2026-10-22T14:21:31.7764574Z ##[endgroup]
+Portable unit tests	Run portable tests	2026-10-22T14:21:37.0351344Z   Determining projects to restore...
+Portable unit tests	Run portable tests	2026-10-22T14:21:43.6275416Z   Restored D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj (in 5.4 sec).
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8767012Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(57,42): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8776819Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(83,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8779824Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(87,50): warning CS8602: Dereference of a possibly null reference. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8782795Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(112,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8786642Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,51): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8790099Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatReleaseManifestTests.cs(17,57): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8793586Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(94,53): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8800392Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(123,57): warning CS8604: Possible null reference argument for parameter 'current' in 'bool DictConflict.IsPendingConflict(DictModel current, string dictPath)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8806763Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictConflictTests.cs(129,74): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8812983Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Diagnostics\PatReleaseManifest.cs(214,48): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8824361Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(15,26): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8832487Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(25,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8845949Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(31,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8857082Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(36,27): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8868800Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(40,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8876640Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(60,62): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8881309Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(65,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8893911Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(145,32): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8899354Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(146,31): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8913272Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(151,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8927077Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(165,35): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8933881Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(167,43): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8946704Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(187,52): warning CS8604: Possible null reference argument for parameter 'descriptor' in 'void DictFileVisibility.VerifyAndRestoreSecurity(string path, byte[] descriptor, string expected)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8964015Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(187,62): warning CS8604: Possible null reference argument for parameter 'expected' in 'void DictFileVisibility.VerifyAndRestoreSecurity(string path, byte[] descriptor, string expected)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8978933Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\PatSettings.cs(189,32): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.8994229Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(69,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9006759Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(70,85): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9024198Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(71,59): warning CS8604: Possible null reference argument for parameter 'diff' in 'ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9034560Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(119,28): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9046817Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(120,85): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9057131Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(121,58): warning CS8604: Possible null reference argument for parameter 'diff' in 'ListViewItem DictPaletteViewRenderer.CreateItem(PaletteEntry entry, DictDiffEntry diff)'. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9062694Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteViewRenderer.cs(133,37): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9068317Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9073941Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(42,30): warning CS8602: Dereference of a possibly null reference. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9079446Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(48,56): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9084999Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(49,26): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9089315Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(50,63): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9093429Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(53,29): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9097676Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(65,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9103359Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(59,33): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9108776Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteViewRendererTests.cs(102,20): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9114303Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteWorkflowTests.cs(26,44): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9121780Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(111,26): warning CS8618: Non-nullable field 'Source' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9125376Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(112,28): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9128514Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(117,38): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9131312Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(121,28): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9133861Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(129,32): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9136699Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(136,24): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9139236Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictConflict.cs(141,24): warning CS8603: Possible null reference return. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9142207Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(31,28): warning CS8601: Possible null reference assignment. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9145047Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(65,28): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9148418Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(66,28): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9151524Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictPaletteSessionTests.cs(16,32): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9155350Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(15,27): warning CS8618: Non-nullable field '_currentDict' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9160766Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\Palette\DictPaletteSession.cs(16,37): warning CS8618: Non-nullable field '_currentDiff' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9169565Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(25,26): warning CS8618: Non-nullable field 'NewEntry' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9180289Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(27,26): warning CS8618: Non-nullable field 'OldEntry' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9184898Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(82,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9191015Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(109,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9203782Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(166,26): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9212361Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\DictDiff.cs(174,26): warning CS8625: Cannot convert null literal to non-nullable reference type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9220245Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\MarkingTextParser.cs(124,33): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9227987Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\Shared\IO\MarkingTextParser.cs(133,35): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9233533Z ##[warning]D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\DictWriterTests.cs(285,41): warning CS8600: Converting null literal or possible null value to non-nullable type. [D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\PatentMarker.Tests.csproj]
+Portable unit tests	Run portable tests	2026-10-22T14:21:50.9984356Z   PatentMarker.Tests -> D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\bin\Release\net8.0-windows\PatentMarker.Tests.dll
+Portable unit tests	Run portable tests	2026-10-22T14:21:51.0110126Z Test run for D:\a\PatentCAD-Annotator\PatentCAD-Annotator\cad-plugin\2025\PatentMarker.Tests\bin\Release\net8.0-windows\PatentMarker.Tests.dll (.NETCoreApp,Version=v8.0)
+Portable unit tests	Run portable tests	2026-10-22T14:21:51.6559591Z A total of 1 test files matched the specified pattern.
+Portable unit tests	Run portable tests	2026-10-22T14:21:52.7743259Z 
+Portable unit tests	Run portable tests	2026-10-22T14:21:52.7797650Z Passed!  - Failed:     0, Passed:   139, Skipped:     0, Total:   139, Duration: 261 ms - PatentMarker.Tests.dll (net8.0)
+Portable unit tests	Post Setup .NET 8	﻿2026-10-22T14:21:53.2153722Z Post job cleanup.
+Portable unit tests	Post Setup .NET 8	2026-10-22T14:21:53.3588682Z (node:2288) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Portable unit tests	Post Setup .NET 8	2026-10-22T14:21:53.3589474Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Portable unit tests	Post Checkout	﻿2026-10-22T14:21:53.3946437Z Post job cleanup.
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.6169950Z [command]"C:\Program Files\Git\bin\git.exe" version
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.6578825Z git version 2.56.0.windows.2
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.6675023Z Temporarily overriding HOME='D:\a\_temp\862accbd-353c-4b0a-97c7-e41fd91517b8' before making global git config changes
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.6676834Z Adding repository directory to the temporary git global config as a safe directory
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.6689798Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\PatentCAD-Annotator\PatentCAD-Annotator
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.7118561Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+Portable unit tests	Post Checkout	2026-10-22T14:21:53.7554046Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+Portable unit tests	Post Checkout	2026-10-22T14:21:54.3732667Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Portable unit tests	Post Checkout	2026-10-22T14:21:54.4091985Z http.https://github.com/.extraheader
+Portable unit tests	Post Checkout	2026-10-22T14:21:54.4141993Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+Portable unit tests	Post Checkout	2026-10-22T14:21:54.4549857Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+Portable unit tests	Post Checkout	2026-10-22T14:21:55.0288342Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp ^includeIf\.gitdir:
+Portable unit tests	Post Checkout	2026-10-22T14:21:55.0685277Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "git config --local --show-origin --name-only --get-regexp remote.origin.url"
+Portable unit tests	Complete job	﻿2026-10-22T14:21:55.6720335Z Cleaning up orphan processes
+Portable unit tests	Complete job	2026-10-22T14:21:55.7459067Z Terminate orphan process: pid (4152) (VBCSCompiler)
+Portable unit tests	Complete job	2026-10-22T14:21:55.7536296Z Terminate orphan process: pid (9436) (conhost)
+Portable unit tests	Complete job	2026-10-22T14:21:55.7570535Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-dotnet@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

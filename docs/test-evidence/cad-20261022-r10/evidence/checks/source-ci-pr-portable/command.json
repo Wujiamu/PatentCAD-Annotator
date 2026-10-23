@@ -1,0 +1,24 @@
+{
+  "id": "source-ci-pr-portable",
+  "exe": "gh",
+  "arguments": [
+    "run",
+    "view",
+    "39718009026",
+    "--repo",
+    "Wujiamu/PatentCAD-Annotator",
+    "--job",
+    "119624904819",
+    "--log"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T11:47:45.5829341+08:00",
+  "finished": "2026-10-22T11:47:49.8443580+08:00",
+  "owned_pid": 18016,
+  "environment": {},
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_ms": 4261.4099,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\source-ci-pr-portable\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r10-20261022-acl\\evidence\\checks\\source-ci-pr-portable\\stderr.txt"
+}

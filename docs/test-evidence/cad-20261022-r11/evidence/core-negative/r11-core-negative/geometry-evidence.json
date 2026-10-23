@@ -1,0 +1,23 @@
+{
+  "run_id": "r11-core-negative",
+  "package_directory": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing/candidate-history-isolated/2025",
+  "drawing": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-negative\\input.dwg",
+  "drawing_sha256": "be2802a0e4f3aad163a195db4842541cfbdc44a4c132a92dbdc56e3fc2b70582",
+  "manifest_sha256": "b385d8a0c8cc01c5c0f4fa26a8eb310ab0c9267a3149482f8d711b53009d530f",
+  "accoreconsole": "C:\\Program Files\\Autodesk\\AutoCAD 2026\\accoreconsole.exe",
+  "accore_stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-negative\\r11-core-negative\\accoreconsole.stdout.txt",
+  "accore_stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-negative\\r11-core-negative\\accoreconsole.stderr.txt",
+  "run_script": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-negative\\r11-core-negative\\run.scr",
+  "candidate_dll_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "expected_mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "assembly_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "assembly_mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "assembly_path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\candidate-history-isolated\\2025\\PatentMarker.dll",
+  "braces": null,
+  "texts": null,
+  "process_exit": 0,
+  "report": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\core-negative\\r11-core-negative\\report\\PatentMarker-geom-verify.txt",
+  "summary": null,
+  "result": "FAIL",
+  "error": "report RESULT is 'FAIL', not PASS"
+}

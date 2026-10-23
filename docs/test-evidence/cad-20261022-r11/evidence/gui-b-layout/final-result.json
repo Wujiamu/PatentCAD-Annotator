@@ -1,0 +1,33 @@
+{
+  "result": "blocked",
+  "pid": 33356,
+  "hwnd": 2165144,
+  "candidateSha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "checks": [
+    {
+      "actual": "current run20261022-223656-429d29f6; 1brace2texts;24/0",
+      "result": "PASS",
+      "evidence": "active/PatentMarker-geom-verify.txt",
+      "name": "startup strict geometry"
+    },
+    {
+      "actual": "902 Manual-B visible",
+      "result": "PASS",
+      "evidence": "01-ready/window.png",
+      "name": "902 palette"
+    },
+    {
+      "actual": "startup ZoomE/0.5x plus sole additional0.5x; only one spline outline discernible. Report anchors span (40,110) to(3578.9669,1567.7594) with text height3.5; cannot visually certify both texts and brace.",
+      "result": "SKIP/BLOCKED",
+      "evidence": [
+        "01-ready/window.png",
+        "06-smaller/window.png"
+      ],
+      "name": "complete simultaneously discernible layout"
+    }
+  ],
+  "cleanup": {
+    "result": "SKIP/BLOCKED",
+    "actual": "stopped after bounded view operation and handed state to parent; process alive"
+  }
+}

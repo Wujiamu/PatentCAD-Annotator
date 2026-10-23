@@ -1,0 +1,175 @@
+{
+  "assembly_path": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\candidate-history-isolated\\2025\\PatentMarker.dll",
+  "assembly_sha256": "4b9e4accf541fbcc0b5d9aba29a15c7f76f56cb1bd6d1c8ede876e835ec34946",
+  "assembly_mvid": "798e256e-31a5-4599-80ad-97f7778de32a",
+  "filesystem": "NTFS",
+  "layer": "Actual candidate DLL IO entry on real isolated NTFS; no CAD/UI claim",
+  "rows": [
+    {
+      "id": "replace-attributes-32",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 32,
+        "attributes_after": 32
+      }
+    },
+    {
+      "id": "replace-attributes-38",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 38,
+        "attributes_after": 38
+      }
+    },
+    {
+      "id": "replace-attributes-8230",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": "",
+        "attributes_before": 8230,
+        "attributes_after": 8230
+      }
+    },
+    {
+      "id": "readonly-protection",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": false,
+        "error": "\u5B57\u5178\u6587\u4EF6\u4E3A\u53EA\u8BFB: <WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\actual-fs\\accepted\\2\\readonly-protection\\sample.dict.json",
+        "attributes_after": 39,
+        "sha_before": "619e63d45ec697f5e41b7cc700912d739439fa2998a5f1f7ef18d526f8f82ea8",
+        "sha_after": "619e63d45ec697f5e41b7cc700912d739439fa2998a5f1f7ef18d526f8f82ea8"
+      }
+    },
+    {
+      "id": "locked-preservation-and-recovery",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "locked_write": false,
+        "error": "IOException: The process cannot access the file because it is being used by another process."
+      }
+    },
+    {
+      "id": "foreign-temp-sentinel",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": ""
+      }
+    },
+    {
+      "id": "replace-acl-ads-creation",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "write_result": true,
+        "error": ""
+      }
+    },
+    {
+      "id": "replace-denied-control-ListDirectory",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "control_replace_denied": true,
+        "control_replace_error": "Access to the path is denied.",
+        "write_result": false,
+        "error": "UnauthorizedAccessException: Access to the path is denied.",
+        "acl_preserved": true,
+        "ads_preserved": true
+      }
+    },
+    {
+      "id": "replace-denied-control-ChangePermissions",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "control_replace_denied": false,
+        "control_replace_error": "",
+        "write_result": true,
+        "error": "",
+        "acl_preserved": true,
+        "ads_preserved": true
+      }
+    },
+    {
+      "id": "replace-denied-control-CreateFiles",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "control_replace_denied": true,
+        "control_replace_error": "Access to the path is denied.",
+        "write_result": false,
+        "error": "UnauthorizedAccessException: Access to the path is denied.",
+        "acl_preserved": true,
+        "ads_preserved": true
+      }
+    },
+    {
+      "id": "new-unicode-space-path",
+      "result": "PASS",
+      "failures": [],
+      "details": {}
+    },
+    {
+      "id": "missing-parent-fails-cleanly",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "error": "\u5B57\u5178\u76EE\u5F55\u4E0D\u5B58\u5728: <WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\actual-fs\\accepted\\2\\missing-parent-fails-cleanly\\missing"
+      }
+    },
+    {
+      "id": "ntfs-compression-preserved",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "compact_exit": 0,
+        "compact_stdout": "\r\n \u6B63\u5728\u538B\u7F29 <WORKSPACE>\\docs\\test-evidence\\acceptance-r11-20261022-grip-routing\\evidence\\actual-fs\\accepted\\2\\ntfs-compression-preserved\\ \u4E2D\u7684\u6587\u4EF6\r\n\r\n\r\n\u5DF2\u538B\u7F29 1 \u4E2A\u76EE\u5F55\u4E2D\u7684 1 \u4E2A\u6587\u4EF6\u3002\r\n\u603B\u5171 30 \u5B57\u8282\u7684\u6570\u636E\u4FDD\u5B58\u5728 30 \u5B57\u8282\u4E2D\u3002\r\n\u538B\u7F29\u7387\u4E3A 1.0 \u5230 1\u3002\r\n",
+        "compact_stderr": "",
+        "error": ""
+      }
+    },
+    {
+      "id": "legacy-inheritance-exact",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "before_acl": "O:<RUNNER-SID>G:<RUNNER-SID>D:(A;ID;0x110156;;;S-1-4-334772876-668064224)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)",
+        "after_acl": "O:<RUNNER-SID>G:<RUNNER-SID>D:(A;ID;0x110156;;;S-1-4-334772876-668064224)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)",
+        "write_result": true,
+        "error": ""
+      }
+    },
+    {
+      "id": "legacy-repair-denied-rollback",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "before_acl": "O:<RUNNER-SID>G:<RUNNER-SID>D:(D;;WD;;;OW)(A;ID;0x110156;;;S-1-4-334772876-668064224)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)",
+        "after_acl": "O:<RUNNER-SID>G:<RUNNER-SID>D:(D;;WD;;;OW)(A;ID;0x110156;;;S-1-4-334772876-668064224)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301bf;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;0x1301ff;;;<RUNNER-SID>)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;<RUNNER-SID>)",
+        "write_result": false,
+        "error": "Win32Exception: \u62D2\u7EDD\u8BBF\u95EE\u3002; \u539F\u6587\u4EF6\u5DF2\u6062\u590D"
+      }
+    },
+    {
+      "id": "unique-owned-temp-cleanup",
+      "result": "PASS",
+      "failures": [],
+      "details": {
+        "leaks": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "empty-report-green-2",
+  "exe": "<USERPROFILE>\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "arguments": [
+    "-NoProfile",
+    "-File",
+    "<BUILD_WORKTREE>/tools/verify-geometry.ps1",
+    "-ReportPath",
+    "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries/evidence/empty-report/empty-forged.txt",
+    "-RunId",
+    "r9-empty",
+    "-ExpectedDllSha256",
+    "abc123",
+    "-ExpectedMvid",
+    "selftest-mvid",
+    "-RequireBraces",
+    "0",
+    "-RequireTexts",
+    "0"
+  ],
+  "cwd": "<BUILD_WORKTREE>",
+  "started": "2026-10-22T10:29:50.3519320+08:00",
+  "finished": "2026-10-22T10:29:51.6388634+08:00",
+  "owned_pid": 26852,
+  "environment": {},
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_ms": 1286.5366,
+  "stdout": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\empty-report-green-2\\stdout.txt",
+  "stderr": "<WORKSPACE>\\docs\\test-evidence\\acceptance-r9-20261022-boundaries\\evidence\\checks\\empty-report-green-2\\stderr.txt"
+}

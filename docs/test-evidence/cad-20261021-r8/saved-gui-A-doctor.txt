@@ -1,0 +1,32 @@
+# PatentMarker Doctor Report
+
+- Generated: 2026-10-21 23:05:07
+- Drawing: <WORKSPACE>\docs\test-evidence\acceptance-r8-20261020-facing-gap\evidence\saved-gui-strict\saved-gui-A\test.dwg
+
+## Environment
+
+- Assembly: <WORKSPACE>\docs\test-evidence\acceptance-r8-20261020-facing-gap\candidate-release\acceptance-stage\2025\PatentMarker.dll
+- Assembly SHA-256: e7ecbb3e08af9d02201c4295993a5e3f4b5014d6bdd8f6f579c6d1f679e921a3
+- Assembly MVID: 5be5b2e4-d78c-474d-9165-671394d00bd3
+- Assembly version: 1.0.0.0
+- Informational version: 1.0.0+8c94b891f237ce35b50c4771b8b8a14d7f6697c9
+- .NET Runtime: 8.0.28
+- BaseDirectory: C:\Program Files\Autodesk\AutoCAD 2026\
+
+## Checks
+
+| # | Check | Result | Detail |
+|---|-------|--------|--------|
+| 1 | 报告目录可写 | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r8-20261020-facing-gap\candidate-release\acceptance-stage\2025 |
+| 2 | 发布清单身份 | PASS | identity matched: PatentMarker.dll \| MVID 5be5b2e4-d78c-474d-9165-671394d00bd3 \| SHA-256 e7ecbb3e08af9d02201c4295993a5e3f4b5014d6bdd8f6f579c6d1f679e921a3 |
+| 3 | PAT_DIM 标注样式 | PASS | 箭头=2.5, 文字高度=3.5 |
+| 4 | TIMES_ROMAN 文字样式 | PASS | TIMES_ROMAN |
+| 5 | 运行设置 | PASS | 箭头大小=2.5, 文字高度=3.5 |
+| 6 | 字典 (.dict.json) | PASS | <WORKSPACE>\docs\test-evidence\acceptance-r8-20261020-facing-gap\evidence\saved-gui-strict\saved-gui-A\test.dict.json \| 1 条 \| 文件存在 |
+| 7 | 模型空间扫描 | PASS | 14 个实体，0 条引线，0 个多行文字 |
+
+Summary: PASS 7 / FAIL 0 / SKIP 0 | recent errors: 0
+
+## Recent errors
+
+(none)

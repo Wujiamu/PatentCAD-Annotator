@@ -88,14 +88,15 @@ internal static class Program
                     if (args[0] == "command" && !Target(text.Pid).ProcessName.Equals("acad", StringComparison.OrdinalIgnoreCase))
                         throw new InvalidOperationException("Command submission is limited to AutoCAD.");
                     if (args[2].Any(char.IsControl)) throw new ArgumentException("Text must not include control characters. Send keys separately.");
-                    if (args[2].Length > 2048) throw new ArgumentException("Text exceeds 2048 characters.");
+                    if (args[2].Length > 512) throw new ArgumentException("Text exceeds 512 characters.");
                     Consume(args[1]);
                     foreach (char character in args[2])
                     {
                         GuardForeground(text);
                         Send(new[] { Input.Unicode(character, false), Input.Unicode(character, true) });
+                        Thread.Sleep(25); // AutoCAD command completion can drop an unpaced Unicode burst.
                     }
-                    if (args[0] == "command") { GuardForeground(text); Send(KeyInputs("Enter")); }
+                    if (args[0] == "command") { Thread.Sleep(100); GuardForeground(text); Send(KeyInputs("Enter")); }
                     Console.WriteLine("Input sent. Capture a new observation.");
                     break;
                 case "drag":
