@@ -1,10 +1,16 @@
 # PatentMarker — Word 专利附图标注工具系列
 
-**一个项目，三条标注路线：Word → AutoCAD、Word → PowerPoint、Word → Visio。** Word 提取附图标记并导出同一种 `.dict.json`，三个宿主分别完成标注和漏标检查。本仓库统一维护源码、公共规则、说明和验证入口，按宿主分别打包。仓库沿用 `PatentCAD-Annotator` 地址。
+**一个项目，三条标注路线：Word → AutoCAD、Word → PowerPoint、Word → Visio。**
+
+PatentMarker 专利附图标注工具系列：Word 提取编号字典，AutoCAD、PowerPoint、Visio 完成标注与漏标检查；共用 .dict.json 协议，按宿主独立打包。
+
+本仓库统一维护源码、公共规则、说明和验证入口；仓库地址沿用 `PatentCAD-Annotator`。
 
 **PatentMarker annotation suite** — One Word dictionary exporter, with AutoCAD, PowerPoint and Visio annotation clients maintained in this repository and packaged separately.
 
 CAD / Word 当前版本：**1.0.3 candidate（待发布 / unreleased）**；Office 实验版本：**PowerPoint 0.1.2.0 / Visio 0.1.4.0**。发布记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+**当前 CAD 修复候选**：[R11 候选及验收（PR #3）](https://github.com/Wujiamu/PatentCAD-Annotator/pull/3)已完成本机 AutoCAD 2026 x64 必要验收。2007 / 2010 / 2013 / 2015 四组旧宿主仅通过 GitHub 交给目标环境验证，尚未回传；本机结论不外推未测宿主。候选包、验收摘要和旧宿主操作步骤均在该 PR 中。
 
 ## 先打开标注面板
 
