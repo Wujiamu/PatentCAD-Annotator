@@ -1,0 +1,2 @@
+using System; using System.Threading.Tasks; using Xunit;
+public class FixtureTests : IAsyncDisposable { public ValueTask DisposeAsync() => ValueTask.CompletedTask; [Fact] public void Unsupported() { } }

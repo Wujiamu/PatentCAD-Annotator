@@ -1,0 +1,15 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py crossing
+exit: 1
+FAIL R-015 crossing modern=False avoids text
+FAIL R-015 crossing modern=False avoids text
+FAIL R-015 native crossing is rejected
+FAIL R-015 native rejected move restores association and location
+FAIL R-015 reject pick inside moved text
+FAIL R-015 rejected move leaves original entity unchanged
+FAIL R-015 crossing modern=True avoids text
+FAIL R-015 crossing modern=True avoids text
+FAIL R-015 native crossing is rejected
+FAIL R-015 native rejected move restores association and location
+FAIL R-015 reject pick inside moved text
+FAIL R-015 rejected move leaves original entity unchanged
+SUMMARY selector=crossing checks=20 failed=12

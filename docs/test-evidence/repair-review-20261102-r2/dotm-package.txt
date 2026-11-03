@@ -1,0 +1,1 @@
+PASS|DOTM_PACKAGE|path=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\word-addin\PatentMarker.dotm|vba_project=true|content_type=true|relationship=true|macro_metadata=true|macro_metadata_entries=3

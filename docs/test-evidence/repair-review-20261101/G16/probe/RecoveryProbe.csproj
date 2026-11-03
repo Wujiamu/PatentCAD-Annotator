@@ -1,0 +1,76 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G16 (R-034) red/green probe.
+
+    ONE scenario file (RecoveryProbe.cs), TWO source snapshots of the files
+    under repair. Nothing else changes between builds, so the only variable is
+    the repaired production code:
+
+      -p:G16Snapshot=red    -> docs/.../G16/red-source  (pre-fix bytes, flat dir)
+      -p:G16Snapshot=green  -> cad-plugin/Shared        (post-fix bytes, live tree)
+
+    The 2025 DictLoader/DictWriter/ConfigLoader, shared DictFileVisibility,
+    NumberIdentity, Strings, PatCheckResult and the palette session/renderer are
+    compiled from the live tree in BOTH builds. The real DictPaletteControl,
+    ArbitrateDialog, DictPaletteWorkflow and DictConflict are compiled in both
+    builds, with only the unrelated neighbours stubbed (PatPaletteCommand,
+    DictPaletteCadService, the two entry dialogs, the AutoCAD host types).
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <AssemblyName>G16RecoveryProbe</AssemblyName>
+    <RootNamespace>G16Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G16Snapshot Condition="'$(G16Snapshot)' == ''">green</G16Snapshot>
+    <IsRed Condition="'$(G16Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G16_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-fix snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)ArbitrateDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteWorkflow.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(RedDir)DictConflict.cs" Condition="'$(IsRed)' == 'true'" Link="IO\DictConflict.cs" />
+    <Compile Include="$(SharedDir)IO\DictConflict.cs" Condition="'$(IsRed)' != 'true'" Link="IO\DictConflict.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="ProbeModel.cs" />
+    <Compile Include="RecoveryProbe.cs" />
+    <Compile Include="AdapterRed.cs" Condition="'$(IsRed)' == 'true'" />
+    <Compile Include="AdapterGreen.cs" Condition="'$(IsRed)' != 'true'" />
+  </ItemGroup>
+
+</Project>

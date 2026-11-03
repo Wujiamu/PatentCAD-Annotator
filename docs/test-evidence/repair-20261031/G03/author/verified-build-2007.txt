@@ -1,0 +1,10 @@
+command: powershell.exe -NoProfile -ExecutionPolicy Bypass -File build.ps1 -Version 2007
+exit: 0
+
+=== Building edition 2007 (.NET 2.0 / Leader + MText) ===
+
+  PatentMarker -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03\cad-plugin\2007\PatentMarker\bin\Release\PatentMarker.dll
+  [OK]   Edition 2007 built successfully
+
+=== Done ===
+  [OK]   All requested editions processed successfully

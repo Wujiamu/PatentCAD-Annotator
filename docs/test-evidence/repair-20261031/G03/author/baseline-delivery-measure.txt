@@ -1,0 +1,23 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py measure
+exit: 1
+FAIL R-020 modern=False native=False h=1 height expected 1 got 3.5
+FAIL R-020 modern=False native=False h=1 width expected 37.5 got 7
+FAIL R-020 modern=False native=False h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=False native=False h=10 height expected 10 got 3.5
+FAIL R-020 modern=False native=False h=10 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=1 height expected 1 got 3.5
+FAIL R-020 modern=False native=True h=1 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=10 height expected 10 got 3.5
+FAIL R-020 modern=False native=True h=10 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=1 height expected 1 got 3.5
+FAIL R-020 modern=True native=False h=1 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=10 height expected 10 got 3.5
+FAIL R-020 modern=True native=False h=10 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=1 height expected 1 got 3.5
+FAIL R-020 modern=True native=True h=1 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=10 height expected 10 got 3.5
+FAIL R-020 modern=True native=True h=10 width expected 37.5 got 7
+SUMMARY selector=measure checks=24 failed=20

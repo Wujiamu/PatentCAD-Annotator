@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net8.0-windows</TargetFramework><UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings><Nullable>disable</Nullable><EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <NoWarn>CS0436;CS8632</NoWarn><AssemblyName>SnapshotProbe</AssemblyName>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\</RepoRoot>
+    <WorkflowSource Condition="'$(WorkflowSource)' == ''">$(RepoRoot)cad-plugin\Shared\Palette\DictPaletteWorkflow.cs</WorkflowSource>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ReviewCore"><HintPath>..\palette\bin\Release\net8.0-windows\Review.dll</HintPath><Aliases>global,core</Aliases></Reference>
+    <Compile Include="$(WorkflowSource)" Link="ProductionWorkflow.cs" />
+    <Compile Include="SnapshotProbe.cs" />
+  </ItemGroup>
+</Project>

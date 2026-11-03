@@ -1,0 +1,316 @@
+{
+  "schema_version": 2,
+  "review_id": "repair-review-20261102-r3",
+  "date": "2026-11-02",
+  "result": "FAIL",
+  "scope": "G24–G27 的8个生产/工具变更文件、两套安装验证脚本及受影响调用链；冻结39个源文件，按17组覆盖表复核。",
+  "reviewer": "当前主代理未参与G24–G27实现；独立重跑旧反例与交付矩阵，并新增确定性的读取/解析交错探针。",
+  "environment": "review-environment.json",
+  "source_manifest": "source-manifest.json",
+  "tool_manifest": "tool-manifest.json",
+  "evidence_manifest": "evidence-manifest.json",
+  "new_items": [],
+  "reopened_items": [
+    "R-004"
+  ],
+  "previous_fixes": [
+    {
+      "id": "R-004",
+      "status": "PASS",
+      "scope": "提交事实、规范路径、严格读取入口、每Document按钮/确认/释放的原有稳定文件场景通过，旧面板114/114、G24矩阵160/160。新增并发读取组合单列。"
+    },
+    {
+      "id": "R-034",
+      "status": "PASS",
+      "scope": "部分写入后刷新、会话事实累计、重复失败后稍后、PATCHECK保留及跨图纸组合通过，G25矩阵100/100；共同ReadSnapshot缺陷统一由R-004/G28处理，不再另派G25。"
+    },
+    {
+      "id": "R-029",
+      "status": "PASS",
+      "scope": "组件回滚60/60，两套完整隔离安装矩阵独立重跑退出0，原注册未写而路径已变的恢复失败已正确处理；本轮无新增补修。"
+    },
+    {
+      "id": "R-035",
+      "status": "PASS",
+      "scope": "默认/显式成功和失败TRX返回后均保留，归属与错误矩阵15/15，真实Office VSTest34/34、48/48；本轮无新增补修。"
+    },
+    {
+      "id": "R-016",
+      "status": "PASS",
+      "scope": "相关生产解析器/VBA源文件与上轮哈希一致；沿用上轮独立2016组与Word L2结果，没有新增解析生产改动，不重复分派。"
+    }
+  ],
+  "tests": [
+    {
+      "id": "old-palette-matrix",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 114,
+      "failed": 0,
+      "evidence": "palette-matrix.txt",
+      "command": "dotnet docs/test-evidence/repair-review-20261102-r3/palette/bin/Release/net8.0-windows/Review.dll",
+      "limit": "上一轮相同业务输入与断言；只适配新增同参数数目的反射重载，按实参类型定位。CAD为桩，模态控件为真实WinForms测试进程。"
+    },
+    {
+      "id": "g24-matrix",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 160,
+      "failed": 0,
+      "evidence": "g24-probe.txt",
+      "command": "dotnet docs/test-evidence/repair-review-20261102-r2/G24/probe/bin/Release/net8.0-windows/G24Probe.dll",
+      "limit": "实现者编写、复核者独立重建重跑；与旧矩阵有重合，skipped=0。"
+    },
+    {
+      "id": "g25-matrix",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 100,
+      "failed": 0,
+      "evidence": "g25-probe.txt",
+      "command": "dotnet docs/test-evidence/repair-review-20261102-r2/G25/probe/bin/Release/net8.0-windows/G25Probe.dll",
+      "limit": "同上，skipped=0；编译仅有未赋值_skip字段的警告，不是跳过断言。"
+    },
+    {
+      "id": "2025-suite",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 302,
+      "failed": 0,
+      "evidence": "2025-suite-host.txt",
+      "command": "./tools/run-fact-tests.ps1 -TestProject ./cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj",
+      "limit": "实际FactRunner支持的同步Fact集合，skipped=0；不等于CAD宿主。沙箱文件ACL用例前置权限失败，主机重跑全通过。NU1900漏洞数据源不可达未作为功能失败，也未宣称漏洞审计通过。"
+    },
+    {
+      "id": "rollback-components",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 60,
+      "failed": 0,
+      "evidence": "installer-matrix.txt",
+      "command": "pwsh -NoProfile -File docs/test-evidence/repair-review-20261102-r3/installer-matrix.ps1 -ProjectRoot .",
+      "limit": "原两套×五阶段×恢复成功/失败；内存注册边界补齐新OpenSubKey回读，目录移动和恢复失败注入不变。"
+    },
+    {
+      "id": "ppt-installer",
+      "status": "PASS",
+      "level": "隔离安装集成",
+      "exit_code": 0,
+      "evidence": "native-ppt-installer.txt",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File office-com-addin/verify-installer.ps1 -OfficeBitness 64",
+      "limit": "真实UUID测试HKCU根、本轮临时目录和非产品哨兵；不修改真实产品注册/安装，不是Office正常启动黑盒。"
+    },
+    {
+      "id": "visio-installer",
+      "status": "PASS",
+      "level": "隔离安装集成",
+      "exit_code": 0,
+      "evidence": "native-visio-installer.txt",
+      "command": "powershell -NoProfile -ExecutionPolicy Bypass -File office-com-addin/verify-visio-installer.ps1",
+      "limit": "同上，两套完整安装验证独立执行。"
+    },
+    {
+      "id": "vstest-wrapper",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 15,
+      "failed": 0,
+      "evidence": "vstest-matrix.txt",
+      "command": "pwsh -NoProfile -File docs/test-evidence/repair-review-20261102-r3/vstest-matrix.ps1 -ProjectRoot .",
+      "limit": "完整生产包装器；dotnet为受控CLI边界。额外验证默认/显式失败TRX留存。"
+    },
+    {
+      "id": "office-ppt",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 34,
+      "failed": 0,
+      "evidence": "office-vstest-ppt.txt",
+      "command": "./tools/run-office-tests-vstest.ps1 -TestProject ./office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/PatentOffice.PowerPoint.CodeTests.csproj -ResultsDirectory ./docs/test-evidence/repair-review-20261102-r3/office-vstest",
+      "limit": "真实VSTest/net48代码测试，结果文件存在，无PPT UI结论。"
+    },
+    {
+      "id": "office-visio",
+      "status": "PASS",
+      "level": "L1",
+      "exit_code": 0,
+      "passed": 48,
+      "failed": 0,
+      "evidence": "office-vstest-visio.txt",
+      "command": "./tools/run-office-tests-vstest.ps1 -TestProject ./office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj -ResultsDirectory ./docs/test-evidence/repair-review-20261102-r3/office-vstest",
+      "limit": "真实VSTest，包含Theory；无Visio UI结论。"
+    },
+    {
+      "id": "snapshot-current",
+      "status": "FAIL",
+      "level": "L1",
+      "exit_code": 1,
+      "passed": 60,
+      "failed": 25,
+      "evidence": "snapshot-red.txt",
+      "command": "dotnet docs/test-evidence/repair-review-20261102-r3/snapshot/bin/Release/net8.0-windows/SnapshotProbe.dll",
+      "limit": "生产Workflow源码原样编译；5类首读字节×4类解析时外部切换，模型通过真实生产加载器解析。仅加载器边界控制外部改写，非真实多进程压力测试。"
+    },
+    {
+      "id": "snapshot-local-hypothesis",
+      "status": "PASS",
+      "level": "L1局部反事实",
+      "exit_code": 0,
+      "passed": 85,
+      "failed": 0,
+      "evidence": "snapshot-hypothesis.txt",
+      "command": "dotnet docs/test-evidence/repair-review-20261102-r3/snapshot/hypothesis-bin/SnapshotProbe.dll",
+      "limit": "只在证据副本把Load(path)替换为LoadBytes(path,bytes)，场景和断言完全相同；不是生产修复、部署候选或放行绿灯。"
+    },
+    {
+      "id": "readonly-gates",
+      "status": "PASS",
+      "level": "L0",
+      "exit_code": 0,
+      "evidence": "readonly-gates.json",
+      "command": "check-version-sync.ps1; sync-mleader-group.ps1 -Check; vba-sync.ps1 -Check; sync-word-addin.ps1 -Check; verify-dotm-package.ps1",
+      "limit": "五项分别执行并核对退出0；只读，不证明实际加载或旧宿主行为。"
+    }
+  ],
+  "coverage": [
+    {
+      "group": "C1",
+      "status": "PASS",
+      "detail": "真实模态编辑调用方、保存后替换/损坏/删除/另存为、可信与不可信提交事实；旧114和G24矩阵通过。"
+    },
+    {
+      "group": "D1",
+      "status": "FAIL",
+      "detail": "85个断言：当前60 PASS/25 FAIL；5类首读（有效、合法空、坏JSON、坏UTF8、BOM）×4种切换（不变、B、坏、B再还原A），含5个后续写入拒绝断言。局部单行假设85/85。"
+    },
+    {
+      "group": "N1",
+      "status": "PASS",
+      "detail": "原编号守卫、名称编辑、完成和显式放弃后再改均通过。"
+    },
+    {
+      "group": "N2",
+      "status": "PASS",
+      "detail": "提交后版本/路径/Document漂移与欠账保留的旧反例通过。"
+    },
+    {
+      "group": "N3",
+      "status": "PASS",
+      "detail": "稳定读期间当前合法/缺新号/损坏×旧/热/冷模型通过；读取/解析之间变化的保证归D1。"
+    },
+    {
+      "group": "N4",
+      "status": "PASS",
+      "detail": "按钮、确认位、关闭释放按Document归属；旧路径被复用后关闭另一文档不再清错任务。"
+    },
+    {
+      "group": "N5",
+      "status": "PASS",
+      "detail": "成功、零匹配、失败与任务去留对照通过。"
+    },
+    {
+      "group": "A1",
+      "status": "PASS",
+      "detail": "四格当前/备份×三个动作与可用性通过。"
+    },
+    {
+      "group": "A2",
+      "status": "PASS",
+      "detail": "选择后文件、Document及路径漂移拒绝通过。"
+    },
+    {
+      "group": "A3",
+      "status": "PASS",
+      "detail": "写前失败、两类部分写入、重复失败/稍后、后续轮询及会话事实通过。"
+    },
+    {
+      "group": "A4",
+      "status": "PASS",
+      "detail": "跨图纸不串模型、未变化时PATCHECK保持、另一备份保留；并发生成错配快照归D1，不重复登记。"
+    },
+    {
+      "group": "I1",
+      "status": "PASS",
+      "detail": "两套现有完整隔离安装矩阵独立通过。"
+    },
+    {
+      "group": "I2",
+      "status": "PASS",
+      "detail": "两套×五阶段×恢复成功/失败，组件60/60；对应完整隔离故障矩阵通过。"
+    },
+    {
+      "group": "I3",
+      "status": "PASS",
+      "detail": "当前安装器回读真实注册存在状态，现有不可信注册/停用/恢复/清理故障与哨兵矩阵通过。"
+    },
+    {
+      "group": "T1",
+      "status": "PASS",
+      "detail": "陈旧文件、无新结果、计数/CLI/XML错误和真实两工程同父目录通过。"
+    },
+    {
+      "group": "T2",
+      "status": "PASS",
+      "detail": "默认/显式成功和失败结果均在返回后可读取，DLL staging清理正常。"
+    },
+    {
+      "group": "B1",
+      "status": "PASS",
+      "detail": "相关组件构建、五项只读门禁通过；LoadBytes五版声明已核对，未将作者五版编译当成本轮独立验证。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "R-004",
+      "kind": "补修",
+      "priority": "P1",
+      "task": "G28",
+      "status": "FAIL",
+      "title": "ReadSnapshot二次读盘，身份与模型可来自不同版本并绕过后续CAS",
+      "locations": [
+        "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs:77",
+        "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs:98",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:761",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:1144",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:1198"
+      ],
+      "scenario": "文件A为999。ReadSnapshot先ReadAllBytes(A)并计算A身份；进入解析加载器前将文件换成B（302），真实生产加载器解析B；可在返回前还原A。返回值却是A身份+B模型。按裁决刷新所用API登记缓存后，对显示出的虚构302编辑为303并写回。",
+      "expected": "模型只能解析首读的那份bytes：A模型/空模型/解析失败与其身份对应；B中独有的302不能成为A可编辑条目，原文件字节不应被这次虚构编辑覆盖。",
+      "actual": "25个同源失败断言。A→B→A且没有待裁决备份的合成前置下，真实DictWriter.Write返回True，文件A原始字节被覆盖；证明CAS自身无法识别错配模型，不表示绕过冲突备份门禁。稳定文件均通过，合法空、坏JSON、坏UTF8、BOM也复现同类错配。",
+      "cause": "代码先File.ReadAllBytes计算DictIdentity，随后调用DictLoader.Load(dictPath)，该函数再次读文件。注释和G24契约要求同一份字节，实际没有把bytes交给解析器。G25视图刷新也复用此入口，不能把模型/身份错配当成独立第二个缺陷。",
+      "repair": "在该共享入口直接调用五版已有的DictLoader.LoadBytes(dictPath, bytes)解析已读字节；保留Read/Parsed/Error和严格解析规则，不新增锁、重试、缓存或读取框架。",
+      "evidence": "snapshot-red.txt",
+      "selectors": [
+        "FAIL|valid/A-to-B-model-A|",
+        "FAIL|valid/A-to-B-to-A-model-A|",
+        "FAIL|valid/A-to-B-to-A-no-phantom-overwrite|",
+        "FAIL|empty/A-to-B-to-A-no-phantom-overwrite|",
+        "FAIL|bad-json/A-to-B-to-A-no-phantom-overwrite|",
+        "FAIL|bad-utf8/A-to-B-to-A-no-phantom-overwrite|",
+        "FAIL|bom/A-to-B-to-A-no-phantom-overwrite|"
+      ],
+      "classification": "G24新增快照方法的实现与已确认契约不一致。普通稳定文件用例已修好；本轮新增读取/解析交错覆盖。沿R-004补修，不为每个编码/调用方另增编号。",
+      "proof": "snapshot/hypothesis/DictPaletteWorkflow.cs仅改一行，相同85个断言全部通过；生产文件仍为Load(path)，故状态仍FAIL。"
+    }
+  ],
+  "exclusions": [
+    "跨程序集探针第一次构建因RuntimeHost/internal LoadBytes可见性失败；已在测试边界补不可达宿主名和对真实内部解析器的反射转发，不计产品失败。",
+    "增加失败TRX留存断言时，测试脚本的$script变量作用域导致路径未记录；随后继承模拟CLI退出码导致PASS汇总仍退出7。均为探针前置/汇总问题，保留原记录，修正后的15个业务断言及退出0才计入结果。",
+    "沙箱302项执行中唯一失败为ACL测试权限前置，主机302/302、skipped=0；不是产品修复失败。NuGet漏洞源不可达警告未被当成测试失败或已完成的安全审计。",
+    "R-012原假设撤回、R-028在AutoCAD2026核验且不迁移的结论保持；不重开未变解析器，也不重列旧四组为本机任务。"
+  ],
+  "limits": [
+    "本轮未修改生产源、安装器、VBA、部署包或系统策略；39个源文件结束时回读哈希一致。局部假设仅在证据副本，不算生产绿灯。",
+    "新反例为确定性I/O边界交错和真实加载器/写入器的L1证据；没有原生CAD GUI、真实DocumentLock/Transaction或实际用户图纸的数据丢失复现。",
+    "真实CAD事件/视觉、重启持久化、Word安装后自动启动和其他Office版本/位数均为SKIP/BLOCKED，不由组件/隔离安装结果外推。",
+    "GitHub外部宿主验收：2007/2010/2013/2015只交目标环境，不在本机安装、测试或反复探测。",
+    "本轮只覆盖变更影响范围和所列组合，不承诺穷尽所有缺陷。"
+  ]
+}

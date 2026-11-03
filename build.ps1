@@ -513,8 +513,7 @@ function Invoke-StaticCheck {
         "IO\ConfigLoader.cs",
         "IO\RuntimeHost.cs",
         "IO\DictEntry.cs",
-        "IO\DictWriter.cs",
-        "IO\SimpleJson.cs"
+        "IO\DictWriter.cs"
     )
     $driftCount2 = 0
     foreach ($rel in $localFilesB) {
@@ -569,6 +568,47 @@ function Invoke-StaticCheck {
         } else {
             Write-Ok "$ver : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)"
         }
+    }
+
+    # ---- 5b. Release manifest identity ----
+    Write-Host "`n  --- Release manifest identity ---"
+    $releaseManifestVerifier = Join-Path $root "tools\verify-release-manifests.ps1"
+    if (Test-Path -LiteralPath $releaseManifestVerifier) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $releaseManifestVerifier
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err2 "Deployment release manifest verification failed."
+            $failCount++
+        } else {
+            Write-Ok "All deployment release manifests match their DLL, DOTM and VBA assets"
+        }
+    } else {
+        Write-Err2 "Release manifest verifier not found: $releaseManifestVerifier"
+        $failCount++
+    }
+
+    # ---- 5c. Release manifest and geometry report negative gates ----
+    Write-Host "`n  --- Negative gate self-tests ---"
+    $releaseManifestSelfTest = Join-Path $root "tools\verify-release-manifests.ps1"
+    if (Test-Path -LiteralPath $releaseManifestSelfTest) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $releaseManifestSelfTest -SelfTest | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err2 "Release manifest negative self-test failed."
+            $failCount++
+        }
+    } else {
+        Write-Err2 "Release manifest verifier not found: $releaseManifestSelfTest"
+        $failCount++
+    }
+    $geometryVerifier = Join-Path $root "tools\verify-geometry.ps1"
+    if (Test-Path -LiteralPath $geometryVerifier) {
+        & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $geometryVerifier -SelfTest | Out-Host
+        if ($LASTEXITCODE -ne 0) {
+            Write-Err2 "Geometry report negative self-test failed."
+            $failCount++
+        }
+    } else {
+        Write-Err2 "Geometry report verifier not found: $geometryVerifier"
+        $failCount++
     }
 
     # ---- 6. Installer profile enumeration ----

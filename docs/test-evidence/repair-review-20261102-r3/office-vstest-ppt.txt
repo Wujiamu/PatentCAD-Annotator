@@ -1,0 +1,2 @@
+ASSEMBLY_SHA256=675ca9f323822d54bc54fad6e39786594c9efdbe862122e0585530eeed66bf1f
+PASS|VSTEST|PatentOffice.PowerPoint.CodeTests|34/34|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\office-vstest\results-be4385d866e04bc48b168391ec67a69d.trx

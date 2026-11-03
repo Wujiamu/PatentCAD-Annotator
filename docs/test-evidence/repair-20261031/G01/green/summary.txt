@@ -1,0 +1,27 @@
+PASS empty
+PASS all-skipped
+PASS empty-skip
+PASS mixed-skip
+PASS pass
+PASS assertion-fails
+PASS task
+PASS value-task
+PASS async-void
+PASS static
+PASS static-class
+PASS static-skipped
+PASS parameter
+PASS theory
+PASS private
+PASS generic
+PASS generic-class
+PASS struct
+PASS constructor
+PASS non-void
+PASS timeout
+PASS custom-fact
+PASS class-fixture
+PASS collection-fixture
+PASS async-lifetime
+PASS async-disposable
+G01 SUMMARY: passed=26 failed=0

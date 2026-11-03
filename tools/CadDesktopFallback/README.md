@@ -58,3 +58,5 @@ Office 可用固定快捷键 `Ctrl+1/3/6`（Visio 工具）、`Ctrl+Shift+W`（V
 先在新空白记事本截图，输入脱敏单词，再真实双击并观察选择结果；通过后才进入临时 CAD。CAD 使用最终候选包经实际安装和新进程启动，不先调用内部初始化器、`Button.PerformClick` 或探针建立待测状态。通过面板列表真实双击启动 PATMARK，逐项点击大括号/对齐/检测，观察提示替换；绘制左右文字并检查没有底部延伸；再覆盖夹点同侧/跨侧拖动与多文档切换。各场景记录 PASS/FAIL/SKIP，恢复产品安装和本轮创建的临时环境。
 
 API 依据：[BitBlt](https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-bitblt)、[MOUSEINPUT](https://learn.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-mouseinput)。
+
+2026-10-22 输入节奏修正：逐字符间隔 25 ms，单次最多 512 字符；自动提交前等待 100 ms。CAD 验收优先用 `text` 输入，重新截图确认完整字面，再单独 Enter。修正前实测 PATDOCTOR 漏为 PATCCTOR，未提交；修正后业务结论以同场景复测为准。

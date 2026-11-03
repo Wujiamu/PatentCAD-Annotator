@@ -1,0 +1,55 @@
+﻿G18 red: PowerPoint isolation matrix against the PRE-FIX rollback order
+time=2026-11-02 01:14:15 +08:00
+host=DESKTOP-3VJ2A3B  user=wjm  powershell=5.1.19041.7802
+red_source=docs/test-evidence/repair-review-20261101/G18/red-prefix-source (archived pre-fix catch bodies; see its README.txt)
+assembled_run_dir=C:\Users\wjm\AppData\Local\Temp\g18-redrepro-048d598fd70949e98f13a14545687620
+command=powershell.exe -NoProfile -ExecutionPolicy Bypass -File <run>\verify-installer.ps1 -OfficeBitness 64 -SourceDirectory <run>\dist
+isolation=TestRegistryRoot Software\PatentMarkerOfficeAddinTests\<guid>; install dir under %TEMP%; no real registry key or Office path used
+assertions=identical to the green run (same verify-installer.ps1); only the catch bodies differ
+exit=1
+---- red source ----
+prefix_src|install-office-addin.ps1|64CF9FC3154931834FC3ADE0A8901E909AE8464BEAC9F996A3BD6BCF49075809
+prefix_src|install-visio-addin.ps1|7AEA53C141603145A695BAFF61119A08683365721E9360DFBD174BAC69A8787D
+prefix_src|uninstall-office-addin.ps1|C5B9DCF1BE0F012DEBF665D73D0A43FB32A44DB68490DFDE6F61B7EB4F5270DF
+prefix_src|uninstall-visio-addin.ps1|C852C3B037E286186B5FDB2A208DAA3D1656A4043DF830B850DC1FAA1BC79A99
+---- output ----
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-b68d16c020164e2fa122cc62447aacac\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-b68d16c020164e2fa122cc62447aacac\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-b68d16c020164e2fa122cc62447aacac\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+PASS: G14 部分删除失败后从恢复副本还原完整文件集与注册项。
+FAIL: G18 uninstall_file_restore_failed_registration_disabled — 仍存在产品注册项：Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7-7E769CB367D8}|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\PatentOffice.PowerPointAddIn|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Office\PowerPoint\Addins\PatentOffice.PowerPointAddIn
+FAIL: G18 uninstall_file_restore_failed_material_kept — 恢复失败却没有保留恢复副本
+FAIL: G18 uninstall_registry_restore_failed_disabled — 注册项未全部保持移除：Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7-7E769CB367D8}|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\PatentOffice.PowerPointAddIn|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Office\PowerPoint\Addins\PatentOffice.PowerPointAddIn
+FAIL: G18 uninstall_registry_restore_failed_material_kept — 残留回滚材料：
+PASS: G18 uninstall_cleanup_failed_files_complete — 清理失败时产品文件仍为完整集合
+PASS: G18 uninstall_cleanup_failed_registration_restored — 清理失败时原注册项已恢复
+FAIL: G18 uninstall_cleanup_failed_material_kept — 残留回滚材料：
+PASS: G18 upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整目录与哈希已还原
+PASS: G18 upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原注册项已恢复
+PASS: G18 upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+FAIL: G18 upgrade_registry_restore_failed_disabled — 仍存在产品注册项：Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7-7E769CB367D8}|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\PatentOffice.PowerPointAddIn|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Office\PowerPoint\Addins\PatentOffice.PowerPointAddIn
+PASS: G18 upgrade_registry_restore_failed_old_files_intact — 注册恢复失败时旧版文件仍完整
+FAIL: G18 upgrade_registry_restore_failed_material_kept — 残留回滚材料：
+FAIL: G18 upgrade_residue_removal_blocked_registration_disabled — 仍存在指向残片的产品注册项：Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7-7E769CB367D8}|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Classes\PatentOffice.PowerPointAddIn|Software\PatentMarkerOfficeAddinTests\b68d16c020164e2fa122cc62447aacac\Office\PowerPoint\Addins\PatentOffice.PowerPointAddIn
+FAIL: G18 upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：
+G18: 9 条断言失败：uninstall_file_restore_failed_registration_disabled, uninstall_file_restore_failed_material_kept, uninstal
+l_registry_restore_failed_disabled, uninstall_registry_restore_failed_material_kept, uninstall_cleanup_failed_material_
+kept, upgrade_registry_restore_failed_disabled, upgrade_registry_restore_failed_material_kept, upgrade_residue_removal_
+blocked_registration_disabled, upgrade_residue_removal_blocked_material_kept
+At C:\Users\wjm\AppData\Local\Temp\g18-redrepro-048d598fd70949e98f13a14545687620\verify-installer.ps1:490 char:9
++         throw ("G18: {0} 条断言失败：{1}" -f $g18Failed.Count, ($g18Failed  ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G18: 9 条断言失败：un...d_material_kept:String) [], RuntimeException
+    + FullyQualifiedErrorId : G18: 9 条断言失败：uninstall_file_restore_failed_registration_disabled, uninstall_file_restore 
+   _failed_material_kept, uninstall_registry_restore_failed_disabled, uninstall_registry_restore_failed_material_kept  
+  , uninstall_cleanup_failed_material_kept, upgrade_registry_restore_failed_disabled, upgrade_registry_restore_faile   
+ d_material_kept, upgrade_residue_removal_blocked_registration_disabled, upgrade_residue_removal_blocked_material_k    
+ept
+ 

@@ -19,8 +19,72 @@ $OutputRoot = if ([string]::IsNullOrEmpty($OutputRoot)) {
 $versions = if ($Version -eq "all") { @("2007", "2010", "2013", "2015", "2025") } else { @($Version) }
 $vbaFiles = @("Patterns.bas", "DictModel.bas", "JsonWriter.bas", "PatentExtractor.bas", "AutoExport.bas", "PatentMarkerBootstrap.bas", "clsSaveHook.cls", "PatentDictPanel.frm", "PatentDictPanel.frx")
 $ilrepack = Join-Path $root "tools\ilrepack\tools\ILRepack.exe"
+$releaseManifestProject = Join-Path $root "tools\ReleaseManifest\ReleaseManifest.csproj"
+$releaseManifestTool = Join-Path $root "tools\ReleaseManifest\bin\Release\net8.0\PatentMarker.ReleaseManifest.exe"
 
 function Fail($message) { throw $message }
+
+function Get-ReleaseVersion {
+    if (-not [string]::IsNullOrWhiteSpace($ReleaseVersion)) { return $ReleaseVersion.Trim() }
+    if (-not [string]::IsNullOrWhiteSpace($env:PATENTMARKER_RELEASE_VERSION)) {
+        return $env:PATENTMARKER_RELEASE_VERSION.Trim()
+    }
+    if (Get-Command git -ErrorAction SilentlyContinue) {
+        $described = (& git -C $root describe --tags --always --dirty 2>$null)
+        if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($described)) {
+            return ([string]$described).Trim()
+        }
+    }
+    return "unversioned"
+}
+
+function Ensure-ReleaseManifestTool {
+    $needsBuild = -not (Test-Path -LiteralPath $releaseManifestTool)
+    if (-not $needsBuild) {
+        $toolTime = (Get-Item -LiteralPath $releaseManifestTool).LastWriteTimeUtc
+        $sourceTime = (Get-ChildItem -LiteralPath (Split-Path -Parent $releaseManifestProject) -File |
+            Where-Object { $_.Extension -in @('.cs', '.csproj') } |
+            Measure-Object -Property LastWriteTimeUtc -Maximum).Maximum
+        $needsBuild = $sourceTime -gt $toolTime
+    }
+    if ($needsBuild) {
+        if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
+            Fail "dotnet CLI is required to build tools/ReleaseManifest"
+        }
+        & dotnet build $releaseManifestProject -c Release --nologo -v quiet | Out-Host
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $releaseManifestTool)) {
+            Fail "Unable to build tools/ReleaseManifest"
+        }
+    }
+}
+
+function Write-ReleaseManifest($ver, $stage) {
+    Ensure-ReleaseManifestTool
+    $commit = (& git -C $root rev-parse HEAD 2>$null)
+    $tree = (& git -C $root rev-parse 'HEAD^{tree}' 2>$null)
+    $dirty = if ((& git -C $root status --porcelain --untracked-files=normal 2>$null)) { "true" } else { "false" }
+    $command = "package.ps1 -Version $ver"
+    $toolchain = "PowerShell $($PSVersionTable.PSVersion); dotnet $(& dotnet --version 2>$null)"
+    $args = @(
+        "generate",
+        (Join-Path $stage "PatentMarker.dll"),
+        (Join-Path $stage "PatentMarker-release.txt"),
+        "--edition", $ver,
+        "--version", (Get-ReleaseVersion),
+        "--source-commit", ([string]$commit).Trim(),
+        "--source-tree", ([string]$tree).Trim(),
+        "--source-dirty", $dirty,
+        "--source-state", $(if ($dirty -eq "true") { "dirty-worktree" } else { "clean-commit" }),
+        "--build-tool", $toolchain,
+        "--build-command", $command,
+        "--dotm", (Join-Path $stage "PatentMarker.dotm"),
+        "--vba-dir", (Join-Path $stage "vba")
+    )
+    & $releaseManifestTool @args | Out-Host
+    if ($LASTEXITCODE -ne 0) { Fail "Release manifest generation failed for $ver" }
+    & $releaseManifestTool verify (Join-Path $stage "PatentMarker-release.txt") (Join-Path $stage "PatentMarker.dll") --dotm (Join-Path $stage "PatentMarker.dotm") --vba-dir (Join-Path $stage "vba") | Out-Host
+    if ($LASTEXITCODE -ne 0) { Fail "Release manifest verification failed for $ver" }
+}
 
 function Get-SourceDll {
     param([string]$ver)
@@ -137,6 +201,7 @@ function Stage-Version {
     if (Test-Path -LiteralPath (Join-Path $stage "Newtonsoft.Json.dll")) {
         Fail "External Newtonsoft.Json.dll must not be present in $ver staging"
     }
+    Write-ReleaseManifest $ver $stage
     Write-Host "[OK] $ver staged: $stage"
     return $stage
 }
@@ -156,7 +221,14 @@ if ($Apply) {
             Copy-Item -LiteralPath $target -Destination "$target.bak.$stamp" -Force
         }
         Copy-Item -LiteralPath $source -Destination $target -Force
+        $manifestTarget = Join-Path $deploy "PatentMarker-release.txt"
+        if (Test-Path -LiteralPath $manifestTarget) {
+            Copy-Item -LiteralPath $manifestTarget -Destination "$manifestTarget.bak.$stamp" -Force
+        }
+        Copy-Item -LiteralPath (Join-Path $OutputRoot "$ver\PatentMarker-release.txt") `
+            -Destination $manifestTarget -Force
         Write-Host "[APPLY] $target (backup: $target.bak.$stamp)"
+        Write-Host "[APPLY] $manifestTarget"
     }
 }
 

@@ -1,0 +1,189 @@
+phase=red
+time=2026-11-01T00:37:00.464982+08:00
+identity=local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8
+command=dotnet test cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj --configuration Release --nologo -v minimal --filter FullyQualifiedName~G13BracePlanarityTests
+exit=1
+cad-plugin/Shared/Commands/PatBraceGeometry.cs sha256=8ca5e55434dc3c512d920899910841af277de315f0c892fb245ffbe07caa659d
+cad-plugin/Shared/Commands/PatBraceEntity.cs sha256=b137f18c13a4e705f4c6268955317763cc0351a05ce98f1019f85118945bc010
+cad-plugin/RuntimeContract.Tests/Shared/G13BracePlanarityTests.cs sha256=71e02b12f439b4031d1f969fc72fdc0dcf504802f57b4526ad39479f3c1c1db2
+cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj sha256=5c267ea3f94babd695ba40cdec721af36ab72f291063653bf0941e952317cd58
+  Determining projects to restore...
+
+  Restored <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj (in 682 ms).
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(17,46): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(26,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(26,57): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(44,38): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(44,52): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,77): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Access' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,17): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Owner' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.GetAccessControl(FileInfo)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,47): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Group' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(129,17): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.SetSecurityDescriptorBinaryForm(byte[], AccessControlSections)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(129,70): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Access' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(130,17): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.SetAccessControl(FileInfo, FileSecurity)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(116,18): warning CA1416: This call site is reachable on all platforms. 'RawSecurityDescriptor.ControlFlags' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(115,46): warning CA1416: This call site is reachable on all platforms. 'RawSecurityDescriptor' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(128,41): warning CA1416: This call site is reachable on all platforms. 'FileSecurity' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(116,42): warning CA1416: This call site is reachable on all platforms. 'ControlFlags.DiscretionaryAclAutoInherited' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.GetAccessControl(FileInfo)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.GetSecurityDescriptorBinaryForm()' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\PatGeomVerifyTests.cs(751,25): warning xUnit2020: Do not use Assert.True(false, message) to fail a test. Use Assert.Fail(message) instead. (https://xunit.net/xunit.analyzers/rules/xUnit2020) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2007.Tests.csproj]
+
+  PatentMarker.RuntimeContract.2007.Tests -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\bin\Release\net8.0\PatentMarker.RuntimeContract.2007.Tests.dll
+
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\bin\Release\net8.0\PatentMarker.RuntimeContract.2007.Tests.dll (.NETCoreApp,Version=v8.0)
+
+A total of 1 test files matched the specified pattern.
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.EndpointEditWithDifferentElevationsIsRejected [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.NewEntityRejectsNonPlanarDefinition [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.SizeEditCannotSilentlyFlattenLegacyDefinition [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.CreateFromDifferentElevationsIsRejected [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedReplacementPreservesGeometryAndStoredDefinition [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedDefinitionDoesNotCreateExtensionDictionary [FAIL]
+
+[xUnit.net 00:00:00.23]     PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedGeometryLeavesExistingVerticesAndElevationUntouched [FAIL]
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.EndpointEditWithDifferentElevationsIsRejected [2 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.EndpointEditWithDifferentElevationsIsRejected() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 26
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.NewEntityRejectsNonPlanarDefinition [< 1 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.NewEntityRejectsNonPlanarDefinition() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 41
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.SizeEditCannotSilentlyFlattenLegacyDefinition [< 1 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.SizeEditCannotSilentlyFlattenLegacyDefinition() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 33
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.CreateFromDifferentElevationsIsRejected [< 1 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.CreateFromDifferentElevationsIsRejected() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 19
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedReplacementPreservesGeometryAndStoredDefinition [2 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedReplacementPreservesGeometryAndStoredDefinition() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 90
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedDefinitionDoesNotCreateExtensionDictionary [< 1 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedDefinitionDoesNotCreateExtensionDictionary() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 72
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+  Failed PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedGeometryLeavesExistingVerticesAndElevationUntouched [< 1 ms]
+
+  Error Message:
+
+   Assert.Throws() Failure: No exception was thrown
+
+Expected: typeof(System.ArgumentException)
+
+  Stack Trace:
+
+     at PatentMarker.RuntimeContractTests.G13BracePlanarityTests.RejectedGeometryLeavesExistingVerticesAndElevationUntouched() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\G13BracePlanarityTests.cs:line 55
+
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+
+
+Failed!  - Failed:     7, Passed:     2, Skipped:     0, Total:     9, Duration: 19 ms - PatentMarker.RuntimeContract.2007.Tests.dll (net8.0)
+

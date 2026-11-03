@@ -1,0 +1,32 @@
+[
+  {
+    "id": "version",
+    "log": "version-sync.txt",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "mleader",
+    "log": "mleader-sync.txt",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "vba",
+    "log": "vba-sync.txt",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "word",
+    "log": "word-sync.txt",
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  {
+    "id": "dotm",
+    "log": "dotm-package.txt",
+    "exit_code": 0,
+    "status": "PASS"
+  }
+]

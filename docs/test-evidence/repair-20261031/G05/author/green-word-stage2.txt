@@ -1,0 +1,6 @@
+L2_SOURCE_IMPORT|WORD_VERSION=16.0
+PASS|R003.initial_export
+PASS|R003.new_target_exported
+PASS|R003.old_dict_bytes_retained
+PASS|R003.old_dict_attributes_retained
+PASS|R005.initial_export

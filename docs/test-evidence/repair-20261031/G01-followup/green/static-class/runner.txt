@@ -1,0 +1,5 @@
+exit=1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+PASS FixtureTests.Valid
+SKIP/BLOCKED StaticTests.Unsupported : test class must be concrete, non-generic and have a public parameterless constructor
+SUMMARY: passed=1 failed=0 skipped=1

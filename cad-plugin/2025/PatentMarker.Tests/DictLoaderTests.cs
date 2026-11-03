@@ -299,9 +299,8 @@ namespace PatentMarker.Tests
         }
 
         [Fact]
-        public void Load_TrailingCommas_ParsesSuccessfully()
+        public void Load_TrailingCommas_ReturnsNull()
         {
-            // System.Text.Json 配置了 AllowTrailingCommas = true
             string json = """
             {
                 "metadata": {
@@ -319,8 +318,7 @@ namespace PatentMarker.Tests
 
             DictModel? result = DictLoader.Load(path);
 
-            Assert.NotNull(result);
-            Assert.Single(result.Entries);
+            Assert.Null(result);
         }
     }
 }

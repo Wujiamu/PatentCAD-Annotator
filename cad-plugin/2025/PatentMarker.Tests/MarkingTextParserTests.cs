@@ -253,17 +253,22 @@ namespace PatentMarker.Tests
             string text = "说明书正文……\n附图标记说明如下：\n1底座， 2支架； 3(泵体)、\n加热器(1)、\n箱体结构10、 隔板131a、\n\n正文结束。";
             var section = MarkingTextParser.ExtractMarkingSection(text);
             var hits = MarkingTextParser.ExtractAll(section.SectionText);
-            // 梯队顺序（与 VBA 一致）：模式1/模式B 先收集，模式2 先于模式A
+            // 顺序按原文位置（R-018 关闭标准）：保留“旧格式优先、重叠的新格式丢弃”的
+            // 命中裁决，但获胜命中一律按 Position 稳定排序，不再按规则梯队分批输出。
+            // 本例原文顺序为 1底座、2支架、3(泵体)、加热器(1)、箱体结构10、隔板131a。
             Assert.Equal(6, hits.Count);
             Assert.Equal("1", hits[0].Number);
+            Assert.Equal("底座", hits[0].Name);
             Assert.Equal("2", hits[1].Number);
+            Assert.Equal("支架", hits[1].Name);
             Assert.Equal("3", hits[2].Number);
-            Assert.Equal("10", hits[3].Number);
-            Assert.Equal("箱体结构", hits[3].Name);
-            Assert.Equal("131a", hits[4].Number);
-            Assert.Equal("隔板", hits[4].Name);
-            Assert.Equal("1", hits[5].Number);
-            Assert.Equal("加热器", hits[5].Name);
+            Assert.Equal("泵体", hits[2].Name);
+            Assert.Equal("1", hits[3].Number);
+            Assert.Equal("加热器", hits[3].Name);
+            Assert.Equal("10", hits[4].Number);
+            Assert.Equal("箱体结构", hits[4].Name);
+            Assert.Equal("131a", hits[5].Number);
+            Assert.Equal("隔板", hits[5].Name);
         }
 
         // ================================================================

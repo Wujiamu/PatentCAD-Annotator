@@ -1,0 +1,32 @@
+[
+  {
+    "path": "word-addin/PatentMarker.dotm",
+    "sha256": "21dac67f2dedc1db0dcb879aa20a84923ca2bd3d61d8b7d21d02fb88effe5a83",
+    "note": "identity only; no host loading claim"
+  },
+  {
+    "path": "PatentMarker-2007-deploy/PatentMarker.dll",
+    "sha256": "1072a377657844688c20d179d675da708142f43b4966584c036ea56060f51e6c",
+    "note": "identity only; no host loading claim"
+  },
+  {
+    "path": "PatentMarker-2010-deploy/PatentMarker.dll",
+    "sha256": "a1483b782a159370fd6f84321afdd9a1619057fe30a94cd1f95c593b073103d4",
+    "note": "identity only; no host loading claim"
+  },
+  {
+    "path": "PatentMarker-2013-deploy/PatentMarker.dll",
+    "sha256": "1a0f9b82e70a9244ed6df32581dd6c7d543495140303ad92dd38dfbf952490bd",
+    "note": "identity only; no host loading claim"
+  },
+  {
+    "path": "PatentMarker-2015-deploy/PatentMarker.dll",
+    "sha256": "55d5c11b19d0beede675b5d5f39a1b3be460516f646d8af01065fa4c69423765",
+    "note": "identity only; no host loading claim"
+  },
+  {
+    "path": "PatentMarker-2025-deploy/PatentMarker.dll",
+    "sha256": "35fff7584021b1a74026a2e8098174d5cb328ed3962c5c95a29b2e3b28b78891",
+    "note": "identity only; no host loading claim"
+  }
+]

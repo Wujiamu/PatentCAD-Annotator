@@ -301,6 +301,7 @@ namespace PatentMarker.Commands
                     style.Dimasz = IO.PatSettingsStore.Current.ArrowSize;
                 }
 
+                PatLeaderTextAttachment.RouteTextPath(leader, mt);
                 tr.Commit();
             }
 

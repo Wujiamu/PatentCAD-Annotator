@@ -1,0 +1,3 @@
+DictPaletteControl.cs      added=57 removed=17  lines 1380 -> 1420
+ArbitrateDialog.cs         added=21 removed=0  lines 173 -> 194
+DictPaletteWorkflow.cs     added=63 removed=0  lines 239 -> 302

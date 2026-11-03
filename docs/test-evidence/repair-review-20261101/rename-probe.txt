@@ -1,0 +1,4 @@
+PASS|rename_retry_same_context|expected_calls=1|actual_calls=1
+PASS|rename_retry_different_document|expected_calls=0|actual_calls=0
+FAIL|rename_retry_different_dictionary_same_new_number|expected_calls=0|actual_calls=1
+FAIL|rename_chain_301_302_303|dictionary=303|pending_new=302|retry_service_calls=0

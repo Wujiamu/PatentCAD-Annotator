@@ -1,0 +1,8 @@
+command: dotnet exec <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\candidate\tools\FactRunner\bin\Release\net8.0-windows\PatentMarker.FactRunner.dll <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\dispose-failure\bin\Release\net8.0\Fixture.dll
+exit: 1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+PASS FixtureTests.Valid
+FAIL FixtureTests.Valid dispose: InvalidOperationException: cleanup failed
+SUMMARY: passed=1 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Valid dispose: InvalidOperationException: cleanup failed

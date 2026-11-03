@@ -46,6 +46,7 @@ namespace PatentMarker.Diagnostics
                 string envBlock = BuildEnvironmentBlock(assemblyPath);
 
                 checks.Add(CheckReportDirWritable(reportDir));
+                checks.Add(CheckReleaseManifest());
                 RunStyleChecks(doc.Database, checks);
                 checks.Add(CheckSettings());
                 RunDictChecks(checks);
@@ -71,6 +72,22 @@ namespace PatentMarker.Diagnostics
         }
 
         // ── 自检项 | Checks ──────────────────────────────────────────
+
+        private static PatDoctorReport.Check CheckReleaseManifest()
+        {
+            try
+            {
+                PatReleaseManifest.ValidationResult result =
+                    PatReleaseManifest.ValidateCurrentAssembly();
+                return new PatDoctorReport.Check(
+                    Strings_Doctor_CheckReleaseManifest, result.Status, result.Detail);
+            }
+            catch (Exception ex)
+            {
+                return new PatDoctorReport.Check(
+                    Strings_Doctor_CheckReleaseManifest, PatDoctorReport.Check.Fail, ex.Message);
+            }
+        }
 
         private static PatDoctorReport.Check CheckReportDirWritable(string dir)
         {
@@ -259,6 +276,16 @@ namespace PatentMarker.Diagnostics
             StringBuilder sb = new StringBuilder();
             sb.Append("## Environment\n\n");
             sb.Append("- Assembly: ").Append(assemblyPath.Length > 0 ? assemblyPath : "(unknown)");
+            PatReleaseManifest.AssemblyIdentity identity =
+                PatReleaseManifest.InspectCurrentAssembly();
+            sb.Append("\n- Assembly SHA-256: ").Append(identity.Sha256.Length > 0
+                ? identity.Sha256 : "(unavailable)");
+            sb.Append("\n- Assembly MVID: ").Append(identity.Mvid.Length > 0
+                ? identity.Mvid : "(unavailable)");
+            sb.Append("\n- Assembly version: ").Append(identity.AssemblyVersion.Length > 0
+                ? identity.AssemblyVersion : "(unavailable)");
+            sb.Append("\n- Informational version: ").Append(identity.InformationalVersion.Length > 0
+                ? identity.InformationalVersion : "(unavailable)");
             sb.Append("\n- .NET Runtime: ").Append(Environment.Version.ToString());
             sb.Append("\n- BaseDirectory: ").Append(AppDomain.CurrentDomain.BaseDirectory);
             return sb.ToString();
@@ -285,6 +312,11 @@ namespace PatentMarker.Diagnostics
         private static string Strings_Doctor_ReportPath
         {
             get { return En ? "Report written to: {0}\n" : "报告已写入: {0}\n"; }
+        }
+
+        private static string Strings_Doctor_CheckReleaseManifest
+        {
+            get { return En ? "Release manifest identity" : "发布清单身份"; }
         }
 
         private static string Strings_Doctor_CheckReportDir

@@ -1,0 +1,6 @@
+exit=1
+FAIL FixtureTests.Unsupported : InvalidOperationException: Late bound operations cannot be performed on types or methods for which ContainsGenericParameters is true.
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Unsupported : InvalidOperationException: Late bound operations cannot be performed on types or methods for which ContainsGenericParameters is true.

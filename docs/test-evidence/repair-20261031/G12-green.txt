@@ -1,0 +1,23 @@
+phase=green
+time=2026-10-31T22:31:04.948533+08:00
+identity=local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8
+command=dotnet test office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj --configuration Release --nologo -v minimal --filter FullyQualifiedName~G12AnnotationPairTests
+exit=0
+office-com-addin/src/PatentOffice.Visio/VisioAnnotations.cs sha256=6df42fce274177e0b9a4d1374d5d5e4a9b59e3a4a16aa152c337e81fc477bdc4
+office-com-addin/tests/PatentOffice.Visio.CodeTests/G12AnnotationPairTests.cs sha256=28d53c2f078b03fa831323cd8cd80350c12920d72504d238c961a560096b5a0c
+  Determining projects to restore...
+
+  All projects are up-to-date for restore.
+
+  PatentOffice.Visio -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\src\PatentOffice.Visio\bin\Release\net40\PatentOffice.Visio.dll
+
+  PatentOffice.Visio.CodeTests -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll
+
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll (.NETFramework,Version=v4.8)
+
+A total of 1 test files matched the specified pattern.
+
+
+
+Passed!  - Failed:     0, Passed:     8, Skipped:     0, Total:     8, Duration: 28 ms - PatentOffice.Visio.CodeTests.dll (net48)
+

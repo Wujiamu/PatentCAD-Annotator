@@ -1,0 +1,7 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py line
+exit: 1
+FAIL R-020 line first uses actual width
+FAIL R-020 line second uses actual widths and largest height
+FAIL R-020 line first uses actual width
+FAIL R-020 line second uses actual widths and largest height
+SUMMARY selector=line checks=4 failed=4

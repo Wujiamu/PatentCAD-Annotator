@@ -1,0 +1,27 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py align
+exit: 1
+FAIL R-015 modern=False native=False target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=False target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=False target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(10,0,0) attachment expected TopLeft actual BottomLeft
+SUMMARY selector=align checks=112 failed=24

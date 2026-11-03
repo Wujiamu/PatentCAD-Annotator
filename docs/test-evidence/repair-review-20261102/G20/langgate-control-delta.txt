@@ -1,0 +1,21 @@
+﻿# G20 对 DictPaletteControl.cs 的完整差量（red-source = 修复前，tree = 修复后）
+#
+# 该文件改前就含 11 处 var（C# 3+），所以不能单独过 C# 2 门禁；这里逐行列出本轮
+# 的全部改动，用于证明没有新增语言构造或新 BCL API。
+#
+# '=>' = 修复后新增，'<=' = 修复前删除
+#
+=>                 // R-034（G20）：不以「备份能否解析」决定整个对话框能否打开。
+=>                 // 备份损坏只约束「恢复 CAD 版」这一个动作；「采用 Word 版」由
+=>                 // 当前文件能否解析约束。两者均坏时对话框给出明确原因并保留「稍后」。
+=>                 // 采用当前版本仍必须由用户显式选择，不自动删除坏备份。
+<=                 if (!selection.BackupParsed)
+<=                     // 备份自身损坏：明确拒绝覆盖，当前字节与属性保持不变。
+<=                     _lblStatus.Text = string.Format(Strings.Conflict_Failed,
+<=                         DictPaletteWorkflow.DescribeWriteError(DictConflict.BackupUnparsableError));
+<=                 {
+<=                     return;
+<=                 }
+#
+# 合计: added=4 removed=7
+

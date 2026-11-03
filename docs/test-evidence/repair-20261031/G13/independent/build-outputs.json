@@ -1,0 +1,22 @@
+{
+  "2007": {
+    "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2007\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+    "sha256": "f0c8d488df133d947a33308b53ab95ebb0c74bfda20c7a56ff390f4723cd9e28"
+  },
+  "2010": {
+    "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2010\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+    "sha256": "8a17a460ad48792ccec672470f7c83e02ced54eeb890ca1dc00d087e71838437"
+  },
+  "2013": {
+    "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2013\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+    "sha256": "3cf72f2ea2686b510780e8df2484b46c156a0f06433283c0643cd40b94f630dc"
+  },
+  "2015": {
+    "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2015\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+    "sha256": "bcae2abc15a9a6a68bebc5b971264d4e9f77b071b1d78939ea3cd89943b1382c"
+  },
+  "2025": {
+    "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2025\\PatentMarker\\bin\\Release\\net8.0-windows\\PatentMarker.dll",
+    "sha256": "5fddb1f1b27f8ded72cd5d4a6a99e91ea863f2ded6750e3c909a40c8e10f5cd6"
+  }
+}

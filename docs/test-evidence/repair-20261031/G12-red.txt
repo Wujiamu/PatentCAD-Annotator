@@ -1,0 +1,73 @@
+phase=red
+time=2026-10-31T22:30:59.810802+08:00
+identity=local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8
+command=dotnet test office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj --configuration Release --nologo -v minimal --filter FullyQualifiedName~G12AnnotationPairTests
+exit=1
+office-com-addin/src/PatentOffice.Visio/VisioAnnotations.cs sha256=13d6a0affaeb4fefdf24f6f8bdda7095a77ce257a9dbec674e044a481f109b14
+office-com-addin/tests/PatentOffice.Visio.CodeTests/G12AnnotationPairTests.cs sha256=28d53c2f078b03fa831323cd8cd80350c12920d72504d238c961a560096b5a0c
+  Determining projects to restore...
+
+  Restored <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\PatentOffice.Visio.CodeTests.csproj (in 191 ms).
+
+  Restored <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\src\PatentOffice.Visio\PatentOffice.Visio.csproj (in 192 ms).
+
+  PatentOffice.Visio -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\src\PatentOffice.Visio\bin\Release\net40\PatentOffice.Visio.dll
+
+  PatentOffice.Visio.CodeTests -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll
+
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll (.NETFramework,Version=v4.8)
+
+A total of 1 test files matched the specified pattern.
+
+[xUnit.net 00:00:01.41]     PatentOffice.Visio.CodeTests.G12AnnotationPairTests.SameIdDifferentNumbers_CannotBorrowEachOthersLabels [FAIL]
+
+[xUnit.net 00:00:01.45]     PatentOffice.Visio.CodeTests.G12AnnotationPairTests.TwoLinesAndOneLabel_ReportsOrphanAndKeepsValidPair [FAIL]
+
+[xUnit.net 00:00:01.45]     PatentOffice.Visio.CodeTests.G12AnnotationPairTests.OneLineAndTwoLabels_ReportsOrphanAndKeepsValidPair [FAIL]
+
+  Failed PatentOffice.Visio.CodeTests.G12AnnotationPairTests.SameIdDifferentNumbers_CannotBorrowEachOthersLabels [665 ms]
+
+  Error Message:
+
+   Assert.Equal() Failure: Values differ
+
+Expected: 1
+
+Actual:   0
+
+  Stack Trace:
+
+     at PatentOffice.Visio.CodeTests.G12AnnotationPairTests.SameIdDifferentNumbers_CannotBorrowEachOthersLabels() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\G12AnnotationPairTests.cs:line 43
+
+  Failed PatentOffice.Visio.CodeTests.G12AnnotationPairTests.TwoLinesAndOneLabel_ReportsOrphanAndKeepsValidPair [1 ms]
+
+  Error Message:
+
+   Assert.Equal() Failure: Values differ
+
+Expected: 1
+
+Actual:   0
+
+  Stack Trace:
+
+     at PatentOffice.Visio.CodeTests.G12AnnotationPairTests.AssertPairCounts(Int32 lines, Int32 labels, Boolean marked, Int32 malformed) in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\G12AnnotationPairTests.cs:line 114
+
+  Failed PatentOffice.Visio.CodeTests.G12AnnotationPairTests.OneLineAndTwoLabels_ReportsOrphanAndKeepsValidPair [1 ms]
+
+  Error Message:
+
+   Assert.Equal() Failure: Values differ
+
+Expected: 1
+
+Actual:   0
+
+  Stack Trace:
+
+     at PatentOffice.Visio.CodeTests.G12AnnotationPairTests.AssertPairCounts(Int32 lines, Int32 labels, Boolean marked, Int32 malformed) in <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12-red\office-com-addin\tests\PatentOffice.Visio.CodeTests\G12AnnotationPairTests.cs:line 114
+
+
+
+Failed!  - Failed:     3, Passed:     5, Skipped:     0, Total:     8, Duration: 29 ms - PatentOffice.Visio.CodeTests.dll (net48)
+

@@ -1,0 +1,21 @@
+﻿{
+    "run_id":  "20261101-162712-92fbd168",
+    "package_directory":  "C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\PatentMarker-2025-deploy",
+    "candidate_dll_sha256":  "34CB28CDF741A3EAA7D56D29FD4669091720CB559AE4A8BD63A7ACB933B2A159",
+    "accoreconsole":  "C:\\Program Files\\Autodesk\\AutoCAD 2026\\accoreconsole.exe",
+    "drawing":  "C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\.r028-final\\r028-brace.dwg",
+    "drawing_sha256_after_save":  "08F8A80697C4AB23ECFA41872F6A1FCDDA9BC34E139CFD74E2C05442CD357CEE",
+    "runA_exit":  -1,
+    "runB_exit":  -1,
+    "runA_stdout":  "C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\.r028-final\\runA.stdout.txt",
+    "runB_stdout":  "C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\.r028-final\\runB.stdout.txt",
+    "report":  "C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\PatentMarker-2025-deploy\\PatentMarker-geom-verify.txt",
+    "report_present":  true,
+    "brace_assertions_passed":  10,
+    "brace_assertions_failed":  0,
+    "planar_contract_pass":  true,
+    "report_summary":  "SUMMARY: required targets missing; braces=1 passed=1 failed=0 unreadable=0; texts=0 passed=0 failed=0 unreadable=0; requiredBraces=1 requiredTexts=1; strict=false",
+    "overall_report_result":  "FAIL",
+    "r028_verdict":  "PASS",
+    "note":  "overall PATGEOMVERIFY RESULT is FAIL only because this drawing has no text annotations (texts=0, requiredTexts=1); brace assertions are the R-028 target"
+}

@@ -778,6 +778,28 @@ namespace PatentMarker.I18n
             get { return En ? "Arbitration failed: {0}" : "裁决失败: {0}"; }
         }
 
+        // 字典写入门禁 | Dictionary write gates (G05)
+        public static string Dict_Busy
+        {
+            get { return En ? "The dictionary is busy. Try again." : "字典正在使用，请重试。"; }
+        }
+
+        public static string Dict_Changed
+        {
+            get { return En ? "The dictionary or drawing changed. Reload and reopen the dialog." : "字典或图纸已变化，请重载并重新打开对话框。"; }
+        }
+
+        public static string Dict_Pending
+        {
+            get { return En ? "Resolve the pending dictionary backup first." : "请先裁决待处理的字典备份。"; }
+        }
+
+        /// <summary>字典已写入但基线更新失败；恢复点保留 | Dictionary written, baseline update failed</summary>
+        public static string Dict_BaselineFailed
+        {
+            get { return En ? "The dictionary was written, but the baseline update failed. The restore point is kept." : "字典已写入，但基线更新失败；恢复点已保留。"; }
+        }
+
         // v4.0：改号同步图纸 | Renumber sync to drawing
         /// <summary>0=changed, 1=oldNumber, 2=newNumber | 已同步 N 条图纸标注: old → new</summary>
         public static string Status_NumberSynced
@@ -795,6 +817,19 @@ namespace PatentMarker.I18n
         public static string Status_NumberSyncFailed
         {
             get { return En ? "Drawing sync failed: {0}" : "图纸同步失败: {0}"; }
+        }
+
+        /// <summary>0=old, 1=new, 2=detail | 字典已改但图纸未完成</summary>
+        public static string Status_DictChangedDrawingPending
+        {
+            get { return En ? "Dictionary changed to {1}, but the drawing still shows {0}: {2}"
+                            : "字典已改为 {1}，但图纸仍是 {0}：{2}"; }
+        }
+
+        // 改号失败后的显式重试 | Explicit retry after a failed renumber sync
+        public static string Palette_RenameRetry
+        {
+            get { return En ? "Retry drawing sync" : "重试同步图纸"; }
         }
 
         // 语言切换按钮 | Language toggle button

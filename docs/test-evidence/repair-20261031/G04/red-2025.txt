@@ -1,0 +1,177 @@
+PASS R002_Syntax[0]
+PASS R002_Syntax[1]
+PASS R002_Syntax[2]
+PASS R002_Syntax[3]
+PASS R002_Syntax[4]
+PASS R002_Syntax[5]
+PASS R002_Syntax[6]
+PASS R002_Syntax[7]
+FAIL R002_Syntax[8]
+PASS R002_Syntax[9]
+PASS R002_Syntax[10]
+PASS R002_Syntax[11]
+PASS R002_Syntax[12]
+PASS R002_Syntax[13]
+PASS R002_Syntax[14]
+PASS R002_Syntax[15]
+PASS R002_Syntax[16]
+PASS R002_Syntax[17]
+PASS R002_Syntax[18]
+PASS R002_Syntax[19]
+FAIL R002_Syntax[20]
+PASS R002_Syntax[21]
+FAIL R002_Root[0]
+PASS R002_Root[1]
+PASS R002_Root[2]
+PASS R002_Root[3]
+PASS R002_Root[4]
+PASS R002_Compat[0]
+PASS R002_Compat[1]
+PASS R002_Compat[2]
+PASS R002_Compat[3]
+PASS R002_Compat[4]
+PASS R002_Compat[5]
+PASS R002_Restore[0] returns failure
+PASS R002_Restore[0] error visible
+PASS R002_Restore[0] current bytes
+PASS R002_Restore[0] backup bytes
+PASS R002_Restore[0] current attributes
+PASS R002_Restore[0] backup attributes
+PASS R002_Restore[1] returns failure
+PASS R002_Restore[1] error visible
+PASS R002_Restore[1] current bytes
+PASS R002_Restore[1] backup bytes
+PASS R002_Restore[1] current attributes
+PASS R002_Restore[1] backup attributes
+FAIL R002_Restore[2] returns failure
+FAIL R002_Restore[2] error visible
+FAIL R002_Restore[2] current bytes
+FAIL R002_Restore[2] backup bytes
+PASS R002_Restore[2] current attributes
+FAIL R002_Restore[2] backup attributes
+PASS R002_Restore[3] returns failure
+PASS R002_Restore[3] error visible
+PASS R002_Restore[3] current bytes
+PASS R002_Restore[3] backup bytes
+PASS R002_Restore[3] current attributes
+PASS R002_Restore[3] backup attributes
+PASS R002_Restore[4] returns failure
+PASS R002_Restore[4] error visible
+PASS R002_Restore[4] current bytes
+PASS R002_Restore[4] backup bytes
+PASS R002_Restore[4] current attributes
+PASS R002_Restore[4] backup attributes
+PASS R002_Restore[5] returns failure
+PASS R002_Restore[5] error visible
+PASS R002_Restore[5] current bytes
+PASS R002_Restore[5] backup bytes
+PASS R002_Restore[5] current attributes
+PASS R002_Restore[5] backup attributes
+PASS R002_Cache original
+PASS R002_Cache valid diff baseline
+PASS R002_Cache retains valid model
+PASS R002_Cache retains diff baseline
+PASS R019_Parse all escapes
+PASS R019_Parse escaped U+0000
+PASS R019_Parse escaped U+0001
+PASS R019_Parse escaped U+0002
+PASS R019_Parse escaped U+0003
+PASS R019_Parse escaped U+0004
+PASS R019_Parse escaped U+0005
+PASS R019_Parse escaped U+0006
+PASS R019_Parse escaped U+0007
+PASS R019_Parse escaped U+0008
+PASS R019_Parse escaped U+0009
+PASS R019_Parse escaped U+000A
+PASS R019_Parse escaped U+000B
+PASS R019_Parse escaped U+000C
+PASS R019_Parse escaped U+000D
+PASS R019_Parse escaped U+000E
+PASS R019_Parse escaped U+000F
+PASS R019_Parse escaped U+0010
+PASS R019_Parse escaped U+0011
+PASS R019_Parse escaped U+0012
+PASS R019_Parse escaped U+0013
+PASS R019_Parse escaped U+0014
+PASS R019_Parse escaped U+0015
+PASS R019_Parse escaped U+0016
+PASS R019_Parse escaped U+0017
+PASS R019_Parse escaped U+0018
+PASS R019_Parse escaped U+0019
+PASS R019_Parse escaped U+001A
+PASS R019_Parse escaped U+001B
+PASS R019_Parse escaped U+001C
+PASS R019_Parse escaped U+001D
+PASS R019_Parse escaped U+001E
+PASS R019_Parse escaped U+001F
+PASS R019_Write control U+0000
+PASS R019_Write CAD marker U+0000
+PASS R019_Write control U+0001
+PASS R019_Write CAD marker U+0001
+PASS R019_Write control U+0002
+PASS R019_Write CAD marker U+0002
+PASS R019_Write control U+0003
+PASS R019_Write CAD marker U+0003
+PASS R019_Write control U+0004
+PASS R019_Write CAD marker U+0004
+PASS R019_Write control U+0005
+PASS R019_Write CAD marker U+0005
+PASS R019_Write control U+0006
+PASS R019_Write CAD marker U+0006
+PASS R019_Write control U+0007
+PASS R019_Write CAD marker U+0007
+PASS R019_Write control U+0008
+PASS R019_Write CAD marker U+0008
+PASS R019_Write control U+0009
+PASS R019_Write CAD marker U+0009
+PASS R019_Write control U+000A
+PASS R019_Write CAD marker U+000A
+PASS R019_Write control U+000B
+PASS R019_Write CAD marker U+000B
+PASS R019_Write control U+000C
+PASS R019_Write CAD marker U+000C
+PASS R019_Write control U+000D
+PASS R019_Write CAD marker U+000D
+PASS R019_Write control U+000E
+PASS R019_Write CAD marker U+000E
+PASS R019_Write control U+000F
+PASS R019_Write CAD marker U+000F
+PASS R019_Write control U+0010
+PASS R019_Write CAD marker U+0010
+PASS R019_Write control U+0011
+PASS R019_Write CAD marker U+0011
+PASS R019_Write control U+0012
+PASS R019_Write CAD marker U+0012
+PASS R019_Write control U+0013
+PASS R019_Write CAD marker U+0013
+PASS R019_Write control U+0014
+PASS R019_Write CAD marker U+0014
+PASS R019_Write control U+0015
+PASS R019_Write CAD marker U+0015
+PASS R019_Write control U+0016
+PASS R019_Write CAD marker U+0016
+PASS R019_Write control U+0017
+PASS R019_Write CAD marker U+0017
+PASS R019_Write control U+0018
+PASS R019_Write CAD marker U+0018
+PASS R019_Write control U+0019
+PASS R019_Write CAD marker U+0019
+PASS R019_Write control U+001A
+PASS R019_Write CAD marker U+001A
+PASS R019_Write control U+001B
+PASS R019_Write CAD marker U+001B
+PASS R019_Write control U+001C
+PASS R019_Write CAD marker U+001C
+PASS R019_Write control U+001D
+PASS R019_Write CAD marker U+001D
+PASS R019_Write control U+001E
+PASS R019_Write CAD marker U+001E
+PASS R019_Write control U+001F
+PASS R019_Write CAD marker U+001F
+PASS R019_Write escaped ordinary text
+PASS R019_Write JSON line endings CRLF
+PASS R019_Write UTF-8 without BOM
+PASS R019_Write file matches serialization
+PASS R019_CRLF string value
+PASS R019_CRLF file structure
+SUMMARY selectors=8 failures=8

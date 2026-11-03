@@ -1,0 +1,20 @@
+MODULES_IMPORTED
+PASS|r017|total occurrences=3 (un-deduped)
+PASS|r021|same number grouped into one entry
+PASS|r021|display keeps first spelling 1342A
+PASS|r021|conflict recorded for same number different names
+PASS|r021-control|distinct sub-numbers stay distinct
+PASS|g15|over-long number rejected, only 301 kept
+PASS|g15|no truncated 23456 entry
+PASS|g19-repeat-after-letter|number=123 name=壳体X123 支架
+PASS|g19-repeat-after-digit|number=123 name=壳体1123 支架
+PASS|g19-repeat-prefixed-number|number=X123 name=壳体AX123 支架
+PASS|g19-repeat-after-chinese|number=123 name=第123定位件
+PASS|g19-paren-halfwidth|number=123 name=壳体X123 支架
+PASS|g19-paren-fullwidth|number=123 name=壳体X123 支架
+PASS|g19-five-digits|number=12345 name=壳体X12345 支架
+PASS|g19-name-digits-not-repeated|number=301 name=第2定位件
+PASS|g19-six-digits-rejected|no entry (over-long number rejected)
+PASS|g19-mixed-order|order=123|壳体X123 支架;1|底座
+SUMMARY: passed=17 failed=0
+EXITCODE=0

@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G17 / R-004 language-level gate.
+
+    Four of the five editions (2007/2010/2013/2015) link the changed Shared
+    files into non-SDK projects whose compilers are older (2007 targets .NET
+    2.0). This scratch project recompiles ONLY the changed Shared files at
+    LangVersion=2 against minimal stubs, so a C# 3+ construct added by this fix
+    fails here instead of in a legacy edition that cannot be built on this
+    machine.
+
+    This is an L0 (static/language) check. It proves nothing about runtime
+    behaviour; the behavioural evidence is the red/green probe and the
+    FactRunner unit tests.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>2</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>G17LangGate</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(RepoRoot)cad-plugin\Shared\Palette\DictPaletteSession.cs" />
+    <Compile Include="$(RepoRoot)cad-plugin\Shared\Palette\EditEntryDialog.cs" />
+    <Compile Include="Stubs.cs" />
+  </ItemGroup>
+
+</Project>

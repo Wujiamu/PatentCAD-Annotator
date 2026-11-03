@@ -1,0 +1,187 @@
+[
+  {
+    "path": "vba/Patterns.bas",
+    "sha256": "338dabccd2f862232c528ce1247464ba26f0cfdd8f8a6aa7d4554cc6ab3e04a0",
+    "bytes": 12839
+  },
+  {
+    "path": "cad-plugin/Shared/IO/MarkingTextParser.cs",
+    "sha256": "a7dd0c0886ad234c5ef97d4a1dc0c5507e7b5a2f0bcf831065be9d37c6cd3c5d",
+    "bytes": 22372
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictConflict.cs",
+    "sha256": "b4c300a74aad8709f8095beb0993e47c7fe613d7104ac6dd3db389a8736e3fc6",
+    "bytes": 16766
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+    "sha256": "bde35b0d4257d2ea8de5d4fcfc2f5b16027a19eb2c944eafaa4a8e14c1c641d5",
+    "bytes": 59238
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteSession.cs",
+    "sha256": "4b998e67e6d221d6206149a5324d071905219a58517e38bde21422070fdbd6da",
+    "bytes": 25939
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs",
+    "sha256": "6757e3368df3cdf6b6a435fe3671c822ff2a33a6f4142ebed4f15804d3aac9c3",
+    "bytes": 8127
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/ArbitrateDialog.cs",
+    "sha256": "c493197cccff1d70a4f60c821845165f0ccf7e7cbf9b40e4b447857c99f016e1",
+    "bytes": 8915
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/EditEntryDialog.cs",
+    "sha256": "c41722fa055bf9df8a91e3901da866c15a6620f1f292a6d6c12f00984604eb02",
+    "bytes": 9902
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteCadService.cs",
+    "sha256": "9eaec35272851b3f786445b11f35ec3e5346bd96f0c8765513f5e352f5bec7ba",
+    "bytes": 8652
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/PatPaletteCommand.cs",
+    "sha256": "bf94745f7d618e0c460f582550819ce0c38df62ed431b9e918ff9f35270a6d0c",
+    "bytes": 25641
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+    "sha256": "a33b70a741a947923e3e2daa62bc4880250513f90663ead7aa97df56e26c0b3d",
+    "bytes": 14500
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictWriter.cs",
+    "sha256": "18e1e03d999a605903c0c42037249b655c4703c4e4fa384bec63af3fc890bc54",
+    "bytes": 11286
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/RuntimeHost.cs",
+    "sha256": "9c457ea517be8ea19564dcbacfacb0066fd6c1a271afbc7ab305b4a514763770",
+    "bytes": 974
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/ConfigLoader.cs",
+    "sha256": "3a86a0b3a2643427f28092bec9c7dc60085ff470b59ab8cea395b96ccd336786",
+    "bytes": 6767
+  },
+  {
+    "path": "cad-plugin/Shared/IO/PatSettings.cs",
+    "sha256": "70162d3fd58fda42eb83b7119c3ff8a4920161b3c4baf8681677d0254b69c5ca",
+    "bytes": 15707
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictDiff.cs",
+    "sha256": "605207616a1903d59ad5d54d76ebaa7c65c0839d7ed942387562504861694526",
+    "bytes": 7486
+  },
+  {
+    "path": "cad-plugin/Shared/IO/NumberIdentity.cs",
+    "sha256": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "bytes": 1700
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatCheckResult.cs",
+    "sha256": "e605adb9bea32d4c2ab54279ef2c5c870c7d22c426f3a0412b2a8438b27d1bcd",
+    "bytes": 7338
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Strings.cs",
+    "sha256": "9ef6bacdb4724a93896d2db8f760a7041f3af9c167f6a4ff20b7f2cc6c8d66f1",
+    "bytes": 42338
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Language.cs",
+    "sha256": "2b48685a891ab34983b7a617e420e43cb38dc2247deff40d40fd2ca913869181",
+    "bytes": 185
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteViewRenderer.cs",
+    "sha256": "c3a62e7eb87ed77e595f05a5b8e29f08a5ff2e52af8eed1da9df498c9881d50d",
+    "bytes": 7571
+  },
+  {
+    "path": "office-com-addin/install-office-addin.ps1",
+    "sha256": "2170d1df8abf4fbdc2d029fb83086093a20607870724581d5a51ca70cef0574a",
+    "bytes": 19646
+  },
+  {
+    "path": "office-com-addin/install-visio-addin.ps1",
+    "sha256": "d6b8f9654a1bd524fa1b7c11cd810910844a055ca323ec054620f0f0f2dee78b",
+    "bytes": 18700
+  },
+  {
+    "path": "office-com-addin/uninstall-office-addin.ps1",
+    "sha256": "bbe6650ae7692986b179ac2cf4672d8155f43d308145cc79d6ffefffbb8af77d",
+    "bytes": 9693
+  },
+  {
+    "path": "office-com-addin/uninstall-visio-addin.ps1",
+    "sha256": "99420d7eb75ffcdf5dbd09ad6efb0b8eee381863c799c9d8536bae9376cdbab1",
+    "bytes": 9288
+  },
+  {
+    "path": "office-com-addin/OfficeAddin.Common.psm1",
+    "sha256": "1631a78b0aa4c5f557e927ce1ced394c4d346455df0eb3defa393cedc55aba42",
+    "bytes": 17000
+  },
+  {
+    "path": "office-com-addin/VisioAddin.Common.psm1",
+    "sha256": "6d45a5299f15424d5ab309111188409b8049d38af698d3e866cdcfa61d366d36",
+    "bytes": 15996
+  },
+  {
+    "path": "tools/test-g02-parser.vbs",
+    "sha256": "cdf44389faa2a9e476103436488ae65aef728c891806676abb085faa87f80871",
+    "bytes": 28316
+  },
+  {
+    "path": "tools/run-office-tests-vstest.ps1",
+    "sha256": "0d60e5976d01eb7c1f3c2cdf7376396790ee2d648e6a5f29fa81b426ec5dfd6a",
+    "bytes": 3352
+  },
+  {
+    "path": "tools/test-g02-l2.vbs",
+    "sha256": "3b40bd4141698872ac59e7729b7f348817608b183920a8368ed5c5e764a9a4be",
+    "bytes": 16028
+  },
+  {
+    "path": "tools/G02ParserProbe/g02-cases.txt",
+    "sha256": "70591f7dcccd8d777992497fbff2f208d495421956d4d897a0a138c2f646b8a0",
+    "bytes": 2290
+  },
+  {
+    "path": "tools/G02ParserProbe/g02-expected.txt",
+    "sha256": "7c4513b772e55003f43c416a2d2a342f22558b6bc8c42646e18b651fdbd2cabf",
+    "bytes": 5208
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/G20ActionAvailabilityTests.cs",
+    "sha256": "627b301bea22c726fbad6b35f7a7cc04d3d456bce9a472bad5aea16c27769003",
+    "bytes": 15919
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/G21PendingLifecycleTests.cs",
+    "sha256": "83642224a1596460b0ff452bdb7d553ab99f9c78801d3c6542fb3309b755e4a2",
+    "bytes": 18465
+  },
+  {
+    "path": "office-com-addin/verify-installer.ps1",
+    "sha256": "2bfc66783cc37533e06fa09c2812d18eb184568cc597bbe0fddc1590d8c88d19",
+    "bytes": 40683
+  },
+  {
+    "path": "office-com-addin/verify-visio-installer.ps1",
+    "sha256": "c77e261aceea43279d2dce24438c77c9b5825ba2a9e3cd47c539ad6a409b45d6",
+    "bytes": 35228
+  },
+  {
+    "path": "vba/DictModel.bas",
+    "sha256": "6804e74b020114afdd3283bd6e2521e82615eca86ff68536376d1c6a1e17900d",
+    "bytes": 9987
+  }
+]

@@ -1,0 +1,46 @@
+﻿G18 green: same catch replay against the live fixed production sources
+time=2026-11-02 01:15:42 +08:00
+host=DESKTOP-3VJ2A3B  user=wjm  powershell=5.1.19041.7802
+command=powershell.exe -NoProfile -ExecutionPolicy Bypass -File docs/test-evidence/repair-review-20261101/G18/uninstall-recovery-probe.ps1 -ProjectRoot . -OutputPath <temp>
+source=office-com-addin/uninstall-{office,visio}-addin.ps1 top-level recovery catch, read verbatim and executed
+same_standard=identical to the red run above; only the catch source differs
+exit=0
+---- source under test ----
+src|office-com-addin\uninstall-office-addin.ps1|BBE6650AE7692986B179AC2CF4672D8155F43D308145CC79D6FFEFFFBB8AF77D
+src|office-com-addin\uninstall-visio-addin.ps1|99420D7EB75FFCDF5DBD09AD6EFB0B8EEE381863C799C9D8536BAE9376CDBAB1
+src|office-com-addin\OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+src|office-com-addin\VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+---- output ----
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g1
+8-ppt-4c215e04e4f743d6b61abe0773766954\product
+WARNING: 从恢复副本还原产品文件失败：injected recovery I/O failure
+WARNING: 
+卸载失败且未能确认完整还原，加载项保持停用。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\
+g18-ppt-13bb23f1118646038aa26e6a052df642\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-
+evidence\repair-review-20261101\G18\g18-ppt-13bb23f1118646038aa26e6a052df642\staged
+WARNING: 恢复原注册表项失败：ProductOnly：injected registry restore failure
+WARNING: 
+卸载失败：产品文件已还原，但原注册项未能恢复（加载项保持停用）。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-202
+61101\G18\g18-ppt-a1a327e21f114b1d829eb8ef2c325dd8\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\
+docs\test-evidence\repair-review-20261101\G18\g18-ppt-a1a327e21f114b1d829eb8ef2c325dd8\staged
+WARNING: 卸载未完成，已从恢复副本还原完整 Visio 
+产品文件并恢复原注册项：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-visio-01ca762d
+68b142fe912d4d944a401f60\product
+WARNING: 从恢复副本还原 Visio 产品文件失败：injected recovery I/O failure
+WARNING: 卸载失败且未能确认完整还原，Visio 
+加载项保持停用。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-visio-3959
+c7d8891e4f7c9e2cd420c118575c\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\rep
+air-review-20261101\G18\g18-visio-3959c7d8891e4f7c9e2cd420c118575c\staged
+WARNING: 恢复 Visio 注册项失败：ProductOnly：injected registry restore failure
+WARNING: 卸载失败：Visio 
+产品文件已还原，但原注册项未能恢复（加载项保持停用）。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101
+\G18\g18-visio-9e4f4e5170fd4dea861cee0491e224d0\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\doc
+s\test-evidence\repair-review-20261101\G18\g18-visio-9e4f4e5170fd4dea861cee0491e224d0\staged
+PASS|uninstall_ppt_recovery|source=live_production_source|scenario=files_restore_ok|expected_registry_enabled=True|actual=True|order_ok=True|trace=registry.remove,files.verify,files.restore,files.verify,registry.restore,registry.verify|notes=
+PASS|uninstall_ppt_recovery|source=live_production_source|scenario=files_restore_fails|expected_registry_enabled=False|actual=False|order_ok=True|trace=registry.remove,files.verify,files.restore|notes=
+PASS|uninstall_ppt_recovery|source=live_production_source|scenario=registry_restore_fails|expected_registry_enabled=False|actual=False|order_ok=True|trace=registry.remove,files.verify,files.restore,files.verify,registry.restore|notes=
+PASS|uninstall_visio_recovery|source=live_production_source|scenario=files_restore_ok|expected_registry_enabled=True|actual=True|order_ok=True|trace=registry.remove,files.verify,files.restore,files.verify,registry.restore,registry.verify|notes=
+PASS|uninstall_visio_recovery|source=live_production_source|scenario=files_restore_fails|expected_registry_enabled=False|actual=False|order_ok=True|trace=registry.remove,files.verify,files.restore|notes=
+PASS|uninstall_visio_recovery|source=live_production_source|scenario=registry_restore_fails|expected_registry_enabled=False|actual=False|order_ok=True|trace=registry.remove,files.verify,files.restore,files.verify,registry.restore|notes=
+SUMMARY|total=6|failed=0

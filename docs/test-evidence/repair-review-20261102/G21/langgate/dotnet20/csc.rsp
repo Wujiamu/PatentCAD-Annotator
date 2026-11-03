@@ -1,0 +1,11 @@
+/nologo
+/target:library
+/out:"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G21\langgate\dotnet20\G21LangGate20.dll"
+/r:System.dll
+/r:System.Drawing.dll
+/r:System.Windows.Forms.dll
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\IO\DictConflict.cs"
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs"
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteSession.cs"
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\EditEntryDialog.cs"
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G21\langgate\Stubs.cs"

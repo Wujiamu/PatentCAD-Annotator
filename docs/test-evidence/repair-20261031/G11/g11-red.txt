@@ -1,0 +1,55 @@
+﻿
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:01.93
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:01.83
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.ExtensibilityContract_UsesOfficeDispatchGuidAndMemberIds
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.NumberIdentityComparer_TrimsAndIgnoresCase
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.OfficeCommonSources_AreLinkedIntoTheHostAssembly
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.Read_AcceptsAnEmptyDictionary
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.Read_ParsesWordDictionaryWithoutChangingItsBytes
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.Read_RejectsAnEntryWithoutANumber
+PASS PatentOffice.Common.CodeTests.OfficeDictionaryTests.Read_RejectsInvalidUtf8
+FAIL PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_ChangedLabelText_IsNotReportedAsTheOldNumber : EmptyException: Assert.Empty() Failure: Collection was not empty
+Collection: ["301"]
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_DamagedAnnotation_DoesNotThrow
+FAIL PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_EmptyLabelText_IsNotReported : EmptyException: Assert.Empty() Failure: Collection was not empty
+Collection: ["301"]
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_HorizontalFlipSwapsEndpoints
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_LabelTextIsComparedByNumberIdentity
+FAIL PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_NestedAnnotation_IsStillMarked : ContainsException: Assert.Contains() Failure: Item not found in set
+Set:       []
+Not found: "301"
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_PlainUserGroup_IsNotClaimed
+FAIL PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_Rotated90Line_EndpointsFollowClockwiseRotation : EqualException: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 60 (rounded from 60)
+Actual:   110 (rounded from 110)
+FAIL PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_RotatedLine_EndpointsFollowTheRotation : EqualException: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 10 (rounded from 10)
+Actual:   110 (rounded from 110)
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_SameNumberSeveralTimes_IsLegal
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_TopLevelAnnotation_IsMarked
+PASS PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_UnrotatedLine_IsUnchanged
+SUMMARY: passed=14 failed=5 skipped=0
+FAILURES:
+ - PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_ChangedLabelText_IsNotReportedAsTheOldNumber : EmptyException: Assert.Empty() Failure: Collection was not empty
+Collection: ["301"]
+ - PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_EmptyLabelText_IsNotReported : EmptyException: Assert.Empty() Failure: Collection was not empty
+Collection: ["301"]
+ - PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_NestedAnnotation_IsStillMarked : ContainsException: Assert.Contains() Failure: Item not found in set
+Set:       []
+Not found: "301"
+ - PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_Rotated90Line_EndpointsFollowClockwiseRotation : EqualException: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 60 (rounded from 60)
+Actual:   110 (rounded from 110)
+ - PatentOffice.PowerPoint.CodeTests.G11ScanTests.G11_RotatedLine_EndpointsFollowTheRotation : EqualException: Assert.Equal() Failure: Values are not within 3 decimal places
+Expected: 10 (rounded from 10)
+Actual:   110 (rounded from 110)

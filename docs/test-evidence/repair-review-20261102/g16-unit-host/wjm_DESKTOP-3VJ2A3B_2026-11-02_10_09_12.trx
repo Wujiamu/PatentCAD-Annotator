@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="657fd4ba-e703-4632-80e7-9b3d81de896e" name="wjm@DESKTOP-3VJ2A3B 2026-11-02 10:09:12" runUser="DESKTOP-3VJ2A3B\wjm" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-02T10:09:12.7728036+08:00" queuing="2026-11-02T10:09:12.7728039+08:00" start="2026-11-02T10:09:11.7938254+08:00" finish="2026-11-02T10:09:12.7733614+08:00" />
+  <TestSettings name="default" id="08affd3d-d6cc-4c13-ac59-4e16deebf94f">
+    <Deployment runDeploymentRoot="wjm_DESKTOP-3VJ2A3B_2026-11-02_10_09_12" />
+  </TestSettings>
+  <TestLists>
+    <TestList name="列表中未列出的结果" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="所有已加载的结果" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="0" executed="0" passed="0" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>Unhandled exception. System.ComponentModel.Win32Exception (5): �ܾ����ʡ�&#xD;
+   at System.Diagnostics.ProcessManager.OpenProcess(Int32 processId, Int32 access, Boolean throwIfExited)&#xD;
+   at System.Diagnostics.Process.GetProcessHandle(Int32 access, Boolean throwIfExited)&#xD;
+   at System.Diagnostics.Process.GetOrOpenProcessHandle()&#xD;
+   at System.Diagnostics.Process.EnsureWatchingForExit()&#xD;
+   at System.Diagnostics.Process.set_EnableRaisingEvents(Boolean value)&#xD;
+   at Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.ProcessHelper.SetExitCallback(Int32 processId, Action`1 callbackAction) in /_/src/Microsoft.TestPlatform.PlatformAbstractions/common/System/ProcessHelper.cs:line 281&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.DefaultEngineInvoker.SetParentProcessExitCallback(IDictionary`2 argsDictionary) in /_/src/testhost.x86/DefaultEngineInvoker.cs:line 230&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.DefaultEngineInvoker.Invoke(IDictionary`2 argsDictionary) in /_/src/testhost.x86/DefaultEngineInvoker.cs:line 132&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Run(String[] args, UiLanguageOverride uiLanguageOverride) in /_/src/testhost.x86/Program.cs:line 65&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Run(String[] args) in /_/src/testhost.x86/Program.cs:line 54&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Main(String[] args) in /_/src/testhost.x86/Program.cs:line 37&#xD;
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="DESKTOP-3VJ2A3B" outcome="Error" timestamp="2026-11-02T10:09:12.6904445+08:00">
+        <Text>源“C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\2025\PatentMarker.Tests\bin\Release\net8.0-windows\PatentMarker.Tests.dll”的 Testhost 进程已退出，但出现错误: Unhandled exception. System.ComponentModel.Win32Exception (5): �ܾ����ʡ�&#xD;
+   at System.Diagnostics.ProcessManager.OpenProcess(Int32 processId, Int32 access, Boolean throwIfExited)&#xD;
+   at System.Diagnostics.Process.GetProcessHandle(Int32 access, Boolean throwIfExited)&#xD;
+   at System.Diagnostics.Process.GetOrOpenProcessHandle()&#xD;
+   at System.Diagnostics.Process.EnsureWatchingForExit()&#xD;
+   at System.Diagnostics.Process.set_EnableRaisingEvents(Boolean value)&#xD;
+   at Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.ProcessHelper.SetExitCallback(Int32 processId, Action`1 callbackAction) in /_/src/Microsoft.TestPlatform.PlatformAbstractions/common/System/ProcessHelper.cs:line 281&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.DefaultEngineInvoker.SetParentProcessExitCallback(IDictionary`2 argsDictionary) in /_/src/testhost.x86/DefaultEngineInvoker.cs:line 230&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.DefaultEngineInvoker.Invoke(IDictionary`2 argsDictionary) in /_/src/testhost.x86/DefaultEngineInvoker.cs:line 132&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Run(String[] args, UiLanguageOverride uiLanguageOverride) in /_/src/testhost.x86/Program.cs:line 65&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Run(String[] args) in /_/src/testhost.x86/Program.cs:line 54&#xD;
+   at Microsoft.VisualStudio.TestPlatform.TestHost.Program.Main(String[] args) in /_/src/testhost.x86/Program.cs:line 37&#xD;
+。请查看诊断日志以了解详细信息。</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

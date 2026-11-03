@@ -1,0 +1,99 @@
+# G02 independent business expectations for tools/G02ParserProbe/g02-cases.txt
+#
+# UTF-8, no BOM, TAB separated. Two assertion groups:
+#
+#   S <case-id> <hit-count> [<number>|<name> ...]
+#       Asserts the DISPLAY view (MarkingTextParser.ExtractAll): exact hit count,
+#       exact number, exact name, exact order. This is what the paste/preview surface uses.
+#
+#   R <case-id> <number>|<name>|<count> ...
+#       Asserts the RAW view (MarkingTextParser.ExtractAllRaw) as a multiset: for each
+#       (number,name) pair the number of real occurrences must be exactly this count.
+#       This is what statistics need; it is the R-017 assertion.
+#
+# Every case must appear in the S group. Cases listed in the R group must also exist
+# in the corpus. Extra or missing lines are FAIL, not SKIP.
+#
+# ---------------------------------------------------------------------------
+# Derivation of the nontrivial expectations (from docs/repair-backlog.md closing
+# criteria and docs/repair-plan.md section 3 contract items 3/4, NOT from parser output):
+#
+# r033-*  "每行一条" means name and number must sit on the SAME line. A line holding only
+#         digits has no name part, so it can never be a bare-list entry: "普通段落\n123\n"
+#         yields 0 hits. "支架 123" and "底座 1\n支架 2" stay valid because name and number
+#         are on one line. Tab and leading/trailing spaces inside the line stay allowed.
+#
+# r032-*  The marking section ends at the first Chinese full stop "。" or at the first blank
+#         paragraph. A capital Z is not a section terminator: "2Z形支架" must not cut the
+#         section short, so all three entries before the full stop survive.
+#         The number lexeme allows a letter suffix, so "2Z形支架" splits as number 2Z +
+#         name 形支架. That split is the pre-existing behaviour (the VBA corpus case
+#         2442U形架 already depends on it); R-032 only changes where the section ends,
+#         so the split is asserted here as-is rather than changed.
+#
+# r016-*  The declared number lexeme is letter-prefix + 1..5 digits + optional hyphen
+#         sub-number + optional letter suffix. "S1", "10-1", "123A1", "123A10", "S12345"
+#         are all complete supported numbers and must be captured whole, never as a
+#         fragment. "123456底座，" has six leading digits, so no supported number can start
+#         at offset 0; starting at offset 1 would be a middle cut, which is exactly the
+#         defect, so the business outcome is 0 hits (explicit rejection, not a tail number).
+#
+# r018-*  Winning hits are ordered by original text position ("支架2、1底座，" gives 2 then 1)
+#         while the existing "old format first, overlapping new-format hits dropped" rule
+#         still decides which hit wins at each position.
+#
+# r017-*  Statistics need true occurrence counts; the display view still de-duplicates by
+#         (number,name). "1支架，1底座，1底座，" therefore shows 2 rows but has 3 raw
+#         occurrences with 底座 appearing twice.
+# ---------------------------------------------------------------------------
+
+S r016-number-first-s1	1	S1|底座
+S r016-number-first-hyphen	1	10-1|支架
+S r016-number-first-paren-s1	1	S1|底座
+S r016-number-first-suffix	2	123A1|第一支路	123A2|第二支路
+S r016-suffix-digits	1	123A10|底座
+S r016-mid-cut-guard	1	S12345|底座
+S r016-too-long	0
+S r016-mixed-forms	4	S1|底座	10-1|支架	1|底座	123A1|第一支路
+S r018-mixed-order	2	2|支架	1|底座
+S r018-mixed-multi	4	10|箱体结构	1|底座	3|加热器	2|支架
+S r018-paren-then-old	2	3|加热器	1|底座
+S r033-plain-then-number	0
+S r033-plain-then-number-crlf	0
+S r033-plain-then-number-cr	0
+S r033-bare-one-line	1	123|支架
+S r033-bare-two-lines	2	1|底座	2|支架
+S r033-bare-tab	1	123|支架
+S r033-bare-lead-space	1	123|支架
+S r032-z-name	3	1|底座	2Z|形支架	3|外壳
+S r032-z-lower	3	1|底座	2z|形支架	3|外壳
+S r032-no-z	2	1|底座	2|支架
+S r032-blank-para	2	1|底座	2|支架
+S r032-z-crlf-blank	3	1|底座	2Z|形支架	3|外壳
+S r017-repeat	2	1|支架	1|底座
+S r017-tie	2	1|支架	1|底座
+
+R r016-mixed-forms	S1|底座|1	10-1|支架|1	1|底座|1	123A1|第一支路|1
+R r017-repeat	1|支架|1	1|底座|2
+R r017-tie	1|支架|1	1|底座|1
+R r032-z-name	1|底座|1	2Z|形支架|1	3|外壳|1
+R r033-bare-two-lines	1|底座|1	2|支架|1
+S g15-name-first-six-digits	0
+S g15-name-first-six-digits-space	0
+S g15-name-first-six-digits-tab	0
+R g15-name-first-five-digits	12345|底座|1
+S g15-name-first-paren-six-digits	0
+S g15-name-first-letter-prefix-six	0
+R g15-name-with-digits	123|第2定位件|1
+R g15-invalid-then-valid	301|端盖|1
+S g19-repeat-after-chinese	1	123|第123定位件
+S g19-repeat-after-letter	1	123|壳体X123 支架
+S g19-repeat-after-digit	1	123|壳体1123 支架
+S g19-repeat-prefixed-number	1	X123|壳体AX123 支架
+S g19-same-text-prefix	1	123|壳体123 支架
+S g19-paren-halfwidth	1	123|壳体X123 支架
+S g19-paren-fullwidth	1	123|壳体X123 支架
+S g19-name-digits-not-repeated	1	301|第2定位件
+S g19-five-digits	1	12345|壳体X12345 支架
+S g19-six-digits-rejected	0
+S g19-mixed-order	2	123|壳体X123 支架	1|底座

@@ -1,0 +1,11 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py failure
+exit: 1
+FAIL R-015 geometry mutation error escapes caller transaction
+FAIL R-015 failed text restoration escapes caller transaction
+FAIL R-015 incomplete leader rejected
+FAIL R-015 incomplete leader unchanged
+FAIL R-015 geometry mutation error escapes caller transaction
+FAIL R-015 failed text restoration escapes caller transaction
+FAIL R-015 incomplete leader rejected
+FAIL R-015 incomplete leader unchanged
+SUMMARY selector=failure checks=8 failed=8

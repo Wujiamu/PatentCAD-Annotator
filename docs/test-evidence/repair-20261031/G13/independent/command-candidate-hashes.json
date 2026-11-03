@@ -1,0 +1,9 @@
+{
+  "cad-plugin/RuntimeContract.Tests/Shared/AutodeskSimulationStubs.cs": "f5bc9a63c861a6dd77b7580dd08a3d1d02b1200bf1ed13daf5a5c0b4bffc4500",
+  "cad-plugin/RuntimeContract.Tests/Shared/IndependentPromptStubs.cs": "b68f54d52b3360999144773901a6b814bd1144501911723c8056511fdb52f04b",
+  "cad-plugin/RuntimeContract.Tests/Shared/G13IndependentCommandTests.cs": "1368161c027e6013e6f617299c6d266616d659fa9a859373616814bfe543cafc",
+  "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj": "33339b91a468f88e242b9a991abcff1a8ab1a2558b4acde36f1097afe5eaa280",
+  "cad-plugin/Shared/Commands/PatBraceCommand.cs": "87ec15a36ff2c0b641795b634b4f8078887944a37f412b74bb50e38507aa9abb",
+  "cad-plugin/Shared/Commands/PatBraceGeometry.cs": "0062bda79c2697a523ea351e86a6baba80eaa216d39afae55a0e9ae8f768f033",
+  "cad-plugin/Shared/Commands/PatBraceEntity.cs": "fa837be499966e78a71509e48f9951d27e7958f79a07a8475f730570f5b20aba"
+}

@@ -1,0 +1,15 @@
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.cs(23,56): error CS0117: “DictLoader”未包含“LoadBytes”的定义 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(47,71): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(63,71): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(172,34): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+
+生成失败。
+
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.cs(23,56): error CS0117: “DictLoader”未包含“LoadBytes”的定义 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(47,71): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(63,71): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\cad-plugin\Shared\Palette\DictPaletteWorkflow.cs(172,34): error CS0122: “RuntimeHost”不可访问，因为它具有一定的保护级别 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+    0 个警告
+    4 个错误
+
+已用时间 00:00:03.90

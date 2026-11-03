@@ -1,0 +1,126 @@
+# G22 red/green evidence
+time=2026-11-02T12:06:01.5002443+08:00
+product=ppt
+mode=RED (pre-fix replay catch)
+powershell=5.1.19041.7802
+os=Microsoft Windows NT 10.0.19045.0
+user=DESKTOP-3VJ2A3B\wjm
+sandbox=C:\Users\wjm\AppData\Local\Temp\PatentMarkerG22Run-99df05bb914e4f418c69ef3e09f40893
+
+sha256|install-office-addin.ps1|8F1CE2EB16CAE309772C3F4FFC90EC5D2985497E1BDC20EA0544FBBBC2E82F84
+sha256|verify-installer.ps1|2BFC66783CC37533E06FA09C2812D18EB184568CC597BBE0FDDC1590D8C88D19
+sha256|OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+sha256|VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\Power
+Point
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\Power
+Point
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3
+b\PowerPoint
+PASS: G14 部分删除失败后从恢复副本还原完整文件集与注册项。
+WARNING: 测试故障注入：从恢复副本还原产品文件失败。
+WARNING: 
+卸载失败且未能确认完整还原，加载项保持停用。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78
+a3b\.PowerPoint.recovery-a94da44718f84ebe94f2bb50b670b637；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddi
+nTest-2cd03b0aa7a54962969c754894d78a3b\.PowerPoint.uninstall-dd3f96a285ce4cefac40ad8e90ec5f5c
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\2cd03b0aa7a54962969c754894d78a3b\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+卸载失败：产品文件已还原，但原注册项未能恢复（加载项保持停用）。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969
+c754894d78a3b\.PowerPoint.recovery-56ae041b26de4740a81ba7ce3ac317d7；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarker
+OfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\.PowerPoint.uninstall-76ce40572c8f47d3a0edecefa052211c
+WARNING: 
+测试故障注入：清理恢复材料失败。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\.P
+owerPoint.recovery-2e8b0aca91c8435bb6d4d6987c381715；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-
+2cd03b0aa7a54962969c754894d78a3b\.PowerPoint.uninstall-efa85410884344ed969c07a3a71e2d69
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3
+b\PowerPoint
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\Power
+Point
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\2cd03b0aa7a54962969c754894d78a3b\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+安装失败：旧版产品文件已还原，但原注册项未能恢复（加载项保持停用）。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962
+969c754894d78a3b\.PowerPoint.rollback-15381e78bbd8482d97e73a391e9522b4
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 测试故障注入：新安装残片被占用，无法隔离或移除。
+WARNING: 
+清理阻挡旧目录还原的残片失败：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894d78a3b\PowerPoint
+WARNING: 
+还原的旧产品目录未通过完整性与哈希核对：目标目录缺少匹配的产品所有权清单，已拒绝覆盖或删除：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54
+962969c754894d78a3b\PowerPoint
+WARNING: 
+安装失败且未能确认旧版完整还原，加载项保持停用。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-2cd03b0aa7a54962969c754894
+d78a3b\.PowerPoint.rollback-8e43663d04524aae95524ed225e4048a；新目录残片：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAd
+dinTest-2cd03b0aa7a54962969c754894d78a3b\.PowerPoint.failed-0328e35e3d5b4e52bd4bca4dd26354fb
+PASS: G18 uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 uninstall_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-56ae041b26de4740a81ba7ce3ac317d7, .PowerPoint.uninstall-76ce40572c8f47d3a0edecefa052211c
+PASS: G18 uninstall_cleanup_failed_files_complete — 清理失败时产品文件仍为完整集合
+PASS: G18 uninstall_cleanup_failed_registration_restored — 清理失败时原注册项已恢复
+PASS: G18 uninstall_cleanup_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-2e8b0aca91c8435bb6d4d6987c381715, .PowerPoint.uninstall-efa85410884344ed969c07a3a71e2d69
+PASS: G18 upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整目录与哈希已还原
+PASS: G18 upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原注册项已恢复
+PASS: G18 upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 upgrade_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 upgrade_registry_restore_failed_old_files_intact — 注册恢复失败时旧版文件仍完整
+PASS: G18 upgrade_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.failed-6c49aef58067487480c8f8ac69eaf3cd
+PASS: G18 upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时加载项保持停用
+PASS: G18 upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.PowerPoint.rollback-8e43663d04524aae95524ed225e4048a
+PASS: G22 first_install_stage_failed_installer_failed — 阶段创建失败后安装返回失败
+PASS: G22 first_install_stage_failed_failure_origin — 失败来自暂存目录创建
+PASS: G22 first_install_stage_failed_no_product_dir — 首次安装早期失败后未留下产品目录
+PASS: G22 first_install_stage_failed_registration — 首次安装早期失败后没有产品注册项
+PASS: G22 first_install_stage_failed_sentinel — 非项目哨兵保持不变
+PASS: G22 upgrade_stage_failed_failure_origin — 失败阶段匹配 'stage-'
+PASS: G22 upgrade_stage_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+FAIL: G22 upgrade_stage_failed_registration — 原注册值被改动：[null,null,null]
+PASS: G22 upgrade_stage_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_staged_copy_failed_failure_origin — 失败阶段匹配 '复制校验失败'
+PASS: G22 upgrade_staged_copy_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+FAIL: G22 upgrade_staged_copy_failed_registration — 原注册值被改动：[null,null,null]
+PASS: G22 upgrade_staged_copy_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_old_move_failed_failure_origin — 失败阶段匹配 'denied|being used|拒绝访问|另一进程'
+PASS: G22 upgrade_old_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+FAIL: G22 upgrade_old_move_failed_registration — 原注册值被改动：[null,null,null]
+PASS: G22 upgrade_old_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_new_move_failed_failure_origin — 失败阶段匹配 '新安装目录无法移动|\.PowerPoint\.stage-'
+PASS: G22 upgrade_new_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_new_move_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_new_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_after_files_failed_failure_origin — 失败阶段匹配 '文件部署后'
+PASS: G22 upgrade_after_files_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_after_files_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_after_files_failed_sentinel — 非项目哨兵文件与注册值保持不变
+G22: 3 条断言失败：upgrade_stage_failed_registration, upgrade_staged_copy_failed_registration, upgrade_old_move_failed_regist
+ration
+At C:\Users\wjm\AppData\Local\Temp\PatentMarkerG22Run-99df05bb914e4f418c69ef3e09f40893\verify-installer.ps1:701 char:9
++         throw ("G22: {0} 条断言失败：{1}" -f $g22Failed.Count, ($g22Failed  ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G22: 3 条断言失败：up...ed_registration:String) [], RuntimeException
+    + FullyQualifiedErrorId : G22: 3 条断言失败：upgrade_stage_failed_registration, upgrade_staged_copy_failed_registration, 
+    upgrade_old_move_failed_registration
+ 
+
+exit=1
+summary|pass=38|fail=3|exit=1

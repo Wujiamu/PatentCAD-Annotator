@@ -1,0 +1,78 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G25 / R-034 (补修) red/green probe.
+
+    ONE scenario file (G25Probe.cs), TWO source snapshots of the palette files
+    G25 may touch. Nothing else changes between builds, so the only variable is
+    the fix:
+
+      -p:G25Snapshot=red    -> red-source/  (post-G24 bytes, pre-G25: the palette
+                               refreshes only on DialogResult.OK/Yes, and the
+                               dialog keeps a single Outcome that a second failed
+                               attempt overwrites)
+      -p:G25Snapshot=green  -> cad-plugin/Shared (post-G25)
+
+    No adapter and no re-implementation: both builds drive the REAL palette entry
+    (DictPaletteControl.BtnArbitrate_Click) and observe the REAL modal
+    ArbitrateDialog through Application.OpenForms, pressing its REAL buttons.
+
+    DictConflict.cs is compiled from red-source/ in both builds: it must not
+    change for this fix (the restore core already reports Wrote truthfully).
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <NoWarn>CS8632</NoWarn>
+    <AssemblyName>G25Probe</AssemblyName>
+    <RootNamespace>G25Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G25Snapshot Condition="'$(G25Snapshot)' == ''">green</G25Snapshot>
+    <IsRed Condition="'$(G25Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G25_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="$(RedDir)DictConflict.cs" Link="IO\DictConflict.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-G25 snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)ArbitrateDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteWorkflow.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <!-- Session/renderer/edit dialog are NOT under repair: always the live tree. -->
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\EditEntryDialog.cs" Link="Palette\EditEntryDialog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="G25Probe.cs" />
+  </ItemGroup>
+
+</Project>

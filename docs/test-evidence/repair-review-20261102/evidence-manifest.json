@@ -1,0 +1,146 @@
+[
+  {
+    "path": "cases.txt",
+    "sha256": "00d8bc4de9ddc32b92a67e109cef559f1ae1ada7e851a5f7693fd74cfa03d763"
+  },
+  {
+    "path": "expected.txt",
+    "sha256": "3f1c7fd90f887a5046b6e8e48fd5d756374352de8e39735aa59063d97c19699d"
+  },
+  {
+    "path": "g16-unit-host.txt",
+    "sha256": "1ea79d2ce12f52536f117ff3311b6d83bef588d4d031805b1107821d42ffeefd"
+  },
+  {
+    "path": "g16-unit.txt",
+    "sha256": "93a8358230ce8a986d3faa58c5ebe29e006d6c5a44abda3414f26fe0ab584014"
+  },
+  {
+    "path": "host-identity.txt",
+    "sha256": "1ea1acf6e9bef4354f5912d7b378782f21de806bfdc64871f06dbc30517b6bca"
+  },
+  {
+    "path": "installer-review-corrected.txt",
+    "sha256": "fc1aa2ecbc66e70a7390d598d4534d44dac90be2cc5464d90a8011a596b07fa4"
+  },
+  {
+    "path": "installer-review.ps1",
+    "sha256": "19592335e9cb2f2ed04145a3f798afdc87f14bc564ac9c56773a41887dc3c0e4"
+  },
+  {
+    "path": "installer-review.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "palette-build.txt",
+    "sha256": "5489c65115e6043adef3965a5c4bd96686dd5d0796991bb36a3a9ecc7a335dfa"
+  },
+  {
+    "path": "palette-review-final.txt",
+    "sha256": "e5ace4d6f41430d769c428ef8aa5ce3d6f111d9b33f7d627930424a3dbf12d85"
+  },
+  {
+    "path": "palette-review-host.txt",
+    "sha256": "274365ff1691467cc6e66589a1d95e453bef399a570a7db8435f0004786f72cf"
+  },
+  {
+    "path": "palette-review-initial.txt",
+    "sha256": "aafd346f904f09bb8c6b9b3e3c71d976d2c905c34725dc379e6e960fcb8734c2"
+  },
+  {
+    "path": "palette-review.txt",
+    "sha256": "48b20c7dc41e24d9856b5290fa8e4d6178bcd284958ebfe1209c2a8a8924ef62"
+  },
+  {
+    "path": "parser-review-invalid-oracle.txt",
+    "sha256": "ada24b8c67b904d9ba8c08b605b225d2832cb444d49d7bd3241b4f8bc3276022"
+  },
+  {
+    "path": "parser-review.ps1",
+    "sha256": "915e2fd988e515140552555422a39e3c2e0542f9c68b6a3f955b864d1e31d6e9"
+  },
+  {
+    "path": "parser-review.txt",
+    "sha256": "25efa3982ff08020f7ac55c15ce92164f4438f4802dfb319a8319300f2544fdb"
+  },
+  {
+    "path": "parser-vbs-full-host.txt",
+    "sha256": "ce086b238f65a02bce6113dd80b20b86fb63dcc794b043ec5632b08e90d41da1"
+  },
+  {
+    "path": "parser-vbs-full.txt",
+    "sha256": "a657b1aa6b06298cd4dbdb9b242d51f386f62c6ca9d7c770baa916c91ed47618"
+  },
+  {
+    "path": "patterns.txt",
+    "sha256": "083bf56dccd7fcbe4019c9ca5e53c6e95fb3bbbd108e97bfe1ac390c9d8a5234"
+  },
+  {
+    "path": "ppt-install-catch.txt",
+    "sha256": "c0184dfd3a208151a356df8ca4c841a3ebaf6f8e1ccf170c8a6819d680b3f00c"
+  },
+  {
+    "path": "probe-results.json",
+    "sha256": "28aaa7cbc4af6d10e5c824b20e55498e5a035e0ef5570862285f3cf2aab3f2d1"
+  },
+  {
+    "path": "review-environment.json",
+    "sha256": "8d5f1ecc56794b110c2e9b26cf036f7c3884b03db6f0928e6c9e4a989f5f0d01"
+  },
+  {
+    "path": "source-manifest.json",
+    "sha256": "3857370ea782b66fce266452eb84f761fa0d810a35a710428b756f88d4f88f98"
+  },
+  {
+    "path": "tool-manifest.json",
+    "sha256": "f2dbb661936265c186f6a2c41123d7f5ec29af5efc6213aabcdb3a545509d1dc"
+  },
+  {
+    "path": "visio-install-catch.txt",
+    "sha256": "e2052803773e7cf1626636734816eb65e17095e7b43128e464716a51c6978a99"
+  },
+  {
+    "path": "vstest-review.ps1",
+    "sha256": "000f0af441cda526290fb470c6d3864aa808d94a8782585c66e93da5fedd2a15"
+  },
+  {
+    "path": "vstest-review.txt",
+    "sha256": "f9fb91740f2ec14c834de50e45687b853639c7f142a8d664038b28c40e0421e4"
+  },
+  {
+    "path": "working-tree-status.txt",
+    "sha256": "ce9ec066db077f2f7ab912b6876c3c49b03356046310948d7a169c1ff3ce659b"
+  },
+  {
+    "path": "vstest-fixture-0368bb458d2d463186d5c29c0337b1cc/empty-no-run.txt",
+    "sha256": "be75c7ec82e5fa0486765460ef5c8d051fc7e72536f4985d528c886bae0f1890"
+  },
+  {
+    "path": "vstest-fixture-0368bb458d2d463186d5c29c0337b1cc/fresh-pass.txt",
+    "sha256": "2df252a3986d7ada32207adafd1257adf12e78285340a4d95df2c5d283865fec"
+  },
+  {
+    "path": "vstest-fixture-0368bb458d2d463186d5c29c0337b1cc/stale-no-run.txt",
+    "sha256": "19f49e6cfa0c58e55b9f3bde870455df26d2d7ee73a737d7c4498bcd6936cc07"
+  },
+  {
+    "path": "vstest-fixture-0368bb458d2d463186d5c29c0337b1cc/fresh-pass/results.trx",
+    "sha256": "cc8d0f1c5fb161584a1de30b00b7d71c1509b59c902361c8576170daaccffe42"
+  },
+  {
+    "path": "vstest-fixture-0368bb458d2d463186d5c29c0337b1cc/stale-no-run/results.trx",
+    "sha256": "cc8d0f1c5fb161584a1de30b00b7d71c1509b59c902361c8576170daaccffe42"
+  },
+  {
+    "path": "g16-unit/wjm_DESKTOP-3VJ2A3B_2026-11-02_09_31_35.trx",
+    "sha256": "6b92228a8ce188654fede36ab7d531dd0a0086f4ebcdee1326af423d4d6cf812"
+  },
+  {
+    "path": "g16-unit-host/wjm_DESKTOP-3VJ2A3B_2026-11-02_10_09_12.trx",
+    "sha256": "3cf5772d28a5088ca5b38d64d238c5856a2435e4c2fc04425a7d3bafecaab342"
+  },
+  {
+    "path": "render-review.ps1",
+    "sha256": "81c428fd79cd003f767f7ad214e38a0189577df95a2fce4d41703b8d1bb94854"
+  }
+]

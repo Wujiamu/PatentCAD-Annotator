@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G24 / R-004 (补修) red/green probe.
+
+    ONE scenario file (G24Probe.cs), TWO source snapshots of the palette files
+    G24 may touch. Nothing else changes between builds, so the only variable is
+    the fix:
+
+      -p:G24Snapshot=red    -> red-source/  (post-G21 bytes, pre-G24: the commit
+                               snapshot is rebuilt from the reloaded model, the
+                               retry trusts the cached model, the buttons and the
+                               confirm phase are global)
+      -p:G24Snapshot=green  -> cad-plugin/Shared (post-G24)
+
+    No adapter and no re-implementation: both builds drive the REAL palette entry
+    (DictPaletteControl.EditSelectedEntry), the REAL modal EditEntryDialog (found
+    through Application.OpenForms, its real TextBox and buttons used) and the REAL
+    DictWriter. The CAD renumber service is a recording stub, so "the drawing was
+    not touched" and "the retry service did not run" are observable facts.
+
+    DictPaletteWorkflow.cs / PatPaletteCommand.cs are compiled from red-source/ in
+    both builds only to prove their bytes did not change; PatPaletteCommand is
+    replaced by the stub below (it would drag in AutoCAD host types).
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <NoWarn>CS8632</NoWarn>
+    <AssemblyName>G24Probe</AssemblyName>
+    <RootNamespace>G24Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G24Snapshot Condition="'$(G24Snapshot)' == ''">green</G24Snapshot>
+    <IsRed Condition="'$(G24Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G24_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\DictConflict.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-G24 snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)EditEntryDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\EditEntryDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteSession.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteSession.cs" />
+    <!-- Same for the workflow facade: G24 adds the canonical-path / same-byte
+         snapshot reads there, so the red build must use its pre-G24 bytes. -->
+    <Compile Include="$(RedDir)DictPaletteWorkflow.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="G24Probe.cs" />
+  </ItemGroup>
+
+</Project>

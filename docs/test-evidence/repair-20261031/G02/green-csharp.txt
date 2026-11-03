@@ -1,0 +1,34 @@
+﻿
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:06.88
+PARSER_SOURCE_SHA256=93c9ee3a2e28cdc3ad33eebdb75945c7e5ebf2bc4cec3e5d9cff2cb4e9078b3a
+PROBE_DLL_SHA256=27bdf3b942061728d47c02c93ef2571a8e4018cba2c99787180e7735122a3965
+PASS|r016-number-first-s1|display=1 [S1|底座]
+PASS|r016-number-first-hyphen|display=1 [10-1|支架]
+PASS|r016-number-first-paren-s1|display=1 [S1|底座]
+PASS|r016-number-first-suffix|display=2 [123A1|第一支路 123A2|第二支路]
+PASS|r016-suffix-digits|display=1 [123A10|底座]
+PASS|r016-mid-cut-guard|display=1 [S12345|底座]
+PASS|r016-too-long|display=0 []
+PASS|r016-mixed-forms|display=4 raw=4 [S1|底座 10-1|支架 1|底座 123A1|第一支路]
+PASS|r018-mixed-order|display=2 [2|支架 1|底座]
+PASS|r018-mixed-multi|display=4 [10|箱体结构 1|底座 3|加热器 2|支架]
+PASS|r018-paren-then-old|display=2 [3|加热器 1|底座]
+PASS|r033-plain-then-number|display=0 []
+PASS|r033-plain-then-number-crlf|display=0 []
+PASS|r033-plain-then-number-cr|display=0 []
+PASS|r033-bare-one-line|display=1 [123|支架]
+PASS|r033-bare-two-lines|display=2 raw=2 [1|底座 2|支架]
+PASS|r033-bare-tab|display=1 [123|支架]
+PASS|r033-bare-lead-space|display=1 [123|支架]
+PASS|r032-z-name|display=3 raw=3 [1|底座 2Z|形支架 3|外壳]
+PASS|r032-z-lower|display=3 [1|底座 2z|形支架 3|外壳]
+PASS|r032-no-z|display=2 [1|底座 2|支架]
+PASS|r032-blank-para|display=2 [1|底座 2|支架]
+PASS|r032-z-crlf-blank|display=3 [1|底座 2Z|形支架 3|外壳]
+PASS|r017-repeat|display=2 raw=3 [1|支架 1|底座]
+PASS|r017-tie|display=2 raw=2 [1|支架 1|底座]
+SUMMARY: passed=25 failed=0

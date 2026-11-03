@@ -1,0 +1,5 @@
+﻿vba\Patterns.bas	BOM=none CP936=True CRLF=317 bareLF=0 bareCR=0 FFFD=0 sha=338dabccd2f862232c528ce1247464ba26f0cfdd8f8a6aa7d4554cc6ab3e04a0
+tools\test-g02-parser.vbs	BOM=none CP936=True CRLF=767 bareLF=0 bareCR=0 FFFD=0 sha=cdf44389faa2a9e476103436488ae65aef728c891806676abb085faa87f80871
+tools\test-g02-l2.vbs	BOM=none CP936=True CRLF=393 bareLF=0 bareCR=0 FFFD=0 sha=3b40bd4141698872ac59e7729b7f348817608b183920a8368ed5c5e764a9a4be
+tools\G02ParserProbe\g02-cases.txt	BOM=none CP936=False CRLF=20 bareLF=26 bareCR=0 FFFD=0 sha=70591f7dcccd8d777992497fbff2f208d495421956d4d897a0a138c2f646b8a0
+tools\G02ParserProbe\g02-expected.txt	BOM=none CP936=False CRLF=15 bareLF=84 bareCR=0 FFFD=0 sha=7c4513b772e55003f43c416a2d2a342f22558b6bc8c42646e18b651fdbd2cabf

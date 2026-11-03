@@ -1,0 +1,212 @@
+[
+  {
+    "check": "first-install exit",
+    "result": "PASS",
+    "details": "0"
+  },
+  {
+    "check": "first-install exact registry operation set",
+    "result": "PASS",
+    "details": "{'missing': [], 'unexpected': []}"
+  },
+  {
+    "check": "first-install isolated admin probe",
+    "result": "PASS",
+    "details": "{\"('CREATE', 'HKLM', 'software\\\\\\\\pmtest2253679')\": 1, \"('DELETE', 'HKLM', 'software\\\\\\\\pmtest2253679')\": 1}"
+  },
+  {
+    "check": "first-install support R17.0/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "first-install user file R17.0/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "first-install support R17.1/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "first-install user file R17.1/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "first-install support R17.1/ACAD-B",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "first-install user file R17.1/ACAD-B",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "first-install support R17.1/ACAD-C",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "first-install user file R17.1/ACAD-C",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "first-install support R17.2/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "first-install user file R17.2/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "first-install R18 outside sentinel",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install exit",
+    "result": "PASS",
+    "details": "0"
+  },
+  {
+    "check": "repeat-install exact registry operation set",
+    "result": "PASS",
+    "details": "{'missing': [], 'unexpected': []}"
+  },
+  {
+    "check": "repeat-install isolated admin probe",
+    "result": "PASS",
+    "details": "{\"('CREATE', 'HKLM', 'software\\\\\\\\pmtest2253775')\": 1, \"('DELETE', 'HKLM', 'software\\\\\\\\pmtest2253775')\": 1}"
+  },
+  {
+    "check": "repeat-install support R17.0/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "repeat-install user file R17.0/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install support R17.1/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "repeat-install user file R17.1/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install support R17.1/ACAD-B",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "repeat-install user file R17.1/ACAD-B",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install support R17.1/ACAD-C",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "repeat-install user file R17.1/ACAD-C",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install support R17.2/ACAD-A",
+    "result": "PASS",
+    "details": "955d0acece731894e66186dbc4c0e5ca81eb620ef7ab57f50c53489a0d974612"
+  },
+  {
+    "check": "repeat-install user file R17.2/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "repeat-install R18 outside sentinel",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall exit",
+    "result": "PASS",
+    "details": "0"
+  },
+  {
+    "check": "uninstall exact registry operation set",
+    "result": "PASS",
+    "details": "{'missing': [], 'unexpected': []}"
+  },
+  {
+    "check": "uninstall no extra admin probe",
+    "result": "PASS",
+    "details": "Counter()"
+  },
+  {
+    "check": "uninstall support R17.0/ACAD-A",
+    "result": "PASS",
+    "details": "31fdc207d08aab94d3e19ef4c260fb97e3d7c71f42dcb68c3fd1b78b3ad8cc62"
+  },
+  {
+    "check": "uninstall user file R17.0/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall support R17.1/ACAD-A",
+    "result": "PASS",
+    "details": "31fdc207d08aab94d3e19ef4c260fb97e3d7c71f42dcb68c3fd1b78b3ad8cc62"
+  },
+  {
+    "check": "uninstall user file R17.1/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall support R17.1/ACAD-B",
+    "result": "PASS",
+    "details": "31fdc207d08aab94d3e19ef4c260fb97e3d7c71f42dcb68c3fd1b78b3ad8cc62"
+  },
+  {
+    "check": "uninstall user file R17.1/ACAD-B",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall support R17.1/ACAD-C",
+    "result": "PASS",
+    "details": "31fdc207d08aab94d3e19ef4c260fb97e3d7c71f42dcb68c3fd1b78b3ad8cc62"
+  },
+  {
+    "check": "uninstall user file R17.1/ACAD-C",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall support R17.2/ACAD-A",
+    "result": "PASS",
+    "details": "31fdc207d08aab94d3e19ef4c260fb97e3d7c71f42dcb68c3fd1b78b3ad8cc62"
+  },
+  {
+    "check": "uninstall user file R17.2/ACAD-A",
+    "result": "PASS",
+    "details": ""
+  },
+  {
+    "check": "uninstall R18 outside sentinel",
+    "result": "PASS",
+    "details": ""
+  }
+]

@@ -1,0 +1,151 @@
+VERSION 5.00
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} PatentDictPanel 
+   Caption         =   "UserForm1"
+   ClientHeight    =   3015
+   ClientLeft      =   120
+   ClientTop       =   465
+   ClientWidth     =   4560
+   OleObjectBlob   =   "PatentDictPanel.frx":0000
+   StartUpPosition =   1  '所有者中心
+End
+Attribute VB_Name = "PatentDictPanel"
+Attribute VB_GlobalNameSpace = False
+Attribute VB_Creatable = False
+Attribute VB_PredeclaredId = True
+Attribute VB_Exposed = False
+Private m_syncingJsonVisibility As Boolean
+Private m_syncingAutoExport As Boolean
+
+Private Sub cmdExport_Click()
+    ' 1.0.1：导出后立即在底部状态行反馈结果（此前点击后无任何提示）。
+    If AutoExport.ExportDictManual() Then
+        lblStatus.Caption = "√ 已导出 " & Format(Now, "hh:nn:ss")
+        lblStatus.ForeColor = RGB(0, 128, 0)
+        UpdateJsonVisibilityControl
+    Else
+        lblStatus.Caption = "× 导出失败（请检查目标图纸或文档路径）"
+        lblStatus.ForeColor = RGB(200, 0, 0)
+    End If
+End Sub
+
+Private Sub chkAutoExport_Click()
+    If m_syncingAutoExport Then Exit Sub
+    If CBool(chkAutoExport.Value) Then
+        If AutoExport.EnableAutoExportForDocument() Then
+            lblStatus.Caption = ChrW(&H4FDD) & ChrW(&H5B58) & " Word " & ChrW(&H65F6) & ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H5DF2) & ChrW(&H5F00) & ChrW(&H542F)
+        Else
+            m_syncingAutoExport = True
+            chkAutoExport.Value = 0
+            m_syncingAutoExport = False
+            lblStatus.Caption = ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H672A) & ChrW(&H5F00) & ChrW(&H542F) & ChrW(&HFF0C) & ChrW(&H8BF7) & ChrW(&H5148) & ChrW(&H9009) & ChrW(&H62E9) & ChrW(&H76EE) & ChrW(&H6807) & " DWG"
+        End If
+    Else
+        AutoExport.IsAutoExportEnabled = False
+        lblStatus.Caption = ChrW(&H4FDD) & ChrW(&H5B58) & ChrW(&H65F6) & ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H5DF2) & ChrW(&H5173) & ChrW(&H95ED)
+    End If
+End Sub
+
+Private Sub chkJsonVisible_Click()
+    If m_syncingJsonVisibility Then Exit Sub
+    If AutoExport.SetCurrentDictVisibility(CBool(chkJsonVisible.Value)) Then
+        If CBool(chkJsonVisible.Value) Then
+            lblStatus.Caption = "JSON 已显示，可手动编辑。"
+        Else
+            lblStatus.Caption = "JSON 已隐藏。"
+        End If
+    Else
+        lblStatus.Caption = AutoExport.GetDiagnosticStatus()
+    End If
+    UpdateJsonVisibilityControl
+End Sub
+
+Private Sub UserForm_Initialize()
+    ' 1.0.1 界面优化：整体放大窗体与字号、微软雅黑、蓝色主按钮、底部状态行。
+    ' .frx 仅保存控件骨架，实际布局一律以磅为单位在此显式设置，
+    ' 避免 twip 量级坐标导致控件画出窗体外（"小空框"问题）。
+    Me.Caption = "专利标注字典工具"
+    Me.Width = 300
+    Me.Height = 210
+    Me.Font.Name = "微软雅黑"
+    Me.Font.Size = 10
+
+    Dim x As Single, iw As Single, ih As Single
+    On Error Resume Next
+    iw = Me.InsideWidth
+    ih = Me.InsideHeight
+    On Error GoTo 0
+    If iw < 100 Then iw = 292
+    If ih < 100 Then ih = 150
+    x = 16
+
+    With cmdExport
+        .Left = x
+        .Top = 14
+        .Width = iw - 2 * x
+        .Height = 50
+        .Caption = "手动导出字典"
+        .BackColor = RGB(0, 120, 215)
+        .ForeColor = RGB(255, 255, 255)
+        .Font.Name = "微软雅黑"
+        .Font.Size = 14
+        .Font.Bold = True
+    End With
+
+    With chkAutoExport
+        .Left = x - 4
+        .Top = 76
+        .Width = iw - 2 * x + 8
+        .Height = 28
+        .Caption = "保存 Word 时自动导出"
+        .Font.Name = "微软雅黑"
+        .Font.Size = 11
+    End With
+
+
+    With chkJsonVisible
+        .Left = x - 4
+        .Top = 108
+        .Width = iw - 2 * x + 8
+        .Height = 28
+        .Caption = "显示 JSON（允许手动编辑）"
+        .Font.Name = "微软雅黑"
+        .Font.Size = 11
+    End With
+
+    ' 状态行：锚定在底部
+    With lblStatus
+        .Left = x
+        .Top = ih - 34
+        .Width = iw - 2 * x
+        .Height = 20
+        .Caption = "导出的字典在文档所在文件夹（隐藏文件）"
+        .ForeColor = RGB(120, 120, 120)
+        .TextAlign = 2
+        .Font.Name = "微软雅黑"
+        .Font.Size = 10
+    End With
+
+    m_syncingAutoExport = True
+    chkAutoExport.Value = IIf(AutoExport.IsAutoExportEnabled, 1, 0)
+    m_syncingAutoExport = False
+    UpdateJsonVisibilityControl
+    lblStatus.Caption = AutoExport.GetDiagnosticStatus()
+End Sub
+
+Private Sub UpdateJsonVisibilityControl()
+    On Error Resume Next
+    m_syncingJsonVisibility = True
+    Dim path As String
+    Dim fso As Object
+    path = AutoExport.GetCurrentDictPath()
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If path = "" Or Not fso.FileExists(path) Then
+        chkJsonVisible.Enabled = False
+        chkJsonVisible.Value = 0
+        m_syncingJsonVisibility = False
+        Exit Sub
+    End If
+    chkJsonVisible.Enabled = True
+    chkJsonVisible.Value = IIf(AutoExport.IsCurrentDictVisible(), 1, 0)
+    m_syncingJsonVisibility = False
+End Sub

@@ -1,0 +1,16 @@
+PASS|T1-stale-root|accepted=False|expected=False
+PASS|T1-stale-child|accepted=False|expected=False
+PASS|T1-no-new|accepted=False|expected=False
+PASS|T1-fresh|accepted=True|expected=True
+PASS|T2-artifact-fresh|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-f35d35e884d346b199c70be72aff7993\fresh\results-ecc3a14d157348828427e5f12eed768b.trx
+PASS|T1-zero|accepted=False|expected=False
+PASS|T1-partial|accepted=False|expected=False
+PASS|T1-cli-error|accepted=False|expected=False
+PASS|T1-bad-xml|accepted=False|expected=False
+PASS|T1-default-fresh|accepted=True|expected=True
+PASS|T2-artifact-default-fresh|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-f35d35e884d346b199c70be72aff7993\temp\PatentMarker-VSTest-Results\Fixture\results-df8bbfbbd80d433d9303efb723cee393.trx
+PASS|T1-explicit-failed|accepted=False|expected=False
+PASS|T2-failure-artifact-explicit-failed|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-f35d35e884d346b199c70be72aff7993\explicit-failed\results-0b639ceaf09f4aa7a95ec7fcd394a614.trx
+PASS|T1-default-failed|accepted=False|expected=False
+PASS|T2-failure-artifact-default-failed|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-f35d35e884d346b199c70be72aff7993\temp\PatentMarker-VSTest-Results\Fixture\results-0adfe3d725ce41eb8e0b632730978bea.trx
+SUMMARY|passed=15|failed=0

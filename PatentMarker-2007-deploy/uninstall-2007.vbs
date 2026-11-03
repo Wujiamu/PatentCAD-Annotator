@@ -73,8 +73,7 @@ output = output & "========================================" & vbCrLf
 output = output & "PatentMarker 2007 Uninstaller" & vbCrLf
 output = output & "========================================" & vbCrLf
 
-Dim acadBaseKey
-acadBaseKey = "Software\Autodesk\AutoCAD\R17.0"
+Dim acadBaseKey, scanVersion
 
 ' --- 1. Scan for ACAD products ---
 Dim subKeys, hive, hiveName, foundAny, seenProfiles
@@ -82,41 +81,50 @@ foundAny = False
 Set seenProfiles = CreateObject("Scripting.Dictionary")
 seenProfiles.CompareMode = 1
 
-Dim productCodes(), productCount
+Dim productCodes(), productBases(), productVersions(), productCount
 productCount = 0
 Dim i, key, profileId
-For Each hive In Array(HKCU, HKLM)
-    subKeys = Null
-    reg.EnumKey hive, acadBaseKey, subKeys
-    If Not IsNull(subKeys) Then
-        foundAny = True
-        If hive = HKCU Then
-            hiveName = "HKCU"
-        Else
-            hiveName = "HKLM"
-        End If
-        LogMsg "Found in " & hiveName
-        For i = 0 To UBound(subKeys)
-            key = subKeys(i)
-            If Left(key, 5) = "ACAD-" Then
-                profileId = LCase(acadBaseKey & "\" & key)
-                If Not seenProfiles.Exists(profileId) Then
-                    seenProfiles.Add profileId, True
-                    If productCount = 0 Then
-                        ReDim productCodes(0)
-                    Else
-                        ReDim Preserve productCodes(productCount)
-                    End If
-                    productCodes(productCount) = key
-                    productCount = productCount + 1
-                End If
+For Each scanVersion In Array("R17.0", "R17.1", "R17.2")
+    acadBaseKey = "Software\Autodesk\AutoCAD\" & scanVersion
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, acadBaseKey, subKeys
+        If Not IsNull(subKeys) Then
+            foundAny = True
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
             End If
-        Next
-    End If
+            LogMsg "Found in " & hiveName
+            For i = 0 To UBound(subKeys)
+                key = subKeys(i)
+                If Left(key, 5) = "ACAD-" Then
+                    profileId = LCase(acadBaseKey & "\" & key)
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        If productCount = 0 Then
+                            ReDim productCodes(0)
+                            ReDim productBases(0)
+                            ReDim productVersions(0)
+                        Else
+                            ReDim Preserve productCodes(productCount)
+                            ReDim Preserve productBases(productCount)
+                            ReDim Preserve productVersions(productCount)
+                        End If
+                        productCodes(productCount) = key
+                        productBases(productCount) = acadBaseKey
+                        productVersions(productCount) = scanVersion
+                        productCount = productCount + 1
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
 If Not foundAny Or productCount = 0 Then
-    LogMsg "AutoCAD R17.0 not found; registry cleanup skipped."
+    LogMsg "AutoCAD R17.0-R17.2 not found; registry cleanup skipped."
 Else
     LogMsg "Products found: " & productCount
 End If
@@ -127,7 +135,7 @@ Dim j, appKey, deleted
 deleted = 0
 
 For j = 0 To productCount - 1
-    appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+    appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
     Dim dummy
     reg.GetStringValue HKCU, appKey, "LOADER", dummy
     If Not IsNull(dummy) Then
@@ -144,7 +152,7 @@ Dim hklmDeleted
 hklmDeleted = 0
 
 For j = 0 To productCount - 1
-    appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+    appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
     On Error Resume Next
     Err.Clear
     reg.DeleteKey HKLM, appKey
@@ -174,7 +182,7 @@ For j = 0 To productCount - 1
 
     ' Source A: ACAD support path
     Dim supportKey, supportPath
-    supportKey = acadBaseKey & "\" & productCode & "\Fixed Profile\General\ACAD"
+    supportKey = productBases(j) & "\" & productCode & "\Fixed Profile\General\ACAD"
     supportPath = ""
     reg.GetStringValue HKCU, supportKey, "ACAD", supportPath
     If IsNull(supportPath) Or supportPath = "" Then
@@ -196,7 +204,7 @@ For j = 0 To productCount - 1
 
     ' Source B: AcadLocation\Support
     Dim prodKey2, acadLocation
-    prodKey2 = acadBaseKey & "\" & productCode
+    prodKey2 = productBases(j) & "\" & productCode
     acadLocation = ""
     reg.GetStringValue HKCU, prodKey2, "AcadLocation", acadLocation
     If IsNull(acadLocation) Or acadLocation = "" Then
@@ -228,7 +236,7 @@ For j = 0 To productCount - 1
     End If
 
     Dim appDataSupport
-    appDataSupport = shell.ExpandEnvironmentStrings("%APPDATA%") & "\Autodesk\AutoCAD\R17.0\" & productCode & "\" & langCode & "\Support"
+    appDataSupport = shell.ExpandEnvironmentStrings("%APPDATA%") & "\Autodesk\AutoCAD\" & productVersions(j) & "\" & productCode & "\" & langCode & "\Support"
     If fso.FolderExists(appDataSupport) Then
         ReDim Preserve candidateDirs(candCount)
         candidateDirs(candCount) = appDataSupport

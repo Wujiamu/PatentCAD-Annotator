@@ -1,0 +1,2 @@
+﻿PASS|L2_INSTALLER_ISOLATION|normal_unchanged=true|user_macros_unchanged=true|missing_manifest_refused=true|repeat_install=true|install_rollback=true|uninstall_rollback=true|recoverable_uninstall=true|manifest_stage_rollback=true|rollback_failure_reported=true
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-Installer-Isolation-283c5b8bdc4540aea1f5fc000959a9d8

@@ -1,0 +1,3 @@
+﻿docs\test-evidence\repair-review-20261102\G21\langgate\dotnet20\NegControl.cs(3,65): error CS0501: ?G21NegControl.Bad.Value.get??????????????? abstract ? extern
+docs\test-evidence\repair-review-20261102\G21\langgate\dotnet20\NegControl.cs(3,70): error CS0501: ?G21NegControl.Bad.Value.set??????????????? abstract ? extern
+=== negctl exit: 1 (expect 1) ===

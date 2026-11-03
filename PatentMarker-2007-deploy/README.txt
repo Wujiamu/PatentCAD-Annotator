@@ -37,7 +37,7 @@ PatentMarker 2007 安装说明 (1.0.3 candidate - 2026-09-12, 待发布)
   2. 双击 install-2007.vbs
   3. 脚本将自动执行三层加载策略:
      - 第1层: 写 HKCU 注册表 (LOADCTRLS=14, 启动时加载)
-       R17.0 注册表合并 HKCU/HKLM 中的全部 ACAD- 配置，重复配置只写入一次
+       R17.0–R17.2 注册表合并 HKCU/HKLM 中的全部 ACAD- 配置，重复配置只写入一次
        有管理员权限时同时写 HKLM
      - 第2层: 部署 acad.lsp 到 ACAD 支持路径
        扫描注册表支持路径/AcadLocation\Support/%APPDATA%

@@ -18,31 +18,72 @@ namespace PatentMarker.Palette
         public int Skipped;
     }
 
+    /// <summary>
+    /// Result of a renumber sync.  When <see cref="Committed"/> is false the
+    /// CAD transaction was rolled back, so the drawing still shows the old
+    /// number everywhere; the dictionary may already carry the new one.
+    /// </summary>
+    public sealed class DictPaletteRenameResult
+    {
+        public int Matched;
+        public int Changed;
+        public bool Committed;
+        public readonly List<string> Failures = new List<string>();
+        public string Error = "";
+
+        public int Failed { get { return Matched - Changed; } }
+        public bool Complete { get { return Committed && Matched > 0 && Failed == 0; } }
+    }
+
     public static class DictPaletteCadService
     {
         /// <summary>
-        /// Renames matching PAT annotation text in model space and commits
-        /// the transaction.  The caller decides how to display the result.
+        /// Renames matching PAT annotation text in model space.  Any single
+        /// write failure rolls the whole CAD transaction back, so the caller
+        /// reports "0 of N updated" instead of a partial count.  JSON and DWG
+        /// are not one transaction: the caller still has to say that the
+        /// dictionary changed and the drawing did not.
         /// </summary>
-        public static int RenameNumber(Document doc, string oldNumber, string newNumber)
+        public static DictPaletteRenameResult RenameNumber(
+            Document doc, string oldNumber, string newNumber)
         {
-            if (doc == null) return 0;
+            DictPaletteRenameResult result = new DictPaletteRenameResult();
+            if (doc == null) { result.Error = "No active document."; return result; }
 
             AcDb.Database db = doc.Database;
-            int changed;
-            using (DocumentLock docLock = doc.LockDocument())
-            using (AcDb.Transaction tr = db.TransactionManager.StartTransaction())
+            try
             {
-                AcDb.BlockTable bt = (AcDb.BlockTable)tr.GetObject(
-                    db.BlockTableId, AcDb.OpenMode.ForRead);
-                AcDb.BlockTableRecord btr = (AcDb.BlockTableRecord)tr.GetObject(
-                    bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForRead);
-                changed = PatEntityHelper.RenameNumberInModelSpace(
-                    tr, btr, oldNumber, newNumber);
-                tr.Commit();
+                using (DocumentLock docLock = doc.LockDocument())
+                using (AcDb.Transaction tr = db.TransactionManager.StartTransaction())
+                {
+                    AcDb.BlockTable bt = (AcDb.BlockTable)tr.GetObject(
+                        db.BlockTableId, AcDb.OpenMode.ForRead);
+                    AcDb.BlockTableRecord btr = (AcDb.BlockTableRecord)tr.GetObject(
+                        bt[AcDb.BlockTableRecord.ModelSpace], AcDb.OpenMode.ForRead);
+                    RenameResult pass = PatEntityHelper.RenameNumberInModelSpace(
+                        tr, btr, oldNumber, newNumber);
+                    result.Matched = pass.Matched;
+                    result.Failures.AddRange(pass.Failures);
+                    if (pass.Matched > 0 && pass.Changed != pass.Matched)
+                    {
+                        result.Error = pass.Changed + " of " + pass.Matched
+                            + " PAT annotation(s) could not be updated.";
+                        tr.Abort();
+                        return result;
+                    }
+                    tr.Commit();
+                    result.Changed = pass.Changed;
+                    result.Committed = true;
+                    return result;
+                }
             }
-
-            return changed;
+            catch (Exception ex)
+            {
+                result.Error = ex.GetType().Name + ": " + ex.Message;
+                result.Changed = 0;
+                result.Committed = false;
+                return result;
+            }
         }
 
         /// <summary>

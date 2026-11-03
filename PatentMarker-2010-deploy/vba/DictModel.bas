@@ -30,13 +30,13 @@ Public Function BuildModel(ByVal text As String, ByVal sourceName As String, _
     reTbl.Global = True
     reTbl.Multiline = True
     reTbl.IgnoreCase = False
-    ' A. 编号单元格在前（两列表格：编号 | 名称）
-    reTbl.pattern = "(\d{1,5}(?:[A-Za-z]\d*)?)" & vbCr & Chr(7) & _
-        "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*)" & vbCr & Chr(7)
-    text = reTbl.Replace(text, "$2$1、")
-    ' B. 名称单元格在前（两列表格：名称 | 编号）
-    reTbl.pattern = "([\u4e00-\u9fa5][\u4e00-\u9fa5A-Za-z0-9]*?)" & vbCr & Chr(7) & _
-        "([A-Z]?\d{1,5}(?:-[A-Z]?\d{1,5})?(?:[A-Za-z]\d*)?)" & vbCr & Chr(7)
+    ' 表格流模式直接复用 Patterns 的共享常量（与 C# MarkingTextParser.cs 同名常量
+    ' 逐字一致），避免 S1 / 10-1 / 123A1 这类完整编号在表格流里被截成尾部数字。
+    ' A. 编号单元格在前（两列表格：编号 | 名称）；分组 1=左边界 2=编号 3=名称
+    reTbl.pattern = Patterns.G02_TABLEA
+    text = reTbl.Replace(text, "$1$3$2、")
+    ' B. 名称单元格在前（两列表格：名称 | 编号）；分组 1=名称 2=编号
+    reTbl.pattern = Patterns.G02_TABLEB
     text = reTbl.Replace(text, "$1$2、")
     ' C. 残余单元格分隔符 -> 顿号
     text = Replace(text, Chr(7), "、")
@@ -51,30 +51,46 @@ Public Function BuildModel(ByVal text As String, ByVal sourceName As String, _
     End If
 
     ' === 第二步：从段落中提取所有标号 ===
+    ' 统计必须使用未去重的原始命中：ExtractAll 会先按 (number,name) 去重，
+    ' 直接用它累加 occurrences / nameCounts 会丢掉重复出现，名称多数决失真。
+    ' 展示与粘贴仍用 Patterns.ExtractAll（去重视图），重复条目不得流入字典。
     Dim rawHits As Variant
-    rawHits = Patterns.ExtractAll(sectionText)
+    rawHits = Patterns.ExtractAllRaw(sectionText)
 
+    ' 编号身份按消费端 NumberIdentity 规则归组：去掉首尾空白 + 忽略大小写
+    ' （Scripting.Dictionary 的 TextCompare 与 NumberIdentity 的 Trim+OrdinalIgnoreCase
+    ' 对 ASCII 字母数字等价，由 tools/test-g02-parser.vbs 与 G02ParserTests 对照验证）。
+    ' 名称比较沿用原来的二进制默认比较，不在这里改名称规则。
+    ' 显示用的编号保留首次命中的原文（不做大写化、不转整数）。
     Dim entries As Object
     Set entries = CreateObject("Scripting.Dictionary")
+    On Error Resume Next
+    entries.CompareMode = 1
+    If Err.Number <> 0 Then
+        Err.Clear
+        Set entries = CreateObject("Scripting.Dictionary")
+    End If
+    On Error GoTo 0
 
-    Dim i As Long, hit As Variant, number As String, name As String
+    Dim i As Long, hit As Variant, number As String, name As String, numberKey As String
     For i = LBound(rawHits) To UBound(rawHits)
         On Error GoTo NextHit
         hit = rawHits(i)
-        number = hit(0)
-        name = hit(1)
+        number = CStr(hit(0))
+        name = CStr(hit(1))
+        numberKey = Trim$(number)
 
-        If Not entries.Exists(number) Then
+        If Not entries.Exists(numberKey) Then
             Dim newEntry As Object
             Set newEntry = CreateObject("Scripting.Dictionary")
             newEntry("number") = number
             Set newEntry("nameCounts") = CreateObject("Scripting.Dictionary")
             newEntry("occurrences") = 0
-            Set entries(number) = newEntry
+            Set entries(numberKey) = newEntry
         End If
 
         Dim entry As Object
-        Set entry = entries(number)
+        Set entry = entries(numberKey)
         entry("occurrences") = entry("occurrences") + 1
         Dim nc As Object
         Set nc = entry("nameCounts")
@@ -90,10 +106,11 @@ NextHit:
     ' === 第三步：组装输出 ===
     Dim outEntries As Collection: Set outEntries = New Collection
 
-    Dim key As Variant
+    Dim key As Variant, displayNumber As String
     For Each key In entries.Keys
         Dim e As Object: Set e = entries(key)
         Dim nameCounts As Object: Set nameCounts = e("nameCounts")
+        displayNumber = CStr(e("number"))
 
         Dim conflicts As Collection: Set conflicts = New Collection
         If nameCounts.Count > 1 Then
@@ -102,12 +119,12 @@ NextHit:
             For Each nk In nameCounts.Keys
                 candidates.Add CStr(nk)
             Next
-            conflicts.Add MakeConflict(CStr(key), candidates)
-            warnings.Add "编号 " & key & " 存在歧义：" & Join(ToStrArray(candidates), " vs ")
+            conflicts.Add MakeConflict(displayNumber, candidates)
+            warnings.Add "编号 " & displayNumber & " 存在歧义：" & Join(ToStrArray(candidates), " vs ")
         End If
 
         Dim outEntry As Object: Set outEntry = CreateObject("Scripting.Dictionary")
-        outEntry("number") = CStr(key)
+        outEntry("number") = displayNumber
         outEntry("name") = MostFrequent(nameCounts)
         outEntry("occurrences") = e("occurrences")
         outEntry("conflicts") = ToObjArray(conflicts)
@@ -143,20 +160,23 @@ Private Function ExtractMarkingSection(ByVal text As String) As String
     Set re = CreateObject("VBScript.RegExp")
     re.IgnoreCase = False
 
-    ' 按优先级尝试多种标记头
-    Dim patterns As Variant
-    patterns = Array( _
-        "附图标记说明如下[：:\n\r]*", _
-        "附图标记说明[：:]\s*", _
-        "附图标记[：:]\s*", _
-        "标记说明如下[：:\n\r]*", _
-        "标记说明[：:]\s*", _
-        "标号说明[：:]\s*" _
+    ' 按优先级尝试多种标记头，模式文本复用 Patterns 的共享常量
+    ' （空白用显式 G02_WS 类：VBScript.RegExp 的 \s 只有 6 个成员，.NET 有 25 个）。
+    ' 局部变量不能叫 patterns：它会遮蔽 Patterns 模块名，导致同一作用域内的
+    ' Patterns.G02_HDR* 引用被解析成该 Variant 变量（VBA 编译错误）。
+    Dim hdrPatterns As Variant
+    hdrPatterns = Array( _
+        Patterns.G02_HDR0, _
+        Patterns.G02_HDR1, _
+        Patterns.G02_HDR2, _
+        Patterns.G02_HDR3, _
+        Patterns.G02_HDR4, _
+        Patterns.G02_HDR5 _
     )
 
     Dim p As Variant, m As Object, found As Boolean
     found = False
-    For Each p In patterns
+    For Each p In hdrPatterns
         re.pattern = CStr(p)
         Set m = re.Execute(text)
         If m.Count > 0 Then
@@ -182,8 +202,11 @@ Private Function ExtractMarkingSection(ByVal text As String) As String
     Dim sentenceEndPos As Long
     sentenceEndPos = InStr(1, after, ChrW(&H3002), vbBinaryCompare)
 
-    ' 截断到下一个段落空行（两连换行）或文本末尾
-    re.pattern = "[\s\S]*?(\r\n\s*\r\n|\n\s*\n|\r\s*\r|\Z)"
+    ' 截断到下一个段落空行（两连换行）或文本末尾。
+    ' 文末不用 \Z：VBScript.RegExp 会把 \Z 当成字面量大写 Z（R-032，例如
+    ' "2Z形支架" 之后的内容会被截掉）。共享常量 G02_SECTIONEND 用 (?![\s\S])
+    ' 表示真正的文本末尾，与 C# 侧的 \z 语义等价（由双引擎对照探针验证）。
+    re.pattern = Patterns.G02_SECTIONEND
     Set m = re.Execute(after)
     If sentenceEndPos > 0 Then
         If m.Count = 0 Then

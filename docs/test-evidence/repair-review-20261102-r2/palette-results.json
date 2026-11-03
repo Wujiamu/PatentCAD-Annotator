@@ -1,0 +1,47 @@
+[
+  {
+    "group": "N1",
+    "passed": 6,
+    "failed": 0
+  },
+  {
+    "group": "N2",
+    "passed": 15,
+    "failed": 8
+  },
+  {
+    "group": "N3",
+    "passed": 11,
+    "failed": 6
+  },
+  {
+    "group": "N4",
+    "passed": 5,
+    "failed": 6
+  },
+  {
+    "group": "N5",
+    "passed": 2,
+    "failed": 0
+  },
+  {
+    "group": "A1",
+    "passed": 24,
+    "failed": 0
+  },
+  {
+    "group": "A2",
+    "passed": 12,
+    "failed": 0
+  },
+  {
+    "group": "A3",
+    "passed": 14,
+    "failed": 4
+  },
+  {
+    "group": "A4",
+    "passed": 1,
+    "failed": 0
+  }
+]

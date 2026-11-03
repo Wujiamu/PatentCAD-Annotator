@@ -1,0 +1,4 @@
+exit=0
+PASS FixtureTests.Unsupported
+PASS FixtureTests.Valid
+SUMMARY: passed=2 failed=0 skipped=0

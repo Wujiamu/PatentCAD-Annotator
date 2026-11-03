@@ -1,0 +1,283 @@
+warning: unable to access 'C:\Users\wjm/.config/git/ignore': Permission denied
+warning: unable to access 'C:\Users\wjm/.config/git/ignore': Permission denied
+ M .gitignore
+ M CHANGELOG.md
+ M PatentMarker-2007-deploy/PatentMarker.dll
+ M PatentMarker-2007-deploy/PatentMarker.dotm
+ M PatentMarker-2007-deploy/README.txt
+ M PatentMarker-2007-deploy/install-2007.vbs
+ M PatentMarker-2007-deploy/install-vba.vbs
+ M PatentMarker-2007-deploy/uninstall-2007.vbs
+ M PatentMarker-2007-deploy/vba/AutoExport.bas
+ M PatentMarker-2007-deploy/vba/DictModel.bas
+ M PatentMarker-2007-deploy/vba/PatentDictPanel.frm
+ M PatentMarker-2007-deploy/vba/Patterns.bas
+ M PatentMarker-2010-deploy/PatentMarker.dll
+ M PatentMarker-2010-deploy/PatentMarker.dotm
+ M PatentMarker-2010-deploy/install-vba.vbs
+ M PatentMarker-2010-deploy/vba/AutoExport.bas
+ M PatentMarker-2010-deploy/vba/DictModel.bas
+ M PatentMarker-2010-deploy/vba/PatentDictPanel.frm
+ M PatentMarker-2010-deploy/vba/Patterns.bas
+ M PatentMarker-2013-deploy/PatentMarker.dll
+ M PatentMarker-2013-deploy/PatentMarker.dotm
+ M PatentMarker-2013-deploy/install-vba.vbs
+ M PatentMarker-2013-deploy/vba/AutoExport.bas
+ M PatentMarker-2013-deploy/vba/DictModel.bas
+ M PatentMarker-2013-deploy/vba/PatentDictPanel.frm
+ M PatentMarker-2013-deploy/vba/Patterns.bas
+ M PatentMarker-2015-deploy/PatentMarker.dll
+ M PatentMarker-2015-deploy/PatentMarker.dotm
+ M PatentMarker-2015-deploy/install-vba.vbs
+ M PatentMarker-2015-deploy/vba/AutoExport.bas
+ M PatentMarker-2015-deploy/vba/DictModel.bas
+ M PatentMarker-2015-deploy/vba/PatentDictPanel.frm
+ M PatentMarker-2015-deploy/vba/Patterns.bas
+ M PatentMarker-2025-deploy/PatentMarker.dll
+ M PatentMarker-2025-deploy/PatentMarker.dotm
+ M PatentMarker-2025-deploy/install-vba.vbs
+ M PatentMarker-2025-deploy/vba/AutoExport.bas
+ M PatentMarker-2025-deploy/vba/DictModel.bas
+ M PatentMarker-2025-deploy/vba/PatentDictPanel.frm
+ M PatentMarker-2025-deploy/vba/Patterns.bas
+ M README.md
+ M build.ps1
+ M cad-plugin/2007/PatentMarker/IO/DictEntry.cs
+ M cad-plugin/2007/PatentMarker/IO/DictWriter.cs
+ D cad-plugin/2007/PatentMarker/IO/SimpleJson.cs
+ M cad-plugin/2007/PatentMarker/PatentMarker.csproj
+ M cad-plugin/2007/PatentMarker/PatentMarkerApp.cs
+ M cad-plugin/2010/PatentMarker/Commands/PatAlignCommand.cs
+ M cad-plugin/2010/PatentMarker/Commands/PatMLeaderCreator.cs
+ M cad-plugin/2010/PatentMarker/Commands/PatMLeaderVerifyCommand.cs
+ M cad-plugin/2010/PatentMarker/IO/DictEntry.cs
+ M cad-plugin/2010/PatentMarker/IO/DictWriter.cs
+ D cad-plugin/2010/PatentMarker/IO/SimpleJson.cs
+ M cad-plugin/2010/PatentMarker/PatentMarker.csproj
+ M cad-plugin/2010/PatentMarker/PatentMarkerApp.cs
+ M cad-plugin/2013/PatentMarker/Commands/PatAlignCommand.cs
+ M cad-plugin/2013/PatentMarker/Commands/PatMLeaderCreator.cs
+ M cad-plugin/2013/PatentMarker/Commands/PatMLeaderVerifyCommand.cs
+ M cad-plugin/2013/PatentMarker/IO/DictEntry.cs
+ M cad-plugin/2013/PatentMarker/IO/DictWriter.cs
+ M cad-plugin/2013/PatentMarker/PatentMarker.csproj
+ M cad-plugin/2013/PatentMarker/PatentMarkerApp.cs
+ M cad-plugin/2015/PatentMarker/Commands/PatAlignCommand.cs
+ M cad-plugin/2015/PatentMarker/Commands/PatMLeaderCreator.cs
+ M cad-plugin/2015/PatentMarker/Commands/PatMLeaderVerifyCommand.cs
+ M cad-plugin/2015/PatentMarker/IO/DictEntry.cs
+ M cad-plugin/2015/PatentMarker/IO/DictWriter.cs
+ M cad-plugin/2015/PatentMarker/PatentMarker.csproj
+ M cad-plugin/2015/PatentMarker/PatentMarkerApp.cs
+ M cad-plugin/2025/PatentMarker.Tests/DictConflictTests.cs
+ M cad-plugin/2025/PatentMarker.Tests/DictLoaderTests.cs
+ M cad-plugin/2025/PatentMarker.Tests/DictWriterTests.cs
+ M cad-plugin/2025/PatentMarker.Tests/MarkingTextParserTests.cs
+ M cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj
+ M cad-plugin/2025/PatentMarker/Commands/PatAlignCommand.cs
+ M cad-plugin/2025/PatentMarker/Commands/PatMLeaderCreator.cs
+ M cad-plugin/2025/PatentMarker/Commands/PatMLeaderVerifyCommand.cs
+ M cad-plugin/2025/PatentMarker/IO/DictEntry.cs
+ M cad-plugin/2025/PatentMarker/IO/DictWriter.cs
+ M cad-plugin/2025/PatentMarker/PatentMarker.csproj
+ M cad-plugin/2025/PatentMarker/PatentMarkerApp.cs
+ M cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj
+ M cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj
+ M cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2013.Tests.csproj
+ M cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj
+ M cad-plugin/RuntimeContract.Tests/Shared/AutodeskSimulationStubs.cs
+ M cad-plugin/RuntimeContract.Tests/Shared/DictPaletteCadServiceTests.cs
+ M cad-plugin/RuntimeContract.Tests/Shared/PatMarkSimulationTests.cs
+ M cad-plugin/RuntimeContract.Tests/Shared/SimulationSupport.cs
+ M cad-plugin/Shared/Cad/PatEntityHelper.cs
+ M cad-plugin/Shared/Commands/PatAlignCommand.cs
+ M cad-plugin/Shared/Commands/PatBraceEntity.cs
+ M cad-plugin/Shared/Commands/PatBraceGeometry.cs
+ M cad-plugin/Shared/Commands/PatLeaderTextAttachment.cs
+ M cad-plugin/Shared/Commands/PatMarkCommand.cs
+ M cad-plugin/Shared/Diagnostics/PatDiagnostics.cs
+ M cad-plugin/Shared/Diagnostics/PatDoctorCommand.cs
+ M cad-plugin/Shared/I18n/Strings.cs
+ M cad-plugin/Shared/IO/DictConflict.cs
+ M cad-plugin/Shared/IO/MarkingTextParser.cs
+ M cad-plugin/Shared/IO/PatSettings.cs
+ M cad-plugin/Shared/Palette/ArbitrateDialog.cs
+ M cad-plugin/Shared/Palette/DictPaletteCadService.cs
+ M cad-plugin/Shared/Palette/DictPaletteControl.cs
+ M cad-plugin/Shared/Palette/DictPaletteSession.cs
+ M cad-plugin/Shared/Palette/DictPaletteWorkflow.cs
+ M cad-plugin/Shared/Palette/EditEntryDialog.cs
+ M cad-plugin/Shared/Palette/PasteRecognizeDialog.cs
+ M cad-plugin/Shared/Palette/PatPaletteCommand.cs
+ M check-version-sync.ps1
+ M docs/development-log.md
+ M docs/mleader-f-plan.md
+ M docs/version-plan.md
+ M office-com-addin/OfficeAddin.Common.psm1
+ M office-com-addin/VisioAddin.Common.psm1
+ M office-com-addin/install-office-addin.ps1
+ M office-com-addin/install-visio-addin.ps1
+ M office-com-addin/src/PatentOffice.PowerPoint/PaletteForm.cs
+ M office-com-addin/src/PatentOffice.PowerPoint/PowerPointAnnotations.cs
+ M office-com-addin/src/PatentOffice.Visio/PaletteForm.cs
+ M office-com-addin/src/PatentOffice.Visio/VisioAnnotations.cs
+ M office-com-addin/uninstall-office-addin.ps1
+ M office-com-addin/uninstall-visio-addin.ps1
+ M office-com-addin/verify-installer.ps1
+ M office-com-addin/verify-visio-installer.ps1
+ M office-com-addin/visio-release-readme.md
+ M package.ps1
+ M tools/ApiSurfaceCheck/Program.cs
+ M tools/CadDesktopFallback/Program.cs
+ M tools/CadDesktopFallback/README.md
+ M tools/check-installer-contract.ps1
+ M tools/verify-vba-installer.ps1
+ M vba/AutoExport.bas
+ M vba/DictModel.bas
+ M vba/PatentDictPanel.frm
+ M vba/Patterns.bas
+ M word-addin/PatentMarker.dotm
+ M word-addin/install-vba.vbs
+?? .codex-remote-attachments/
+?? .gitattributes
+?? PatentMarker-2007-deploy/PatentMarker-release.txt
+?? PatentMarker-2010-deploy/PatentMarker-release.txt
+?? PatentMarker-2013-deploy/PatentMarker-release.txt
+?? PatentMarker-2015-deploy/PatentMarker-release.txt
+?? PatentMarker-2025-deploy/PatentMarker-release.txt
+?? _paneltest/
+?? cad-plugin/2025/PatentMarker.Tests/DictConflictBoundaryTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/DictWriterBoundaryTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G02ParserTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G04JsonRegressionTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G05ProtocolTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G07SettingsAndDiagnosticsTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G15NumberBoundaryTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G16RecoveryTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/G17RenameRetryTests.cs
+?? cad-plugin/2025/PatentMarker.Tests/PatReleaseManifestTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/G03RoutingTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/G06RenameResultTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/G13BracePlanarityTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/G13CommandTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/G13PromptStubs.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/PatGeomVerifyTests.cs
+?? cad-plugin/RuntimeContract.Tests/Shared/PatNativeEditTests.cs
+?? cad-plugin/Shared/Cad/PatNativeEditTracker.cs
+?? cad-plugin/Shared/Commands/PatBraceAssertions.cs
+?? cad-plugin/Shared/Commands/PatGeomTextAssertions.cs
+?? cad-plugin/Shared/Commands/PatGeomVerifyCommand.cs
+?? cad-plugin/Shared/Commands/PatGeomVerifySummary.cs
+?? cad-plugin/Shared/Commands/PatTextPathRouting.cs
+?? cad-plugin/Shared/Diagnostics/PatReleaseManifest.cs
+?? cad-plugin/Shared/IO/SimpleJson.cs
+?? docs/acceptance-checklist-20261018.md
+?? docs/acceptance-crash-fix-20261018.json
+?? docs/acceptance-crash-fix-20261018.md
+?? docs/acceptance-current-checkpoint.json
+?? docs/acceptance-current.md
+?? docs/acceptance-efficiency-metrics-20261021.json
+?? docs/acceptance-efficient-runbook.md
+?? docs/acceptance-findings.json
+?? docs/acceptance-postfix-20261018-fixup.md
+?? docs/acceptance-postfix-20261018.md
+?? docs/acceptance-postfix-20261020.md
+?? docs/acceptance-postfix-20261021-r8.md
+?? docs/acceptance-postfix-20261022-r10.md
+?? docs/acceptance-postfix-20261022-r11.md
+?? docs/acceptance-postfix-20261022-r9.md
+?? docs/acceptance-r3-20261018-fixup.md
+?? docs/acceptance-retrospective-20261021.md
+?? docs/acceptance-retrospective-20261022-r10.md
+?? docs/acceptance-retrospective-20261022-r11.md
+?? docs/acceptance-retrospective-20261022.md
+?? docs/acceptance-review-20261018-fixup.md
+?? docs/acceptance-review-20261018-r2.md
+?? docs/acceptance-review-20261018.md
+?? docs/acceptance-workflow.md
+?? docs/cad-manual-acceptance-guide-20261018.md
+?? docs/cad-manual-offline-acceptance-20261018.md
+?? docs/geometry-verification-implementation-20261018.md
+?? docs/rea-development-plan-2026-10-18.md
+?? docs/rea-handoff-review-2026-10-18.md
+?? docs/repair-backlog.md
+?? docs/repair-collaboration.md
+?? docs/repair-plan.md
+?? docs/repair-work/
+?? docs/test-evidence/acceptance-assets-20261018/
+?? docs/test-evidence/acceptance-fix-r2-20261018/
+?? docs/test-evidence/acceptance-r10-20261022-acl/
+?? docs/test-evidence/acceptance-r11-20261022-grip-routing/
+?? docs/test-evidence/acceptance-r3-20261018/
+?? docs/test-evidence/acceptance-r4-20261018-164606/
+?? docs/test-evidence/acceptance-r5-20261018-173636/
+?? docs/test-evidence/acceptance-r6-20261018-182545/
+?? docs/test-evidence/acceptance-r7-20261020-124355/
+?? docs/test-evidence/acceptance-r8-20261020-facing-gap/
+?? docs/test-evidence/acceptance-r9-20261022-boundaries/
+?? docs/test-evidence/api-usage-20261018/
+?? docs/test-evidence/cad-lag-isolation-20261018/
+?? docs/test-evidence/cad-observation-20261020-2026-10-20T04-43-18-675Z/
+?? docs/test-evidence/computer-use-diagnostic-20261018/
+?? docs/test-evidence/deployment-provenance-20261018/
+?? docs/test-evidence/file-replace-sandbox-20261018.txt
+?? docs/test-evidence/geometry-contract-20261018.txt
+?? docs/test-evidence/geometry-report-selftest-20261018.txt
+?? docs/test-evidence/github-merge-20261023/
+?? docs/test-evidence/independent-acceptance-20261018/
+?? docs/test-evidence/manual-cad-20261018/
+?? docs/test-evidence/manual-cad-current-20261018/
+?? docs/test-evidence/prepare-readme-public-version-20261023.py
+?? docs/test-evidence/r3-core-fix-20261018/
+?? docs/test-evidence/r3-fix-candidate-20261018/
+?? docs/test-evidence/rea-20261018/
+?? docs/test-evidence/reacceptance-20261018-r2/
+?? docs/test-evidence/readme-public-version-20261023/
+?? docs/test-evidence/release-identity-20261018/
+?? docs/test-evidence/repair-20261031/
+?? docs/test-evidence/repair-review-20261101/
+?? docs/test-evidence/repair-review-20261102/
+?? docs/test-evidence/repository-presentation-20261023/
+?? office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/G10PptPaletteHarness.cs
+?? office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/G10PptPaletteTests.cs
+?? office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/G11ScanTests.cs
+?? office-com-addin/tests/PatentOffice.Visio.CodeTests/G10VisioPaletteHarness.cs
+?? office-com-addin/tests/PatentOffice.Visio.CodeTests/G10VisioPaletteTests.cs
+?? office-com-addin/tests/PatentOffice.Visio.CodeTests/G12AnnotationPairTests.cs
+?? tools/AcceptanceProbe/
+?? tools/FactRunner/
+?? tools/G02ParserProbe/
+?? tools/G03Regression/
+?? tools/G04JsonRegression/
+?? tools/ManagedSemanticDiff/
+?? tools/ReleaseManifest/
+?? tools/acceptance-report-cases.ps1
+?? tools/assemble-acceptance-findings.ps1
+?? tools/extract-api-usage.ps1
+?? tools/manual-cad-acceptance.ps1
+?? tools/probe-g11-host-nested.ps1
+?? tools/probe-g11-host-roundtrip.ps1
+?? tools/probe-g11-host-tags.ps1
+?? tools/probe-r031-ppt-geometry.ps1
+?? tools/probe-r031-rotation-endpoints.ps1
+?? tools/probe-r031-rotation-sign.ps1
+?? tools/render-acceptance-report.ps1
+?? tools/run-acceptance-evidence.ps1
+?? tools/run-fact-tests.ps1
+?? tools/run-office-tests-vstest.ps1
+?? tools/test-2007-installer-isolated.ps1
+?? tools/test-acceptance-report.ps1
+?? tools/test-fact-runner.ps1
+?? tools/test-g02-l2.vbs
+?? tools/test-g02-legacy-engine.vbs
+?? tools/test-g02-parser.vbs
+?? tools/test-g05-digest.vbs
+?? tools/test-g05-lock.cs
+?? tools/test-g05-lock.vbs
+?? tools/test-g05-word.vbs
+?? tools/test-g08-rollback.ps1
+?? tools/test-g14-recovery-copy.ps1
+?? tools/verify-geometry.ps1
+?? tools/verify-r028-xrecord-roundtrip.ps1
+?? tools/verify-release-manifests.ps1
+?? undefined/

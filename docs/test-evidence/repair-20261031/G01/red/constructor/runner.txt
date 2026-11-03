@@ -1,0 +1,6 @@
+exit=1
+FAIL ConstructorTests.Unsupported : MissingMethodException: Cannot dynamically create an instance of type 'ConstructorTests'. Reason: No parameterless constructor defined.
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=1 skipped=0
+FAILURES:
+ - ConstructorTests.Unsupported : MissingMethodException: Cannot dynamically create an instance of type 'ConstructorTests'. Reason: No parameterless constructor defined.

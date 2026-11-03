@@ -1,0 +1,110 @@
+[
+  {
+    "snapshot": "baseline-run",
+    "year": "2013",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\FrameworkProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2013",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:NewtonsoftAssembly=<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net35\\Newtonsoft.Json.dll",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-baseline-run-2013\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-baseline-run-2013\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-baseline-run-2013\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-baseline-run-2013\\Release\\net40\\FrameworkProbe.exe"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T11:06:31.076831+08:00"
+  },
+  {
+    "snapshot": "baseline-run",
+    "year": "2015",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\FrameworkProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2015",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:NewtonsoftAssembly=<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net45\\Newtonsoft.Json.dll",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-baseline-run-2015\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-baseline-run-2015\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-baseline-run-2015\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-baseline-run-2015\\Release\\net45\\FrameworkProbe.exe"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T11:06:33.920554+08:00"
+  },
+  {
+    "snapshot": "candidate-fixed",
+    "year": "2013",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\FrameworkProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2013",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:NewtonsoftAssembly=<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net35\\Newtonsoft.Json.dll",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-candidate-fixed-2013\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-candidate-fixed-2013\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-candidate-fixed-2013\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-candidate-fixed-2013\\Release\\net40\\FrameworkProbe.exe"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T11:06:37.007667+08:00"
+  },
+  {
+    "snapshot": "candidate-fixed",
+    "year": "2015",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\FrameworkProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2015",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:NewtonsoftAssembly=<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net45\\Newtonsoft.Json.dll",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-candidate-fixed-2015\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\obj\\framework-candidate-fixed-2015\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-candidate-fixed-2015\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\bin\\framework-candidate-fixed-2015\\Release\\net45\\FrameworkProbe.exe"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T11:06:39.672302+08:00"
+  }
+]

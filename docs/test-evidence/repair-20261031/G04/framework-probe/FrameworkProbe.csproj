@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+ <PropertyGroup>
+  <OutputType>Exe</OutputType><TargetFramework Condition="'$(CadYear)' == '2013'">net40</TargetFramework><TargetFramework Condition="'$(CadYear)' == '2015'">net45</TargetFramework>
+  <LangVersion>latest</LangVersion><EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+ </PropertyGroup>
+ <ItemGroup>
+  <Compile Include="Program.cs" />
+  <Compile Include="$(SourceRoot)/cad-plugin/$(CadYear)/PatentMarker/IO/DictEntry.cs" />
+  <Compile Include="$(ParserFile)" />
+  <Reference Include="Newtonsoft.Json"><HintPath>$(NewtonsoftAssembly)</HintPath></Reference>
+ </ItemGroup>
+</Project>

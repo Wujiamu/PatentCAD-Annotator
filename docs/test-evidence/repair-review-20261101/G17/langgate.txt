@@ -1,0 +1,10 @@
+﻿# G17 (R-004) language-level gate (L0) — run 2026-11-02 03:18:42 +08:00
+# command: dotnet build docs/test-evidence/repair-review-20261101/G17/langgate/G17LangGate.csproj -c Release
+# recompiles cad-plugin/Shared/Palette/{DictPaletteSession,EditEntryDialog}.cs at LangVersion=2
+# against minimal stubs. 2007 targets .NET 2.0; a C# 3+ construct in the fix fails here.
+# exit=0
+已成功生成。
+    0 个警告
+    0 个错误
+已用时间 00:00:01.26
+

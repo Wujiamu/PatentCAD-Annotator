@@ -1,0 +1,2 @@
+ASSEMBLY_SHA256=81b65e2e760f60800f1bfa1bacf90f9cd02dafedd45a2673b5d752516d10d308
+PASS|VSTEST|PatentOffice.Visio.CodeTests|48/48|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\office-vstest\results-fb2c28ffb01f49a3a134ce70e0cd79e8.trx

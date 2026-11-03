@@ -1,0 +1,8 @@
+command: dotnet exec <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\baseline\tools\FactRunner\bin\Release\net8.0-windows\PatentMarker.FactRunner.dll <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\bin\Release\net8.0\Fixture.dll
+exit: 1
+FAIL FixtureTests.Fails : TrueException: assertion failed
+FAIL FixtureTests.Fails dispose: InvalidOperationException: cleanup failed
+SUMMARY: passed=0 failed=2 skipped=0
+FAILURES:
+ - FixtureTests.Fails : TrueException: assertion failed
+ - FixtureTests.Fails dispose: InvalidOperationException: cleanup failed

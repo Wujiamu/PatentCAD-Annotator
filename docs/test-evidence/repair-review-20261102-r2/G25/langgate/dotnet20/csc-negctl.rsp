@@ -1,0 +1,5 @@
+/nologo
+/target:library
+/out:"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\langgate\dotnet20\NegCtl.dll"
+/r:System.dll
+"C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\langgate\dotnet20\NegCtl.cs"

@@ -1,0 +1,22 @@
+START
+FILES_OK
+WORD_STARTED
+DOC_SAVED
+MODULE_IMPORTED Patterns.bas
+MODULE_IMPORTED DictModel.bas
+MODULE_IMPORTED JsonWriter.bas
+MODULE_IMPORTED PatentExtractor.bas
+MODULE_IMPORTED clsSaveHook.cls
+MODULE_IMPORTED AutoExport.bas
+MODULE_IMPORTED PatentMarkerBootstrap.bas
+MODULE_IMPORTED PatentDictPanel.frm
+FRX_PRESENT (auto-loaded by .frm) PatentDictPanel.frx
+ALL_IMPORTED
+NO_ARG_PUBLIC_SUBS=1 names=ShowPatentDictPanel
+MACRO_LIST_OK
+FORM_IMPORTED
+PANEL_PROBE_OK
+JSON_CREATED bytes=310
+JSON_PATH C:\Users\wjm\AppData\Local\Temp\PatentMarkerPanel-radB34E7\panel.dict.json
+PASS
+PASS|L2_PANEL_SOURCE_IMPORT|C:\Users\wjm\AppData\Local\Temp\PatentMarkerPanel-radB34E7\panel.dict.json|C:\Users\wjm\AppData\Local\Temp\PatentMarkerPanel-radB34E7\test.log

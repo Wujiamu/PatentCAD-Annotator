@@ -1,0 +1,134 @@
+FAIL R-001 h=1 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=90: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=270: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=90: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=270: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 crossing text: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-015 modern=False native=False target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=False target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=False target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=False target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=False native=True target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=False native=True target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=False target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=False target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,-10,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(10,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,10,0) attachment expected BottomRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(0,-10,0) attachment expected TopLeft actual BottomLeft
+FAIL R-015 modern=True native=True target=(-10,0,0) attachment expected TopRight actual BottomLeft
+FAIL R-015 modern=True native=True target=(10,0,0) attachment expected TopLeft actual BottomLeft
+FAIL R-020 modern=False native=False h=1 height expected 1 got 3.5
+FAIL R-020 modern=False native=False h=1 width expected 37.5 got 7
+FAIL R-020 modern=False native=False h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=False native=False h=10 height expected 10 got 3.5
+FAIL R-020 modern=False native=False h=10 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=1 height expected 1 got 3.5
+FAIL R-020 modern=False native=True h=1 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=False native=True h=10 height expected 10 got 3.5
+FAIL R-020 modern=False native=True h=10 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=1 height expected 1 got 3.5
+FAIL R-020 modern=True native=False h=1 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=True native=False h=10 height expected 10 got 3.5
+FAIL R-020 modern=True native=False h=10 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=1 height expected 1 got 3.5
+FAIL R-020 modern=True native=True h=1 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=3.5 width expected 37.5 got 7
+FAIL R-020 modern=True native=True h=10 height expected 10 got 3.5
+FAIL R-020 modern=True native=True h=10 width expected 37.5 got 7
+FAIL R-015 crossing modern=False avoids text
+FAIL R-015 crossing modern=False avoids text
+FAIL R-015 native crossing is rejected
+FAIL R-015 native rejected move restores association and location
+FAIL R-015 reject pick inside moved text
+FAIL R-015 rejected move leaves original entity unchanged
+FAIL R-015 crossing modern=True avoids text
+FAIL R-015 crossing modern=True avoids text
+FAIL R-015 native crossing is rejected
+FAIL R-015 native rejected move restores association and location
+FAIL R-015 reject pick inside moved text
+FAIL R-015 rejected move leaves original entity unchanged
+FAIL R-015 geometry mutation error escapes caller transaction
+FAIL R-015 failed text restoration escapes caller transaction
+FAIL R-015 incomplete leader rejected
+FAIL R-015 incomplete leader unchanged
+FAIL R-015 geometry mutation error escapes caller transaction
+FAIL R-015 failed text restoration escapes caller transaction
+FAIL R-015 incomplete leader rejected
+FAIL R-015 incomplete leader unchanged
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 line first uses actual width
+FAIL R-020 line second uses actual widths and largest height
+FAIL R-020 line first uses actual width
+FAIL R-020 line second uses actual widths and largest height
+FAIL R-020 frame first column uses actual height
+FAIL R-020 frame next column clears prior width plus gap
+FAIL R-020 frame first column uses actual height
+FAIL R-020 frame next column clears prior width plus gap
+FAIL R-020 multi-column modern=False right=False same row 0
+FAIL R-020 multi-column modern=False right=False column=1 expected -85 actual -5
+FAIL R-020 multi-column modern=False right=False same row 1
+FAIL R-020 multi-column modern=False right=False column=2 expected -107 actual -5
+FAIL R-020 multi-column modern=False right=False same row 2
+FAIL R-020 multi-column modern=False right=True same row 0
+FAIL R-020 multi-column modern=False right=True column=1 expected 185 actual 105
+FAIL R-020 multi-column modern=False right=True same row 1
+FAIL R-020 multi-column modern=False right=True column=2 expected 207 actual 105
+FAIL R-020 multi-column modern=False right=True same row 2
+FAIL R-020 multi-column modern=True right=False same row 0
+FAIL R-020 multi-column modern=True right=False column=1 expected -85 actual -5
+FAIL R-020 multi-column modern=True right=False same row 1
+FAIL R-020 multi-column modern=True right=False column=2 expected -107 actual -5
+FAIL R-020 multi-column modern=True right=False same row 2
+FAIL R-020 multi-column modern=True right=True same row 0
+FAIL R-020 multi-column modern=True right=True column=1 expected 185 actual 105
+FAIL R-020 multi-column modern=True right=True same row 1
+FAIL R-020 multi-column modern=True right=True column=2 expected 207 actual 105
+FAIL R-020 multi-column modern=True right=True same row 2
+SUMMARY selector=all checks=301 failed=133

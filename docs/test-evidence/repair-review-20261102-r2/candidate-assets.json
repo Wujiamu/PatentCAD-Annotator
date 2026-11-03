@@ -1,0 +1,32 @@
+[
+  {
+    "path": "word-addin/PatentMarker.dotm",
+    "sha256": "21dac67f2dedc1db0dcb879aa20a84923ca2bd3d61d8b7d21d02fb88effe5a83",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  },
+  {
+    "path": "PatentMarker-2007-deploy/PatentMarker.dll",
+    "sha256": "9e485625a16591cd38ff23acadd3e594e2135028d3d3378267226b4204b3922b",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  },
+  {
+    "path": "PatentMarker-2010-deploy/PatentMarker.dll",
+    "sha256": "efcffcee116cf4a56f373d9310e7627ff042102fe935248085120edaffa0d4ec",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  },
+  {
+    "path": "PatentMarker-2013-deploy/PatentMarker.dll",
+    "sha256": "8f6297d4e390d4e633edef542b89ae966b1ef9e6df1650bfc6079b5608a0a5af",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  },
+  {
+    "path": "PatentMarker-2015-deploy/PatentMarker.dll",
+    "sha256": "de560244a69b85d136c8a4651bba5f4e622a60ca78f98f90ed2b72dbb8a85d0c",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  },
+  {
+    "path": "PatentMarker-2025-deploy/PatentMarker.dll",
+    "sha256": "eeab365fd9addeb116c54a509a474f644471d3822d56a9233ff3e59fdc3d8f12",
+    "note": "identity only; not evidence of actual CAD/installed Word loading"
+  }
+]

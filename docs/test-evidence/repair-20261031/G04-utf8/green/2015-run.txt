@@ -1,0 +1,27 @@
+PASS R002_Utf8 valid Chinese BOM=False
+PASS R002_Utf8 valid Chinese BOM=True
+PASS R002_Utf8 malformed rejected 0-False
+PASS R002_Utf8 restore rejected 0-False
+PASS R002_Utf8 current preserved 0-False
+PASS R002_Utf8 backup preserved 0-False
+PASS R002_Utf8 malformed rejected 0-True
+PASS R002_Utf8 restore rejected 0-True
+PASS R002_Utf8 current preserved 0-True
+PASS R002_Utf8 backup preserved 0-True
+PASS R002_Utf8 malformed rejected 1-False
+PASS R002_Utf8 restore rejected 1-False
+PASS R002_Utf8 current preserved 1-False
+PASS R002_Utf8 backup preserved 1-False
+PASS R002_Utf8 malformed rejected 1-True
+PASS R002_Utf8 restore rejected 1-True
+PASS R002_Utf8 current preserved 1-True
+PASS R002_Utf8 backup preserved 1-True
+PASS R002_Utf8 malformed rejected 2-False
+PASS R002_Utf8 restore rejected 2-False
+PASS R002_Utf8 current preserved 2-False
+PASS R002_Utf8 backup preserved 2-False
+PASS R002_Utf8 malformed rejected 2-True
+PASS R002_Utf8 restore rejected 2-True
+PASS R002_Utf8 current preserved 2-True
+PASS R002_Utf8 backup preserved 2-True
+SUMMARY selectors=1 failures=0

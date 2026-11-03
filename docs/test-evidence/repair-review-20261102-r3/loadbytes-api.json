@@ -1,0 +1,32 @@
+[
+  {
+    "version": "2007",
+    "path": "cad-plugin/2007/PatentMarker/IO/DictEntry.cs",
+    "sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3",
+    "declaration": "internal static DictModel LoadBytes(string path, byte[] bytes)"
+  },
+  {
+    "version": "2010",
+    "path": "cad-plugin/2010/PatentMarker/IO/DictEntry.cs",
+    "sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3",
+    "declaration": "internal static DictModel LoadBytes(string path, byte[] bytes)"
+  },
+  {
+    "version": "2013",
+    "path": "cad-plugin/2013/PatentMarker/IO/DictEntry.cs",
+    "sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e",
+    "declaration": "internal static DictModel LoadBytes(string path, byte[] bytes)"
+  },
+  {
+    "version": "2015",
+    "path": "cad-plugin/2015/PatentMarker/IO/DictEntry.cs",
+    "sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e",
+    "declaration": "internal static DictModel LoadBytes(string path, byte[] bytes)"
+  },
+  {
+    "version": "2025",
+    "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+    "sha256": "a33b70a741a947923e3e2daa62bc4880250513f90663ead7aa97df56e26c0b3d",
+    "declaration": "internal static DictModel? LoadBytes(string path, byte[] bytes)"
+  }
+]

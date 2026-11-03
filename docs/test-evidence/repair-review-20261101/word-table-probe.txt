@@ -1,0 +1,3 @@
+PASS|word_native_2x2_number_first|version=16.0|expected=1:底座,2:支架|numbers=1,2|names=底座,支架|raw=1<CR><CELL>底座<CR><CELL><CR><CELL>2<CR><CELL>支架<CR><CELL><CR><CELL><CR>
+PASS|word_native_2x2_name_first|version=16.0|expected=1:底座,2:支架|numbers=1,2|names=底座,支架|raw=底座<CR><CELL>1<CR><CELL><CR><CELL>支架<CR><CELL>2<CR><CELL><CR><CELL><CR>
+SUMMARY|cases=2|failed=0

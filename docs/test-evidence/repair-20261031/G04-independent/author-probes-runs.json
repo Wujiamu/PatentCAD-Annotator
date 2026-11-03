@@ -1,0 +1,272 @@
+[
+  {
+    "snapshot": "baseline-run",
+    "year": "2007",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2007",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2007\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2007\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2007\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2007\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T00:53:35.067175+08:00"
+  },
+  {
+    "snapshot": "baseline-run",
+    "year": "2010",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2010",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2010\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2010\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2010\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2010\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2010\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T00:53:37.508063+08:00"
+  },
+  {
+    "snapshot": "baseline-run",
+    "year": "2013",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2013",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2013\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2013\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2013\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2013\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T00:53:42.460953+08:00"
+  },
+  {
+    "snapshot": "baseline-run",
+    "year": "2015",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2015",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2015\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2015\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2015\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2015\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T00:53:45.397714+08:00"
+  },
+  {
+    "snapshot": "baseline-run",
+    "year": "2025",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2025",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\cad-plugin\\2007\\PatentMarker\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2025\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\obj\\baseline-run-2025\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2025\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\baseline-run\\tools\\G04JsonRegression\\bin\\baseline-run-2025\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T00:53:47.502463+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2007",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2007",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2007\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2007\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2007\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2007\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T00:53:49.664914+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2010",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2010",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2010\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2010\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2010\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2010\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T00:53:51.754439+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2013",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2013",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2013\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2013\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2013\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2013\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T00:53:54.417336+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2015",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2015",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2015\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2015\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2015\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2015\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T00:53:56.984449+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2025",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\G04JsonRegression.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2025",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2025\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\obj\\candidate-2025\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2025\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "dotnet",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\tools\\G04JsonRegression\\bin\\candidate-2025\\Release\\net8.0\\G04JsonRegression.dll"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T00:53:59.009560+08:00"
+  }
+]

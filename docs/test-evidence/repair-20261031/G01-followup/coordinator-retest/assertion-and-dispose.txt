@@ -1,0 +1,7 @@
+command: dotnet exec <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G01-repair\tools\FactRunner\bin\Release\net8.0-windows\PatentMarker.FactRunner.dll <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\bin\Release\net8.0\Fixture.dll
+exit: 1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+FAIL FixtureTests.Fails : AggregateException: One or more errors occurred. (assertion failed) (cleanup failed)
+SUMMARY: passed=0 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Fails : AggregateException: One or more errors occurred. (assertion failed) (cleanup failed)

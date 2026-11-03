@@ -1,0 +1,2 @@
+using System; using System.Threading.Tasks; using Xunit;
+public class DerivedFactAttribute : FactAttribute { } public class FixtureTests { [Fact] public void Valid() { Assert.True(true); } [DerivedFact] public void Unsupported() { } }

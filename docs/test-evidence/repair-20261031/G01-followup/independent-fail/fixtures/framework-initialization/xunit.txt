@@ -1,0 +1,42 @@
+command: dotnet test <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\Fixture.csproj -c Release --no-build --nologo -v normal
+exit: 1
+Build started 2026/11/1 0:50:15.
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\bin\Release\net8.0\Fixture.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.6+bf9b858c26 (64-bit .NET 8.0.28)
+[xUnit.net 00:00:00.08]   Discovering: Fixture
+[xUnit.net 00:00:00.12]   Discovered:  Fixture
+[xUnit.net 00:00:00.12]   Starting:    Fixture
+[xUnit.net 00:00:00.18]     FixtureTests.Valid [FAIL]
+[xUnit.net 00:00:00.18]       Assert.Null() Failure: Value is not null
+[xUnit.net 00:00:00.18]       Expected: null
+[xUnit.net 00:00:00.18]       Actual:   "active"
+[xUnit.net 00:00:00.18]       Stack Trace:
+[xUnit.net 00:00:00.18]         <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\Fixture.cs(7,0): at FixtureTests.Valid()
+[xUnit.net 00:00:00.18]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.18]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.19]   Finished:    Fixture
+  Failed FixtureTests.Valid [3 ms]
+  Error Message:
+   Assert.Null() Failure: Value is not null
+Expected: null
+Actual:   "active"
+  Stack Trace:
+     at FixtureTests.Valid() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\Fixture.cs:line 7
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+
+Test Run Failed.
+Total tests: 1
+     Failed: 1
+ Total time: 0.8247 Seconds
+     1>Project "<USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\Fixture.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "<USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\framework-initialization\Fixture.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.58

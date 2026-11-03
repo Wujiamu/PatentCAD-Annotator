@@ -1,0 +1,7 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py frame
+exit: 1
+FAIL R-020 frame first column uses actual height
+FAIL R-020 frame next column clears prior width plus gap
+FAIL R-020 frame first column uses actual height
+FAIL R-020 frame next column clears prior width plus gap
+SUMMARY selector=frame checks=4 failed=4

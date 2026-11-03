@@ -1,0 +1,12 @@
+PASS|number_first_S1|expected=S1|actual=S1|names=底座
+PASS|number_first_sub|expected=10-1|actual=10-1|names=支架
+PASS|number_first_six_digits|expected=|actual=|names=
+FAIL|name_first_six_digits|expected=|actual=23456|names=底座1
+FAIL|name_first_six_digits_space|expected=|actual=23456|names=底座 1
+PASS|parenthesized_six_digits|expected=|actual=|names=
+PASS|bare_six_digits|expected=|actual=|names=
+PASS|name_first_five_digits|expected=12345|actual=12345|names=底座
+PASS|mixed_order|expected=2,1|actual=2,1|names=支架,底座
+FAIL|consecutive_name_first_table|expected=1,2|actual=1|names=支架
+FAIL|consecutive_number_first_table|expected=1,2|actual=1|names=底座
+SUMMARY|total=11|failed=4

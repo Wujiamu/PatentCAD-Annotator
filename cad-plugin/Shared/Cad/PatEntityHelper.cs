@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using PatentMarker.Commands;
@@ -26,21 +27,36 @@ namespace PatentMarker.IO
             Leader leader = ent as Leader;
             if (leader != null)
             {
-                if (leader.DimensionStyle.IsNull) return false;
                 try
                 {
-                    DimStyleTableRecord dsr = (DimStyleTableRecord)tr.GetObject(
-                        leader.DimensionStyle, OpenMode.ForRead);
-                    return dsr.Name == Styles.PatStyleInitializer.DimStyleName;
+                    if (!leader.DimensionStyle.IsNull)
+                    {
+                        DimStyleTableRecord dsr = (DimStyleTableRecord)tr.GetObject(
+                            leader.DimensionStyle, OpenMode.ForRead);
+                        if (dsr.Name == Styles.PatStyleInitializer.DimStyleName)
+                            return true;
+                    }
                 }
-                catch
-                {
-                    return false;
-                }
+                catch { }
+                // Old or host-normalized Leaders can lose the temporary
+                // dimension-style identity while retaining the product link.
+                return HasLeaderAnnotationLink(leader, tr);
             }
 
             MText text = ent as MText;
             return text != null && IsStandaloneText(text, tr);
+        }
+
+        private static bool HasLeaderAnnotationLink(Leader leader, Transaction tr)
+        {
+            if (leader == null || leader.ExtensionDictionary.IsNull) return false;
+            try
+            {
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    leader.ExtensionDictionary, OpenMode.ForRead);
+                return dictionary.Contains("PATENTMARKER_MTEXT");
+            }
+            catch { return false; }
         }
 
         /// <summary>
@@ -73,6 +89,115 @@ namespace PatentMarker.IO
             catch { }
             return false;
         }
+
+        /// <summary>
+        /// Reads the Plan-F MLeader point chain without referencing the
+        /// MLeader type. The chain is attach, zero or more doglegs, then the
+        /// recorded text point as its final element.
+        /// </summary>
+        public static bool TryReadMLeaderChain(
+            Entity mleader,
+            Transaction tr,
+            out List<Point3d> chain,
+            out bool hasArrow,
+            out bool isSplined)
+        {
+            chain = new List<Point3d>();
+            hasArrow = false;
+            isSplined = false;
+            if (mleader == null || mleader.ExtensionDictionary.IsNull) return false;
+            try
+            {
+                DBDictionary dictionary = (DBDictionary)tr.GetObject(
+                    mleader.ExtensionDictionary, OpenMode.ForRead);
+                if (!dictionary.Contains(MLeaderMarkerKey)) return false;
+                Xrecord record = (Xrecord)tr.GetObject(
+                    dictionary.GetAt(MLeaderMarkerKey), OpenMode.ForRead);
+                using (ResultBuffer data = record.Data)
+                {
+                    if (data == null) return false;
+                    foreach (TypedValue value in data)
+                    {
+                        if (value.TypeCode == 70)
+                            hasArrow = Convert.ToInt32(value.Value) == 1;
+                        else if (value.TypeCode == 71)
+                            isSplined = Convert.ToInt32(value.Value) == 1;
+                        else if (value.TypeCode == 10 && value.Value is Point3d)
+                            chain.Add((Point3d)value.Value);
+                    }
+                }
+                return chain.Count > 0;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Reads GetLastVertex(0) from a Plan-F MLeader via reflection.</summary>
+        public static bool TryGetMLeaderLastVertex(Entity mleader, out Point3d point)
+        {
+            point = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                MethodInfo method = mleader.GetType().GetMethod(
+                    "GetLastVertex", new Type[] { typeof(int) });
+                if (method == null) return false;
+                object value = method.Invoke(mleader, new object[] { 0 });
+                if (!(value is Point3d)) return false;
+                point = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
+        /// <summary>Reads MLeader.TextLocation via reflection.</summary>
+        /// <summary>Reads the actual penultimate and final MLeader vertices via reflection.</summary>
+        public static bool TryReadMLeaderActualPreviousVertex(
+            Entity mleader, out Point3d previous, out Point3d last)
+        {
+            previous = new Point3d(0, 0, 0);
+            last = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                Type type = mleader.GetType();
+                MethodInfo getLast = type.GetMethod(
+                    "GetLastVertex", new Type[] { typeof(int) });
+                MethodInfo getVertex = type.GetMethod(
+                    "GetVertex", new Type[] { typeof(int), typeof(int) });
+                MethodInfo getCount = type.GetMethod(
+                    "VerticesCount", new Type[] { typeof(int) });
+                if (getLast == null || getVertex == null || getCount == null) return false;
+                object lastValue = getLast.Invoke(mleader, new object[] { 0 });
+                if (!(lastValue is Point3d)) return false;
+                last = (Point3d)lastValue;
+
+                int count = (int)getCount.Invoke(mleader, new object[] { 0 });
+                if (count < 2) return false;
+                object value = getVertex.Invoke(mleader, new object[] { 0, count - 2 });
+                if (!(value is Point3d)) return false;
+                previous = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
+
+        public static bool TryGetMLeaderTextLocation(Entity mleader, out Point3d point)
+        {
+            point = new Point3d(0, 0, 0);
+            if (mleader == null) return false;
+            try
+            {
+                PropertyInfo property = mleader.GetType().GetProperty("TextLocation");
+                if (property == null || !property.CanRead) return false;
+                object value = property.GetValue(mleader, null);
+                if (!(value is Point3d)) return false;
+                point = (Point3d)value;
+                return true;
+            }
+            catch { return false; }
+        }
+
 
         /// <summary>
         /// Returns true for a standalone PAT MText created when the leader
@@ -262,12 +387,19 @@ namespace PatentMarker.IO
             return false;
         }
 
-        public static int RenameNumberInModelSpace(Transaction tr,
+        /// <summary>
+        /// Renames matching PAT annotation text.  Reports how many entities
+        /// matched the old number, how many were actually written, and why
+        /// each remaining match failed.  A swallowed per-entity failure must
+        /// stay visible: callers may not report a partial drawing update as a
+        /// complete sync.
+        /// </summary>
+        public static RenameResult RenameNumberInModelSpace(Transaction tr,
             BlockTableRecord modelSpace, string oldNumber, string newNumber)
         {
-            if (oldNumber == null || oldNumber.Length == 0) return 0;
-            if (newNumber == null || newNumber.Length == 0) return 0;
-            int changed = 0;
+            RenameResult result = new RenameResult();
+            if (oldNumber == null || oldNumber.Length == 0) return result;
+            if (newNumber == null || newNumber.Length == 0) return result;
             foreach (ObjectId entId in modelSpace)
             {
                 Entity ent = (Entity)tr.GetObject(entId, OpenMode.ForRead);
@@ -275,13 +407,15 @@ namespace PatentMarker.IO
                 {
                     string mleaderNumber = GetMLeaderNumber(ent);
                     if (!NumberIdentity.AreEqual(mleaderNumber, oldNumber)) continue;
+                    result.Matched++;
                     try
                     {
                         Entity writableMLeader = (Entity)tr.GetObject(
                             ent.ObjectId, OpenMode.ForWrite);
-                        if (SetMLeaderNumber(writableMLeader, newNumber)) changed++;
+                        if (SetMLeaderNumber(writableMLeader, newNumber)) result.Changed++;
+                        else result.AddFailure(entId, "MLeader text was not writable.");
                     }
-                    catch { }
+                    catch (Exception ex) { result.AddFailure(entId, ex.Message); }
                     continue;
                 }
 
@@ -293,13 +427,15 @@ namespace PatentMarker.IO
                         continue;
                     string standaloneNumber = GetTextNumber(standaloneText);
                     if (!NumberIdentity.AreEqual(standaloneNumber, oldNumber)) continue;
+                    result.Matched++;
                     try
                     {
                         MText writableText = (MText)tr.GetObject(
                             standaloneText.ObjectId, OpenMode.ForWrite);
-                        if (SetTextNumber(writableText, newNumber)) changed++;
+                        if (SetTextNumber(writableText, newNumber)) result.Changed++;
+                        else result.AddFailure(entId, "Standalone text was not writable.");
                     }
-                    catch { }
+                    catch (Exception ex) { result.AddFailure(entId, ex.Message); }
                     continue;
                 }
                 if (!IsPatEntity(leader, tr)) continue;
@@ -310,14 +446,36 @@ namespace PatentMarker.IO
 
                 ObjectId annotationId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                 if (annotationId.IsNull) continue;
+                result.Matched++;
                 try
                 {
                     Entity ann = (Entity)tr.GetObject(annotationId, OpenMode.ForWrite);
-                    if (SetLeaderNumber(ann, newNumber)) changed++;
+                    if (SetLeaderNumber(ann, newNumber)) result.Changed++;
+                    else result.AddFailure(entId, "Leader annotation text was not writable.");
                 }
-                catch { }
+                catch (Exception ex) { result.AddFailure(entId, ex.Message); }
             }
-            return changed;
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Outcome of one rename pass.  <see cref="Matched"/> minus
+    /// <see cref="Changed"/> is the number of PAT annotations that still show
+    /// the old number; <see cref="Failures"/> explains each one.
+    /// </summary>
+    public sealed class RenameResult
+    {
+        public int Matched;
+        public int Changed;
+        public readonly System.Collections.Generic.List<string> Failures =
+            new System.Collections.Generic.List<string>();
+
+        public int Failed { get { return Matched - Changed; } }
+
+        internal void AddFailure(ObjectId id, string reason)
+        {
+            Failures.Add(id.ToString() + ": " + (reason ?? "unknown failure"));
         }
     }
 }

@@ -1,10 +1,28 @@
 Attribute VB_Name = "AutoExport"
 Option Explicit
 
+#If VBA7 Then
+Private Declare PtrSafe Function CryptAcquireContextW Lib "advapi32.dll" (ByRef provider As LongPtr, ByVal container As LongPtr, ByVal providerName As LongPtr, ByVal providerType As Long, ByVal flags As Long) As Long
+Private Declare PtrSafe Function CryptCreateHash Lib "advapi32.dll" (ByVal provider As LongPtr, ByVal algorithm As Long, ByVal key As LongPtr, ByVal flags As Long, ByRef hash As LongPtr) As Long
+Private Declare PtrSafe Function CryptHashData Lib "advapi32.dll" (ByVal hash As LongPtr, ByRef data As Any, ByVal dataLength As Long, ByVal flags As Long) As Long
+Private Declare PtrSafe Function CryptGetHashParam Lib "advapi32.dll" (ByVal hash As LongPtr, ByVal parameter As Long, ByRef data As Any, ByRef dataLength As Long, ByVal flags As Long) As Long
+Private Declare PtrSafe Function CryptDestroyHash Lib "advapi32.dll" (ByVal hash As LongPtr) As Long
+Private Declare PtrSafe Function CryptReleaseContext Lib "advapi32.dll" (ByVal provider As LongPtr, ByVal flags As Long) As Long
+#Else
+Private Declare Function CryptAcquireContextW Lib "advapi32.dll" (ByRef provider As Long, ByVal container As Long, ByVal providerName As Long, ByVal providerType As Long, ByVal flags As Long) As Long
+Private Declare Function CryptCreateHash Lib "advapi32.dll" (ByVal provider As Long, ByVal algorithm As Long, ByVal key As Long, ByVal flags As Long, ByRef hash As Long) As Long
+Private Declare Function CryptHashData Lib "advapi32.dll" (ByVal hash As Long, ByRef data As Any, ByVal dataLength As Long, ByVal flags As Long) As Long
+Private Declare Function CryptGetHashParam Lib "advapi32.dll" (ByVal hash As Long, ByVal parameter As Long, ByRef data As Any, ByRef dataLength As Long, ByVal flags As Long) As Long
+Private Declare Function CryptDestroyHash Lib "advapi32.dll" (ByVal hash As Long) As Long
+Private Declare Function CryptReleaseContext Lib "advapi32.dll" (ByVal provider As Long, ByVal flags As Long) As Long
+#End If
+Private Const BASELINE_HEADER As String = "PATENTMARKER_WORD_BASELINE_V1"
+
 Private Const PM_VERSION As String = "1.0.3"
 
 Private m_hook As clsSaveHook
 Private m_enabled As Boolean
+Private m_userDisabled As Boolean
 Private m_selectedDwgByDoc As Object
 Private m_runId As String
 Private m_logPath As String
@@ -12,7 +30,7 @@ Private m_lastStatus As String
 
 ' The only user-facing macro shown in Word's macro list.
 Public Sub ShowPatentDictPanel()
-    If Not m_enabled Then Call InitializeAutoExport("PanelOpen")
+    If Not m_enabled And Not m_userDisabled Then Call InitializeAutoExport("PanelOpen")
     PatentDictPanel.Show
 End Sub
 
@@ -22,8 +40,10 @@ End Property
 
 Public Property Let IsAutoExportEnabled(ByVal v As Boolean)
     If v Then
+        m_userDisabled = False
         Call InitializeAutoExport("PropertySet")
     Else
+        m_userDisabled = True
         DisableAutoExport "PropertySet"
     End If
 End Property
@@ -231,6 +251,7 @@ End Function
 ' Export helpers follow.
 Public Function EnableAutoExportForDocument(Optional ByVal targetDwgPath As String = "", Optional ByVal doc As Document) As Boolean
     On Error GoTo errHandler
+    m_userDisabled = False
     If doc Is Nothing Then Set doc = ActiveDocument
 
     Dim docDir As String
@@ -253,13 +274,17 @@ Public Function EnableAutoExportForDocument(Optional ByVal targetDwgPath As Stri
                 targetPath = GetOutputPath(doc, True, "")
             End If
         End If
-        If targetPath = "" Then Exit Function
+        If targetPath = "" Then
+            DisableAutoExport "PanelToggleFailed"
+            Exit Function
+        End If
     End If
 
     If Not InitializeAutoExport("PanelToggle") Then Exit Function
     EnableAutoExportForDocument = True
     Exit Function
 errHandler:
+    DisableAutoExport "PanelToggleFailed"
     EnableAutoExportForDocument = False
 End Function
 
@@ -304,10 +329,18 @@ Public Function SetCurrentDictVisibility(ByVal visible As Boolean, Optional ByVa
     Dim path As String
     Dim fso As Object
     Dim attrs As Long
+    Dim lockNumber As Integer
+    Dim lockHeld As Boolean
     If doc Is Nothing Then Set doc = ActiveDocument
     path = GetCurrentDictPath(doc)
     Set fso = CreateObject("Scripting.FileSystemObject")
-    If path = "" Or Not fso.FileExists(path) Then Exit Function
+    If path = "" Or Not fso.FileExists(path) Then
+        m_lastStatus = "字典不存在，请先导出。"
+        Exit Function
+    End If
+    AcquireProductLock path, lockNumber
+    lockHeld = True
+    If Not fso.FileExists(path) Then Err.Raise vbObjectError + 515, "AutoExport.Visibility", "Dictionary changed"
 
     attrs = GetAttr(path)
     If visible Then
@@ -316,12 +349,32 @@ Public Function SetCurrentDictVisibility(ByVal visible As Boolean, Optional ByVa
         attrs = attrs Or vbHidden Or vbSystem
     End If
     SetAttr path, attrs
+    Close #lockNumber
+    lockHeld = False
     SetCurrentDictVisibility = True
     Exit Function
 errHandler:
+    Dim failure As String
+    failure = Err.Description & " (" & Err.Number & ")"
+    On Error Resume Next
+    If lockHeld Then Close #lockNumber
+    On Error GoTo 0
+    m_lastStatus = "字典可见性修改失败：" & failure
+    WriteDiagnostic "visibility.failure", "FAIL", "path=" & path & ";error=" & failure
     SetCurrentDictVisibility = False
 End Function
 
+
+Private Sub AcquireProductLock(ByVal path As String, ByRef lockNumber As Integer)
+    On Error GoTo failed
+    lockNumber = FreeFile
+    Open path & ".patlock" For Binary Access Read Write Lock Read Write As #lockNumber
+    Exit Sub
+failed:
+    Dim failure As String
+    failure = Err.Description & " (" & Err.Number & ")"
+    Err.Raise vbObjectError + 527, "AutoExport.AcquireProductLock", "字典正在使用或锁不可用：" & failure
+End Sub
 
 Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection As Boolean, ByVal targetDwgPath As String) As Boolean
     On Error GoTo errHandler
@@ -342,6 +395,15 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     End If
     WriteDiagnostic "export.target", "PASS", DescribeDocument(doc) & ";output_path=" & outPath
 
+    Dim lockNumber As Integer
+    Dim lockHeld As Boolean
+    AcquireProductLock outPath, lockNumber
+    lockHeld = True
+
+    Dim previousDigest As String, baselineFailure As String, baselineOk As Boolean
+    baselineOk = ReadWordBaseline(outPath, previousDigest, baselineFailure)
+    If baselineFailure <> "" Then Err.Raise vbObjectError + 524, "AutoExport.BaselineRead", baselineFailure
+
     Dim outputWasVisible As Boolean
     Dim outputExisted As Boolean
     Dim originalOutputAttributes As Long
@@ -361,6 +423,8 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
 
     Dim json As String
     json = JsonWriter.Serialize(root)
+    Dim newDigest As String
+    newDigest = BaselineDigest(json)
 
     ' v4.0：导出前备份被 CAD 端修改过的旧字典，防止 Word 静默覆盖。
     ' 可见 JSON 若确实被手工改过，也走同一份备份/裁决流程。
@@ -368,8 +432,8 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     Dim manualEditFailure As String
     Dim manualEditDetected As Boolean
     manualEditDetected = False
-    If outputWasVisible Then
-        manualEditDetected = IsVisibleDictContentChanged(outPath, json, manualEditFailure)
+    If outputExisted Then
+        manualEditDetected = IsVisibleDictContentChanged(outPath, baselineOk, previousDigest, manualEditFailure)
         If manualEditFailure <> "" Then
             Err.Raise vbObjectError + 514, "AutoExport.VisibleDictRead", manualEditFailure
         End If
@@ -397,18 +461,18 @@ Private Function ExportDictCore(ByVal doc As Document, ByVal allowDwgSelection A
     End If
 
     ' Preserve every existing attribute exactly; new exports remain hidden.
-    On Error Resume Next
     If outputExisted Then
         SetAttr outPath, originalOutputAttributes
     Else
         SetAttr outPath, vbHidden Or vbSystem
     End If
-    On Error GoTo errHandler
 
-    ' v5.2: after a DWG appeared, the export target switched from the Word base
-    ' name to the DWG base name - remove the orphan dict from the Word-only era
-    ' (it is hidden, so the user cannot see or delete it manually)
-    CleanupOrphanWordDict doc, outPath
+    If Not WriteWordBaseline(outPath, newDigest, baselineFailure) Then
+        Err.Raise vbObjectError + 525, "AutoExport.BaselineWrite", "字典已保存，但基线更新失败 / Dictionary was saved but baseline update failed: " & baselineFailure
+    End If
+    RecordRetainedWordDict doc, outPath
+    Close #lockNumber
+    lockHeld = False
 
     m_lastStatus = "最近一次导出成功：" & Format$(Now, "hh:nn:ss")
     WriteDiagnostic "export.success", "PASS", DescribeDocument(doc) & ";output_path=" & outPath
@@ -426,6 +490,7 @@ errHandler:
     If outputExisted And outPath <> "" Then
         If outputFso.FileExists(outPath) Then SetAttr outPath, originalOutputAttributes
     End If
+    If lockHeld Then Close #lockNumber
     Dim errPath As String
     Dim errorDir As String
     errorDir = ""
@@ -709,7 +774,7 @@ End Function
 '       CAD 端 DictConflict.FindWordBackup 依赖此命名约定做冲突检测。
 ' Backup failures are returned to ExportDict so CAD changes are never silently overwritten.
 ' ======================================================================
-Private Function IsVisibleDictContentChanged(ByVal dictPath As String, ByVal newContent As String, ByRef failure As String) As Boolean
+Private Function IsVisibleDictContentChanged(ByVal dictPath As String, ByVal baselineOk As Boolean, ByVal knownDigest As String, ByRef failure As String) As Boolean
     On Error GoTo errHandler
     failure = ""
     IsVisibleDictContentChanged = False
@@ -725,8 +790,8 @@ Private Function IsVisibleDictContentChanged(ByVal dictPath As String, ByVal new
         Exit Function
     End If
 
-    IsVisibleDictContentChanged = _
-        (NormalizeJsonForExportCompare(currentContent) <> NormalizeJsonForExportCompare(newContent))
+    IsVisibleDictContentChanged = Not baselineOk
+    If baselineOk Then IsVisibleDictContentChanged = (BaselineDigest(currentContent) <> knownDigest)
     Exit Function
 
 errHandler:
@@ -754,6 +819,102 @@ Private Function NormalizeJsonForExportCompare(ByVal content As String) As Strin
 
     NormalizeJsonForExportCompare = Trim$(content)
 End Function
+Private Function ReadWordBaseline(ByVal dictPath As String, ByRef digest As String, ByRef failure As String) As Boolean
+    On Error GoTo failed
+    Dim path As String, content As String, fso As Object
+    path = dictPath & ".word-baseline"
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    digest = "": failure = ""
+    If fso.FolderExists(path) Then
+        failure = "Baseline path belongs to a folder"
+        Exit Function
+    End If
+    If Not fso.FileExists(path) Then Exit Function
+    content = ReadUtf8File(path, failure)
+    If failure <> "" Then Exit Function
+    If Left$(content, Len(BASELINE_HEADER) + 1) <> BASELINE_HEADER & vbLf Then
+        failure = "Unrecognized baseline file; it was not replaced"
+        Exit Function
+    End If
+    digest = Mid$(content, Len(BASELINE_HEADER) + 2)
+    If Len(digest) <> 64 Then Exit Function
+    If digest Like "*[!0-9a-f]*" Then Exit Function
+    ReadWordBaseline = True
+    Exit Function
+failed:
+    failure = Err.Description & " (" & Err.Number & ")"
+End Function
+
+Private Function WriteWordBaseline(ByVal dictPath As String, ByVal digest As String, ByRef failure As String) As Boolean
+    On Error GoTo failed
+    Dim path As String, fso As Object, existed As Boolean, attrs As Long
+    path = dictPath & ".word-baseline"
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    existed = fso.FileExists(path)
+    If existed Then
+        attrs = GetAttr(path)
+        SetAttr path, attrs And Not (vbHidden Or vbSystem)
+    End If
+    If Not JsonWriter.WriteToFile(path, BASELINE_HEADER & vbLf & digest) Then Err.Raise vbObjectError + 526, "AutoExport.BaselineWrite", "Baseline file replacement failed"
+    If existed Then SetAttr path, attrs
+    WriteWordBaseline = True
+    Exit Function
+failed:
+    failure = Err.Description & " (" & Err.Number & ")"
+    On Error Resume Next
+    If existed And fso.FileExists(path) Then SetAttr path, attrs
+    WriteWordBaseline = False
+End Function
+
+Private Function BaselineDigest(ByVal content As String) As String
+    On Error GoTo failed
+#If VBA7 Then
+    Dim provider As LongPtr, hash As LongPtr
+#Else
+    Dim provider As Long, hash As Long
+#End If
+    Dim stream As Object, bytes() As Byte, digest(0 To 31) As Byte
+    Dim digestLength As Long, byteCount As Long, i As Long, result As String
+    Set stream = CreateObject("ADODB.Stream")
+    stream.Type = 2
+    stream.Charset = "utf-8"
+    stream.Open
+    stream.WriteText NormalizeJsonForExportCompare(content)
+    stream.Position = 0
+    stream.Type = 1
+    If stream.Size > 3 Then
+        stream.Position = 3
+        bytes = stream.Read
+        byteCount = UBound(bytes) - LBound(bytes) + 1
+    End If
+    stream.Close
+    If CryptAcquireContextW(provider, 0, 0, 24, &HF0000000) = 0 Then Err.Raise vbObjectError + 520, "AutoExport.Hash", "SHA-256 provider unavailable"
+    If CryptCreateHash(provider, &H800C&, 0, 0, hash) = 0 Then Err.Raise vbObjectError + 521, "AutoExport.Hash", "SHA-256 creation failed"
+    If byteCount > 0 Then
+        If CryptHashData(hash, bytes(LBound(bytes)), byteCount, 0) = 0 Then Err.Raise vbObjectError + 522, "AutoExport.Hash", "SHA-256 update failed"
+    End If
+    digestLength = 32
+    If CryptGetHashParam(hash, 2, digest(0), digestLength, 0) = 0 Or digestLength <> 32 Then Err.Raise vbObjectError + 523, "AutoExport.Hash", "SHA-256 result failed"
+    For i = 0 To 31
+        result = result & LCase$(Right$("0" & Hex$(digest(i)), 2))
+    Next
+    BaselineDigest = result
+    On Error Resume Next
+    If hash <> 0 Then CryptDestroyHash hash
+    If provider <> 0 Then CryptReleaseContext provider, 0
+    On Error GoTo 0
+    Exit Function
+failed:
+    Dim errorNumber As Long, errorDescription As String
+    errorNumber = Err.Number: errorDescription = Err.Description
+    On Error Resume Next
+    If Not stream Is Nothing Then If stream.State <> 0 Then stream.Close
+    If hash <> 0 Then CryptDestroyHash hash
+    If provider <> 0 Then CryptReleaseContext provider, 0
+    On Error GoTo 0
+    Err.Raise errorNumber, "AutoExport.Hash", errorDescription
+End Function
+
 Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As String, Optional ByVal forceBackup As Boolean = False) As Boolean
     On Error GoTo errHandler
     BackupIfCadModified = True
@@ -762,7 +923,6 @@ Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As 
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
     If Not fso.FileExists(dictPath) Then Exit Function
-
     Dim content As String
     Dim readFailure As String
     content = ReadUtf8File(dictPath, readFailure)
@@ -771,7 +931,18 @@ Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As 
         BackupIfCadModified = False
         Exit Function
     End If
-    If Not forceBackup And InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) = 0 Then Exit Function
+    Dim cadModified As Boolean
+    cadModified = (InStr(1, content, """modified_by"": ""cad""", vbBinaryCompare) <> 0)
+    If HasPendingBackup(dictPath) Then
+        If forceBackup Or cadModified Then
+            If Not IsCurrentFrozenBackup(dictPath) Then
+                failure = "A dictionary backup is awaiting a decision"
+                BackupIfCadModified = False
+            End If
+        End If
+        Exit Function
+    End If
+    If Not forceBackup And Not cadModified Then Exit Function
 
     Dim bakDir As String
     bakDir = fso.GetParentFolderName(dictPath)
@@ -779,31 +950,14 @@ Private Function BackupIfCadModified(ByVal dictPath As String, ByRef failure As 
     Dim fileName As String
     fileName = fso.GetFileName(dictPath)
 
-    ' Create the new backup before deleting older backups. If copying fails,
-    ' the previous CAD backup remains available for arbitration.
+    ' Never replace or delete an existing recovery point.
     Dim stamp As String
     stamp = Format(Now, "yyyymmdd-hhnnss")
     Dim bakPath As String
     bakPath = bakDir & "\" & fileName & ".word-" & stamp & ".bak"
-    If fso.FileExists(bakPath) Then
-        SetAttr bakPath, vbNormal
-        Kill bakPath
-    End If
+    If fso.FileExists(bakPath) Then Err.Raise vbObjectError + 516, "AutoExport.Backup", "Backup already exists"
     FileCopy dictPath, bakPath
-    SetAttr bakPath, vbHidden Or vbSystem
-
-    ' Keep only the newest backup, including hidden/system files.
-    Dim oldBak As String
-    Dim oldPath As String
-    oldBak = Dir(bakDir & "\" & fileName & ".word-*.bak", vbHidden Or vbSystem)
-    Do While oldBak <> ""
-        oldPath = bakDir & "\" & oldBak
-        If StrComp(oldPath, bakPath, vbTextCompare) <> 0 Then
-            SetAttr oldPath, vbNormal
-            Kill oldPath
-        End If
-        oldBak = Dir()
-    Loop
+    SetAttr bakPath, GetAttr(bakPath) Or vbHidden Or vbSystem
 
     Exit Function
 
@@ -812,38 +966,83 @@ errHandler:
     BackupIfCadModified = False
 End Function
 
-' ======================================================================
-' v5.2: delete <Word base>.dict.json when the effective export base is a
-' DWG name (a DWG appeared after the first Word-only export). The orphan
-' is hidden (v5.2 attributes), so the user cannot see or delete it.
-' Only the file named exactly like the current Word document is touched;
-' other documents' dict files are never affected.
-' ======================================================================
-Private Sub CleanupOrphanWordDict(ByVal doc As Document, ByVal outPath As String)
-    On Error GoTo done
+Private Function HasPendingBackup(ByVal dictPath As String) As Boolean
+    Dim fso As Object, folder As Object, item As Object
+    Dim prefix As String, name As String, suffix As String
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set folder = fso.GetFolder(fso.GetParentFolderName(dictPath))
+    prefix = fso.GetFileName(dictPath) & ".word-"
+    For Each item In folder.Files
+        name = item.Name
+        If StrComp(Left$(name, Len(prefix)), prefix, vbTextCompare) = 0 Then
+            suffix = LCase$(Mid$(name, Len(prefix) + 1))
+            If suffix Like "########-######.bak" Then
+                HasPendingBackup = True
+                Exit Function
+            End If
+        End If
+    Next
+End Function
 
-    Dim dir As String
+Private Function IsCurrentFrozenBackup(ByVal dictPath As String) As Boolean
+    Dim fso As Object, folder As Object, item As Object
+    Dim prefix As String, name As String, suffix As String
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set folder = fso.GetFolder(fso.GetParentFolderName(dictPath))
+    prefix = fso.GetFileName(dictPath) & ".word-"
+    For Each item In folder.Files
+        name = item.Name
+        If StrComp(Left$(name, Len(prefix)), prefix, vbTextCompare) = 0 Then
+            suffix = LCase$(Mid$(name, Len(prefix) + 1))
+            If suffix Like "########-######.bak" Then
+                If BinaryFilesEqual(dictPath, item.Path) Then
+                    IsCurrentFrozenBackup = True
+                    Exit Function
+                End If
+            End If
+        End If
+    Next
+End Function
+
+Private Function BinaryFilesEqual(ByVal firstPath As String, ByVal secondPath As String) As Boolean
+    Dim first As Object, second As Object, a() As Byte, b() As Byte, i As Long, count As Long
+    Set first = CreateObject("ADODB.Stream")
+    Set second = CreateObject("ADODB.Stream")
+    first.Type = 1: second.Type = 1
+    first.Open: second.Open
+    On Error GoTo failed
+    first.LoadFromFile firstPath: second.LoadFromFile secondPath
+    If first.Size <> second.Size Then GoTo done
+    count = first.Size
+    If count > 0 Then
+        a = first.Read: b = second.Read
+        For i = 0 To count - 1
+            If a(i) <> b(i) Then GoTo done
+        Next
+    End If
+    BinaryFilesEqual = True
+done:
+    first.Close: second.Close
+    Exit Function
+failed:
+    Dim errorNumber As Long, description As String
+    errorNumber = Err.Number: description = Err.Description
+    On Error Resume Next
+    If first.State <> 0 Then first.Close
+    If second.State <> 0 Then second.Close
+    On Error GoTo 0
+    Err.Raise errorNumber, "AutoExport.BackupCompare", description
+End Function
+
+Private Sub RecordRetainedWordDict(ByVal doc As Document, ByVal outPath As String)
+    On Error GoTo done
+    Dim dir As String, retainedPath As String, fso As Object
     dir = GetOutputDir(doc)
     If dir = "" Then Exit Sub
-
-    Dim wordBase As String
-    wordBase = RemoveExt(doc.Name)
-
-    Dim orphanPath As String
-    orphanPath = dir & "\" & wordBase & ".dict.json"
-
-    ' Target never switched (no DWG rename) - nothing to clean
-    If StrComp(orphanPath, outPath, vbTextCompare) = 0 Then Exit Sub
-
-    Dim fso As Object
+    retainedPath = dir & "\" & RemoveExt(doc.Name) & ".dict.json"
+    If StrComp(retainedPath, outPath, vbTextCompare) = 0 Then Exit Sub
     Set fso = CreateObject("Scripting.FileSystemObject")
-    If Not fso.FileExists(orphanPath) Then Exit Sub
-
-    On Error Resume Next
-    ' Hidden files cannot be killed - clear attributes first
-    SetAttr orphanPath, vbNormal
-    Kill orphanPath
-
+    If fso.FileExists(retainedPath) Then WriteDiagnostic "export.retained", "INFO", "path=" & retainedPath
 done:
 End Sub
 ' Read UTF-8 file content and return failure details to the caller.

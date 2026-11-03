@@ -1,0 +1,154 @@
+[
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/palette/Review.cs",
+    "sha256": "70ffe3ca1eef0267354e472bd0fcb23a31574acd83a2b99352825110d72bf01d"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/palette/Review.csproj",
+    "sha256": "2c56443326ce7c7f7e3635faabf046b6e5ce8b218ea4af970d7318031aa6210d"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/palette/bin/Release/net8.0-windows/Review.dll",
+    "sha256": "f21d7d81147a19949c422bbc9f51fd98f8bb407ec03eeb827521860e0f8da8f5"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/snapshot/SnapshotProbe.cs",
+    "sha256": "e0c70e3cf6e67cbec206163684ae049ac5699c49c944f710952b76143cc62de6"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/snapshot/SnapshotProbe.csproj",
+    "sha256": "681460d93ce70a6316503b1b03e9d05f7aeb71eef6e2589ca087b95650212c1f"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/snapshot/bin/Release/net8.0-windows/SnapshotProbe.dll",
+    "sha256": "6e8b61a0028cc44e6cbd109ae2e087c810b48474d8cce3bc47442c3a8da48b13"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/snapshot/hypothesis/DictPaletteWorkflow.cs",
+    "sha256": "d419551eb3bdde688da51543c0fd87fcf91f1b8b8536e3a78b0945f0d9f7c6e3"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/snapshot/hypothesis-bin/SnapshotProbe.dll",
+    "sha256": "8c9e2823ba9a78738fcbc168156c20d13367b795e807faa8ff7187f7e53aa571"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/installer-matrix.ps1",
+    "sha256": "55523d174f2d783aba2f1f160aecafff5f9647ba710b4f4e8439d8101718da0e"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/vstest-matrix.ps1",
+    "sha256": "e6d43cfc2f6e28d6ea109ebea8814faf2f2b08f0239c37698c493b07d2995081"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r3/render-review.ps1",
+    "sha256": "8c5ee529faf9af85f176b719392d348bc9b6fd99cdb59a17b35c3ce41f547ec4"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261101/G17/probe/Stubs.cs",
+    "sha256": "23b5c8049ee5936333021f4b1d9a97b083c2206b061f619ca25404a21dcc2002"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G24/probe/G24Probe.cs",
+    "sha256": "38a0e56f8df34e200a2854a37667136228282b72cc0382543735654c07724617"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G24/probe/G24Probe.csproj",
+    "sha256": "293456e382146b24b5b7dcea44251e99eb07a7c081a288a7317e9a7fd2c5107d"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G24/probe/Stubs.cs",
+    "sha256": "4bfed404c01bc5461d8ac6d4a526bb9fc69f1076fd7e545e5787cc25198cac8e"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G24/probe/bin/Release/net8.0-windows/G24Probe.dll",
+    "sha256": "955ffa3e1189a418d317c5640cbc3de02891e67bdc23bd7334c768c2b83cdcf9"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G25/probe/G25Probe.cs",
+    "sha256": "cf43f6c0414445faad3725698e3917f47a597bd868e22b547aedc99f27a2e2c3"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G25/probe/G25Probe.csproj",
+    "sha256": "59f459d66d9de381276d0462b7119e5371a1efe1985bac8f673db0f50e98f065"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G25/probe/Stubs.cs",
+    "sha256": "a551f28daa5f8450c93f8ec7fc2f49438bda68dc9ce3d647428632f3693fe7ab"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/G25/probe/bin/Release/net8.0-windows/G25Probe.dll",
+    "sha256": "fd376a946a9b7d61260d7962e9c6d7dd7d51e4eba7ec093df9247951e9143a6a"
+  },
+  {
+    "path": "tools/run-fact-tests.ps1",
+    "sha256": "386d3ecab7c2b2dfcc82008cddfb0aaa3634a63b419bc42bb28942da8ddcf192"
+  },
+  {
+    "path": "tools/FactRunner/Program.cs",
+    "sha256": "55c42ffcd7420643a67114dacd4ebb14f2108547f0d01a3d89e563b7d6d5e05a"
+  },
+  {
+    "path": "tools/FactRunner/FactRunner.csproj",
+    "sha256": "2bbeffb5e171683237e67762dbc1feb248236cd39849032e44c1339e1274b461"
+  },
+  {
+    "path": "tools/FactRunner/bin/Release/net8.0-windows/PatentMarker.FactRunner.dll",
+    "sha256": "f7efbd977469216f30dbe5fd499d9a60f67763eba7e69acee67e3a398055633d"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj",
+    "sha256": "e86cd995386d3ca575db7e7977b3da44523cad08c887578ad417d120ceb6e13f"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker.Tests/bin/Release/net8.0-windows/PatentMarker.Tests.dll",
+    "sha256": "443419a527eb11e2eb691ae8d742e9421ae19e12dbc887ca41fa9100492f4594"
+  },
+  {
+    "path": "tools/run-office-tests-vstest.ps1",
+    "sha256": "1a35955fd01229fa74355f90b1452d6d56f4e52c4620d8e55d919c3e4e9e21ba"
+  },
+  {
+    "path": "office-com-addin/verify-installer.ps1",
+    "sha256": "f25ad4510ff121dfe5dbd24914eaade8e6928ac8902821567dd1f56f05ba144c"
+  },
+  {
+    "path": "office-com-addin/verify-visio-installer.ps1",
+    "sha256": "03324a76ff217d234eff686cc6fdb6fec967bcdacb625dac43ab176c41d793b3"
+  },
+  {
+    "path": "office-com-addin/OfficeAddin.Common.psm1",
+    "sha256": "1631a78b0aa4c5f557e927ce1ced394c4d346455df0eb3defa393cedc55aba42"
+  },
+  {
+    "path": "office-com-addin/VisioAddin.Common.psm1",
+    "sha256": "6d45a5299f15424d5ab309111188409b8049d38af698d3e866cdcfa61d366d36"
+  },
+  {
+    "path": "office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/bin/Release/net48/PatentOffice.PowerPoint.CodeTests.dll",
+    "sha256": "675ca9f323822d54bc54fad6e39786594c9efdbe862122e0585530eeed66bf1f"
+  },
+  {
+    "path": "office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/PatentOffice.Visio.CodeTests.dll",
+    "sha256": "81b65e2e760f60800f1bfa1bacf90f9cd02dafedd45a2673b5d752516d10d308"
+  },
+  {
+    "path": "check-version-sync.ps1",
+    "sha256": "81a46591d6dd78360686e811a5a44aa6ae4df828356486e4305eaf2c01f2a930"
+  },
+  {
+    "path": "sync-mleader-group.ps1",
+    "sha256": "45889c1a880ae79f5c86d282292b6d67e29f3ad99055004f60b08a936d6c79ac"
+  },
+  {
+    "path": "vba-sync.ps1",
+    "sha256": "910c6ee932ec8e676080052c96b48c0a5a0e3fc44898aadd483f83fbe8197d7d"
+  },
+  {
+    "path": "sync-word-addin.ps1",
+    "sha256": "601b51879c46b0fb96fcf8f4b7ee5b455c051e630035616fa23f64fa2182b2e6"
+  },
+  {
+    "path": "tools/verify-dotm-package.ps1",
+    "sha256": "be7b11058b75d819bb8ddde26d9ac7198101a1f6ab6c2b62304177b1d7d45300"
+  }
+]

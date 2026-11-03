@@ -45,6 +45,14 @@ namespace PatentMarker.Tests
                    "\n  },\n  \"entries\": [],\n  \"warnings\": []\n}";
         }
 
+        private bool Keep(string backup, out string error) =>
+            DictConflict.ResolveKeepWord(DictPath, DictFileVisibility.ReadIdentity(DictPath), backup,
+                DictFileVisibility.ReadIdentity(backup), () => true, out error);
+
+        private DictModel? Restore(string backup, out string error) =>
+            DictConflict.ResolveRestoreCad(DictPath, DictFileVisibility.ReadIdentity(DictPath), backup,
+                DictFileVisibility.ReadIdentity(backup), () => true, out error);
+
         // ===== FindWordBackup =====
 
         [Fact]
@@ -114,13 +122,13 @@ namespace PatentMarker.Tests
         }
 
         [Fact]
-        public void IsPendingConflict_BackupAndCadMark_False()
+        public void IsPendingConflict_BackupAndCadMark_True()
         {
-            // 当前 JSON 仍有 CAD 标记 → CAD 版本仍是最新，无需裁决
+            // 只要备份尚待裁决，当前 CAD 标记也不能覆盖它。
             WriteFile(DictPath, MakeJson("cad"));
             MakeBackup("20260704-090000", MakeJson("cad"));
             DictModel? current = DictLoader.Load(DictPath);   // 从磁盘读回带标记的模型
-            Assert.False(DictConflict.IsPendingConflict(current, DictPath));
+            Assert.True(DictConflict.IsPendingConflict(current, DictPath));
         }
 
         [Fact]
@@ -137,19 +145,21 @@ namespace PatentMarker.Tests
         {
             string backup = DictPath + DictConflict.BackupInfix + "20260704-090000.bak";
             MakeBackup("20260704-090000", MakeJson("cad"));
+            WriteFile(DictPath, MakeJson());
             string error;
-            Assert.True(DictConflict.ResolveKeepWord(backup, out error));
+            Assert.True(Keep(backup, out error));
             Assert.Equal("", error);
             Assert.False(File.Exists(backup));
         }
 
         [Fact]
-        public void ResolveKeepWord_MissingBackup_StillTrue()
+        public void ResolveKeepWord_MissingBackup_RejectsStaleSelection()
         {
             string backup = DictPath + DictConflict.BackupInfix + "20260704-090000.bak";
+            WriteFile(DictPath, MakeJson());
             string error;
-            Assert.True(DictConflict.ResolveKeepWord(backup, out error));
-            Assert.Equal("", error);
+            Assert.False(Keep(backup, out error));
+            Assert.Equal(DictFileVisibility.ChangedError, error);
         }
 
         // ===== ResolveRestoreCad =====
@@ -165,7 +175,7 @@ namespace PatentMarker.Tests
             File.SetAttributes(backup, FileAttributes.Hidden | FileAttributes.System);
 
             string error;
-            DictModel? restored = DictConflict.ResolveRestoreCad(DictPath, backup, out error);
+            DictModel? restored = Restore(backup, out error);
 
             Assert.NotNull(restored);
             Assert.Equal("", error);
@@ -191,7 +201,7 @@ namespace PatentMarker.Tests
             WriteFile(DictPath, MakeJson());
             string backup = DictPath + DictConflict.BackupInfix + "20260704-090000.bak";
             string error;
-            DictModel? restored = DictConflict.ResolveRestoreCad(DictPath, backup, out error);
+            DictModel? restored = Restore(backup, out error);
             Assert.Null(restored);
             Assert.NotEqual("", error);
         }
@@ -205,7 +215,7 @@ namespace PatentMarker.Tests
             WriteFile(backup, "{ invalid json }");
 
             string error;
-            DictModel? restored = DictConflict.ResolveRestoreCad(DictPath, backup, out error);
+            DictModel? restored = Restore(backup, out error);
 
             Assert.Null(restored);
             Assert.NotEqual("", error);

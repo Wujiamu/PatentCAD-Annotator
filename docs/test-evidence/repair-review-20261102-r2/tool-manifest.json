@@ -1,0 +1,94 @@
+[
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/parser-matrix.ps1",
+    "sha256": "22ad3188b904de4d3ae62040521f7913d55cd4b723d5ffdd58af624bd4e00842"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/palette/Review.cs",
+    "sha256": "90a4c39ef55f4a48ac07675868c2c5ff15cc0594f31f60a8fe864b75341a80f3"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/palette/Review.csproj",
+    "sha256": "2c56443326ce7c7f7e3635faabf046b6e5ce8b218ea4af970d7318031aa6210d"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/palette/bin/Release/net8.0-windows/Review.dll",
+    "sha256": "7963c53a1545008cf08997fc7297112f7bc39047a6a4b6d5e6411363cae06514"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/installer-matrix.ps1",
+    "sha256": "5f63a4cf7802f2f8a0e08bdee239ee2f4e770a3adcae5ff2fccbaa329596adef"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/vstest-matrix.ps1",
+    "sha256": "1fc1ea40a694264d9774c6345be4e443ae1a30b9eeee87c3c793aca24cdfd24c"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/word-l2-probe.vbs",
+    "sha256": "86de58626af394b4b6d5017ec76667e9d9128d04ae3ab8d186f771ada96b064f"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102-r2/render-review.ps1",
+    "sha256": "7a39986dfd13937108dbefa09b85536c34021e125ba5a1b859295cf6b1aad22b"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261101/G17/probe/Stubs.cs",
+    "sha256": "23b5c8049ee5936333021f4b1d9a97b083c2206b061f619ca25404a21dcc2002"
+  },
+  {
+    "path": "tools/test-g02-parser.vbs",
+    "sha256": "cdf44389faa2a9e476103436488ae65aef728c891806676abb085faa87f80871"
+  },
+  {
+    "path": "tools/test-g02-l2.vbs",
+    "sha256": "3b40bd4141698872ac59e7729b7f348817608b183920a8368ed5c5e764a9a4be"
+  },
+  {
+    "path": "office-com-addin/verify-installer.ps1",
+    "sha256": "2bfc66783cc37533e06fa09c2812d18eb184568cc597bbe0fddc1590d8c88d19"
+  },
+  {
+    "path": "office-com-addin/verify-visio-installer.ps1",
+    "sha256": "c77e261aceea43279d2dce24438c77c9b5825ba2a9e3cd47c539ad6a409b45d6"
+  },
+  {
+    "path": "office-com-addin/OfficeAddin.Common.psm1",
+    "sha256": "1631a78b0aa4c5f557e927ce1ced394c4d346455df0eb3defa393cedc55aba42"
+  },
+  {
+    "path": "office-com-addin/VisioAddin.Common.psm1",
+    "sha256": "6d45a5299f15424d5ab309111188409b8049d38af698d3e866cdcfa61d366d36"
+  },
+  {
+    "path": "tools/run-office-tests-vstest.ps1",
+    "sha256": "0d60e5976d01eb7c1f3c2cdf7376396790ee2d648e6a5f29fa81b426ec5dfd6a"
+  },
+  {
+    "path": "check-version-sync.ps1",
+    "sha256": "81a46591d6dd78360686e811a5a44aa6ae4df828356486e4305eaf2c01f2a930"
+  },
+  {
+    "path": "sync-mleader-group.ps1",
+    "sha256": "45889c1a880ae79f5c86d282292b6d67e29f3ad99055004f60b08a936d6c79ac"
+  },
+  {
+    "path": "vba-sync.ps1",
+    "sha256": "910c6ee932ec8e676080052c96b48c0a5a0e3fc44898aadd483f83fbe8197d7d"
+  },
+  {
+    "path": "sync-word-addin.ps1",
+    "sha256": "601b51879c46b0fb96fcf8f4b7ee5b455c051e630035616fa23f64fa2182b2e6"
+  },
+  {
+    "path": "tools/verify-dotm-package.ps1",
+    "sha256": "be7b11058b75d819bb8ddde26d9ac7198101a1f6ab6c2b62304177b1d7d45300"
+  },
+  {
+    "path": "office-com-addin/tests/PatentOffice.PowerPoint.CodeTests/bin/Release/net48/PatentOffice.PowerPoint.CodeTests.dll",
+    "sha256": "675ca9f323822d54bc54fad6e39786594c9efdbe862122e0585530eeed66bf1f"
+  },
+  {
+    "path": "office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/PatentOffice.Visio.CodeTests.dll",
+    "sha256": "81b65e2e760f60800f1bfa1bacf90f9cd02dafedd45a2673b5d752516d10d308"
+  }
+]

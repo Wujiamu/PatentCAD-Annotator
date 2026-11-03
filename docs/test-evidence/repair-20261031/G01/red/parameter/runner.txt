@@ -1,0 +1,6 @@
+exit=1
+FAIL FixtureTests.Unsupported : TargetParameterCountException: Parameter count mismatch.
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Unsupported : TargetParameterCountException: Parameter count mismatch.

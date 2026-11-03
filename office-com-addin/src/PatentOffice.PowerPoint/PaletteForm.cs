@@ -30,6 +30,8 @@ namespace PatentOffice.PowerPoint
         private PatentDictionary _dictionary;
         private bool _dictionaryCurrent;
         private bool _closingForHost;
+        private bool _hasReportedReadFailure;
+        private bool _hasReportedBindingFailure;
         private HashSet<string> _markedNumbers = new HashSet<string>(NumberIdentity.Comparer);
 
         public PaletteForm(PowerPointAddIn addIn)
@@ -145,14 +147,7 @@ namespace PatentOffice.PowerPoint
                     {
                         _activePresentation = null;
                         _activePresentationPath = null;
-                        _boundPath = null;
-                        _lastLoadedHash = null;
-                        _lastAttemptedHash = null;
-                        _lastAttemptError = null;
-                        _lastAttemptSucceeded = false;
-                        _dictionary = null;
-                        _dictionaryCurrent = false;
-                        _markedNumbers.Clear();
+                        ClearDictionaryState();
                         _pathInput.Text = "";
                         RenderEntries();
                     }
@@ -169,46 +164,37 @@ namespace PatentOffice.PowerPoint
                     !string.Equals(presentationPath, _activePresentationPath, StringComparison.OrdinalIgnoreCase);
                 if (changedPresentation)
                 {
-                    _activePresentation = presentation;
-                    _activePresentationPath = presentationPath;
-                    _boundPath = null;
-                    _lastLoadedHash = null;
-                    _lastAttemptedHash = null;
-                    _lastAttemptError = null;
-                    _lastAttemptSucceeded = false;
-                    _dictionary = null;
-                    _dictionaryCurrent = false;
-                    _markedNumbers.Clear();
+                    ClearDictionaryState();
                     RenderEntries();
-                    BindingResult binding = PresentationBinding.Resolve(presentation);
-                    if (!string.IsNullOrEmpty(binding.Path)) _boundPath = binding.Path;
-                    _pathInput.Text = _boundPath ?? "";
-                    _bindPathButton.Enabled = true;
-                    if (!string.IsNullOrEmpty(binding.Error))
-                    {
-                        _bindingLabel.Text = "字典关联：" + binding.Error;
-                        _statusLabel.Text = "可使用“选择 / 绑定字典”重新关联。";
-                        _markButton.Enabled = false;
-                        _checkButton.Enabled = false;
-                        OfficeDiagnostics.Write("binding.resolve", "FAIL", "ppt=" + presentationPath + ";" + binding.Error);
-                        return;
-                    }
-                    if (_boundPath == null)
-                    {
-                        _bindingLabel.Text = "字典关联：未设置";
-                        _statusLabel.Text = "先选择 Word 导出的 .dict.json。";
-                        _markButton.Enabled = false;
-                        _checkButton.Enabled = false;
-                        return;
-                    }
-                    OfficeDiagnostics.Write("binding.resolve", "PASS", "ppt=" + presentationPath + ";dict=" + _boundPath);
                 }
 
-                if (_boundPath != null)
+                _activePresentation = presentation;
+                _activePresentationPath = presentationPath;
+                _bindPathButton.Enabled = true;
+
+                // The binding lives in the presentation and can be changed by Undo/Redo or an
+                // external edit while the presentation object and path stay the same, so it is
+                // re-resolved on every poll instead of only when the presentation key changes.
+                BindingResult binding = PresentationBinding.Resolve(presentation);
+                ApplyResolvedBinding(binding, presentationPath);
+                if (!string.IsNullOrEmpty(binding.Error))
                 {
-                    _bindingLabel.Text = "字典：" + _boundPath;
-                    RefreshBoundDictionary(false);
+                    _statusLabel.Text = "可使用“选择 / 绑定字典”重新关联。";
+                    _markButton.Enabled = false;
+                    _checkButton.Enabled = false;
+                    ReportBindingFailure(presentationPath + ";" + binding.Error);
+                    return;
                 }
+                if (_boundPath == null)
+                {
+                    _statusLabel.Text = "先选择 Word 导出的 .dict.json。";
+                    _markButton.Enabled = false;
+                    _checkButton.Enabled = false;
+                    return;
+                }
+
+                _bindingLabel.Text = "字典：" + _boundPath;
+                RefreshBoundDictionary(false);
             }
             catch (Exception ex)
             {
@@ -218,6 +204,79 @@ namespace PatentOffice.PowerPoint
                 _checkButton.Enabled = false;
                 OfficeDiagnostics.Write("host.refresh", "FAIL", ex.GetType().Name + ":" + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Adopts the freshly resolved binding. A different binding invalidates everything that
+        /// belonged to the previous dictionary: rows, selection, marked statistics and the read
+        /// failure recorded for the other file. Without this the panel would show the old rows
+        /// next to the new path.
+        /// </summary>
+        private void ApplyResolvedBinding(BindingResult binding, string presentationPath)
+        {
+            string resolved = string.IsNullOrEmpty(binding.Path) ? null : binding.Path;
+            string previous = _boundPath;
+            bool samePath = string.Equals(resolved, previous, StringComparison.OrdinalIgnoreCase);
+            if (!samePath)
+            {
+                bool hadBinding = previous != null || _dictionary != null;
+                ClearDictionaryState();
+                RenderEntries();
+                _boundPath = resolved;
+                if (hadBinding || resolved != null)
+                    OfficeDiagnostics.Write("binding.changed", "INFO",
+                        "ppt=" + presentationPath + ";from=" + (previous ?? "") + ";to=" + (resolved ?? ""));
+            }
+            else
+            {
+                _boundPath = resolved;
+            }
+
+            _pathInput.Text = _boundPath ?? "";
+            if (!string.IsNullOrEmpty(binding.Error))
+            {
+                // A binding that cannot be resolved to a readable file must never leave the panel
+                // acting on the previously loaded snapshot; the rows stay for viewing only.
+                _dictionaryCurrent = false;
+                _bindingLabel.Text = "字典关联：" + binding.Error;
+                return;
+            }
+            if (_boundPath == null)
+            {
+                _dictionaryCurrent = false;
+                _bindingLabel.Text = "字典关联：未设置";
+                return;
+            }
+            _bindingLabel.Text = "字典：" + _boundPath;
+            // Only a transition is worth a log line; the panel re-resolves the binding on every
+            // 2-second poll, so logging each success would flood the diagnostic log.
+            bool recovered = _hasReportedBindingFailure;
+            _hasReportedBindingFailure = false;
+            if (!samePath || recovered)
+                OfficeDiagnostics.Write("binding.resolve", "PASS", "ppt=" + presentationPath + ";dict=" + _boundPath);
+        }
+
+        /// <summary>Drops the dictionary view and every statistic derived from it.</summary>
+        private void ClearDictionaryState()
+        {
+            _boundPath = null;
+            _lastLoadedHash = null;
+            _lastAttemptedHash = null;
+            _lastAttemptError = null;
+            _lastAttemptSucceeded = false;
+            _dictionary = null;
+            _dictionaryCurrent = false;
+            _markedNumbers.Clear();
+            _hasReportedReadFailure = false;
+            _hasReportedBindingFailure = false;
+        }
+
+        /// <summary>Logs a binding failure once so a 2-second poll cannot flood the log.</summary>
+        private void ReportBindingFailure(string details)
+        {
+            if (_hasReportedBindingFailure) return;
+            _hasReportedBindingFailure = true;
+            OfficeDiagnostics.Write("binding.resolve", "FAIL", details);
         }
 
         private void BindButton_Click(object sender, EventArgs e)
@@ -277,15 +336,10 @@ namespace PatentOffice.PowerPoint
             PresentationBinding.Save(presentation, dictionaryPath);
             _activePresentation = presentation;
             _activePresentationPath = GetPresentationPath(presentation);
+            ClearDictionaryState();
             _boundPath = snapshot.Path;
-            _lastLoadedHash = null;
-            _lastAttemptedHash = null;
-            _lastAttemptError = null;
-            _lastAttemptSucceeded = false;
-            _dictionary = null;
-            _dictionaryCurrent = false;
-            _markedNumbers.Clear();
             _pathInput.Text = _boundPath;
+            _bindingLabel.Text = "字典：" + _boundPath;
             _statusLabel.Text = "绑定成功。请保存演示文稿以保存此关联。";
             OfficeDiagnostics.Write("binding.save", "PASS", "ppt=" + _activePresentationPath + ";dict=" + _boundPath + ";sha256=" + snapshot.Sha256);
             RefreshBoundDictionary(true);
@@ -294,39 +348,36 @@ namespace PatentOffice.PowerPoint
         private void RefreshBoundDictionary(bool force)
         {
             if (string.IsNullOrEmpty(_boundPath)) return;
-            string observedHash = null;
+            string path = _boundPath;
             try
             {
-                if (!File.Exists(_boundPath))
+                if (!File.Exists(path))
                 {
                     _dictionaryCurrent = false;
+                    _lastAttemptedHash = null;
+                    _lastAttemptSucceeded = false;
+                    _lastAttemptError = null;
                     _markButton.Enabled = false;
                     _checkButton.Enabled = false;
+                    _hasReportedReadFailure = false;
                     _statusLabel.Text = "绑定的字典文件不存在。上次内容保留供查看；请选择有效字典重新绑定。";
                     return;
                 }
 
-                observedHash = DictionaryReader.ComputeHash(_boundPath);
-                if (!force && string.Equals(observedHash, _lastAttemptedHash, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (_lastAttemptSucceeded && _dictionaryCurrent) return;
-                    if (!_lastAttemptSucceeded)
-                    {
-                        _dictionaryCurrent = false;
-                        _markButton.Enabled = false;
-                        _checkButton.Enabled = false;
-                        _statusLabel.Text = "字典读取失败，已暂停新标注；上次有效列表仍保留。" + _lastAttemptError;
-                        return;
-                    }
-                }
+                // One read of the bytes yields both the identity and the content, so a failure can
+                // never be attributed to a hash taken from a different (possibly repaired) file.
+                DictionarySnapshot snapshot = DictionaryReader.Read(path);
+                if (!force && _lastAttemptSucceeded && _dictionaryCurrent &&
+                    string.Equals(snapshot.Sha256, _lastAttemptedHash, StringComparison.OrdinalIgnoreCase))
+                    return;
 
-                DictionarySnapshot snapshot = DictionaryReader.Read(_boundPath);
                 _dictionary = snapshot.Dictionary;
                 _lastLoadedHash = snapshot.Sha256;
                 _lastAttemptedHash = snapshot.Sha256;
                 _lastAttemptError = null;
                 _lastAttemptSucceeded = true;
                 _dictionaryCurrent = true;
+                _hasReportedReadFailure = false;
                 _markButton.Enabled = _dictionary.Entries.Count > 0;
                 _checkButton.Enabled = true;
                 _markedNumbers = PowerPointAnnotations.GetMarkedNumbers(_activePresentation);
@@ -337,13 +388,20 @@ namespace PatentOffice.PowerPoint
             catch (Exception ex)
             {
                 _dictionaryCurrent = false;
-                _lastAttemptedHash = observedHash;
-                _lastAttemptError = ex.GetType().Name + ":" + ex.Message;
+                // Never carry the failed bytes' identity into the cache: a transient I/O error must
+                // be retried on the next poll, and a content error must not be pinned to a hash that
+                // may already describe a repaired file.
+                _lastAttemptedHash = null;
                 _lastAttemptSucceeded = false;
+                _lastAttemptError = ex.GetType().Name + ":" + ex.Message;
                 _markButton.Enabled = false;
                 _checkButton.Enabled = false;
-                _statusLabel.Text = "字典读取失败，已暂停新标注；上次有效列表仍保留。" + _lastAttemptError;
-                OfficeDiagnostics.Write("dict.read", "FAIL", "path=" + _boundPath + ";" + ex.GetType().Name + ":" + ex.Message);
+                _statusLabel.Text = "字典读取失败，已暂停新标注；下次刷新会自动重试。上次有效列表仍保留。" + _lastAttemptError;
+                if (!_hasReportedReadFailure)
+                {
+                    _hasReportedReadFailure = true;
+                    OfficeDiagnostics.Write("dict.read", "FAIL", "path=" + path + ";" + ex.GetType().Name + ":" + ex.Message);
+                }
             }
         }
 
@@ -351,7 +409,7 @@ namespace PatentOffice.PowerPoint
         {
             try
             {
-                if (!RefreshActionContext()) return;
+                if (!RefreshActionContext(true)) return;
                 if (!_dictionaryCurrent || _dictionary == null)
                     throw new InvalidOperationException("当前字典不可用，已暂停标注。");
                 if (_entries.SelectedItems.Count != 1)
@@ -375,7 +433,7 @@ namespace PatentOffice.PowerPoint
         {
             try
             {
-                if (!RefreshActionContext()) return;
+                if (!RefreshActionContext(false)) return;
                 if (!_dictionaryCurrent || _dictionary == null)
                     throw new InvalidOperationException("当前字典不可用，无法检查。");
                 _markedNumbers = PowerPointAnnotations.GetMarkedNumbers(_activePresentation);
@@ -400,18 +458,48 @@ namespace PatentOffice.PowerPoint
             }
         }
 
-        private bool RefreshActionContext()
+        /// <summary>
+        /// Re-checks the host context before an action. Both the presentation identity and the
+        /// binding are re-validated; when either changed, the stale row selection is dropped so a
+        /// number from the previous dictionary cannot be applied to the new one. A whole-presentation
+        /// check needs no selection, so it may continue once the new dictionary has been read.
+        /// </summary>
+        private bool RefreshActionContext(bool requiresSelection)
         {
             object previous = _activePresentation;
             string previousPath = _activePresentationPath;
+            string previousBinding = _boundPath;
+            bool hadSelection = _entries.SelectedItems.Count == 1;
             RefreshHostState();
-            if (object.ReferenceEquals(previous, _activePresentation) &&
-                string.Equals(previousPath, _activePresentationPath, StringComparison.OrdinalIgnoreCase))
+
+            if (!object.ReferenceEquals(previous, _activePresentation) ||
+                !string.Equals(previousPath, _activePresentationPath, StringComparison.OrdinalIgnoreCase))
+            {
+                _statusLabel.Text = "当前演示文稿已切换。请在新文稿重新选择编号或执行检查。";
+                OfficeDiagnostics.Write("palette.action", "INFO", "presentation_changed;from=" +
+                    (previousPath ?? "") + ";to=" + (_activePresentationPath ?? ""));
+                return false;
+            }
+
+            if (!string.Equals(previousBinding, _boundPath, StringComparison.OrdinalIgnoreCase))
+            {
+                OfficeDiagnostics.Write("palette.action", "INFO", "binding_changed;from=" +
+                    (previousBinding ?? "") + ";to=" + (_boundPath ?? ""));
+                if (requiresSelection)
+                {
+                    _statusLabel.Text = "字典关联已变化，已清除旧选择。请重新选择编号后再执行操作。";
+                    return false;
+                }
                 return true;
-            _statusLabel.Text = "当前演示文稿已切换。请在新文稿重新选择编号或执行检查。";
-            OfficeDiagnostics.Write("palette.action", "INFO", "presentation_changed;from=" +
-                (previousPath ?? "") + ";to=" + (_activePresentationPath ?? ""));
-            return false;
+            }
+
+            if (requiresSelection && hadSelection && _entries.SelectedItems.Count != 1)
+            {
+                _statusLabel.Text = "列表已刷新，已清除旧选择。请重新选择编号后再执行操作。";
+                OfficeDiagnostics.Write("palette.action", "INFO", "selection_cleared");
+                return false;
+            }
+            return true;
         }
 
         private void RenderEntries()

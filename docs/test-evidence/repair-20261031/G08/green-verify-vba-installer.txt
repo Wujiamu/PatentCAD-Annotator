@@ -1,0 +1,8 @@
+﻿# tools/verify-vba-installer.ps1 -DeployDir <isolated candidate copy> -KeepArtifacts
+# isolated candidate: C:\Users\wjm\AppData\Local\Temp\G08-candidate-2a8e151bc4704eb3ab98920f3679b8ed
+# installer SHA-256: 3813D5396D3399BE9E4BE80D4E0721661C849244611D6A366B6DCE6CAFB98749
+# dotm      SHA-256: 01F9A47B837288534B1229EF3EFF14ED4424C2B0E66CE9F67E41BBF5A10FC713
+# exit: 0
+
+PASS|L2_INSTALLER_ISOLATION|normal_unchanged=true|user_macros_unchanged=true|missing_manifest_refused=true|repeat_install=true|install_rollback=true|uninstall_rollback=true|recoverable_uninstall=true|manifest_stage_rollback=true|rollback_failure_reported=true
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-Installer-Isolation-f49e7dea531a4572b3e4f01e82b5b83a

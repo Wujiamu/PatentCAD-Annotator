@@ -1,0 +1,15 @@
+{
+  "time": "2026-11-02T13:39:38.4786797+08:00",
+  "head": "b945b1a68fec26ada268b5a4ee3ac066386e96ab",
+  "identity": "desktop-3vj2a3b\\codexsandboxoffline",
+  "powershell": "7.6.5",
+  "framework": ".NET 10.0.11",
+  "os": "Microsoft Windows 10.0.19045",
+  "scope": "G19-G23; production callers and state combinations",
+  "source_files": 37,
+  "word_version": "16.0",
+  "word_bitness": "64 (PE machine 8664)",
+  "word_processes_after_probe": 0,
+  "host_identity": "desktop-3vj2a3b\\wjm",
+  "palette_runtime": ".NET 8.0.28 / x64"
+}

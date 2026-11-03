@@ -1,0 +1,183 @@
+﻿
+=== Static analysis check (no SDK DLL required) ===
+
+  --- VBA cross-package consistency ---
+  [OK]   VBA Patterns.bas : all packages match canonical source
+  [OK]   VBA DictModel.bas : all packages match canonical source
+  [OK]   VBA JsonWriter.bas : all packages match canonical source
+  [OK]   VBA PatentExtractor.bas : all packages match canonical source
+  [OK]   VBA AutoExport.bas : all packages match canonical source
+  [OK]   VBA PatentMarkerBootstrap.bas : all packages match canonical source
+  [OK]   VBA clsSaveHook.cls : all packages match canonical source
+  [OK]   VBA PatentDictPanel.frm : all packages match canonical source
+  [OK]   VBA PatentDictPanel.frx : all packages match canonical source
+
+  --- csproj TargetFramework validation ---
+  [OK]   2007 : TargetFramework = v2.0
+  [OK]   2010 : TargetFramework = v3.5
+  [OK]   2013 : TargetFramework = v4.0
+  [OK]   2015 : TargetFramework = v4.5
+  [OK]   2025 : TargetFramework = net8.0-windows
+
+  --- Canonical shared source layer ---
+
+========================================
+ PatentCAD-Annotator Sync Check
+========================================
+
+-- Canonical shared source layer --
+  [OK]   IO\NumberIdentity.cs canonical and linked by all five editions
+  [OK]   IO\SimpleJson.cs canonical and linked by all five editions
+  [OK]   IO\PatSettings.cs canonical and linked by all five editions
+  [OK]   IO\DictDiff.cs canonical and linked by all five editions
+  [OK]   IO\DictConflict.cs canonical and linked by all five editions
+  [OK]   IO\MarkingTextParser.cs canonical and linked by all five editions
+  [OK]   I18n\Language.cs canonical and linked by all five editions
+  [OK]   I18n\Strings.cs canonical and linked by all five editions
+  [OK]   Commands\PatLeaderTextAttachment.cs canonical and linked by all five editions
+  [OK]   Commands\PatTextPathRouting.cs canonical and linked by all five editions
+  [OK]   Cad\PatNativeEditTracker.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceGeometry.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceAssertions.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomTextAssertions.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomVerifySummary.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomVerifyCommand.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceEntity.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceCommand.cs canonical and linked by all five editions
+  [OK]   Commands\PatCheckResult.cs canonical and linked by all five editions
+  [OK]   Cad\PatEntityHelper.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteCadService.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteWorkflow.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteSession.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteViewRenderer.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteControl.cs canonical and linked by all five editions
+  [OK]   Palette\PatPaletteCommand.cs canonical and linked by all five editions
+  [OK]   Palette\ArbitrateDialog.cs canonical and linked by all five editions
+  [OK]   Palette\EditEntryDialog.cs canonical and linked by all five editions
+  [OK]   Palette\PasteRecognizeDialog.cs canonical and linked by all five editions
+  [OK]   Styles\PatStyleInitializer.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDiagnostics.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDoctorCommand.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDoctorReport.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatReleaseManifest.cs canonical and linked by all five editions
+
+-- MLeader fork local commands (2010/2013/2015/2025) --
+  [OK]   Commands\PatMarkCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderCreator.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderSetCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderVerifyCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatCheckCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatAlignCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatSelectAllCommand.cs identical and compiled in 2010/2013/2015/2025
+
+-- Critical shared contract aliases --
+  [OK]   IO\NumberIdentity.cs is covered by the canonical shared layer
+  [OK]   IO\PatSettings.cs is covered by the canonical shared layer
+
+Total source files: 14
+  Synced: 0
+  Content diff: 0
+  Partial missing: 0
+  Single-version only: 0
+
+-- Synced files (identical across present versions) --
+
+[OK] All five-version sources are fully synced.
+
+Check complete.
+  [OK]   Canonical shared source layer verified by check-version-sync.ps1
+
+  --- Version-local file consistency ---
+  [OK]   Word asset PatentMarker.dotm : identical across all deployment packages
+  [OK]   Word asset install-vba.vbs : identical across all deployment packages
+  [OK]   Word asset uninstall-vba.vbs : identical across all deployment packages
+PASS|DOTM_PACKAGE|path=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\word-addin\PatentMarker.dotm|vba_project=true|content_type=true|relationship=true|macro_metadata=true|macro_metadata_entries=3
+  [OK]   Canonical Word add-in contains required AutoExec macro metadata
+
+  --- Word add-in installation safety contract ---
+  [OK]   Startup install/uninstall contracts present; Normal/VBProject access forbidden
+PASS|WORD_SYNC_GATE_FAILURE_INJECTION|vba_drift_rejected=true|word_asset_drift_rejected=true|dotm_metadata_drift_rejected=true|check_writes=0
+  [OK]   Word synchronization checks reject drift with nonzero exit codes
+  [OK]   Group 2013/2015 (Newtonsoft stack): 4 version-local files consistent
+  [OK]   Group 2007/2010 (SimpleJson stack): 4 version-local files consistent
+
+  --- Active-document host boundary ---
+  [OK]   All editions route active-document reads through IO/RuntimeHost.cs
+
+  --- Deploy package version-specific checks ---
+  [OK]   2013 : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)
+  [OK]   2015 : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)
+  [OK]   2025 : No external Newtonsoft.Json.dll (merged into PatentMarker.dll)
+
+  --- Release manifest identity ---
+PASS manifest=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2007-deploy\PatentMarker-release.txt
+artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2007-deploy\PatentMarker.dll
+sha256=9e485625a16591cd38ff23acadd3e594e2135028d3d3378267226b4204b3922b
+mvid=76392979-7a24-42d0-9800-c7f7348a5df5
+[OK]   2007 release manifest matches deployment DLL
+PASS manifest=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2010-deploy\PatentMarker-release.txt
+artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2010-deploy\PatentMarker.dll
+sha256=efcffcee116cf4a56f373d9310e7627ff042102fe935248085120edaffa0d4ec
+mvid=df80d2be-e062-4262-ae38-168bc79d8410
+[OK]   2010 release manifest matches deployment DLL
+PASS manifest=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2013-deploy\PatentMarker-release.txt
+artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2013-deploy\PatentMarker.dll
+sha256=8f6297d4e390d4e633edef542b89ae966b1ef9e6df1650bfc6079b5608a0a5af
+mvid=0cbe0161-4aee-4e03-936f-40b0d5f7e7fc
+[OK]   2013 release manifest matches deployment DLL
+PASS manifest=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2015-deploy\PatentMarker-release.txt
+artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2015-deploy\PatentMarker.dll
+sha256=de560244a69b85d136c8a4651bba5f4e622a60ca78f98f90ed2b72dbb8a85d0c
+mvid=894b526d-d59d-4805-8eb8-caad7947e645
+[OK]   2015 release manifest matches deployment DLL
+PASS manifest=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2025-deploy\PatentMarker-release.txt
+artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\PatentMarker-2025-deploy\PatentMarker.dll
+sha256=eeab365fd9addeb116c54a509a474f644471d3822d56a9233ff3e59fdc3d8f12
+mvid=71157fc1-fddf-4444-b098-138297006b52
+[OK]   2025 release manifest matches deployment DLL
+[OK] all deployment release manifests match their DLLs
+  [OK]   All deployment release manifests match their DLL, DOTM and VBA assets
+
+  --- Negative gate self-tests ---
+powershell : FAIL manifest=C:\Users\wjm\AppData\Local\Temp\PatentMarker-manifest-selftest-4ead83c8d422419bb038087ec7e53
+13d\tampered.txt
+At line:3 char:1
++ powershell -NoProfile -ExecutionPolicy Bypass -File .\build.ps1 -Stat ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL manifest=C...3d\tampered.txt:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ - artifact.sha256 expected=eeab365fd9addeb116c54a509a474f644471d3822d56a9233ff3e59fdc3d8f12 actual=0000000000000000000
+000000000000000000000000000000000000000000000
+PASS self-test: tampered SHA-256 manifest rejected
+PASS self-test: good report accepted; stale/Fail/wrong-hash/wrong-path/wrong-mvid/missing-B0c/missing-ASSERTIONS/wrong-count/wrong-required/non-strict/bad-totals/duplicate-PASS/missing-B9/empty-PASS reports rejected
+
+  --- Installer profile enumeration ---
+Installer profile enumeration check
+[OK]   2007: all supported profiles are enumerated
+[OK]   2010: all supported profiles are enumerated
+[OK]   2013: all supported profiles are enumerated
+[OK]   2015: all supported profiles are enumerated
+[OK]   2025: all supported profiles are enumerated
+[OK]   2007-uninstall: all supported profiles are enumerated
+[OK]   2010-uninstall: all supported profiles are enumerated
+[OK]   2013-uninstall: all supported profiles are enumerated
+[OK]   2015-uninstall: all supported profiles are enumerated
+[OK]   2025-uninstall: all supported profiles are enumerated
+[PASS] R17.0-only install targets=1, registry and support paths
+[PASS] R17.0-only uninstall targets=1, registry and support paths
+[PASS] R17.1-only install targets=1, registry and support paths
+[PASS] R17.1-only uninstall targets=1, registry and support paths
+[PASS] R17.2-only install targets=1, registry and support paths
+[PASS] R17.2-only uninstall targets=1, registry and support paths
+[PASS] mixed-and-duplicates install targets=4, registry and support paths
+[PASS] mixed-and-duplicates uninstall targets=4, registry and support paths
+[PASS] language-product install targets=1, registry and support paths
+[PASS] language-product uninstall targets=1, registry and support paths
+[PASS] location-hklm install targets=2, registry and support paths
+[PASS] location-hklm uninstall targets=2, registry and support paths
+Installer profile enumeration check passed.
+  [OK]   All installer profile enumeration contracts passed
+
+=== Static check result ===
+  [OK]   All static checks passed.

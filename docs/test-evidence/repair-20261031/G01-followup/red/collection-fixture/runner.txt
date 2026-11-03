@@ -1,0 +1,4 @@
+exit=1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+SKIP/BLOCKED: xUnit collection fixtures are unsupported.
+SUMMARY: passed=0 failed=0 skipped=1

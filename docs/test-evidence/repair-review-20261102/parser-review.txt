@@ -1,0 +1,15 @@
+PASS|plain|engine=csharp-production|expected=123|底座|actual=123|底座|trace=capture=123/底座;first-occurrence=2;preceding=座;accepted=True
+PASS|plain|engine=vbscript-production-boundary|expected=123|底座|actual=123|底座|trace=capture=123/底座;first-occurrence=2;preceding=座;accepted=True
+PASS|digits-in-name|engine=csharp-production|expected=123|第2定位件|actual=123|第2定位件|trace=capture=123/第2定位件;first-occurrence=6;preceding= ;accepted=True
+PASS|digits-in-name|engine=vbscript-production-boundary|expected=123|第2定位件|actual=123|第2定位件|trace=capture=123/第2定位件;first-occurrence=6;preceding= ;accepted=True
+PASS|repeat-after-chinese|engine=csharp-production|expected=123|第123定位件|actual=123|第123定位件|trace=capture=123/第123定位件;first-occurrence=1;preceding=第;accepted=True
+PASS|repeat-after-chinese|engine=vbscript-production-boundary|expected=123|第123定位件|actual=123|第123定位件|trace=capture=123/第123定位件;first-occurrence=1;preceding=第;accepted=True
+PASS|repeat-after-letter|engine=csharp-production|expected=123|壳体X123 支架|actual=123|壳体X123 支架|trace=capture=123/壳体X123 支架;first-occurrence=3;preceding=X;accepted=False
+FAIL|repeat-after-letter|engine=vbscript-production-boundary|expected=123|壳体X123 支架|actual=|trace=capture=123/壳体X123 支架;first-occurrence=3;preceding=X;accepted=False
+PASS|repeat-after-digit|engine=csharp-production|expected=123|壳体1123 支架|actual=123|壳体1123 支架|trace=capture=123/壳体1123 支架;first-occurrence=3;preceding=1;accepted=False
+FAIL|repeat-after-digit|engine=vbscript-production-boundary|expected=123|壳体1123 支架|actual=|trace=capture=123/壳体1123 支架;first-occurrence=3;preceding=1;accepted=False
+PASS|repeat-prefixed-number|engine=csharp-production|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|trace=capture=X123/壳体AX123 支架;first-occurrence=3;preceding=A;accepted=False
+FAIL|repeat-prefixed-number|engine=vbscript-production-boundary|expected=X123|壳体AX123 支架|actual=|trace=capture=X123/壳体AX123 支架;first-occurrence=3;preceding=A;accepted=False
+PASS|overlength|engine=csharp-production|expected=|actual=|trace=capture=23456/底座1;first-occurrence=3;preceding=1;accepted=False
+PASS|overlength|engine=vbscript-production-boundary|expected=|actual=|trace=capture=23456/底座1;first-occurrence=3;preceding=1;accepted=False
+SUMMARY|total=14|failed=3

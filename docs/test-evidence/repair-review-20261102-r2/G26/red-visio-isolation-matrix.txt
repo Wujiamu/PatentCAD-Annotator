@@ -1,0 +1,155 @@
+# G26 red/green evidence: real isolated HKCU test root + temporary install tree
+time=2026-11-02T16:19:20.1558870+08:00
+product=visio
+mode=RED (pre-fix rollback replayed with the same scaffolding)
+powershell=5.1.19041.7802
+os=Microsoft Windows NT 10.0.19045.0
+user=DESKTOP-3VJ2A3B\wjm
+sandbox=C:\Users\wjm\AppData\Local\Temp\PatentMarkerG26Run-de100a9e273a4d41a91431f9e3441a69
+
+sha256|install-visio-addin.ps1|3D7F2E239EE341037EC098A55DCDEC42E0BA8DE84EAFCA31FE77A909B8112F77
+sha256|verify-visio-installer.ps1|03324A76FF217D234EFF686CC6FDB6FEC967BCDACB625DAC43AB176C41D793B3
+sha256|OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+sha256|VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+
+PASS: G14 Visio 部分删除失败后从恢复副本还原完整文件集与注册项。
+PASS: G18 Visio uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 Visio uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 Visio uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 Visio uninstall_registry_restore_failed_material_kept — 残留回滚材料：.Visio.recovery-0df49e537821440ea4e2bc06c1b2a3b9, .Visio.uninstall-4f35a0b491e64777a3ff89339b0ebcaf
+PASS: G18 Visio uninstall_cleanup_failed_files_complete — 清理失败时 Visio 产品文件仍为完整集合
+PASS: G18 Visio uninstall_cleanup_failed_registration_restored — 清理失败时原 Visio 注册项已恢复
+PASS: G18 Visio uninstall_cleanup_failed_material_kept — 残留回滚材料：.Visio.recovery-a48270e358aa484cbd1f46471e3a0ab7, .Visio.uninstall-3c829d87b52a47a7b2f48f3917a304df
+PASS: G18 Visio upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整 Visio 目录与哈希已还原
+PASS: G18 Visio upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原 Visio 注册项已恢复
+PASS: G18 Visio upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 Visio upgrade_registry_restore_failed_disabled — 注册恢复失败后 Visio 加载项保持停用
+PASS: G18 Visio upgrade_registry_restore_failed_old_files_intact — Visio 注册恢复失败时旧版文件仍完整
+PASS: G18 Visio upgrade_registry_restore_failed_material_kept — 残留回滚材料：.Visio.failed-84e79d27520149779f452a87e43f76d4
+PASS: G18 Visio upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时 Visio 加载项保持停用
+PASS: G18 Visio upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.Visio.rollback-3964a3f065194df8b8f70164be35ff9e
+PASS: G22 Visio first_install_stage_failed_installer_failed — 阶段创建失败后 Visio 安装返回失败
+PASS: G22 Visio first_install_stage_failed_failure_origin — 失败来自暂存目录创建
+PASS: G22 Visio first_install_stage_failed_no_product_dir — 首次 Visio 安装早期失败后未留下产品目录
+PASS: G22 Visio first_install_stage_failed_registration — 首次 Visio 安装早期失败后没有产品注册项
+PASS: G22 Visio first_install_stage_failed_sentinel — 非项目哨兵保持不变
+PASS: G22 Visio upgrade_stage_failed_failure_origin — 失败阶段匹配 'stage-'
+PASS: G22 Visio upgrade_stage_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_stage_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_stage_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_failure_origin — 失败阶段匹配 '暂存校验失败'
+PASS: G22 Visio upgrade_staged_copy_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_old_move_failed_failure_origin — 失败阶段匹配 'denied|being used|拒绝访问|另一进程'
+PASS: G22 Visio upgrade_old_move_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_old_move_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_old_move_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_new_move_failed_failure_origin — 失败阶段匹配 '新 Visio 安装目录无法移动|\.Visio\.stage-'
+PASS: G22 Visio upgrade_new_move_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_new_move_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_new_move_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_after_files_failed_failure_origin — 失败阶段匹配 'Visio 产品文件部署后'
+PASS: G22 Visio upgrade_after_files_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_after_files_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_after_files_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio stage_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio stage_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio stage_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 Visio stage_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 Visio stage_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 Visio stage_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio stage_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio stage_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 Visio stage_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 Visio stage_restore_fails_target_integrity — 完整=True；预期=True
+FAIL: G26 Visio stage_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 Visio stage_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 Visio stage_restore_fails_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio stage_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio stage_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 Visio old_moved_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio old_moved_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio old_moved_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 Visio old_moved_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 Visio old_moved_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 Visio old_moved_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio old_moved_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio old_moved_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 Visio old_moved_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 Visio old_moved_restore_fails_target_integrity — 完整=False；预期=False
+FAIL: G26 Visio old_moved_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 Visio old_moved_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 Visio old_moved_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 Visio old_moved_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio old_moved_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 Visio new_files_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio new_files_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio new_files_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 Visio new_files_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 Visio new_files_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 Visio new_files_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio new_files_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio new_files_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 Visio new_files_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 Visio new_files_restore_fails_target_integrity — 完整=False；预期=False
+FAIL: G26 Visio new_files_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 Visio new_files_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 Visio new_files_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 Visio new_files_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio new_files_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 Visio new_registry_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio new_registry_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio new_registry_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 Visio new_registry_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 Visio new_registry_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 Visio new_registry_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio new_registry_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio new_registry_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 Visio new_registry_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 Visio new_registry_restore_fails_target_integrity — 完整=False；预期=False
+PASS: G26 Visio new_registry_restore_fails_registration_state — 启用=False；预期=False
+PASS: G26 Visio new_registry_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 Visio new_registry_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 Visio new_registry_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio new_registry_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=False
+PASS: G26 Visio first_new_files_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio first_new_files_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio first_new_files_restore_ok_registration_state — 启用=False；预期=False
+PASS: G26 Visio first_new_files_restore_ok_registration_absent — 没有任何产品注册项
+PASS: G26 Visio first_new_files_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio first_new_files_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+FAIL: G26 Visio first_new_files_restore_ok_log_matches_state — 日志=restored；预期=nothing-installed；注册实际=False
+PASS: G26 Visio first_new_files_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 Visio first_new_files_restore_fails_target_integrity — 完整=False；预期=False
+PASS: G26 Visio first_new_files_restore_fails_registration_state — 启用=False；预期=False
+PASS: G26 Visio first_new_files_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 Visio first_new_files_restore_fails_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio first_new_files_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 Visio first_new_files_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=False
+PASS: G26 Visio registration_diverged_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 Visio registration_diverged_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 Visio registration_diverged_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 Visio registration_diverged_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+FAIL: G26 Visio registration_diverged_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 Visio registration_diverged_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 Visio registration_diverged_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+FAIL: G26 Visio registration_diverged_restore_ok_log_matches_state — 日志=disabled；预期=restored；注册实际=True
+G26: 9 条 Visio 断言失败：stage_restore_fails_registration_state, stage_restore_fails_registration_absent, old_moved_restore_
+fails_registration_state, old_moved_restore_fails_registration_absent, new_files_restore_fails_registration_state, new_
+files_restore_fails_registration_absent, first_new_files_restore_ok_log_matches_state, registration_diverged_restore_ok
+_registration_matches_baseline, registration_diverged_restore_ok_log_matches_state
+At C:\Users\wjm\AppData\Local\Temp\PatentMarkerG26Run-de100a9e273a4d41a91431f9e3441a69\verify-visio-installer.ps1:730 c
+har:9
++         throw ("G26: {0} 条 Visio 断言失败：{1}" -f $g26Failed.Count, ($g26 ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G26: 9 条 Visio ...g_matches_state:String) [], RuntimeException
+    + FullyQualifiedErrorId : G26: 9 条 Visio 断言失败：stage_restore_fails_registration_state, stage_restore_fails_registra 
+   tion_absent, old_moved_restore_fails_registration_state, old_moved_restore_fails_registration_absent, new_files_re  
+  store_fails_registration_state, new_files_restore_fails_registration_absent, first_new_files_restore_ok_log_matche   
+ s_state, registration_diverged_restore_ok_registration_matches_baseline, registration_diverged_restore_ok_log_matc    
+hes_state
+ 
+
+exit=1
+summary|pass=114|fail=9|exit=1

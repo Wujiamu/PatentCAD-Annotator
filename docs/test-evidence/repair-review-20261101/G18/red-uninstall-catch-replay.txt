@@ -1,0 +1,39 @@
+﻿G18 red: R-029 catch replay against the pre-fix catch bodies sealed by the review
+time=2026-11-02 01:15:42 +08:00
+host=DESKTOP-3VJ2A3B  user=wjm  powershell=5.1.19041.7802
+command=powershell.exe -NoProfile -ExecutionPolicy Bypass -File docs/test-evidence/repair-review-20261101/G18/uninstall-recovery-probe.ps1 -ProjectRoot . -UseSealedCatchBodies -OutputPath <temp>
+source=docs/test-evidence/repair-review-20261101/uninstall-{ppt,visio}-catch.ps1 (sealed pre-fix bodies, unchanged by this task)
+same_standard=registration may be enabled only when files are complete AND the original registration was restored; material kept whenever the rollback is unconfirmed
+exit=1
+---- output ----
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-ppt-a
+03762a9b5c2423e8357e18157bcec09\product
+WARNING: 从恢复副本还原产品文件失败：injected recovery I/O failure
+WARNING: 
+卸载失败且未能确认完整还原。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-ppt-
+fafa77f7a7904c699a6163e134322a5a\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence
+\repair-review-20261101\G18\g18-ppt-fafa77f7a7904c699a6163e134322a5a\staged
+WARNING: 恢复原注册表项失败：ProductOnly
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-ppt-c
+60e710c47fa41ddaacbb77c223dd742\product
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-visio
+-c348b4f8853a4e519f8a197afd2b6e6f\product
+WARNING: 从恢复副本还原 Visio 产品文件失败：injected recovery I/O failure
+WARNING: 
+卸载失败且未能确认完整还原。恢复副本保留于：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-visi
+o-d9b8359d2f7245cf9b7f3b99406d2830\complete-recovery；卸载暂存目录：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-eviden
+ce\repair-review-20261101\G18\g18-visio-d9b8359d2f7245cf9b7f3b99406d2830\staged
+WARNING: 恢复 Visio 注册项失败：ProductOnly
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件：C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G18\g18-visio
+-6e86bac478f1465ebf559fc75d7fcf7e\product
+PASS|uninstall_ppt_recovery|source=sealed_prefix_source|scenario=files_restore_ok|expected_registry_enabled=True|actual=True|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=
+FAIL|uninstall_ppt_recovery|source=sealed_prefix_source|scenario=files_restore_fails|expected_registry_enabled=False|actual=True|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=registry_state_mismatch
+FAIL|uninstall_ppt_recovery|source=sealed_prefix_source|scenario=registry_restore_fails|expected_registry_enabled=False|actual=False|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=recovery_material_lost
+PASS|uninstall_visio_recovery|source=sealed_prefix_source|scenario=files_restore_ok|expected_registry_enabled=True|actual=True|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=
+FAIL|uninstall_visio_recovery|source=sealed_prefix_source|scenario=files_restore_fails|expected_registry_enabled=False|actual=True|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=registry_state_mismatch
+FAIL|uninstall_visio_recovery|source=sealed_prefix_source|scenario=registry_restore_fails|expected_registry_enabled=False|actual=False|order_ok=False|trace=registry.remove,registry.restore,files.restore|notes=recovery_material_lost
+SUMMARY|total=6|failed=4

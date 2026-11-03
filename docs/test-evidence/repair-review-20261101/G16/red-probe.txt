@@ -1,0 +1,24 @@
+﻿# G16 / R-034 - RED run (pre-fix production entry)
+# produced: 2026-11-02 01:58:42 +08:00
+# palette source snapshot: docs/test-evidence/repair-review-20261101/G16/red-source (pre-fix bytes, SHA-256 recorded in G16.md)
+# build: dotnet build docs/test-evidence/repair-review-20261101/G16/probe/RecoveryProbe.csproj -c Release -p:G16Snapshot=red
+# run:   dotnet docs/test-evidence/repair-review-20261101/G16/probe/bin/Release/net8.0-windows/G16RecoveryProbe.dll
+# exit code: 1
+# assertions: the same 15 business scenarios in both runs; only the adapter differs
+#
+PASS|recovery_valid_control|selected_valid=True|current_identity_matches_disk=True|backup_identity_matches_disk=True|sel_current=06B03BF0C53E|disk_current=06B03BF0C53E|sel_backup=5E5C6C7A38A9|disk_backup=5E5C6C7A38A9
+FAIL|recovery_after_parse_error|valid_backup=True|retained_old_model=True|palette_snapshot_matches_disk=False|recovery_allowed=False|error=PATENTMARKER_CONTENT_CHANGED
+FAIL|recovery_raw_current_snapshot_control|selected_valid=False|backup_parsed=True|byte_snapshot=False
+FAIL|recovery_after_explicit_reload|current_model_null=True|valid_backup=True|button_enabled=False
+FAIL|recovery_corrupt_utf8_current|restored=False|entries=-1|bytes_replaced=False
+FAIL|recovery_cold_start_no_cache|model_null=True|pending=False|restored=False
+PASS|recovery_corrupt_backup_refused|refused=True|wrote=False|error=Backup dictionary cannot be parsed.
+PASS|recovery_current_changed_after_capture|refused=True|error=PATENTMARKER_CONTENT_CHANGED|newer_bytes_kept=True
+PASS|recovery_backup_changed_after_capture|refused=True|error=PATENTMARKER_CONTENT_CHANGED
+PASS|recovery_document_switched|refused=True|error=PATENTMARKER_CONTENT_CHANGED
+PASS|recovery_keep_requires_parsable_current|refused=True|error=PATENTMARKER_CONTENT_CHANGED|backup_kept=True
+PASS|recovery_lock_busy|refused=True|error=PATENTMARKER_LOCK_BUSY
+PASS|recovery_read_only_target|refused=True|read_only_preserved=True|error=字典文件为只读: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G16\probe\bin\Release\net8.0-windows\g16-work\t.dict.json
+FAIL|recovery_baseline_failure_reports_write|reports_wrote=False|error=PATENTMARKER_CONTENT_CHANGED|restore_point_kept=True
+FAIL|recovery_dialog_offers_restore|restore_enabled=True|keep_enabled=True
+SUMMARY: passed=8 failed=7 skipped=0

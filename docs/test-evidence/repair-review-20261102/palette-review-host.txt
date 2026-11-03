@@ -1,0 +1,14 @@
+PASS|unrelated-success-json-written|written=True
+FAIL|unrelated-success-preserves-first-pending|expected=301>302|actual=none
+PASS|unrelated-no-match-json-written|written=True
+FAIL|unrelated-no-match-preserves-first-pending|expected=301>302|actual=none
+PASS|unrelated-failure-json-written|written=True
+FAIL|unrelated-failure-preserves-first-pending|expected=301>302|actual=401>402
+PASS|related-followup-blocked|written=False|pending=301>302
+PASS|same-operation-success-clears|pending=none
+PASS|first-sync-drift-no-cad-call|calls=0
+FAIL|first-sync-drift-retains-owed-operation|expected=301>302|actual=none
+PASS|valid-current-invalid-backup-fixture|current=True|backup=False
+FAIL|valid-current-keep-action-not-rejected-by-bad-backup|status=裁决失败: Backup dictionary cannot be parsed.|backup-still-present=True
+PASS|valid-current-keep-component-works|success=True|error=
+SUMMARY|total=13|failed=5

@@ -1,0 +1,27 @@
+G19 evidence manifest
+host: Windows 10 22H2 19045; Windows PowerShell 5.1.19041.7802 (no pwsh 7 on this host)
+word: Word 16.0 (16.0.20326.20232) 64-bit; WINWORD count 0 after runs
+dotnet: 8.0.422
+
+LAYER          FILE                                    RESULT                                                  EXIT  SHA256
+L1 red         red-vbs-probe-formal.txt                FAIL 7 / 67 (expected red)                              1     a2b630cefe0f433b41a72dd6ea209d0c21a64352918e12385349c4d5d99685e4
+L1 red         red-vbs-probe-review-selectors.txt      FAIL 3 / 30 (expected red)                              1     9b183910f2dea113ac6b83408ef0d27e2264fccaa9fbae0f33de5f2532e4c20c
+L1 green       green-vbs-probe-formal.txt              PASS 67 / 0                                             0     b91faa6261bfbe07a710d98d2cb8af0c5fd6ca85fbfcdae9f83651c951763d94
+L1 green       green-vbs-probe-review-selectors.txt    PASS 30 / 0                                             0     a38195eab8f644625d2b05df5fc6a710839f5ba2a269f1529ecf6892f0663122
+L1 trap        probe-trap-demo.txt                     PASS 67 / 0 (fixed probe + pre-fix VBA = still green)   0     e3d5b38e81bcefc5ce7a443111bec53a037067dff57731ff5b1c5fc478c97876
+L1 csharp      csharp-probe-green.txt                  PASS 44 / 0 (C# source unchanged)                       0     db8f4c274a9b08ec7c3ee06b280ad619468bbf7d60638a34b61978b20a22b452
+L1 ws          whitespace-gap-check.txt                PASS 4 / 0 C# and PASS 27 / 0 VBScript                  0     4fdd3e4f09fe597893484435eb7ca93c1c2b73b966d04e77a884b5f8a9565056
+L2 red         red-vba-l2.txt                          FAIL 7 / 17 (expected red)                              1     6c7e28a07adc1f7358a585ed0e707691b37e51772a42646341c83d8f9d768f55
+L2 green       green-vba-l2.txt                        PASS 17 / 0                                             0     8824eb3c0e2966b58626bf5c380f47501a98d28cdf22d24893eb1794f378529f
+L1 unit        csharp-fact-tests.txt                   PASS 252 / 0 / 0 skipped                                0     27784130a9b6ee9048ea34b7f93ecb07c01f3e96ff26ab011b4b1987acd6d6e7
+L0 guard       parser-review-guard.txt                 BLOCKED by design (old-expression probe)                1     1544ebf0d13db4be6b632569a3a9568f56b567e9c8df9fc0b20f448ae9d23545
+L0 enc         encoding-check.txt                      CP936 + CRLF, no BOM, no U+FFFD                         n/a   efe2a3616472236360b51de0a80ec50b56af2134471d1aba2d37ae6a3489106b
+
+FIXED INPUTS (do not delete; needed to reproduce red)
+red-probe\test-g02-parser.vbs           d0a008982c5c6dca2153886fbdea34bd4b3dbdcd98b47a8e58ffca37d5aaf3d5
+red-source\Patterns.bas                 55d5c8c9521a262cf738bfef01b6b50b06ada6555bcac2920b9da5e97497178f
+probe-patterns\patterns.txt             9113a69f01ba425507193791130bfa82c2d2d6561b8cbc32a26b6fa6a763aead
+probe-patterns\formal-cases.txt         f02dd4d28f38ce9a2929e19fd1ad5328ce167a182a30e3da2643958219b329db
+probe-patterns\cases.txt                00d8bc4de9ddc32b92a67e109cef559f1ae1ada7e851a5f7693fd74cfa03d763
+probe-patterns\expected.txt             3f1c7fd90f887a5046b6e8e48fd5d756374352de8e39735aa59063d97c19699d
+baseline-sha256.txt                     8bc180d5e81b5ba6b31c81af28af8b6630bad90f6a5e8870ab55adb0e9ef7a2e

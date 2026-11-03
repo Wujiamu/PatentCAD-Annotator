@@ -1,0 +1,2017 @@
+PASS|base-0|expected=1|支架|actual=1|支架|input=1 支架，
+PASS|base-1|expected=1|支架|actual=1|支架|input=支架 1，
+PASS|base-2|expected=1|支架|actual=1|支架|input=支架 (1)，
+PASS|base-3|expected=1|支架|actual=1|支架|input=支架 （1），
+PASS|base-4|expected=1|支架|actual=1|支架|input=1	支架，
+PASS|base-5|expected=1|支架|actual=1|支架|input=支架	1，
+PASS|base-6|expected=1|支架|actual=1|支架|input=支架	(1)，
+PASS|base-7|expected=1|支架|actual=1|支架|input=支架	（1），
+PASS|base-8|expected=1|支架|actual=1|支架|input=1　支架，
+PASS|base-9|expected=1|支架|actual=1|支架|input=支架　1，
+PASS|base-10|expected=1|支架|actual=1|支架|input=支架　(1)，
+PASS|base-11|expected=1|支架|actual=1|支架|input=支架　（1），
+PASS|base-12|expected=1|支架|actual=1|支架|input=1 	支架，
+PASS|base-13|expected=1|支架|actual=1|支架|input=支架 	1，
+PASS|base-14|expected=1|支架|actual=1|支架|input=支架 	(1)，
+PASS|base-15|expected=1|支架|actual=1|支架|input=支架 	（1），
+PASS|base-16|expected=1|支架|actual=1|支架|input=1 支架；
+PASS|base-17|expected=1|支架|actual=1|支架|input=支架 1；
+PASS|base-18|expected=1|支架|actual=1|支架|input=支架 (1)；
+PASS|base-19|expected=1|支架|actual=1|支架|input=支架 （1）；
+PASS|base-20|expected=1|支架|actual=1|支架|input=1	支架；
+PASS|base-21|expected=1|支架|actual=1|支架|input=支架	1；
+PASS|base-22|expected=1|支架|actual=1|支架|input=支架	(1)；
+PASS|base-23|expected=1|支架|actual=1|支架|input=支架	（1）；
+PASS|base-24|expected=1|支架|actual=1|支架|input=1　支架；
+PASS|base-25|expected=1|支架|actual=1|支架|input=支架　1；
+PASS|base-26|expected=1|支架|actual=1|支架|input=支架　(1)；
+PASS|base-27|expected=1|支架|actual=1|支架|input=支架　（1）；
+PASS|base-28|expected=1|支架|actual=1|支架|input=1 	支架；
+PASS|base-29|expected=1|支架|actual=1|支架|input=支架 	1；
+PASS|base-30|expected=1|支架|actual=1|支架|input=支架 	(1)；
+PASS|base-31|expected=1|支架|actual=1|支架|input=支架 	（1）；
+PASS|base-32|expected=1|支架|actual=1|支架|input=1 支架,
+PASS|base-33|expected=1|支架|actual=1|支架|input=支架 1,
+PASS|base-34|expected=1|支架|actual=1|支架|input=支架 (1),
+PASS|base-35|expected=1|支架|actual=1|支架|input=支架 （1）,
+PASS|base-36|expected=1|支架|actual=1|支架|input=1	支架,
+PASS|base-37|expected=1|支架|actual=1|支架|input=支架	1,
+PASS|base-38|expected=1|支架|actual=1|支架|input=支架	(1),
+PASS|base-39|expected=1|支架|actual=1|支架|input=支架	（1）,
+PASS|base-40|expected=1|支架|actual=1|支架|input=1　支架,
+PASS|base-41|expected=1|支架|actual=1|支架|input=支架　1,
+PASS|base-42|expected=1|支架|actual=1|支架|input=支架　(1),
+PASS|base-43|expected=1|支架|actual=1|支架|input=支架　（1）,
+PASS|base-44|expected=1|支架|actual=1|支架|input=1 	支架,
+PASS|base-45|expected=1|支架|actual=1|支架|input=支架 	1,
+PASS|base-46|expected=1|支架|actual=1|支架|input=支架 	(1),
+PASS|base-47|expected=1|支架|actual=1|支架|input=支架 	（1）,
+PASS|base-48|expected=1|支架|actual=1|支架|input=1 支架;
+PASS|base-49|expected=1|支架|actual=1|支架|input=支架 1;
+PASS|base-50|expected=1|支架|actual=1|支架|input=支架 (1);
+PASS|base-51|expected=1|支架|actual=1|支架|input=支架 （1）;
+PASS|base-52|expected=1|支架|actual=1|支架|input=1	支架;
+PASS|base-53|expected=1|支架|actual=1|支架|input=支架	1;
+PASS|base-54|expected=1|支架|actual=1|支架|input=支架	(1);
+PASS|base-55|expected=1|支架|actual=1|支架|input=支架	（1）;
+PASS|base-56|expected=1|支架|actual=1|支架|input=1　支架;
+PASS|base-57|expected=1|支架|actual=1|支架|input=支架　1;
+PASS|base-58|expected=1|支架|actual=1|支架|input=支架　(1);
+PASS|base-59|expected=1|支架|actual=1|支架|input=支架　（1）;
+PASS|base-60|expected=1|支架|actual=1|支架|input=1 	支架;
+PASS|base-61|expected=1|支架|actual=1|支架|input=支架 	1;
+PASS|base-62|expected=1|支架|actual=1|支架|input=支架 	(1);
+PASS|base-63|expected=1|支架|actual=1|支架|input=支架 	（1）;
+PASS|base-64|expected=1|支架|actual=1|支架|input=1 支架、
+PASS|base-65|expected=1|支架|actual=1|支架|input=支架 1、
+PASS|base-66|expected=1|支架|actual=1|支架|input=支架 (1)、
+PASS|base-67|expected=1|支架|actual=1|支架|input=支架 （1）、
+PASS|base-68|expected=1|支架|actual=1|支架|input=1	支架、
+PASS|base-69|expected=1|支架|actual=1|支架|input=支架	1、
+PASS|base-70|expected=1|支架|actual=1|支架|input=支架	(1)、
+PASS|base-71|expected=1|支架|actual=1|支架|input=支架	（1）、
+PASS|base-72|expected=1|支架|actual=1|支架|input=1　支架、
+PASS|base-73|expected=1|支架|actual=1|支架|input=支架　1、
+PASS|base-74|expected=1|支架|actual=1|支架|input=支架　(1)、
+PASS|base-75|expected=1|支架|actual=1|支架|input=支架　（1）、
+PASS|base-76|expected=1|支架|actual=1|支架|input=1 	支架、
+PASS|base-77|expected=1|支架|actual=1|支架|input=支架 	1、
+PASS|base-78|expected=1|支架|actual=1|支架|input=支架 	(1)、
+PASS|base-79|expected=1|支架|actual=1|支架|input=支架 	（1）、
+PASS|base-80|expected=1|支架|actual=1|支架|input=1 支架。
+PASS|base-81|expected=1|支架|actual=1|支架|input=支架 1。
+PASS|base-82|expected=1|支架|actual=1|支架|input=支架 (1)。
+PASS|base-83|expected=1|支架|actual=1|支架|input=支架 （1）。
+PASS|base-84|expected=1|支架|actual=1|支架|input=1	支架。
+PASS|base-85|expected=1|支架|actual=1|支架|input=支架	1。
+PASS|base-86|expected=1|支架|actual=1|支架|input=支架	(1)。
+PASS|base-87|expected=1|支架|actual=1|支架|input=支架	（1）。
+PASS|base-88|expected=1|支架|actual=1|支架|input=1　支架。
+PASS|base-89|expected=1|支架|actual=1|支架|input=支架　1。
+PASS|base-90|expected=1|支架|actual=1|支架|input=支架　(1)。
+PASS|base-91|expected=1|支架|actual=1|支架|input=支架　（1）。
+PASS|base-92|expected=1|支架|actual=1|支架|input=1 	支架。
+PASS|base-93|expected=1|支架|actual=1|支架|input=支架 	1。
+PASS|base-94|expected=1|支架|actual=1|支架|input=支架 	(1)。
+PASS|base-95|expected=1|支架|actual=1|支架|input=支架 	（1）。
+PASS|base-96|expected=1|支架|actual=1|支架|input=1 支架.
+PASS|base-97|expected=1|支架|actual=1|支架|input=支架 1.
+PASS|base-98|expected=1|支架|actual=1|支架|input=支架 (1).
+PASS|base-99|expected=1|支架|actual=1|支架|input=支架 （1）.
+PASS|base-100|expected=1|支架|actual=1|支架|input=1	支架.
+PASS|base-101|expected=1|支架|actual=1|支架|input=支架	1.
+PASS|base-102|expected=1|支架|actual=1|支架|input=支架	(1).
+PASS|base-103|expected=1|支架|actual=1|支架|input=支架	（1）.
+PASS|base-104|expected=1|支架|actual=1|支架|input=1　支架.
+PASS|base-105|expected=1|支架|actual=1|支架|input=支架　1.
+PASS|base-106|expected=1|支架|actual=1|支架|input=支架　(1).
+PASS|base-107|expected=1|支架|actual=1|支架|input=支架　（1）.
+PASS|base-108|expected=1|支架|actual=1|支架|input=1 	支架.
+PASS|base-109|expected=1|支架|actual=1|支架|input=支架 	1.
+PASS|base-110|expected=1|支架|actual=1|支架|input=支架 	(1).
+PASS|base-111|expected=1|支架|actual=1|支架|input=支架 	（1）.
+PASS|base-112|expected=12345|支架|actual=12345|支架|input=12345 支架，
+PASS|base-113|expected=12345|支架|actual=12345|支架|input=支架 12345，
+PASS|base-114|expected=12345|支架|actual=12345|支架|input=支架 (12345)，
+PASS|base-115|expected=12345|支架|actual=12345|支架|input=支架 （12345），
+PASS|base-116|expected=12345|支架|actual=12345|支架|input=12345	支架，
+PASS|base-117|expected=12345|支架|actual=12345|支架|input=支架	12345，
+PASS|base-118|expected=12345|支架|actual=12345|支架|input=支架	(12345)，
+PASS|base-119|expected=12345|支架|actual=12345|支架|input=支架	（12345），
+PASS|base-120|expected=12345|支架|actual=12345|支架|input=12345　支架，
+PASS|base-121|expected=12345|支架|actual=12345|支架|input=支架　12345，
+PASS|base-122|expected=12345|支架|actual=12345|支架|input=支架　(12345)，
+PASS|base-123|expected=12345|支架|actual=12345|支架|input=支架　（12345），
+PASS|base-124|expected=12345|支架|actual=12345|支架|input=12345 	支架，
+PASS|base-125|expected=12345|支架|actual=12345|支架|input=支架 	12345，
+PASS|base-126|expected=12345|支架|actual=12345|支架|input=支架 	(12345)，
+PASS|base-127|expected=12345|支架|actual=12345|支架|input=支架 	（12345），
+PASS|base-128|expected=12345|支架|actual=12345|支架|input=12345 支架；
+PASS|base-129|expected=12345|支架|actual=12345|支架|input=支架 12345；
+PASS|base-130|expected=12345|支架|actual=12345|支架|input=支架 (12345)；
+PASS|base-131|expected=12345|支架|actual=12345|支架|input=支架 （12345）；
+PASS|base-132|expected=12345|支架|actual=12345|支架|input=12345	支架；
+PASS|base-133|expected=12345|支架|actual=12345|支架|input=支架	12345；
+PASS|base-134|expected=12345|支架|actual=12345|支架|input=支架	(12345)；
+PASS|base-135|expected=12345|支架|actual=12345|支架|input=支架	（12345）；
+PASS|base-136|expected=12345|支架|actual=12345|支架|input=12345　支架；
+PASS|base-137|expected=12345|支架|actual=12345|支架|input=支架　12345；
+PASS|base-138|expected=12345|支架|actual=12345|支架|input=支架　(12345)；
+PASS|base-139|expected=12345|支架|actual=12345|支架|input=支架　（12345）；
+PASS|base-140|expected=12345|支架|actual=12345|支架|input=12345 	支架；
+PASS|base-141|expected=12345|支架|actual=12345|支架|input=支架 	12345；
+PASS|base-142|expected=12345|支架|actual=12345|支架|input=支架 	(12345)；
+PASS|base-143|expected=12345|支架|actual=12345|支架|input=支架 	（12345）；
+PASS|base-144|expected=12345|支架|actual=12345|支架|input=12345 支架,
+PASS|base-145|expected=12345|支架|actual=12345|支架|input=支架 12345,
+PASS|base-146|expected=12345|支架|actual=12345|支架|input=支架 (12345),
+PASS|base-147|expected=12345|支架|actual=12345|支架|input=支架 （12345）,
+PASS|base-148|expected=12345|支架|actual=12345|支架|input=12345	支架,
+PASS|base-149|expected=12345|支架|actual=12345|支架|input=支架	12345,
+PASS|base-150|expected=12345|支架|actual=12345|支架|input=支架	(12345),
+PASS|base-151|expected=12345|支架|actual=12345|支架|input=支架	（12345）,
+PASS|base-152|expected=12345|支架|actual=12345|支架|input=12345　支架,
+PASS|base-153|expected=12345|支架|actual=12345|支架|input=支架　12345,
+PASS|base-154|expected=12345|支架|actual=12345|支架|input=支架　(12345),
+PASS|base-155|expected=12345|支架|actual=12345|支架|input=支架　（12345）,
+PASS|base-156|expected=12345|支架|actual=12345|支架|input=12345 	支架,
+PASS|base-157|expected=12345|支架|actual=12345|支架|input=支架 	12345,
+PASS|base-158|expected=12345|支架|actual=12345|支架|input=支架 	(12345),
+PASS|base-159|expected=12345|支架|actual=12345|支架|input=支架 	（12345）,
+PASS|base-160|expected=12345|支架|actual=12345|支架|input=12345 支架;
+PASS|base-161|expected=12345|支架|actual=12345|支架|input=支架 12345;
+PASS|base-162|expected=12345|支架|actual=12345|支架|input=支架 (12345);
+PASS|base-163|expected=12345|支架|actual=12345|支架|input=支架 （12345）;
+PASS|base-164|expected=12345|支架|actual=12345|支架|input=12345	支架;
+PASS|base-165|expected=12345|支架|actual=12345|支架|input=支架	12345;
+PASS|base-166|expected=12345|支架|actual=12345|支架|input=支架	(12345);
+PASS|base-167|expected=12345|支架|actual=12345|支架|input=支架	（12345）;
+PASS|base-168|expected=12345|支架|actual=12345|支架|input=12345　支架;
+PASS|base-169|expected=12345|支架|actual=12345|支架|input=支架　12345;
+PASS|base-170|expected=12345|支架|actual=12345|支架|input=支架　(12345);
+PASS|base-171|expected=12345|支架|actual=12345|支架|input=支架　（12345）;
+PASS|base-172|expected=12345|支架|actual=12345|支架|input=12345 	支架;
+PASS|base-173|expected=12345|支架|actual=12345|支架|input=支架 	12345;
+PASS|base-174|expected=12345|支架|actual=12345|支架|input=支架 	(12345);
+PASS|base-175|expected=12345|支架|actual=12345|支架|input=支架 	（12345）;
+PASS|base-176|expected=12345|支架|actual=12345|支架|input=12345 支架、
+PASS|base-177|expected=12345|支架|actual=12345|支架|input=支架 12345、
+PASS|base-178|expected=12345|支架|actual=12345|支架|input=支架 (12345)、
+PASS|base-179|expected=12345|支架|actual=12345|支架|input=支架 （12345）、
+PASS|base-180|expected=12345|支架|actual=12345|支架|input=12345	支架、
+PASS|base-181|expected=12345|支架|actual=12345|支架|input=支架	12345、
+PASS|base-182|expected=12345|支架|actual=12345|支架|input=支架	(12345)、
+PASS|base-183|expected=12345|支架|actual=12345|支架|input=支架	（12345）、
+PASS|base-184|expected=12345|支架|actual=12345|支架|input=12345　支架、
+PASS|base-185|expected=12345|支架|actual=12345|支架|input=支架　12345、
+PASS|base-186|expected=12345|支架|actual=12345|支架|input=支架　(12345)、
+PASS|base-187|expected=12345|支架|actual=12345|支架|input=支架　（12345）、
+PASS|base-188|expected=12345|支架|actual=12345|支架|input=12345 	支架、
+PASS|base-189|expected=12345|支架|actual=12345|支架|input=支架 	12345、
+PASS|base-190|expected=12345|支架|actual=12345|支架|input=支架 	(12345)、
+PASS|base-191|expected=12345|支架|actual=12345|支架|input=支架 	（12345）、
+PASS|base-192|expected=12345|支架|actual=12345|支架|input=12345 支架。
+PASS|base-193|expected=12345|支架|actual=12345|支架|input=支架 12345。
+PASS|base-194|expected=12345|支架|actual=12345|支架|input=支架 (12345)。
+PASS|base-195|expected=12345|支架|actual=12345|支架|input=支架 （12345）。
+PASS|base-196|expected=12345|支架|actual=12345|支架|input=12345	支架。
+PASS|base-197|expected=12345|支架|actual=12345|支架|input=支架	12345。
+PASS|base-198|expected=12345|支架|actual=12345|支架|input=支架	(12345)。
+PASS|base-199|expected=12345|支架|actual=12345|支架|input=支架	（12345）。
+PASS|base-200|expected=12345|支架|actual=12345|支架|input=12345　支架。
+PASS|base-201|expected=12345|支架|actual=12345|支架|input=支架　12345。
+PASS|base-202|expected=12345|支架|actual=12345|支架|input=支架　(12345)。
+PASS|base-203|expected=12345|支架|actual=12345|支架|input=支架　（12345）。
+PASS|base-204|expected=12345|支架|actual=12345|支架|input=12345 	支架。
+PASS|base-205|expected=12345|支架|actual=12345|支架|input=支架 	12345。
+PASS|base-206|expected=12345|支架|actual=12345|支架|input=支架 	(12345)。
+PASS|base-207|expected=12345|支架|actual=12345|支架|input=支架 	（12345）。
+PASS|base-208|expected=12345|支架|actual=12345|支架|input=12345 支架.
+PASS|base-209|expected=12345|支架|actual=12345|支架|input=支架 12345.
+PASS|base-210|expected=12345|支架|actual=12345|支架|input=支架 (12345).
+PASS|base-211|expected=12345|支架|actual=12345|支架|input=支架 （12345）.
+PASS|base-212|expected=12345|支架|actual=12345|支架|input=12345	支架.
+PASS|base-213|expected=12345|支架|actual=12345|支架|input=支架	12345.
+PASS|base-214|expected=12345|支架|actual=12345|支架|input=支架	(12345).
+PASS|base-215|expected=12345|支架|actual=12345|支架|input=支架	（12345）.
+PASS|base-216|expected=12345|支架|actual=12345|支架|input=12345　支架.
+PASS|base-217|expected=12345|支架|actual=12345|支架|input=支架　12345.
+PASS|base-218|expected=12345|支架|actual=12345|支架|input=支架　(12345).
+PASS|base-219|expected=12345|支架|actual=12345|支架|input=支架　（12345）.
+PASS|base-220|expected=12345|支架|actual=12345|支架|input=12345 	支架.
+PASS|base-221|expected=12345|支架|actual=12345|支架|input=支架 	12345.
+PASS|base-222|expected=12345|支架|actual=12345|支架|input=支架 	(12345).
+PASS|base-223|expected=12345|支架|actual=12345|支架|input=支架 	（12345）.
+PASS|base-224|expected=S1|支架|actual=S1|支架|input=S1 支架，
+PASS|base-225|expected=S1|支架|actual=S1|支架|input=支架 S1，
+PASS|base-226|expected=S1|支架|actual=S1|支架|input=支架 (S1)，
+PASS|base-227|expected=S1|支架|actual=S1|支架|input=支架 （S1），
+PASS|base-228|expected=S1|支架|actual=S1|支架|input=S1	支架，
+PASS|base-229|expected=S1|支架|actual=S1|支架|input=支架	S1，
+PASS|base-230|expected=S1|支架|actual=S1|支架|input=支架	(S1)，
+PASS|base-231|expected=S1|支架|actual=S1|支架|input=支架	（S1），
+PASS|base-232|expected=S1|支架|actual=S1|支架|input=S1　支架，
+PASS|base-233|expected=S1|支架|actual=S1|支架|input=支架　S1，
+PASS|base-234|expected=S1|支架|actual=S1|支架|input=支架　(S1)，
+PASS|base-235|expected=S1|支架|actual=S1|支架|input=支架　（S1），
+PASS|base-236|expected=S1|支架|actual=S1|支架|input=S1 	支架，
+PASS|base-237|expected=S1|支架|actual=S1|支架|input=支架 	S1，
+PASS|base-238|expected=S1|支架|actual=S1|支架|input=支架 	(S1)，
+PASS|base-239|expected=S1|支架|actual=S1|支架|input=支架 	（S1），
+PASS|base-240|expected=S1|支架|actual=S1|支架|input=S1 支架；
+PASS|base-241|expected=S1|支架|actual=S1|支架|input=支架 S1；
+PASS|base-242|expected=S1|支架|actual=S1|支架|input=支架 (S1)；
+PASS|base-243|expected=S1|支架|actual=S1|支架|input=支架 （S1）；
+PASS|base-244|expected=S1|支架|actual=S1|支架|input=S1	支架；
+PASS|base-245|expected=S1|支架|actual=S1|支架|input=支架	S1；
+PASS|base-246|expected=S1|支架|actual=S1|支架|input=支架	(S1)；
+PASS|base-247|expected=S1|支架|actual=S1|支架|input=支架	（S1）；
+PASS|base-248|expected=S1|支架|actual=S1|支架|input=S1　支架；
+PASS|base-249|expected=S1|支架|actual=S1|支架|input=支架　S1；
+PASS|base-250|expected=S1|支架|actual=S1|支架|input=支架　(S1)；
+PASS|base-251|expected=S1|支架|actual=S1|支架|input=支架　（S1）；
+PASS|base-252|expected=S1|支架|actual=S1|支架|input=S1 	支架；
+PASS|base-253|expected=S1|支架|actual=S1|支架|input=支架 	S1；
+PASS|base-254|expected=S1|支架|actual=S1|支架|input=支架 	(S1)；
+PASS|base-255|expected=S1|支架|actual=S1|支架|input=支架 	（S1）；
+PASS|base-256|expected=S1|支架|actual=S1|支架|input=S1 支架,
+PASS|base-257|expected=S1|支架|actual=S1|支架|input=支架 S1,
+PASS|base-258|expected=S1|支架|actual=S1|支架|input=支架 (S1),
+PASS|base-259|expected=S1|支架|actual=S1|支架|input=支架 （S1）,
+PASS|base-260|expected=S1|支架|actual=S1|支架|input=S1	支架,
+PASS|base-261|expected=S1|支架|actual=S1|支架|input=支架	S1,
+PASS|base-262|expected=S1|支架|actual=S1|支架|input=支架	(S1),
+PASS|base-263|expected=S1|支架|actual=S1|支架|input=支架	（S1）,
+PASS|base-264|expected=S1|支架|actual=S1|支架|input=S1　支架,
+PASS|base-265|expected=S1|支架|actual=S1|支架|input=支架　S1,
+PASS|base-266|expected=S1|支架|actual=S1|支架|input=支架　(S1),
+PASS|base-267|expected=S1|支架|actual=S1|支架|input=支架　（S1）,
+PASS|base-268|expected=S1|支架|actual=S1|支架|input=S1 	支架,
+PASS|base-269|expected=S1|支架|actual=S1|支架|input=支架 	S1,
+PASS|base-270|expected=S1|支架|actual=S1|支架|input=支架 	(S1),
+PASS|base-271|expected=S1|支架|actual=S1|支架|input=支架 	（S1）,
+PASS|base-272|expected=S1|支架|actual=S1|支架|input=S1 支架;
+PASS|base-273|expected=S1|支架|actual=S1|支架|input=支架 S1;
+PASS|base-274|expected=S1|支架|actual=S1|支架|input=支架 (S1);
+PASS|base-275|expected=S1|支架|actual=S1|支架|input=支架 （S1）;
+PASS|base-276|expected=S1|支架|actual=S1|支架|input=S1	支架;
+PASS|base-277|expected=S1|支架|actual=S1|支架|input=支架	S1;
+PASS|base-278|expected=S1|支架|actual=S1|支架|input=支架	(S1);
+PASS|base-279|expected=S1|支架|actual=S1|支架|input=支架	（S1）;
+PASS|base-280|expected=S1|支架|actual=S1|支架|input=S1　支架;
+PASS|base-281|expected=S1|支架|actual=S1|支架|input=支架　S1;
+PASS|base-282|expected=S1|支架|actual=S1|支架|input=支架　(S1);
+PASS|base-283|expected=S1|支架|actual=S1|支架|input=支架　（S1）;
+PASS|base-284|expected=S1|支架|actual=S1|支架|input=S1 	支架;
+PASS|base-285|expected=S1|支架|actual=S1|支架|input=支架 	S1;
+PASS|base-286|expected=S1|支架|actual=S1|支架|input=支架 	(S1);
+PASS|base-287|expected=S1|支架|actual=S1|支架|input=支架 	（S1）;
+PASS|base-288|expected=S1|支架|actual=S1|支架|input=S1 支架、
+PASS|base-289|expected=S1|支架|actual=S1|支架|input=支架 S1、
+PASS|base-290|expected=S1|支架|actual=S1|支架|input=支架 (S1)、
+PASS|base-291|expected=S1|支架|actual=S1|支架|input=支架 （S1）、
+PASS|base-292|expected=S1|支架|actual=S1|支架|input=S1	支架、
+PASS|base-293|expected=S1|支架|actual=S1|支架|input=支架	S1、
+PASS|base-294|expected=S1|支架|actual=S1|支架|input=支架	(S1)、
+PASS|base-295|expected=S1|支架|actual=S1|支架|input=支架	（S1）、
+PASS|base-296|expected=S1|支架|actual=S1|支架|input=S1　支架、
+PASS|base-297|expected=S1|支架|actual=S1|支架|input=支架　S1、
+PASS|base-298|expected=S1|支架|actual=S1|支架|input=支架　(S1)、
+PASS|base-299|expected=S1|支架|actual=S1|支架|input=支架　（S1）、
+PASS|base-300|expected=S1|支架|actual=S1|支架|input=S1 	支架、
+PASS|base-301|expected=S1|支架|actual=S1|支架|input=支架 	S1、
+PASS|base-302|expected=S1|支架|actual=S1|支架|input=支架 	(S1)、
+PASS|base-303|expected=S1|支架|actual=S1|支架|input=支架 	（S1）、
+PASS|base-304|expected=S1|支架|actual=S1|支架|input=S1 支架。
+PASS|base-305|expected=S1|支架|actual=S1|支架|input=支架 S1。
+PASS|base-306|expected=S1|支架|actual=S1|支架|input=支架 (S1)。
+PASS|base-307|expected=S1|支架|actual=S1|支架|input=支架 （S1）。
+PASS|base-308|expected=S1|支架|actual=S1|支架|input=S1	支架。
+PASS|base-309|expected=S1|支架|actual=S1|支架|input=支架	S1。
+PASS|base-310|expected=S1|支架|actual=S1|支架|input=支架	(S1)。
+PASS|base-311|expected=S1|支架|actual=S1|支架|input=支架	（S1）。
+PASS|base-312|expected=S1|支架|actual=S1|支架|input=S1　支架。
+PASS|base-313|expected=S1|支架|actual=S1|支架|input=支架　S1。
+PASS|base-314|expected=S1|支架|actual=S1|支架|input=支架　(S1)。
+PASS|base-315|expected=S1|支架|actual=S1|支架|input=支架　（S1）。
+PASS|base-316|expected=S1|支架|actual=S1|支架|input=S1 	支架。
+PASS|base-317|expected=S1|支架|actual=S1|支架|input=支架 	S1。
+PASS|base-318|expected=S1|支架|actual=S1|支架|input=支架 	(S1)。
+PASS|base-319|expected=S1|支架|actual=S1|支架|input=支架 	（S1）。
+PASS|base-320|expected=S1|支架|actual=S1|支架|input=S1 支架.
+PASS|base-321|expected=S1|支架|actual=S1|支架|input=支架 S1.
+PASS|base-322|expected=S1|支架|actual=S1|支架|input=支架 (S1).
+PASS|base-323|expected=S1|支架|actual=S1|支架|input=支架 （S1）.
+PASS|base-324|expected=S1|支架|actual=S1|支架|input=S1	支架.
+PASS|base-325|expected=S1|支架|actual=S1|支架|input=支架	S1.
+PASS|base-326|expected=S1|支架|actual=S1|支架|input=支架	(S1).
+PASS|base-327|expected=S1|支架|actual=S1|支架|input=支架	（S1）.
+PASS|base-328|expected=S1|支架|actual=S1|支架|input=S1　支架.
+PASS|base-329|expected=S1|支架|actual=S1|支架|input=支架　S1.
+PASS|base-330|expected=S1|支架|actual=S1|支架|input=支架　(S1).
+PASS|base-331|expected=S1|支架|actual=S1|支架|input=支架　（S1）.
+PASS|base-332|expected=S1|支架|actual=S1|支架|input=S1 	支架.
+PASS|base-333|expected=S1|支架|actual=S1|支架|input=支架 	S1.
+PASS|base-334|expected=S1|支架|actual=S1|支架|input=支架 	(S1).
+PASS|base-335|expected=S1|支架|actual=S1|支架|input=支架 	（S1）.
+PASS|base-336|expected=1342A|支架|actual=1342A|支架|input=1342A 支架，
+PASS|base-337|expected=1342A|支架|actual=1342A|支架|input=支架 1342A，
+PASS|base-338|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A)，
+PASS|base-339|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A），
+PASS|base-340|expected=1342A|支架|actual=1342A|支架|input=1342A	支架，
+PASS|base-341|expected=1342A|支架|actual=1342A|支架|input=支架	1342A，
+PASS|base-342|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A)，
+PASS|base-343|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A），
+PASS|base-344|expected=1342A|支架|actual=1342A|支架|input=1342A　支架，
+PASS|base-345|expected=1342A|支架|actual=1342A|支架|input=支架　1342A，
+PASS|base-346|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A)，
+PASS|base-347|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A），
+PASS|base-348|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架，
+PASS|base-349|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A，
+PASS|base-350|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A)，
+PASS|base-351|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A），
+PASS|base-352|expected=1342A|支架|actual=1342A|支架|input=1342A 支架；
+PASS|base-353|expected=1342A|支架|actual=1342A|支架|input=支架 1342A；
+PASS|base-354|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A)；
+PASS|base-355|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）；
+PASS|base-356|expected=1342A|支架|actual=1342A|支架|input=1342A	支架；
+PASS|base-357|expected=1342A|支架|actual=1342A|支架|input=支架	1342A；
+PASS|base-358|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A)；
+PASS|base-359|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）；
+PASS|base-360|expected=1342A|支架|actual=1342A|支架|input=1342A　支架；
+PASS|base-361|expected=1342A|支架|actual=1342A|支架|input=支架　1342A；
+PASS|base-362|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A)；
+PASS|base-363|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）；
+PASS|base-364|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架；
+PASS|base-365|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A；
+PASS|base-366|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A)；
+PASS|base-367|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）；
+PASS|base-368|expected=1342A|支架|actual=1342A|支架|input=1342A 支架,
+PASS|base-369|expected=1342A|支架|actual=1342A|支架|input=支架 1342A,
+PASS|base-370|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A),
+PASS|base-371|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）,
+PASS|base-372|expected=1342A|支架|actual=1342A|支架|input=1342A	支架,
+PASS|base-373|expected=1342A|支架|actual=1342A|支架|input=支架	1342A,
+PASS|base-374|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A),
+PASS|base-375|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）,
+PASS|base-376|expected=1342A|支架|actual=1342A|支架|input=1342A　支架,
+PASS|base-377|expected=1342A|支架|actual=1342A|支架|input=支架　1342A,
+PASS|base-378|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A),
+PASS|base-379|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）,
+PASS|base-380|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架,
+PASS|base-381|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A,
+PASS|base-382|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A),
+PASS|base-383|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）,
+PASS|base-384|expected=1342A|支架|actual=1342A|支架|input=1342A 支架;
+PASS|base-385|expected=1342A|支架|actual=1342A|支架|input=支架 1342A;
+PASS|base-386|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A);
+PASS|base-387|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）;
+PASS|base-388|expected=1342A|支架|actual=1342A|支架|input=1342A	支架;
+PASS|base-389|expected=1342A|支架|actual=1342A|支架|input=支架	1342A;
+PASS|base-390|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A);
+PASS|base-391|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）;
+PASS|base-392|expected=1342A|支架|actual=1342A|支架|input=1342A　支架;
+PASS|base-393|expected=1342A|支架|actual=1342A|支架|input=支架　1342A;
+PASS|base-394|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A);
+PASS|base-395|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）;
+PASS|base-396|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架;
+PASS|base-397|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A;
+PASS|base-398|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A);
+PASS|base-399|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）;
+PASS|base-400|expected=1342A|支架|actual=1342A|支架|input=1342A 支架、
+PASS|base-401|expected=1342A|支架|actual=1342A|支架|input=支架 1342A、
+PASS|base-402|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A)、
+PASS|base-403|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）、
+PASS|base-404|expected=1342A|支架|actual=1342A|支架|input=1342A	支架、
+PASS|base-405|expected=1342A|支架|actual=1342A|支架|input=支架	1342A、
+PASS|base-406|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A)、
+PASS|base-407|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）、
+PASS|base-408|expected=1342A|支架|actual=1342A|支架|input=1342A　支架、
+PASS|base-409|expected=1342A|支架|actual=1342A|支架|input=支架　1342A、
+PASS|base-410|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A)、
+PASS|base-411|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）、
+PASS|base-412|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架、
+PASS|base-413|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A、
+PASS|base-414|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A)、
+PASS|base-415|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）、
+PASS|base-416|expected=1342A|支架|actual=1342A|支架|input=1342A 支架。
+PASS|base-417|expected=1342A|支架|actual=1342A|支架|input=支架 1342A。
+PASS|base-418|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A)。
+PASS|base-419|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）。
+PASS|base-420|expected=1342A|支架|actual=1342A|支架|input=1342A	支架。
+PASS|base-421|expected=1342A|支架|actual=1342A|支架|input=支架	1342A。
+PASS|base-422|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A)。
+PASS|base-423|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）。
+PASS|base-424|expected=1342A|支架|actual=1342A|支架|input=1342A　支架。
+PASS|base-425|expected=1342A|支架|actual=1342A|支架|input=支架　1342A。
+PASS|base-426|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A)。
+PASS|base-427|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）。
+PASS|base-428|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架。
+PASS|base-429|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A。
+PASS|base-430|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A)。
+PASS|base-431|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）。
+PASS|base-432|expected=1342A|支架|actual=1342A|支架|input=1342A 支架.
+PASS|base-433|expected=1342A|支架|actual=1342A|支架|input=支架 1342A.
+PASS|base-434|expected=1342A|支架|actual=1342A|支架|input=支架 (1342A).
+PASS|base-435|expected=1342A|支架|actual=1342A|支架|input=支架 （1342A）.
+PASS|base-436|expected=1342A|支架|actual=1342A|支架|input=1342A	支架.
+PASS|base-437|expected=1342A|支架|actual=1342A|支架|input=支架	1342A.
+PASS|base-438|expected=1342A|支架|actual=1342A|支架|input=支架	(1342A).
+PASS|base-439|expected=1342A|支架|actual=1342A|支架|input=支架	（1342A）.
+PASS|base-440|expected=1342A|支架|actual=1342A|支架|input=1342A　支架.
+PASS|base-441|expected=1342A|支架|actual=1342A|支架|input=支架　1342A.
+PASS|base-442|expected=1342A|支架|actual=1342A|支架|input=支架　(1342A).
+PASS|base-443|expected=1342A|支架|actual=1342A|支架|input=支架　（1342A）.
+PASS|base-444|expected=1342A|支架|actual=1342A|支架|input=1342A 	支架.
+PASS|base-445|expected=1342A|支架|actual=1342A|支架|input=支架 	1342A.
+PASS|base-446|expected=1342A|支架|actual=1342A|支架|input=支架 	(1342A).
+PASS|base-447|expected=1342A|支架|actual=1342A|支架|input=支架 	（1342A）.
+PASS|base-448|expected=123A1|支架|actual=123A1|支架|input=123A1 支架，
+PASS|base-449|expected=123A1|支架|actual=123A1|支架|input=支架 123A1，
+PASS|base-450|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1)，
+PASS|base-451|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1），
+PASS|base-452|expected=123A1|支架|actual=123A1|支架|input=123A1	支架，
+PASS|base-453|expected=123A1|支架|actual=123A1|支架|input=支架	123A1，
+PASS|base-454|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1)，
+PASS|base-455|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1），
+PASS|base-456|expected=123A1|支架|actual=123A1|支架|input=123A1　支架，
+PASS|base-457|expected=123A1|支架|actual=123A1|支架|input=支架　123A1，
+PASS|base-458|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1)，
+PASS|base-459|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1），
+PASS|base-460|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架，
+PASS|base-461|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1，
+PASS|base-462|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1)，
+PASS|base-463|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1），
+PASS|base-464|expected=123A1|支架|actual=123A1|支架|input=123A1 支架；
+PASS|base-465|expected=123A1|支架|actual=123A1|支架|input=支架 123A1；
+PASS|base-466|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1)；
+PASS|base-467|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）；
+PASS|base-468|expected=123A1|支架|actual=123A1|支架|input=123A1	支架；
+PASS|base-469|expected=123A1|支架|actual=123A1|支架|input=支架	123A1；
+PASS|base-470|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1)；
+PASS|base-471|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）；
+PASS|base-472|expected=123A1|支架|actual=123A1|支架|input=123A1　支架；
+PASS|base-473|expected=123A1|支架|actual=123A1|支架|input=支架　123A1；
+PASS|base-474|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1)；
+PASS|base-475|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）；
+PASS|base-476|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架；
+PASS|base-477|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1；
+PASS|base-478|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1)；
+PASS|base-479|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）；
+PASS|base-480|expected=123A1|支架|actual=123A1|支架|input=123A1 支架,
+PASS|base-481|expected=123A1|支架|actual=123A1|支架|input=支架 123A1,
+PASS|base-482|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1),
+PASS|base-483|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）,
+PASS|base-484|expected=123A1|支架|actual=123A1|支架|input=123A1	支架,
+PASS|base-485|expected=123A1|支架|actual=123A1|支架|input=支架	123A1,
+PASS|base-486|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1),
+PASS|base-487|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）,
+PASS|base-488|expected=123A1|支架|actual=123A1|支架|input=123A1　支架,
+PASS|base-489|expected=123A1|支架|actual=123A1|支架|input=支架　123A1,
+PASS|base-490|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1),
+PASS|base-491|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）,
+PASS|base-492|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架,
+PASS|base-493|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1,
+PASS|base-494|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1),
+PASS|base-495|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）,
+PASS|base-496|expected=123A1|支架|actual=123A1|支架|input=123A1 支架;
+PASS|base-497|expected=123A1|支架|actual=123A1|支架|input=支架 123A1;
+PASS|base-498|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1);
+PASS|base-499|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）;
+PASS|base-500|expected=123A1|支架|actual=123A1|支架|input=123A1	支架;
+PASS|base-501|expected=123A1|支架|actual=123A1|支架|input=支架	123A1;
+PASS|base-502|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1);
+PASS|base-503|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）;
+PASS|base-504|expected=123A1|支架|actual=123A1|支架|input=123A1　支架;
+PASS|base-505|expected=123A1|支架|actual=123A1|支架|input=支架　123A1;
+PASS|base-506|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1);
+PASS|base-507|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）;
+PASS|base-508|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架;
+PASS|base-509|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1;
+PASS|base-510|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1);
+PASS|base-511|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）;
+PASS|base-512|expected=123A1|支架|actual=123A1|支架|input=123A1 支架、
+PASS|base-513|expected=123A1|支架|actual=123A1|支架|input=支架 123A1、
+PASS|base-514|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1)、
+PASS|base-515|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）、
+PASS|base-516|expected=123A1|支架|actual=123A1|支架|input=123A1	支架、
+PASS|base-517|expected=123A1|支架|actual=123A1|支架|input=支架	123A1、
+PASS|base-518|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1)、
+PASS|base-519|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）、
+PASS|base-520|expected=123A1|支架|actual=123A1|支架|input=123A1　支架、
+PASS|base-521|expected=123A1|支架|actual=123A1|支架|input=支架　123A1、
+PASS|base-522|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1)、
+PASS|base-523|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）、
+PASS|base-524|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架、
+PASS|base-525|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1、
+PASS|base-526|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1)、
+PASS|base-527|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）、
+PASS|base-528|expected=123A1|支架|actual=123A1|支架|input=123A1 支架。
+PASS|base-529|expected=123A1|支架|actual=123A1|支架|input=支架 123A1。
+PASS|base-530|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1)。
+PASS|base-531|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）。
+PASS|base-532|expected=123A1|支架|actual=123A1|支架|input=123A1	支架。
+PASS|base-533|expected=123A1|支架|actual=123A1|支架|input=支架	123A1。
+PASS|base-534|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1)。
+PASS|base-535|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）。
+PASS|base-536|expected=123A1|支架|actual=123A1|支架|input=123A1　支架。
+PASS|base-537|expected=123A1|支架|actual=123A1|支架|input=支架　123A1。
+PASS|base-538|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1)。
+PASS|base-539|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）。
+PASS|base-540|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架。
+PASS|base-541|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1。
+PASS|base-542|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1)。
+PASS|base-543|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）。
+PASS|base-544|expected=123A1|支架|actual=123A1|支架|input=123A1 支架.
+PASS|base-545|expected=123A1|支架|actual=123A1|支架|input=支架 123A1.
+PASS|base-546|expected=123A1|支架|actual=123A1|支架|input=支架 (123A1).
+PASS|base-547|expected=123A1|支架|actual=123A1|支架|input=支架 （123A1）.
+PASS|base-548|expected=123A1|支架|actual=123A1|支架|input=123A1	支架.
+PASS|base-549|expected=123A1|支架|actual=123A1|支架|input=支架	123A1.
+PASS|base-550|expected=123A1|支架|actual=123A1|支架|input=支架	(123A1).
+PASS|base-551|expected=123A1|支架|actual=123A1|支架|input=支架	（123A1）.
+PASS|base-552|expected=123A1|支架|actual=123A1|支架|input=123A1　支架.
+PASS|base-553|expected=123A1|支架|actual=123A1|支架|input=支架　123A1.
+PASS|base-554|expected=123A1|支架|actual=123A1|支架|input=支架　(123A1).
+PASS|base-555|expected=123A1|支架|actual=123A1|支架|input=支架　（123A1）.
+PASS|base-556|expected=123A1|支架|actual=123A1|支架|input=123A1 	支架.
+PASS|base-557|expected=123A1|支架|actual=123A1|支架|input=支架 	123A1.
+PASS|base-558|expected=123A1|支架|actual=123A1|支架|input=支架 	(123A1).
+PASS|base-559|expected=123A1|支架|actual=123A1|支架|input=支架 	（123A1）.
+PASS|base-560|expected=10-1|支架|actual=10-1|支架|input=10-1 支架，
+PASS|base-561|expected=10-1|支架|actual=10-1|支架|input=支架 10-1，
+PASS|base-562|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1)，
+PASS|base-563|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1），
+PASS|base-564|expected=10-1|支架|actual=10-1|支架|input=10-1	支架，
+PASS|base-565|expected=10-1|支架|actual=10-1|支架|input=支架	10-1，
+PASS|base-566|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1)，
+PASS|base-567|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1），
+PASS|base-568|expected=10-1|支架|actual=10-1|支架|input=10-1　支架，
+PASS|base-569|expected=10-1|支架|actual=10-1|支架|input=支架　10-1，
+PASS|base-570|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1)，
+PASS|base-571|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1），
+PASS|base-572|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架，
+PASS|base-573|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1，
+PASS|base-574|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1)，
+PASS|base-575|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1），
+PASS|base-576|expected=10-1|支架|actual=10-1|支架|input=10-1 支架；
+PASS|base-577|expected=10-1|支架|actual=10-1|支架|input=支架 10-1；
+PASS|base-578|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1)；
+PASS|base-579|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）；
+PASS|base-580|expected=10-1|支架|actual=10-1|支架|input=10-1	支架；
+PASS|base-581|expected=10-1|支架|actual=10-1|支架|input=支架	10-1；
+PASS|base-582|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1)；
+PASS|base-583|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）；
+PASS|base-584|expected=10-1|支架|actual=10-1|支架|input=10-1　支架；
+PASS|base-585|expected=10-1|支架|actual=10-1|支架|input=支架　10-1；
+PASS|base-586|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1)；
+PASS|base-587|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）；
+PASS|base-588|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架；
+PASS|base-589|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1；
+PASS|base-590|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1)；
+PASS|base-591|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）；
+PASS|base-592|expected=10-1|支架|actual=10-1|支架|input=10-1 支架,
+PASS|base-593|expected=10-1|支架|actual=10-1|支架|input=支架 10-1,
+PASS|base-594|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1),
+PASS|base-595|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）,
+PASS|base-596|expected=10-1|支架|actual=10-1|支架|input=10-1	支架,
+PASS|base-597|expected=10-1|支架|actual=10-1|支架|input=支架	10-1,
+PASS|base-598|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1),
+PASS|base-599|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）,
+PASS|base-600|expected=10-1|支架|actual=10-1|支架|input=10-1　支架,
+PASS|base-601|expected=10-1|支架|actual=10-1|支架|input=支架　10-1,
+PASS|base-602|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1),
+PASS|base-603|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）,
+PASS|base-604|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架,
+PASS|base-605|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1,
+PASS|base-606|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1),
+PASS|base-607|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）,
+PASS|base-608|expected=10-1|支架|actual=10-1|支架|input=10-1 支架;
+PASS|base-609|expected=10-1|支架|actual=10-1|支架|input=支架 10-1;
+PASS|base-610|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1);
+PASS|base-611|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）;
+PASS|base-612|expected=10-1|支架|actual=10-1|支架|input=10-1	支架;
+PASS|base-613|expected=10-1|支架|actual=10-1|支架|input=支架	10-1;
+PASS|base-614|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1);
+PASS|base-615|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）;
+PASS|base-616|expected=10-1|支架|actual=10-1|支架|input=10-1　支架;
+PASS|base-617|expected=10-1|支架|actual=10-1|支架|input=支架　10-1;
+PASS|base-618|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1);
+PASS|base-619|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）;
+PASS|base-620|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架;
+PASS|base-621|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1;
+PASS|base-622|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1);
+PASS|base-623|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）;
+PASS|base-624|expected=10-1|支架|actual=10-1|支架|input=10-1 支架、
+PASS|base-625|expected=10-1|支架|actual=10-1|支架|input=支架 10-1、
+PASS|base-626|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1)、
+PASS|base-627|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）、
+PASS|base-628|expected=10-1|支架|actual=10-1|支架|input=10-1	支架、
+PASS|base-629|expected=10-1|支架|actual=10-1|支架|input=支架	10-1、
+PASS|base-630|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1)、
+PASS|base-631|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）、
+PASS|base-632|expected=10-1|支架|actual=10-1|支架|input=10-1　支架、
+PASS|base-633|expected=10-1|支架|actual=10-1|支架|input=支架　10-1、
+PASS|base-634|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1)、
+PASS|base-635|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）、
+PASS|base-636|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架、
+PASS|base-637|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1、
+PASS|base-638|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1)、
+PASS|base-639|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）、
+PASS|base-640|expected=10-1|支架|actual=10-1|支架|input=10-1 支架。
+PASS|base-641|expected=10-1|支架|actual=10-1|支架|input=支架 10-1。
+PASS|base-642|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1)。
+PASS|base-643|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）。
+PASS|base-644|expected=10-1|支架|actual=10-1|支架|input=10-1	支架。
+PASS|base-645|expected=10-1|支架|actual=10-1|支架|input=支架	10-1。
+PASS|base-646|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1)。
+PASS|base-647|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）。
+PASS|base-648|expected=10-1|支架|actual=10-1|支架|input=10-1　支架。
+PASS|base-649|expected=10-1|支架|actual=10-1|支架|input=支架　10-1。
+PASS|base-650|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1)。
+PASS|base-651|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）。
+PASS|base-652|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架。
+PASS|base-653|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1。
+PASS|base-654|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1)。
+PASS|base-655|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）。
+PASS|base-656|expected=10-1|支架|actual=10-1|支架|input=10-1 支架.
+PASS|base-657|expected=10-1|支架|actual=10-1|支架|input=支架 10-1.
+PASS|base-658|expected=10-1|支架|actual=10-1|支架|input=支架 (10-1).
+PASS|base-659|expected=10-1|支架|actual=10-1|支架|input=支架 （10-1）.
+PASS|base-660|expected=10-1|支架|actual=10-1|支架|input=10-1	支架.
+PASS|base-661|expected=10-1|支架|actual=10-1|支架|input=支架	10-1.
+PASS|base-662|expected=10-1|支架|actual=10-1|支架|input=支架	(10-1).
+PASS|base-663|expected=10-1|支架|actual=10-1|支架|input=支架	（10-1）.
+PASS|base-664|expected=10-1|支架|actual=10-1|支架|input=10-1　支架.
+PASS|base-665|expected=10-1|支架|actual=10-1|支架|input=支架　10-1.
+PASS|base-666|expected=10-1|支架|actual=10-1|支架|input=支架　(10-1).
+PASS|base-667|expected=10-1|支架|actual=10-1|支架|input=支架　（10-1）.
+PASS|base-668|expected=10-1|支架|actual=10-1|支架|input=10-1 	支架.
+PASS|base-669|expected=10-1|支架|actual=10-1|支架|input=支架 	10-1.
+PASS|base-670|expected=10-1|支架|actual=10-1|支架|input=支架 	(10-1).
+PASS|base-671|expected=10-1|支架|actual=10-1|支架|input=支架 	（10-1）.
+PASS|repeat-672|expected=123|支架|actual=123|支架|input=支架 123，
+PASS|repeat-673|expected=123|支架|actual=123|支架|input=支架 (123)，
+PASS|repeat-674|expected=123|支架|actual=123|支架|input=支架 （123），
+PASS|repeat-675|expected=123|支架|actual=123|支架|input=支架	123，
+PASS|repeat-676|expected=123|支架|actual=123|支架|input=支架	(123)，
+PASS|repeat-677|expected=123|支架|actual=123|支架|input=支架	（123），
+PASS|repeat-678|expected=123|支架|actual=123|支架|input=支架　123，
+PASS|repeat-679|expected=123|支架|actual=123|支架|input=支架　(123)，
+PASS|repeat-680|expected=123|支架|actual=123|支架|input=支架　（123），
+PASS|repeat-681|expected=123|支架|actual=123|支架|input=支架 	123，
+PASS|repeat-682|expected=123|支架|actual=123|支架|input=支架 	(123)，
+PASS|repeat-683|expected=123|支架|actual=123|支架|input=支架 	（123），
+PASS|repeat-684|expected=123|支架|actual=123|支架|input=支架 123；
+PASS|repeat-685|expected=123|支架|actual=123|支架|input=支架 (123)；
+PASS|repeat-686|expected=123|支架|actual=123|支架|input=支架 （123）；
+PASS|repeat-687|expected=123|支架|actual=123|支架|input=支架	123；
+PASS|repeat-688|expected=123|支架|actual=123|支架|input=支架	(123)；
+PASS|repeat-689|expected=123|支架|actual=123|支架|input=支架	（123）；
+PASS|repeat-690|expected=123|支架|actual=123|支架|input=支架　123；
+PASS|repeat-691|expected=123|支架|actual=123|支架|input=支架　(123)；
+PASS|repeat-692|expected=123|支架|actual=123|支架|input=支架　（123）；
+PASS|repeat-693|expected=123|支架|actual=123|支架|input=支架 	123；
+PASS|repeat-694|expected=123|支架|actual=123|支架|input=支架 	(123)；
+PASS|repeat-695|expected=123|支架|actual=123|支架|input=支架 	（123）；
+PASS|repeat-696|expected=123|支架|actual=123|支架|input=支架 123,
+PASS|repeat-697|expected=123|支架|actual=123|支架|input=支架 (123),
+PASS|repeat-698|expected=123|支架|actual=123|支架|input=支架 （123）,
+PASS|repeat-699|expected=123|支架|actual=123|支架|input=支架	123,
+PASS|repeat-700|expected=123|支架|actual=123|支架|input=支架	(123),
+PASS|repeat-701|expected=123|支架|actual=123|支架|input=支架	（123）,
+PASS|repeat-702|expected=123|支架|actual=123|支架|input=支架　123,
+PASS|repeat-703|expected=123|支架|actual=123|支架|input=支架　(123),
+PASS|repeat-704|expected=123|支架|actual=123|支架|input=支架　（123）,
+PASS|repeat-705|expected=123|支架|actual=123|支架|input=支架 	123,
+PASS|repeat-706|expected=123|支架|actual=123|支架|input=支架 	(123),
+PASS|repeat-707|expected=123|支架|actual=123|支架|input=支架 	（123）,
+PASS|repeat-708|expected=123|支架|actual=123|支架|input=支架 123;
+PASS|repeat-709|expected=123|支架|actual=123|支架|input=支架 (123);
+PASS|repeat-710|expected=123|支架|actual=123|支架|input=支架 （123）;
+PASS|repeat-711|expected=123|支架|actual=123|支架|input=支架	123;
+PASS|repeat-712|expected=123|支架|actual=123|支架|input=支架	(123);
+PASS|repeat-713|expected=123|支架|actual=123|支架|input=支架	（123）;
+PASS|repeat-714|expected=123|支架|actual=123|支架|input=支架　123;
+PASS|repeat-715|expected=123|支架|actual=123|支架|input=支架　(123);
+PASS|repeat-716|expected=123|支架|actual=123|支架|input=支架　（123）;
+PASS|repeat-717|expected=123|支架|actual=123|支架|input=支架 	123;
+PASS|repeat-718|expected=123|支架|actual=123|支架|input=支架 	(123);
+PASS|repeat-719|expected=123|支架|actual=123|支架|input=支架 	（123）;
+PASS|repeat-720|expected=123|支架|actual=123|支架|input=支架 123、
+PASS|repeat-721|expected=123|支架|actual=123|支架|input=支架 (123)、
+PASS|repeat-722|expected=123|支架|actual=123|支架|input=支架 （123）、
+PASS|repeat-723|expected=123|支架|actual=123|支架|input=支架	123、
+PASS|repeat-724|expected=123|支架|actual=123|支架|input=支架	(123)、
+PASS|repeat-725|expected=123|支架|actual=123|支架|input=支架	（123）、
+PASS|repeat-726|expected=123|支架|actual=123|支架|input=支架　123、
+PASS|repeat-727|expected=123|支架|actual=123|支架|input=支架　(123)、
+PASS|repeat-728|expected=123|支架|actual=123|支架|input=支架　（123）、
+PASS|repeat-729|expected=123|支架|actual=123|支架|input=支架 	123、
+PASS|repeat-730|expected=123|支架|actual=123|支架|input=支架 	(123)、
+PASS|repeat-731|expected=123|支架|actual=123|支架|input=支架 	（123）、
+PASS|repeat-732|expected=123|支架|actual=123|支架|input=支架 123。
+PASS|repeat-733|expected=123|支架|actual=123|支架|input=支架 (123)。
+PASS|repeat-734|expected=123|支架|actual=123|支架|input=支架 （123）。
+PASS|repeat-735|expected=123|支架|actual=123|支架|input=支架	123。
+PASS|repeat-736|expected=123|支架|actual=123|支架|input=支架	(123)。
+PASS|repeat-737|expected=123|支架|actual=123|支架|input=支架	（123）。
+PASS|repeat-738|expected=123|支架|actual=123|支架|input=支架　123。
+PASS|repeat-739|expected=123|支架|actual=123|支架|input=支架　(123)。
+PASS|repeat-740|expected=123|支架|actual=123|支架|input=支架　（123）。
+PASS|repeat-741|expected=123|支架|actual=123|支架|input=支架 	123。
+PASS|repeat-742|expected=123|支架|actual=123|支架|input=支架 	(123)。
+PASS|repeat-743|expected=123|支架|actual=123|支架|input=支架 	（123）。
+PASS|repeat-744|expected=123|支架|actual=123|支架|input=支架 123.
+PASS|repeat-745|expected=123|支架|actual=123|支架|input=支架 (123).
+PASS|repeat-746|expected=123|支架|actual=123|支架|input=支架 （123）.
+PASS|repeat-747|expected=123|支架|actual=123|支架|input=支架	123.
+PASS|repeat-748|expected=123|支架|actual=123|支架|input=支架	(123).
+PASS|repeat-749|expected=123|支架|actual=123|支架|input=支架	（123）.
+PASS|repeat-750|expected=123|支架|actual=123|支架|input=支架　123.
+PASS|repeat-751|expected=123|支架|actual=123|支架|input=支架　(123).
+PASS|repeat-752|expected=123|支架|actual=123|支架|input=支架　（123）.
+PASS|repeat-753|expected=123|支架|actual=123|支架|input=支架 	123.
+PASS|repeat-754|expected=123|支架|actual=123|支架|input=支架 	(123).
+PASS|repeat-755|expected=123|支架|actual=123|支架|input=支架 	（123）.
+PASS|repeat-756|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123，
+PASS|repeat-757|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123)，
+PASS|repeat-758|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123），
+PASS|repeat-759|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123，
+PASS|repeat-760|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123)，
+PASS|repeat-761|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123），
+PASS|repeat-762|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123，
+PASS|repeat-763|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123)，
+PASS|repeat-764|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123），
+PASS|repeat-765|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123，
+PASS|repeat-766|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123)，
+PASS|repeat-767|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123），
+PASS|repeat-768|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123；
+PASS|repeat-769|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123)；
+PASS|repeat-770|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）；
+PASS|repeat-771|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123；
+PASS|repeat-772|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123)；
+PASS|repeat-773|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）；
+PASS|repeat-774|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123；
+PASS|repeat-775|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123)；
+PASS|repeat-776|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）；
+PASS|repeat-777|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123；
+PASS|repeat-778|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123)；
+PASS|repeat-779|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）；
+PASS|repeat-780|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123,
+PASS|repeat-781|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123),
+PASS|repeat-782|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）,
+PASS|repeat-783|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123,
+PASS|repeat-784|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123),
+PASS|repeat-785|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）,
+PASS|repeat-786|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123,
+PASS|repeat-787|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123),
+PASS|repeat-788|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）,
+PASS|repeat-789|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123,
+PASS|repeat-790|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123),
+PASS|repeat-791|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）,
+PASS|repeat-792|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123;
+PASS|repeat-793|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123);
+PASS|repeat-794|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）;
+PASS|repeat-795|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123;
+PASS|repeat-796|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123);
+PASS|repeat-797|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）;
+PASS|repeat-798|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123;
+PASS|repeat-799|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123);
+PASS|repeat-800|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）;
+PASS|repeat-801|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123;
+PASS|repeat-802|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123);
+PASS|repeat-803|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）;
+PASS|repeat-804|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123、
+PASS|repeat-805|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123)、
+PASS|repeat-806|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）、
+PASS|repeat-807|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123、
+PASS|repeat-808|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123)、
+PASS|repeat-809|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）、
+PASS|repeat-810|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123、
+PASS|repeat-811|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123)、
+PASS|repeat-812|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）、
+PASS|repeat-813|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123、
+PASS|repeat-814|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123)、
+PASS|repeat-815|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）、
+PASS|repeat-816|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123。
+PASS|repeat-817|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123)。
+PASS|repeat-818|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）。
+PASS|repeat-819|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123。
+PASS|repeat-820|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123)。
+PASS|repeat-821|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）。
+PASS|repeat-822|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123。
+PASS|repeat-823|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123)。
+PASS|repeat-824|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）。
+PASS|repeat-825|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123。
+PASS|repeat-826|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123)。
+PASS|repeat-827|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）。
+PASS|repeat-828|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 123.
+PASS|repeat-829|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 (123).
+PASS|repeat-830|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 （123）.
+PASS|repeat-831|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	123.
+PASS|repeat-832|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	(123).
+PASS|repeat-833|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架	（123）.
+PASS|repeat-834|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　123.
+PASS|repeat-835|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　(123).
+PASS|repeat-836|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架　（123）.
+PASS|repeat-837|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	123.
+PASS|repeat-838|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	(123).
+PASS|repeat-839|expected=123|壳体X123 支架|actual=123|壳体X123 支架|input=壳体X123 支架 	（123）.
+PASS|repeat-840|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123，
+PASS|repeat-841|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123)，
+PASS|repeat-842|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123），
+PASS|repeat-843|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123，
+PASS|repeat-844|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123)，
+PASS|repeat-845|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123），
+PASS|repeat-846|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123，
+PASS|repeat-847|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123)，
+PASS|repeat-848|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123），
+PASS|repeat-849|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123，
+PASS|repeat-850|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123)，
+PASS|repeat-851|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123），
+PASS|repeat-852|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123；
+PASS|repeat-853|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123)；
+PASS|repeat-854|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）；
+PASS|repeat-855|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123；
+PASS|repeat-856|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123)；
+PASS|repeat-857|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）；
+PASS|repeat-858|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123；
+PASS|repeat-859|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123)；
+PASS|repeat-860|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）；
+PASS|repeat-861|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123；
+PASS|repeat-862|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123)；
+PASS|repeat-863|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）；
+PASS|repeat-864|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123,
+PASS|repeat-865|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123),
+PASS|repeat-866|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）,
+PASS|repeat-867|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123,
+PASS|repeat-868|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123),
+PASS|repeat-869|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）,
+PASS|repeat-870|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123,
+PASS|repeat-871|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123),
+PASS|repeat-872|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）,
+PASS|repeat-873|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123,
+PASS|repeat-874|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123),
+PASS|repeat-875|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）,
+PASS|repeat-876|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123;
+PASS|repeat-877|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123);
+PASS|repeat-878|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）;
+PASS|repeat-879|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123;
+PASS|repeat-880|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123);
+PASS|repeat-881|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）;
+PASS|repeat-882|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123;
+PASS|repeat-883|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123);
+PASS|repeat-884|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）;
+PASS|repeat-885|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123;
+PASS|repeat-886|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123);
+PASS|repeat-887|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）;
+PASS|repeat-888|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123、
+PASS|repeat-889|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123)、
+PASS|repeat-890|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）、
+PASS|repeat-891|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123、
+PASS|repeat-892|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123)、
+PASS|repeat-893|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）、
+PASS|repeat-894|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123、
+PASS|repeat-895|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123)、
+PASS|repeat-896|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）、
+PASS|repeat-897|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123、
+PASS|repeat-898|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123)、
+PASS|repeat-899|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）、
+PASS|repeat-900|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123。
+PASS|repeat-901|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123)。
+PASS|repeat-902|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）。
+PASS|repeat-903|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123。
+PASS|repeat-904|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123)。
+PASS|repeat-905|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）。
+PASS|repeat-906|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123。
+PASS|repeat-907|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123)。
+PASS|repeat-908|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）。
+PASS|repeat-909|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123。
+PASS|repeat-910|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123)。
+PASS|repeat-911|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）。
+PASS|repeat-912|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 123.
+PASS|repeat-913|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 (123).
+PASS|repeat-914|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 （123）.
+PASS|repeat-915|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	123.
+PASS|repeat-916|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	(123).
+PASS|repeat-917|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架	（123）.
+PASS|repeat-918|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　123.
+PASS|repeat-919|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　(123).
+PASS|repeat-920|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架　（123）.
+PASS|repeat-921|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	123.
+PASS|repeat-922|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	(123).
+PASS|repeat-923|expected=123|壳体1123 支架|actual=123|壳体1123 支架|input=壳体1123 支架 	（123）.
+PASS|repeat-924|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123，
+PASS|repeat-925|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123)，
+PASS|repeat-926|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123），
+PASS|repeat-927|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123，
+PASS|repeat-928|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123)，
+PASS|repeat-929|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123），
+PASS|repeat-930|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123，
+PASS|repeat-931|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123)，
+PASS|repeat-932|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123），
+PASS|repeat-933|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123，
+PASS|repeat-934|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123)，
+PASS|repeat-935|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123），
+PASS|repeat-936|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123；
+PASS|repeat-937|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123)；
+PASS|repeat-938|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）；
+PASS|repeat-939|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123；
+PASS|repeat-940|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123)；
+PASS|repeat-941|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）；
+PASS|repeat-942|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123；
+PASS|repeat-943|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123)；
+PASS|repeat-944|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）；
+PASS|repeat-945|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123；
+PASS|repeat-946|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123)；
+PASS|repeat-947|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）；
+PASS|repeat-948|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123,
+PASS|repeat-949|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123),
+PASS|repeat-950|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）,
+PASS|repeat-951|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123,
+PASS|repeat-952|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123),
+PASS|repeat-953|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）,
+PASS|repeat-954|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123,
+PASS|repeat-955|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123),
+PASS|repeat-956|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）,
+PASS|repeat-957|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123,
+PASS|repeat-958|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123),
+PASS|repeat-959|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）,
+PASS|repeat-960|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123;
+PASS|repeat-961|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123);
+PASS|repeat-962|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）;
+PASS|repeat-963|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123;
+PASS|repeat-964|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123);
+PASS|repeat-965|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）;
+PASS|repeat-966|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123;
+PASS|repeat-967|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123);
+PASS|repeat-968|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）;
+PASS|repeat-969|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123;
+PASS|repeat-970|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123);
+PASS|repeat-971|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）;
+PASS|repeat-972|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123、
+PASS|repeat-973|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123)、
+PASS|repeat-974|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）、
+PASS|repeat-975|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123、
+PASS|repeat-976|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123)、
+PASS|repeat-977|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）、
+PASS|repeat-978|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123、
+PASS|repeat-979|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123)、
+PASS|repeat-980|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）、
+PASS|repeat-981|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123、
+PASS|repeat-982|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123)、
+PASS|repeat-983|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）、
+PASS|repeat-984|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123。
+PASS|repeat-985|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123)。
+PASS|repeat-986|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）。
+PASS|repeat-987|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123。
+PASS|repeat-988|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123)。
+PASS|repeat-989|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）。
+PASS|repeat-990|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123。
+PASS|repeat-991|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123)。
+PASS|repeat-992|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）。
+PASS|repeat-993|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123。
+PASS|repeat-994|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123)。
+PASS|repeat-995|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）。
+PASS|repeat-996|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 123.
+PASS|repeat-997|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 (123).
+PASS|repeat-998|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 （123）.
+PASS|repeat-999|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	123.
+PASS|repeat-1000|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	(123).
+PASS|repeat-1001|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架	（123）.
+PASS|repeat-1002|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　123.
+PASS|repeat-1003|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　(123).
+PASS|repeat-1004|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架　（123）.
+PASS|repeat-1005|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	123.
+PASS|repeat-1006|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	(123).
+PASS|repeat-1007|expected=123|壳体AX123 支架|actual=123|壳体AX123 支架|input=壳体AX123 支架 	（123）.
+PASS|repeat-1008|expected=12345|支架|actual=12345|支架|input=支架 12345，
+PASS|repeat-1009|expected=12345|支架|actual=12345|支架|input=支架 (12345)，
+PASS|repeat-1010|expected=12345|支架|actual=12345|支架|input=支架 （12345），
+PASS|repeat-1011|expected=12345|支架|actual=12345|支架|input=支架	12345，
+PASS|repeat-1012|expected=12345|支架|actual=12345|支架|input=支架	(12345)，
+PASS|repeat-1013|expected=12345|支架|actual=12345|支架|input=支架	（12345），
+PASS|repeat-1014|expected=12345|支架|actual=12345|支架|input=支架　12345，
+PASS|repeat-1015|expected=12345|支架|actual=12345|支架|input=支架　(12345)，
+PASS|repeat-1016|expected=12345|支架|actual=12345|支架|input=支架　（12345），
+PASS|repeat-1017|expected=12345|支架|actual=12345|支架|input=支架 	12345，
+PASS|repeat-1018|expected=12345|支架|actual=12345|支架|input=支架 	(12345)，
+PASS|repeat-1019|expected=12345|支架|actual=12345|支架|input=支架 	（12345），
+PASS|repeat-1020|expected=12345|支架|actual=12345|支架|input=支架 12345；
+PASS|repeat-1021|expected=12345|支架|actual=12345|支架|input=支架 (12345)；
+PASS|repeat-1022|expected=12345|支架|actual=12345|支架|input=支架 （12345）；
+PASS|repeat-1023|expected=12345|支架|actual=12345|支架|input=支架	12345；
+PASS|repeat-1024|expected=12345|支架|actual=12345|支架|input=支架	(12345)；
+PASS|repeat-1025|expected=12345|支架|actual=12345|支架|input=支架	（12345）；
+PASS|repeat-1026|expected=12345|支架|actual=12345|支架|input=支架　12345；
+PASS|repeat-1027|expected=12345|支架|actual=12345|支架|input=支架　(12345)；
+PASS|repeat-1028|expected=12345|支架|actual=12345|支架|input=支架　（12345）；
+PASS|repeat-1029|expected=12345|支架|actual=12345|支架|input=支架 	12345；
+PASS|repeat-1030|expected=12345|支架|actual=12345|支架|input=支架 	(12345)；
+PASS|repeat-1031|expected=12345|支架|actual=12345|支架|input=支架 	（12345）；
+PASS|repeat-1032|expected=12345|支架|actual=12345|支架|input=支架 12345,
+PASS|repeat-1033|expected=12345|支架|actual=12345|支架|input=支架 (12345),
+PASS|repeat-1034|expected=12345|支架|actual=12345|支架|input=支架 （12345）,
+PASS|repeat-1035|expected=12345|支架|actual=12345|支架|input=支架	12345,
+PASS|repeat-1036|expected=12345|支架|actual=12345|支架|input=支架	(12345),
+PASS|repeat-1037|expected=12345|支架|actual=12345|支架|input=支架	（12345）,
+PASS|repeat-1038|expected=12345|支架|actual=12345|支架|input=支架　12345,
+PASS|repeat-1039|expected=12345|支架|actual=12345|支架|input=支架　(12345),
+PASS|repeat-1040|expected=12345|支架|actual=12345|支架|input=支架　（12345）,
+PASS|repeat-1041|expected=12345|支架|actual=12345|支架|input=支架 	12345,
+PASS|repeat-1042|expected=12345|支架|actual=12345|支架|input=支架 	(12345),
+PASS|repeat-1043|expected=12345|支架|actual=12345|支架|input=支架 	（12345）,
+PASS|repeat-1044|expected=12345|支架|actual=12345|支架|input=支架 12345;
+PASS|repeat-1045|expected=12345|支架|actual=12345|支架|input=支架 (12345);
+PASS|repeat-1046|expected=12345|支架|actual=12345|支架|input=支架 （12345）;
+PASS|repeat-1047|expected=12345|支架|actual=12345|支架|input=支架	12345;
+PASS|repeat-1048|expected=12345|支架|actual=12345|支架|input=支架	(12345);
+PASS|repeat-1049|expected=12345|支架|actual=12345|支架|input=支架	（12345）;
+PASS|repeat-1050|expected=12345|支架|actual=12345|支架|input=支架　12345;
+PASS|repeat-1051|expected=12345|支架|actual=12345|支架|input=支架　(12345);
+PASS|repeat-1052|expected=12345|支架|actual=12345|支架|input=支架　（12345）;
+PASS|repeat-1053|expected=12345|支架|actual=12345|支架|input=支架 	12345;
+PASS|repeat-1054|expected=12345|支架|actual=12345|支架|input=支架 	(12345);
+PASS|repeat-1055|expected=12345|支架|actual=12345|支架|input=支架 	（12345）;
+PASS|repeat-1056|expected=12345|支架|actual=12345|支架|input=支架 12345、
+PASS|repeat-1057|expected=12345|支架|actual=12345|支架|input=支架 (12345)、
+PASS|repeat-1058|expected=12345|支架|actual=12345|支架|input=支架 （12345）、
+PASS|repeat-1059|expected=12345|支架|actual=12345|支架|input=支架	12345、
+PASS|repeat-1060|expected=12345|支架|actual=12345|支架|input=支架	(12345)、
+PASS|repeat-1061|expected=12345|支架|actual=12345|支架|input=支架	（12345）、
+PASS|repeat-1062|expected=12345|支架|actual=12345|支架|input=支架　12345、
+PASS|repeat-1063|expected=12345|支架|actual=12345|支架|input=支架　(12345)、
+PASS|repeat-1064|expected=12345|支架|actual=12345|支架|input=支架　（12345）、
+PASS|repeat-1065|expected=12345|支架|actual=12345|支架|input=支架 	12345、
+PASS|repeat-1066|expected=12345|支架|actual=12345|支架|input=支架 	(12345)、
+PASS|repeat-1067|expected=12345|支架|actual=12345|支架|input=支架 	（12345）、
+PASS|repeat-1068|expected=12345|支架|actual=12345|支架|input=支架 12345。
+PASS|repeat-1069|expected=12345|支架|actual=12345|支架|input=支架 (12345)。
+PASS|repeat-1070|expected=12345|支架|actual=12345|支架|input=支架 （12345）。
+PASS|repeat-1071|expected=12345|支架|actual=12345|支架|input=支架	12345。
+PASS|repeat-1072|expected=12345|支架|actual=12345|支架|input=支架	(12345)。
+PASS|repeat-1073|expected=12345|支架|actual=12345|支架|input=支架	（12345）。
+PASS|repeat-1074|expected=12345|支架|actual=12345|支架|input=支架　12345。
+PASS|repeat-1075|expected=12345|支架|actual=12345|支架|input=支架　(12345)。
+PASS|repeat-1076|expected=12345|支架|actual=12345|支架|input=支架　（12345）。
+PASS|repeat-1077|expected=12345|支架|actual=12345|支架|input=支架 	12345。
+PASS|repeat-1078|expected=12345|支架|actual=12345|支架|input=支架 	(12345)。
+PASS|repeat-1079|expected=12345|支架|actual=12345|支架|input=支架 	（12345）。
+PASS|repeat-1080|expected=12345|支架|actual=12345|支架|input=支架 12345.
+PASS|repeat-1081|expected=12345|支架|actual=12345|支架|input=支架 (12345).
+PASS|repeat-1082|expected=12345|支架|actual=12345|支架|input=支架 （12345）.
+PASS|repeat-1083|expected=12345|支架|actual=12345|支架|input=支架	12345.
+PASS|repeat-1084|expected=12345|支架|actual=12345|支架|input=支架	(12345).
+PASS|repeat-1085|expected=12345|支架|actual=12345|支架|input=支架	（12345）.
+PASS|repeat-1086|expected=12345|支架|actual=12345|支架|input=支架　12345.
+PASS|repeat-1087|expected=12345|支架|actual=12345|支架|input=支架　(12345).
+PASS|repeat-1088|expected=12345|支架|actual=12345|支架|input=支架　（12345）.
+PASS|repeat-1089|expected=12345|支架|actual=12345|支架|input=支架 	12345.
+PASS|repeat-1090|expected=12345|支架|actual=12345|支架|input=支架 	(12345).
+PASS|repeat-1091|expected=12345|支架|actual=12345|支架|input=支架 	（12345）.
+PASS|repeat-1092|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345，
+PASS|repeat-1093|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345)，
+PASS|repeat-1094|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345），
+PASS|repeat-1095|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345，
+PASS|repeat-1096|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345)，
+PASS|repeat-1097|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345），
+PASS|repeat-1098|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345，
+PASS|repeat-1099|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345)，
+PASS|repeat-1100|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345），
+PASS|repeat-1101|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345，
+PASS|repeat-1102|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345)，
+PASS|repeat-1103|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345），
+PASS|repeat-1104|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345；
+PASS|repeat-1105|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345)；
+PASS|repeat-1106|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）；
+PASS|repeat-1107|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345；
+PASS|repeat-1108|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345)；
+PASS|repeat-1109|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）；
+PASS|repeat-1110|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345；
+PASS|repeat-1111|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345)；
+PASS|repeat-1112|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）；
+PASS|repeat-1113|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345；
+PASS|repeat-1114|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345)；
+PASS|repeat-1115|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）；
+PASS|repeat-1116|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345,
+PASS|repeat-1117|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345),
+PASS|repeat-1118|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）,
+PASS|repeat-1119|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345,
+PASS|repeat-1120|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345),
+PASS|repeat-1121|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）,
+PASS|repeat-1122|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345,
+PASS|repeat-1123|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345),
+PASS|repeat-1124|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）,
+PASS|repeat-1125|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345,
+PASS|repeat-1126|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345),
+PASS|repeat-1127|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）,
+PASS|repeat-1128|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345;
+PASS|repeat-1129|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345);
+PASS|repeat-1130|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）;
+PASS|repeat-1131|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345;
+PASS|repeat-1132|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345);
+PASS|repeat-1133|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）;
+PASS|repeat-1134|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345;
+PASS|repeat-1135|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345);
+PASS|repeat-1136|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）;
+PASS|repeat-1137|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345;
+PASS|repeat-1138|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345);
+PASS|repeat-1139|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）;
+PASS|repeat-1140|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345、
+PASS|repeat-1141|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345)、
+PASS|repeat-1142|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）、
+PASS|repeat-1143|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345、
+PASS|repeat-1144|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345)、
+PASS|repeat-1145|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）、
+PASS|repeat-1146|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345、
+PASS|repeat-1147|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345)、
+PASS|repeat-1148|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）、
+PASS|repeat-1149|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345、
+PASS|repeat-1150|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345)、
+PASS|repeat-1151|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）、
+PASS|repeat-1152|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345。
+PASS|repeat-1153|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345)。
+PASS|repeat-1154|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）。
+PASS|repeat-1155|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345。
+PASS|repeat-1156|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345)。
+PASS|repeat-1157|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）。
+PASS|repeat-1158|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345。
+PASS|repeat-1159|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345)。
+PASS|repeat-1160|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）。
+PASS|repeat-1161|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345。
+PASS|repeat-1162|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345)。
+PASS|repeat-1163|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）。
+PASS|repeat-1164|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 12345.
+PASS|repeat-1165|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 (12345).
+PASS|repeat-1166|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 （12345）.
+PASS|repeat-1167|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	12345.
+PASS|repeat-1168|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	(12345).
+PASS|repeat-1169|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架	（12345）.
+PASS|repeat-1170|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　12345.
+PASS|repeat-1171|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　(12345).
+PASS|repeat-1172|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架　（12345）.
+PASS|repeat-1173|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	12345.
+PASS|repeat-1174|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	(12345).
+PASS|repeat-1175|expected=12345|壳体X123 支架|actual=12345|壳体X123 支架|input=壳体X123 支架 	（12345）.
+PASS|repeat-1176|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345，
+PASS|repeat-1177|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345)，
+PASS|repeat-1178|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345），
+PASS|repeat-1179|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345，
+PASS|repeat-1180|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345)，
+PASS|repeat-1181|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345），
+PASS|repeat-1182|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345，
+PASS|repeat-1183|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345)，
+PASS|repeat-1184|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345），
+PASS|repeat-1185|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345，
+PASS|repeat-1186|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345)，
+PASS|repeat-1187|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345），
+PASS|repeat-1188|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345；
+PASS|repeat-1189|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345)；
+PASS|repeat-1190|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）；
+PASS|repeat-1191|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345；
+PASS|repeat-1192|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345)；
+PASS|repeat-1193|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）；
+PASS|repeat-1194|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345；
+PASS|repeat-1195|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345)；
+PASS|repeat-1196|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）；
+PASS|repeat-1197|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345；
+PASS|repeat-1198|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345)；
+PASS|repeat-1199|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）；
+PASS|repeat-1200|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345,
+PASS|repeat-1201|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345),
+PASS|repeat-1202|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）,
+PASS|repeat-1203|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345,
+PASS|repeat-1204|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345),
+PASS|repeat-1205|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）,
+PASS|repeat-1206|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345,
+PASS|repeat-1207|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345),
+PASS|repeat-1208|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）,
+PASS|repeat-1209|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345,
+PASS|repeat-1210|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345),
+PASS|repeat-1211|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）,
+PASS|repeat-1212|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345;
+PASS|repeat-1213|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345);
+PASS|repeat-1214|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）;
+PASS|repeat-1215|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345;
+PASS|repeat-1216|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345);
+PASS|repeat-1217|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）;
+PASS|repeat-1218|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345;
+PASS|repeat-1219|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345);
+PASS|repeat-1220|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）;
+PASS|repeat-1221|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345;
+PASS|repeat-1222|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345);
+PASS|repeat-1223|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）;
+PASS|repeat-1224|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345、
+PASS|repeat-1225|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345)、
+PASS|repeat-1226|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）、
+PASS|repeat-1227|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345、
+PASS|repeat-1228|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345)、
+PASS|repeat-1229|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）、
+PASS|repeat-1230|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345、
+PASS|repeat-1231|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345)、
+PASS|repeat-1232|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）、
+PASS|repeat-1233|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345、
+PASS|repeat-1234|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345)、
+PASS|repeat-1235|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）、
+PASS|repeat-1236|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345。
+PASS|repeat-1237|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345)。
+PASS|repeat-1238|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）。
+PASS|repeat-1239|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345。
+PASS|repeat-1240|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345)。
+PASS|repeat-1241|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）。
+PASS|repeat-1242|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345。
+PASS|repeat-1243|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345)。
+PASS|repeat-1244|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）。
+PASS|repeat-1245|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345。
+PASS|repeat-1246|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345)。
+PASS|repeat-1247|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）。
+PASS|repeat-1248|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 12345.
+PASS|repeat-1249|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 (12345).
+PASS|repeat-1250|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 （12345）.
+PASS|repeat-1251|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	12345.
+PASS|repeat-1252|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	(12345).
+PASS|repeat-1253|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架	（12345）.
+PASS|repeat-1254|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　12345.
+PASS|repeat-1255|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　(12345).
+PASS|repeat-1256|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架　（12345）.
+PASS|repeat-1257|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	12345.
+PASS|repeat-1258|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	(12345).
+PASS|repeat-1259|expected=12345|壳体1123 支架|actual=12345|壳体1123 支架|input=壳体1123 支架 	（12345）.
+PASS|repeat-1260|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345，
+PASS|repeat-1261|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345)，
+PASS|repeat-1262|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345），
+PASS|repeat-1263|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345，
+PASS|repeat-1264|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345)，
+PASS|repeat-1265|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345），
+PASS|repeat-1266|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345，
+PASS|repeat-1267|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345)，
+PASS|repeat-1268|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345），
+PASS|repeat-1269|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345，
+PASS|repeat-1270|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345)，
+PASS|repeat-1271|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345），
+PASS|repeat-1272|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345；
+PASS|repeat-1273|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345)；
+PASS|repeat-1274|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）；
+PASS|repeat-1275|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345；
+PASS|repeat-1276|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345)；
+PASS|repeat-1277|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）；
+PASS|repeat-1278|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345；
+PASS|repeat-1279|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345)；
+PASS|repeat-1280|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）；
+PASS|repeat-1281|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345；
+PASS|repeat-1282|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345)；
+PASS|repeat-1283|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）；
+PASS|repeat-1284|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345,
+PASS|repeat-1285|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345),
+PASS|repeat-1286|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）,
+PASS|repeat-1287|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345,
+PASS|repeat-1288|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345),
+PASS|repeat-1289|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）,
+PASS|repeat-1290|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345,
+PASS|repeat-1291|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345),
+PASS|repeat-1292|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）,
+PASS|repeat-1293|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345,
+PASS|repeat-1294|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345),
+PASS|repeat-1295|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）,
+PASS|repeat-1296|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345;
+PASS|repeat-1297|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345);
+PASS|repeat-1298|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）;
+PASS|repeat-1299|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345;
+PASS|repeat-1300|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345);
+PASS|repeat-1301|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）;
+PASS|repeat-1302|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345;
+PASS|repeat-1303|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345);
+PASS|repeat-1304|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）;
+PASS|repeat-1305|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345;
+PASS|repeat-1306|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345);
+PASS|repeat-1307|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）;
+PASS|repeat-1308|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345、
+PASS|repeat-1309|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345)、
+PASS|repeat-1310|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）、
+PASS|repeat-1311|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345、
+PASS|repeat-1312|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345)、
+PASS|repeat-1313|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）、
+PASS|repeat-1314|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345、
+PASS|repeat-1315|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345)、
+PASS|repeat-1316|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）、
+PASS|repeat-1317|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345、
+PASS|repeat-1318|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345)、
+PASS|repeat-1319|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）、
+PASS|repeat-1320|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345。
+PASS|repeat-1321|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345)。
+PASS|repeat-1322|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）。
+PASS|repeat-1323|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345。
+PASS|repeat-1324|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345)。
+PASS|repeat-1325|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）。
+PASS|repeat-1326|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345。
+PASS|repeat-1327|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345)。
+PASS|repeat-1328|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）。
+PASS|repeat-1329|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345。
+PASS|repeat-1330|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345)。
+PASS|repeat-1331|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）。
+PASS|repeat-1332|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 12345.
+PASS|repeat-1333|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 (12345).
+PASS|repeat-1334|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 （12345）.
+PASS|repeat-1335|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	12345.
+PASS|repeat-1336|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	(12345).
+PASS|repeat-1337|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架	（12345）.
+PASS|repeat-1338|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　12345.
+PASS|repeat-1339|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　(12345).
+PASS|repeat-1340|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架　（12345）.
+PASS|repeat-1341|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	12345.
+PASS|repeat-1342|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	(12345).
+PASS|repeat-1343|expected=12345|壳体AX123 支架|actual=12345|壳体AX123 支架|input=壳体AX123 支架 	（12345）.
+PASS|repeat-1344|expected=X123|支架|actual=X123|支架|input=支架 X123，
+PASS|repeat-1345|expected=X123|支架|actual=X123|支架|input=支架 (X123)，
+PASS|repeat-1346|expected=X123|支架|actual=X123|支架|input=支架 （X123），
+PASS|repeat-1347|expected=X123|支架|actual=X123|支架|input=支架	X123，
+PASS|repeat-1348|expected=X123|支架|actual=X123|支架|input=支架	(X123)，
+PASS|repeat-1349|expected=X123|支架|actual=X123|支架|input=支架	（X123），
+PASS|repeat-1350|expected=X123|支架|actual=X123|支架|input=支架　X123，
+PASS|repeat-1351|expected=X123|支架|actual=X123|支架|input=支架　(X123)，
+PASS|repeat-1352|expected=X123|支架|actual=X123|支架|input=支架　（X123），
+PASS|repeat-1353|expected=X123|支架|actual=X123|支架|input=支架 	X123，
+PASS|repeat-1354|expected=X123|支架|actual=X123|支架|input=支架 	(X123)，
+PASS|repeat-1355|expected=X123|支架|actual=X123|支架|input=支架 	（X123），
+PASS|repeat-1356|expected=X123|支架|actual=X123|支架|input=支架 X123；
+PASS|repeat-1357|expected=X123|支架|actual=X123|支架|input=支架 (X123)；
+PASS|repeat-1358|expected=X123|支架|actual=X123|支架|input=支架 （X123）；
+PASS|repeat-1359|expected=X123|支架|actual=X123|支架|input=支架	X123；
+PASS|repeat-1360|expected=X123|支架|actual=X123|支架|input=支架	(X123)；
+PASS|repeat-1361|expected=X123|支架|actual=X123|支架|input=支架	（X123）；
+PASS|repeat-1362|expected=X123|支架|actual=X123|支架|input=支架　X123；
+PASS|repeat-1363|expected=X123|支架|actual=X123|支架|input=支架　(X123)；
+PASS|repeat-1364|expected=X123|支架|actual=X123|支架|input=支架　（X123）；
+PASS|repeat-1365|expected=X123|支架|actual=X123|支架|input=支架 	X123；
+PASS|repeat-1366|expected=X123|支架|actual=X123|支架|input=支架 	(X123)；
+PASS|repeat-1367|expected=X123|支架|actual=X123|支架|input=支架 	（X123）；
+PASS|repeat-1368|expected=X123|支架|actual=X123|支架|input=支架 X123,
+PASS|repeat-1369|expected=X123|支架|actual=X123|支架|input=支架 (X123),
+PASS|repeat-1370|expected=X123|支架|actual=X123|支架|input=支架 （X123）,
+PASS|repeat-1371|expected=X123|支架|actual=X123|支架|input=支架	X123,
+PASS|repeat-1372|expected=X123|支架|actual=X123|支架|input=支架	(X123),
+PASS|repeat-1373|expected=X123|支架|actual=X123|支架|input=支架	（X123）,
+PASS|repeat-1374|expected=X123|支架|actual=X123|支架|input=支架　X123,
+PASS|repeat-1375|expected=X123|支架|actual=X123|支架|input=支架　(X123),
+PASS|repeat-1376|expected=X123|支架|actual=X123|支架|input=支架　（X123）,
+PASS|repeat-1377|expected=X123|支架|actual=X123|支架|input=支架 	X123,
+PASS|repeat-1378|expected=X123|支架|actual=X123|支架|input=支架 	(X123),
+PASS|repeat-1379|expected=X123|支架|actual=X123|支架|input=支架 	（X123）,
+PASS|repeat-1380|expected=X123|支架|actual=X123|支架|input=支架 X123;
+PASS|repeat-1381|expected=X123|支架|actual=X123|支架|input=支架 (X123);
+PASS|repeat-1382|expected=X123|支架|actual=X123|支架|input=支架 （X123）;
+PASS|repeat-1383|expected=X123|支架|actual=X123|支架|input=支架	X123;
+PASS|repeat-1384|expected=X123|支架|actual=X123|支架|input=支架	(X123);
+PASS|repeat-1385|expected=X123|支架|actual=X123|支架|input=支架	（X123）;
+PASS|repeat-1386|expected=X123|支架|actual=X123|支架|input=支架　X123;
+PASS|repeat-1387|expected=X123|支架|actual=X123|支架|input=支架　(X123);
+PASS|repeat-1388|expected=X123|支架|actual=X123|支架|input=支架　（X123）;
+PASS|repeat-1389|expected=X123|支架|actual=X123|支架|input=支架 	X123;
+PASS|repeat-1390|expected=X123|支架|actual=X123|支架|input=支架 	(X123);
+PASS|repeat-1391|expected=X123|支架|actual=X123|支架|input=支架 	（X123）;
+PASS|repeat-1392|expected=X123|支架|actual=X123|支架|input=支架 X123、
+PASS|repeat-1393|expected=X123|支架|actual=X123|支架|input=支架 (X123)、
+PASS|repeat-1394|expected=X123|支架|actual=X123|支架|input=支架 （X123）、
+PASS|repeat-1395|expected=X123|支架|actual=X123|支架|input=支架	X123、
+PASS|repeat-1396|expected=X123|支架|actual=X123|支架|input=支架	(X123)、
+PASS|repeat-1397|expected=X123|支架|actual=X123|支架|input=支架	（X123）、
+PASS|repeat-1398|expected=X123|支架|actual=X123|支架|input=支架　X123、
+PASS|repeat-1399|expected=X123|支架|actual=X123|支架|input=支架　(X123)、
+PASS|repeat-1400|expected=X123|支架|actual=X123|支架|input=支架　（X123）、
+PASS|repeat-1401|expected=X123|支架|actual=X123|支架|input=支架 	X123、
+PASS|repeat-1402|expected=X123|支架|actual=X123|支架|input=支架 	(X123)、
+PASS|repeat-1403|expected=X123|支架|actual=X123|支架|input=支架 	（X123）、
+PASS|repeat-1404|expected=X123|支架|actual=X123|支架|input=支架 X123。
+PASS|repeat-1405|expected=X123|支架|actual=X123|支架|input=支架 (X123)。
+PASS|repeat-1406|expected=X123|支架|actual=X123|支架|input=支架 （X123）。
+PASS|repeat-1407|expected=X123|支架|actual=X123|支架|input=支架	X123。
+PASS|repeat-1408|expected=X123|支架|actual=X123|支架|input=支架	(X123)。
+PASS|repeat-1409|expected=X123|支架|actual=X123|支架|input=支架	（X123）。
+PASS|repeat-1410|expected=X123|支架|actual=X123|支架|input=支架　X123。
+PASS|repeat-1411|expected=X123|支架|actual=X123|支架|input=支架　(X123)。
+PASS|repeat-1412|expected=X123|支架|actual=X123|支架|input=支架　（X123）。
+PASS|repeat-1413|expected=X123|支架|actual=X123|支架|input=支架 	X123。
+PASS|repeat-1414|expected=X123|支架|actual=X123|支架|input=支架 	(X123)。
+PASS|repeat-1415|expected=X123|支架|actual=X123|支架|input=支架 	（X123）。
+PASS|repeat-1416|expected=X123|支架|actual=X123|支架|input=支架 X123.
+PASS|repeat-1417|expected=X123|支架|actual=X123|支架|input=支架 (X123).
+PASS|repeat-1418|expected=X123|支架|actual=X123|支架|input=支架 （X123）.
+PASS|repeat-1419|expected=X123|支架|actual=X123|支架|input=支架	X123.
+PASS|repeat-1420|expected=X123|支架|actual=X123|支架|input=支架	(X123).
+PASS|repeat-1421|expected=X123|支架|actual=X123|支架|input=支架	（X123）.
+PASS|repeat-1422|expected=X123|支架|actual=X123|支架|input=支架　X123.
+PASS|repeat-1423|expected=X123|支架|actual=X123|支架|input=支架　(X123).
+PASS|repeat-1424|expected=X123|支架|actual=X123|支架|input=支架　（X123）.
+PASS|repeat-1425|expected=X123|支架|actual=X123|支架|input=支架 	X123.
+PASS|repeat-1426|expected=X123|支架|actual=X123|支架|input=支架 	(X123).
+PASS|repeat-1427|expected=X123|支架|actual=X123|支架|input=支架 	（X123）.
+PASS|repeat-1428|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123，
+PASS|repeat-1429|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123)，
+PASS|repeat-1430|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123），
+PASS|repeat-1431|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123，
+PASS|repeat-1432|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123)，
+PASS|repeat-1433|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123），
+PASS|repeat-1434|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123，
+PASS|repeat-1435|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123)，
+PASS|repeat-1436|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123），
+PASS|repeat-1437|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123，
+PASS|repeat-1438|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123)，
+PASS|repeat-1439|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123），
+PASS|repeat-1440|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123；
+PASS|repeat-1441|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123)；
+PASS|repeat-1442|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）；
+PASS|repeat-1443|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123；
+PASS|repeat-1444|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123)；
+PASS|repeat-1445|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）；
+PASS|repeat-1446|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123；
+PASS|repeat-1447|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123)；
+PASS|repeat-1448|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）；
+PASS|repeat-1449|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123；
+PASS|repeat-1450|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123)；
+PASS|repeat-1451|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）；
+PASS|repeat-1452|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123,
+PASS|repeat-1453|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123),
+PASS|repeat-1454|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）,
+PASS|repeat-1455|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123,
+PASS|repeat-1456|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123),
+PASS|repeat-1457|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）,
+PASS|repeat-1458|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123,
+PASS|repeat-1459|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123),
+PASS|repeat-1460|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）,
+PASS|repeat-1461|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123,
+PASS|repeat-1462|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123),
+PASS|repeat-1463|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）,
+PASS|repeat-1464|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123;
+PASS|repeat-1465|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123);
+PASS|repeat-1466|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）;
+PASS|repeat-1467|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123;
+PASS|repeat-1468|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123);
+PASS|repeat-1469|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）;
+PASS|repeat-1470|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123;
+PASS|repeat-1471|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123);
+PASS|repeat-1472|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）;
+PASS|repeat-1473|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123;
+PASS|repeat-1474|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123);
+PASS|repeat-1475|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）;
+PASS|repeat-1476|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123、
+PASS|repeat-1477|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123)、
+PASS|repeat-1478|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）、
+PASS|repeat-1479|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123、
+PASS|repeat-1480|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123)、
+PASS|repeat-1481|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）、
+PASS|repeat-1482|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123、
+PASS|repeat-1483|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123)、
+PASS|repeat-1484|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）、
+PASS|repeat-1485|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123、
+PASS|repeat-1486|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123)、
+PASS|repeat-1487|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）、
+PASS|repeat-1488|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123。
+PASS|repeat-1489|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123)。
+PASS|repeat-1490|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）。
+PASS|repeat-1491|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123。
+PASS|repeat-1492|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123)。
+PASS|repeat-1493|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）。
+PASS|repeat-1494|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123。
+PASS|repeat-1495|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123)。
+PASS|repeat-1496|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）。
+PASS|repeat-1497|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123。
+PASS|repeat-1498|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123)。
+PASS|repeat-1499|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）。
+PASS|repeat-1500|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 X123.
+PASS|repeat-1501|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 (X123).
+PASS|repeat-1502|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 （X123）.
+PASS|repeat-1503|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	X123.
+PASS|repeat-1504|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	(X123).
+PASS|repeat-1505|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架	（X123）.
+PASS|repeat-1506|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　X123.
+PASS|repeat-1507|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　(X123).
+PASS|repeat-1508|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架　（X123）.
+PASS|repeat-1509|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	X123.
+PASS|repeat-1510|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	(X123).
+PASS|repeat-1511|expected=X123|壳体X123 支架|actual=X123|壳体X123 支架|input=壳体X123 支架 	（X123）.
+PASS|repeat-1512|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123，
+PASS|repeat-1513|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123)，
+PASS|repeat-1514|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123），
+PASS|repeat-1515|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123，
+PASS|repeat-1516|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123)，
+PASS|repeat-1517|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123），
+PASS|repeat-1518|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123，
+PASS|repeat-1519|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123)，
+PASS|repeat-1520|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123），
+PASS|repeat-1521|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123，
+PASS|repeat-1522|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123)，
+PASS|repeat-1523|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123），
+PASS|repeat-1524|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123；
+PASS|repeat-1525|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123)；
+PASS|repeat-1526|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）；
+PASS|repeat-1527|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123；
+PASS|repeat-1528|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123)；
+PASS|repeat-1529|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）；
+PASS|repeat-1530|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123；
+PASS|repeat-1531|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123)；
+PASS|repeat-1532|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）；
+PASS|repeat-1533|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123；
+PASS|repeat-1534|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123)；
+PASS|repeat-1535|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）；
+PASS|repeat-1536|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123,
+PASS|repeat-1537|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123),
+PASS|repeat-1538|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）,
+PASS|repeat-1539|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123,
+PASS|repeat-1540|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123),
+PASS|repeat-1541|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）,
+PASS|repeat-1542|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123,
+PASS|repeat-1543|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123),
+PASS|repeat-1544|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）,
+PASS|repeat-1545|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123,
+PASS|repeat-1546|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123),
+PASS|repeat-1547|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）,
+PASS|repeat-1548|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123;
+PASS|repeat-1549|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123);
+PASS|repeat-1550|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）;
+PASS|repeat-1551|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123;
+PASS|repeat-1552|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123);
+PASS|repeat-1553|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）;
+PASS|repeat-1554|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123;
+PASS|repeat-1555|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123);
+PASS|repeat-1556|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）;
+PASS|repeat-1557|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123;
+PASS|repeat-1558|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123);
+PASS|repeat-1559|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）;
+PASS|repeat-1560|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123、
+PASS|repeat-1561|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123)、
+PASS|repeat-1562|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）、
+PASS|repeat-1563|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123、
+PASS|repeat-1564|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123)、
+PASS|repeat-1565|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）、
+PASS|repeat-1566|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123、
+PASS|repeat-1567|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123)、
+PASS|repeat-1568|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）、
+PASS|repeat-1569|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123、
+PASS|repeat-1570|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123)、
+PASS|repeat-1571|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）、
+PASS|repeat-1572|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123。
+PASS|repeat-1573|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123)。
+PASS|repeat-1574|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）。
+PASS|repeat-1575|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123。
+PASS|repeat-1576|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123)。
+PASS|repeat-1577|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）。
+PASS|repeat-1578|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123。
+PASS|repeat-1579|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123)。
+PASS|repeat-1580|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）。
+PASS|repeat-1581|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123。
+PASS|repeat-1582|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123)。
+PASS|repeat-1583|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）。
+PASS|repeat-1584|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 X123.
+PASS|repeat-1585|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 (X123).
+PASS|repeat-1586|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 （X123）.
+PASS|repeat-1587|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	X123.
+PASS|repeat-1588|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	(X123).
+PASS|repeat-1589|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架	（X123）.
+PASS|repeat-1590|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　X123.
+PASS|repeat-1591|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　(X123).
+PASS|repeat-1592|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架　（X123）.
+PASS|repeat-1593|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	X123.
+PASS|repeat-1594|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	(X123).
+PASS|repeat-1595|expected=X123|壳体1123 支架|actual=X123|壳体1123 支架|input=壳体1123 支架 	（X123）.
+PASS|repeat-1596|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123，
+PASS|repeat-1597|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123)，
+PASS|repeat-1598|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123），
+PASS|repeat-1599|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123，
+PASS|repeat-1600|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123)，
+PASS|repeat-1601|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123），
+PASS|repeat-1602|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123，
+PASS|repeat-1603|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123)，
+PASS|repeat-1604|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123），
+PASS|repeat-1605|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123，
+PASS|repeat-1606|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123)，
+PASS|repeat-1607|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123），
+PASS|repeat-1608|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123；
+PASS|repeat-1609|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123)；
+PASS|repeat-1610|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）；
+PASS|repeat-1611|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123；
+PASS|repeat-1612|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123)；
+PASS|repeat-1613|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）；
+PASS|repeat-1614|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123；
+PASS|repeat-1615|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123)；
+PASS|repeat-1616|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）；
+PASS|repeat-1617|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123；
+PASS|repeat-1618|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123)；
+PASS|repeat-1619|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）；
+PASS|repeat-1620|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123,
+PASS|repeat-1621|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123),
+PASS|repeat-1622|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）,
+PASS|repeat-1623|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123,
+PASS|repeat-1624|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123),
+PASS|repeat-1625|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）,
+PASS|repeat-1626|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123,
+PASS|repeat-1627|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123),
+PASS|repeat-1628|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）,
+PASS|repeat-1629|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123,
+PASS|repeat-1630|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123),
+PASS|repeat-1631|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）,
+PASS|repeat-1632|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123;
+PASS|repeat-1633|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123);
+PASS|repeat-1634|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）;
+PASS|repeat-1635|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123;
+PASS|repeat-1636|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123);
+PASS|repeat-1637|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）;
+PASS|repeat-1638|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123;
+PASS|repeat-1639|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123);
+PASS|repeat-1640|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）;
+PASS|repeat-1641|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123;
+PASS|repeat-1642|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123);
+PASS|repeat-1643|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）;
+PASS|repeat-1644|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123、
+PASS|repeat-1645|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123)、
+PASS|repeat-1646|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）、
+PASS|repeat-1647|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123、
+PASS|repeat-1648|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123)、
+PASS|repeat-1649|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）、
+PASS|repeat-1650|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123、
+PASS|repeat-1651|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123)、
+PASS|repeat-1652|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）、
+PASS|repeat-1653|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123、
+PASS|repeat-1654|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123)、
+PASS|repeat-1655|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）、
+PASS|repeat-1656|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123。
+PASS|repeat-1657|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123)。
+PASS|repeat-1658|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）。
+PASS|repeat-1659|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123。
+PASS|repeat-1660|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123)。
+PASS|repeat-1661|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）。
+PASS|repeat-1662|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123。
+PASS|repeat-1663|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123)。
+PASS|repeat-1664|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）。
+PASS|repeat-1665|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123。
+PASS|repeat-1666|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123)。
+PASS|repeat-1667|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）。
+PASS|repeat-1668|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 X123.
+PASS|repeat-1669|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 (X123).
+PASS|repeat-1670|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 （X123）.
+PASS|repeat-1671|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	X123.
+PASS|repeat-1672|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	(X123).
+PASS|repeat-1673|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架	（X123）.
+PASS|repeat-1674|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　X123.
+PASS|repeat-1675|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　(X123).
+PASS|repeat-1676|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架　（X123）.
+PASS|repeat-1677|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	X123.
+PASS|repeat-1678|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	(X123).
+PASS|repeat-1679|expected=X123|壳体AX123 支架|actual=X123|壳体AX123 支架|input=壳体AX123 支架 	（X123）.
+PASS|overlength-1680|expected=|actual=|input=123456 支架，
+PASS|overlength-1681|expected=|actual=|input=支架 123456，
+PASS|overlength-1682|expected=|actual=|input=支架 (123456)，
+PASS|overlength-1683|expected=|actual=|input=支架 （123456），
+PASS|overlength-1684|expected=|actual=|input=123456	支架，
+PASS|overlength-1685|expected=|actual=|input=支架	123456，
+PASS|overlength-1686|expected=|actual=|input=支架	(123456)，
+PASS|overlength-1687|expected=|actual=|input=支架	（123456），
+PASS|overlength-1688|expected=|actual=|input=123456　支架，
+PASS|overlength-1689|expected=|actual=|input=支架　123456，
+PASS|overlength-1690|expected=|actual=|input=支架　(123456)，
+PASS|overlength-1691|expected=|actual=|input=支架　（123456），
+PASS|overlength-1692|expected=|actual=|input=123456 	支架，
+PASS|overlength-1693|expected=|actual=|input=支架 	123456，
+PASS|overlength-1694|expected=|actual=|input=支架 	(123456)，
+PASS|overlength-1695|expected=|actual=|input=支架 	（123456），
+PASS|overlength-1696|expected=|actual=|input=123456 支架；
+PASS|overlength-1697|expected=|actual=|input=支架 123456；
+PASS|overlength-1698|expected=|actual=|input=支架 (123456)；
+PASS|overlength-1699|expected=|actual=|input=支架 （123456）；
+PASS|overlength-1700|expected=|actual=|input=123456	支架；
+PASS|overlength-1701|expected=|actual=|input=支架	123456；
+PASS|overlength-1702|expected=|actual=|input=支架	(123456)；
+PASS|overlength-1703|expected=|actual=|input=支架	（123456）；
+PASS|overlength-1704|expected=|actual=|input=123456　支架；
+PASS|overlength-1705|expected=|actual=|input=支架　123456；
+PASS|overlength-1706|expected=|actual=|input=支架　(123456)；
+PASS|overlength-1707|expected=|actual=|input=支架　（123456）；
+PASS|overlength-1708|expected=|actual=|input=123456 	支架；
+PASS|overlength-1709|expected=|actual=|input=支架 	123456；
+PASS|overlength-1710|expected=|actual=|input=支架 	(123456)；
+PASS|overlength-1711|expected=|actual=|input=支架 	（123456）；
+PASS|overlength-1712|expected=|actual=|input=123456 支架,
+PASS|overlength-1713|expected=|actual=|input=支架 123456,
+PASS|overlength-1714|expected=|actual=|input=支架 (123456),
+PASS|overlength-1715|expected=|actual=|input=支架 （123456）,
+PASS|overlength-1716|expected=|actual=|input=123456	支架,
+PASS|overlength-1717|expected=|actual=|input=支架	123456,
+PASS|overlength-1718|expected=|actual=|input=支架	(123456),
+PASS|overlength-1719|expected=|actual=|input=支架	（123456）,
+PASS|overlength-1720|expected=|actual=|input=123456　支架,
+PASS|overlength-1721|expected=|actual=|input=支架　123456,
+PASS|overlength-1722|expected=|actual=|input=支架　(123456),
+PASS|overlength-1723|expected=|actual=|input=支架　（123456）,
+PASS|overlength-1724|expected=|actual=|input=123456 	支架,
+PASS|overlength-1725|expected=|actual=|input=支架 	123456,
+PASS|overlength-1726|expected=|actual=|input=支架 	(123456),
+PASS|overlength-1727|expected=|actual=|input=支架 	（123456）,
+PASS|overlength-1728|expected=|actual=|input=123456 支架;
+PASS|overlength-1729|expected=|actual=|input=支架 123456;
+PASS|overlength-1730|expected=|actual=|input=支架 (123456);
+PASS|overlength-1731|expected=|actual=|input=支架 （123456）;
+PASS|overlength-1732|expected=|actual=|input=123456	支架;
+PASS|overlength-1733|expected=|actual=|input=支架	123456;
+PASS|overlength-1734|expected=|actual=|input=支架	(123456);
+PASS|overlength-1735|expected=|actual=|input=支架	（123456）;
+PASS|overlength-1736|expected=|actual=|input=123456　支架;
+PASS|overlength-1737|expected=|actual=|input=支架　123456;
+PASS|overlength-1738|expected=|actual=|input=支架　(123456);
+PASS|overlength-1739|expected=|actual=|input=支架　（123456）;
+PASS|overlength-1740|expected=|actual=|input=123456 	支架;
+PASS|overlength-1741|expected=|actual=|input=支架 	123456;
+PASS|overlength-1742|expected=|actual=|input=支架 	(123456);
+PASS|overlength-1743|expected=|actual=|input=支架 	（123456）;
+PASS|overlength-1744|expected=|actual=|input=123456 支架、
+PASS|overlength-1745|expected=|actual=|input=支架 123456、
+PASS|overlength-1746|expected=|actual=|input=支架 (123456)、
+PASS|overlength-1747|expected=|actual=|input=支架 （123456）、
+PASS|overlength-1748|expected=|actual=|input=123456	支架、
+PASS|overlength-1749|expected=|actual=|input=支架	123456、
+PASS|overlength-1750|expected=|actual=|input=支架	(123456)、
+PASS|overlength-1751|expected=|actual=|input=支架	（123456）、
+PASS|overlength-1752|expected=|actual=|input=123456　支架、
+PASS|overlength-1753|expected=|actual=|input=支架　123456、
+PASS|overlength-1754|expected=|actual=|input=支架　(123456)、
+PASS|overlength-1755|expected=|actual=|input=支架　（123456）、
+PASS|overlength-1756|expected=|actual=|input=123456 	支架、
+PASS|overlength-1757|expected=|actual=|input=支架 	123456、
+PASS|overlength-1758|expected=|actual=|input=支架 	(123456)、
+PASS|overlength-1759|expected=|actual=|input=支架 	（123456）、
+PASS|overlength-1760|expected=|actual=|input=123456 支架。
+PASS|overlength-1761|expected=|actual=|input=支架 123456。
+PASS|overlength-1762|expected=|actual=|input=支架 (123456)。
+PASS|overlength-1763|expected=|actual=|input=支架 （123456）。
+PASS|overlength-1764|expected=|actual=|input=123456	支架。
+PASS|overlength-1765|expected=|actual=|input=支架	123456。
+PASS|overlength-1766|expected=|actual=|input=支架	(123456)。
+PASS|overlength-1767|expected=|actual=|input=支架	（123456）。
+PASS|overlength-1768|expected=|actual=|input=123456　支架。
+PASS|overlength-1769|expected=|actual=|input=支架　123456。
+PASS|overlength-1770|expected=|actual=|input=支架　(123456)。
+PASS|overlength-1771|expected=|actual=|input=支架　（123456）。
+PASS|overlength-1772|expected=|actual=|input=123456 	支架。
+PASS|overlength-1773|expected=|actual=|input=支架 	123456。
+PASS|overlength-1774|expected=|actual=|input=支架 	(123456)。
+PASS|overlength-1775|expected=|actual=|input=支架 	（123456）。
+PASS|overlength-1776|expected=|actual=|input=123456 支架.
+PASS|overlength-1777|expected=|actual=|input=支架 123456.
+PASS|overlength-1778|expected=|actual=|input=支架 (123456).
+PASS|overlength-1779|expected=|actual=|input=支架 （123456）.
+PASS|overlength-1780|expected=|actual=|input=123456	支架.
+PASS|overlength-1781|expected=|actual=|input=支架	123456.
+PASS|overlength-1782|expected=|actual=|input=支架	(123456).
+PASS|overlength-1783|expected=|actual=|input=支架	（123456）.
+PASS|overlength-1784|expected=|actual=|input=123456　支架.
+PASS|overlength-1785|expected=|actual=|input=支架　123456.
+PASS|overlength-1786|expected=|actual=|input=支架　(123456).
+PASS|overlength-1787|expected=|actual=|input=支架　（123456）.
+PASS|overlength-1788|expected=|actual=|input=123456 	支架.
+PASS|overlength-1789|expected=|actual=|input=支架 	123456.
+PASS|overlength-1790|expected=|actual=|input=支架 	(123456).
+PASS|overlength-1791|expected=|actual=|input=支架 	（123456）.
+PASS|overlength-1792|expected=|actual=|input=S123456 支架，
+PASS|overlength-1793|expected=|actual=|input=支架 S123456，
+PASS|overlength-1794|expected=|actual=|input=支架 (S123456)，
+PASS|overlength-1795|expected=|actual=|input=支架 （S123456），
+PASS|overlength-1796|expected=|actual=|input=S123456	支架，
+PASS|overlength-1797|expected=|actual=|input=支架	S123456，
+PASS|overlength-1798|expected=|actual=|input=支架	(S123456)，
+PASS|overlength-1799|expected=|actual=|input=支架	（S123456），
+PASS|overlength-1800|expected=|actual=|input=S123456　支架，
+PASS|overlength-1801|expected=|actual=|input=支架　S123456，
+PASS|overlength-1802|expected=|actual=|input=支架　(S123456)，
+PASS|overlength-1803|expected=|actual=|input=支架　（S123456），
+PASS|overlength-1804|expected=|actual=|input=S123456 	支架，
+PASS|overlength-1805|expected=|actual=|input=支架 	S123456，
+PASS|overlength-1806|expected=|actual=|input=支架 	(S123456)，
+PASS|overlength-1807|expected=|actual=|input=支架 	（S123456），
+PASS|overlength-1808|expected=|actual=|input=S123456 支架；
+PASS|overlength-1809|expected=|actual=|input=支架 S123456；
+PASS|overlength-1810|expected=|actual=|input=支架 (S123456)；
+PASS|overlength-1811|expected=|actual=|input=支架 （S123456）；
+PASS|overlength-1812|expected=|actual=|input=S123456	支架；
+PASS|overlength-1813|expected=|actual=|input=支架	S123456；
+PASS|overlength-1814|expected=|actual=|input=支架	(S123456)；
+PASS|overlength-1815|expected=|actual=|input=支架	（S123456）；
+PASS|overlength-1816|expected=|actual=|input=S123456　支架；
+PASS|overlength-1817|expected=|actual=|input=支架　S123456；
+PASS|overlength-1818|expected=|actual=|input=支架　(S123456)；
+PASS|overlength-1819|expected=|actual=|input=支架　（S123456）；
+PASS|overlength-1820|expected=|actual=|input=S123456 	支架；
+PASS|overlength-1821|expected=|actual=|input=支架 	S123456；
+PASS|overlength-1822|expected=|actual=|input=支架 	(S123456)；
+PASS|overlength-1823|expected=|actual=|input=支架 	（S123456）；
+PASS|overlength-1824|expected=|actual=|input=S123456 支架,
+PASS|overlength-1825|expected=|actual=|input=支架 S123456,
+PASS|overlength-1826|expected=|actual=|input=支架 (S123456),
+PASS|overlength-1827|expected=|actual=|input=支架 （S123456）,
+PASS|overlength-1828|expected=|actual=|input=S123456	支架,
+PASS|overlength-1829|expected=|actual=|input=支架	S123456,
+PASS|overlength-1830|expected=|actual=|input=支架	(S123456),
+PASS|overlength-1831|expected=|actual=|input=支架	（S123456）,
+PASS|overlength-1832|expected=|actual=|input=S123456　支架,
+PASS|overlength-1833|expected=|actual=|input=支架　S123456,
+PASS|overlength-1834|expected=|actual=|input=支架　(S123456),
+PASS|overlength-1835|expected=|actual=|input=支架　（S123456）,
+PASS|overlength-1836|expected=|actual=|input=S123456 	支架,
+PASS|overlength-1837|expected=|actual=|input=支架 	S123456,
+PASS|overlength-1838|expected=|actual=|input=支架 	(S123456),
+PASS|overlength-1839|expected=|actual=|input=支架 	（S123456）,
+PASS|overlength-1840|expected=|actual=|input=S123456 支架;
+PASS|overlength-1841|expected=|actual=|input=支架 S123456;
+PASS|overlength-1842|expected=|actual=|input=支架 (S123456);
+PASS|overlength-1843|expected=|actual=|input=支架 （S123456）;
+PASS|overlength-1844|expected=|actual=|input=S123456	支架;
+PASS|overlength-1845|expected=|actual=|input=支架	S123456;
+PASS|overlength-1846|expected=|actual=|input=支架	(S123456);
+PASS|overlength-1847|expected=|actual=|input=支架	（S123456）;
+PASS|overlength-1848|expected=|actual=|input=S123456　支架;
+PASS|overlength-1849|expected=|actual=|input=支架　S123456;
+PASS|overlength-1850|expected=|actual=|input=支架　(S123456);
+PASS|overlength-1851|expected=|actual=|input=支架　（S123456）;
+PASS|overlength-1852|expected=|actual=|input=S123456 	支架;
+PASS|overlength-1853|expected=|actual=|input=支架 	S123456;
+PASS|overlength-1854|expected=|actual=|input=支架 	(S123456);
+PASS|overlength-1855|expected=|actual=|input=支架 	（S123456）;
+PASS|overlength-1856|expected=|actual=|input=S123456 支架、
+PASS|overlength-1857|expected=|actual=|input=支架 S123456、
+PASS|overlength-1858|expected=|actual=|input=支架 (S123456)、
+PASS|overlength-1859|expected=|actual=|input=支架 （S123456）、
+PASS|overlength-1860|expected=|actual=|input=S123456	支架、
+PASS|overlength-1861|expected=|actual=|input=支架	S123456、
+PASS|overlength-1862|expected=|actual=|input=支架	(S123456)、
+PASS|overlength-1863|expected=|actual=|input=支架	（S123456）、
+PASS|overlength-1864|expected=|actual=|input=S123456　支架、
+PASS|overlength-1865|expected=|actual=|input=支架　S123456、
+PASS|overlength-1866|expected=|actual=|input=支架　(S123456)、
+PASS|overlength-1867|expected=|actual=|input=支架　（S123456）、
+PASS|overlength-1868|expected=|actual=|input=S123456 	支架、
+PASS|overlength-1869|expected=|actual=|input=支架 	S123456、
+PASS|overlength-1870|expected=|actual=|input=支架 	(S123456)、
+PASS|overlength-1871|expected=|actual=|input=支架 	（S123456）、
+PASS|overlength-1872|expected=|actual=|input=S123456 支架。
+PASS|overlength-1873|expected=|actual=|input=支架 S123456。
+PASS|overlength-1874|expected=|actual=|input=支架 (S123456)。
+PASS|overlength-1875|expected=|actual=|input=支架 （S123456）。
+PASS|overlength-1876|expected=|actual=|input=S123456	支架。
+PASS|overlength-1877|expected=|actual=|input=支架	S123456。
+PASS|overlength-1878|expected=|actual=|input=支架	(S123456)。
+PASS|overlength-1879|expected=|actual=|input=支架	（S123456）。
+PASS|overlength-1880|expected=|actual=|input=S123456　支架。
+PASS|overlength-1881|expected=|actual=|input=支架　S123456。
+PASS|overlength-1882|expected=|actual=|input=支架　(S123456)。
+PASS|overlength-1883|expected=|actual=|input=支架　（S123456）。
+PASS|overlength-1884|expected=|actual=|input=S123456 	支架。
+PASS|overlength-1885|expected=|actual=|input=支架 	S123456。
+PASS|overlength-1886|expected=|actual=|input=支架 	(S123456)。
+PASS|overlength-1887|expected=|actual=|input=支架 	（S123456）。
+PASS|overlength-1888|expected=|actual=|input=S123456 支架.
+PASS|overlength-1889|expected=|actual=|input=支架 S123456.
+PASS|overlength-1890|expected=|actual=|input=支架 (S123456).
+PASS|overlength-1891|expected=|actual=|input=支架 （S123456）.
+PASS|overlength-1892|expected=|actual=|input=S123456	支架.
+PASS|overlength-1893|expected=|actual=|input=支架	S123456.
+PASS|overlength-1894|expected=|actual=|input=支架	(S123456).
+PASS|overlength-1895|expected=|actual=|input=支架	（S123456）.
+PASS|overlength-1896|expected=|actual=|input=S123456　支架.
+PASS|overlength-1897|expected=|actual=|input=支架　S123456.
+PASS|overlength-1898|expected=|actual=|input=支架　(S123456).
+PASS|overlength-1899|expected=|actual=|input=支架　（S123456）.
+PASS|overlength-1900|expected=|actual=|input=S123456 	支架.
+PASS|overlength-1901|expected=|actual=|input=支架 	S123456.
+PASS|overlength-1902|expected=|actual=|input=支架 	(S123456).
+PASS|overlength-1903|expected=|actual=|input=支架 	（S123456）.
+PASS|overlength-1904|expected=|actual=|input=10-123456 支架，
+PASS|overlength-1905|expected=|actual=|input=支架 10-123456，
+PASS|overlength-1906|expected=|actual=|input=支架 (10-123456)，
+PASS|overlength-1907|expected=|actual=|input=支架 （10-123456），
+PASS|overlength-1908|expected=|actual=|input=10-123456	支架，
+PASS|overlength-1909|expected=|actual=|input=支架	10-123456，
+PASS|overlength-1910|expected=|actual=|input=支架	(10-123456)，
+PASS|overlength-1911|expected=|actual=|input=支架	（10-123456），
+PASS|overlength-1912|expected=|actual=|input=10-123456　支架，
+PASS|overlength-1913|expected=|actual=|input=支架　10-123456，
+PASS|overlength-1914|expected=|actual=|input=支架　(10-123456)，
+PASS|overlength-1915|expected=|actual=|input=支架　（10-123456），
+PASS|overlength-1916|expected=|actual=|input=10-123456 	支架，
+PASS|overlength-1917|expected=|actual=|input=支架 	10-123456，
+PASS|overlength-1918|expected=|actual=|input=支架 	(10-123456)，
+PASS|overlength-1919|expected=|actual=|input=支架 	（10-123456），
+PASS|overlength-1920|expected=|actual=|input=10-123456 支架；
+PASS|overlength-1921|expected=|actual=|input=支架 10-123456；
+PASS|overlength-1922|expected=|actual=|input=支架 (10-123456)；
+PASS|overlength-1923|expected=|actual=|input=支架 （10-123456）；
+PASS|overlength-1924|expected=|actual=|input=10-123456	支架；
+PASS|overlength-1925|expected=|actual=|input=支架	10-123456；
+PASS|overlength-1926|expected=|actual=|input=支架	(10-123456)；
+PASS|overlength-1927|expected=|actual=|input=支架	（10-123456）；
+PASS|overlength-1928|expected=|actual=|input=10-123456　支架；
+PASS|overlength-1929|expected=|actual=|input=支架　10-123456；
+PASS|overlength-1930|expected=|actual=|input=支架　(10-123456)；
+PASS|overlength-1931|expected=|actual=|input=支架　（10-123456）；
+PASS|overlength-1932|expected=|actual=|input=10-123456 	支架；
+PASS|overlength-1933|expected=|actual=|input=支架 	10-123456；
+PASS|overlength-1934|expected=|actual=|input=支架 	(10-123456)；
+PASS|overlength-1935|expected=|actual=|input=支架 	（10-123456）；
+PASS|overlength-1936|expected=|actual=|input=10-123456 支架,
+PASS|overlength-1937|expected=|actual=|input=支架 10-123456,
+PASS|overlength-1938|expected=|actual=|input=支架 (10-123456),
+PASS|overlength-1939|expected=|actual=|input=支架 （10-123456）,
+PASS|overlength-1940|expected=|actual=|input=10-123456	支架,
+PASS|overlength-1941|expected=|actual=|input=支架	10-123456,
+PASS|overlength-1942|expected=|actual=|input=支架	(10-123456),
+PASS|overlength-1943|expected=|actual=|input=支架	（10-123456）,
+PASS|overlength-1944|expected=|actual=|input=10-123456　支架,
+PASS|overlength-1945|expected=|actual=|input=支架　10-123456,
+PASS|overlength-1946|expected=|actual=|input=支架　(10-123456),
+PASS|overlength-1947|expected=|actual=|input=支架　（10-123456）,
+PASS|overlength-1948|expected=|actual=|input=10-123456 	支架,
+PASS|overlength-1949|expected=|actual=|input=支架 	10-123456,
+PASS|overlength-1950|expected=|actual=|input=支架 	(10-123456),
+PASS|overlength-1951|expected=|actual=|input=支架 	（10-123456）,
+PASS|overlength-1952|expected=|actual=|input=10-123456 支架;
+PASS|overlength-1953|expected=|actual=|input=支架 10-123456;
+PASS|overlength-1954|expected=|actual=|input=支架 (10-123456);
+PASS|overlength-1955|expected=|actual=|input=支架 （10-123456）;
+PASS|overlength-1956|expected=|actual=|input=10-123456	支架;
+PASS|overlength-1957|expected=|actual=|input=支架	10-123456;
+PASS|overlength-1958|expected=|actual=|input=支架	(10-123456);
+PASS|overlength-1959|expected=|actual=|input=支架	（10-123456）;
+PASS|overlength-1960|expected=|actual=|input=10-123456　支架;
+PASS|overlength-1961|expected=|actual=|input=支架　10-123456;
+PASS|overlength-1962|expected=|actual=|input=支架　(10-123456);
+PASS|overlength-1963|expected=|actual=|input=支架　（10-123456）;
+PASS|overlength-1964|expected=|actual=|input=10-123456 	支架;
+PASS|overlength-1965|expected=|actual=|input=支架 	10-123456;
+PASS|overlength-1966|expected=|actual=|input=支架 	(10-123456);
+PASS|overlength-1967|expected=|actual=|input=支架 	（10-123456）;
+PASS|overlength-1968|expected=|actual=|input=10-123456 支架、
+PASS|overlength-1969|expected=|actual=|input=支架 10-123456、
+PASS|overlength-1970|expected=|actual=|input=支架 (10-123456)、
+PASS|overlength-1971|expected=|actual=|input=支架 （10-123456）、
+PASS|overlength-1972|expected=|actual=|input=10-123456	支架、
+PASS|overlength-1973|expected=|actual=|input=支架	10-123456、
+PASS|overlength-1974|expected=|actual=|input=支架	(10-123456)、
+PASS|overlength-1975|expected=|actual=|input=支架	（10-123456）、
+PASS|overlength-1976|expected=|actual=|input=10-123456　支架、
+PASS|overlength-1977|expected=|actual=|input=支架　10-123456、
+PASS|overlength-1978|expected=|actual=|input=支架　(10-123456)、
+PASS|overlength-1979|expected=|actual=|input=支架　（10-123456）、
+PASS|overlength-1980|expected=|actual=|input=10-123456 	支架、
+PASS|overlength-1981|expected=|actual=|input=支架 	10-123456、
+PASS|overlength-1982|expected=|actual=|input=支架 	(10-123456)、
+PASS|overlength-1983|expected=|actual=|input=支架 	（10-123456）、
+PASS|overlength-1984|expected=|actual=|input=10-123456 支架。
+PASS|overlength-1985|expected=|actual=|input=支架 10-123456。
+PASS|overlength-1986|expected=|actual=|input=支架 (10-123456)。
+PASS|overlength-1987|expected=|actual=|input=支架 （10-123456）。
+PASS|overlength-1988|expected=|actual=|input=10-123456	支架。
+PASS|overlength-1989|expected=|actual=|input=支架	10-123456。
+PASS|overlength-1990|expected=|actual=|input=支架	(10-123456)。
+PASS|overlength-1991|expected=|actual=|input=支架	（10-123456）。
+PASS|overlength-1992|expected=|actual=|input=10-123456　支架。
+PASS|overlength-1993|expected=|actual=|input=支架　10-123456。
+PASS|overlength-1994|expected=|actual=|input=支架　(10-123456)。
+PASS|overlength-1995|expected=|actual=|input=支架　（10-123456）。
+PASS|overlength-1996|expected=|actual=|input=10-123456 	支架。
+PASS|overlength-1997|expected=|actual=|input=支架 	10-123456。
+PASS|overlength-1998|expected=|actual=|input=支架 	(10-123456)。
+PASS|overlength-1999|expected=|actual=|input=支架 	（10-123456）。
+PASS|overlength-2000|expected=|actual=|input=10-123456 支架.
+PASS|overlength-2001|expected=|actual=|input=支架 10-123456.
+PASS|overlength-2002|expected=|actual=|input=支架 (10-123456).
+PASS|overlength-2003|expected=|actual=|input=支架 （10-123456）.
+PASS|overlength-2004|expected=|actual=|input=10-123456	支架.
+PASS|overlength-2005|expected=|actual=|input=支架	10-123456.
+PASS|overlength-2006|expected=|actual=|input=支架	(10-123456).
+PASS|overlength-2007|expected=|actual=|input=支架	（10-123456）.
+PASS|overlength-2008|expected=|actual=|input=10-123456　支架.
+PASS|overlength-2009|expected=|actual=|input=支架　10-123456.
+PASS|overlength-2010|expected=|actual=|input=支架　(10-123456).
+PASS|overlength-2011|expected=|actual=|input=支架　（10-123456）.
+PASS|overlength-2012|expected=|actual=|input=10-123456 	支架.
+PASS|overlength-2013|expected=|actual=|input=支架 	10-123456.
+PASS|overlength-2014|expected=|actual=|input=支架 	(10-123456).
+PASS|overlength-2015|expected=|actual=|input=支架 	（10-123456）.
+SUMMARY|total=2016|failed=0

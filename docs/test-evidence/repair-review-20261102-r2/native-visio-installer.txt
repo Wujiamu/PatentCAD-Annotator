@@ -1,0 +1,44 @@
+PASS: G14 Visio 部分删除失败后从恢复副本还原完整文件集与注册项。
+PASS: G18 Visio uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 Visio uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 Visio uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 Visio uninstall_registry_restore_failed_material_kept — 残留回滚材料：.Visio.recovery-b27d615bfd834efdaf186a43ae5df008, .Visio.uninstall-3702e2ec578148c6b4a68cb0415cf562
+PASS: G18 Visio uninstall_cleanup_failed_files_complete — 清理失败时 Visio 产品文件仍为完整集合
+PASS: G18 Visio uninstall_cleanup_failed_registration_restored — 清理失败时原 Visio 注册项已恢复
+PASS: G18 Visio uninstall_cleanup_failed_material_kept — 残留回滚材料：.Visio.recovery-be8443a6671a4da9b2f73182ec49bd43, .Visio.uninstall-3d64e9baf95d4d6eafe03ba5d24a3c76
+PASS: G18 Visio upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整 Visio 目录与哈希已还原
+PASS: G18 Visio upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原 Visio 注册项已恢复
+PASS: G18 Visio upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 Visio upgrade_registry_restore_failed_disabled — 注册恢复失败后 Visio 加载项保持停用
+PASS: G18 Visio upgrade_registry_restore_failed_old_files_intact — Visio 注册恢复失败时旧版文件仍完整
+PASS: G18 Visio upgrade_registry_restore_failed_material_kept — 残留回滚材料：.Visio.failed-67ddb8ab541c476f86981e958e609896
+PASS: G18 Visio upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时 Visio 加载项保持停用
+PASS: G18 Visio upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.Visio.rollback-bc1b09982f91454aa8b96c8b8304dd84
+PASS: G22 Visio first_install_stage_failed_installer_failed — 阶段创建失败后 Visio 安装返回失败
+PASS: G22 Visio first_install_stage_failed_failure_origin — 失败来自暂存目录创建
+PASS: G22 Visio first_install_stage_failed_no_product_dir — 首次 Visio 安装早期失败后未留下产品目录
+PASS: G22 Visio first_install_stage_failed_registration — 首次 Visio 安装早期失败后没有产品注册项
+PASS: G22 Visio first_install_stage_failed_sentinel — 非项目哨兵保持不变
+PASS: G22 Visio upgrade_stage_failed_failure_origin — 失败阶段匹配 'stage-'
+PASS: G22 Visio upgrade_stage_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_stage_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_stage_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_failure_origin — 失败阶段匹配 '暂存校验失败'
+PASS: G22 Visio upgrade_staged_copy_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_staged_copy_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_old_move_failed_failure_origin — 失败阶段匹配 'denied|being used|拒绝访问|另一进程'
+PASS: G22 Visio upgrade_old_move_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_old_move_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_old_move_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_new_move_failed_failure_origin — 失败阶段匹配 '新 Visio 安装目录无法移动|\.Visio\.stage-'
+PASS: G22 Visio upgrade_new_move_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_new_move_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_new_move_failed_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G22 Visio upgrade_after_files_failed_failure_origin — 失败阶段匹配 'Visio 产品文件部署后'
+PASS: G22 Visio upgrade_after_files_failed_old_files — 旧 Visio 文件字节、完整文件集与所有权清单保持不变
+PASS: G22 Visio upgrade_after_files_failed_registration — 原 Visio 注册值保持不变
+PASS: G22 Visio upgrade_after_files_failed_sentinel — 非项目哨兵文件与注册项保持不变
+Visio 隔离安装回归 PASS：首次安装故障回滚、成功安装、升级故障回滚、重复安装、卸载及旁边哨兵保护。
+PASS: G18 Visio 文件验证先于注册恢复（文件恢复失败、注册恢复失败、清理失败、升级新目录半删除）。
+PASS: G22 Visio 区分旧安装存在与旧目录已移动（首次安装早期失败、stage 创建/复制校验/旧目录移动/新目录移动/部署后失败）。

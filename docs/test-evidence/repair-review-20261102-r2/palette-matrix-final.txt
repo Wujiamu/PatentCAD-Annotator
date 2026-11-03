@@ -1,0 +1,126 @@
+ENV|DESKTOP-3VJ2A3B\wjm|.NET 8.0.28
+PASS|N1-related-block|
+PASS|N1-unrelated-block|
+PASS|N1-name-allowed|
+PASS|N1-name-change-first-retry-refuses|
+PASS|N1-name-change-confirm-retries|
+PASS|N1-after-complete-edit|
+PASS|N3-has-new-stale|expected-calls=1|actual-calls=1|pending=False
+PASS|N3-has-new-warm|expected-calls=1|actual-calls=1|pending=False
+PASS|N3-has-new-cold|expected-calls=1|actual-calls=1|pending=False
+FAIL|N3-missing-new-stale|expected-calls=0|actual-calls=1|pending=False
+PASS|N3-missing-new-warm|expected-calls=0|actual-calls=0|pending=True
+PASS|N3-missing-new-cold|expected-calls=0|actual-calls=0|pending=True
+FAIL|N3-bad-stale|expected-calls=0|actual-calls=1|pending=False
+FAIL|N3-bad-warm|expected-calls=0|actual-calls=1|pending=False
+PASS|N3-bad-cold|expected-calls=0|actual-calls=0|pending=True
+PASS|N2-stable|calls=1
+PASS|N2-content|calls=0
+PASS|N2-content-keeps-debt|
+PASS|N2-deleted|calls=0
+PASS|N2-deleted-keeps-debt|
+PASS|N2-document|calls=0
+PASS|N2-document-keeps-debt|
+FAIL|N2-save-as|calls=1
+FAIL|N2-save-as-keeps-debt|
+PASS|N4-A-resolved-False|
+FAIL|N4-B-buttons-after-A-resolved-False|pending=True|buttons=False
+PASS|N4-release-all-False|
+PASS|N4-A-resolved-True|
+FAIL|N4-B-buttons-after-A-resolved-True|pending=True|buttons=False
+PASS|N4-release-all-True|
+FAIL|N4-no-debt-hides-buttons|pending=False|buttons=True
+FAIL|N4-no-dictionary-hides-buttons|buttons=True
+FAIL|N4-confirm-not-inherited|expected-first-retry-calls=0|actual=1
+PASS|N4-closing-unrelated-keeps-A|
+FAIL|N4-close-reused-old-path-keeps-renamed-doc|pending-A=False
+PASS|N5-failure-keeps|
+PASS|N5-zero-match-completes|
+FAIL|N3-save-as-first-refuses-FalseFalse|calls=1
+FAIL|N3-save-as-confirm-FalseFalse|calls=1
+PASS|N3-save-as-first-refuses-FalseTrue|calls=0
+PASS|N3-save-as-confirm-FalseTrue|calls=0
+FAIL|N3-save-as-first-refuses-TrueFalse|calls=1
+PASS|N3-save-as-confirm-TrueFalse|calls=1
+PASS|N3-save-as-first-refuses-TrueTrue|calls=0
+PASS|N3-save-as-confirm-TrueTrue|calls=1
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+PASS|N2-real-edit-open-saved-stable|opened=True|saved=True
+PASS|N2-real-edit-sync-stable|calls=1
+PASS|N2-real-edit-open-saved-replacement|opened=True|saved=True
+FAIL|N2-real-edit-sync-replacement|calls=1
+FAIL|N2-real-edit-retains-debt-replacement|
+PASS|N2-real-edit-open-saved-bad|opened=True|saved=True
+PASS|N2-real-edit-sync-bad|calls=0
+PASS|N2-real-edit-retains-debt-bad|
+PASS|N2-real-edit-open-saved-deleted|opened=True|saved=True
+FAIL|N2-real-edit-sync-deleted|calls=1
+FAIL|N2-real-edit-retains-debt-deleted|
+PASS|N2-real-edit-open-saved-save-as|opened=True|saved=True
+FAIL|N2-real-edit-sync-save-as|calls=1
+FAIL|N2-real-edit-retains-debt-save-as|
+PASS|A1-buttons-FalseFalsekeep|
+PASS|A1-action-FalseFalsekeep|success=False|error=Current dictionary cannot be parsed.
+PASS|A1-buttons-FalseFalserestore|
+PASS|A1-action-FalseFalserestore|success=False|error=Backup dictionary cannot be parsed.
+PASS|A1-buttons-FalseFalselater|
+PASS|A1-later-FalseFalse|
+PASS|A1-buttons-FalseTruekeep|
+PASS|A1-action-FalseTruekeep|success=False|error=Current dictionary cannot be parsed.
+PASS|A1-buttons-FalseTruerestore|
+PASS|A1-action-FalseTruerestore|success=True|error=
+PASS|A1-buttons-FalseTruelater|
+PASS|A1-later-FalseTrue|
+PASS|A1-buttons-TrueFalsekeep|
+PASS|A1-action-TrueFalsekeep|success=True|error=
+PASS|A1-buttons-TrueFalserestore|
+PASS|A1-action-TrueFalserestore|success=False|error=Backup dictionary cannot be parsed.
+PASS|A1-buttons-TrueFalselater|
+PASS|A1-later-TrueFalse|
+PASS|A1-buttons-TrueTruekeep|
+PASS|A1-action-TrueTruekeep|success=True|error=
+PASS|A1-buttons-TrueTruerestore|
+PASS|A1-action-TrueTruerestore|success=True|error=
+PASS|A1-buttons-TrueTruelater|
+PASS|A1-later-TrueTrue|
+PASS|A2-current-change-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-change-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-change-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-change-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-delete-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-delete-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-delete-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-delete-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-document-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-document-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-path-keep|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-path-restore|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A3-open-none|opened=True
+PASS|A3-result-none|success=True|wrote=True
+PASS|A3-panel-matches-disk-none|panel=201|disk=201
+PASS|A3-open-baseline|opened=True
+PASS|A3-result-baseline|success=False|wrote=True
+FAIL|A3-panel-matches-disk-baseline|panel=301|disk=201
+PASS|A3-open-delete-backup|opened=True
+PASS|A3-result-delete-backup|success=False|wrote=True
+FAIL|A3-panel-matches-disk-delete-backup|panel=301|disk=201
+PASS|A3-open-readonly|opened=True
+PASS|A3-result-readonly|success=False|wrote=False
+PASS|A3-panel-matches-disk-readonly|panel=301|disk=301
+PASS|A3-open-baseline-repeat|opened=True
+PASS|A3-result-baseline-repeat|success=False|wrote=True
+FAIL|A3-panel-matches-disk-baseline-repeat|panel=301|disk=201
+PASS|A3-open-delete-backup-repeat|opened=True
+PASS|A3-result-delete-backup-repeat|success=False|wrote=True
+FAIL|A3-panel-matches-disk-delete-backup-repeat|panel=301|disk=201
+PASS|A4-other-backup-retained|
+SUMMARY|passed=90|failed=24|blocked=0

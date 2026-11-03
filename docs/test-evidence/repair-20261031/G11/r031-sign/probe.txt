@@ -1,0 +1,9 @@
+﻿POWERPOINT_VERSION|16.0
+h-rot0|left=300|top=360|w=600|h=0|rot=0|flipH=0|flipV=0|inkMinX=400|inkMaxX=1200|inkMinY=476|inkMaxY=484|Lthick=3|Rthick=9
+h-rot90|left=300|top=360|w=600|h=0|rot=90|flipH=0|flipV=0|inkMinX=799|inkMaxX=801|inkMinY=80|inkMaxY=719|Lthick=640|Rthick=640
+h-rot180|left=300|top=360|w=600|h=0|rot=180|flipH=0|flipV=0|inkMinX=400|inkMaxX=1200|inkMinY=476|inkMaxY=484|Lthick=9|Rthick=3
+h-rot270|left=300|top=360|w=600|h=0|rot=270|flipH=0|flipV=0|inkMinX=796|inkMaxX=804|inkMinY=80|inkMaxY=719|Lthick=6|Rthick=638
+d-rot0|left=300|top=200|w=600|h=360|rot=0|flipH=0|flipV=0|inkMinX=400|inkMaxX=1157|inkMinY=266|inkMaxY=719|Lthick=5|Rthick=5
+d-rot90|left=300|top=200|w=600|h=360|rot=90|flipH=0|flipV=0|inkMinX=671|inkMaxX=1041|inkMinY=107|inkMaxY=719|Lthick=8|Rthick=8
+fwd|left=300|top=360|w=600|h=0|rot=0|flipH=0|flipV=0|Lthick=2|Rthick=8
+rev|left=300|top=360|w=600|h=0|rot=0|flipH=-1|flipV=0|Lthick=8|Rthick=2

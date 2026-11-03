@@ -1,0 +1,5 @@
+command: dotnet exec <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G01-repair\tools\FactRunner\bin\Release\net8.0-windows\PatentMarker.FactRunner.dll <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\abstract-static\bin\Release\net8.0\Fixture.dll
+exit: 0
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=0 skipped=0

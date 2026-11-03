@@ -1,0 +1,32 @@
+PASS|pattern-text|G02_NUM
+PASS|pattern-text|G02_WS
+PASS|pattern-text|G02_INLINE
+PASS|pattern-text|G02_NAME
+PASS|pattern-text|G02_NAMEFIRST
+PASS|pattern-text|G02_NAMEBARE
+PASS|pattern-text|G02_SEP
+PASS|pattern-text|G02_SEPN
+PASS|pattern-text|G02_CELLSTART
+PASS|pattern-text|G02_P1
+PASS|pattern-text|G02_PB
+PASS|pattern-text|G02_P2
+PASS|pattern-text|G02_PA
+PASS|pattern-text|G02_P3
+PASS|pattern-text|G02_HDR0
+PASS|pattern-text|G02_HDR1
+PASS|pattern-text|G02_HDR2
+PASS|pattern-text|G02_HDR3
+PASS|pattern-text|G02_HDR4
+PASS|pattern-text|G02_HDR5
+PASS|pattern-text|G02_SECTIONEND
+PASS|pattern-text|G02_TABLEA
+PASS|pattern-text|G02_TABLEB
+PASS|display|plain|hits=1 raw=1
+PASS|display|digits-in-name|hits=1 raw=1
+PASS|display|repeat-after-chinese|hits=1 raw=1
+PASS|display|repeat-after-letter|hits=1 raw=1
+PASS|display|repeat-after-digit|hits=1 raw=1
+PASS|display|repeat-prefixed-number|hits=1 raw=1
+PASS|display|overlength|hits=0 raw=0
+SUMMARY: passed=30 failed=0
+EXITCODE=0

@@ -1,0 +1,28 @@
+﻿snapshot=green|entry=production|dialog=modal
+PASS|matrix|good-current|good-backup|keep|parsed=True/True|opened=True|keep_enabled=True|expected_keep=True|result=OK|succeeded=True|current_kept=True|backup_present=False|status=已采用 Word 版（备份已清理）。
+PASS|matrix|good-current|good-backup|restore|parsed=True/True|opened=True|restore_enabled=True|expected_restore=True|result=Yes|succeeded=True|wrote=True|current_kept=False|backup_present=False|status=已恢复 CAD 版（CAD 标记已清除）。
+PASS|matrix|good-current|good-backup|later|parsed=True/True|opened=True|result=Cancel|current_kept=True|backup_kept=True|backup_present=True
+PASS|matrix|bad-current|good-backup|keep|parsed=False/True|opened=True|keep_enabled=False|expected_keep=False|result=Cancel|succeeded=False|current_kept=True|backup_present=True|status=检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理
+PASS|matrix|bad-current|good-backup|restore|parsed=False/True|opened=True|restore_enabled=True|expected_restore=True|result=Yes|succeeded=True|wrote=True|current_kept=False|backup_present=False|status=已恢复 CAD 版（CAD 标记已清除）。
+PASS|matrix|bad-current|good-backup|later|parsed=False/True|opened=True|result=Cancel|current_kept=True|backup_kept=True|backup_present=True
+PASS|matrix|good-current|bad-backup|keep|parsed=True/False|opened=True|keep_enabled=True|expected_keep=True|result=OK|succeeded=True|current_kept=True|backup_present=False|status=已采用 Word 版（备份已清理）。
+PASS|matrix|good-current|bad-backup|restore|parsed=True/False|opened=True|restore_enabled=False|expected_restore=False|result=Cancel|succeeded=False|wrote=False|current_kept=True|backup_present=True|status=检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理
+PASS|matrix|good-current|bad-backup|later|parsed=True/False|opened=True|result=Cancel|current_kept=True|backup_kept=True|backup_present=True
+PASS|matrix|bad-current|bad-backup|keep|parsed=False/False|opened=True|keep_enabled=False|expected_keep=False|result=Cancel|succeeded=False|current_kept=True|backup_present=True|status=检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理
+PASS|matrix|bad-current|bad-backup|restore|parsed=False/False|opened=True|restore_enabled=False|expected_restore=False|result=Cancel|succeeded=False|wrote=False|current_kept=True|backup_present=True|status=检测到 Word 已覆盖 CAD 修改 — 点击「裁决」处理
+PASS|matrix|bad-current|bad-backup|later|parsed=False/False|opened=True|result=Cancel|current_kept=True|backup_kept=True|backup_present=True
+PASS|palette|good-current|good-backup|arbitrate-button-enabled|parsed=True/True|button_enabled=True|pending_on_disk=True
+PASS|palette|bad-current|good-backup|arbitrate-button-enabled|parsed=False/True|button_enabled=True|pending_on_disk=True
+PASS|palette|good-current|bad-backup|arbitrate-button-enabled|parsed=True/False|button_enabled=True|pending_on_disk=True
+PASS|palette|bad-current|bad-backup|arbitrate-button-enabled|parsed=False/False|button_enabled=True|pending_on_disk=True
+PASS|valid-current-invalid-backup-fixture|current=True|backup=False
+PASS|valid-current-keep-action-not-rejected-by-bad-backup|status=已采用 Word 版（备份已清理）。|dialog_opened=True|keep_enabled=True|backup_still_present_before=True|backup_present_after=False
+PASS|valid-current-keep-component-works|success=True|error=<none>
+PASS|valid-valid-keep|success=True|backup_present=False
+PASS|bad-current-valid-backup-keep-disabled|enabled=False
+PASS|bad-current-valid-backup-restore|success=True|error=<none>
+PASS|both-bad-preserve-files|keep=False|restore=False|current_kept=True|backup_kept=True
+PASS|both-bad-shows-both-reasons|opened=True|keep_enabled=False|restore_enabled=False|has_current_reason=True|has_backup_reason=True|reason=Word 端已覆盖 CAD 的修改。CAD 原版已备份为: / C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G20\probe\bin\Release\net8.0-windows\g20-work\f07a95d0003e4837a0eacf66b9965d9d\t.dict.json.word-20261102-010101.bak /  / 请选择保留哪一版: / 采用 Word 版: Current dictionary cannot be parsed. / 恢复 CAD 版: Backup dictionary cannot be parsed.
+PASS|stale-current-changed-after-open-refused|succeeded=False|newer_bytes_kept=True|backup_kept=True|dialog_message=裁决失败: 字典或图纸已变化，请重载并重新打开对话框。
+PASS|stale-backup-changed-after-open-refused|succeeded=False|current_kept=True|changed_backup_kept=True|dialog_message=裁决失败: 字典或图纸已变化，请重载并重新打开对话框。
+SUMMARY: passed=26 failed=0 skipped=0

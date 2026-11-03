@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "review_id": "repair-review-20261102",
+  "date": "2026-11-02",
+  "result": "FAIL",
+  "scope": "复核 G15–G18 集成源码及新测试承载工具；仅补修计划，不改生产代码。",
+  "reviewer": "当前主代理未参与 G15–G18 实施；自行增加场景，复用旧探针的 CAD 桩和反射适配器。",
+  "environment": "review-environment.json",
+  "source_manifest": {
+    "path": "source-manifest.json",
+    "count": 29,
+    "sha256": "3857370ea782b66fce266452eb84f761fa0d810a35a710428b756f88d4f88f98"
+  },
+  "tool_manifest": {
+    "path": "tool-manifest.json",
+    "count": 10,
+    "sha256": "f2dbb661936265c186f6a2c41123d7f5ec29af5efc6213aabcdb3a545509d1dc"
+  },
+  "evidence_manifest": {
+    "path": "evidence-manifest.json",
+    "count": 36,
+    "sha256": "1e3e758758c65c7530a9f785b171443d5af89928c2724b6b46bfd90346202382"
+  },
+  "new_items": [
+    "R-035"
+  ],
+  "reopened_items": [
+    "R-004",
+    "R-016",
+    "R-029",
+    "R-034"
+  ],
+  "tests": [
+    {
+      "id": "parser-boundary",
+      "status": "FAIL",
+      "level": "L1",
+      "command": "pwsh -NoProfile -File docs/test-evidence/repair-review-20261102/parser-review.ps1 -ProjectRoot .",
+      "exit_code": 1,
+      "evidence": "parser-review.txt",
+      "passed": 11,
+      "failed": 3,
+      "limitation": "C# 编译生产解析器；VBScript.RegExp 用生产常量，边界表达式在 PowerShell 重放，不是 Word BuildModel。"
+    },
+    {
+      "id": "parser-full-vbscript",
+      "status": "FAIL",
+      "level": "L0/L1",
+      "command": "cscript //nologo tools/test-g02-parser.vbs vba docs/test-evidence/repair-review-20261102/patterns.txt docs/test-evidence/repair-review-20261102/cases.txt docs/test-evidence/repair-review-20261102/expected.txt",
+      "exit_code": 1,
+      "evidence": "parser-vbs-full-host.txt",
+      "passed": 27,
+      "failed": 3,
+      "limitation": "23 个模式文本检查与 7 个展示场景；CollectHits 是探针副本，边界错误与当前 VBA 相同。未执行实际 Word VBA。"
+    },
+    {
+      "id": "palette",
+      "status": "FAIL",
+      "level": "L1",
+      "command": "dotnet docs/test-evidence/repair-review-20261102/palette-probe/bin/Release/net8.0-windows/Review.dll",
+      "exit_code": 1,
+      "evidence": "palette-review-final.txt",
+      "passed": 12,
+      "failed": 5,
+      "limitation": "生产 Control/EditEntryDialog/DictConflict，反射调用与 CAD 桩；未显示模态窗体，无真实 DocumentLock/Transaction。项目构建退出 0，目标 net8.0-windows。"
+    },
+    {
+      "id": "installer-catch",
+      "status": "FAIL",
+      "level": "L1",
+      "command": "pwsh -NoProfile -File docs/test-evidence/repair-review-20261102/installer-review.ps1 -ProjectRoot .",
+      "exit_code": 1,
+      "evidence": "installer-review-corrected.txt",
+      "passed": 10,
+      "failed": 2,
+      "limitation": "从生产 AST 原样提取 catch；注册表为内存桩、产品完整性为合成文件边界，目录移动和文件哈希为实际操作。未运行完整安装器、未改真实注册表。"
+    },
+    {
+      "id": "stale-trx",
+      "status": "FAIL",
+      "level": "L1",
+      "command": "pwsh -NoProfile -File docs/test-evidence/repair-review-20261102/vstest-review.ps1 -ProjectRoot .",
+      "exit_code": 1,
+      "evidence": "vstest-review.txt",
+      "passed": 2,
+      "failed": 1,
+      "limitation": "生产包装脚本完整执行；dotnet 注入为退出 0 不产新 TRX／产新 TRX，未据此声称真实 Office 用例失败。"
+    },
+    {
+      "id": "g16-vstest-rerun",
+      "status": "SKIP/BLOCKED",
+      "level": "L1",
+      "command": "dotnet test cad-plugin/2025/PatentMarker.Tests/PatentMarker.Tests.csproj -c Release --no-build --no-restore --filter FullyQualifiedName~G16RecoveryTests --logger trx --results-directory docs/test-evidence/repair-review-20261102/g16-unit-host --nologo -v minimal",
+      "exit_code": 1,
+      "evidence": "g16-unit-host.txt",
+      "limitation": "沙箱第一次连接超时；主机重试后 Win32Exception(5)，testhost 无法打开父进程句柄，业务断言未执行。不计产品 FAIL，也不计 PASS。"
+    }
+  ],
+  "findings": [
+    {
+      "id": "R-016",
+      "kind": "补修",
+      "priority": "P1",
+      "status": "FAIL",
+      "task": "G19",
+      "title": "名称含相同数字时，新增的 VBA 左边界检查拒绝合法条目",
+      "locations": [
+        "vba/Patterns.bas:202",
+        "tools/test-g02-parser.vbs:345"
+      ],
+      "scenario": "解析“壳体X123 支架 123、”“壳体1123 支架 123、”“壳体AX123 支架 X123、”。空格保留，避免编号在前模式优先命中的歧义。",
+      "expected": "分别得到 123／壳体X123 支架、123／壳体1123 支架、X123／壳体AX123 支架，与生产 C# 一致。",
+      "actual": "三个 C# 对照均 PASS；实际 VBScript 完整提取均 0 命中。",
+      "cause": "InStr(1,m.Value,number) 找到名称中较早的同文数字，NumberStartOk 检查了错误位置。超长编号原反例已经被拒绝，不能撤销该修复。",
+      "repair": "从未修剪名称捕获组末尾之后定位编号，覆盖直接编号和括号分支；C# Group.Index 行为保持。",
+      "evidence": "parser-vbs-full-host.txt",
+      "selectors": [
+        "FAIL|display|repeat-after-letter|",
+        "FAIL|display|repeat-after-digit|",
+        "FAIL|display|repeat-prefixed-number|"
+      ]
+    },
+    {
+      "id": "R-034",
+      "kind": "补修",
+      "priority": "P1",
+      "status": "FAIL",
+      "task": "G20",
+      "title": "备份损坏时，全局入口检查挡住合法的“采用 Word 版”",
+      "locations": [
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:667",
+        "cad-plugin/Shared/Palette/ArbitrateDialog.cs:97"
+      ],
+      "scenario": "当前字典合法，最新待裁决备份为损坏文本；调用面板裁决事件。",
+      "expected": "允许用户打开裁决并明确选择采用当前版本；恢复损坏备份被禁用／拒绝，稍后保留文件。",
+      "actual": "事件直接返回“裁决失败: Backup dictionary cannot be parsed.”，无法选择采用当前版本；同一快照调用生产 KeepSelectedVersion 能成功。",
+      "cause": "BackupParsed 被当作整个裁决入口的条件，而它只应约束恢复动作。原坏当前文件＋好备份的恢复在本轮组件矩阵 PASS。",
+      "repair": "按动作分别使用 CurrentParsed/BackupParsed；保留上下文、双身份与锁检查，不自动删除备份。",
+      "evidence": "palette-review-final.txt",
+      "selectors": [
+        "FAIL|valid-current-keep-action-not-rejected-by-bad-backup|"
+      ]
+    },
+    {
+      "id": "R-004",
+      "kind": "补修",
+      "priority": "P1",
+      "status": "FAIL",
+      "task": "G21",
+      "title": "待同步记录被无关改号清除／覆盖，首次同步被拒也没有留痕",
+      "locations": [
+        "cad-plugin/Shared/Palette/DictPaletteSession.cs:379",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:869",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:900",
+        "cad-plugin/Shared/Palette/DictPaletteControl.cs:942"
+      ],
+      "scenario": "301→302 的 JSON 已提交但图纸同步失败；同图纸再把 401 改为 402，分别模拟成功、零匹配和失败。另在首次同步前改变已提交 JSON 的身份。",
+      "expected": "原 301→302 记录只有完成该操作或用户显式放弃才移除；首次同步因漂移拒绝也保留已欠操作。",
+      "actual": "无关成功／零匹配清空旧记录，无关失败覆盖成 401→402；首次同步漂移虽未调用 CAD，却没有建立待同步记录。",
+      "cause": "单文档只有一个槽位，但守卫允许无关改号；结果处理按文档无条件 Clear/Set，漂移分支直接 return。",
+      "repair": "维持单槽位，待处理时阻止该图纸的所有后续编号变更，允许名称编辑；首次同步拒绝要登记欠账。清除／更新按具体操作核对，不引入多任务队列。",
+      "evidence": "palette-review-final.txt",
+      "selectors": [
+        "FAIL|unrelated-success-preserves-first-pending|",
+        "FAIL|unrelated-no-match-preserves-first-pending|",
+        "FAIL|unrelated-failure-preserves-first-pending|",
+        "FAIL|first-sync-drift-retains-owed-operation|"
+      ]
+    },
+    {
+      "id": "R-029",
+      "kind": "补修",
+      "priority": "P2",
+      "status": "FAIL",
+      "task": "G22",
+      "title": "升级在旧目录移动前失败，完整旧安装的注册项被清空",
+      "locations": [
+        "office-com-addin/install-office-addin.ps1:175",
+        "office-com-addin/install-office-addin.ps1:239",
+        "office-com-addin/install-visio-addin.ps1:223"
+      ],
+      "scenario": "旧安装及注册项完整；暂存复制／校验或移动旧目录失败，此时 oldMoved/targetMovedToBackup=false、newInstalled=false。",
+      "expected": "失败返回，完整旧安装及原注册项仍可用；已移动旧目录和首次安装分别按各自状态回滚。",
+      "actual": "两套 catch 均清空三个模拟注册项，随后将“旧目录未移动”误判为“原来没有安装”；因目标仍存在而不恢复注册。文件哈希不变。",
+      "cause": "回滚用是否已经移动旧目录推断是否存在旧安装，遗漏暂存阶段失败。",
+      "repair": "区分进入 try 前已有安装与后续移动状态；保留／验证完整未移动旧目标后恢复原注册。沿用已修正的文件完整性门禁。",
+      "evidence": "installer-review-corrected.txt",
+      "selectors": [
+        "FAIL|ppt-before-old-move-registration|",
+        "FAIL|visio-before-old-move-registration|"
+      ]
+    },
+    {
+      "id": "R-035",
+      "kind": "新增",
+      "priority": "P2",
+      "status": "FAIL",
+      "task": "G23",
+      "title": "VSTest 包装器可以用旧 TRX 把本次零执行报为通过",
+      "locations": [
+        "tools/run-office-tests-vstest.ps1:39",
+        "tools/run-office-tests-vstest.ps1:43"
+      ],
+      "scenario": "显式 ResultsDirectory 留有昨天 total=executed=passed=1 的 results.trx；注入本次 dotnet vstest 退出 0 但不生成新 TRX。",
+      "expected": "本次没有生成结果，必须非零／SKIP/BLOCKED，不采纳历史计数。",
+      "actual": "生产脚本选中旧 results.trx 并输出 PASS|VSTEST|Fixture|1/1；无旧文件时正确失败，新文件正常通过。",
+      "cause": "固定 results.trx 名称，递归选择最近文件，没有将所读文件绑定到本次运行。默认唯一临时目录不触发，但显式复用结果目录会触发。",
+      "repair": "每次运行使用唯一日志名／子目录，仅读取这次约定的确切 TRX 后校验计数；保留真实 VSTest。",
+      "evidence": "vstest-review.txt",
+      "selectors": [
+        "FAIL|stale-no-run|"
+      ],
+      "deduplication": "R-030 的 FactRunner 零用例返回值不是本缺陷；它的修复不覆盖新增包装器读取历史结果，文件和责任包均独立。"
+    }
+  ],
+  "exclusions": [
+    "parser-review-invalid-oracle.txt 的最初三个例子可能被编号在前模式优先解释，部分还含名称不支持的连字符，不能作为缺陷期望。已改成合法且无优先级歧义的带空格语料，保留无效运行但不计发现。",
+    "installer-review.txt 是探针缺少路径边界辅助函数导致的前置错误；仅 installer-review-corrected.txt 进入结论。",
+    "palette-review.txt 为沙箱进程初始化失败；parser-vbs-full.txt 为 CScript 初始化被拒。主机隔离重跑后才取得业务结果。",
+    "旧 Word 表格候选已由前轮真实 Content.Text 排除，本轮不重复建项。",
+    "保留前轮真实 Office VSTest 48/48、34/34 的历史结论；R-035 的故障注入不否定那些已产生实际断言的运行。"
+  ],
+  "limits": [
+    "未修改生产源码、VBA、安装器、部署包或系统权限；本轮没有修复后绿灯，也没有发布放行。",
+    "L1 反例需要后续用同一断言完成红绿；真实 CAD 按钮、模态交互、DocumentLock/Transaction 和实际安装链路未验。",
+    "GitHub 外部宿主验收：2007/2010/2013/2015 等待目标环境回传；不安排本机安装、探测或测试。",
+    "Word 实际 BuildModel、真实 Office 安装失败回滚仍需相应 L2/L3；本轮仅源代码／组件层。",
+    "R-012 原假设撤回、R-028 在 AutoCAD 2026 核验且不迁移的结论不变；均不外推其他宿主。"
+  ]
+}

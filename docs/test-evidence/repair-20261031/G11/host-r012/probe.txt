@@ -1,0 +1,13 @@
+﻿A.top-level|marked=301
+B.grouped-with-shape|outerItems=3|outerTags=[]
+   item1|type=9|tags=[]
+   item2|type=17|tags=[]
+   item3|type=1|tags=[]
+B.marked=
+C.nested-group-of-groups|outer2Items=4|outer2Tags=[]
+   item1|type=1|items=0|tags=[]
+   item2|type=1|items=0|tags=[]
+   item3|type=9|items=0|tags=[]
+   item4|type=17|items=0|tags=[]
+C.marked=
+D.after-save-reopen|marked=

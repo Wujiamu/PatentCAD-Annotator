@@ -104,23 +104,82 @@ namespace PatentOffice.PowerPoint
             for (int slideIndex = 1; slideIndex <= slideCount; slideIndex++)
             {
                 dynamic slide = slides.Item(slideIndex);
-                dynamic shapes = slide.Shapes;
-                int shapeCount = Convert.ToInt32(shapes.Count);
-                for (int shapeIndex = 1; shapeIndex <= shapeCount; shapeIndex++)
-                {
-                    dynamic shape = shapes.Item(shapeIndex);
-                    if (Convert.ToInt32(shape.Type) != MsoGroupShape || !IsPatentAnnotationGroup(shape))
-                        continue;
-                    string marker = null;
-                    string number = null;
-                    if (TryGetTag(shape, "PATMARKER", out marker) && marker == "PATENTMARKER" &&
-                        TryGetTag(shape, "PATNUMBER", out number) && !string.IsNullOrWhiteSpace(number))
-                    {
-                        numbers.Add(NumberIdentity.Normalize(number));
-                    }
-                }
+                ScanShapes(slide.Shapes, numbers);
             }
             return numbers;
+        }
+
+        /// <summary>
+        /// Walks the top level and every nested group. A user may group an
+        /// existing product annotation with other shapes; the annotation stays
+        /// valid and visible, so skipping nested groups would report a marked
+        /// number as missing. Only shapes carrying the product identity and the
+        /// line+label structure are claimed; ordinary groups and text are left
+        /// alone.
+        /// </summary>
+        private static void ScanShapes(dynamic shapes, HashSet<string> numbers)
+        {
+            int count = Convert.ToInt32(shapes.Count);
+            for (int index = 1; index <= count; index++)
+            {
+                dynamic shape = shapes.Item(index);
+                int type = Convert.ToInt32(shape.Type);
+                if (type == MsoGroupShape)
+                {
+                    if (IsPatentAnnotationGroup(shape) && TryAddMarkedNumber(shape, numbers))
+                        continue;
+                    try { ScanShapes(shape.GroupItems, numbers); }
+                    catch (Exception ex)
+                    {
+                        OfficeDiagnostics.Write("annotation.scan", "SKIP",
+                            "nested group not readable: " + ex.Message);
+                    }
+                    continue;
+                }
+                if (IsPatentAnnotationGroup(shape)) TryAddMarkedNumber(shape, numbers);
+            }
+        }
+
+        /// <summary>
+        /// Claims the group's number only when the visible label text still
+        /// matches the identity tag. A user who retypes or clears the label
+        /// must not be reported as "301 already marked" for a tag that says 301.
+        /// </summary>
+        private static bool TryAddMarkedNumber(dynamic group, HashSet<string> numbers)
+        {
+            string marker = null;
+            string number = null;
+            if (!TryGetTag(group, "PATMARKER", out marker) || marker != "PATENTMARKER") return false;
+            if (!TryGetTag(group, "PATNUMBER", out number) || string.IsNullOrWhiteSpace(number)) return false;
+            string visible;
+            if (!TryGetVisibleLabel(group, out visible)) return false;
+            if (!NumberIdentity.AreEqual(visible, number))
+            {
+                OfficeDiagnostics.Write("annotation.scan", "SKIP",
+                    "label text does not match identity tag; tag=" + number);
+                return false;
+            }
+            numbers.Add(NumberIdentity.Normalize(number));
+            return true;
+        }
+
+        private static bool TryGetVisibleLabel(dynamic group, out string text)
+        {
+            text = null;
+            try
+            {
+                dynamic items = group.GroupItems;
+                int count = Convert.ToInt32(items.Count);
+                for (int index = 1; index <= count; index++)
+                {
+                    dynamic item = items.Item(index);
+                    if (Convert.ToInt32(item.Type) != MsoTextBoxShape) continue;
+                    text = Convert.ToString(item.TextFrame.TextRange.Text);
+                    return true;
+                }
+            }
+            catch { }
+            return false;
         }
 
         private static bool IsPatentAnnotationGroup(dynamic group)
@@ -183,7 +242,17 @@ namespace PatentOffice.PowerPoint
             return false;
         }
 
-        private static void GetLineEndpoints(dynamic line, out double startX, out double startY, out double endX, out double endY)
+        /// <summary>
+        /// Logical start/end of a native line.
+        ///
+        /// Measured on PowerPoint 16.0 (tools/probe-r031-rotation-sign.ps1):
+        /// Rotation rotates the shape clockwise about its bounding-box centre,
+        /// and the arrowhead end moves with it. Drawing a line backwards
+        /// stores HorizontalFlip=-1, so a flip already swaps the ends. Rotation
+        /// was ignored before, which put the label on the wrong end for any
+        /// rotated line.
+        /// </summary>
+        internal static void GetLineEndpoints(dynamic line, out double startX, out double startY, out double endX, out double endY)
         {
             double left = Convert.ToDouble(line.Left);
             double top = Convert.ToDouble(line.Top);
@@ -191,11 +260,37 @@ namespace PatentOffice.PowerPoint
             double height = Convert.ToDouble(line.Height);
             bool flipH = Convert.ToBoolean(line.HorizontalFlip);
             bool flipV = Convert.ToBoolean(line.VerticalFlip);
+            double rotation = Convert.ToDouble(line.Rotation);
 
+            // Unrotated endpoints in bounding-box coordinates.
             startX = flipH ? left + width : left;
             startY = flipV ? top + height : top;
             endX = flipH ? left : left + width;
             endY = flipV ? top : top + height;
+
+            if (rotation == 0.0) return;
+
+            double centreX = left + width / 2.0;
+            double centreY = top + height / 2.0;
+            RotatePoint(ref startX, ref startY, centreX, centreY, rotation);
+            RotatePoint(ref endX, ref endY, centreX, centreY, rotation);
+        }
+
+        /// <summary>
+        /// PowerPoint rotates clockwise on screen, whose y axis points down, so
+        /// the standard rotation matrix applies directly with the angle in
+        /// degrees. Measured, not assumed: see the probe named above.
+        /// </summary>
+        private static void RotatePoint(ref double x, ref double y,
+            double centreX, double centreY, double degrees)
+        {
+            double radians = degrees * Math.PI / 180.0;
+            double cos = Math.Cos(radians);
+            double sin = Math.Sin(radians);
+            double dx = x - centreX;
+            double dy = y - centreY;
+            x = centreX + dx * cos - dy * sin;
+            y = centreY + dx * sin + dy * cos;
         }
 
         private static void RollBack(dynamic slide, dynamic line, dynamic label, string labelName,

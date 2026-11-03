@@ -1,0 +1,248 @@
+﻿# tools/verify-vba-installer.ps1 -DeployDir <baseline installer + fault injection> -KeepArtifacts
+# installer = frozen baseline (78CC1B5D...) + manifest-write injection, SHA-256: 4EFEDF9914D641CC8F29324DC3B51CA49E014854D299F9A9D5C0D71B26EB9B5E
+# exit: 1 (non-zero is the expected result: the new assertions catch R-007)
+
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-Installer-Isolation-ad56204183a54a18babaa137ed3b45bf
+G08 rollback matrix failed (exit=1):
+INSTALLER|C:\Users\wjm\AppData\Local\Temp\G08-baseline-ab092350b3384a4187437568dfda2bf4\install-vba.vbs
+ADDIN|C:\Users\wjm\AppData\Local\Temp\G08-baseline-ab092350b3384a4187437568dfda2bf4\PatentMarker.dotm
+CASE|PASS|first-install|exit=0
+CASE|PASS|upgrade|exit=0
+CASE|PASS|upgrade-protected-attributes|exit=0
+CASE|PASS|upgrade-locked-manifest|exit=1
+CASE|FAIL|fail-addin-activate|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-activate\installer
+.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-write|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-write\installer
+.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-close|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-close\installer
+.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-content|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-content\install
+er.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-activate|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-activate\instal
+ler.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-write-protected|exit=1
+  - previous ownership manifest bytes were not restored
+  - previous ownership manifest attributes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-write-protected
+\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|first-install-manifest-write|exit=1
+  - output does not report a first-installation rollback
+  - first-install rollback left the ownership manifest behind
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\first-install-manifest-write\
+installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-addin-restore|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-restore\installer.
+log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-restore|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-restore\install
+er.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-addin-restore-corrupt|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-restore-corrupt\in
+staller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-restore-corrupt|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-restore-corrupt
+\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+FAIL|G08_INSTALLER_ROLLBACK|cases=15|failed=11|fail-addin-activate,fail-manifest-write,fail-manifest-close,fail-manifes
+t-content,fail-manifest-activate,fail-manifest-write-protected,first-install-manifest-write,fail-addin-restore,fail-man
+ifest-restore,fail-addin-restore-corrupt,fail-manifest-restore-corrupt
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d
+At C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\tools\verify-vba-installer.ps1:94 char:9
++         throw ("G08 rollback matrix failed (exit=$rollbackExit):`n" + ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G08 rollback ma...9c125d59e4dbb7d:String) [], RuntimeException
+    + FullyQualifiedErrorId : G08 rollback matrix failed (exit=1):
+INSTALLER|C:\Users\wjm\AppData\Local\Temp\G08-baseline-ab092350b3384a4187437568dfda2bf4\install-vba.vbs
+ADDIN|C:\Users\wjm\AppData\Local\Temp\G08-baseline-ab092350b3384a4187437568dfda2bf4\PatentMarker.dotm
+CASE|PASS|first-install|exit=0
+CASE|PASS|upgrade|exit=0
+CASE|PASS|upgrade-protected-attributes|exit=0
+CASE|PASS|upgrade-locked-manifest|exit=1
+CASE|FAIL|fail-addin-activate|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-activate\inst 
+   aller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-write|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-write\inst 
+   aller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-close|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-close\inst 
+   aller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-content|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-content\in 
+   staller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-activate|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-activate\i 
+   nstaller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-write-protected|exit=1
+  - previous ownership manifest bytes were not restored
+  - previous ownership manifest attributes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-write-prot 
+   ected\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|first-install-manifest-write|exit=1
+  - output does not report a first-installation rollback
+  - first-install rollback left the ownership manifest behind
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\first-install-manifest-w 
+   rite\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-addin-restore|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-restore\insta 
+   ller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-restore|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-restore\in 
+   staller.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-addin-restore-corrupt|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-addin-restore-corru 
+   pt\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-restore-corrupt|exit=1
+  - a failed restore was not reported as ROLLBACK_INCOMPLETE
+  - output claims a restore even though it failed
+  - output does not name the recovery file
+  - expected exactly one add-in recovery copy, found 0
+  > START|PatentMarker Word add-in installer
+      > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d\fail-manifest-restore-co 
+   rrupt\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+    FAIL|G08_INSTALLER_ROLLBACK|cases=15|failed=11|fail-addin-activate,fail-manifest-write,fail-manifest-close,fail-ma 
+   nifest-content,fail-manifest-activate,fail-manifest-write-protected,first-install-manifest-write,fail-addin-restor  
+  e,fail-manifest-restore,fail-addin-restore-corrupt,fail-manifest-restore-corrupt
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-c94870c2409e498d89c125d59e4dbb7d
+ 

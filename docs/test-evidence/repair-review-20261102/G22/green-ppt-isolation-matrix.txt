@@ -1,0 +1,121 @@
+# G22 red/green evidence
+time=2026-11-02T12:06:22.5823112+08:00
+product=ppt
+mode=GREEN (current production)
+powershell=5.1.19041.7802
+os=Microsoft Windows NT 10.0.19045.0
+user=DESKTOP-3VJ2A3B\wjm
+sandbox=C:\Users\wjm\AppData\Local\Temp\PatentMarkerG22Run-116573f65dd74ffab3873e9ca6667b22
+
+sha256|install-office-addin.ps1|2170D1DF8ABF4FBDC2D029FB83086093A20607870724581D5A51CA70CEF0574A
+sha256|verify-installer.ps1|2BFC66783CC37533E06FA09C2812D18EB184568CC597BBE0FDDC1590D8C88D19
+sha256|OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+sha256|VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\Power
+Point
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\Power
+Point
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78
+c\PowerPoint
+PASS: G14 部分删除失败后从恢复副本还原完整文件集与注册项。
+WARNING: 测试故障注入：从恢复副本还原产品文件失败。
+WARNING: 
+卸载失败且未能确认完整还原，加载项保持停用。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba
+78c\.PowerPoint.recovery-9c2ec04e0c294c32850fc074a6a8c712；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddi
+nTest-6a56df1815304eeeb10e38d82dbba78c\.PowerPoint.uninstall-7eed5cbd604e4ba086d633115d635e68
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\6a56df1815304eeeb10e38d82dbba78c\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+卸载失败：产品文件已还原，但原注册项未能恢复（加载项保持停用）。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10
+e38d82dbba78c\.PowerPoint.recovery-49f5b6455b454d9499f3ec2f3f746677；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarker
+OfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\.PowerPoint.uninstall-678d9f0ad1844716930a719bef2c8c7e
+WARNING: 
+测试故障注入：清理恢复材料失败。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\.P
+owerPoint.recovery-b696c3f6c04447f0a9fa3c8241019a57；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-
+6a56df1815304eeeb10e38d82dbba78c\.PowerPoint.uninstall-363a2aa18d9e437aab1f7e2aa74375d0
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78
+c\PowerPoint
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\Power
+Point
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\6a56df1815304eeeb10e38d82dbba78c\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+安装失败：旧版产品文件已还原，但原注册项未能恢复（加载项保持停用）。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eee
+b10e38d82dbba78c\.PowerPoint.rollback-740e8e2aab5b4d118d731026205c56df
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 测试故障注入：新安装残片被占用，无法隔离或移除。
+WARNING: 
+清理阻挡旧目录还原的残片失败：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82dbba78c\PowerPoint
+WARNING: 
+还原的旧产品目录未通过完整性与哈希核对：目标目录缺少匹配的产品所有权清单，已拒绝覆盖或删除：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304
+eeeb10e38d82dbba78c\PowerPoint
+WARNING: 
+安装失败且未能确认旧版完整还原，加载项保持停用。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-6a56df1815304eeeb10e38d82d
+bba78c\.PowerPoint.rollback-d69bee8c605a499780a026f27d2d8b84；新目录残片：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAd
+dinTest-6a56df1815304eeeb10e38d82dbba78c\.PowerPoint.failed-c35bdef863434cb79c40c1f43c271dd0
+PASS: G18 uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 uninstall_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-49f5b6455b454d9499f3ec2f3f746677, .PowerPoint.uninstall-678d9f0ad1844716930a719bef2c8c7e
+PASS: G18 uninstall_cleanup_failed_files_complete — 清理失败时产品文件仍为完整集合
+PASS: G18 uninstall_cleanup_failed_registration_restored — 清理失败时原注册项已恢复
+PASS: G18 uninstall_cleanup_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-b696c3f6c04447f0a9fa3c8241019a57, .PowerPoint.uninstall-363a2aa18d9e437aab1f7e2aa74375d0
+PASS: G18 upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整目录与哈希已还原
+PASS: G18 upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原注册项已恢复
+PASS: G18 upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 upgrade_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 upgrade_registry_restore_failed_old_files_intact — 注册恢复失败时旧版文件仍完整
+PASS: G18 upgrade_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.failed-269ef54f61e3452e907bdbecf3463d35
+PASS: G18 upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时加载项保持停用
+PASS: G18 upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.PowerPoint.rollback-d69bee8c605a499780a026f27d2d8b84
+PASS: G22 first_install_stage_failed_installer_failed — 阶段创建失败后安装返回失败
+PASS: G22 first_install_stage_failed_failure_origin — 失败来自暂存目录创建
+PASS: G22 first_install_stage_failed_no_product_dir — 首次安装早期失败后未留下产品目录
+PASS: G22 first_install_stage_failed_registration — 首次安装早期失败后没有产品注册项
+PASS: G22 first_install_stage_failed_sentinel — 非项目哨兵保持不变
+PASS: G22 upgrade_stage_failed_failure_origin — 失败阶段匹配 'stage-'
+PASS: G22 upgrade_stage_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_stage_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_stage_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_staged_copy_failed_failure_origin — 失败阶段匹配 '复制校验失败'
+PASS: G22 upgrade_staged_copy_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_staged_copy_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_staged_copy_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_old_move_failed_failure_origin — 失败阶段匹配 'denied|being used|拒绝访问|另一进程'
+PASS: G22 upgrade_old_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_old_move_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_old_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_new_move_failed_failure_origin — 失败阶段匹配 '新安装目录无法移动|\.PowerPoint\.stage-'
+PASS: G22 upgrade_new_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_new_move_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_new_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_after_files_failed_failure_origin — 失败阶段匹配 '文件部署后'
+PASS: G22 upgrade_after_files_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_after_files_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_after_files_failed_sentinel — 非项目哨兵文件与注册值保持不变
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+PASS: 首次安装故障回滚、重复安装、升级故障回滚、卸载以及非产品文件和注册项哨兵保护。
+PASS: G18 文件验证先于注册恢复（文件恢复失败、注册恢复失败、清理失败、升级新目录半删除）。
+PASS: G22 区分旧安装存在与旧目录已移动（首次安装早期失败、stage 创建/复制校验/旧目录移动/新目录移动/部署后失败）。
+
+exit=0
+summary|pass=44|fail=0|exit=0

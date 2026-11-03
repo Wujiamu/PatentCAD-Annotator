@@ -1,0 +1,225 @@
+[OK] 2010 source profile uses the MLeader Plan-F construction path
+[OK] 2010 routes active-document reads through IO/RuntimeHost
+
+=== Checking API surface for 2010 ===
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03-integrated\tools\ApiSurfaceCheck\Program.cs(130,6): warning CS8321: 声明了本地函数“RequireEnumValue”，但从未使用过 [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03-integrated\tools\ApiSurfaceCheck\ApiSurfaceCheck.csproj]
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03-integrated\tools\ApiSurfaceCheck\Program.cs(144,6): warning CS8321: 声明了本地函数“RequireAbsent”，但从未使用过 [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03-integrated\tools\ApiSurfaceCheck\ApiSurfaceCheck.csproj]
+=== SDK API surface: 2010 ===
+[INFO] acdbmgd.dll: 18.0.0.0
+[INFO] acmgd.dll: 18.0.0.0
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Leader
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Annotation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MText.Attachment
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Dimasz
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.IsSplined
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.HasArrowHead
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.AppendVertex/1
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.ExtensionDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.CreateExtensionDictionary/0
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.SetVertexAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.DBDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.Contains/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.GetAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.SetAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Xrecord
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Xrecord.Data
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.TypedValue
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.ResultBuffer
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Polyline
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.Elevation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.NumberOfVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.AddVertexAt/5
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.RemoveVertexAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.UpgradeOpen/0
+[OK]   type: Autodesk.AutoCAD.Geometry.Point2d
+[OK]   type: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.AllowNone
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.DefaultValue
+[OK]   method: Autodesk.AutoCAD.EditorInput.Editor.GetDouble/1
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MLeader
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MLeaderStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.TextLocation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.LeaderLineCount
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLeaderLine/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.RemoveLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.VerticesCount/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLeaderIndex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetDogleg/2
+[OK] API surface constraints passed.
+[OK] 2013 source profile uses the MLeader Plan-F construction path
+[OK] 2013 routes active-document reads through IO/RuntimeHost
+
+=== Checking API surface for 2013 ===
+=== SDK API surface: 2013 ===
+[INFO] accoremgd.dll: 19.0.0.0
+[INFO] acdbmgd.dll: 19.0.0.0
+[INFO] acmgd.dll: 19.0.0.0
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Leader
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Annotation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MText.Attachment
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.DimensionStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Dimasz
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.IsSplined
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.HasArrowHead
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.NumVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.AppendVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.VertexAt/1
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.ExtensionDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.CreateExtensionDictionary/0
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.SetVertexAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.DBDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.Contains/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.GetAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.SetAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Xrecord
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Xrecord.Data
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.TypedValue
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.ResultBuffer
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Polyline
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.Elevation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.NumberOfVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.AddVertexAt/5
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.RemoveVertexAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.UpgradeOpen/0
+[OK]   type: Autodesk.AutoCAD.Geometry.Point2d
+[OK]   type: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.AllowNone
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.DefaultValue
+[OK]   method: Autodesk.AutoCAD.EditorInput.Editor.GetDouble/1
+[OK]   type: Autodesk.AutoCAD.Geometry.Point3d
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MLeader
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MLeaderStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.TextLocation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.LeaderLineCount
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLeaderLine/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.RemoveLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.VerticesCount/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLeaderIndex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetDogleg/2
+[OK] API surface constraints passed.
+[OK] 2015 source profile uses the MLeader Plan-F construction path
+[OK] 2015 routes active-document reads through IO/RuntimeHost
+
+=== Checking API surface for 2015 ===
+=== SDK API surface: 2015 ===
+[INFO] accoremgd.dll: 20.0.0.0
+[INFO] acdbmgd.dll: 20.0.0.0
+[INFO] acmgd.dll: 20.0.0.0
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Leader
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Annotation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MText.Attachment
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.DimensionStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Dimasz
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.IsSplined
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.HasArrowHead
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.NumVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.AppendVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.VertexAt/1
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.ExtensionDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.CreateExtensionDictionary/0
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.SetVertexAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.DBDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.Contains/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.GetAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.SetAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Xrecord
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Xrecord.Data
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.TypedValue
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.ResultBuffer
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Polyline
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.Elevation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.NumberOfVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.AddVertexAt/5
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.RemoveVertexAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.UpgradeOpen/0
+[OK]   type: Autodesk.AutoCAD.Geometry.Point2d
+[OK]   type: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.AllowNone
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.DefaultValue
+[OK]   method: Autodesk.AutoCAD.EditorInput.Editor.GetDouble/1
+[OK]   type: Autodesk.AutoCAD.Geometry.Point3d
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MLeader
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MLeaderStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.TextLocation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.LeaderLineCount
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLeaderLine/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.RemoveLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.VerticesCount/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLeaderIndex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetDogleg/2
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.ExtendLeaderToText
+[OK] API surface constraints passed.
+[OK] 2025 source profile uses the MLeader Plan-F construction path
+[OK] 2025 routes active-document reads through IO/RuntimeHost
+
+=== Checking API surface for 2025 ===
+=== SDK API surface: 2025 ===
+[INFO] accoremgd.dll: 25.1.0.0
+[INFO] acdbmgd.dll: 25.1.0.0
+[INFO] acmgd.dll: 25.1.0.0
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Leader
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Annotation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MText.Attachment
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.DimensionStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.Dimasz
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.IsSplined
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.HasArrowHead
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.NumVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.AppendVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.VertexAt/1
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Leader.ExtensionDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.CreateExtensionDictionary/0
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Leader.SetVertexAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.DBDictionary
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.Contains/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.GetAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.DBDictionary.SetAt/2
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Xrecord
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Xrecord.Data
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.TypedValue
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.ResultBuffer
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.Polyline
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.Elevation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.Polyline.NumberOfVertices
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.AddVertexAt/5
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.RemoveVertexAt/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.Polyline.UpgradeOpen/0
+[OK]   type: Autodesk.AutoCAD.Geometry.Point2d
+[OK]   type: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.AllowNone
+[OK]   property: Autodesk.AutoCAD.EditorInput.PromptDoubleOptions.DefaultValue
+[OK]   method: Autodesk.AutoCAD.EditorInput.Editor.GetDouble/1
+[OK]   type: Autodesk.AutoCAD.Geometry.Point3d
+[OK]   type: Autodesk.AutoCAD.DatabaseServices.MLeader
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MText
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.MLeaderStyle
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.TextLocation
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.LeaderLineCount
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLeaderLine/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.AddLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.RemoveLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.VerticesCount/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLastVertex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetLastVertex/2
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.GetLeaderIndex/1
+[OK]   method: Autodesk.AutoCAD.DatabaseServices.MLeader.SetDogleg/2
+[OK]   property: Autodesk.AutoCAD.DatabaseServices.MLeader.ExtendLeaderToText
+[OK] API surface constraints passed.
+
+[OK] API surface checks passed for: 2010, 2013, 2015, 2025

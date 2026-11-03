@@ -1,0 +1,98 @@
+{
+  "basis_manifest_sha256": "7a8c5653d2d691d8c210b87776ad7251ef5a6f8ff84248f624da7ba000aa9034",
+  "head": "b945b1a68fec26ada268b5a4ee3ac066386e96ab",
+  "generated_utc": "2026-10-31T16:38:11.586323+00:00",
+  "changes": {
+    "cad-plugin/Shared/IO/SimpleJson.cs": {
+      "baseline_sha256": null,
+      "candidate_sha256": "4dee72c558401a0d2bf0ae714af8346b33c53ea93df66455448ae6d07cf88182"
+    },
+    "cad-plugin/2007/PatentMarker/IO/SimpleJson.cs": {
+      "baseline_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+      "candidate_sha256": null
+    },
+    "cad-plugin/2010/PatentMarker/IO/SimpleJson.cs": {
+      "baseline_sha256": "2db514843e617f6bd3afc6a57ce8874b576c7fabb83c6a84f1c85ca1f216c6e0",
+      "candidate_sha256": null
+    },
+    "cad-plugin/2007/PatentMarker/IO/DictWriter.cs": {
+      "baseline_sha256": "aeceed67952b7b5af9aac60719827456517096b9d1183acdbc615210dbb0863c",
+      "candidate_sha256": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d"
+    },
+    "cad-plugin/2010/PatentMarker/IO/DictWriter.cs": {
+      "baseline_sha256": "aeceed67952b7b5af9aac60719827456517096b9d1183acdbc615210dbb0863c",
+      "candidate_sha256": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d"
+    },
+    "cad-plugin/2013/PatentMarker/IO/DictEntry.cs": {
+      "baseline_sha256": "bfe87682281f7c1fcacfcb2480a3999cc9f4b5eccf97bc7e61c73f987b723cae",
+      "candidate_sha256": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803"
+    },
+    "cad-plugin/2015/PatentMarker/IO/DictEntry.cs": {
+      "baseline_sha256": "bfe87682281f7c1fcacfcb2480a3999cc9f4b5eccf97bc7e61c73f987b723cae",
+      "candidate_sha256": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803"
+    },
+    "cad-plugin/2025/PatentMarker/IO/DictEntry.cs": {
+      "baseline_sha256": "d6ae2c730a2a068cc81be2e6fa1bd66217681156c4dde96f1d8c47e946471984",
+      "candidate_sha256": "470cdc3e66523d3e483b2ef8f0fad7404a508708deaf85ad9e2e94068a5f273d"
+    },
+    "cad-plugin/2025/PatentMarker.Tests/G04JsonRegressionTests.cs": {
+      "baseline_sha256": null,
+      "candidate_sha256": "2682fa5584811053ea04c20b052ad91a2141ccba298a5f4ab14b086a2bfeaf58"
+    }
+  },
+  "unchanged_dependencies": {
+    "cad-plugin/2007/PatentMarker/IO/DictEntry.cs": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+    "cad-plugin/2010/PatentMarker/IO/DictEntry.cs": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+    "cad-plugin/2007/PatentMarker/IO/ConfigLoader.cs": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "cad-plugin/2010/PatentMarker/IO/ConfigLoader.cs": "79e70a41521c41aed70f15fc3c6713e5c610ecba9525ae25d9ebdfcba1fe2ae2",
+    "cad-plugin/Shared/IO/DictConflict.cs": "8e6c58f1a4a2b9e0e1fc3484952e2a31abfe1e009db34aa61f86ec35f6ba8a04",
+    "cad-plugin/Shared/IO/NumberIdentity.cs": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "cad-plugin/Shared/IO/PatSettings.cs": "c5f64a76dc48c8bb3e8420b70df8c438a587a72bff3ebc7f826279ddd784a666"
+  },
+  "probes": {
+    "tools/G04JsonRegression/G04JsonRegression.csproj": "b3b2343cce1135fa8de34035bc6077b1847c61118231a4273c15f1d38ac96df5",
+    "tools/G04JsonRegression/Program.cs": "cbacb86f89417151ec73af2457648469d807e68f4dfcf5018c0a6104ba746fe0",
+    "tools/G04JsonRegression/HostStubs.cs": "3e34ca3d3a6b7a18e1b5f844e1cd10c363e47c92ce900258a1c346b3e04165e6",
+    "docs/test-evidence/G04/framework-probe/FrameworkProbe.csproj": "50d750916c79f75b4761531c649c322f5c8095e879232bccba4ba286b26a60f3",
+    "docs/test-evidence/G04/framework-probe/Program.cs": "97dc2a375c176644fbcc3990914bf769899d0a53c4e2ff2be2eaff65a176d3ed",
+    "docs/test-evidence/G04/framework-probe/Net20Probe.cs": "503ef56573360ba2c4311da3473f948c93b7a152fc6eb412d91360de0713d31a"
+  },
+  "test_assemblies": {
+    "tools/G04JsonRegression/bin/red-2007/Release/net8.0/G04JsonRegression.dll": "6761fc16dd9ca7459daf24468e3d1b86ef6f647523cb1a941c61434758006ecc",
+    "tools/G04JsonRegression/bin/red-2010/Release/net8.0/G04JsonRegression.dll": "3d831db6d1c9f263716d829022978b5e90e21448991b547f28ad4fc32c719e1c",
+    "tools/G04JsonRegression/bin/red-2013/Release/net8.0/G04JsonRegression.dll": "e082b6abe82fe41d8f1dab18a21bf14794b7a5638613215b3e88fdd0f1937142",
+    "tools/G04JsonRegression/bin/red-2015/Release/net8.0/G04JsonRegression.dll": "b868a2f2eca02d75aad38bf684848ccc626d02eb4daf20174779592f9fcfe603",
+    "tools/G04JsonRegression/bin/red-2025/Release/net8.0/G04JsonRegression.dll": "bb3ce0b9c1411c8493e12df29008348ee1462ac4e1ec9d2b97503a6ae4bfc4d9",
+    "tools/G04JsonRegression/bin/green-2007/Release/net8.0/G04JsonRegression.dll": "f5b49ab418f97f5aa4503cacc77b5d06c7aa4f83f1e0c0248c60303493aa34ba",
+    "tools/G04JsonRegression/bin/green-2010/Release/net8.0/G04JsonRegression.dll": "82ae8e28cd0f2432163af20d46f950854ccd34d91bf4a1ae44164ee582c2739d",
+    "tools/G04JsonRegression/bin/green-2013/Release/net8.0/G04JsonRegression.dll": "f06898544f381b88e5d48186ad9f5ac8fdf90caef2e6978f7de5a4c57cb35adc",
+    "tools/G04JsonRegression/bin/green-2015/Release/net8.0/G04JsonRegression.dll": "e773364b8ed69513e2eba9b330df11d457a4f8af8d5db063076d27317126219a",
+    "tools/G04JsonRegression/bin/green-2025/Release/net8.0/G04JsonRegression.dll": "22b35157d7c6382cffc20fcd660bea296c0653c14ae8497806116bfa0fc38ab5"
+  },
+  "evidence": {
+    "docs/test-evidence/G04/red-2007.txt": "e67274c17285858730c79af7778351bd700d84a89fef3d92c5aad9daa8b09c61",
+    "docs/test-evidence/G04/red-2010.txt": "e67274c17285858730c79af7778351bd700d84a89fef3d92c5aad9daa8b09c61",
+    "docs/test-evidence/G04/red-2013.txt": "da3dacecaffb325e4bbe5d7a33b3a83ed68c875c0af30fcac03ec078226d9e1e",
+    "docs/test-evidence/G04/red-2015.txt": "da3dacecaffb325e4bbe5d7a33b3a83ed68c875c0af30fcac03ec078226d9e1e",
+    "docs/test-evidence/G04/red-2025.txt": "3032e99acd352d0ee1989b16059232ae7f970758d6e4cab07d2fa4bc3abfa86c",
+    "docs/test-evidence/G04/green-2007.txt": "a70019d74296e73823f60226fc860beff094e21acc0c75306caf6bf3103c103a",
+    "docs/test-evidence/G04/green-2010.txt": "a70019d74296e73823f60226fc860beff094e21acc0c75306caf6bf3103c103a",
+    "docs/test-evidence/G04/green-2013.txt": "578e5ce6d730737365b1d9d238e41515feb5503ea19ae8c4b177026c797e425b",
+    "docs/test-evidence/G04/green-2015.txt": "578e5ce6d730737365b1d9d238e41515feb5503ea19ae8c4b177026c797e425b",
+    "docs/test-evidence/G04/green-2025.txt": "578e5ce6d730737365b1d9d238e41515feb5503ea19ae8c4b177026c797e425b",
+    "docs/test-evidence/G04/framework-red-2013.txt": "52f56d2c13fb3a4c68448169551957791b19f579bc9582e3c3b1b040f96e44d5",
+    "docs/test-evidence/G04/framework-red-2015.txt": "52f56d2c13fb3a4c68448169551957791b19f579bc9582e3c3b1b040f96e44d5",
+    "docs/test-evidence/G04/framework-green-2013.txt": "a3f3aa65447fec93f262290b1f829071c35534af98bb750f7b82aaf8325ff89b",
+    "docs/test-evidence/G04/framework-green-2015.txt": "a3f3aa65447fec93f262290b1f829071c35534af98bb750f7b82aaf8325ff89b",
+    "docs/test-evidence/G04/net20-runtime.txt": "a42b4abc5a142309e94c15ec9fbb88c609400dcd856b14b6c4e3f2b99196c3da",
+    "docs/test-evidence/G04/xunit-2025.txt": "1144b61e168f79fa20c23779867b1da4b376b2c9887766d212761e9b1192b5c5",
+    "docs/test-evidence/G04/xunit-2025-all.txt": "399ac3dea259aa50b0838b01e70d8a302caba5eec67a441aaa122d7eb0a42dbb"
+  },
+  "external_tools": {
+    "dotnet_sdk": "8.0.422",
+    "csc_net20_sha256": "1be7a63415f03400065f2beb2ca991c8b0b914bd41310cf9dd93c5e1fc0ed072",
+    "newtonsoft_net35_sha256": "c69b18993d8236e5dfe3f0580a4392e7bc0b5f525911737318117c91d43b3ea5",
+    "newtonsoft_net45_sha256": "e1e27af7b07eeedf5ce71a9255f0422816a6fc5849a483c6714e1b472044fa9d",
+    "net20_probe_exe_sha256": "8cac0fdd3290045d1773af0b5d9a2fb797c87755a1b57c8fca7b78c47a203e9c"
+  }
+}

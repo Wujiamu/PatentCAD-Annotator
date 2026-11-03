@@ -1,0 +1,13 @@
+{
+  "path": "cad-plugin/Shared/I18n/Strings.cs",
+  "before_sha256": "8b082d61446fba0aef7c44dc4fff495294efc1f644aed09e5fddff1ffbde34a3",
+  "after_sha256": "f764dc755cfcee0b30edd57fa3f270a771658d4c2e037e8b3cc720a7d56b8e7c",
+  "keys": [
+    "Dict_Busy",
+    "Dict_Changed",
+    "Dict_Pending",
+    "Dict_BaselineFailed",
+    "Conflict_StatusDetected",
+    "Conflict_Msg"
+  ]
+}

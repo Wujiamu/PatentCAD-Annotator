@@ -1,0 +1,9 @@
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\G25Probe.cs(68,42): warning CS0649: 从未对字段“Probe._skip”赋值，字段将一直保持其默认值 0 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\G25Probe.csproj]
+
+已成功生成。
+
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\G25Probe.cs(68,42): warning CS0649: 从未对字段“Probe._skip”赋值，字段将一直保持其默认值 0 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\G25Probe.csproj]
+    1 个警告
+    0 个错误
+
+已用时间 00:00:02.38

@@ -1,0 +1,9 @@
+MODULES_IMPORTED
+PASS|r017|total occurrences=3 (un-deduped)
+PASS|r021|same number grouped into one entry
+PASS|r021|display keeps first spelling 1342A
+PASS|r021|conflict recorded for same number different names
+PASS|r021-control|distinct sub-numbers stay distinct
+PASS|g15|over-long number rejected, only 301 kept
+PASS|g15|no truncated 23456 entry
+SUMMARY: passed=7 failed=0

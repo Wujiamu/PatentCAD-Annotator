@@ -1,0 +1,12 @@
+PASS|T1-stale-root|accepted=False|expected=False
+PASS|T1-stale-child|accepted=False|expected=False
+PASS|T1-no-new|accepted=False|expected=False
+PASS|T1-fresh|accepted=True|expected=True
+PASS|T2-artifact-fresh|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d\fresh\results-accc27c4ae20459a8d38db11774f166e.trx
+PASS|T1-zero|accepted=False|expected=False
+PASS|T1-partial|accepted=False|expected=False
+PASS|T1-cli-error|accepted=False|expected=False
+PASS|T1-bad-xml|accepted=False|expected=False
+PASS|T1-default-fresh|accepted=True|expected=True
+PASS|T2-artifact-default-fresh|trx=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d\temp\PatentMarker-VSTest-Results\Fixture\results-3a567ad9820140cab0732f70009cb045.trx
+SUMMARY|passed=11|failed=0

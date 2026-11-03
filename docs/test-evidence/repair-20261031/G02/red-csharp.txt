@@ -1,0 +1,34 @@
+﻿
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:12.67
+PARSER_SOURCE_SHA256=a88f75539fbcd207989bb62cd73e3aaab0152396d10098c754ec4be828368562
+PROBE_DLL_SHA256=c82c0913543b4d011dbc000ce5ea2b59b1ae517423f286037d6e37fdc8c8b399
+FAIL|r016-number-first-s1|display hit[0] expected=(S1,底座) actual=(1,底座) all=[1|底座]
+FAIL|r016-number-first-hyphen|display hit[0] expected=(10-1,支架) actual=(1,支架) all=[1|支架]
+FAIL|r016-number-first-paren-s1|display hit[0] expected=(S1,底座) actual=(1,底座) all=[1|底座]
+PASS|r016-number-first-suffix|display=2 [123A1|第一支路 123A2|第二支路]
+PASS|r016-suffix-digits|display=1 [123A10|底座]
+FAIL|r016-mid-cut-guard|display hit[0] expected=(S12345,底座) actual=(12345,底座) all=[12345|底座]
+FAIL|r016-too-long|display count expected=0 actual=1 actualHits=[12345|6底座]
+FAIL|r016-mixed-forms|display count expected=4 actual=3 actualHits=[1|底座 1|支架 123A1|第一支路]
+FAIL|r018-mixed-order|display hit[0] expected=(2,支架) actual=(1,底座) all=[1|底座 2|支架]
+FAIL|r018-mixed-multi|display hit[0] expected=(10,箱体结构) actual=(1,底座) all=[1|底座 2|支架 10|箱体结构 3|加热器]
+FAIL|r018-paren-then-old|display hit[0] expected=(3,加热器) actual=(1,底座) all=[1|底座 3|加热器]
+FAIL|r033-plain-then-number|display count expected=0 actual=1 actualHits=[123|普通段落]
+FAIL|r033-plain-then-number-crlf|display count expected=0 actual=1 actualHits=[123|普通段落]
+FAIL|r033-plain-then-number-cr|display count expected=0 actual=1 actualHits=[123|普通段落]
+PASS|r033-bare-one-line|display=1 [123|支架]
+FAIL|r033-bare-two-lines|raw view unavailable: MarkingTextParser.ExtractAllRaw is missing
+PASS|r033-bare-tab|display=1 [123|支架]
+PASS|r033-bare-lead-space|display=1 [123|支架]
+FAIL|r032-z-name|raw view unavailable: MarkingTextParser.ExtractAllRaw is missing
+PASS|r032-z-lower|display=3 [1|底座 2z|形支架 3|外壳]
+PASS|r032-no-z|display=2 [1|底座 2|支架]
+PASS|r032-blank-para|display=2 [1|底座 2|支架]
+PASS|r032-z-crlf-blank|display=3 [1|底座 2Z|形支架 3|外壳]
+FAIL|r017-repeat|raw view unavailable: MarkingTextParser.ExtractAllRaw is missing
+FAIL|r017-tie|raw view unavailable: MarkingTextParser.ExtractAllRaw is missing
+SUMMARY: passed=9 failed=16

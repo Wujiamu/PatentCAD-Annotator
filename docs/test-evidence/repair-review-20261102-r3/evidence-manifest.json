@@ -1,0 +1,947 @@
+[
+  {
+    "path": "2025-suite-host.txt",
+    "sha256": "465a90b5d09d8f2da6986f6d186caaff5c79901639e7d9e3d65451ec02525084",
+    "bytes": 26705
+  },
+  {
+    "path": "2025-suite.txt",
+    "sha256": "28eb85189e852e5194429ecb8e2b6e270b006aac09b2086c47bf99a2178b39ec",
+    "bytes": 26973
+  },
+  {
+    "path": "candidate-assets.json",
+    "sha256": "0d0b63e0ae889d58e3959e96b3156d4de16df2956d2a4890d7f4d29d3807eddd",
+    "bytes": 1216
+  },
+  {
+    "path": "coverage-plan.md",
+    "sha256": "b6bfee63a8efecc29a1522ba0567fa121f932d359bfd7889fd87ecc32693ce4d",
+    "bytes": 3133
+  },
+  {
+    "path": "dotm-package.txt",
+    "sha256": "0f9daf00fa8a84cff4ea16c5a11d3f2388d9a71878a0c9ac09c19874f0d42dcb",
+    "bytes": 194
+  },
+  {
+    "path": "g24-build.txt",
+    "sha256": "2a56e1e28d3a63529441780ffdb80a3740e6ae87a5ea5082b43a43039d366edc",
+    "bytes": 84
+  },
+  {
+    "path": "g24-probe.txt",
+    "sha256": "8a38c95d0ae29334e6c36a9f4a407f8712857e599e7e82788211c4ac2666d9c4",
+    "bytes": 10771
+  },
+  {
+    "path": "g25-build.txt",
+    "sha256": "747bb1ddec005b4ea28315da6cfd0688acd4c398a5270a1ad368396113d52404",
+    "bytes": 742
+  },
+  {
+    "path": "g25-probe.txt",
+    "sha256": "49fa247524cb40e7c74bece1072c823f4d66f327168bf5a2cae8ec3decf6cbb3",
+    "bytes": 10955
+  },
+  {
+    "path": "host-identity.txt",
+    "sha256": "1ea1acf6e9bef4354f5912d7b378782f21de806bfdc64871f06dbc30517b6bca",
+    "bytes": 21
+  },
+  {
+    "path": "installer-matrix.ps1",
+    "sha256": "55523d174f2d783aba2f1f160aecafff5f9647ba710b4f4e8439d8101718da0e",
+    "bytes": 6732
+  },
+  {
+    "path": "installer-matrix.txt",
+    "sha256": "03de8a677d4e93cdb0745890a64717be1a3db987b69ed460081e6c7b490c8bd3",
+    "bytes": 4774
+  },
+  {
+    "path": "loadbytes-api.json",
+    "sha256": "5ae2adef89d17deae056da88e9c873e9df33bc16ae4cd08be11fe93cbc382825",
+    "bytes": 1326
+  },
+  {
+    "path": "mleader-sync.txt",
+    "sha256": "4e334447d24735694cd82972d9a454ae2c805ac878445c817f9e121f6ed70bab",
+    "bytes": 943
+  },
+  {
+    "path": "native-ppt-installer.txt",
+    "sha256": "577536a64d92014c89a08d06ad67b9a42cd6e6f06007c4a50a1738cd508c1f3f",
+    "bytes": 19347
+  },
+  {
+    "path": "native-visio-installer.txt",
+    "sha256": "bd4bd0ad20f890e70af916aa63f5e009d91cb3f5ad8ff3e0c2c33aaecc8f399c",
+    "bytes": 13332
+  },
+  {
+    "path": "office-vstest-ppt.txt",
+    "sha256": "5a99a16a54b8aedbb88904e9038d822cfbce65ab23128fb19c6456ab61af932a",
+    "bytes": 286
+  },
+  {
+    "path": "office-vstest-visio.txt",
+    "sha256": "5a16a795ff29c5e59df32d5cb805ccc641444536a611d7524f2850281379e85a",
+    "bytes": 281
+  },
+  {
+    "path": "palette-build.txt",
+    "sha256": "c63817013640c62857eb646596adb76439bb89272a6561ffa42c37da82ff5b56",
+    "bytes": 84
+  },
+  {
+    "path": "palette-matrix.txt",
+    "sha256": "45180f7d3976810571d5f8e5d84e536e4ddd5747b9208db2482925ffd5b9c6e7",
+    "bytes": 5992
+  },
+  {
+    "path": "ppt-catch.txt",
+    "sha256": "dd0134dce4fa5f4c829bebf4a0d6d107dfe85fbb8701b9d6f5dcdbf36d502d28",
+    "bytes": 12341
+  },
+  {
+    "path": "readonly-gates.json",
+    "sha256": "3ae641454e90aab3330abdf33a888d4ce8314d59ed7e630c1e5683023620098b",
+    "bytes": 528
+  },
+  {
+    "path": "render-review.ps1",
+    "sha256": "8c5ee529faf9af85f176b719392d348bc9b6fd99cdb59a17b35c3ce41f547ec4",
+    "bytes": 5138
+  },
+  {
+    "path": "review-environment.json",
+    "sha256": "d405ad99257aa74fe42e727850e1c5d5690fcae4baad2a9bc93914b4b684e814",
+    "bytes": 372
+  },
+  {
+    "path": "snapshot-build-corrected.txt",
+    "sha256": "02b03692c0e43fce00f77498b806b70ec73306d9b56e06ca3a5ddf5359a57465",
+    "bytes": 697
+  },
+  {
+    "path": "snapshot-build-final.txt",
+    "sha256": "788cae466fc6630693d0e197fc3d2dc3ee23bee5623e897cb69f3b9d8b736096",
+    "bytes": 84
+  },
+  {
+    "path": "snapshot-build.txt",
+    "sha256": "58d21a8e362699c3b0e03cbb94af32026923cc02965a548fdae9c182b4c958d9",
+    "bytes": 2523
+  },
+  {
+    "path": "snapshot-hypothesis-build.txt",
+    "sha256": "54d0368f62cef5faedc9c52d0851b51713f87b838c776890b8d6048bc04ad1bb",
+    "bytes": 84
+  },
+  {
+    "path": "snapshot-hypothesis-first-payload.txt",
+    "sha256": "e9d7e5cbfaac9126c4d72c966c93857a82e10345d13416f8549d47d972138445",
+    "bytes": 1267
+  },
+  {
+    "path": "snapshot-hypothesis.txt",
+    "sha256": "e3937ec98abb3f9c42031bcf343faf82ba1556f56c90807fe67d16c227903b1e",
+    "bytes": 7254
+  },
+  {
+    "path": "snapshot-red-before-writer.txt",
+    "sha256": "e8b54deb199bf81ae3947965f75d532b4ac985eb72d7a8da816bccd1b3bb3d66",
+    "bytes": 1154
+  },
+  {
+    "path": "snapshot-red-first-payload.txt",
+    "sha256": "ef037f32bd1faa3858ab644e1ad711d89cda0a825fa1bd1cff4f56589c47995c",
+    "bytes": 1252
+  },
+  {
+    "path": "snapshot-red.txt",
+    "sha256": "f2e42991664d89e26f5fe400de15adbca41c97e789dc2b23048f969c7392a0e9",
+    "bytes": 7182
+  },
+  {
+    "path": "source-manifest.json",
+    "sha256": "1b3e896a6c5bd932e306b42eeb481c4fc2e627dbdfb7c0d0cf569a7ed37c0263",
+    "bytes": 6709
+  },
+  {
+    "path": "tool-manifest.json",
+    "sha256": "95572e4064c5f3aed81ee082594d3e5bdc30281ee95a9c41b7598e96dac68e31",
+    "bytes": 6463
+  },
+  {
+    "path": "vba-sync.txt",
+    "sha256": "510883ddbcdbf4a40a8c71bfcf72f9ff3e8abcd2749c7e4e1cb58fcf1538b9a6",
+    "bytes": 36
+  },
+  {
+    "path": "version-sync.txt",
+    "sha256": "dc1d2c76a259fdee86c258bb75913ff14d7e137080029c9960f7275ac7cade40",
+    "bytes": 3946
+  },
+  {
+    "path": "visio-catch.txt",
+    "sha256": "a53f38e6a46606601c51c013f1a77aa9f4f2cf8e52920fb62009903944292bc4",
+    "bytes": 12342
+  },
+  {
+    "path": "vstest-invalid-trace.txt",
+    "sha256": "bbb8890379739c058e8e1aee6eb5186af35741bec8f88da798d8dd30e2740305",
+    "bytes": 956
+  },
+  {
+    "path": "vstest-matrix-before-failed-results.txt",
+    "sha256": "2b3dce43dee25c4060a041bef83d6b08d25528fed6cb2a5f8a5d10dee9184010",
+    "bytes": 929
+  },
+  {
+    "path": "vstest-matrix.ps1",
+    "sha256": "e6d43cfc2f6e28d6ea109ebea8814faf2f2b08f0239c37698c493b07d2995081",
+    "bytes": 3555
+  },
+  {
+    "path": "vstest-matrix.txt",
+    "sha256": "3ac72203435d4356a7a8546e42fa8ccd29e2ccaa172cec34442a2f39be70e4cb",
+    "bytes": 1548
+  },
+  {
+    "path": "vstest-pass-inherited-exit.txt",
+    "sha256": "00764f04a8475302a76c9bdba8984c8fe79d92a55c5890040d1aa352bc5ab614",
+    "bytes": 1548
+  },
+  {
+    "path": "word-sync.txt",
+    "sha256": "b7f7ddd22d6644abf98c78b57f643a5e0adb71c08bd023621f90cf5bf5c79ce8",
+    "bytes": 44
+  },
+  {
+    "path": "working-tree-status.txt",
+    "sha256": "1ad44eadf6fd3bdfb7d48e10ae2c552bd62d666b2c0565cdd5022ec9d7b0479a",
+    "bytes": 14031
+  },
+  {
+    "path": "office-vstest/results-be4385d866e04bc48b168391ec67a69d.trx",
+    "sha256": "462996be0f4a1dfc36b3441a9b8a52ba7f0f93ba265165a33cb9874e7a5769b2",
+    "bytes": 49938
+  },
+  {
+    "path": "office-vstest/results-c7067583141145ad8b14505be0f9a99a.trx",
+    "sha256": "ced65efe1ef5017c28cf67a7d24c4ddb8c7327a33e1fc36400ccf8b64ad3d92b",
+    "bytes": 70693
+  },
+  {
+    "path": "installer-fixtures/ppt-first-new-files-False-6cfedbdc111145be8ca200cd99a8ec0e/catch-log.txt",
+    "sha256": "f19edf0f1b7e5a2b47e93b06898288b28325fd7eabdc0f9b5d85031ee5c12295",
+    "bytes": 250
+  },
+  {
+    "path": "installer-fixtures/ppt-first-new-files-False-6cfedbdc111145be8ca200cd99a8ec0e/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-first-new-files-True-366702bfd5a8448784eabb2c5a41eba2/catch-log.txt",
+    "sha256": "dcf33aefcc6a09f4e693ff350904194814a134d6926cd6bdc28ee9112350584c",
+    "bytes": 249
+  },
+  {
+    "path": "installer-fixtures/ppt-first-new-files-True-366702bfd5a8448784eabb2c5a41eba2/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-False-f8a54702a2c74b049cde90006324dbed/catch-log.txt",
+    "sha256": "b8ac6fd8191f6748fe9c88b166fcf7dbff38db1e4b64a13f91ab6322a2d86bdb",
+    "bytes": 232
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-False-f8a54702a2c74b049cde90006324dbed/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-False-f8a54702a2c74b049cde90006324dbed/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-True-e5cd996b53a14cdb9d13a57616dc87fb/catch-log.txt",
+    "sha256": "5941a750a6b3f5ce82207e271e6c3b703fe5f813eb9268f72c4ac0b99e489ff7",
+    "bytes": 696
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-True-e5cd996b53a14cdb9d13a57616dc87fb/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-True-e5cd996b53a14cdb9d13a57616dc87fb/.product.failed-ad94ddad7b32446983ca09e40a4e6022/new.dll",
+    "sha256": "bc6d6263dc365029f2a34a565e015d63b0d46e6399507ff13d6f71ec0ecfa577",
+    "bytes": 19
+  },
+  {
+    "path": "installer-fixtures/ppt-new-files-True-e5cd996b53a14cdb9d13a57616dc87fb/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-False-b5932a73570e46108229dbc2860e7ee0/catch-log.txt",
+    "sha256": "b4ebea2f5509a115848b760fd48f859f6dc0ac20ada0a4e9b7ab18d02cfa10ab",
+    "bytes": 235
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-False-b5932a73570e46108229dbc2860e7ee0/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-False-b5932a73570e46108229dbc2860e7ee0/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-True-674f4f26f5cb4f22aca7fcbdcaf5cdf6/catch-log.txt",
+    "sha256": "0d67a4c33c0c7e12eca158922310b325a7e32efc76c8372c735e4217ce323a47",
+    "bytes": 705
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-True-674f4f26f5cb4f22aca7fcbdcaf5cdf6/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-True-674f4f26f5cb4f22aca7fcbdcaf5cdf6/.product.failed-cd9a472b3b2f4a0b9ee2aa4f181d13f5/new.dll",
+    "sha256": "bc6d6263dc365029f2a34a565e015d63b0d46e6399507ff13d6f71ec0ecfa577",
+    "bytes": 19
+  },
+  {
+    "path": "installer-fixtures/ppt-new-registry-True-674f4f26f5cb4f22aca7fcbdcaf5cdf6/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-False-789568a61b364fc680182355f11b811f/catch-log.txt",
+    "sha256": "c9e807b347f83b2d86bdeb42c46215e8de249227d62ec6f2842dba2dc0ead889",
+    "bytes": 232
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-False-789568a61b364fc680182355f11b811f/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-False-789568a61b364fc680182355f11b811f/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-True-4ce5a99beb7344e69519d0409aa35999/catch-log.txt",
+    "sha256": "ca7f83db4af2e448599fe213aa7e8eb64efdc369c58f0d722aca640c8d22f278",
+    "bytes": 696
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-True-4ce5a99beb7344e69519d0409aa35999/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-old-moved-True-4ce5a99beb7344e69519d0409aa35999/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-False-5c8983953a6c442391614e2b57c5aa49/catch-log.txt",
+    "sha256": "d823bc782d1be2d1478e589fed39ac75cbd25152ad44b2e03b992e0b82291fad",
+    "bytes": 228
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-False-5c8983953a6c442391614e2b57c5aa49/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-False-5c8983953a6c442391614e2b57c5aa49/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-True-e204f1c30cfc4398aea58d9fcd497c3a/catch-log.txt",
+    "sha256": "b539e3e046e244cd343fa15800417ccc673bb305d795bb1ff78f0724e1c3f1bc",
+    "bytes": 227
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-True-e204f1c30cfc4398aea58d9fcd497c3a/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/ppt-stage-True-e204f1c30cfc4398aea58d9fcd497c3a/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-first-new-files-False-00a0c7f62fe54bd080b4f8c72bff8a3d/catch-log.txt",
+    "sha256": "95bd315de6a71d59b29dbb30132f198a1423e6254edf276fa92d3ecfa8eb30ec",
+    "bytes": 259
+  },
+  {
+    "path": "installer-fixtures/visio-first-new-files-False-00a0c7f62fe54bd080b4f8c72bff8a3d/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-first-new-files-True-720b13187ae44b4895886ea04085a138/catch-log.txt",
+    "sha256": "0fba85b13c86552b720797c164008ef62ec86027201588655aa849a62c103744",
+    "bytes": 258
+  },
+  {
+    "path": "installer-fixtures/visio-first-new-files-True-720b13187ae44b4895886ea04085a138/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-False-94cca1fc37274ca1a87f91d596b09247/catch-log.txt",
+    "sha256": "a177e0c36d028bd30f5daa0113f5ea74ecd8738f16fa8d669a7bef99ba06629e",
+    "bytes": 241
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-False-94cca1fc37274ca1a87f91d596b09247/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-False-94cca1fc37274ca1a87f91d596b09247/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-True-d044a3da6a7d4e068909883231dceeb1/catch-log.txt",
+    "sha256": "28fbd316e1326e3007f9c4781ae5df45b75e256b22893899d13aa817de58cc85",
+    "bytes": 715
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-True-d044a3da6a7d4e068909883231dceeb1/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-True-d044a3da6a7d4e068909883231dceeb1/.product.failed-c7e88ed240cb4d43afd65e018f568668/new.dll",
+    "sha256": "bc6d6263dc365029f2a34a565e015d63b0d46e6399507ff13d6f71ec0ecfa577",
+    "bytes": 19
+  },
+  {
+    "path": "installer-fixtures/visio-new-files-True-d044a3da6a7d4e068909883231dceeb1/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-False-9caddea751974dfe98ef8e997478cbe6/catch-log.txt",
+    "sha256": "adc7786980b3751cc8c5fe2483398bc95d8ed2767612198084af1ae5d73a6ef1",
+    "bytes": 244
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-False-9caddea751974dfe98ef8e997478cbe6/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-False-9caddea751974dfe98ef8e997478cbe6/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-True-4751eeb6ca6342598b970d8cdff185ce/catch-log.txt",
+    "sha256": "9e1b908ff0ffe3f8998c4b213b5948ad453d062bfc51305ac13487fb018b652c",
+    "bytes": 724
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-True-4751eeb6ca6342598b970d8cdff185ce/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-True-4751eeb6ca6342598b970d8cdff185ce/.product.failed-81b3c3960c9e4068bc27557ce8a29fc9/new.dll",
+    "sha256": "bc6d6263dc365029f2a34a565e015d63b0d46e6399507ff13d6f71ec0ecfa577",
+    "bytes": 19
+  },
+  {
+    "path": "installer-fixtures/visio-new-registry-True-4751eeb6ca6342598b970d8cdff185ce/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-False-39e5d48bfe7f41be80f4016daa83a550/catch-log.txt",
+    "sha256": "d4a1925fafdeab190ba405522ca83e6aea64a1327ab817e0c58f17c083e6ef47",
+    "bytes": 241
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-False-39e5d48bfe7f41be80f4016daa83a550/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-False-39e5d48bfe7f41be80f4016daa83a550/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-True-052da7e4e42a4fe7bec0cb142c6c708c/catch-log.txt",
+    "sha256": "441a38074b9a6c3506517430c8bd6eda79ce268694b180f910bae31f6f6da7a7",
+    "bytes": 715
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-True-052da7e4e42a4fe7bec0cb142c6c708c/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-old-moved-True-052da7e4e42a4fe7bec0cb142c6c708c/old-backup/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-stage-False-6c619f59beca408992d7dc9ad0f51098/catch-log.txt",
+    "sha256": "56d490bfb47e2d08f5959c010871f315e4e817a44649c9110a6b60bfc08a9f73",
+    "bytes": 237
+  },
+  {
+    "path": "installer-fixtures/visio-stage-False-6c619f59beca408992d7dc9ad0f51098/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-stage-False-6c619f59beca408992d7dc9ad0f51098/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-stage-True-ff36f687497146eea4ec0e94018d1c0a/catch-log.txt",
+    "sha256": "badf2c8b301a7cbd1c18a9248c7d8c9ec4e5aac8a7cad567a8d9fc86f13765aa",
+    "bytes": 236
+  },
+  {
+    "path": "installer-fixtures/visio-stage-True-ff36f687497146eea4ec0e94018d1c0a/unrelated.txt",
+    "sha256": "af130c430b308c0ed93b5500ef5735b2307771de63cc03ce4b8b11f546c535e6",
+    "bytes": 20
+  },
+  {
+    "path": "installer-fixtures/visio-stage-True-ff36f687497146eea4ec0e94018d1c0a/product/old.dll",
+    "sha256": "3d9bc314aa92a735467fd5a3e66734b760ba4676a9addc28f5d721fb053412fb",
+    "bytes": 20
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/bad-xml.txt",
+    "sha256": "3371067fd4270dc97dbe4574d8a588cf5ba3282115a34d7b40b9113ccb222e03",
+    "bytes": 562
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/cli-error.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/default-fresh.txt",
+    "sha256": "86f190a7e0d3e0dd0290d8bcd765abcb8875a7c013dadc3a144651687eaaf89a",
+    "bytes": 333
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/Fixture.csproj",
+    "sha256": "400b35829b2a391f4048da02e1108b98db09431b2947e806a184743bd1b33c3a",
+    "bytes": 11
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/fresh.txt",
+    "sha256": "f34efb6e5e5cc06f2e9e548f29721df37e1c1bb8728a5e7e22f417b87de434a8",
+    "bytes": 298
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/no-new.txt",
+    "sha256": "caac88677e9b1bcf4963e0d49d29e9397ddd8adf7eec9057977dd2df1d8f7e8f",
+    "bytes": 667
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/partial.txt",
+    "sha256": "f1cf4bfc9d92a681856930d31ab7ace51950e40dc10732942b8cd27b2fb28ade",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/stale-child.txt",
+    "sha256": "3a4ba5a7b324814531ad8a764308e44f0dd3c61843cab6017e42660075c95162",
+    "bytes": 672
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/stale-root.txt",
+    "sha256": "752c2628454cc3f1542f3f5b0e6ef8e7655e08813c1f6a8c427944cdf4a98f37",
+    "bytes": 671
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/zero.txt",
+    "sha256": "2685327ccc6a18fc3f31cd289c23f0211bcf6c6fbd177fe663b179ff398e0884",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/bad-xml/results-b84f6e03a11c4c7baef797078392b5e6.trx",
+    "sha256": "d918e71bab4fee97bcae9f4b6dc9415e8966b5f58c6ccfd2b1fab9deebfee06c",
+    "bytes": 8
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/bin/Release/net48/Fixture.dll",
+    "sha256": "2cf9f5cd6b59453af82bbd690bd24e2b62a44ef80f414a4ab8ec84c7006b5234",
+    "bytes": 26
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/fresh/results-accc27c4ae20459a8d38db11774f166e.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/partial/results-25daca8ad1a843e3a7a1deef0a657b12.trx",
+    "sha256": "57412d99045bf8a737ae7317b5c8bb7922accb99fee627b5410a3cabf94d5e5c",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/stale-child/old/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/stale-root/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/temp/PatentMarker-VSTest-Results/Fixture/results-3a567ad9820140cab0732f70009cb045.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-10c8b8ed0e084087aaf59dcd36f5164d/zero/results-8e64b59d13f54f9a85d24f5dc44be8ad.trx",
+    "sha256": "9366d554a6b61c51b96be537d3eafb88eec37616199562f00cb1433526fe348f",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/bad-xml.txt",
+    "sha256": "b49ad3b35d5ce73f7dfd567711b6e935fdd1fb012e9afccc57a9b020675ae2ec",
+    "bytes": 562
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/cli-error.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/default-fresh.txt",
+    "sha256": "7738910ba40e0f44eb113d29d27e50179e897e6c1982c5ee688cc1c9168d97f6",
+    "bytes": 333
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/explicit-failed.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/Fixture.csproj",
+    "sha256": "400b35829b2a391f4048da02e1108b98db09431b2947e806a184743bd1b33c3a",
+    "bytes": 11
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/fresh.txt",
+    "sha256": "dfd1ef0ca9d8a829adb3879d74095cc305514c81c50f07f4c5bd28d3af327f6c",
+    "bytes": 298
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/no-new.txt",
+    "sha256": "9caabe6b28c27f556db6860a7059c075e3e35ad145124dcacad62b46b4167730",
+    "bytes": 667
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/partial.txt",
+    "sha256": "f1cf4bfc9d92a681856930d31ab7ace51950e40dc10732942b8cd27b2fb28ade",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/stale-child.txt",
+    "sha256": "7368159d1f17aa4ce6b57b5d48b20704f3868ba774d0927ce71b8bcb9e8f5133",
+    "bytes": 672
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/stale-root.txt",
+    "sha256": "6220f6237a47fadb98ffcb36f05a1ce6412ad79d23e0b2083d730cefbcf08f6e",
+    "bytes": 671
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/zero.txt",
+    "sha256": "2685327ccc6a18fc3f31cd289c23f0211bcf6c6fbd177fe663b179ff398e0884",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/bad-xml/results-c66b35535b1c4b578fbd7d90f29cc5f7.trx",
+    "sha256": "d918e71bab4fee97bcae9f4b6dc9415e8966b5f58c6ccfd2b1fab9deebfee06c",
+    "bytes": 8
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/bin/Release/net48/Fixture.dll",
+    "sha256": "2cf9f5cd6b59453af82bbd690bd24e2b62a44ef80f414a4ab8ec84c7006b5234",
+    "bytes": 26
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/explicit-failed/results-42c94a404a1144e799fe172f17fc9bd4.trx",
+    "sha256": "4e82521b2cc6963add8e3a7f71c791d12786f287edc6169647ad9726e98f20ad",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/fresh/results-fc1f80f1831840bf9bee0bbfc3e27e01.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/partial/results-164a90b79dcd47af989a9ce021151cc0.trx",
+    "sha256": "57412d99045bf8a737ae7317b5c8bb7922accb99fee627b5410a3cabf94d5e5c",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/stale-child/old/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/stale-root/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/temp/PatentMarker-VSTest-Results/Fixture/results-2e47fbae1fa84d45b70e5f1d026d6ec6.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-92543bdb39514fbd8c14751dbadcd577/zero/results-3a2850597346460eb0d8a390113a9e5b.trx",
+    "sha256": "9366d554a6b61c51b96be537d3eafb88eec37616199562f00cb1433526fe348f",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/bad-xml.txt",
+    "sha256": "3fd10ff8601d90f7e6658edcb044e296f6fe265baa191a5edb8faa2c688a80f1",
+    "bytes": 562
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/cli-error.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/default-failed.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/default-fresh.txt",
+    "sha256": "d45746253ecd8d052472d3affa1a05792f50c1249efa1b62086633bdb407eb0a",
+    "bytes": 333
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/explicit-failed.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/Fixture.csproj",
+    "sha256": "400b35829b2a391f4048da02e1108b98db09431b2947e806a184743bd1b33c3a",
+    "bytes": 11
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/fresh.txt",
+    "sha256": "ae1e747ed9414417fe10d3fa0a672a75863b64bf435606a41d99bd9038db6bae",
+    "bytes": 298
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/no-new.txt",
+    "sha256": "049888afea34049bd3cb46423723fc566322e5e5680821fb26e891d7f415e482",
+    "bytes": 667
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/partial.txt",
+    "sha256": "f1cf4bfc9d92a681856930d31ab7ace51950e40dc10732942b8cd27b2fb28ade",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/stale-child.txt",
+    "sha256": "49f190c2e17e003bc7fefa528ae8dbd7cbb67d3884f23056953c328f6d6b7695",
+    "bytes": 672
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/stale-root.txt",
+    "sha256": "eda00c8b74110c8015e85351f005fcd17b03da1aa603fc327b903c226a32db8a",
+    "bytes": 671
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/zero.txt",
+    "sha256": "2685327ccc6a18fc3f31cd289c23f0211bcf6c6fbd177fe663b179ff398e0884",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/bad-xml/results-a2540ff6acff4bde937bfffc677fff3a.trx",
+    "sha256": "d918e71bab4fee97bcae9f4b6dc9415e8966b5f58c6ccfd2b1fab9deebfee06c",
+    "bytes": 8
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/bin/Release/net48/Fixture.dll",
+    "sha256": "2cf9f5cd6b59453af82bbd690bd24e2b62a44ef80f414a4ab8ec84c7006b5234",
+    "bytes": 26
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/explicit-failed/results-f8722286b3664eedaf9f5a12b41bb7bc.trx",
+    "sha256": "4e82521b2cc6963add8e3a7f71c791d12786f287edc6169647ad9726e98f20ad",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/fresh/results-2bbd0bf8708e445e946387b3dd3d07d0.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/partial/results-9b8eabb5f5ba42849d892f4c28a720ea.trx",
+    "sha256": "57412d99045bf8a737ae7317b5c8bb7922accb99fee627b5410a3cabf94d5e5c",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/stale-child/old/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/stale-root/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/temp/PatentMarker-VSTest-Results/Fixture/results-5f0ec8c82bfa4d3095fa0bd88cb761dd.trx",
+    "sha256": "4e82521b2cc6963add8e3a7f71c791d12786f287edc6169647ad9726e98f20ad",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/temp/PatentMarker-VSTest-Results/Fixture/results-d5757fd74df248d091d73176db5f8243.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-c54d76b64113416db55ce2cc98af142a/zero/results-4e4a135aa9694fe3b4bdffcae0660865.trx",
+    "sha256": "9366d554a6b61c51b96be537d3eafb88eec37616199562f00cb1433526fe348f",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/bad-xml.txt",
+    "sha256": "3fd10ff8601d90f7e6658edcb044e296f6fe265baa191a5edb8faa2c688a80f1",
+    "bytes": 562
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/cli-error.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/default-failed.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/default-fresh.txt",
+    "sha256": "65d7e1a8a96a9407ce78b42adc6d08d1cf2db817f8a7cadd9e8977c5e2ddd395",
+    "bytes": 333
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/explicit-failed.txt",
+    "sha256": "2cfb6dd489868cb716a3c49e59d2acfd8bc9aaa11d9048dbe4c31aae2b86599d",
+    "bytes": 391
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/Fixture.csproj",
+    "sha256": "400b35829b2a391f4048da02e1108b98db09431b2947e806a184743bd1b33c3a",
+    "bytes": 11
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/fresh.txt",
+    "sha256": "fb0a849dcb5e4e8ea6525e3531702877a43226d3e5c0f0e988a6624d9c935e5f",
+    "bytes": 298
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/no-new.txt",
+    "sha256": "8e4bcf9896c0546b9b453675076aff3d323a228238ed9d517f3d2ff9e2d5c367",
+    "bytes": 667
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/partial.txt",
+    "sha256": "f1cf4bfc9d92a681856930d31ab7ace51950e40dc10732942b8cd27b2fb28ade",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/stale-child.txt",
+    "sha256": "e48ebcd97e3a614db8632fab6721f0fd63b9e939cd8c29aba6f259070f6fcfc3",
+    "bytes": 672
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/stale-root.txt",
+    "sha256": "f16640bafdde0c5e39430097377390206722a0bed56a2cc369513c1633f5a3a1",
+    "bytes": 671
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/zero.txt",
+    "sha256": "2685327ccc6a18fc3f31cd289c23f0211bcf6c6fbd177fe663b179ff398e0884",
+    "bytes": 438
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/bad-xml/results-9380b6ff4c134977a097c0292f3020ba.trx",
+    "sha256": "d918e71bab4fee97bcae9f4b6dc9415e8966b5f58c6ccfd2b1fab9deebfee06c",
+    "bytes": 8
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/bin/Release/net48/Fixture.dll",
+    "sha256": "2cf9f5cd6b59453af82bbd690bd24e2b62a44ef80f414a4ab8ec84c7006b5234",
+    "bytes": 26
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/explicit-failed/results-0b639ceaf09f4aa7a95ec7fcd394a614.trx",
+    "sha256": "4e82521b2cc6963add8e3a7f71c791d12786f287edc6169647ad9726e98f20ad",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/fresh/results-ecc3a14d157348828427e5f12eed768b.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/partial/results-9aeeced2668840eca8510e06e93e0379.trx",
+    "sha256": "57412d99045bf8a737ae7317b5c8bb7922accb99fee627b5410a3cabf94d5e5c",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/stale-child/old/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/stale-root/results.trx",
+    "sha256": "6ab29b8d92d9fbecb6ee63d311410e42162da7593e97502e1ada57510c445402",
+    "bytes": 96
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/temp/PatentMarker-VSTest-Results/Fixture/results-0adfe3d725ce41eb8e0b632730978bea.trx",
+    "sha256": "4e82521b2cc6963add8e3a7f71c791d12786f287edc6169647ad9726e98f20ad",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/temp/PatentMarker-VSTest-Results/Fixture/results-df8bbfbbd80d433d9303efb723cee393.trx",
+    "sha256": "867c41ae2512f202d93ff2cf4550bbb35620b54fe133f296377d1e3003ec02ea",
+    "bytes": 107
+  },
+  {
+    "path": "vstest-fixture-f35d35e884d346b199c70be72aff7993/zero/results-443d1bd2d24146c6b806097d9693ed0a.trx",
+    "sha256": "9366d554a6b61c51b96be537d3eafb88eec37616199562f00cb1433526fe348f",
+    "bytes": 107
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "g09-author-harness.log": "b317a5fcd5ffa94cb0ce9adb7dcb966662fb92a37379636ddd30a3856c515ea5",
+  "g09-contract.log": "e38ba347bc8de65d2ddc5a6c4df244336c833745aa2d0d36678df1585904b2ed",
+  "g09-independent-check.py": "76edfe66bbcbca3a25d56475378599489e128775e0dd5502c50b263d00cfbc5d",
+  "g09-independent-results.json": "51e0e104ef87256190a28308b4518ef2b9640edb350d0eb27f64aa3ab0071a30",
+  "g09-red.log": "76d812534370d9917d3c979b9f0174b2b2a4c6bf3e62f531d76a128ede3c9cac",
+  "g12-dotnet-test.log": "213abac92a60a4e57548b7fac124cb27241a8fb0d6cdc965df1c00f0e874fc00",
+  "g12-red.log": "ccab5e45b4159dd847f93f5505a2e87f92155ee2f96811023e897b6454f4d9ae",
+  "g12-source-snapshot.json": "93ead11be59c09d17c31a8e167ad81508402984f871a664c92b2c20238f4e57c",
+  "independent-acceptance.md": "47df68d5d471c8baecabaaae843c7ae03e46f74cc33b2df33b29de7d41d55ed6",
+  "independent-findings.json": "90178d37cfcf386695ee761460886f5620bf9e8b0729aa8eda792e63b5bd6d4e",
+  "source-hashes.json": "e85619a022206a9db821b29551cb57ca2d87cab843d980df1f0cd6d1c081ee2d"
+}

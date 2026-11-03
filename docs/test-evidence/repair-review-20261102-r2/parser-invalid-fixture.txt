@@ -1,0 +1,13 @@
+SUMMARY|total=2016|failed=2016
+FAIL|base-0 1 支架， 1|支架|expected=|actual=|input=
+FAIL|base-1 支架 1， 1|支架|expected=|actual=|input=
+FAIL|base-2 支架 (1)， 1|支架|expected=|actual=|input=
+FAIL|base-3 支架 （1）， 1|支架|expected=|actual=|input=
+FAIL|base-4 1	支架， 1|支架|expected=|actual=|input=
+FAIL|base-5 支架	1， 1|支架|expected=|actual=|input=
+FAIL|base-6 支架	(1)， 1|支架|expected=|actual=|input=
+FAIL|base-7 支架	（1）， 1|支架|expected=|actual=|input=
+FAIL|base-8 1　支架， 1|支架|expected=|actual=|input=
+FAIL|base-9 支架　1， 1|支架|expected=|actual=|input=
+FAIL|base-10 支架　(1)， 1|支架|expected=|actual=|input=
+FAIL|base-11 支架　（1）， 1|支架|expected=|actual=|input=

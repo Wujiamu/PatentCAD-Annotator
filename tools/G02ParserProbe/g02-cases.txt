@@ -1,0 +1,46 @@
+# G02 shared parser case matrix. UTF-8, no BOM. <id>	<escaped text>
+# escapes: `n = LF, `r = CR, `t = TAB, `\ = backslash
+r016-number-first-s1	S1底座，
+r016-number-first-hyphen	10-1支架；
+r016-number-first-paren-s1	S1(底座)、
+r016-number-first-suffix	123A1第一支路，123A2第二支路；
+r016-suffix-digits	123A10底座，
+r016-mid-cut-guard	S12345底座，
+r016-too-long	123456底座，
+r016-mixed-forms	S1底座，10-1支架；1(底座)、123A1第一支路，
+r018-mixed-order	支架2、1底座，
+r018-mixed-multi	箱体结构10、1底座，加热器(3)、2支架；
+r018-paren-then-old	加热器(3)、1底座，
+r033-plain-then-number	普通段落\n123\n
+r033-plain-then-number-crlf	普通段落\r\n123\r\n
+r033-plain-then-number-cr	普通段落\r123\r
+r033-bare-one-line	支架 123
+r033-bare-two-lines	底座 1\n支架 2
+r033-bare-tab	支架\t123
+r033-bare-lead-space	  支架 123  \n
+r032-z-name	附图标记说明：1底座，2Z形支架，3外壳。
+r032-z-lower	附图标记说明：1底座，2z形支架，3外壳。
+r032-no-z	附图标记说明：1底座，2支架。
+r032-blank-para	附图标记说明：1底座，2支架。\r\n\r\n下一页200正文。
+r032-z-crlf-blank	附图标记说明：1底座，2Z形支架，3外壳。\r\n\r\n下一页200正文。
+r017-repeat	1支架，1底座，1底座，
+r017-tie	1支架，1底座，
+g15-name-first-six-digits	底座123456、
+g15-name-first-six-digits-space	底座 123456、
+g15-name-first-six-digits-tab	底座\t123456、
+g15-name-first-five-digits	底座12345、
+g15-name-first-paren-six-digits	底座(123456)、
+g15-name-first-letter-prefix-six	底座S123456、
+g15-name-with-digits	第2定位件 123、
+g15-invalid-then-valid	底座123456、端盖301、
+g19-repeat-after-chinese	第123定位件 123、
+g19-repeat-after-letter	壳体X123 支架 123、
+g19-repeat-after-digit	壳体1123 支架 123、
+g19-repeat-prefixed-number	壳体AX123 支架 X123、
+g19-same-text-prefix	壳体123 支架 123、
+g19-paren-halfwidth	壳体X123 支架(123)、
+g19-paren-fullwidth	壳体X123 支架（123）、
+g19-name-digits-not-repeated	第2定位件 301、
+g19-five-digits	壳体X12345 支架 12345、
+g19-six-digits-rejected	壳体X123456 支架 123456、
+g19-mixed-order	壳体X123 支架 123、1底座，

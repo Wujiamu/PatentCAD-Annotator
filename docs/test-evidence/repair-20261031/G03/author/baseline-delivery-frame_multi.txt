@@ -1,0 +1,23 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py frame_multi
+exit: 1
+FAIL R-020 multi-column modern=False right=False same row 0
+FAIL R-020 multi-column modern=False right=False column=1 expected -85 actual -5
+FAIL R-020 multi-column modern=False right=False same row 1
+FAIL R-020 multi-column modern=False right=False column=2 expected -107 actual -5
+FAIL R-020 multi-column modern=False right=False same row 2
+FAIL R-020 multi-column modern=False right=True same row 0
+FAIL R-020 multi-column modern=False right=True column=1 expected 185 actual 105
+FAIL R-020 multi-column modern=False right=True same row 1
+FAIL R-020 multi-column modern=False right=True column=2 expected 207 actual 105
+FAIL R-020 multi-column modern=False right=True same row 2
+FAIL R-020 multi-column modern=True right=False same row 0
+FAIL R-020 multi-column modern=True right=False column=1 expected -85 actual -5
+FAIL R-020 multi-column modern=True right=False same row 1
+FAIL R-020 multi-column modern=True right=False column=2 expected -107 actual -5
+FAIL R-020 multi-column modern=True right=False same row 2
+FAIL R-020 multi-column modern=True right=True same row 0
+FAIL R-020 multi-column modern=True right=True column=1 expected 185 actual 105
+FAIL R-020 multi-column modern=True right=True same row 1
+FAIL R-020 multi-column modern=True right=True column=2 expected 207 actual 105
+FAIL R-020 multi-column modern=True right=True same row 2
+SUMMARY selector=frame_multi checks=24 failed=20

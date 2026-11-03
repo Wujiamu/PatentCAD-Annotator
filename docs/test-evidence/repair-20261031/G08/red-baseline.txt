@@ -1,0 +1,32 @@
+﻿INSTALLER|C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-20261031\G08\red-inject-install-vba.vbs
+ADDIN|C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\word-addin\PatentMarker.dotm
+CASE|PASS|first-install|exit=0
+CASE|PASS|upgrade|exit=0
+CASE|PASS|upgrade-protected-attributes|exit=0
+CASE|PASS|upgrade-locked-manifest|exit=1
+CASE|FAIL|fail-addin-activate|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-046c7020526945efb44172e1da7edcf4\fail-addin-activate\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-write|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-046c7020526945efb44172e1da7edcf4\fail-manifest-write\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+CASE|FAIL|fail-manifest-close|exit=1
+  - previous ownership manifest bytes were not restored
+  - product manifest is not the previous one
+  > START|PatentMarker Word add-in installer
+  > LOG|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-046c7020526945efb44172e1da7edcf4\fail-manifest-close\installer.log
+  > MODE|isolated startup override
+  > FAIL|cannot write ownership manifest; previous add-in restored: �������δ����
+  > 
+FAIL|G08_INSTALLER_ROLLBACK|cases=7|failed=3|fail-addin-activate,fail-manifest-write,fail-manifest-close
+ARTIFACTS|C:\Users\wjm\AppData\Local\Temp\PatentMarker-G08-046c7020526945efb44172e1da7edcf4

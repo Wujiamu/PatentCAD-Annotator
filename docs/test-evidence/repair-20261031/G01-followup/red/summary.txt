@@ -1,0 +1,34 @@
+PASS empty
+PASS all-skipped
+PASS empty-skip
+PASS mixed-skip
+PASS pass
+PASS assertion-fails
+PASS task
+PASS value-task
+PASS async-void
+PASS static
+PASS static-class
+PASS static-skipped
+PASS parameter
+PASS theory
+PASS private
+PASS generic
+PASS generic-class
+PASS struct
+PASS constructor
+PASS non-void
+PASS timeout
+PASS custom-fact
+PASS class-fixture
+PASS collection-fixture
+PASS async-lifetime
+PASS async-disposable
+FAIL hook-method: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL hook-class: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL hook-assembly: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL case-orderer: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL collection-orderer: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL custom-framework: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL dispose-failure: exit=1; expected=1, summary=passed=0 failed=1 skipped=0
+G01 SUMMARY: passed=26 failed=7

@@ -1,0 +1,5 @@
+exit=1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+SKIP FixtureTests.Skipped : 
+SUMMARY: passed=0 failed=0 skipped=1
+SKIP/BLOCKED: no runnable Fact tests were executed.

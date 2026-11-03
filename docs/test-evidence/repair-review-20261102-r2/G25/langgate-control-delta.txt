@@ -1,0 +1,4 @@
+DictPaletteControl.cs      var=11/11  Func<=0/0  ?.=0/0  ??=0/0  linq=0/0
+ArbitrateDialog.cs         var=0/0  Func<=0/0  ?.=0/0  ??=0/0  linq=0/0
+DictPaletteWorkflow.cs     var=0/0  Func<=0/0  ?.=0/0  ??=0/0  linq=0/0
+DictConflict.cs            var=0/0  Func<=0/0  ?.=0/0  ??=0/0  linq=0/0

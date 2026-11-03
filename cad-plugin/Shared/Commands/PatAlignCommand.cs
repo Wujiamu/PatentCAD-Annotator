@@ -226,6 +226,7 @@ namespace PatentMarker.Commands
                     int index = 0;
                     int perColumn = Math.Max(1, (int)Math.Floor(span / pitch));
                     int column = 0;
+                    double columnOffset = 0.0;
                     while (index < items.Count)
                     {
                         // 该列文字的最大占位宽（决定下一列的退距）
@@ -243,8 +244,8 @@ namespace PatentMarker.Commands
                             if (verticalSide)
                             {
                                 double x = sideName == Strings.PatAlign_KwLeft
-                                    ? minX - margin - column * (maxW + colGap)
-                                    : maxX + margin + column * (maxW + colGap);
+                                    ? minX - margin - columnOffset
+                                    : maxX + margin + columnOffset;
                                 pos = new Point3d(x, along, 0);
                             }
                             else
@@ -257,6 +258,7 @@ namespace PatentMarker.Commands
                             if (MoveTarget(tr, t, pos)) aligned++;
                         }
                         index += count;
+                        columnOffset += maxW + colGap;
                         column++;
                         if (column > overflowCols) overflowCols = column;
                         if (column > 50) break; // 安全阀：异常数据防死循环
@@ -328,8 +330,8 @@ namespace PatentMarker.Commands
                         {
                             t = new Target();
                             t.EntityId = leader.ObjectId;
-                            t.TextLocation = IO.PatEntityHelper.GetLeaderTextPos(leader, tr);
-                            t.TextHeight = 3.5;
+                            PatLeaderTextAttachment.ReadTextMetrics(leader, tr,
+                                out t.TextLocation, out t.TextHeight, out t.Width);
                         }
                     }
 
@@ -362,8 +364,7 @@ namespace PatentMarker.Commands
                     t.Width = (mt.Contents ?? "").Length * 0.7 * t.TextHeight;
                     return true;
                 }
-                // 旧 Leader：无内嵌 MText 宽度可读，按当前编号文本估宽
-                t.Width = t.TextHeight * 2.0;
+                // 旧 Leader 的关联文字已在收集时测量。
                 return true;
             }
             catch
@@ -382,6 +383,7 @@ namespace PatentMarker.Commands
         /// 移动关联 MText + 重写文字端点）。</summary>
         private static bool MoveTarget(Transaction tr, Target t, Point3d newPos)
         {
+            bool editingLeader = false;
             try
             {
                 if (t.IsStandalone)
@@ -394,14 +396,15 @@ namespace PatentMarker.Commands
                 ObjectId annId = PatLeaderTextAttachment.GetAnnotationId(leader, tr);
                 if (annId.IsNull) return false;
                 MText text = (MText)tr.GetObject(annId, OpenMode.ForWrite);
-                text.Location = newPos;
-                if (leader.Annotation.IsNull)
-                    PatLeaderTextAttachment.SetTextEndpoint(leader, newPos, text.TextHeight);
-                return true;
+                editingLeader = true;
+                bool moved = PatLeaderTextAttachment.MoveText(leader, text, newPos);
+                editingLeader = false;
+                return moved;
             }
             catch (Exception ex)
             {
                 PatentMarkerApp.RawLog("PATALIGN move error: " + ex.Message);
+                if (editingLeader) throw;
                 return false;
             }
         }

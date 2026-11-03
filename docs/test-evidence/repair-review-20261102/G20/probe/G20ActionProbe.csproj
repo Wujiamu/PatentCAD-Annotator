@@ -1,0 +1,79 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G20 / R-034 (补修) red/green probe.
+
+    ONE scenario file (ActionProbe.cs), TWO source snapshots of the files under
+    repair. Nothing else changes between builds, so the only variable is the fix:
+
+      -p:G20Snapshot=red    -> red-source/ (pre-G20 bytes: the palette rejects the
+                               whole arbitration when the backup cannot be parsed)
+      -p:G20Snapshot=green  -> cad-plugin/Shared (post-G20 bytes: availability is
+                               decided per selected action)
+
+    No adapter exists in this probe: both builds drive the SAME production entry
+    (DictPaletteControl.BtnArbitrate_Click, reflected because a probe cannot press
+    a mouse) and observe the SAME modal ArbitrateDialog through
+    Application.OpenForms, pressing its real buttons. The 2025 DictLoader /
+    DictWriter / ConfigLoader / RuntimeHost, shared DictConflict,
+    DictPaletteSession, DictPaletteViewRenderer, Strings, PatCheckResult and
+    EditEntryDialog are compiled from the live tree in BOTH builds.
+
+    DictConflict.cs is deliberately NOT part of the red snapshot: G20 must not
+    change it (it is G16's contract and G21's neighbour). The red snapshot only
+    contains the three files G20 is allowed to touch.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <AssemblyName>G20ActionProbe</AssemblyName>
+    <RootNamespace>G20Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G20Snapshot Condition="'$(G20Snapshot)' == ''">green</G20Snapshot>
+    <IsRed Condition="'$(G20Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G20_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\DictConflict.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\EditEntryDialog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-G20 snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)ArbitrateDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\ArbitrateDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteWorkflow.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteWorkflow.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="ActionProbe.cs" />
+  </ItemGroup>
+
+</Project>

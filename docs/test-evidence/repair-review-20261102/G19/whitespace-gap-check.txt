@@ -1,0 +1,44 @@
+# Ad-hoc whitespace-gap check (not part of the formal corpus).
+# Why the fix searches from Len(SubMatches(0))+1 inside m.Value instead of adding
+# Len(name) to m.FirstIndex: the name and the number are separated by G02_WS*.
+# These cases prove the search skips that gap (multiple spaces, TAB, U+3000).
+# x-no-space-ambiguous has NO separator: the number-first tier (G02_P1) wins and
+# both engines agree on X123|支架123. That is pre-existing tiering, unchanged by G19.
+C#:
+PASS|x-multi-space|display=1 [123|壳体X123 支架]
+PASS|x-tab-gap|display=1 [123|壳体X123 支架]
+PASS|x-fullwidth-space|display=1 [123|壳体X123 支架]
+PASS|x-no-space-ambiguous|display=1 [X123|支架123]
+SUMMARY: passed=4 failed=0
+C#_EXIT=0
+
+VBScript (fixed probe):
+PASS|pattern-text|G02_NUM
+PASS|pattern-text|G02_WS
+PASS|pattern-text|G02_INLINE
+PASS|pattern-text|G02_NAME
+PASS|pattern-text|G02_NAMEFIRST
+PASS|pattern-text|G02_NAMEBARE
+PASS|pattern-text|G02_SEP
+PASS|pattern-text|G02_SEPN
+PASS|pattern-text|G02_CELLSTART
+PASS|pattern-text|G02_P1
+PASS|pattern-text|G02_PB
+PASS|pattern-text|G02_P2
+PASS|pattern-text|G02_PA
+PASS|pattern-text|G02_P3
+PASS|pattern-text|G02_HDR0
+PASS|pattern-text|G02_HDR1
+PASS|pattern-text|G02_HDR2
+PASS|pattern-text|G02_HDR3
+PASS|pattern-text|G02_HDR4
+PASS|pattern-text|G02_HDR5
+PASS|pattern-text|G02_SECTIONEND
+PASS|pattern-text|G02_TABLEA
+PASS|pattern-text|G02_TABLEB
+PASS|display|x-multi-space|hits=1 raw=1
+PASS|display|x-tab-gap|hits=1 raw=1
+PASS|display|x-fullwidth-space|hits=1 raw=1
+PASS|display|x-no-space-ambiguous|hits=1 raw=1
+SUMMARY: passed=27 failed=0
+VBS_EXIT=0

@@ -1,0 +1,97 @@
+[
+  {
+    "snapshot": "baseline-run",
+    "version": "2007",
+    "command": [
+      "dotnet",
+      "test",
+      "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj",
+      "--configuration",
+      "Release",
+      "--nologo",
+      "--filter",
+      "FullyQualifiedName~G13BracePlanarityTests",
+      "--logger",
+      "console;verbosity=normal"
+    ],
+    "exit_code": 1,
+    "log": "baseline-run-2007.log",
+    "time_local": "2026-11-01T00:42:27.628753+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "version": "2007",
+    "command": [
+      "dotnet",
+      "test",
+      "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj",
+      "--configuration",
+      "Release",
+      "--nologo",
+      "--filter",
+      "FullyQualifiedName~G13BracePlanarityTests",
+      "--logger",
+      "console;verbosity=normal"
+    ],
+    "exit_code": 0,
+    "log": "candidate-2007.log",
+    "time_local": "2026-11-01T00:42:31.160065+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "version": "2010",
+    "command": [
+      "dotnet",
+      "test",
+      "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj",
+      "--configuration",
+      "Release",
+      "--nologo",
+      "--filter",
+      "FullyQualifiedName~G13BracePlanarityTests",
+      "--logger",
+      "console;verbosity=normal"
+    ],
+    "exit_code": 0,
+    "log": "candidate-2010.log",
+    "time_local": "2026-11-01T00:42:34.609691+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "version": "2013",
+    "command": [
+      "dotnet",
+      "test",
+      "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2013.Tests.csproj",
+      "--configuration",
+      "Release",
+      "--nologo",
+      "--filter",
+      "FullyQualifiedName~G13BracePlanarityTests",
+      "--logger",
+      "console;verbosity=normal"
+    ],
+    "exit_code": 0,
+    "log": "candidate-2013.log",
+    "time_local": "2026-11-01T00:42:38.060382+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "version": "2015",
+    "command": [
+      "dotnet",
+      "test",
+      "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj",
+      "--configuration",
+      "Release",
+      "--nologo",
+      "--filter",
+      "FullyQualifiedName~G13BracePlanarityTests",
+      "--logger",
+      "console;verbosity=normal"
+    ],
+    "exit_code": 0,
+    "log": "candidate-2015.log",
+    "time_local": "2026-11-01T00:42:41.462810+08:00"
+  }
+]

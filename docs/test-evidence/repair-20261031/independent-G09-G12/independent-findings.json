@@ -1,0 +1,79 @@
+{
+  "time_local": "2026-11-01T00:39:01.145591+08:00",
+  "reviewer": "/root/g01 independent; not implementation author of G09/G12",
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "baseline_manifest_sha256": "7a8c5653d2d691d8c210b87776ad7251ef5a6f8ff84248f624da7ba000aa9034",
+  "G09": {
+    "result": "PASS",
+    "scope": "isolated fake registry and temporary support folders; no real CAD or registry",
+    "baseline": {
+      "exit": 1,
+      "cases": {
+        "pass": 2,
+        "fail": 10
+      }
+    },
+    "candidate": {
+      "exit": 0,
+      "cases": {
+        "pass": 12,
+        "fail": 0
+      }
+    },
+    "independent_assertions": {
+      "exit": 0,
+      "pass": 42,
+      "fail": 0
+    },
+    "contract_exit": 0,
+    "selectors": [
+      "R17.0-only",
+      "R17.1-only",
+      "R17.2-only",
+      "mixed-and-duplicates",
+      "language-product",
+      "location-hklm",
+      "same-version multi-profile plus duplicate and repeated install"
+    ]
+  },
+  "G12": {
+    "result": "PASS",
+    "scope": "real net48 VSTest using fake Visio objects; not real Visio host",
+    "baseline": {
+      "exit": 1,
+      "total": 10,
+      "pass": 7,
+      "fail": 3
+    },
+    "candidate": {
+      "exit": 0,
+      "total": 10,
+      "pass": 10,
+      "fail": 0
+    },
+    "filter": "FullyQualifiedName~PatentOffice.Visio.CodeTests.G12AnnotationPairTests|FullyQualifiedName~PatentOffice.Visio.CodeTests.AnnotationScanTests",
+    "net40_product_and_net48_tests": {
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/xunit.core.dll": "27a5d2a83f90eae3bd6ddff74c0b3a495ce9357174612063394bf0f9552c445f",
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/xunit.assert.dll": "1199abb58444f67e43899951ce0fce78db87b8e920b97d03be8a7fb637539e74",
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/xunit.execution.desktop.dll": "91df93d6bf6e389062043dd9561c9dac7109fcdb7564fe0c8ac642e627f62959",
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/xunit.runner.visualstudio.testadapter.dll": "89c9229eb8ae333941f0b2190b2b1e553fc6fd6e3cab708ead593944cbaf5891",
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/PatentOffice.Visio.CodeTests.dll": "e9fcb9fb48e4ddf5c47c0a873adf289d7a93da466d177340f5cdcdf083c39e85",
+      "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/bin/Release/net48/PatentOffice.Visio.dll": "063b4e69d7f3d3bd5832e9342168bad6598c818c3bf0629a87cd7569332dd473"
+    }
+  },
+  "uncovered": {
+    "GitHub external CAD hosts 2007/2010/2013/2015": "SKIP/BLOCKED: target environments not reported",
+    "real Visio create/copy/delete/save/reopen": "SKIP/BLOCKED: not run in this isolated validation",
+    "deployment and actual installation": "SKIP/BLOCKED: no candidate installation in this task"
+  },
+  "tools": {
+    "dotnet": {
+      "path": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "sha256": "6d12b93599139e67b8dd951a06a9cda10bc0261e732432db483ea5e7e5c1b479"
+    },
+    "cscript": {
+      "path": "C:\\Windows\\System32\\cscript.exe",
+      "sha256": "6f15c80751abf5cfe3fdd69744b7c4146de1ef6464b0398c3e89edd011a02c3f"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType><TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms><ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable><LangVersion>12</LangVersion><NoWarn>CS8632</NoWarn>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\</RepoRoot>
+    <S>$(RepoRoot)cad-plugin\Shared\</S><E>$(RepoRoot)cad-plugin\2025\PatentMarker\</E>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(E)IO\DictEntry.cs"/><Compile Include="$(E)IO\DictWriter.cs"/>
+    <Compile Include="$(E)IO\ConfigLoader.cs"/><Compile Include="$(E)IO\RuntimeHost.cs"/>
+    <Compile Include="$(S)IO\PatSettings.cs"/><Compile Include="$(S)IO\DictDiff.cs"/>
+    <Compile Include="$(S)IO\DictConflict.cs"/><Compile Include="$(S)IO\NumberIdentity.cs"/>
+    <Compile Include="$(S)Commands\PatCheckResult.cs"/><Compile Include="$(S)I18n\Strings.cs"/>
+    <Compile Include="$(S)I18n\Language.cs"/><Compile Include="$(S)Palette\DictPaletteViewRenderer.cs"/>
+    <Compile Include="$(S)Palette\DictPaletteWorkflow.cs"/><Compile Include="$(S)Palette\ArbitrateDialog.cs"/>
+    <Compile Include="$(S)Palette\DictPaletteControl.cs"/><Compile Include="$(S)Palette\EditEntryDialog.cs"/>
+    <Compile Include="$(S)Palette\DictPaletteSession.cs"/>
+    <Compile Include="$(RepoRoot)docs\test-evidence\repair-review-20261101\G17\probe\Stubs.cs"/>
+    <Compile Include="Review.cs"/>
+  </ItemGroup>
+</Project>

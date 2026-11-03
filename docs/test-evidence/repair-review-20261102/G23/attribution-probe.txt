@@ -1,0 +1,10 @@
+﻿PASS|root_stale_old_strategy_accepts|old=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G23\attribution-probe\root-stale\results.trx
+PASS|root_stale_new_strategy_refuses|new=
+PASS|root_stale_would_report_all_pass|total=1 passed=1
+PASS|nested_stale_old_strategy_accepts|old=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G23\attribution-probe\nested-stale\20261101-030000\results.trx
+PASS|nested_stale_new_strategy_refuses|new=
+PASS|own_result_accepted|new=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\G23\attribution-probe\own-result\results-acdd936f45224beb98fe49fa5d8369ae.trx
+PASS|own_result_all_pass|total=48 executed=48 passed=48
+PASS|zero_count_rejected|total=0
+PASS|partial_execution_rejected|executed=47
+SUMMARY: passed=9 failed=0

@@ -153,26 +153,31 @@ namespace PatentOffice.Visio
             foreach (KeyValuePair<string, List<MarkPart>> pair in partsById)
             {
                 List<MarkPart> parts = pair.Value;
-                bool foundValidPair = false;
-                bool containsMalformedPart = false;
+                bool[] matched = new bool[parts.Count];
                 for (int i = 0; i < parts.Count; i++)
                 {
                     MarkPart line = parts[i];
-                    if (!line.IsValid) containsMalformedPart = true;
                     if (!line.IsLine || !line.IsValid) continue;
                     for (int j = 0; j < parts.Count; j++)
                     {
                         MarkPart label = parts[j];
-                        if (!label.IsValid) containsMalformedPart = true;
-                        if (label.IsLabel && label.IsValid && NumberIdentity.AreEqual(line.Number, label.Number))
+                        if (!matched[j] && label.IsLabel && label.IsValid && NumberIdentity.AreEqual(line.Number, label.Number))
                         {
                             result.MarkedNumbers.Add(NumberIdentity.Normalize(line.Number));
-                            foundValidPair = true;
+                            matched[i] = true;
+                            matched[j] = true;
                             break;
                         }
                     }
                 }
-                if (containsMalformedPart || !foundValidPair) result.MalformedCount++;
+                for (int i = 0; i < matched.Length; i++)
+                {
+                    if (!matched[i])
+                    {
+                        result.MalformedCount++;
+                        break;
+                    }
+                }
             }
         }
 

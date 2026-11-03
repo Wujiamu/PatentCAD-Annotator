@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G21 / R-004 (补修) red/green probe.
+
+    ONE scenario file (PendingProbe.cs), TWO source snapshots of the three files
+    G21 may touch. Nothing else changes between builds, so the only variable is
+    the fix:
+
+      -p:G21Snapshot=red    -> red-source/  (post-G20 bytes, pre-G21: the pending
+                               record is only guarded for *related* renames and
+                               a refused first sync is dropped silently)
+      -p:G21Snapshot=green  -> cad-plugin/Shared (post-G21: one record per
+                               drawing, every later number change is refused
+                               before the second JSON write, a refused first sync
+                               is recorded)
+
+    There is no adapter and no re-implementation: both builds drive the REAL
+    palette entries (DictPaletteControl.EditSelectedEntry / BtnAddEntry_Click /
+    BtnRenameRetry_Click / DiscardPendingRename), the REAL modal EditEntryDialog
+    (found through Application.OpenForms, its real buttons pressed) and the REAL
+    DictWriter. The CAD renumber service is a recording stub.
+
+    DictConflict.cs, DictPaletteWorkflow.cs and ArbitrateDialog.cs are NOT part of
+    the red snapshot: G21 must not change them (G20 finalized them).
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <AssemblyName>G21PendingProbe</AssemblyName>
+    <RootNamespace>G21Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G21Snapshot Condition="'$(G21Snapshot)' == ''">green</G21Snapshot>
+    <IsRed Condition="'$(G21Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G21_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\DictConflict.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-G21 snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)EditEntryDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\EditEntryDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteSession.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteSession.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="PendingProbe.cs" />
+  </ItemGroup>
+
+</Project>

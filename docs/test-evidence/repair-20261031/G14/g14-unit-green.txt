@@ -1,0 +1,6 @@
+﻿recovery-copy|.PowerPoint.recovery-040fe895a5784ac694f861f8360385ee
+staged|install-manifest.json,PatentOffice.PowerPoint.dll
+restore-returned|True
+files|before=3|after=3|mismatched=0
+leftover-file-count-after-partial-delete|2
+PASS|G14_RECOVERY_COPY_RESTORES_COMPLETE_FILE_SET

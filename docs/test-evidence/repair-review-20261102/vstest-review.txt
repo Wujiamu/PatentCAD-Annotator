@@ -1,0 +1,4 @@
+PASS|empty-no-run|expected-accepted=False|actual-accepted=False|artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\vstest-fixture-0368bb458d2d463186d5c29c0337b1cc
+FAIL|stale-no-run|expected-accepted=False|actual-accepted=True|artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\vstest-fixture-0368bb458d2d463186d5c29c0337b1cc
+PASS|fresh-pass|expected-accepted=True|actual-accepted=True|artifact=C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102\vstest-fixture-0368bb458d2d463186d5c29c0337b1cc
+SUMMARY|total=3|failed=1

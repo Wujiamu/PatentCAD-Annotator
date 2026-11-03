@@ -1,0 +1,5 @@
+exit=0
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+SKIP FixtureTests.Skipped : later
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=0 skipped=1

@@ -1,0 +1,22 @@
+﻿# G17 (R-004) probe — snapshot=green (pre-fix red-source vs live cad-plugin/Shared)
+# built 2026-11-02 03:14:29 +08:00 on DESKTOP-3VJ2A3B
+# dotnet 8.0.422 / Microsoft.NETCore.App 10.0.11
+# command: dotnet build RenameProbe.csproj -c Release -p:G17Snapshot=<mode> ; dotnet bin/Release/net8.0-windows/G17RenameProbe.dll
+PASS|rename_retry_same_context|expected_calls=1|actual_calls=1
+PASS|rename_retry_different_document|expected_calls=0|actual_calls=0
+PASS|rename_retry_different_dictionary_same_new_number|expected_calls=0|actual_calls=0|pending_kept=True
+PASS|rename_chain_301_302_303|dictionary=302|pending_new=302|retry_service_calls=1|edit_written=False
+PASS|rename_retry_succeeds_and_clears|calls=1|changed=1|pending=False
+PASS|rename_new_number_redefined_keeps_record|calls=0|pending=True
+PASS|rename_new_number_deleted_keeps_record|calls=0|pending=True
+PASS|rename_second_json_write_blocked|written=False|bytes_unchanged=True|error=请先完成或显式放弃待同步操作（301 → 302），本次改号未写入字典。
+PASS|rename_unrelated_entry_allowed|written=True|error=<none>
+PASS|rename_discard_then_related_allowed|written=True|pending=False
+PASS|rename_two_drawings_do_not_overwrite|A_recorded=301>302@t.dict.json|A_after_B=301>302@t.dict.json|B_recorded=401>402@t.dict.json|B_after_A=401>402@t.dict.json
+PASS|rename_close_drawing_releases_only_that_drawing|A_after_close=<none>|A_service_calls=0
+PASS|rename_external_write_before_transaction|calls=0|pending=True
+PASS|rename_lock_or_commit_failure_is_not_synced|changed=-1|pending=True
+PASS|rename_plain_text_same_number_untouched|changed=0|pending=False|service_calls=1|status=已同步 0 条图纸标注: 301 → 302
+SUMMARY: passed=15 failed=0 skipped=0
+exit=0
+

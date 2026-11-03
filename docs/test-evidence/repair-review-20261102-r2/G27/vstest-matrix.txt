@@ -1,0 +1,9 @@
+﻿# G27 / R-035 - default results must outlive the staging copy
+# red  : results placed in staging (pre-fix behaviour) -> printed path gone after return
+# green: results placed outside staging -> printed path still readable
+
+FAIL|T2-artifact-default-fresh|exit=0|PASS|VSTEST|PatentOffice.PowerPoint.CodeTests|34/34|trx=C:\Users\wjm\AppData\Local\Temp\PatentMarker-VSTest-ea9c3610f3b14715b439696d69786315\results-eefa5a0341fc4f369052edb376b6df70.trx|exists_after_return=False
+PASS|T2-artifact-default-fresh|exit=0|PASS|VSTEST|PatentOffice.PowerPoint.CodeTests|34/34|trx=C:\Users\wjm\AppData\Local\Temp\PatentMarker-VSTest-Results\PatentOffice.PowerPoint.CodeTests\results-4513a41520ff4f6bab7a3471f4e5cbbe.trx|exists_after_return=True
+
+# Explicit ResultsDirectory is the positive control and keeps working.
+PASS|T2-artifact-explicit-fresh|exit=0|PASS|VSTEST|PatentOffice.PowerPoint.CodeTests|34/34|trx=docs\test-evidence\repair-review-20261102-r2\G27\explicit-results\results-5a22f30c32f04209a374206988581b2e.trx|exists_after_return=True

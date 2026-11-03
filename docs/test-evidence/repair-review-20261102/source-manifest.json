@@ -1,0 +1,176 @@
+[
+  {
+    "path": "vba/Patterns.bas",
+    "sha256": "55d5c8c9521a262cf738bfef01b6b50b06ada6555bcac2920b9da5e97497178f",
+    "bytes": 12577,
+    "last_write_utc": "2026-11-01T16:42:46.4906715Z"
+  },
+  {
+    "path": "cad-plugin/Shared/IO/MarkingTextParser.cs",
+    "sha256": "a7dd0c0886ad234c5ef97d4a1dc0c5507e7b5a2f0bcf831065be9d37c6cd3c5d",
+    "bytes": 22372,
+    "last_write_utc": "2026-11-01T16:37:14.7708133Z"
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictConflict.cs",
+    "sha256": "b4c300a74aad8709f8095beb0993e47c7fe613d7104ac6dd3db389a8736e3fc6",
+    "bytes": 16766,
+    "last_write_utc": "2026-11-01T18:01:14.9963946Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+    "sha256": "d651ade5070d0f5f3ad3d823d76778066778c2c2e56fae6b212a8f0ca7409453",
+    "bytes": 55628,
+    "last_write_utc": "2026-11-01T19:02:18.6832476Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteSession.cs",
+    "sha256": "7b0220d0dcb4363e2c538d9e3da4520a5fb126072f34fd7332ccb1268f1930bd",
+    "bytes": 23802,
+    "last_write_utc": "2026-11-01T19:26:19.1369000Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs",
+    "sha256": "6fe7623c70f2cd683a6623d8105d95644dd127cb16e3454bbd500f11db80ac5d",
+    "bytes": 5944,
+    "last_write_utc": "2026-11-01T17:45:16.8195886Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/ArbitrateDialog.cs",
+    "sha256": "8a38ad658ce4ed5064c3d78fe08c69cb2ea930aaea0e47e440ca2620a8618196",
+    "bytes": 7159,
+    "last_write_utc": "2026-11-01T17:45:50.0226343Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/EditEntryDialog.cs",
+    "sha256": "c41722fa055bf9df8a91e3901da866c15a6620f1f292a6d6c12f00984604eb02",
+    "bytes": 9902,
+    "last_write_utc": "2026-11-01T18:57:45.3396078Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteCadService.cs",
+    "sha256": "9eaec35272851b3f786445b11f35ec3e5346bd96f0c8765513f5e352f5bec7ba",
+    "bytes": 8652,
+    "last_write_utc": "2026-11-01T06:34:37.2285768Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/PatPaletteCommand.cs",
+    "sha256": "bf94745f7d618e0c460f582550819ce0c38df62ed431b9e918ff9f35270a6d0c",
+    "bytes": 25641,
+    "last_write_utc": "2026-11-01T18:57:54.7703893Z"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+    "sha256": "a33b70a741a947923e3e2daa62bc4880250513f90663ead7aa97df56e26c0b3d",
+    "bytes": 14500,
+    "last_write_utc": "2026-11-01T03:37:20.4016123Z"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/DictWriter.cs",
+    "sha256": "18e1e03d999a605903c0c42037249b655c4703c4e4fa384bec63af3fc890bc54",
+    "bytes": 11286,
+    "last_write_utc": "2026-11-01T03:37:20.4046038Z"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/RuntimeHost.cs",
+    "sha256": "9c457ea517be8ea19564dcbacfacb0066fd6c1a271afbc7ab305b4a514763770",
+    "bytes": 974,
+    "last_write_utc": "2026-08-05T09:36:50.9092215Z"
+  },
+  {
+    "path": "cad-plugin/2025/PatentMarker/IO/ConfigLoader.cs",
+    "sha256": "3a86a0b3a2643427f28092bec9c7dc60085ff470b59ab8cea395b96ccd336786",
+    "bytes": 6767,
+    "last_write_utc": "2026-08-05T15:53:59.2440615Z"
+  },
+  {
+    "path": "cad-plugin/Shared/IO/PatSettings.cs",
+    "sha256": "70162d3fd58fda42eb83b7119c3ff8a4920161b3c4baf8681677d0254b69c5ca",
+    "bytes": 15707,
+    "last_write_utc": "2026-11-01T06:34:05.2942176Z"
+  },
+  {
+    "path": "cad-plugin/Shared/IO/DictDiff.cs",
+    "sha256": "605207616a1903d59ad5d54d76ebaa7c65c0839d7ed942387562504861694526",
+    "bytes": 7486,
+    "last_write_utc": "2026-08-06T07:24:01.5969178Z"
+  },
+  {
+    "path": "cad-plugin/Shared/IO/NumberIdentity.cs",
+    "sha256": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "bytes": 1700,
+    "last_write_utc": "2026-09-28T05:51:29.4796808Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Commands/PatCheckResult.cs",
+    "sha256": "e605adb9bea32d4c2ab54279ef2c5c870c7d22c426f3a0412b2a8438b27d1bcd",
+    "bytes": 7338,
+    "last_write_utc": "2026-09-05T06:29:31.9188578Z"
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Strings.cs",
+    "sha256": "9ef6bacdb4724a93896d2db8f760a7041f3af9c167f6a4ff20b7f2cc6c8d66f1",
+    "bytes": 42338,
+    "last_write_utc": "2026-11-01T05:53:25.3480858Z"
+  },
+  {
+    "path": "cad-plugin/Shared/I18n/Language.cs",
+    "sha256": "2b48685a891ab34983b7a617e420e43cb38dc2247deff40d40fd2ca913869181",
+    "bytes": 185,
+    "last_write_utc": "2026-08-06T07:24:01.5999089Z"
+  },
+  {
+    "path": "cad-plugin/Shared/Palette/DictPaletteViewRenderer.cs",
+    "sha256": "c3a62e7eb87ed77e595f05a5b8e29f08a5ff2e52af8eed1da9df498c9881d50d",
+    "bytes": 7571,
+    "last_write_utc": "2026-09-05T03:36:27.7846521Z"
+  },
+  {
+    "path": "office-com-addin/install-office-addin.ps1",
+    "sha256": "d39e85bc662a27b33635b65c826c13d633fa9c63ccdacd3da2c1ca4b397085c0",
+    "bytes": 16315,
+    "last_write_utc": "2026-11-01T17:09:43.9770084Z"
+  },
+  {
+    "path": "office-com-addin/install-visio-addin.ps1",
+    "sha256": "e71d512336a48231f9e533f04a912b63c8f29ca9edbb3f37ff0e9bd63c12d91d",
+    "bytes": 15348,
+    "last_write_utc": "2026-11-01T17:09:44.0188973Z"
+  },
+  {
+    "path": "office-com-addin/uninstall-office-addin.ps1",
+    "sha256": "bbe6650ae7692986b179ac2cf4672d8155f43d308145cc79d6ffefffbb8af77d",
+    "bytes": 9693,
+    "last_write_utc": "2026-11-01T17:12:20.4432046Z"
+  },
+  {
+    "path": "office-com-addin/uninstall-visio-addin.ps1",
+    "sha256": "99420d7eb75ffcdf5dbd09ad6efb0b8eee381863c799c9d8536bae9376cdbab1",
+    "bytes": 9288,
+    "last_write_utc": "2026-11-01T17:12:36.7665589Z"
+  },
+  {
+    "path": "office-com-addin/OfficeAddin.Common.psm1",
+    "sha256": "1631a78b0aa4c5f557e927ce1ced394c4d346455df0eb3defa393cedc55aba42",
+    "bytes": 17000,
+    "last_write_utc": "2026-11-01T17:02:44.3671995Z"
+  },
+  {
+    "path": "office-com-addin/VisioAddin.Common.psm1",
+    "sha256": "6d45a5299f15424d5ab309111188409b8049d38af698d3e866cdcfa61d366d36",
+    "bytes": 15996,
+    "last_write_utc": "2026-11-01T17:02:44.3769384Z"
+  },
+  {
+    "path": "tools/test-g02-parser.vbs",
+    "sha256": "d0a008982c5c6dca2153886fbdea34bd4b3dbdcd98b47a8e58ffca37d5aaf3d5",
+    "bytes": 27865,
+    "last_write_utc": "2026-11-01T16:42:33.3569417Z"
+  },
+  {
+    "path": "tools/run-office-tests-vstest.ps1",
+    "sha256": "1db417eabfba02cf65615f6ba3cb8afbf1182faa6c59dfc374af2a95dd28b03b",
+    "bytes": 3045,
+    "last_write_utc": "2026-11-01T17:30:20.2587372Z"
+  }
+]

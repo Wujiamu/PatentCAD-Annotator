@@ -1,0 +1,15 @@
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:01.84
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:01.62
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=0 skipped=0

@@ -1,0 +1,9 @@
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.cs(26,56): error CS0117: “DictLoader”未包含“LoadBytes”的定义 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+
+生成失败。
+
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.cs(26,56): error CS0117: “DictLoader”未包含“LoadBytes”的定义 [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r3\snapshot\SnapshotProbe.csproj]
+    0 个警告
+    1 个错误
+
+已用时间 00:00:01.30

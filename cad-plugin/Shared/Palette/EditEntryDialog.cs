@@ -26,16 +26,89 @@ namespace PatentMarker.Palette
         private readonly DictModel _model;
         private readonly DictEntry _entry;
         private readonly string _dictPath;
+        private readonly object _document;
+        private readonly string _identity;
+        private readonly IRenameFollowUpGuard _guard;
+
+        // R-004（G24）：写入方保存的提交事实。成功 Write 已经通过
+        // NotifySelfWrite 登记真实序列化身份，这里在写成功的那一刻把它连同
+        // Document、DWG 路径、字典路径一起留住，供调用方刷新列表后读取。
+        private readonly RenameCommitFact _commit = new RenameCommitFact();
 
         /// <param name="model">当前字典模型（写回时原地修改后落盘）</param>
         /// <param name="entry">要编辑的条目；null 表示新增</param>
         /// <param name="dictPath">dict.json 路径</param>
-        public EditEntryDialog(DictModel model, DictEntry entry, string dictPath)
+        /// <param name="document">打开对话框时的目标图纸</param>
+        /// <param name="identity">打开对话框时的字典内容身份</param>
+        /// <param name="guard">
+        /// R-004：改号前守卫。在写 JSON 之前判定是否存在必须先完成或显式放弃的
+        /// 待同步操作；为 null 时不做该判定（新增条目等不涉及改号的入口）。
+        /// </param>
+        public EditEntryDialog(DictModel model, DictEntry entry, string dictPath, object document, string identity)
+            : this(model, entry, dictPath, document, identity, null)
+        {
+        }
+
+        public EditEntryDialog(DictModel model, DictEntry entry, string dictPath, object document, string identity,
+            IRenameFollowUpGuard guard)
         {
             _model = model;
             _entry = entry;
             _dictPath = dictPath;
+            _document = document;
+            _identity = identity;
+            _guard = guard;
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// R-004（G24）：本次对话框**成功写出的那一版**的提交事实。
+        ///
+        /// 调用方（DictPaletteControl.EditSelectedEntry）必须在刷新列表**之后**
+        /// 仍然读这一份，而不是重新 Reload 再从新模型取身份：对话框关闭到首次
+        /// 同步之间的窗口里，外部合法 JSON、损坏文件、被删除的文件都不能被
+        /// 当成「本次提交版本」。空身份不会退化为回读当前文件，
+        /// <c>MISSING</c> 也不算成功提交（见 <see cref="RenameCommitFact.HasTrustedIdentity"/>）。
+        /// 编号／名称语义与写入失败的回滚保持不变。
+        /// </summary>
+        public RenameCommitFact CommitFact
+        {
+            get { return _commit; }
+        }
+
+        /// <summary>清空提交事实（写入失败或删除后重新开始）。</summary>
+        private void ResetCommitFact()
+        {
+            _commit.Written = false;
+            _commit.Document = null;
+            _commit.DrawingPath = "";
+            _commit.DictPath = "";
+            _commit.DictIdentity = "";
+            _commit.OldNumber = "";
+            _commit.NewNumber = "";
+            _commit.OldName = "";
+            _commit.NewName = "";
+        }
+
+        /// <summary>
+        /// 记录一次成功的写入。身份取自 <see cref="DictLoader.GetIdentity"/>：
+        /// 它只在缓存里仍然是**这次写出的同一个模型对象**时才返回身份，因此
+        /// 拿到的就是 DictWriter 真正序列化的那一份字节，而不是之后回读的结果。
+        /// </summary>
+        private void CaptureCommitFact(string oldNumber, string newNumber,
+            string oldName, string newName)
+        {
+            ResetCommitFact();
+            _commit.Written = true;
+            _commit.Document = _document;
+            _commit.DrawingPath = RenameSyncContext.DrawingPathOf(_document);
+            _commit.DictPath = RenameSyncContext.FullPath(_dictPath);
+            _commit.DictIdentity = DictLoader.GetIdentity(_model, _dictPath);
+            _commit.OldNumber = oldNumber == null ? "" : oldNumber;
+            _commit.NewNumber = newNumber == null ? "" : newNumber;
+            _commit.OldName = oldName == null ? "" : oldName;
+            _commit.NewName = newName == null ? "" : newName;
+            if (_commit.DictIdentity == null) _commit.DictIdentity = "";
         }
 
         private void InitializeComponent()
@@ -101,6 +174,7 @@ namespace PatentMarker.Palette
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             if (_entry == null) return;
+            ResetCommitFact();
             DialogResult confirm = MessageBox.Show(this, Strings.Edit_DeleteConfirm,
                 Strings.Edit_TitleEdit, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (confirm != DialogResult.Yes) return;
@@ -143,6 +217,19 @@ namespace PatentMarker.Palette
             string originalNumber = _entry != null ? _entry.Number : null;
             string originalName = _entry != null ? _entry.Name : null;
 
+            // R-004：有待同步操作时，后续相关改号必须先完成或显式放弃。
+            // 这里在第二次 JSON 写入之前拦住，不猜测串接映射（302→303）。
+            if (_guard != null && _entry != null &&
+                !NumberIdentity.AreEqual(originalNumber, newNumber))
+            {
+                RenameFollowUpDecision decision = _guard.Evaluate(originalNumber, newNumber);
+                if (decision != null && !decision.Allowed)
+                {
+                    _lblError.Text = decision.Reason;
+                    return false;
+                }
+            }
+
             string conflict;
             if (!DictWriter.TryApplyEdit(_model, _entry, newNumber, newName, out conflict))
             {
@@ -162,6 +249,9 @@ namespace PatentMarker.Palette
                 _lblError.Text = _lastWriteError;
                 return false;
             }
+            // R-004（G24）：写成功了，就在这一刻留住「这次提交写了什么」。
+            CaptureCommitFact(originalNumber, _entry != null ? _entry.Number : newNumber,
+                originalName, _entry != null ? _entry.Name : newName);
             return true;
         }
 
@@ -189,13 +279,17 @@ namespace PatentMarker.Palette
 
         private bool WriteBack()
         {
-            string error;
-            if (!DictWriter.Write(_dictPath, _model, out error))
+            if (!DictPaletteWorkflow.IsCurrentContext(_document, _dictPath))
             {
-                _lastWriteError = error;
+                _lastWriteError = Strings.Dict_Changed;
                 return false;
             }
-            DictLoader.NotifySelfWrite(_model, _dictPath);
+            string error;
+            if (!DictWriter.Write(_dictPath, _model, _identity, out error))
+            {
+                _lastWriteError = DictPaletteWorkflow.DescribeWriteError(error);
+                return false;
+            }
             return true;
         }
     }

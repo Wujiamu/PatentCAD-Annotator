@@ -1,0 +1,56 @@
+command=dotnet test cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj --configuration Release --nologo -v minimal --filter FullyQualifiedName~G13BracePlanarityTests|FullyQualifiedName~G13IndependentCommandTests
+exit=0
+  Determining projects to restore...
+
+  Restored <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj (in 484 ms).
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(17,46): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(26,43): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(26,57): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(44,38): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\NumberIdentity.cs(44,52): warning CS8632: The annotation for nullable reference types should only be used in code within a '#nullable' annotations context. [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,47): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Group' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.GetSecurityDescriptorSddlForm(AccessControlSections)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,17): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Owner' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(108,20): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.GetAccessControl(FileInfo)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(109,77): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Access' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(116,42): warning CA1416: This call site is reachable on all platforms. 'ControlFlags.DiscretionaryAclAutoInherited' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(130,17): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.SetAccessControl(FileInfo, FileSecurity)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(129,17): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.SetSecurityDescriptorBinaryForm(byte[], AccessControlSections)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(128,41): warning CA1416: This call site is reachable on all platforms. 'FileSecurity' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(116,18): warning CA1416: This call site is reachable on all platforms. 'RawSecurityDescriptor.ControlFlags' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(129,70): warning CA1416: This call site is reachable on all platforms. 'AccessControlSections.Access' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(115,46): warning CA1416: This call site is reachable on all platforms. 'RawSecurityDescriptor' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: This call site is reachable on all platforms. 'ObjectSecurity.GetSecurityDescriptorBinaryForm()' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\Shared\IO\PatSettings.cs(166,23): warning CA1416: This call site is reachable on all platforms. 'FileSystemAclExtensions.GetAccessControl(FileInfo)' is only supported on: 'windows'. (https://learn.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\Shared\PatGeomVerifyTests.cs(751,25): warning xUnit2020: Do not use Assert.True(false, message) to fail a test. Use Assert.Fail(message) instead. (https://xunit.net/xunit.analyzers/rules/xUnit2020) [<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj]
+
+  PatentMarker.RuntimeContract.2015.Tests -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\bin\Release\net8.0\PatentMarker.RuntimeContract.2015.Tests.dll
+
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G13\cad-plugin\RuntimeContract.Tests\bin\Release\net8.0\PatentMarker.RuntimeContract.2015.Tests.dll (.NETCoreApp,Version=v8.0)
+
+A total of 1 test files matched the specified pattern.
+
+
+
+Passed!  - Failed:     0, Passed:    14, Skipped:     0, Total:    14, Duration: 110 ms - PatentMarker.RuntimeContract.2015.Tests.dll (net8.0)
+

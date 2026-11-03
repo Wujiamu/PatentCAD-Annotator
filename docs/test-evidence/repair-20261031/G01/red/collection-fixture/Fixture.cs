@@ -1,0 +1,2 @@
+using System; using System.Threading.Tasks; using Xunit;
+public class Resource { } [CollectionDefinition("Example")] public class FixtureDefinition : ICollectionFixture<Resource> { } [Collection("Example")] public class FixtureTests { [Fact] public void Unsupported() { } }

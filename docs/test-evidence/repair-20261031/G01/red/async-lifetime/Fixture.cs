@@ -1,0 +1,2 @@
+using System; using System.Threading.Tasks; using Xunit;
+public class FixtureTests : IAsyncLifetime { public Task InitializeAsync() => Task.CompletedTask; public Task DisposeAsync() => Task.CompletedTask; [Fact] public void Unsupported() { } }

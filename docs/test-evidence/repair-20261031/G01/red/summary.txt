@@ -1,0 +1,27 @@
+FAIL empty: exit=0; expected=1, summary=passed=0 failed=0 skipped=0
+FAIL all-skipped: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL empty-skip: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+PASS mixed-skip
+PASS pass
+PASS assertion-fails
+FAIL task: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL value-task: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL async-void: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL static: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL static-class: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL static-skipped: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL parameter: exit=1; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL theory: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL private: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL generic: exit=1; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL generic-class: exit=1; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL struct: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL constructor: exit=1; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL non-void: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL timeout: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL custom-fact: exit=0; expected=1, summary=passed=1 failed=0 skipped=1
+FAIL class-fixture: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL collection-fixture: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL async-lifetime: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+FAIL async-disposable: exit=0; expected=1, summary=passed=0 failed=0 skipped=1
+G01 SUMMARY: passed=3 failed=23

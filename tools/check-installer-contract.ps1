@@ -7,10 +7,12 @@ $contracts = @(
     @{
         Name = "2007"
         Path = "PatentMarker-2007-deploy\install-2007.vbs"
-        Candidates = @("R17.0")
+        Candidates = @("R17.0", "R17.1", "R17.2")
         Required = @(
             "For Each hive In Array(HKCU, HKLM)"
             "seenProfiles"
+            "productBases(j)"
+            "productVersions(j)"
             "Err.Clear"
         )
     }
@@ -66,10 +68,12 @@ $contracts = @(
     @{
         Name = "2007-uninstall"
         Path = "PatentMarker-2007-deploy\uninstall-2007.vbs"
-        Candidates = @("R17.0")
+        Candidates = @("R17.0", "R17.1", "R17.2")
         Required = @(
             "For Each hive In Array(HKCU, HKLM)"
             "seenProfiles"
+            "productBases(j)"
+            "productVersions(j)"
             "Dim candidateDirs()"
             "reg.GetStringValue HKLM, supportKey"
             "reg.DeleteKey HKLM"
@@ -156,6 +160,11 @@ foreach ($contract in $contracts) {
         Write-Output "[FAIL] $($contract.Name): missing or unsafe contract: $($missing -join ', ')"
         $failCount++
     }
+}
+
+& powershell.exe -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot 'test-2007-installer-isolated.ps1')
+if ($LASTEXITCODE -ne 0) {
+    $failCount++
 }
 
 if ($failCount -gt 0) {

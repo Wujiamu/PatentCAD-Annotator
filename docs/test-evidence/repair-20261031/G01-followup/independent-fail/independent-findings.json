@@ -1,0 +1,549 @@
+{
+  "schema": "PatentCAD-G01-independent-acceptance-v1",
+  "status": "FAIL",
+  "reviewer": "independent reviewer; did not author candidate",
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "time": "2026-11-01T00:52:23.278695+08:00",
+  "frozen_candidate_source": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\candidate\\tools\\FactRunner\\Program.cs",
+  "frozen_candidate_source_sha256": "5a2af8b3eeff44a1a69ccb272009dec520698d62d021114de1dfccdfbc1fffe4",
+  "runner_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\candidate\\tools\\FactRunner\\bin\\Release\\net8.0-windows\\PatentMarker.FactRunner.dll",
+  "runner_sha256": "86ce25194babe5cfb6ae7055642bc40eaf72587fb9c5f7138d1aa575aa503637",
+  "audit_tool": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit_g01.py",
+  "audit_tool_sha256": "14b3ac5da12a2b93250e81a84baf036a1095fc9935525914890a7e53da540f05",
+  "frozen_original_inputs_manifest": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\frozen-inputs.json",
+  "frozen_original_inputs_manifest_sha256": "c33dfeedee0c961622ae16d57c9aefa233422260618ceed370e9d6a48d8ccaad",
+  "extra_fixtures_manifest": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra-fixtures-sha256.json",
+  "extra_fixtures_manifest_sha256": "3cb719de4b94675e05f6ab2db66dd9e576ee90db9a10600b9d1bd7d9e76f0e98",
+  "prior_26_fixture_matrix": {
+    "baseline_summary": "G01 SUMMARY: passed=3 failed=23",
+    "candidate_summary": "G01 SUMMARY: passed=26 failed=0",
+    "baseline": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\evidence-baseline-v2",
+    "candidate": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\evidence-candidate-v2"
+  },
+  "wrapper_cases": [
+    {
+      "case": "pass",
+      "status": "PASS",
+      "expected_exit": 0,
+      "observed_exit": 0,
+      "expected_summary": "passed=1 failed=0 skipped=0",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\wrapper\\pass\\wrapper.txt",
+      "output_sha256": "91c96681418aead6dbd13d2117147f5efea2d8e6d6872e54e0a6db63658ce248"
+    },
+    {
+      "case": "assertion-fails",
+      "status": "PASS",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "expected_summary": "passed=0 failed=1 skipped=0",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\wrapper\\assertion-fails\\wrapper.txt",
+      "output_sha256": "c27367f4472d37f51619d48491d9132db6f578a97c2d04158f4b367843414f6d"
+    },
+    {
+      "case": "task",
+      "status": "PASS",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "expected_summary": "passed=1 failed=0 skipped=1",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\wrapper\\task\\wrapper.txt",
+      "output_sha256": "8854fcc0d045a8e787be79825b8fc20a6b55a409349894a4585a37df479f2646"
+    },
+    {
+      "case": "empty",
+      "status": "PASS",
+      "expected_exit": 1,
+      "observed_exit": 1,
+      "expected_summary": "passed=0 failed=0 skipped=0",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\wrapper\\empty\\wrapper.txt",
+      "output_sha256": "21323a4fd9f1166fdd25271e75a9b8ae15ecb8dbe9e5d0dcc1d18df4ab3cd962"
+    }
+  ],
+  "independent_extra_cases": [
+    {
+      "name": "beforeafter",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "98a07f9d2eeb1d4790dbe6ca6d13a1cee019aec10ace022cc1696836489f3dde",
+      "fixture_source_sha256": "2cedd12172922cef13d32e9600f15fcf355bd4f01d5ac8ca9cf371ffa61f48a7",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\beforeafter\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\beforeafter.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\beforeafter\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\beforeafter\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "5b3e9f854224839f193d7871d62ee119a76474be3b848145dcb1d359b4f8d2a7"
+    },
+    {
+      "name": "after-method",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "9e6a62f2a6cc85c2a46610cf7986eee031adda7cb6a754fc5c606af88c90c22a",
+      "fixture_source_sha256": "9307f13423a2e1ac3cde0e507c4f6b73f8b6cc1f7df0e5183a242086ddd7f477",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-method\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\after-method.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-method\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-method\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "2dc3513acda2716dfd7618777fda6686e4aaed32081f670ad2b45b36d7749d97"
+    },
+    {
+      "name": "before-class",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "8142343abdecaa173a11e943dd82e16dc3221aa9b19d5f7015107a96c3ac7ed3",
+      "fixture_source_sha256": "1a3a73f4ed9778eab245dc052d98543b04798f98b5a56efb91c6152a9bb9516e",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-class\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-class.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-class\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-class\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "f792a1d3245a1e287607ec3075a95a149618142aa85ea90b4ea063370699b742"
+    },
+    {
+      "name": "after-class",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "5998d8b35f2a8fdf98fe1b1c606dbacd0294f6e4bf3ea3f465cdf0ccb41dcfd7",
+      "fixture_source_sha256": "da4c894fcc9082cf68f3e6bba47626d61b2c9f826f32c637c298d90a607af72a",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-class\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\after-class.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-class\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\after-class\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "146607cd2f2acb1855054e71309a57327e71f7e213033a223b2e0043719924d8"
+    },
+    {
+      "name": "before-assembly",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "8e71a8fae232a88a237dbd7491b0d97e34c45ba47c6ae525ce7a229d47642f2f",
+      "fixture_source_sha256": "697b45f2b61fbb9238fc0a49a8976f1aea34eba219e146371e27d06e0f40049d",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-assembly\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-assembly.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-assembly\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-assembly\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "c81f3b1d77cfa54906130f7e0b3c6884c5b7f337d5c01112c7db036f1f31f3d1"
+    },
+    {
+      "name": "before-inherited-class",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "fc73c00564bf76622f096a586f69b613c7651b588b1c4ee869d559264267afb4",
+      "fixture_source_sha256": "3b969308ecebf5a6d8bf061229b6e94ff67b6cbff1061c0adec7cfb25e2733ae",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-class\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-inherited-class.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-class\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-class\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "4d04029a7e89ce0a7bd52cab5cb36e06c078bcc98bb13bd9b49d1111cd7524e2"
+    },
+    {
+      "name": "before-inherited-method",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "bb766ad091dc73146c864948c901f80ba70756388ac84ca474419bade4804598",
+      "fixture_source_sha256": "7f267ca97640b460484f1eb1290a9af63866e110c718b6bd601ce863871278ef",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-method\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-inherited-method.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-method\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-inherited-method\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "cc6064fd7da2980c5e7418dfdb4579089bb49317b13292ddbfcfc8acbd318aa6"
+    },
+    {
+      "name": "before-derived-attribute",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Valid",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "c1fd2fad7dc4a0b85b01ca0e4108049a5ae546887befc0d8244499802a8ed639",
+      "fixture_source_sha256": "1a2a3c556e72988267f7af178e0f28fe8dd8e0ad9ba6e1e846d73124f7b1cb6c",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-derived-attribute\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-derived-attribute.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-derived-attribute\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-derived-attribute\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "eb5b71079a97127345a720765a6008b97907ef2becfafface05ab4df1ffc39ce"
+    },
+    {
+      "name": "before-mixed",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no PASS for FixtureTests.Unsupported",
+      "exit": 0,
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "3be44695413f259387d27298d25ae3b2da8373235ff26dd8eef82ad812118dee",
+      "fixture_source_sha256": "ca0ba87f4914e89321173219d3b84893264a3d3c5c1be5a0284bf0e77ff48828",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-mixed\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\before-mixed.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 2,
+        "passed": 1,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-mixed\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\before-mixed\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "43d500452bdadb4317ad594908b2fd812c75aaa62e9a84ad6b4806361115dd1c"
+    },
+    {
+      "name": "custom-orderer",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no tests reported PASS",
+      "exit": 0,
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "e7440f0efaceb620b231720fbfab07cecfcd54c57abb4bf3829a0f549e7d11aa",
+      "fixture_source_sha256": "ae3aec177c58f5862de3deb581ad65adb0298fb5668101ce8aa70f32227b256c",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-orderer\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\custom-orderer.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 2,
+        "passed": 1,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-orderer\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-orderer\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "b7dc2d3dba8b688e1046418156e8eb7632f0e4f95d6dc0c4a534f0c1f3a26b6a"
+    },
+    {
+      "name": "assembly-orderer",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no tests reported PASS",
+      "exit": 0,
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "770a995d4cd7a16dc4c81c49023ec331ae734052dca62fd33084a7cc0fcc4edf",
+      "fixture_source_sha256": "781fc76e9973cccf0d5d691b86fe1c517543ff0540854481fbf99f95b06f2fb7",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assembly-orderer\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\assembly-orderer.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 2,
+        "passed": 1,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assembly-orderer\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assembly-orderer\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "366d9d363e63ca459acb13a14cfe549eeaf64d6221419b560e460d4862e8ef71"
+    },
+    {
+      "name": "collection-orderer",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no tests reported PASS",
+      "exit": 0,
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "3b56129a119c97d9249965a805fb69d9707b48f6727c59d9a35e71277d64a164",
+      "fixture_source_sha256": "05f1986f0e55cbe444df60acb38cc5fba9c8c2395c815371fc4a5de0ee443bcb",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-orderer\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\collection-orderer.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 2,
+        "passed": 1,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-orderer\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-orderer\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "c3266f8ea90c742a06ee613380f7c98a18cb3c1b2e1dc84c8174ef42c649a0e3"
+    },
+    {
+      "name": "collection-type-orderer",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no tests reported PASS",
+      "exit": 0,
+      "summary": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "21a5ae98e2c84fd3e50051824ac98569a0e389e4ed9c63b8662429422509b4af",
+      "fixture_source_sha256": "be208c896f54bf2bd81af4a6ebdab30d98d224df0ef445d13da03d4dbb090f88",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-type-orderer\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\collection-type-orderer.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 2,
+        "passed": 1,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-type-orderer\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\collection-type-orderer\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "5c4d81d6cbd551280fe1667f019a2a7e1f15cd689d8a21a14937a6bfde122205"
+    },
+    {
+      "name": "framework-initialization",
+      "status": "FAIL",
+      "expected": "nonzero, explicit SKIP/BLOCKED, no tests reported PASS",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "df632d53815ae5662f3dba7926f7d609070eae4bf0b7a9489d117d58a8d633e3",
+      "fixture_source_sha256": "a321975ba7afda0cda53d1b4772765e2e14262c68e2b0e3a53e28ea0696cebba",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\framework-initialization\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\framework-initialization.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\framework-initialization\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\framework-initialization\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "02ed70b441c3a07f4a3adf200429cc5b3678b560c56a9800dc3d4e71214c0d86"
+    },
+    {
+      "name": "benign-attribute",
+      "status": "PASS",
+      "expected": "exit 0 and one passing Fact",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "5bcbce04a7d302856c7ff2799aeca8fd6dd838067165fc37d24691bf1b53b2f6",
+      "fixture_source_sha256": "3f4e03edc903e8c5834f075c5efad79a445dbfe9d6d801b830cafef077821d81",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\benign-attribute\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\benign-attribute.txt",
+      "xunit": {
+        "exit": 0,
+        "total": 1,
+        "passed": 1,
+        "failed": null
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\benign-attribute\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\benign-attribute\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "d77e7a603984847928084c62a5cbeb8dbda52fc1678b1efd26385591a36eaa26"
+    },
+    {
+      "name": "dispose-failure",
+      "status": "FAIL",
+      "expected": "exit nonzero and exactly one failed test, no PASS for it",
+      "exit": 1,
+      "summary": {
+        "passed": 1,
+        "failed": 1,
+        "skipped": 0
+      },
+      "fixture_sha256": "ed077ff20039b43db835a934c8a8b1fe494762dbebf409c911d12440454adda9",
+      "fixture_source_sha256": "70eac082eeb286cb782aa8066b26d5e2b303e1537693aab10fb18863ecda53e3",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\dispose-failure\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\dispose-failure.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\dispose-failure\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\dispose-failure\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "9d2846ecaab41841a7617f7dd6a364ccc4d8d30ee629b02a3ee87696efb47202"
+    },
+    {
+      "name": "assertion-and-dispose",
+      "status": "FAIL",
+      "expected": "exit nonzero and exactly one failed test, no PASS for it",
+      "exit": 1,
+      "summary": {
+        "passed": 0,
+        "failed": 2,
+        "skipped": 0
+      },
+      "fixture_sha256": "9cf28c30b1d97a29cc96be7edf6b23fae173e00500f56388b43b179bf8038064",
+      "fixture_source_sha256": "9963595e26bf80a216c0c2a168eb385bcc040af76eb59ca19f2cd79e9fb8352a",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assertion-and-dispose\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\assertion-and-dispose.txt",
+      "xunit": {
+        "exit": 1,
+        "total": 1,
+        "passed": null,
+        "failed": 1
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assertion-and-dispose\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\assertion-and-dispose\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "f1b560244b85c31778c3da3d708c06dd89c22a6951fb311c92243dee023e5ca4"
+    },
+    {
+      "name": "abstract-static",
+      "status": "SKIP/BLOCKED",
+      "expected": "xUnit and old candidate agreed; not established as a false-green case",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "043cfded12e0119f494c8491efac39d40590c4d22b431ccc983ec434f2de4863",
+      "fixture_source_sha256": "21c780975b7c48755bd0ad39cf5afd6c431cbb98d0be4f8d6ee68ad9afa9a701",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\abstract-static\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\abstract-static.txt",
+      "xunit": {
+        "exit": 0,
+        "total": 1,
+        "passed": 1,
+        "failed": null
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\abstract-static\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\abstract-static\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "4d1d302eab4b8421fc22bbf1e70f8505c9bc0033d030bd2a63d564f50bd382d0"
+    },
+    {
+      "name": "custom-framework",
+      "status": "SKIP/BLOCKED",
+      "expected": "xUnit and old candidate agreed; not established as a false-green case",
+      "exit": 0,
+      "summary": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "fixture_sha256": "94be2946952e71928aa9352d37175c67586555ebb03c3c5f3ea85ee45e234464",
+      "fixture_source_sha256": "8f23047ddbb1e3e38e00d2f53a44cf71eb1f36fa3b1ffc6949ace081daa3468e",
+      "xunit_observation": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-framework\\xunit.txt",
+      "output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\audit-frozen-candidate\\custom-framework.txt",
+      "xunit": {
+        "exit": 0,
+        "total": 1,
+        "passed": 1,
+        "failed": null
+      },
+      "baseline_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-framework\\baseline-runner.txt",
+      "frozen_candidate_output": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-independent-G01-i0iw6avz\\extra\\custom-framework\\candidate-runner.txt",
+      "project_sha256": "1aac663f723118eb726dff2154c8244a98f3122c45301f59a98d5cbfea18caca",
+      "xunit_log_sha256": "bbe74db30c403bccd388eb4274c9f54f4c042a558c0610f8ab9047affd1b2519"
+    }
+  ],
+  "independent_extra_summary": {
+    "PASS": 1,
+    "FAIL": 16,
+    "SKIP/BLOCKED": 2
+  },
+  "limitations": [
+    "19 additional fixtures are local net8 test assemblies; no CAD or Office host was used.",
+    "abstract-static and broken custom-framework did not demonstrate xUnit/candidate disagreement and are SKIP/BLOCKED, not false-green findings.",
+    "fixture and xUnit logs are local unredacted paths; sanitize paths before sharing externally."
+  ],
+  "expectation_basis": "Fail closed with explicit SKIP/BLOCKED for unsupported xUnit interceptors, orderers and framework; allow unrelated attributes; count disposal failures once per test."
+}

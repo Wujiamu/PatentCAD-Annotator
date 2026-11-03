@@ -1,0 +1,62 @@
+[
+  {
+    "Year": "2007",
+    "File": "current.dict.json",
+    "Attributes": 32,
+    "Sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7"
+  },
+  {
+    "Year": "2007",
+    "File": "current.dict.json.word-20261101-010101.bak",
+    "Attributes": 38,
+    "Sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef"
+  },
+  {
+    "Year": "2010",
+    "File": "current.dict.json",
+    "Attributes": 32,
+    "Sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7"
+  },
+  {
+    "Year": "2010",
+    "File": "current.dict.json.word-20261101-010101.bak",
+    "Attributes": 38,
+    "Sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef"
+  },
+  {
+    "Year": "2013",
+    "File": "current.dict.json",
+    "Attributes": 32,
+    "Sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7"
+  },
+  {
+    "Year": "2013",
+    "File": "current.dict.json.word-20261101-010101.bak",
+    "Attributes": 38,
+    "Sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef"
+  },
+  {
+    "Year": "2015",
+    "File": "current.dict.json",
+    "Attributes": 32,
+    "Sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7"
+  },
+  {
+    "Year": "2015",
+    "File": "current.dict.json.word-20261101-010101.bak",
+    "Attributes": 38,
+    "Sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef"
+  },
+  {
+    "Year": "2025",
+    "File": "current.dict.json",
+    "Attributes": 32,
+    "Sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7"
+  },
+  {
+    "Year": "2025",
+    "File": "current.dict.json.word-20261101-010101.bak",
+    "Attributes": 38,
+    "Sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef"
+  }
+]

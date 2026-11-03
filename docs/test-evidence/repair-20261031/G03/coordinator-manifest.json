@@ -1,0 +1,46 @@
+{
+  "time": "2026-11-01 Asia/Shanghai",
+  "role": "coordinator, independent of G03 production author; executed author-provided probe and simulation tests",
+  "source": {
+    "cad-plugin/Shared/Commands/PatTextPathRouting.cs": "eb9796d1e69584576decfd5740ebbb1fa18c4c1b096f52af2e70a7e5092ec3d9",
+    "cad-plugin/Shared/Commands/PatLeaderTextAttachment.cs": "be9180d03bfc9b8617735246923dc08db5aa8c2f1a904a138f42d5c892dd1be8",
+    "cad-plugin/Shared/Commands/PatAlignCommand.cs": "19f644fe454afccca777f2c14e49e0e61e83b310d4aa7b2563b1ad27607cdd3c",
+    "cad-plugin/RuntimeContract.Tests/Shared/AutodeskSimulationStubs.cs": "9ba7284b614d09dd7dc4c110bd2a91d7341370d1eb89321cda98ed345c01c7d8",
+    "cad-plugin/RuntimeContract.Tests/Shared/G03RoutingTests.cs": "0a065f80071ffbffa3877c3ffc0e640ff85c715cf8a4a2dc9f478b92379815cb",
+    "tools/G03Regression/Program.cs": "828daddfa6bce634c0d7b59d2483e82626239fc34e8a09974b0831050438428b",
+    "tools/G03Regression/run.py": "4760a23ba7802a7aa5c075cb115595dd8c022e6688b41833e067bc706e15086c",
+    "tools/G03Regression/G03Regression.csproj": "766491f827c5836ac9fa945bb3ca9dd5155a3260bb8feca9f7b8842d5256f708",
+    "cad-plugin/2010/PatentMarker/Commands/PatAlignCommand.cs": "30336a562eecc3538e62978e2106517651150a0057d06fa17d80d34565779f5b",
+    "cad-plugin/2013/PatentMarker/Commands/PatAlignCommand.cs": "30336a562eecc3538e62978e2106517651150a0057d06fa17d80d34565779f5b",
+    "cad-plugin/2015/PatentMarker/Commands/PatAlignCommand.cs": "30336a562eecc3538e62978e2106517651150a0057d06fa17d80d34565779f5b",
+    "cad-plugin/2025/PatentMarker/Commands/PatAlignCommand.cs": "30336a562eecc3538e62978e2106517651150a0057d06fa17d80d34565779f5b",
+    "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj": "59fe9f6d0801d939c010408d017514aafd76974e2d47afe6f8281c07ebe5bd64",
+    "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj": "a5315afcd5625704d8d564f90e39c1748efe7ab094b8e8ad16c97ebfa0479b37",
+    "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2013.Tests.csproj": "f2db8f83f31060cf7e10004c78a51a250b0b5d9e57abaa31f9807fa55612b63e",
+    "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj": "fa5224ece41177334eaa7dda0c1dea0c101db1d7f04c87fa8bd06372bc0face2"
+  },
+  "sdk_build_outputs": {
+    "2007": {
+      "relative_path": "cad-plugin/2007/PatentMarker/bin/Release/PatentMarker.dll",
+      "sha256": "b0710f3101860cb3a04a3d0001cc45ef603444f373a98de95de686a9608c2bf8"
+    },
+    "2010": {
+      "relative_path": "cad-plugin/2010/PatentMarker/bin/Release/PatentMarker.dll",
+      "sha256": "49803bb1fc664b2749a6522e4585f4464285d3046242bfa97d4d522cdbe31483"
+    },
+    "2013": {
+      "relative_path": "cad-plugin/2013/PatentMarker/bin/Release/PatentMarker.dll",
+      "sha256": "9508f2f5bf48d625b8fb35c3c109717936835c8aa88ae40c88f025bfc9e587b6"
+    },
+    "2015": {
+      "relative_path": "cad-plugin/2015/PatentMarker/bin/Release/PatentMarker.dll",
+      "sha256": "77364c6c4bb76b0cfb66dba5bfbcd6a101eda3f91e2568fefec7780fa3fc6d6c"
+    },
+    "2025": {
+      "relative_path": "cad-plugin/2025/PatentMarker/bin/Release/net8.0-windows/PatentMarker.dll",
+      "sha256": "542ee07b5afd879968a902076ed8cf5caf0ffc8f93bfb41afdf09e11ef3e434c"
+    }
+  },
+  "evidence": "../continuation-evidence-sha256.json",
+  "limits": "No real AutoCAD host, UI, save/reopen, spline geometry or production deployment"
+}

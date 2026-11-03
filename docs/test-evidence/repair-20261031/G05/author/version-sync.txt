@@ -1,0 +1,65 @@
+
+========================================
+ PatentCAD-Annotator Sync Check
+========================================
+
+-- Canonical shared source layer --
+  [OK]   IO\NumberIdentity.cs canonical and linked by all five editions
+  [OK]   IO\SimpleJson.cs canonical and linked by all five editions
+  [OK]   IO\PatSettings.cs canonical and linked by all five editions
+  [OK]   IO\DictDiff.cs canonical and linked by all five editions
+  [OK]   IO\DictConflict.cs canonical and linked by all five editions
+  [OK]   IO\MarkingTextParser.cs canonical and linked by all five editions
+  [OK]   I18n\Language.cs canonical and linked by all five editions
+  [OK]   I18n\Strings.cs canonical and linked by all five editions
+  [OK]   Commands\PatLeaderTextAttachment.cs canonical and linked by all five editions
+  [OK]   Commands\PatTextPathRouting.cs canonical and linked by all five editions
+  [OK]   Cad\PatNativeEditTracker.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceGeometry.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceAssertions.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomTextAssertions.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomVerifySummary.cs canonical and linked by all five editions
+  [OK]   Commands\PatGeomVerifyCommand.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceEntity.cs canonical and linked by all five editions
+  [OK]   Commands\PatBraceCommand.cs canonical and linked by all five editions
+  [OK]   Commands\PatCheckResult.cs canonical and linked by all five editions
+  [OK]   Cad\PatEntityHelper.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteCadService.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteWorkflow.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteSession.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteViewRenderer.cs canonical and linked by all five editions
+  [OK]   Palette\DictPaletteControl.cs canonical and linked by all five editions
+  [OK]   Palette\PatPaletteCommand.cs canonical and linked by all five editions
+  [OK]   Palette\ArbitrateDialog.cs canonical and linked by all five editions
+  [OK]   Palette\EditEntryDialog.cs canonical and linked by all five editions
+  [OK]   Palette\PasteRecognizeDialog.cs canonical and linked by all five editions
+  [OK]   Styles\PatStyleInitializer.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDiagnostics.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDoctorCommand.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatDoctorReport.cs canonical and linked by all five editions
+  [OK]   Diagnostics\PatReleaseManifest.cs canonical and linked by all five editions
+
+-- MLeader fork local commands (2010/2013/2015/2025) --
+  [OK]   Commands\PatMarkCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderCreator.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderSetCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatMLeaderVerifyCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatCheckCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatAlignCommand.cs identical and compiled in 2010/2013/2015/2025
+  [OK]   Commands\PatSelectAllCommand.cs identical and compiled in 2010/2013/2015/2025
+
+-- Critical shared contract aliases --
+  [OK]   IO\NumberIdentity.cs is covered by the canonical shared layer
+  [OK]   IO\PatSettings.cs is covered by the canonical shared layer
+
+Total source files: 14
+  Synced: 0
+  Content diff: 0
+  Partial missing: 0
+  Single-version only: 0
+
+-- Synced files (identical across present versions) --
+
+[OK] All five-version sources are fully synced.
+
+Check complete.

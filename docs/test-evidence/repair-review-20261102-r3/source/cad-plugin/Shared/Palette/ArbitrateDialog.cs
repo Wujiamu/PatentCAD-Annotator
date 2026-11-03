@@ -1,0 +1,213 @@
+using PatentMarker.IO;
+using PatentMarker.I18n;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace PatentMarker.Palette
+{
+    /// <summary>
+    /// v4.0 功能 3：双端冲突裁决对话框（三选）。
+    /// 打开时面板已确认存在 Word 备份（FindWordBackup 非空），本对话框只做 UI 与动作转发：
+    ///   DialogResult.OK    = 采用 Word 版（删除备份，当前 dict.json 即 Word 最新导出）
+    ///   DialogResult.Yes   = 恢复 CAD 版（备份覆盖回 + 清除 CAD 标记 + 删备份）
+    ///   DialogResult.Cancel = 稍后再说（不做任何动作）
+    /// 失败时错误显示在对话框内，不关闭。
+    ///
+    /// R-034：对话框持有的是打开时抓取的「恢复选择上下文」（磁盘真实身份），
+    /// 不是面板缓存模型。当前文件解析失败时仍可恢复备份；只有「采用 Word 版」
+    /// 需要当前内容仍是合法字典。动作期间才短时持有产品锁，不把锁带到对话框生命周期。
+    ///
+    /// G20（R-034 补修）：可用性按**所选动作**判断，不再用「备份能否解析」否决
+    /// 整个对话框。当前合法 + 备份损坏时，用户仍能打开对话框并明确选择
+    /// 「采用 Word 版」；只有「恢复 CAD 版」被禁用。两者均坏时两个动作都禁用，
+    /// 对话框说明原因并保留「稍后」——不自动删除任何一端的文件。
+    /// </summary>
+    public class ArbitrateDialog : Form
+    {
+        private Label _lblInfo = null;
+        private Label _lblReason = null;
+        private Button _btnKeepWord = null;
+        private Button _btnRestoreCad = null;
+        private Button _btnLater = null;
+
+        /// <summary>
+        /// 选择上下文是否带了解析结论。兼容入口只拿到身份字符串，
+        /// 不知道两端能否解析，此时不预先禁用按钮，改由动作入口按磁盘字节判定。
+        /// </summary>
+        private readonly bool _parsedStateKnown;
+
+        private readonly string _dictPath;
+        private readonly string _backupPath;
+        private readonly string _identity;
+        private readonly string _backupIdentity;
+        private readonly object _document;
+
+        private readonly DictConflict.RecoverySelection _selection;
+
+        /// <summary>兼容入口：只带身份字符串，动作时按当时磁盘字节复核。</summary>
+        public ArbitrateDialog(string dictPath, object document, string identity, string backupPath, string backupIdentity)
+            : this(BuildSelection(dictPath, document, identity, backupPath, backupIdentity), false)
+        {
+        }
+
+        /// <summary>R-034 入口：使用打开对话框时抓取的恢复选择上下文。</summary>
+        public ArbitrateDialog(DictConflict.RecoverySelection selection)
+            : this(selection, selection != null)
+        {
+        }
+
+        private ArbitrateDialog(DictConflict.RecoverySelection selection, bool parsedStateKnown)
+        {
+            _selection = selection;
+            _parsedStateKnown = parsedStateKnown;
+            if (selection != null)
+            {
+                _dictPath = selection.DictPath;
+                _document = selection.Document;
+                _identity = selection.CurrentIdentity;
+                _backupPath = selection.BackupPath;
+                _backupIdentity = selection.BackupIdentity;
+            }
+            InitializeComponent();
+        }
+
+        private static DictConflict.RecoverySelection BuildSelection(string dictPath, object document,
+            string identity, string backupPath, string backupIdentity)
+        {
+            DictConflict.RecoverySelection selection = new DictConflict.RecoverySelection();
+            selection.DictPath = dictPath;
+            selection.Document = document;
+            selection.CurrentIdentity = identity;
+            selection.BackupPath = backupPath;
+            selection.BackupIdentity = backupIdentity;
+            return selection;
+        }
+
+        private bool IsCurrentContext()
+        {
+            return DictPaletteWorkflow.IsCurrentContext(_document, _dictPath);
+        }
+
+        /// <summary>恢复成功后由面板读取：写入是否发生、备份是否已清理。</summary>
+        public DictConflict.RecoveryOutcome Outcome { get { return _outcome; } }
+        private DictConflict.RecoveryOutcome _outcome = new DictConflict.RecoveryOutcome();
+
+        private readonly DictPaletteWorkflow.ArbitrationSessionFact _fact =
+            new DictPaletteWorkflow.ArbitrationSessionFact();
+
+        /// <summary>
+        /// R-034（G25）：面板在对话框关闭后读取的会话事实。它回答的是「本次裁决里
+        /// 到底有没有写过盘、有没有哪一步没完成」，而不是最后一次点击的返回值。
+        /// </summary>
+        public DictPaletteWorkflow.ArbitrationSessionFact SessionFact { get { return _fact.Copy(); } }
+
+        /// <summary>
+        /// R-034（G25）：对话框关闭后状态栏应当显示的真实结论。
+        /// 完整成功→成功文案；部分写入（已写盘但基线或备份清理失败）→如实说明
+        /// 已经发生的写入；写前就失败→真实失败原因；用户只选了「稍后」→空串，
+        /// 由面板按磁盘上的待裁决备份继续提示，不编造失败也不谎报成功。
+        /// </summary>
+        public string DescribeSessionStatus(DialogResult result)
+        {
+            if (_fact.AnySucceeded)
+                return result == DialogResult.Yes ? Strings.Conflict_RestoreOk : Strings.Conflict_KeepWordOk;
+            if (_fact.Attempts == 0) return "";
+            return string.Format(Strings.Conflict_Failed, _fact.DescribeFailure());
+        }
+
+        private void InitializeComponent()
+        {
+            this.Text = Strings.Conflict_Title;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ClientSize = new Size(460, 216);
+            this.Font = new Font("Microsoft Sans Serif", 9F);
+
+            _lblInfo = new Label();
+            _lblInfo.SetBounds(14, 12, 432, 70);
+            _lblInfo.Text = string.Format(Strings.Conflict_Msg, _backupPath);
+
+            // G20：两端能否解析是「动作可用性」的说明，不是打开对话框的门禁。
+            // 版面固定（两个动作都可用时该行留空），避免按状态改布局导致按钮跳动。
+            _lblReason = new Label();
+            _lblReason.SetBounds(14, 84, 432, 50);
+            _lblReason.ForeColor = SystemColors.GrayText;
+            _lblReason.Text = DictPaletteWorkflow.DescribeUnavailableActions(_selection);
+
+            _btnKeepWord = new Button();
+            _btnKeepWord.Text = Strings.Conflict_BtnKeepWord;
+            _btnKeepWord.SetBounds(14, 176, 132, 30);
+            _btnKeepWord.Click += new EventHandler(BtnKeepWord_Click);
+            // 当前文件损坏时没有可「采用」的当前版本；按钮直接禁用，
+            // 而不是让用户点击后拿到一个含糊的失败。备份是否损坏与本按钮无关。
+            _btnKeepWord.Enabled = !_parsedStateKnown ||
+                DictPaletteWorkflow.IsActionAvailable(_selection, DictPaletteWorkflow.KeepWordAction);
+
+            _btnRestoreCad = new Button();
+            _btnRestoreCad.Text = Strings.Conflict_BtnRestoreCad;
+            _btnRestoreCad.SetBounds(160, 176, 136, 30);
+            _btnRestoreCad.Click += new EventHandler(BtnRestoreCad_Click);
+            // 损坏备份不得覆盖当前文件，因此只禁用这一个动作。
+            _btnRestoreCad.Enabled = !_parsedStateKnown ||
+                DictPaletteWorkflow.IsActionAvailable(_selection, DictPaletteWorkflow.RestoreCadAction);
+
+            _btnLater = new Button();
+            _btnLater.Text = Strings.Conflict_BtnLater;
+            _btnLater.SetBounds(344, 176, 102, 30);
+            _btnLater.DialogResult = DialogResult.Cancel;
+
+            this.Controls.AddRange(new Control[] { _lblInfo, _lblReason, _btnKeepWord, _btnRestoreCad, _btnLater });
+            this.CancelButton = _btnLater;
+        }
+
+        // ===== 事件 =====
+
+        private void BtnKeepWord_Click(object sender, EventArgs e)
+        {
+            DictConflict.RecoveryOutcome outcome =
+                DictConflict.KeepSelectedVersion(_selection, new DictConflict.ContextCheck(IsCurrentContext));
+            _outcome = outcome;
+            // R-034（G25）：累积事实只追加，后一次失败不能抹掉前一次的真实结果。
+            _fact.Record(outcome);
+            if (!outcome.Succeeded)
+            {
+                _lblInfo.Text = string.Format(Strings.Conflict_Failed, DictPaletteWorkflow.DescribeWriteError(outcome.Error));
+                return;
+            }
+            this.DialogResult = DialogResult.OK;
+        }
+
+        private void BtnRestoreCad_Click(object sender, EventArgs e)
+        {
+            DictConflict.RecoveryOutcome outcome =
+                DictConflict.RestoreSelectedBackup(_selection, new DictConflict.ContextCheck(IsCurrentContext));
+            _outcome = outcome;
+            // R-034（G25）：累积事实只追加，后一次失败不能抹掉前一次的真实结果。
+            _fact.Record(outcome);
+            if (!outcome.Succeeded)
+            {
+                _lblInfo.Text = string.Format(Strings.Conflict_Failed, DescribeRecoveryFailure(outcome));
+                return;
+            }
+            this.DialogResult = DialogResult.Yes;
+        }
+
+        /// <summary>
+        /// 恢复失败时如实说明已经发生的写入。字典字节已替换但基线或备份清理
+        /// 失败时，不能让用户以为什么都没写、然后反复点一个永远过期的快照。
+        /// </summary>
+        private static string DescribeRecoveryFailure(DictConflict.RecoveryOutcome outcome)
+        {
+            if (outcome.Wrote)
+            {
+                // 写入已发生：说明现状并要求重载，而不是笼统的「内容已变化」。
+                return DictPaletteWorkflow.DescribeWriteError(DictFileVisibility.BaselineError) +
+                    " " + DictPaletteWorkflow.DescribeWriteError(outcome.Error);
+            }
+            return DictPaletteWorkflow.DescribeWriteError(outcome.Error);
+        }
+    }
+}

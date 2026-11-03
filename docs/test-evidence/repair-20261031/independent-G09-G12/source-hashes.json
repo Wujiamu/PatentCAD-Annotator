@@ -1,0 +1,12 @@
+{
+  "G09/tools/test-2007-installer-isolated.ps1": "e6d55b4c749c672928d297444b09dfa799631dad0b1540f280531d1b8826c8cb",
+  "G09/tools/check-installer-contract.ps1": "2a0dbfb902d316c922058ffb04927af9c3caa696e80c9b28ae140e80ecde4ed9",
+  "G09/PatentMarker-2007-deploy/install-2007.vbs": "8ecaea70ae40df258c051c3344a6b3ad36ff6b62a44974ca7372796ce8965320",
+  "G09/PatentMarker-2007-deploy/uninstall-2007.vbs": "bac5140ba3598e2c2b65a52931ff4cfb6d2d82721bb48509d43651d9ee49a47e",
+  "G12/office-com-addin/src/PatentOffice.Visio/VisioAnnotations.cs": "6df42fce274177e0b9a4d1374d5d5e4a9b59e3a4a16aa152c337e81fc477bdc4",
+  "G12/office-com-addin/src/PatentOffice.Visio/PatentOffice.Visio.csproj": "25360fa90271921281224d8876a482784364add9367bc20c4110a0e5ef9b85f0",
+  "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/G12AnnotationPairTests.cs": "28d53c2f078b03fa831323cd8cd80350c12920d72504d238c961a560096b5a0c",
+  "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/AnnotationScanTests.cs": "46ddde2f982fd6c253c02011c3f7c51c0e96651d78a99835964fff0cf7e88e52",
+  "G12/office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj": "785fde8f9632d9340281b3293f907e3c6f955c0250520cab0ba63eacdaaeba60",
+  "G12/cad-plugin/Shared/IO/NumberIdentity.cs": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14"
+}

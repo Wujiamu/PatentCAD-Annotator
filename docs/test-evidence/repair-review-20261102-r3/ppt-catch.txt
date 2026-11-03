@@ -1,0 +1,226 @@
+{
+    $failure = $_
+    # Rollback order is the point of this block (G18): the add-in registration
+    # may only be re-enabled after a complete product directory is proven to be
+    # back in place. A registration pointing at a half-deleted directory is
+    # worse than a disabled add-in.
+    # G22/R-029: a failure before the first registry write leaves the original
+    # registration untouched, and deleting it here is what used to make a
+    # complete old installation unloadable.
+    # G26/R-029: "this run wrote no registration value" does not mean "the
+    # registration still points at usable files". Four states decide the
+    # rollback:
+    #   1. the original installation is complete and was never moved;
+    #   2. the product file path changed (old directory moved away and/or the
+    #      new directory already deployed);
+    #   3. this run wrote a registration value;
+    #   4. this rollback disabled the registration.
+    # Only a completely untouched original installation may keep its keys by
+    # re-reading them. Once the product path changed the keys are removed even
+    # though registrationTouched is still false, and they are written back from
+    # the snapshot only after a complete product directory has been verified.
+    $pathsChanged = $targetMovedToBackup -or $newTargetInstalled
+    $registrationUnchanged = $true
+    for ($index = 0; $index -lt $registryPaths.Count; $index++) {
+        if (-not $registrationUnchanged) { break }
+        try {
+            Assert-PatentMarkerRegistrySnapshotRestored -BaseKey $baseKey `
+                -Path $registryPaths[$index] -Snapshot $registrySnapshots[$index]
+        }
+        catch { $registrationUnchanged = $false }
+    }
+    $registrationTrusted = (-not $pathsChanged) -and (-not $registrationTouched) -and $registrationUnchanged
+    $registrationDisabled = $false
+    $registryCleared = $true
+    if (-not $registrationTrusted) {
+        foreach ($path in $registryPaths) {
+            try {
+                Remove-PatentMarkerRegistryTree -BaseKey $baseKey -Path $path
+                $registrationDisabled = $true
+            }
+            catch { $registryCleared = $false; Write-Warning "回滚注册表项失败：$path" }
+        }
+    }
+
+    # 1) Isolate this run's new directory first. It is a fragment of the failed
+    #    upgrade, so it must never be mistaken for the old installation just
+    #    because the original install path happens to exist.
+    $quarantineDirectory = Assert-PatentMarkerSiblingDirectory -Candidate (
+        Join-Path $installParent ('.' + $installLeaf + '.failed-' + [Guid]::NewGuid().ToString('N'))) `
+        -ExpectedParent $installParent
+    if ($newTargetInstalled -and (Test-Path -LiteralPath $installFull -PathType Container)) {
+        if ($FaultInjectionPoint -in @('RollbackPartialDelete', 'RollbackRemovalBlocked')) {
+            # Reproduce a failing recursive delete: the new directory keeps only
+            # part of its files and is still present when the rollback starts.
+            # One file stays present so the blocked case can hold it open.
+            $victim = Join-Path $installFull 'PatentOffice.PowerPoint.dll'
+            if (Test-Path -LiteralPath $victim) { Remove-Item -LiteralPath $victim -Force }
+            Write-Warning '测试故障注入：新安装目录半删除。'
+        }
+        if ($FaultInjectionPoint -eq 'RollbackRemovalBlocked') {
+            # The half-deleted new directory cannot be removed or renamed away.
+            # A real open handle is used instead of skipping the call, so the
+            # isolation and the removal both genuinely fail the way a locked or
+            # ACL-protected fragment does.
+            $script:g18BlockedHandle = [IO.File]::Open(
+                (Join-Path $installFull 'Newtonsoft.Json.dll'),
+                [IO.FileMode]::Open, [IO.FileAccess]::Read, [IO.FileShare]::None)
+            Write-Warning '测试故障注入：新安装残片被占用，无法隔离或移除。'
+        }
+        else {
+            try { Move-Item -LiteralPath $installFull -Destination $quarantineDirectory }
+            catch {
+                Write-Warning "隔离本次新安装残片失败：$($_.Exception.Message)"
+                try { Remove-PatentMarkerSiblingDirectory -Candidate $installFull -ExpectedParent $installParent }
+                catch { Write-Warning "移除本次新安装残片失败：$installFull" }
+            }
+        }
+    }
+
+    # 2) Restore the old complete directory, then 3) verify its full product
+    #    set and hashes before the registration is allowed back.
+    $filesComplete = $false
+    if ($targetMovedToBackup) {
+        if (Test-Path -LiteralPath $installFull -PathType Container) {
+            try { Remove-PatentMarkerSiblingDirectory -Candidate $installFull -ExpectedParent $installParent }
+            catch { Write-Warning "清理阻挡旧目录还原的残片失败：$installFull" }
+        }
+        if (-not (Test-Path -LiteralPath $installFull)) {
+            try { Move-Item -LiteralPath $backupDirectory -Destination $installFull }
+            catch { Write-Warning "恢复旧安装目录失败：$installFull" }
+        }
+        if (Test-Path -LiteralPath $installFull -PathType Container) {
+            try {
+                [void](Assert-PatentMarkerOwnedDirectory -InstallDirectory $installFull)
+                $filesComplete = $true
+            }
+            catch { Write-Warning "还原的旧产品目录未通过完整性与哈希核对：$($_.Exception.Message)" }
+        }
+    }
+    elseif ($hadExistingInstall) {
+        # A complete old installation existed and was never moved: staging failed
+        # before anything replaced it. Verify it where it stands and never delete
+        # it; "the old directory was not moved" does not mean "nothing was
+        # installed".
+        if (Test-Path -LiteralPath $installFull -PathType Container) {
+            try {
+                [void](Assert-PatentMarkerOwnedDirectory -InstallDirectory $installFull)
+                $filesComplete = $true
+            }
+            catch { Write-Warning "未移动的旧产品目录未通过完整性与哈希核对：$($_.Exception.Message)" }
+        }
+    }
+    else {
+        # No previous installation existed: "complete" means nothing is left
+        # behind for a registration to point at.
+        $filesComplete = -not (Test-Path -LiteralPath $installFull)
+    }
+
+    # 3b) A live registration must never outlive an unconfirmed product
+    #     directory. The gate above already covers every path change; this fires
+    #     for the remaining case where an untouched directory itself fails
+    #     verification, so the "add-in stays disabled" message below can never
+    #     contradict the registration that is really present.
+    if (-not $filesComplete -and -not $registrationDisabled) {
+        foreach ($path in $registryPaths) {
+            try {
+                Remove-PatentMarkerRegistryTree -BaseKey $baseKey -Path $path
+                $registrationDisabled = $true
+            }
+            catch { Write-Warning "回滚注册表项失败：$path" }
+        }
+    }
+
+    # 4) Only now restore the original registration, and confirm the result.
+    #    Re-reading untouched keys is only allowed while the original
+    #    installation never moved, this run wrote nothing, and the keys still
+    #    match the pre-install snapshot. A registration this rollback cleared is
+    #    not an untouched registration, so it is written back and re-read.
+    $registryRestored = $false
+    if ($filesComplete -and $registrationTrusted -and -not $registrationDisabled) {
+        # This run never wrote a registration value and never changed the
+        # product path, so the original keys were never disturbed. Confirm that
+        # instead of deleting and rewriting them.
+        $registryRestored = $true
+        for ($index = 0; $index -lt $registryPaths.Count; $index++) {
+            if (-not $registryRestored) { break }
+            try {
+                Assert-PatentMarkerRegistrySnapshotRestored -BaseKey $baseKey -Path $registryPaths[$index] `
+                    -Snapshot $registrySnapshots[$index]
+            }
+            catch {
+                $registryRestored = $false
+                Write-Warning "原注册表项已与安装前不一致：$($registryPaths[$index])：$($_.Exception.Message)"
+            }
+        }
+    }
+    elseif ($filesComplete) {
+        $registryRestored = $registryCleared
+        for ($index = 0; $index -lt $registryPaths.Count; $index++) {
+            if (-not $registryRestored) { break }
+            try {
+                if ($FaultInjectionPoint -eq 'RegistryRestoreFails' -and $index -eq 0) {
+                    throw '测试故障注入：注册表恢复单步失败。'
+                }
+                Restore-PatentMarkerRegistrySnapshot -BaseKey $baseKey -Snapshot $registrySnapshots[$index]
+                Assert-PatentMarkerRegistrySnapshotRestored -BaseKey $baseKey -Path $registryPaths[$index] `
+                    -Snapshot $registrySnapshots[$index]
+            }
+            catch {
+                $registryRestored = $false
+                Write-Warning "恢复原注册表项失败：$($registryPaths[$index])：$($_.Exception.Message)"
+            }
+        }
+    }
+
+    # 5) Clean up last, and only after both halves are confirmed back. What the
+    #    log says about the add-in state is read from the registration that is
+    #    really present, never from the rollback flags.
+    $registrationPresent = $false
+    foreach ($path in $registryPaths) {
+        $probe = $baseKey.OpenSubKey($path)
+        if ($probe) { $probe.Dispose(); $registrationPresent = $true }
+    }
+    if ($filesComplete -and $registryRestored) {
+        if ($FaultInjectionPoint -eq 'CleanupFails') {
+            Write-Warning ("测试故障注入：清理恢复材料失败。旧目录备份保留于：{0}；新目录残片：{1}" -f `
+                $backupDirectory, $quarantineDirectory)
+        }
+        else {
+            foreach ($leftover in @($quarantineDirectory, $backupDirectory)) {
+                if ($leftover -and (Test-Path -LiteralPath $leftover -PathType Container)) {
+                    try { Remove-PatentMarkerSiblingDirectory -Candidate $leftover -ExpectedParent $installParent }
+                    catch { Write-Warning "清理回滚材料失败：$leftover" }
+                }
+            }
+        }
+        if (-not $hadExistingInstall) {
+            Write-Warning "安装未完成，未部署产品文件（安装前没有旧版安装）：$installFull"
+        }
+        elseif ($registrationPresent) {
+            Write-Warning "安装未完成，已恢复旧版产品文件与原注册项：$installFull"
+        }
+        else {
+            Write-Warning "安装未完成，已恢复旧版产品文件（安装前没有产品注册项）：$installFull"
+        }
+    }
+    elseif ($filesComplete -and -not $registrationPresent) {
+        Write-Warning ("安装失败：旧版产品文件已还原，但原注册项未能恢复（加载项保持停用）。旧目录备份保留于：{0}" -f `
+            $backupDirectory)
+    }
+    elseif ($filesComplete) {
+        Write-Warning ("安装失败：旧版产品文件已还原，但产品注册项与原注册项不一致，需人工确认加载项。旧目录备份保留于：{0}" -f `
+            $backupDirectory)
+    }
+    elseif (-not $registrationPresent) {
+        # Never claim a rollback we could not verify, and never point a live
+        # registration at an incomplete directory.
+        Write-Warning ("安装失败且未能确认旧版完整还原，加载项保持停用。旧目录备份保留于：{0}；新目录残片：{1}" -f `
+            $backupDirectory, $quarantineDirectory)
+    }
+    else {
+        Write-Warning ("安装失败且未能确认旧版完整还原，但产品注册项仍然存在，需人工确认加载项。旧目录备份保留于：{0}；新目录残片：{1}" -f `
+            $backupDirectory, $quarantineDirectory)
+    }
+    throw $failure
+}

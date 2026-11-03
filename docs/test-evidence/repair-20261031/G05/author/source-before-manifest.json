@@ -1,0 +1,23 @@
+{
+  "cad-plugin/Shared/IO/PatSettings.cs": "c5f64a76dc48c8bb3e8420b70df8c438a587a72bff3ebc7f826279ddd784a666",
+  "cad-plugin/Shared/IO/DictConflict.cs": "8e6c58f1a4a2b9e0e1fc3484952e2a31abfe1e009db34aa61f86ec35f6ba8a04",
+  "cad-plugin/Shared/Palette/DictPaletteControl.cs": "74789f46434db8f4dcaad34485e9273753de519b6e434bc4e9b6cc949b18fab7",
+  "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs": "722667442e4945564cf739a78bf4daa9b1723fcf140533d8adc103d6fd94cc6c",
+  "cad-plugin/Shared/Palette/EditEntryDialog.cs": "153a9199399a82e88d19dddf5885139f17d5854debb5e5e0cdeee02f612804e3",
+  "cad-plugin/Shared/Palette/PasteRecognizeDialog.cs": "85d23fb6ce6ca74602926fb0bf6fee946e383592cf46bd9c5878393d3b48ae56",
+  "cad-plugin/Shared/Palette/ArbitrateDialog.cs": "b7bfd128b3186cc1036656cb83ce1fa0225293f6f080cdd609ef268c4599c0ef",
+  "vba/AutoExport.bas": "8033a30dc71bd4198a918dc4ac5a9222d30e81fce9afd7af0355928eb85d3543",
+  "vba/JsonWriter.bas": "0ed7661b042c5ae8638ce8f115c2ba2900daa53f957f36b93e369c1d1f353676",
+  "vba/PatentDictPanel.frm": "7d0d357d2f572cd89735603b3d08746c3be8989474639b585d732e5c0fdcde18",
+  "vba/PatentDictPanel.frx": "1fbceacb93828e1f35da7b01d54e4544e6f4d3281d509cf26a9d3459776ed7c1",
+  "cad-plugin/2007/PatentMarker/IO/DictEntry.cs": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+  "cad-plugin/2007/PatentMarker/IO/DictWriter.cs": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d",
+  "cad-plugin/2010/PatentMarker/IO/DictEntry.cs": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+  "cad-plugin/2010/PatentMarker/IO/DictWriter.cs": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d",
+  "cad-plugin/2013/PatentMarker/IO/DictEntry.cs": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+  "cad-plugin/2013/PatentMarker/IO/DictWriter.cs": "a2403e25a154b06162e430dcf26ce8f8f56efc4a4f6f8937b9c6af632ed48b61",
+  "cad-plugin/2015/PatentMarker/IO/DictEntry.cs": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+  "cad-plugin/2015/PatentMarker/IO/DictWriter.cs": "a2403e25a154b06162e430dcf26ce8f8f56efc4a4f6f8937b9c6af632ed48b61",
+  "cad-plugin/2025/PatentMarker/IO/DictEntry.cs": "470cdc3e66523d3e483b2ef8f0fad7404a508708deaf85ad9e2e94068a5f273d",
+  "cad-plugin/2025/PatentMarker/IO/DictWriter.cs": "b0271eb26eba3d5e3e57907eca4bfdeba29b8711b425150158092ea4ea7620ac"
+}

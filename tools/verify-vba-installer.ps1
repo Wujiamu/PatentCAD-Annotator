@@ -80,6 +80,35 @@ try {
     if ((Get-HashValue $installedPath) -ne $syntheticPreviousHash) { throw "Installer did not roll back the previous add-in after manifest failure" }
     if (-not (Test-Path -LiteralPath $manifestPath)) { throw "Installer lost the existing manifest after rollback" }
 
+    # G08 / R-007: the case above fails while the *previous* manifest is still in
+    # place, so it never reaches the branch that broke. These cases fail after the
+    # new add-in is already activated and after the old manifest has been moved
+    # aside, which is exactly where the half-written manifest used to block the
+    # FSO restore. They are additive: the locked-manifest case above stays.
+    $rollbackMatrix = Join-Path $PSScriptRoot "test-g08-rollback.ps1"
+    if (-not (Test-Path -LiteralPath $rollbackMatrix)) { throw "Missing G08 rollback matrix: $rollbackMatrix" }
+    $rollbackOutput = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $rollbackMatrix `
+            -InstallerPath $installer -AddinPath $sourceAddin 2>&1 | ForEach-Object { [string]$_ })
+    $rollbackExit = $LASTEXITCODE
+    if ($rollbackExit -ne 0) {
+        throw ("G08 rollback matrix failed (exit=$rollbackExit):`n" + ($rollbackOutput -join [Environment]::NewLine))
+    }
+    if (-not ($rollbackOutput -contains "PASS|G08_INSTALLER_ROLLBACK|cases=15|failed=0")) {
+        throw "G08 rollback matrix did not report a full pass"
+    }
+    foreach ($requiredCase in @("fail-manifest-write", "fail-manifest-close", "fail-manifest-activate", "fail-addin-activate")) {
+        if (-not ($rollbackOutput -contains "CASE|PASS|$requiredCase|exit=1")) {
+            throw "G08 rollback matrix did not prove the '$requiredCase' stage"
+        }
+    }
+
+    # The failed install above must not have left staging residue in the Startup
+    # folder, and the product files must be exactly the ones the test set up.
+    $residue = @(Get-ChildItem -LiteralPath $startupPath -Filter "*.pm-new-*" -Force)
+    if ($residue.Count -gt 0) { throw "Installer left staging residue: $(($residue | ForEach-Object Name) -join ', ')" }
+    if ((Get-HashValue $normalSentinel) -ne $normalHash) { throw "Normal.dotm sentinel changed after the failed install" }
+    if ((Get-HashValue $userMacroSentinel) -ne $userMacroHash) { throw "User macro sentinel changed after the failed install" }
+
     $secondOutput = Invoke-Vbs $installer $installArgs
     if ((Get-HashValue $installedPath) -ne (Get-HashValue $sourceAddin)) { throw "Repeated install produced different add-in bytes" }
     if ((Get-HashValue $normalSentinel) -ne $normalHash) { throw "Normal.dotm sentinel changed on repeated install" }
@@ -107,7 +136,7 @@ try {
     }
 
     $passed = $true
-    Write-Output "PASS|L2_INSTALLER_ISOLATION|normal_unchanged=true|user_macros_unchanged=true|missing_manifest_refused=true|repeat_install=true|install_rollback=true|uninstall_rollback=true|recoverable_uninstall=true"
+    Write-Output "PASS|L2_INSTALLER_ISOLATION|normal_unchanged=true|user_macros_unchanged=true|missing_manifest_refused=true|repeat_install=true|install_rollback=true|uninstall_rollback=true|recoverable_uninstall=true|manifest_stage_rollback=true|rollback_failure_reported=true"
 } finally {
     if ($passed -and -not $KeepArtifacts) {
         $resolved = [IO.Path]::GetFullPath($tempRoot)

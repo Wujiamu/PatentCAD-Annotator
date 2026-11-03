@@ -1,0 +1,66 @@
+[
+  {
+    "file": "parser-review.txt",
+    "pass": 11,
+    "fail": 3,
+    "failures": [
+      "FAIL|repeat-after-letter|engine=vbscript-production-boundary|expected=123|壳体X123 支架|actual=|trace=capture=123/壳体X123 支架;first-occurrence=3;preceding=X;accepted=False",
+      "FAIL|repeat-after-digit|engine=vbscript-production-boundary|expected=123|壳体1123 支架|actual=|trace=capture=123/壳体1123 支架;first-occurrence=3;preceding=1;accepted=False",
+      "FAIL|repeat-prefixed-number|engine=vbscript-production-boundary|expected=X123|壳体AX123 支架|actual=|trace=capture=X123/壳体AX123 支架;first-occurrence=3;preceding=A;accepted=False"
+    ],
+    "summary": [
+      "SUMMARY|total=14|failed=3"
+    ]
+  },
+  {
+    "file": "parser-vbs-full-host.txt",
+    "pass": 27,
+    "fail": 3,
+    "failures": [
+      "FAIL|display|repeat-after-letter|count expected=1 actual=0 hits=[]",
+      "FAIL|display|repeat-after-digit|count expected=1 actual=0 hits=[]",
+      "FAIL|display|repeat-prefixed-number|count expected=1 actual=0 hits=[]"
+    ],
+    "summary": [
+      "SUMMARY: passed=27 failed=3"
+    ]
+  },
+  {
+    "file": "palette-review-final.txt",
+    "pass": 12,
+    "fail": 5,
+    "failures": [
+      "FAIL|unrelated-success-preserves-first-pending|expected=301>302|actual=none",
+      "FAIL|unrelated-no-match-preserves-first-pending|expected=301>302|actual=none",
+      "FAIL|unrelated-failure-preserves-first-pending|expected=301>302|actual=401>402",
+      "FAIL|first-sync-drift-retains-owed-operation|expected=301>302|actual=none",
+      "FAIL|valid-current-keep-action-not-rejected-by-bad-backup|status=裁决失败: Backup dictionary cannot be parsed.|backup-still-present=True"
+    ],
+    "summary": [
+      "SUMMARY|total=17|failed=5"
+    ]
+  },
+  {
+    "file": "installer-review-corrected.txt",
+    "pass": 10,
+    "fail": 2,
+    "failures": [
+      "FAIL|ppt-before-old-move-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove",
+      "FAIL|visio-before-old-move-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove"
+    ],
+    "summary": [
+      "SUMMARY|total=12|failed=2"
+    ]
+  },
+  {
+    "file": "vstest-review.txt",
+    "pass": 2,
+    "fail": 1,
+    "failures": [
+      "FAIL|stale-no-run|expected-accepted=False|actual-accepted=True|artifact=C:\\Users\\wjm\\WorkBuddy\\2026-06-20-00-50-28\\docs\\test-evidence\\repair-review-20261102\\vstest-fixture-0368bb458d2d463186d5c29c0337b1cc"
+    ],
+    "summary": [
+      "SUMMARY|total=3|failed=1"
+    ]
+  }
+]

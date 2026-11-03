@@ -56,10 +56,10 @@ Function L(t)
                            "PatentMarker 2007 安装程序" & vbCrLf & "========================================")
     t = Replace(t, "ERROR: PatentMarker.dll not found" & vbCrLf & "Path: ", _
                            "错误：找不到 PatentMarker.dll" & vbCrLf & "路径：")
-    t = Replace(t, "ERROR: AutoCAD R17.0 not found in registry", _
-                           "错误：注册表中未找到 AutoCAD R17.0")
+    t = Replace(t, "ERROR: AutoCAD R17.0-R17.2 not found in registry", _
+                           "错误：注册表中未找到 AutoCAD R17.0-R17.2")
     t = Replace(t, "ERROR: No ACAD- product code found", "错误：未找到 ACAD- 产品代码")
-    t = Replace(t, ">>> Restart AutoCAD 2007.", ">>> 请重启 AutoCAD 2007。")
+    t = Replace(t, ">>> Restart AutoCAD 2007-2009.", ">>> 请重启 AutoCAD 2007-2009。")
     t = Replace(t, ">>> PatentMarker will auto-load via acad.lsp.", ">>> PatentMarker 将通过 acad.lsp 自动加载。")
     t = Replace(t, ">>> Type BZ to open the palette.", ">>> 输入 BZ 打开面板。")
     t = Replace(t, ">>> Auto-deploy failed. Manual steps:", ">>> 自动部署失败，请手动操作：")
@@ -156,8 +156,7 @@ adminOk = IsAdmin()
 LogMsg "Privilege: " & IIf(adminOk, "Admin", "Non-admin (HKLM skipped)")
 
 ' --- 3. Scan all registry hives for ACAD 2007 ---
-Dim acadBaseKey
-acadBaseKey = "Software\Autodesk\AutoCAD\R17.0"
+Dim acadBaseKey, scanVersion
 LogMsg ""
 LogMsg "--- Scanning Registry ---"
 
@@ -166,42 +165,51 @@ foundAny = False
 Set seenProfiles = CreateObject("Scripting.Dictionary")
 seenProfiles.CompareMode = 1
 
-Dim productCodes(), productCount
+Dim productCodes(), productBases(), productVersions(), productCount
 productCount = 0
 
 Dim i, key, profileId
-For Each hive In Array(HKCU, HKLM)
-    subKeys = Null
-    reg.EnumKey hive, acadBaseKey, subKeys
-    If Not IsNull(subKeys) Then
-        foundAny = True
-        If hive = HKCU Then
-            hiveName = "HKCU"
-        Else
-            hiveName = "HKLM"
-        End If
-        LogMsg "  Found in " & hiveName
-        For i = 0 To UBound(subKeys)
-            key = subKeys(i)
-            If Left(key, 5) = "ACAD-" Then
-                profileId = LCase(acadBaseKey & "\" & key)
-                If Not seenProfiles.Exists(profileId) Then
-                    seenProfiles.Add profileId, True
-                    If productCount = 0 Then
-                        ReDim productCodes(0)
-                    Else
-                        ReDim Preserve productCodes(productCount)
-                    End If
-                    productCodes(productCount) = key
-                    productCount = productCount + 1
-                End If
+For Each scanVersion In Array("R17.0", "R17.1", "R17.2")
+    acadBaseKey = "Software\Autodesk\AutoCAD\" & scanVersion
+    For Each hive In Array(HKCU, HKLM)
+        subKeys = Null
+        reg.EnumKey hive, acadBaseKey, subKeys
+        If Not IsNull(subKeys) Then
+            foundAny = True
+            If hive = HKCU Then
+                hiveName = "HKCU"
+            Else
+                hiveName = "HKLM"
             End If
-        Next
-    End If
+            LogMsg "  Found in " & hiveName
+            For i = 0 To UBound(subKeys)
+                key = subKeys(i)
+                If Left(key, 5) = "ACAD-" Then
+                    profileId = LCase(acadBaseKey & "\" & key)
+                    If Not seenProfiles.Exists(profileId) Then
+                        seenProfiles.Add profileId, True
+                        If productCount = 0 Then
+                            ReDim productCodes(0)
+                            ReDim productBases(0)
+                            ReDim productVersions(0)
+                        Else
+                            ReDim Preserve productCodes(productCount)
+                            ReDim Preserve productBases(productCount)
+                            ReDim Preserve productVersions(productCount)
+                        End If
+                        productCodes(productCount) = key
+                        productBases(productCount) = acadBaseKey
+                        productVersions(productCount) = scanVersion
+                        productCount = productCount + 1
+                    End If
+                End If
+            Next
+        End If
+    Next
 Next
 
 If Not foundAny Then
-    QuitWithMsg "ERROR: AutoCAD R17.0 not found in registry"
+    QuitWithMsg "ERROR: AutoCAD R17.0-R17.2 not found in registry"
 End If
 
 If productCount = 0 Then
@@ -215,7 +223,7 @@ ReDim acadPaths(productCount - 1)
 
 For i = 0 To productCount - 1
     Dim prodKey, acadLocation
-    prodKey = acadBaseKey & "\" & productCodes(i)
+    prodKey = productBases(i) & "\" & productCodes(i)
     acadLocation = ""
     reg.GetStringValue HKCU, prodKey, "AcadLocation", acadLocation
     If IsNull(acadLocation) Or acadLocation = "" Then
@@ -234,7 +242,7 @@ Dim j, appKey, installed
 installed = 0
 
 For j = 0 To productCount - 1
-    appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+    appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
     reg.CreateKey HKCU, appKey
 
     Dim writeOk, verifyVal, verifyDword
@@ -267,7 +275,7 @@ If adminOk Then
     LogMsg ""
     LogMsg "--- Write HKLM ---"
     For j = 0 To productCount - 1
-        appKey = acadBaseKey & "\" & productCodes(j) & "\Applications\PatentMarker"
+        appKey = productBases(j) & "\" & productCodes(j) & "\Applications\PatentMarker"
         On Error Resume Next
         Err.Clear
         reg.CreateKey HKLM, appKey
@@ -320,7 +328,7 @@ For j = 0 To productCount - 1
 
     ' Source A: ACAD support path from registry
     Dim supportKey, supportPath
-    supportKey = acadBaseKey & "\" & productCode & "\Fixed Profile\General\ACAD"
+    supportKey = productBases(j) & "\" & productCode & "\Fixed Profile\General\ACAD"
     supportPath = ""
     reg.GetStringValue HKCU, supportKey, "ACAD", supportPath
     If IsNull(supportPath) Or supportPath = "" Then
@@ -352,7 +360,7 @@ For j = 0 To productCount - 1
         End If
     End If
 
-    ' Source C: %APPDATA%\Autodesk\AutoCAD\R17.0\<product>\<lang>\Support
+    ' Source C: %APPDATA%\Autodesk\AutoCAD\<version>\<product>\<lang>\Support
     Dim langCode, langId
     langCode = "enu"
     If InStr(productCode, ":") > 0 Then
@@ -370,7 +378,7 @@ For j = 0 To productCount - 1
     End If
 
     Dim appDataSupport
-    appDataSupport = shell.ExpandEnvironmentStrings("%APPDATA%") & "\Autodesk\AutoCAD\R17.0\" & productCode & "\" & langCode & "\Support"
+    appDataSupport = shell.ExpandEnvironmentStrings("%APPDATA%") & "\Autodesk\AutoCAD\" & productVersions(j) & "\" & productCode & "\" & langCode & "\Support"
     If fso.FolderExists(appDataSupport) Then
         ReDim Preserve candidateDirs(candCount)
         candidateDirs(candCount) = appDataSupport
@@ -479,7 +487,7 @@ LogMsg "Layer 3 LSP:  " & manualLspPath
 
 LogMsg ""
 If lspDeployed Then
-    LogMsg ">>> Restart AutoCAD 2007."
+    LogMsg ">>> Restart AutoCAD 2007-2009."
     LogMsg ">>> PatentMarker will auto-load via acad.lsp."
     LogMsg ">>> Type BZ to open the palette."
 Else

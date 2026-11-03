@@ -1,0 +1,7 @@
+S plain	1	123|底座
+S digits-in-name	1	123|第2定位件
+S repeat-after-chinese	1	123|第123定位件
+S repeat-after-letter	1	123|壳体X123 支架
+S repeat-after-digit	1	123|壳体1123 支架
+S repeat-prefixed-number	1	X123|壳体AX123 支架
+S overlength	0

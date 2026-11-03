@@ -1,0 +1,4 @@
+PASS|recovery_valid_control|selected_valid=True
+FAIL|recovery_after_parse_error|valid_backup=True|retained_old_model=True|palette_snapshot_matches_disk=False|recovery_allowed=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|recovery_raw_current_snapshot_control|selected_valid=True
+FAIL|recovery_after_explicit_reload|current_model_null=True|valid_backup=True|button_enabled=False

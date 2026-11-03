@@ -105,7 +105,7 @@ namespace PatentMarker.Commands
             List<Point3d> chain = PatMLeaderCreator.ReadChain(ml, tr, out hasArrow, out isSplined);
             report.AppendLine("MLeader " + ml.ObjectId);
 
-            if (chain.Count < 3)
+            if (chain.Count < 2)
             {
                 report.AppendLine("  [FAIL] marker chain unreadable or incomplete ("
                     + chain.Count + " points)");
@@ -161,18 +161,25 @@ namespace PatentMarker.Commands
             // endpoints near the stored insertion point. A default cluster
             // direction can connect at the far edge and fold over the text.
             Extents3d textBounds = ml.MText.GeometricExtents;
-            Point3d previous = doglegs[doglegs.Count - 1];
-            bool textOnRight = textLoc.X >= previous.X;
-            Point3d facingEdge = new Point3d(
-                textOnRight ? textBounds.MinPoint.X : textBounds.MaxPoint.X,
-                (textBounds.MinPoint.Y + textBounds.MaxPoint.Y) / 2.0,
-                textLoc.Z);
-            double edgeDistance = MinDistanceToEndpoint(ex, facingEdge);
-            double edgeTolerance = Math.Max(0.15, textHeight * 0.1);
-            Report(report, ref ok, edgeDistance <= edgeTolerance,
-                "C9 endpoint-on-facing-text-edge",
-                edgeDistance.ToString("F3") + " (tol="
-                + edgeTolerance.ToString("F3") + ")");
+            Point3d previous = doglegs.Count == 0 ? attach : doglegs[doglegs.Count - 1];
+            Point3d actualLast = ml.GetLastVertex(0);
+            Point3d drawnLast = actualLast;
+            double nearest = double.PositiveInfinity;
+            foreach (Point3d endpoint in ex.CurveEndpoints)
+            {
+                double d = endpoint.DistanceTo(actualLast);
+                if (d < nearest) { nearest = d; drawnLast = endpoint; }
+            }
+            double edgeDistance = PatGeomTextAssertions.BoundaryGapError(
+                ex.CurveEndpoints.Count > 0, textBounds.MinPoint,
+                textBounds.MaxPoint, previous, drawnLast, textHeight);
+            double edgeTolerance = Math.Max(1.0, textHeight) * 1e-4;
+            Report(report, ref ok, nearest <= edgeTolerance && edgeDistance <= edgeTolerance,
+                "C9 facing-text-boundary-gap",
+                "error=" + edgeDistance.ToString("F6") + " gap="
+                + (textHeight * PatLeaderTextAttachment.TextGapPerHeight).ToString("F3")
+                + " terminalError=" + nearest.ToString("F6")
+                + " (tol=" + edgeTolerance.ToString("F6") + ")");
 
             // C1 绘制路径起点 = 附着点（有箭头时允许 ArrowSize 修剪量）
             double bestAttach = MinDistanceToEndpoint(ex, attach);

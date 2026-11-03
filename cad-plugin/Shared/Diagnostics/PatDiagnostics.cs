@@ -79,7 +79,11 @@ namespace PatentMarker.Diagnostics
                 ContainsWord(message, "error")
                 || ContainsWord(message, "failed")
                 || ContainsWord(message, "fatal")
-                || ContainsWord(message, "exception");
+                || ContainsWord(message, "exception")
+                // A standalone "FAIL" is the product's own explicit-failure
+                // marker. It is matched as a whole word so numbers and paths
+                // that merely contain the letters are not treated as errors.
+                || ContainsStandaloneWord(message, "FAIL");
             if (isError)
                 Record("log", message);
         }
@@ -102,6 +106,30 @@ namespace PatentMarker.Diagnostics
         private static bool ContainsWord(string text, string word)
         {
             return text.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Whole-word match for an all-caps failure marker: the surrounding
+        /// characters must not be letters or digits, so "FAIL" matches while
+        /// "FAILED", "PATFAIL1" and paths containing it do not.
+        /// </summary>
+        private static bool ContainsStandaloneWord(string text, string word)
+        {
+            int index = 0;
+            while ((index = text.IndexOf(word, index, StringComparison.OrdinalIgnoreCase)) >= 0)
+            {
+                bool startOk = index == 0 || !IsWordChar(text[index - 1]);
+                int end = index + word.Length;
+                bool endOk = end >= text.Length || !IsWordChar(text[end]);
+                if (startOk && endOk) return true;
+                index = end;
+            }
+            return false;
+        }
+
+        private static bool IsWordChar(char value)
+        {
+            return char.IsLetterOrDigit(value) || value == '_';
         }
     }
 }

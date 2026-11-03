@@ -1,0 +1,9 @@
+{
+  "Timestamp": "2026-11-01T11:07:57.9504617+08:00",
+  "ComputerName": "<HOST>",
+  "User": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "OS": "Microsoft Windows NT 10.0.19045.0",
+  "Is64BitOS": true,
+  "ProcessArchitecture": "AMD64",
+  "NetFrameworkRelease": 533509
+}

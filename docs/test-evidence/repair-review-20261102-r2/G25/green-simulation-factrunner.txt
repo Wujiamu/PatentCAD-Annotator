@@ -1,0 +1,4 @@
+2007 exit=0  PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures SUMMARY: passed=83 failed=0 skipped=0
+2010 exit=0  PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures SUMMARY: passed=96 failed=0 skipped=0
+2013 exit=0  PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures SUMMARY: passed=96 failed=0 skipped=0
+2015 exit=0  PASS PatentMarker.RuntimeContract.Tests.PatGeomVerifyTests.Summary_DistinguishesPassSkipAndRequiredFailures SUMMARY: passed=96 failed=0 skipped=0

@@ -17,6 +17,7 @@ namespace PatentMarker.Commands
         public static Polyline CreatePolyline(
             Database db, PatBraceDefinition definition)
         {
+            PatBraceGeometry.RequirePlanar(definition);
             Polyline polyline = new Polyline();
             polyline.SetDatabaseDefaults(db);
             ApplyGeometry(polyline, definition);
@@ -26,6 +27,7 @@ namespace PatentMarker.Commands
         public static void ApplyGeometry(
             Polyline polyline, PatBraceDefinition definition)
         {
+            PatBraceGeometry.RequirePlanar(definition);
             System.Collections.Generic.List<Point3d> points =
                 PatBraceGeometry.BuildPoints(definition);
             SetGeometry(polyline, points, definition.Top.Z);
@@ -92,6 +94,7 @@ namespace PatentMarker.Commands
         public static void WriteDefinition(
             Polyline polyline, PatBraceDefinition definition, Transaction tr)
         {
+            PatBraceGeometry.RequirePlanar(definition);
             if (polyline.ExtensionDictionary.IsNull)
                 polyline.CreateExtensionDictionary();
 
@@ -169,6 +172,11 @@ namespace PatentMarker.Commands
                     new Point3d(numbers[0], numbers[1], numbers[2]),
                     new Point3d(numbers[3], numbers[4], numbers[5]),
                     numbers[6], side);
+                if (definition.Top.Z != definition.Bottom.Z)
+                {
+                    try { PatentMarkerApp.RawLog("PATBRACE legacy record has non-coplanar endpoints; edit endpoints to correct."); }
+                    catch { }
+                }
                 return true;
             }
             catch
@@ -181,6 +189,7 @@ namespace PatentMarker.Commands
         public static void ReplaceGeometry(
             Polyline polyline, PatBraceDefinition definition, Transaction tr)
         {
+            PatBraceGeometry.RequirePlanar(definition);
             polyline.UpgradeOpen();
             System.Collections.Generic.List<Point3d> points =
                 PatBraceGeometry.BuildPoints(definition);

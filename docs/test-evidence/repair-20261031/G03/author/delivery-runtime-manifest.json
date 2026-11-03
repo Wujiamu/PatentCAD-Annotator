@@ -1,0 +1,21 @@
+{
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "time": "2026-11-01T00:42:18.663596+08:00",
+  "dotnet": "8.0.422",
+  "files": {
+    "cad-plugin/2007/PatentMarker/lib/acdbmgd.dll": "8371774f080aee33c4c80ef57f9aaa598228dedb94fb1d31c4c6315f81b8d677",
+    "cad-plugin/2007/PatentMarker/lib/acmgd.dll": "3cf2cb4fb5fa27099c6aa1ab24b0314bcef9960c45cbd233d1064876e9ffda98",
+    "cad-plugin/2007/PatentMarker/bin/Release/PatentMarker.dll": "45f44073e36f0b761adb0c8c22a15c0e36a6b25e84f4d0e2ec3f796a8559e1e4",
+    "cad-plugin/2010/PatentMarker/lib/acdbmgd.dll": "41d312faa67742027487a0d6d05cb154ee7507042710111d3670bc1144ddc87b",
+    "cad-plugin/2010/PatentMarker/lib/acmgd.dll": "a2b557e4c437b9b59dad63cbb4b4af7abb775e145ef6e6581a991da0e713810f",
+    "cad-plugin/2010/PatentMarker/bin/Release/PatentMarker.dll": "363bc934eb693dd91ae370b5b62241a7783fc3d442bdd4ce23c27c2ef5640675",
+    "cad-plugin/2025/PatentMarker/lib/acdbmgd.dll": "c4c1133a1d35fbdb5deb9b98d0cf9df62684ca3c0621ae11f9d28352388ffc78",
+    "cad-plugin/2025/PatentMarker/lib/acmgd.dll": "d34ef77113688cd15c287a7278975a0286e40660502e4b7b03e37f12e4c1a4d1",
+    "cad-plugin/2025/PatentMarker/lib/accoremgd.dll": "77eb421995e5dfbcc28e66cd4ee50718746c0c6ae26fad50bae174ad373201fe",
+    "cad-plugin/RuntimeContract.Tests/G03.2007.red.Tests.csproj": "2638b649b7d088a6c184eb8f50e7f6229e1e3205b163b690837008098f1bf25c",
+    "cad-plugin/RuntimeContract.Tests/G03.2007.green.Tests.csproj": "b3ecf84abfce90e6cbf78283650552485b0d40f20b042339d699f25689c7c32e",
+    "cad-plugin/RuntimeContract.Tests/G03.2010.red.Tests.csproj": "0830b4165d81f8cbd06d16e93c6b9fde76555341eef0d07d6bae1178367d398f",
+    "cad-plugin/RuntimeContract.Tests/G03.2010.green.Tests.csproj": "dea927b301e279615cee65212796a355678d95173c3f0674b6d237d9cd1cfb46",
+    "tools/G03Regression/obj/AutodeskSimulationStubs.G03.cs": "eda160f982140cc556e0742d0993f997e1c9801e24d0b8d1549cff3e0f2bd700"
+  }
+}

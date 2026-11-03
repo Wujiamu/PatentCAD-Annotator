@@ -1,0 +1,5 @@
+﻿PASS|uninstall_ppt_recovery|file_restore_fails=False|expected_registry_enabled=True|actual=True|trace=registry.remove,registry.restore,files.restore
+FAIL|uninstall_ppt_recovery|file_restore_fails=True|expected_registry_enabled=False|actual=True|trace=registry.remove,registry.restore,files.restore
+PASS|uninstall_visio_recovery|file_restore_fails=False|expected_registry_enabled=True|actual=True|trace=registry.remove,registry.restore,files.restore
+FAIL|uninstall_visio_recovery|file_restore_fails=True|expected_registry_enabled=False|actual=True|trace=registry.remove,registry.restore,files.restore
+SUMMARY|total=4|failed=2

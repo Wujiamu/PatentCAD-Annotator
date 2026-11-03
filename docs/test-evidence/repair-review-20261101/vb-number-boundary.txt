@@ -1,0 +1,3 @@
+FAIL|vb_pattern_six_digits|expected=|actual=23456|name=底座1
+FAIL|vb_pattern_six_digits_space|expected=|actual=23456|name=底座 1
+PASS|vb_pattern_five_digits_control|expected=12345|actual=12345|name=底座

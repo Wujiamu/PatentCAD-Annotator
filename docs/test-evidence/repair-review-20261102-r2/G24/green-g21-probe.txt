@@ -1,0 +1,42 @@
+﻿snapshot=green|entry=production(DictPaletteControl.EditSelectedEntry+EditEntryDialog+DictWriter)|cad=recording-stub
+PASS|first-sync-failed-recorded|success|written=True|pending=301>302|calls=1
+PASS|unrelated-success-json-blocked|written=False|error=请先完成或显式放弃待同步操作（301 → 302），本次改号未写入字典。
+PASS|unrelated-success-json-unchanged|unchanged=True
+PASS|unrelated-success-no-service-call|calls=0
+PASS|unrelated-success-preserves-first-pending|expected=301>302|actual=301>302
+PASS|first-sync-failed-recorded|no-match|written=True|pending=301>302|calls=1
+PASS|unrelated-no-match-json-blocked|written=False|error=请先完成或显式放弃待同步操作（301 → 302），本次改号未写入字典。
+PASS|unrelated-no-match-json-unchanged|unchanged=True
+PASS|unrelated-no-match-no-service-call|calls=0
+PASS|unrelated-no-match-preserves-first-pending|expected=301>302|actual=301>302
+PASS|first-sync-failed-recorded|failure|written=True|pending=301>302|calls=1
+PASS|unrelated-failure-json-blocked|written=False|error=请先完成或显式放弃待同步操作（301 → 302），本次改号未写入字典。
+PASS|unrelated-failure-json-unchanged|unchanged=True
+PASS|unrelated-failure-no-service-call|calls=0
+PASS|unrelated-failure-preserves-first-pending|expected=301>302|actual=301>302
+PASS|related-followup-blocked|written=False|pending=301>302|calls=0
+PASS|name-edit-allowed-with-pending|written=True|json_changed=True|error=|pending=301>302
+PASS|name-edit-does-not-lose-task|pending=301>302
+PASS|same-operation-success-clears|pending=none|retry_calls=1
+PASS|discard-control-reachable|control=visible
+PASS|discard-clears-pending|pending=none
+PASS|discard-then-number-change-allowed|written=True|error=|pending=none
+PASS|drift-json-really-written|written=True|changed=True|pending=none
+PASS|first-sync-drift-json-changed|changed=True
+PASS|first-sync-drift-no-cad-call|calls=0
+PASS|first-sync-drift-cad-unchanged|unchanged=True
+PASS|first-sync-drift-retains-owed-operation|expected=301>302|actual=301>302
+PASS|first-sync-drift-requires-reconfirm|reconfirm=True
+PASS|drift-on-retry-keeps-record|pending=301>302|calls=0|reconfirm=True
+PASS|reconfirm-then-completes|pending=none|calls=1
+PASS|partial-commit-records-pending|written=True|pending=301>302
+PASS|service-exception-records-pending|written=True|pending=301>302
+PASS|zero-match-first-sync-no-pending|written=True|pending=none
+PASS|complete-first-sync-no-pending|written=True|pending=none
+PASS|two-drawings-a-owes|a=301>302
+PASS|two-drawings-b-not-blocked-by-a|written=True|b=none
+PASS|two-drawings-independent|a=301>302
+PASS|two-drawings-b-owes|b=501>502
+PASS|close-b-clears-b|b=none
+PASS|close-b-keeps-a|a=301>302
+SUMMARY: passed=40 failed=0

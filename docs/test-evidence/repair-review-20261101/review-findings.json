@@ -1,0 +1,358 @@
+{
+  "review_id": "integrated-review-20261101",
+  "client_date": "2026-11-01",
+  "timezone": "Asia/Shanghai",
+  "result": "FAIL",
+  "scope": "已集成 G01–G14 的风险导向复核，重点为解析边界、缓存与恢复、改号重试、卸载二次失败；不是全范围发布验收。",
+  "head": "b945b1a68fec26ada268b5a4ee3ac066386e96ab",
+  "working_tree": "dirty; 用户与其他 Agent 已有修改保留，本轮未修改生产源码。",
+  "reviewer": {
+    "role": "本轮聊天主代理",
+    "execution_identity": "DESKTOP-3VJ2A3B\\CodexSandboxOffline",
+    "powershell": "7.6.5",
+    "runtime": ".NET 10.0.11",
+    "formal_release_acceptance": false
+  },
+  "findings": [
+    {
+      "id": "R-016",
+      "kind": "补修",
+      "priority": "P1",
+      "task": "G15",
+      "title": "名称在前的超长编号仍被静默截尾",
+      "sources": [
+        {
+          "path": "cad-plugin/Shared/IO/MarkingTextParser.cs",
+          "line": 354
+        },
+        {
+          "path": "vba/Patterns.bas",
+          "line": 183
+        }
+      ],
+      "trigger": "输入“底座123456、”或“底座 123456、”。现有词法只支持 1–5 位数字，G02 回归契约明确超长编号必须拒绝。",
+      "expected": "不匹配超长完整编号；不从尾部接受 23456，也不把首位数字吞进名称。",
+      "actual": "生产 C# ExtractAll 返回 number=23456，name=底座1（空白变体为“底座 1”）；从生产 VBA 常量构造的实际 VBScript.RegExp 也得到相同错误。",
+      "root": "Name-first 分支未像 number-first 分支那样核对编号起点；名称字符类允许数字，正则通过回溯把超长数字串首位让给名称。",
+      "evidence": [
+        "parser-probe-word-corrected.txt",
+        "vb-number-boundary.txt"
+      ],
+      "layer": "L1；真实 VBScript 引擎的生产模式，不是完整 Word BuildModel／保存路径。"
+    },
+    {
+      "id": "R-004",
+      "kind": "补修",
+      "priority": "P1",
+      "task": "G17",
+      "title": "改号重试未绑定字典快照，连续改号会留下不可完成任务",
+      "sources": [
+        {
+          "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+          "line": 872
+        }
+      ],
+      "trigger": "301→302 的图纸同步失败后，同一图纸切到另一本含 302 的字典；或在未处理前继续把同一字典项 302→303。",
+      "expected": "只对原图纸、原字典和已确认的操作重试；新改号先处理待同步操作或显式承接它，不能留下无法完成的旧任务。",
+      "actual": "替换为另一含 302 的模型后，原码仍调用改号服务 1 次；连续改号后 JSON 已到 303，待重试目标仍为 302，点击重试调用服务 0 次。",
+      "root": "待重试状态仅保存 old/new/Document，没有字典路径或内容身份；二次改号无匹配分支不更新或拦截旧待处理操作。",
+      "evidence": [
+        "rename-probe.txt",
+        "rename-probe.cs"
+      ],
+      "layer": "L1；执行生产重试／结果处理函数，CAD 服务和控件是边界桩，未修改真实 DWG。"
+    },
+    {
+      "id": "R-029",
+      "kind": "补修",
+      "priority": "P2",
+      "task": "G18",
+      "title": "卸载回滚在文件恢复成功前重启注册项",
+      "sources": [
+        {
+          "path": "office-com-addin/uninstall-office-addin.ps1",
+          "line": 77
+        },
+        {
+          "path": "office-com-addin/uninstall-visio-addin.ps1",
+          "line": 83
+        },
+        {
+          "path": "office-com-addin/install-office-addin.ps1",
+          "line": 176
+        },
+        {
+          "path": "office-com-addin/install-visio-addin.ps1",
+          "line": 159
+        }
+      ],
+      "trigger": "卸载删除失败进入 catch，随后完整文件恢复因 I/O 等原因失败。",
+      "expected": "确认完整产品文件恢复后才恢复原注册项；恢复失败保持产品停用，保留恢复副本和注册快照。",
+      "actual": "PPT、Visio 的当前 catch 均按 registry.remove → registry.restore → files.restore 执行；文件恢复故障注入后，模拟注册项仍为 Enabled=True。",
+      "root": "新增恢复副本修好了“只有残片”的一部分情形，但顶层恢复顺序仍沿用先注册、后文件，且没有用文件恢复结果控制注册恢复。 静态补查升级 catch 仍先恢复注册项；若新目录半删除且仍存在，旧目录恢复条件为 false。",
+      "evidence": [
+        "uninstall-recovery-probe.txt",
+        "uninstall-recovery-probe.ps1",
+        "uninstall-ppt-catch.ps1",
+        "uninstall-visio-catch.ps1"
+      ],
+      "layer": "L1 catch 分支回放；恢复 I/O 与注册表为受控边界，未运行真实卸载器或修改真实注册表。 升级的残留目录分支仅静态核对，未执行升级失败回归。"
+    },
+    {
+      "id": "R-034",
+      "kind": "新增",
+      "priority": "P1",
+      "task": "G16",
+      "title": "当前 JSON 损坏时，有效备份也无法从面板恢复",
+      "sources": [
+        {
+          "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+          "line": 639
+        },
+        {
+          "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+          "line": 685
+        },
+        {
+          "path": "cad-plugin/Shared/IO/DictConflict.cs",
+          "line": 86
+        }
+      ],
+      "trigger": "已加载合法字典且存在合法 Word 备份；可见 JSON 被编辑成损坏内容，重新轮询或点击重载。冷启动直接遇到损坏 JSON 也有同样问题。",
+      "expected": "普通写回继续拒绝坏文件／旧模型，但用户明确恢复合法备份时，应能选择当前文件的实际字节身份并确认恢复。",
+      "actual": "保留旧缓存时，面板带入旧缓存身份，ReadSelected 报 CONTENT_CHANGED；显式重载清空模型后，UpdateConflictState 禁用裁决按钮，尽管备份可成功解析。使用当前坏文件的真实字节身份时，底层 ReadSelected 校验通过。",
+      "root": "恢复入口错误依赖“已成功解析的当前模型及其身份”。严格解析与旧快照保护集成后，无法为坏当前文件建立可用的恢复选择上下文。",
+      "evidence": [
+        "recovery-probe.txt",
+        "recovery-probe.cs"
+      ],
+      "layer": "L1；2007 生产加载器／共享严格解析器、选择快照校验和按钮状态原码；其他四版缓存／UI路径静态相同，未做真实 CAD 点击。"
+    }
+  ],
+  "checks": [
+    {
+      "path": "parser-probe-word-corrected.txt",
+      "status": "FAIL",
+      "passed": 9,
+      "failed": 2,
+      "exit_code": 1,
+      "note": "包含真实 Word 已核实的行标记样本，替代初次表格假设。"
+    },
+    {
+      "path": "vb-number-boundary.txt",
+      "status": "FAIL",
+      "passed": 1,
+      "failed": 2,
+      "exit_code": null,
+      "note": "实际 VBScript.RegExp；与 C# 命令组执行，组合退出 1，未单独记录此子步骤退出码。"
+    },
+    {
+      "path": "rename-probe.txt",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 2,
+      "exit_code": 1,
+      "note": "控件和 CAD 写入服务为桩，仅验证生产调度函数。"
+    },
+    {
+      "path": "recovery-probe.txt",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 2,
+      "exit_code": 1,
+      "note": "文件读取和生产解析真实执行，恢复选择与按钮为函数层验证，未执行目标写回。"
+    },
+    {
+      "path": "uninstall-recovery-probe.txt",
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 2,
+      "exit_code": 1,
+      "note": "真实 catch 原码＋受控失败，注册表桩；不是完整隔离安装矩阵。"
+    },
+    {
+      "path": "word-table-probe.txt",
+      "status": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "exit_code": 0,
+      "note": "经批准在沙箱外新建 Word 空白文档，实际 Tables.Add 2×2 后取 Content.Text；仅 C# 预处理对照。Word 16.0；该探针未采集位数／外层执行身份，不用于宿主放行。"
+    }
+  ],
+  "discarded": [
+    {
+      "candidate": "连续两行表格预处理漏项／错配",
+      "evidence": [
+        "parser-probe.txt",
+        "word-table-probe.txt"
+      ],
+      "decision": "不建待修复项",
+      "reason": "最初构造流缺少 Word 每行额外 CR+Chr(7) 行标记。实际 Word 两种列顺序均解析为 1:底座、2:支架；修正输入后通过。原始失败记录保留但不算产品反例。",
+      "reference": "https://learn.microsoft.com/en-us/office/vba/api/word.range.isendofrowmark"
+    }
+  ],
+  "existing_conclusions": [
+    "R-012：维持 G11 宿主记录对原假设的撤回，不再次安排“保留身份的嵌套组合”修复。",
+    "R-028：维持 G13 的 AutoCAD 2026 往返核验、不迁移结论，不外推其他宿主。",
+    "上轮通过只限原场景与快照。本轮未重复运行全部套件或重做旧版 CAD／Office 安装验收。"
+  ],
+  "verification_followup": [
+    "Visio 当前记录为 39 PASS＋3 个 Theory 方法 SKIP；源码共 9 组 InlineData，仍需实际执行，不能把跳过计成完整门禁通过。",
+    "checkpoint-findings.json 是 11:38 阶段快照，与 16:20 第二轮及后来 G13 记录不同；最终状态需用同一候选的机器可读结果生成，而非继续将旧快照当当前结论。",
+    "新候选仍需按受影响范围做独立重跑；真实 CAD 面板及 JSON–DWG 相关状态不能由本轮桩测试放行。",
+    "GitHub 外部宿主验收单列；不在本机安装、探测 2007/2010/2013/2015。"
+  ],
+  "source_sha256": [
+    {
+      "path": "cad-plugin/Shared/IO/MarkingTextParser.cs",
+      "sha256": "93c9ee3a2e28cdc3ad33eebdb75945c7e5ebf2bc4cec3e5d9cff2cb4e9078b3a"
+    },
+    {
+      "path": "vba/Patterns.bas",
+      "sha256": "58c45ade0023e383e1a3617d9ea22b9c3987a155aa84961c5bcf3828ef8f44e7"
+    },
+    {
+      "path": "vba/DictModel.bas",
+      "sha256": "6804e74b020114afdd3283bd6e2521e82615eca86ff68536376d1c6a1e17900d"
+    },
+    {
+      "path": "cad-plugin/Shared/Palette/DictPaletteControl.cs",
+      "sha256": "e85a430f7f050c641b90e70f326b32ee328334cbfffbba5e98a55be208df5842"
+    },
+    {
+      "path": "cad-plugin/Shared/Palette/EditEntryDialog.cs",
+      "sha256": "93574a33c976980394b386f5561fb0ab38d3aacd2fa07ebd110f7081d1cf749b"
+    },
+    {
+      "path": "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs",
+      "sha256": "c1d3d7e3e76d13b62be146be24abefff449dc5c2450ec54d7d859eee1f3513e5"
+    },
+    {
+      "path": "cad-plugin/Shared/Palette/DictPaletteCadService.cs",
+      "sha256": "9eaec35272851b3f786445b11f35ec3e5346bd96f0c8765513f5e352f5bec7ba"
+    },
+    {
+      "path": "cad-plugin/Shared/Palette/ArbitrateDialog.cs",
+      "sha256": "fac23a91653106411563156acf53f28594714bfaf0b4f17b2d05415f76d53d57"
+    },
+    {
+      "path": "cad-plugin/Shared/IO/PatSettings.cs",
+      "sha256": "70162d3fd58fda42eb83b7119c3ff8a4920161b3c4baf8681677d0254b69c5ca"
+    },
+    {
+      "path": "cad-plugin/Shared/IO/DictConflict.cs",
+      "sha256": "de69e4387bf096a4dd35a1586d08dfa6837738592379a80c2011cb8d8f45c41b"
+    },
+    {
+      "path": "cad-plugin/Shared/IO/SimpleJson.cs",
+      "sha256": "4dee72c558401a0d2bf0ae714af8346b33c53ea93df66455448ae6d07cf88182"
+    },
+    {
+      "path": "office-com-addin/uninstall-office-addin.ps1",
+      "sha256": "b2f4e7f02f9785f63a01e7a4d9302ae65f5b70a37237ca1c800074171d627d67"
+    },
+    {
+      "path": "office-com-addin/uninstall-visio-addin.ps1",
+      "sha256": "a3b49bdaa096ae496954125e7642496ed1097557210746f36c681119fb5db8b1"
+    },
+    {
+      "path": "office-com-addin/OfficeAddin.Common.psm1",
+      "sha256": "76727955fe421cbee0dc0d07ea094d4ccf2f8c4ac3851ea9c037e92c409fc223"
+    },
+    {
+      "path": "office-com-addin/VisioAddin.Common.psm1",
+      "sha256": "9b0c036ff3ad8a1521015c1a92f9ef5f970fdcaab0a1953a119707b2c3866427"
+    },
+    {
+      "path": "cad-plugin/2007/PatentMarker/IO/DictEntry.cs",
+      "sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3"
+    },
+    {
+      "path": "cad-plugin/2010/PatentMarker/IO/DictEntry.cs",
+      "sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3"
+    },
+    {
+      "path": "cad-plugin/2013/PatentMarker/IO/DictEntry.cs",
+      "sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e"
+    },
+    {
+      "path": "cad-plugin/2015/PatentMarker/IO/DictEntry.cs",
+      "sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e"
+    },
+    {
+      "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+      "sha256": "a33b70a741a947923e3e2daa62bc4880250513f90663ead7aa97df56e26c0b3d"
+    },
+    {
+      "path": "office-com-addin/install-office-addin.ps1",
+      "sha256": "a26080aa9833bce2583e01e72e761d25b0eff92d24d16bffe3afb1c18dbe9976"
+    },
+    {
+      "path": "office-com-addin/install-visio-addin.ps1",
+      "sha256": "61a6d06d994a6408e52e147f489c31838b214a1001613b1efdfc7a0f1d1d9517"
+    }
+  ],
+  "evidence_sha256": [
+    {
+      "path": "parser-probe-word-corrected.ps1",
+      "sha256": "1e7b08ac75196d3adc3d306e098be73ca66f80d54db112d1a934aa6061dd9c09"
+    },
+    {
+      "path": "parser-probe-word-corrected.txt",
+      "sha256": "af98dac5996f2180026bed5494ba6395dc5f204386dda066225b179620bdf94f"
+    },
+    {
+      "path": "parser-probe.ps1",
+      "sha256": "92a2c8b13a83f89bcf21bde6cc7c7028bd4209f9d9a7e6ffdbcca57cce982bdb"
+    },
+    {
+      "path": "parser-probe.txt",
+      "sha256": "09b9b4386216f125757ea24490cc325d3ec85f357fa5dd7bc3d49457235380f5"
+    },
+    {
+      "path": "recovery-probe.cs",
+      "sha256": "49d0aded8a86203bb7740c81b30137bb46443cdf710592730a65b14cfe4fdfc1"
+    },
+    {
+      "path": "recovery-probe.txt",
+      "sha256": "f26740da699e10a5153393c0bfc740bea98f6e6441bfa9be37c3525f92e15cb6"
+    },
+    {
+      "path": "rename-probe.cs",
+      "sha256": "34ac88bfb5908270b5703a141835fa0fb0e4cf36ec0f1e43e3272c53d67cc080"
+    },
+    {
+      "path": "rename-probe.txt",
+      "sha256": "d2e6b4641c26992ec2d69969e4a6738c0750e30a39d9560194893a9078c7fcf4"
+    },
+    {
+      "path": "uninstall-ppt-catch.ps1",
+      "sha256": "181be22bf56a2a639dbced5676823562673cf606dcf07f61447d54162844bb79"
+    },
+    {
+      "path": "uninstall-recovery-probe.ps1",
+      "sha256": "2321f882e6801f3b703233a6521211c933b4cbd709fe94397b83563e5ccf0563"
+    },
+    {
+      "path": "uninstall-recovery-probe.txt",
+      "sha256": "f48cb228c440c6ab6cced818305f199095ad788579086e4693fbe15111a32a48"
+    },
+    {
+      "path": "uninstall-visio-catch.ps1",
+      "sha256": "3978dc71080689fdced62418ec2ec6f5cce28ba51a97eadd7cddf42a6e21092f"
+    },
+    {
+      "path": "vb-number-boundary.txt",
+      "sha256": "64e66c225aff6a72f8e75e6c10bab4107df57523e4438ebe47d6394eaad302ee"
+    },
+    {
+      "path": "word-table-probe.ps1",
+      "sha256": "a05936348f731e63fea70d929095ea7404913fc8fa85fd391f7fb7ab145a2c62"
+    },
+    {
+      "path": "word-table-probe.txt",
+      "sha256": "078e10c77dc39b04a7355b1d367efb0879cdf51fa4f53d13fd047cb996c0a4a4"
+    }
+  ],
+  "reviewed_at": "2026-11-01T22:34:47.0515131+08:00"
+}

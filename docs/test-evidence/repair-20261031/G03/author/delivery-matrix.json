@@ -1,0 +1,115 @@
+{
+  "time": "2026-11-01T00:40:40.824860+08:00",
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "workdir": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G03",
+  "results": [
+    {
+      "state": "baseline",
+      "selector": "route",
+      "exit": 1,
+      "summary": "SUMMARY selector=route checks=89 failed=29"
+    },
+    {
+      "state": "baseline",
+      "selector": "align",
+      "exit": 1,
+      "summary": "SUMMARY selector=align checks=112 failed=24"
+    },
+    {
+      "state": "baseline",
+      "selector": "measure",
+      "exit": 1,
+      "summary": "SUMMARY selector=measure checks=24 failed=20"
+    },
+    {
+      "state": "baseline",
+      "selector": "crossing",
+      "exit": 1,
+      "summary": "SUMMARY selector=crossing checks=20 failed=12"
+    },
+    {
+      "state": "baseline",
+      "selector": "failure",
+      "exit": 1,
+      "summary": "SUMMARY selector=failure checks=8 failed=8"
+    },
+    {
+      "state": "baseline",
+      "selector": "fallback",
+      "exit": 1,
+      "summary": "SUMMARY selector=fallback checks=16 failed=12"
+    },
+    {
+      "state": "baseline",
+      "selector": "line",
+      "exit": 1,
+      "summary": "SUMMARY selector=line checks=4 failed=4"
+    },
+    {
+      "state": "baseline",
+      "selector": "frame",
+      "exit": 1,
+      "summary": "SUMMARY selector=frame checks=4 failed=4"
+    },
+    {
+      "state": "baseline",
+      "selector": "frame_multi",
+      "exit": 1,
+      "summary": "SUMMARY selector=frame_multi checks=24 failed=20"
+    },
+    {
+      "state": "candidate",
+      "selector": "route",
+      "exit": 0,
+      "summary": "SUMMARY selector=route checks=148 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "align",
+      "exit": 0,
+      "summary": "SUMMARY selector=align checks=112 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "measure",
+      "exit": 0,
+      "summary": "SUMMARY selector=measure checks=24 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "crossing",
+      "exit": 0,
+      "summary": "SUMMARY selector=crossing checks=22 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "failure",
+      "exit": 0,
+      "summary": "SUMMARY selector=failure checks=8 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "fallback",
+      "exit": 0,
+      "summary": "SUMMARY selector=fallback checks=16 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "line",
+      "exit": 0,
+      "summary": "SUMMARY selector=line checks=4 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "frame",
+      "exit": 0,
+      "summary": "SUMMARY selector=frame checks=4 failed=0"
+    },
+    {
+      "state": "candidate",
+      "selector": "frame_multi",
+      "exit": 0,
+      "summary": "SUMMARY selector=frame_multi checks=24 failed=0"
+    }
+  ]
+}

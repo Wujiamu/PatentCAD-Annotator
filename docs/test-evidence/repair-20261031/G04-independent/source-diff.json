@@ -1,0 +1,35 @@
+{
+  "fixed_snapshot_matches_live_integrated": true,
+  "changes": [
+    {
+      "path": "cad-plugin/2007/PatentMarker/IO/DictEntry.cs",
+      "old": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+      "fixed": "f169dc154b4e347a51182ac35c35dd7c94108a8c3766603ec2ae0a030199c2b6"
+    },
+    {
+      "path": "cad-plugin/2010/PatentMarker/IO/DictEntry.cs",
+      "old": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+      "fixed": "f169dc154b4e347a51182ac35c35dd7c94108a8c3766603ec2ae0a030199c2b6"
+    },
+    {
+      "path": "cad-plugin/2013/PatentMarker/IO/DictEntry.cs",
+      "old": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+      "fixed": "68de436136eb180ce09c514c1f5efc79ff5165882c4f27f5ec3fb56307661f0e"
+    },
+    {
+      "path": "cad-plugin/2015/PatentMarker/IO/DictEntry.cs",
+      "old": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+      "fixed": "68de436136eb180ce09c514c1f5efc79ff5165882c4f27f5ec3fb56307661f0e"
+    },
+    {
+      "path": "cad-plugin/2025/PatentMarker/IO/DictEntry.cs",
+      "old": "470cdc3e66523d3e483b2ef8f0fad7404a508708deaf85ad9e2e94068a5f273d",
+      "fixed": "fe10cc5eeb9a5b788102b7c0b9a01deb6c5b40abf6c96f56601d573bbf585f1a"
+    },
+    {
+      "path": "tools/G04JsonRegression/Program.cs",
+      "old": "cbacb86f89417151ec73af2457648469d807e68f4dfcf5018c0a6104ba746fe0",
+      "fixed": "bcf41baa272a2119776007bd07687009dbd5dff96cb5b031c85b34fa7e9a1f28"
+    }
+  ]
+}

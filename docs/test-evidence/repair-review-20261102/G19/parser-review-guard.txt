@@ -1,0 +1,11 @@
+# docs/test-evidence/repair-review-20261102/parser-review.ps1 (unmodified copy, re-encoded UTF8-BOM in $env:TEMP only
+# because this host has Windows PowerShell 5.1 and no pwsh 7)
+# Guard on line 22 must trip now that the production locator changed.
+Boundary expression changed; reassess probe
+所在位置 C:\Users\wjm\AppData\Local\Temp\g19-parser-review-f4d76726\parser-review.ps1:22 字符: 94
++ ... ryCompare)')) { throw 'Boundary expression changed; reassess probe' }
++                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Boundary expres... reassess probe:String) [], RuntimeException
+    + FullyQualifiedErrorId : Boundary expression changed; reassess probe
+ 
+EXITCODE=1

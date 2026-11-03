@@ -1,0 +1,21 @@
+phase=green
+time=2026-10-31T22:26:57.042555+08:00
+identity=local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8
+command=powershell -NoProfile -ExecutionPolicy Bypass -File tools/test-2007-installer-isolated.ps1 -KeepArtifacts
+exit=0
+PatentMarker-2007-deploy/install-2007.vbs sha256=8ecaea70ae40df258c051c3344a6b3ad36ff6b62a44974ca7372796ce8965320
+PatentMarker-2007-deploy/uninstall-2007.vbs sha256=bac5140ba3598e2c2b65a52931ff4cfb6d2d82721bb48509d43651d9ee49a47e
+tools/test-2007-installer-isolated.ps1 sha256=e6d55b4c749c672928d297444b09dfa799631dad0b1540f280531d1b8826c8cb
+[PASS] R17.0-only install targets=1, registry and support paths
+[PASS] R17.0-only uninstall targets=1, registry and support paths
+[PASS] R17.1-only install targets=1, registry and support paths
+[PASS] R17.1-only uninstall targets=1, registry and support paths
+[PASS] R17.2-only install targets=1, registry and support paths
+[PASS] R17.2-only uninstall targets=1, registry and support paths
+[PASS] mixed-and-duplicates install targets=4, registry and support paths
+[PASS] mixed-and-duplicates uninstall targets=4, registry and support paths
+[PASS] language-product install targets=1, registry and support paths
+[PASS] language-product uninstall targets=1, registry and support paths
+[PASS] location-hklm install targets=2, registry and support paths
+[PASS] location-hklm uninstall targets=2, registry and support paths
+Evidence: <USERPROFILE>\AppData\Local\Temp\PatentMarker-G09-2057812e45e94c57871e3fae3f977819

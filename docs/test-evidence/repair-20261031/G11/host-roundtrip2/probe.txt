@@ -1,0 +1,6 @@
+﻿1.created|tags=[PATMARKER=PATENTMARKER;PATNUMBER=301;]|marked=301
+2.pasted|name=Group 4|type=6|tags=[PATMARKER=PATENTMARKER;PATNUMBER=301;]|marked=301
+3.reopened|marked=301
+4a.readback|child=TextBox 2|text=[999]
+4.text-edited|tags=[PATMARKER=PATENTMARKER;PATNUMBER=301;]|marked=301
+5.reopen-after-edit|marked=301

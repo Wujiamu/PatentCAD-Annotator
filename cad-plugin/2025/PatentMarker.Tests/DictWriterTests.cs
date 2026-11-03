@@ -129,7 +129,7 @@ namespace PatentMarker.Tests
         public void Write_NoBom_Utf8()
         {
             string path = Path.Combine(_tempDir, "test.dict.json");
-            bool ok = DictWriter.Write(path, MakeModel(), out string error);
+            bool ok = DictWriter.Write(path, MakeModel(), DictFileVisibility.ReadIdentity(path), out string error);
             Assert.True(ok, error);
             byte[] bytes = File.ReadAllBytes(path);
             Assert.False(bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF,
@@ -140,7 +140,7 @@ namespace PatentMarker.Tests
         public void Write_ThenLoad_RoundTrip()
         {
             string path = Path.Combine(_tempDir, "rt.dict.json");
-            Assert.True(DictWriter.Write(path, MakeModel(withModified: true), out string error), error);
+            Assert.True(DictWriter.Write(path, MakeModel(withModified: true), DictFileVisibility.ReadIdentity(path), out string error), error);
 
             DictModel? loaded = DictLoader.Load(path);
             Assert.NotNull(loaded);
@@ -158,7 +158,7 @@ namespace PatentMarker.Tests
         {
             string path = Path.Combine(_tempDir, "overwrite.dict.json");
             File.WriteAllText(path, "旧内容", new UTF8Encoding(false));
-            Assert.True(DictWriter.Write(path, MakeModel(), out string error), error);
+            Assert.True(DictWriter.Write(path, MakeModel(), DictFileVisibility.ReadIdentity(path), out string error), error);
             Assert.Contains("底座", File.ReadAllText(path, new UTF8Encoding(false)));
             Assert.False(File.Exists(path + ".tmp"), "临时文件应已清理");
         }
@@ -167,7 +167,7 @@ namespace PatentMarker.Tests
         public void Write_NewFileDefaultsToHidden()
         {
             string path = Path.Combine(_tempDir, "default-hidden.dict.json");
-            Assert.True(DictWriter.Write(path, MakeModel(), out string error), error);
+            Assert.True(DictWriter.Write(path, MakeModel(), DictFileVisibility.ReadIdentity(path), out string error), error);
             Assert.False(DictFileVisibility.IsVisible(path));
         }
 
@@ -178,7 +178,7 @@ namespace PatentMarker.Tests
             File.WriteAllText(path, "{}", new UTF8Encoding(false));
             Assert.True(DictFileVisibility.TrySetVisible(path, true, out string visibilityError), visibilityError);
 
-            Assert.True(DictWriter.Write(path, MakeModel(), out string error), error);
+            Assert.True(DictWriter.Write(path, MakeModel(), DictFileVisibility.ReadIdentity(path), out string error), error);
             Assert.True(DictFileVisibility.IsVisible(path));
         }
 
@@ -186,7 +186,7 @@ namespace PatentMarker.Tests
         public void Write_MissingDirectory_ReturnsFalse()
         {
             string path = Path.Combine(_tempDir, "no", "such", "dir.dict.json");
-            bool ok = DictWriter.Write(path, MakeModel(), out string error);
+            bool ok = DictWriter.Write(path, MakeModel(), DictFileVisibility.ReadIdentity(path), out string error);
             Assert.False(ok);
             Assert.False(string.IsNullOrEmpty(error));
         }

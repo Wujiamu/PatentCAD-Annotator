@@ -1,0 +1,34 @@
+﻿G18 green: Visio isolation matrix (fixed sources)
+time=2026-11-02 01:13:04 +08:00
+host=DESKTOP-3VJ2A3B  user=wjm  powershell=5.1.19041.7802
+command=powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\office-com-addin\verify-visio-installer.ps1
+isolation=TestRegistryRoot Software\PatentMarkerTests\Visio-<guid>; install dir under %TEMP%\PatentMarkerVisioInstaller-<guid>; no real registry key or Visio path used
+exit=0
+---- source under test ----
+src|office-com-addin\install-office-addin.ps1|D39E85BC662A27B33635B65C826C13D633FA9C63CCDACD3DA2C1CA4B397085C0
+src|office-com-addin\install-visio-addin.ps1|E71D512336A48231F9E533F04A912B63C8F29CA9EDBB3F37FF0E9BD63C12D91D
+src|office-com-addin\uninstall-office-addin.ps1|BBE6650AE7692986B179AC2CF4672D8155F43D308145CC79D6FFEFFFBB8AF77D
+src|office-com-addin\uninstall-visio-addin.ps1|99420D7EB75FFCDF5DBD09AD6EFB0B8EEE381863C799C9D8536BAE9376CDBAB1
+src|office-com-addin\OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+src|office-com-addin\VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+src|office-com-addin\verify-installer.ps1|0D7DCDDFCFEE3D1A103133C30ACAE92A3499A166DA9401DA9B535EC4C5C2AC7A
+src|office-com-addin\verify-visio-installer.ps1|B2DA95215EA7E1F9E91FC2E5155194224456A1AA62E6ED6A030B4E7B3BC83AA9
+---- output ----
+PASS: G14 Visio 部分删除失败后从恢复副本还原完整文件集与注册项。
+PASS: G18 Visio uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 Visio uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 Visio uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 Visio uninstall_registry_restore_failed_material_kept — 残留回滚材料：.Visio.recovery-2351b37afd2d45dc811db6d0f5aea6ba, .Visio.uninstall-1a6584cf9acb4f9bb4ec35dfe9b58963
+PASS: G18 Visio uninstall_cleanup_failed_files_complete — 清理失败时 Visio 产品文件仍为完整集合
+PASS: G18 Visio uninstall_cleanup_failed_registration_restored — 清理失败时原 Visio 注册项已恢复
+PASS: G18 Visio uninstall_cleanup_failed_material_kept — 残留回滚材料：.Visio.recovery-07a33bd713f44cb2b5cf88caed16a856, .Visio.uninstall-46a2431aea62470abaf9f4454f406bdc
+PASS: G18 Visio upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整 Visio 目录与哈希已还原
+PASS: G18 Visio upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原 Visio 注册项已恢复
+PASS: G18 Visio upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 Visio upgrade_registry_restore_failed_disabled — 注册恢复失败后 Visio 加载项保持停用
+PASS: G18 Visio upgrade_registry_restore_failed_old_files_intact — Visio 注册恢复失败时旧版文件仍完整
+PASS: G18 Visio upgrade_registry_restore_failed_material_kept — 残留回滚材料：.Visio.failed-f533220198b14b2a82741f3c848bfb6c
+PASS: G18 Visio upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时 Visio 加载项保持停用
+PASS: G18 Visio upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.Visio.rollback-2b06b144ae4a4f4a8ded3b37acf15277
+Visio 隔离安装回归 PASS：首次安装故障回滚、成功安装、升级故障回滚、重复安装、卸载及旁边哨兵保护。
+PASS: G18 Visio 文件验证先于注册恢复（文件恢复失败、注册恢复失败、清理失败、升级新目录半删除）。

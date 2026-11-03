@@ -1,0 +1,18 @@
+﻿C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\tests\PatentOffice.Visio.CodeTests\G10VisioPaletteTests.cs(318,45): error CS1061: “G10VisioPalette”未包含“HostWindowReads”的定义，并且找不到可接受第一个“G10VisioPalette”类型参数的可访问扩展方法“HostWindowReads”(是否缺少 using 指令或程序集引用?) [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\tests\PatentOffice.Visio.CodeTests\PatentOffice.Visio.CodeTests.csproj]
+
+生成失败。
+
+C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\tests\PatentOffice.Visio.CodeTests\G10VisioPaletteTests.cs(318,45): error CS1061: “G10VisioPalette”未包含“HostWindowReads”的定义，并且找不到可接受第一个“G10VisioPalette”类型参数的可访问扩展方法“HostWindowReads”(是否缺少 using 指令或程序集引用?) [C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\tests\PatentOffice.Visio.CodeTests\PatentOffice.Visio.CodeTests.csproj]
+    0 个警告
+    1 个错误
+
+已用时间 00:00:01.97
+Test project build failed: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\tests\PatentOffice.Visio.CodeTes
+ts\PatentOffice.Visio.CodeTests.csproj
+At C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\tools\run-fact-tests.ps1:13 char:28
++ ... ($LASTEXITCODE -ne 0) { throw "Test project build failed: $project" }
++                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (Test project bu...odeTests.csproj:String) [], RuntimeException
+    + FullyQualifiedErrorId : Test project build failed: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\office-com-addin\t 
+   ests\PatentOffice.Visio.CodeTests\PatentOffice.Visio.CodeTests.csproj
+ 

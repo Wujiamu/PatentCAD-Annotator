@@ -1,0 +1,74 @@
+{
+  "office-com-addin/src/PatentOffice.Visio/PaletteForm.cs": {
+    "candidate": "509003b4f7e90ebfa3da5ea0d87fa7ed16f5a43d1ca329432a15fa42daae9e3b",
+    "baseline-run": "509003b4f7e90ebfa3da5ea0d87fa7ed16f5a43d1ca329432a15fa42daae9e3b"
+  },
+  "office-com-addin/src/PatentOffice.Visio/PatentOffice.Visio.csproj": {
+    "candidate": "25360fa90271921281224d8876a482784364add9367bc20c4110a0e5ef9b85f0",
+    "baseline-run": "25360fa90271921281224d8876a482784364add9367bc20c4110a0e5ef9b85f0"
+  },
+  "office-com-addin/src/PatentOffice.Visio/VisioAddIn.cs": {
+    "candidate": "6a92a8a550e6eeed0e7d8da7014c57ae781106c48e9fa3497be6b4adb5fa9672",
+    "baseline-run": "6a92a8a550e6eeed0e7d8da7014c57ae781106c48e9fa3497be6b4adb5fa9672"
+  },
+  "office-com-addin/src/PatentOffice.Visio/VisioAnnotations.cs": {
+    "candidate": "6df42fce274177e0b9a4d1374d5d5e4a9b59e3a4a16aa152c337e81fc477bdc4",
+    "baseline-run": "13d6a0affaeb4fefdf24f6f8bdda7095a77ce257a9dbec674e044a481f109b14"
+  },
+  "office-com-addin/src/PatentOffice.Visio/VisioDocumentBinding.cs": {
+    "candidate": "e85e829511feeb22a45013c363e49e0fff9e0121c0515de809da0c2355ba5d60",
+    "baseline-run": "e85e829511feeb22a45013c363e49e0fff9e0121c0515de809da0c2355ba5d60"
+  },
+  "office-com-addin/src/PatentOffice.Visio/Properties/AssemblyInfo.cs": {
+    "candidate": "4c9adc43a0ab70ad173d18f80bf2fdfedcc145a0f5b06cfa5d537bcc427dc696",
+    "baseline-run": "4c9adc43a0ab70ad173d18f80bf2fdfedcc145a0f5b06cfa5d537bcc427dc696"
+  },
+  "office-com-addin/src/PatentOffice.Shared/ComContracts.cs": {
+    "candidate": "d3d0864b39b9bc5219e8e16a483c060f16336d1493b182f0d8546484c3d7cf8a",
+    "baseline-run": "d3d0864b39b9bc5219e8e16a483c060f16336d1493b182f0d8546484c3d7cf8a"
+  },
+  "office-com-addin/src/PatentOffice.Shared/DictionaryReader.cs": {
+    "candidate": "2272098c600fdfdb7102e02002975795cc4c2b777538a9bcbbae350ebbc015fd",
+    "baseline-run": "2272098c600fdfdb7102e02002975795cc4c2b777538a9bcbbae350ebbc015fd"
+  },
+  "office-com-addin/src/PatentOffice.Shared/OfficeDiagnostics.cs": {
+    "candidate": "8f8393ee98fbff4082150bc96b23e557c2f060dc5d7c6179496fb8a58ebd06e6",
+    "baseline-run": "8f8393ee98fbff4082150bc96b23e557c2f060dc5d7c6179496fb8a58ebd06e6"
+  },
+  "office-com-addin/src/PatentOffice.Shared/PatentDictionary.cs": {
+    "candidate": "e636dbc04680b9e2a0c6116936699f9e5c0c8f3b6f6b2b00878626c52c137435",
+    "baseline-run": "e636dbc04680b9e2a0c6116936699f9e5c0c8f3b6f6b2b00878626c52c137435"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/AnnotationScanTests.cs": {
+    "candidate": "46ddde2f982fd6c253c02011c3f7c51c0e96651d78a99835964fff0cf7e88e52",
+    "baseline-run": "46ddde2f982fd6c253c02011c3f7c51c0e96651d78a99835964fff0cf7e88e52"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/AnnotationSelectionTests.cs": {
+    "candidate": "4ddd043f0eb13c3049a522e133bffe4e437f584aefcebcb6ded509b2e32bdeb0",
+    "baseline-run": "4ddd043f0eb13c3049a522e133bffe4e437f584aefcebcb6ded509b2e32bdeb0"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/BindingAndDictionaryTests.cs": {
+    "candidate": "8a4b3753efe4948b37f03bda5fef205ef2658ea35f1f67ecf55fba00cb6275d9",
+    "baseline-run": "8a4b3753efe4948b37f03bda5fef205ef2658ea35f1f67ecf55fba00cb6275d9"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/G12AnnotationPairTests.cs": {
+    "candidate": "28d53c2f078b03fa831323cd8cd80350c12920d72504d238c961a560096b5a0c",
+    "baseline-run": "28d53c2f078b03fa831323cd8cd80350c12920d72504d238c961a560096b5a0c"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/PaletteDocumentIdentityTests.cs": {
+    "candidate": "e8d3b089a1e79d2c01f372934b85fba672359322fdcd69c8de2ad443a7ff946c",
+    "baseline-run": "e8d3b089a1e79d2c01f372934b85fba672359322fdcd69c8de2ad443a7ff946c"
+  },
+  "office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj": {
+    "candidate": "785fde8f9632d9340281b3293f907e3c6f955c0250520cab0ba63eacdaaeba60",
+    "baseline-run": "785fde8f9632d9340281b3293f907e3c6f955c0250520cab0ba63eacdaaeba60"
+  },
+  "office-com-addin/tests/Shared/OfficeDictionaryTests.cs": {
+    "candidate": "59ec598b07d702796ac29ec834d0e83ba6c821fa0fa78497cba3de6ea2334753",
+    "baseline-run": "59ec598b07d702796ac29ec834d0e83ba6c821fa0fa78497cba3de6ea2334753"
+  },
+  "cad-plugin/Shared/IO/NumberIdentity.cs": {
+    "candidate": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14",
+    "baseline-run": "ebb70ae6653c071bf944a855680be80a1c118c8329378fcb034c1c3e6bf1bc14"
+  }
+}

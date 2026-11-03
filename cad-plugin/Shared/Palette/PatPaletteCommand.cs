@@ -119,7 +119,13 @@ namespace PatentMarker.Palette
             Document closing = e != null ? e.Document : null;
             ClearMarkDispatchState(closing);
             if (closing != null)
+            {
                 Commands.PatCheckResult.Release(closing);
+                // R-004：待同步操作按图纸隔离，关闭图纸时释放该图纸的记录，
+                // 不让它被另一张图纸继承，也不因关闭图纸而丢掉其他图纸的记录。
+                if (_control != null)
+                    _control.ReleasePendingRenameForDrawing(closing.Name, closing);
+            }
             string drawingPath = closing != null ? closing.Name : "";
             IO.DictLoader.ReleaseForDrawing(drawingPath);
             IO.PatSettingsStore.Release(drawingPath);
@@ -547,6 +553,7 @@ namespace PatentMarker.Palette
             AppAcad.DocumentManager.DocumentToBeDestroyed -= DocManager_DocumentToBeDestroyed;
             if (_control != null)
             {
+                _control.ReleaseAllPendingRenames();
                 _control.Dispose();
                 _control = null;
             }

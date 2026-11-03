@@ -1,0 +1,103 @@
+{
+  "PSEdition": "Core",
+  "WSManStackVersion": {
+    "Major": 3,
+    "Minor": 0,
+    "Build": -1,
+    "Revision": -1,
+    "MajorRevision": -1,
+    "MinorRevision": -1
+  },
+  "PSRemotingProtocolVersion": {
+    "Major": 2,
+    "Minor": 4,
+    "Build": -1,
+    "Revision": -1,
+    "MajorRevision": -1,
+    "MinorRevision": -1
+  },
+  "OS": "Microsoft Windows 10.0.19045",
+  "PSVersion": {
+    "Major": 7,
+    "Minor": 6,
+    "Patch": 5,
+    "PreReleaseLabel": null,
+    "BuildLabel": null
+  },
+  "SerializationVersion": {
+    "Major": 1,
+    "Minor": 1,
+    "Build": 0,
+    "Revision": 1,
+    "MajorRevision": 0,
+    "MinorRevision": 1
+  },
+  "PSCompatibleVersions": [
+    {
+      "Major": 1,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 2,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 3,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 4,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 5,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 5,
+      "Minor": 1,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 6,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    },
+    {
+      "Major": 7,
+      "Minor": 0,
+      "Build": -1,
+      "Revision": -1,
+      "MajorRevision": -1,
+      "MinorRevision": -1
+    }
+  ],
+  "Platform": "Win32NT",
+  "GitCommitId": "7.6.5"
+}

@@ -22,9 +22,17 @@ namespace PatentMarker.Palette
         private Button _btnCancel = null;
 
         private readonly List<PreviewRow> _rows = new List<PreviewRow>();
+        private readonly DictModel _model;
+        private readonly string _dictPath;
+        private readonly object _document;
+        private readonly string _identity;
 
-        public PasteRecognizeDialog()
+        public PasteRecognizeDialog(DictModel model, string dictPath, object document, string identity)
         {
+            _model = model;
+            _dictPath = dictPath;
+            _document = document;
+            _identity = identity;
             InitializeComponent();
         }
 
@@ -171,11 +179,10 @@ namespace PatentMarker.Palette
                     return;
                 }
 
-                string dictPath = DictLoader.CurrentPath ?? DictLoader.ResolveDictPath();
-                if (dictPath == null)
+                string dictPath = _dictPath;
+                if (!DictPaletteWorkflow.IsCurrentContext(_document, dictPath))
                 {
-                    MessageBox.Show(this, Strings.Paste_NoDict, Strings.Paste_Title,
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _lblInfo.Text = Strings.Dict_Changed;
                     return;
                 }
 
@@ -185,14 +192,12 @@ namespace PatentMarker.Palette
                     MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (mode == DialogResult.Cancel) return;
 
-                DictModel model = DictLoader.LoadForCurrentDrawing();
-                if (model == null)
+                if (!DictPaletteWorkflow.IsCurrentContext(_document, dictPath))
                 {
-                    _lblInfo.Text = Strings.Paste_NoDict;
+                    _lblInfo.Text = Strings.Dict_Changed;
                     return;
                 }
-
-                DictModel newModel = DictWriter.BuildWriteModel(model, RowsToWrite(rows), mode == DialogResult.Yes);
+                DictModel newModel = DictWriter.BuildWriteModel(_model, RowsToWrite(rows), mode == DialogResult.Yes);
                 if (newModel == null)
                 {
                     _lblInfo.Text = Strings.Paste_NoRows;
@@ -200,14 +205,13 @@ namespace PatentMarker.Palette
                 }
 
                 string error;
-                if (!DictWriter.Write(dictPath, newModel, out error))
+                if (!DictWriter.Write(dictPath, newModel, _identity, out error))
                 {
-                    MessageBox.Show(this, string.Format(Strings.Paste_WriteFail, error),
+                    MessageBox.Show(this, string.Format(Strings.Paste_WriteFail, DictPaletteWorkflow.DescribeWriteError(error)),
                         Strings.Paste_Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                DictLoader.NotifySelfWrite(newModel, dictPath);
                 _lblInfo.Text = string.Format(Strings.Paste_WriteOk, newModel.Entries.Count, dictPath);
                 MessageBox.Show(this, string.Format(Strings.Paste_WriteOk, newModel.Entries.Count, dictPath),
                     Strings.Paste_Title, MessageBoxButtons.OK, MessageBoxIcon.Information);

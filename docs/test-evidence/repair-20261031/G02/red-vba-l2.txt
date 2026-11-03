@@ -1,0 +1,7 @@
+﻿MODULES_IMPORTED
+FAIL|r017|total occurrences expected=3 actual=2
+FAIL|r021|entry count expected=1 actual=2
+PASS|r021|display keeps first spelling 1342A
+FAIL|r021|conflict count expected>=1 actual=0
+PASS|r021-control|distinct sub-numbers stay distinct
+SUMMARY: passed=2 failed=3

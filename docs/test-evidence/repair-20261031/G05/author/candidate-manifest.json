@@ -1,0 +1,122 @@
+{
+  "base_manifest_sha256": "e261ffb8581c12360187c3379f27e05430a804122a71ea8d7ce17ef221ceef8a",
+  "candidate_production": {
+    "cad-plugin/Shared/IO/PatSettings.cs": {
+      "before_sha256": "c5f64a76dc48c8bb3e8420b70df8c438a587a72bff3ebc7f826279ddd784a666",
+      "after_sha256": "ce9d6ede626461f56997f03e7a7f8561713a5b9c6a9cf7d4633189c57b1d6890"
+    },
+    "cad-plugin/Shared/IO/DictConflict.cs": {
+      "before_sha256": "8e6c58f1a4a2b9e0e1fc3484952e2a31abfe1e009db34aa61f86ec35f6ba8a04",
+      "after_sha256": "de69e4387bf096a4dd35a1586d08dfa6837738592379a80c2011cb8d8f45c41b"
+    },
+    "cad-plugin/Shared/Palette/DictPaletteControl.cs": {
+      "before_sha256": "74789f46434db8f4dcaad34485e9273753de519b6e434bc4e9b6cc949b18fab7",
+      "after_sha256": "9c1adc05b468ce0f35a7ef81a54cdbcc9fa026be20f7e5690927b121092164ae"
+    },
+    "cad-plugin/Shared/Palette/DictPaletteWorkflow.cs": {
+      "before_sha256": "722667442e4945564cf739a78bf4daa9b1723fcf140533d8adc103d6fd94cc6c",
+      "after_sha256": "c1d3d7e3e76d13b62be146be24abefff449dc5c2450ec54d7d859eee1f3513e5"
+    },
+    "cad-plugin/Shared/Palette/EditEntryDialog.cs": {
+      "before_sha256": "153a9199399a82e88d19dddf5885139f17d5854debb5e5e0cdeee02f612804e3",
+      "after_sha256": "93574a33c976980394b386f5561fb0ab38d3aacd2fa07ebd110f7081d1cf749b"
+    },
+    "cad-plugin/Shared/Palette/PasteRecognizeDialog.cs": {
+      "before_sha256": "85d23fb6ce6ca74602926fb0bf6fee946e383592cf46bd9c5878393d3b48ae56",
+      "after_sha256": "d9b5a750b57702cb8ab892bc082e67b7eda27a77ffa886c8d691b327e1ae0e8a"
+    },
+    "cad-plugin/Shared/Palette/ArbitrateDialog.cs": {
+      "before_sha256": "b7bfd128b3186cc1036656cb83ce1fa0225293f6f080cdd609ef268c4599c0ef",
+      "after_sha256": "fac23a91653106411563156acf53f28594714bfaf0b4f17b2d05415f76d53d57"
+    },
+    "vba/AutoExport.bas": {
+      "before_sha256": "8033a30dc71bd4198a918dc4ac5a9222d30e81fce9afd7af0355928eb85d3543",
+      "after_sha256": "b0f239ac77a66f6d3f2656495087183df99659d063447b4e27b41a14930cf916"
+    },
+    "vba/PatentDictPanel.frm": {
+      "before_sha256": "7d0d357d2f572cd89735603b3d08746c3be8989474639b585d732e5c0fdcde18",
+      "after_sha256": "a11917cf79cf295549cb546a239fa32997cc9af20cedd854dd19bffa10feedb3"
+    },
+    "cad-plugin/2007/PatentMarker/IO/DictEntry.cs": {
+      "before_sha256": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+      "after_sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3"
+    },
+    "cad-plugin/2007/PatentMarker/IO/DictWriter.cs": {
+      "before_sha256": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d",
+      "after_sha256": "00a702110f865fd4c871aac221a2b6896f5435060a9729188b415772acf72115"
+    },
+    "cad-plugin/2010/PatentMarker/IO/DictEntry.cs": {
+      "before_sha256": "1f29a68d71d22637ce03cdf960176c5ddd85930bcfb36de20846958ff7859020",
+      "after_sha256": "b045a8544912fb3e876653e2821f7aa8bbd3194abac7b2da521081f12671a4b3"
+    },
+    "cad-plugin/2010/PatentMarker/IO/DictWriter.cs": {
+      "before_sha256": "99b50d1d1240a591fafd1eb14679f0dd0d5a05d4430806932cb0bb589a21505d",
+      "after_sha256": "00a702110f865fd4c871aac221a2b6896f5435060a9729188b415772acf72115"
+    },
+    "cad-plugin/2013/PatentMarker/IO/DictEntry.cs": {
+      "before_sha256": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+      "after_sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e"
+    },
+    "cad-plugin/2013/PatentMarker/IO/DictWriter.cs": {
+      "before_sha256": "a2403e25a154b06162e430dcf26ce8f8f56efc4a4f6f8937b9c6af632ed48b61",
+      "after_sha256": "1dfc06b9348a58dd15206709369c62781f959ec2188b874a865b84ac0c5ddec4"
+    },
+    "cad-plugin/2015/PatentMarker/IO/DictEntry.cs": {
+      "before_sha256": "baa44c4696f4c7e19d59adb3c84e4ae2c9d807cd908aa76c403759a1d917b803",
+      "after_sha256": "4bddbc3a06af9227582a6e7d6720d1ce7b81535b6b49be7414df2b8a9e303a4e"
+    },
+    "cad-plugin/2015/PatentMarker/IO/DictWriter.cs": {
+      "before_sha256": "a2403e25a154b06162e430dcf26ce8f8f56efc4a4f6f8937b9c6af632ed48b61",
+      "after_sha256": "1dfc06b9348a58dd15206709369c62781f959ec2188b874a865b84ac0c5ddec4"
+    },
+    "cad-plugin/2025/PatentMarker/IO/DictEntry.cs": {
+      "before_sha256": "470cdc3e66523d3e483b2ef8f0fad7404a508708deaf85ad9e2e94068a5f273d",
+      "after_sha256": "a33b70a741a947923e3e2daa62bc4880250513f90663ead7aa97df56e26c0b3d"
+    },
+    "cad-plugin/2025/PatentMarker/IO/DictWriter.cs": {
+      "before_sha256": "b0271eb26eba3d5e3e57907eca4bfdeba29b8711b425150158092ea4ea7620ac",
+      "after_sha256": "18e1e03d999a605903c0c42037249b655c4703c4e4fa384bec63af3fc890bc54"
+    }
+  },
+  "candidate_tests_and_probes": {
+    "cad-plugin/2025/PatentMarker.Tests/G05ProtocolTests.cs": "0e1076a2d0550af008bf120dc3dbcac175b7bc32a4447e3d10f84876e139c47a",
+    "tools/test-g05-word.vbs": "bca5dc1a6c6cc07829e1978536547cdfe8af8641bc11fa408118c40fdaa5c865",
+    "tools/test-g05-digest.vbs": "e435d023254fa7baa0933280f0c365a3ab468371ea272ec7cff012012e7433b8",
+    "tools/test-g05-lock.cs": "b56a0e13b4f598d5d0387c740d061f4568ac792008f06c8e1ffb48751ad49e3a",
+    "tools/test-g05-lock.vbs": "49425be5162608941ec9244daef9f9f3eff2c0ac09a210e369924cc781ad8038"
+  },
+  "evidence_sha256": {
+    "docs/test-evidence/G05/source-before-manifest.json": "c02ec6aafc906a50304db6b1bb00230e3304624c7f046b964fa7dad5e727c543",
+    "docs/test-evidence/G05/cad-probe/before/cad-plugin/2025/PatentMarker.Tests/G05ProtocolTests.cs": "41f236e4179501cd4326548c3b5f9a7f7edb9fa92f1e3d3ec35400c092ab0510",
+    "docs/test-evidence/G05/cad-probe/after/cad-plugin/2025/PatentMarker.Tests/G05ProtocolTests.cs": "41f236e4179501cd4326548c3b5f9a7f7edb9fa92f1e3d3ec35400c092ab0510",
+    "docs/test-evidence/G05/cad-red-same-source.txt": "c153752115f58a640ad78d7fcdcdda9b3347cea454a46ee498946a45cd7f9a5c",
+    "docs/test-evidence/G05/cad-green-same-source.txt": "ea5f06c86a07f7a98a9f1b15b80afc590175ed4e889c4a2492164c02f6373dca",
+    "docs/test-evidence/G05/red-utf8.txt": "9e6802d1ebffca3e904c3a47d2d12dc9e5afc3cfc2aaafbd9601e0d8146fde87",
+    "docs/test-evidence/G05/green-cad-final.txt": "87d4bc60062c7f159a0db5d160069430fb247bd04d66924e84f9a186a8f7dbd9",
+    "docs/test-evidence/G05/red-arbitration.txt": "64bdf9795fea1a80c7c40b321e7d425d85e801963b2ae6592783b6153ad72942",
+    "docs/test-evidence/G05/green-arbitration.txt": "5985609c4c9c4a5a616edff682d0d31af059cc0e5d510ac2d8c812eda8f8906e",
+    "docs/test-evidence/G05/first-create.txt": "8362e03692d254a55e03a54cfdc517bf41d5f90b48e74d7beb2e56b517a8a4d7",
+    "docs/test-evidence/G05/word-red-repro.txt": "11a9f150ab396bfe99df8d0f7233cb0ff31c3bffd2ff0dd221fc4709e18d3d06",
+    "docs/test-evidence/G05/word-final2.txt": "7a5e0825aef90253fb8b71b9c45d58e9d4c5eab4be2739b05531cca59d642fc5",
+    "docs/test-evidence/G05/digest-word-final2.txt": "6e37d9fd47cf5b7520946ac6555e7a8e55a5b08db2c043b8bf3b0e42150be458",
+    "docs/test-evidence/G05/word-lock-final2.txt": "f48557dcfba5329f9f10e7408682d2a2ba3e7724032fe86ab4718161b407a47c",
+    "docs/test-evidence/G05/g05-lock-probe.exe": "395c2a99323aa7f367ddbf58b26b0693ca52e1c91a24c065445a8e1611958a57",
+    "docs/test-evidence/G05/word-panel-existing.txt": "13b3331f9695f6af946785a637babf51a953faf2f3ead577fdb749c7590d85ed",
+    "docs/test-evidence/G05/word-export-existing.txt": "6ea8657a415851320fba9d16204a555bf0607dca45abb0896754348c21dfaf73",
+    "docs/test-evidence/G05/build-all-final.txt": "8ef08cd28f35dae1223c29431f0673e4a53f25542f625e9c947cca107cba6e7c",
+    "docs/test-evidence/G05/version-sync.txt": "dc1d2c76a259fdee86c258bb75913ff14d7e137080029c9960f7275ac7cade40",
+    "docs/test-evidence/G05/public-tests-before-migration.txt": "f9ba90c394e26062995904198d8614c23a59b4d1d157565a42092ff8c497e14d",
+    "docs/test-evidence/G05/build-all-final2.txt": "a3aaa300dddef855c390f9af0d9a0c9d4d2d966bff8489b5c8bac951f9ebfb2d",
+    "docs/test-evidence/G05/green-cad-final2.txt": "2f3cf1f0e92acabf3f70311fa0c1485ac91ee50e5ebd4b6500141bcbd784d7d9"
+  },
+  "strings_handoff": {
+    "path": "cad-plugin/Shared/I18n/Strings.cs",
+    "before_sha256": "8b082d61446fba0aef7c44dc4fff495294efc1f644aed09e5fddff1ffbde34a3",
+    "after_sha256": "f764dc755cfcee0b30edd57fa3f270a771658d4c2e037e8b3cc720a7d56b8e7c",
+    "writer": "coordinator"
+  },
+  "unchanged": {
+    "vba/JsonWriter.bas": "0ed7661b042c5ae8638ce8f115c2ba2900daa53f957f36b93e369c1d1f353676",
+    "vba/PatentDictPanel.frx": "1fbceacb93828e1f35da7b01d54e4544e6f4d3281d509cf26a9d3459776ed7c1"
+  }
+}

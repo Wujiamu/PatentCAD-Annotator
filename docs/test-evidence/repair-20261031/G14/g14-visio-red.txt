@@ -1,0 +1,7 @@
+﻿G14: Visio 文件未完整还原，却也没有保留恢复副本。
+At C:\Users\wjm\AppData\Local\Temp\g14v4-97df96afe35c433591e9e71ed5957ffd\verify-visio-installer.ps1:31 char:28
++     if (-not $Condition) { throw $Message }
++                            ~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G14: Visio 文件未完整还原，却也没有保留恢复副本。:String) [], RuntimeException
+    + FullyQualifiedErrorId : G14: Visio 文件未完整还原，却也没有保留恢复副本。
+ 

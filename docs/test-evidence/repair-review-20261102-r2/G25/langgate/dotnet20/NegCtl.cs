@@ -1,0 +1,1 @@
+public class N { public int X { get; set; } }

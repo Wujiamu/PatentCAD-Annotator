@@ -34,6 +34,8 @@ namespace PatentOffice.Visio
         private HashSet<string> _markedNumbers = new HashSet<string>(NumberIdentity.Comparer);
         private int _malformedCount;
         private bool _closingForHost;
+        private bool _hasReportedReadFailure;
+        private bool _hasReportedBindingFailure;
 
         public PaletteForm(VisioAddIn addIn)
         {
@@ -174,39 +176,28 @@ namespace PatentOffice.Visio
                     !string.Equals(key, _activeDocumentKey, StringComparison.OrdinalIgnoreCase);
                 if (changed)
                 {
-                    _activeDocument = document;
-                    _activeDocumentKey = key;
-                    _boundPath = null;
-                    _lastAttemptedHash = null;
-                    _lastAttemptError = null;
-                    _lastAttemptSucceeded = false;
-                    _dictionaryCurrent = false;
-                    _snapshot = null;
-                    _markedNumbers.Clear();
-                    _malformedCount = 0;
+                    ClearDictionaryState();
                     RenderEntries();
-
-                    BindingResult binding = VisioDocumentBinding.Resolve(document);
-                    if (!string.IsNullOrEmpty(binding.Path)) _boundPath = binding.Path;
-                    _pathInput.Text = _boundPath ?? "";
-                    if (!string.IsNullOrEmpty(binding.Error))
-                    {
-                        _documentLabel.Text = "当前文档：" + SafeName(document);
-                        _bindingLabel.Text = "字典关联：" + binding.Error;
-                        _statusLabel.Text = "保存文档后可以选择字典；关联损坏时请重新绑定。";
-                        SetActionsEnabled(false);
-                        VisioDiagnostics.Write("binding.resolve", "FAIL", "doc=" + key + ";" + binding.Error);
-                        return;
-                    }
-                    VisioDiagnostics.Write("binding.resolve", string.IsNullOrEmpty(_boundPath) ? "UNBOUND" : "PASS",
-                        "doc=" + key + ";dict=" + (_boundPath ?? ""));
                 }
 
                 _activeDocument = document;
+                _activeDocumentKey = key;
                 _documentLabel.Text = "当前文档：" + SafeName(document);
+
+                // The binding lives in the document and can be changed by Undo/Redo or an external
+                // edit while the document object and path stay the same, so it is re-resolved on
+                // every poll instead of only when the document key changes.
+                BindingResult binding = VisioDocumentBinding.Resolve(document);
+                ApplyResolvedBinding(binding, key);
+                if (!string.IsNullOrEmpty(binding.Error))
+                {
+                    _statusLabel.Text = "保存文档后可以选择字典；关联损坏时请重新绑定。";
+                    SetActionsEnabled(false);
+                    ReportBindingFailure(key + ";" + binding.Error);
+                    return;
+                }
                 if (_boundPath == null)
                 {
-                    _bindingLabel.Text = "字典关联：未设置";
                     _statusLabel.Text = "先选择 Word 导出的 .dict.json。";
                     SetActionsEnabled(false);
                     return;
@@ -225,38 +216,102 @@ namespace PatentOffice.Visio
             }
         }
 
+        /// <summary>
+        /// Adopts the freshly resolved binding. A different binding invalidates everything that
+        /// belonged to the previous dictionary: rows, selection, marked statistics and the read
+        /// failure recorded for the other file. Without this the panel would show the old rows
+        /// next to the new path.
+        /// </summary>
+        private void ApplyResolvedBinding(BindingResult binding, string documentKey)
+        {
+            string resolved = string.IsNullOrEmpty(binding.Path) ? null : binding.Path;
+            string previous = _boundPath;
+            bool samePath = string.Equals(resolved, previous, StringComparison.OrdinalIgnoreCase);
+            if (!samePath)
+            {
+                bool hadBinding = previous != null || _snapshot != null;
+                ClearDictionaryState();
+                RenderEntries();
+                _boundPath = resolved;
+                if (hadBinding || resolved != null)
+                    VisioDiagnostics.Write("binding.changed", "INFO",
+                        "doc=" + documentKey + ";from=" + (previous ?? "") + ";to=" + (resolved ?? ""));
+            }
+            else
+            {
+                _boundPath = resolved;
+            }
+
+            _pathInput.Text = _boundPath ?? "";
+            if (!string.IsNullOrEmpty(binding.Error))
+            {
+                // A binding that cannot be resolved to a readable file must never leave the panel
+                // acting on the previously loaded snapshot; the rows stay for viewing only.
+                _dictionaryCurrent = false;
+                _bindingLabel.Text = "字典关联：" + binding.Error;
+                return;
+            }
+            if (_boundPath == null)
+            {
+                _dictionaryCurrent = false;
+                _bindingLabel.Text = "字典关联：未设置";
+                return;
+            }
+            _bindingLabel.Text = "字典：" + _boundPath;
+            // Only a transition is worth a log line; the panel re-resolves the binding on every
+            // 2-second poll, so logging each success would flood the diagnostic log.
+            bool recovered = _hasReportedBindingFailure;
+            _hasReportedBindingFailure = false;
+            if (!samePath || recovered)
+                VisioDiagnostics.Write("binding.resolve", "PASS", "doc=" + documentKey + ";dict=" + _boundPath);
+        }
+
+        /// <summary>Drops the dictionary view and every statistic derived from it.</summary>
+        private void ClearDictionaryState()
+        {
+            _boundPath = null;
+            _lastAttemptedHash = null;
+            _lastAttemptError = null;
+            _lastAttemptSucceeded = false;
+            _dictionaryCurrent = false;
+            _snapshot = null;
+            _markedNumbers.Clear();
+            _malformedCount = 0;
+            _hasReportedReadFailure = false;
+            _hasReportedBindingFailure = false;
+        }
+
         private void RefreshBoundDictionary(bool force)
         {
             if (string.IsNullOrEmpty(_boundPath)) return;
+            string path = _boundPath;
             try
             {
-                if (!File.Exists(_boundPath))
+                if (!File.Exists(path))
                 {
                     _dictionaryCurrent = false;
+                    _lastAttemptedHash = null;
+                    _lastAttemptSucceeded = false;
+                    _lastAttemptError = null;
                     _markButton.Enabled = false;
                     _statusLabel.Text = "字典文件暂不可用。上次有效列表保留供查看；请选择有效字典或恢复文件。";
+                    _hasReportedReadFailure = false;
                     return;
                 }
 
-                string hash = DictionaryReader.ComputeHash(_boundPath);
-                if (!force && string.Equals(hash, _lastAttemptedHash, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (_lastAttemptSucceeded && _dictionaryCurrent) return;
-                    if (!_lastAttemptSucceeded)
-                    {
-                        _dictionaryCurrent = false;
-                        _markButton.Enabled = false;
-                        _statusLabel.Text = "字典读取失败，已暂停新标注；上次有效列表仍保留。" + _lastAttemptError;
-                        return;
-                    }
-                }
+                // One read of the bytes yields both the identity and the content, so a failure can
+                // never be attributed to a hash taken from a different (possibly repaired) file.
+                DictionarySnapshot current = DictionaryReader.Read(path);
+                if (!force && _lastAttemptSucceeded && _dictionaryCurrent &&
+                    string.Equals(current.Sha256, _lastAttemptedHash, StringComparison.OrdinalIgnoreCase))
+                    return;
 
-                DictionarySnapshot current = DictionaryReader.Read(_boundPath);
                 _snapshot = current;
                 _lastAttemptedHash = current.Sha256;
                 _lastAttemptError = null;
                 _lastAttemptSucceeded = true;
                 _dictionaryCurrent = true;
+                _hasReportedReadFailure = false;
                 ScanCurrentDocument();
                 RenderEntries();
                 _statusLabel.Text = "已读取 " + current.Dictionary.Entries.Count + " 个编号；字典只读，标注保存在当前文档。";
@@ -266,14 +321,20 @@ namespace PatentOffice.Visio
             catch (Exception ex)
             {
                 _dictionaryCurrent = false;
-                try { _lastAttemptedHash = DictionaryReader.ComputeHash(_boundPath); }
-                catch { _lastAttemptedHash = null; }
-                _lastAttemptError = ex.GetType().Name + ":" + ex.Message;
+                // Never carry the failed bytes' identity into the cache: a transient I/O error must
+                // be retried on the next poll, and a content error must not be pinned to a hash that
+                // may already describe a repaired file.
+                _lastAttemptedHash = null;
                 _lastAttemptSucceeded = false;
+                _lastAttemptError = ex.GetType().Name + ":" + ex.Message;
                 _markButton.Enabled = false;
-                _statusLabel.Text = "字典读取失败，已暂停新标注；上次有效列表仍保留。" + _lastAttemptError;
-                VisioDiagnostics.Write("dict.read", "FAIL", "doc=" + _activeDocumentKey + ";path=" +
-                    _boundPath + ";" + _lastAttemptError);
+                _statusLabel.Text = "字典读取失败，已暂停新标注；下次刷新会自动重试。上次有效列表仍保留。" + _lastAttemptError;
+                if (!_hasReportedReadFailure)
+                {
+                    _hasReportedReadFailure = true;
+                    VisioDiagnostics.Write("dict.read", "FAIL", "doc=" + _activeDocumentKey + ";path=" +
+                        path + ";" + _lastAttemptError);
+                }
             }
         }
 
@@ -336,6 +397,7 @@ namespace PatentOffice.Visio
             VisioDocumentBinding.Save(document, dictionaryPath);
             _activeDocument = document;
             _activeDocumentKey = GetDocumentKey(document);
+            ClearDictionaryState();
             _boundPath = snapshot.Path;
             _snapshot = snapshot;
             _lastAttemptedHash = snapshot.Sha256;
@@ -355,7 +417,7 @@ namespace PatentOffice.Visio
         {
             try
             {
-                if (!RefreshActionContext()) return;
+                if (!RefreshActionContext(true)) return;
                 if (!_dictionaryCurrent || _snapshot == null)
                     throw new InvalidOperationException("当前字典不可用，已暂停标注。");
                 if (_entries.SelectedItems.Count != 1)
@@ -379,7 +441,7 @@ namespace PatentOffice.Visio
         {
             try
             {
-                if (!RefreshActionContext()) return;
+                if (!RefreshActionContext(false)) return;
                 if (!_dictionaryCurrent || _snapshot == null)
                     throw new InvalidOperationException("当前字典不可用，无法检查。");
                 ScanCurrentDocument();
@@ -430,15 +492,48 @@ namespace PatentOffice.Visio
             _malformedCount = scan.MalformedCount;
         }
 
-        private bool RefreshActionContext()
+        /// <summary>
+        /// Re-checks the host context before an action. Both the document identity and the binding
+        /// are re-validated; when either changed, the stale row selection is dropped so a number from
+        /// the previous dictionary cannot be applied to the new one. A whole-document check needs no
+        /// selection, so it may continue once the new dictionary has been read.
+        /// </summary>
+        private bool RefreshActionContext(bool requiresSelection)
         {
             string previousKey = _activeDocumentKey;
+            string previousPath = _boundPath;
+            bool hadSelection = _entries.SelectedItems.Count == 1;
             RefreshHostState();
-            if (string.Equals(previousKey, _activeDocumentKey, StringComparison.OrdinalIgnoreCase)) return true;
-            _statusLabel.Text = "当前文档已切换。请在新文档重新选择编号或执行检查。";
-            VisioDiagnostics.Write("palette.action", "INFO", "document_changed;from=" +
-                (previousKey ?? "") + ";to=" + (_activeDocumentKey ?? ""));
-            return false;
+
+            bool documentChanged = !string.Equals(previousKey, _activeDocumentKey, StringComparison.OrdinalIgnoreCase);
+            if (documentChanged)
+            {
+                _statusLabel.Text = "当前文档已切换。请在新文档重新选择编号或执行检查。";
+                VisioDiagnostics.Write("palette.action", "INFO", "document_changed;from=" +
+                    (previousKey ?? "") + ";to=" + (_activeDocumentKey ?? ""));
+                return false;
+            }
+
+            bool bindingChanged = !string.Equals(previousPath, _boundPath, StringComparison.OrdinalIgnoreCase);
+            if (bindingChanged)
+            {
+                VisioDiagnostics.Write("palette.action", "INFO", "binding_changed;from=" +
+                    (previousPath ?? "") + ";to=" + (_boundPath ?? ""));
+                if (requiresSelection)
+                {
+                    _statusLabel.Text = "字典关联已变化，已清除旧选择。请重新选择编号后再执行操作。";
+                    return false;
+                }
+                return true;
+            }
+
+            if (requiresSelection && hadSelection && _entries.SelectedItems.Count != 1)
+            {
+                _statusLabel.Text = "列表已刷新，已清除旧选择。请重新选择编号后再执行操作。";
+                VisioDiagnostics.Write("palette.action", "INFO", "selection_cleared");
+                return false;
+            }
+            return true;
         }
 
         private void RenderEntries()
@@ -467,14 +562,7 @@ namespace PatentOffice.Visio
         {
             _activeDocument = null;
             _activeDocumentKey = null;
-            _boundPath = null;
-            _lastAttemptedHash = null;
-            _lastAttemptError = null;
-            _lastAttemptSucceeded = false;
-            _dictionaryCurrent = false;
-            _snapshot = null;
-            _markedNumbers.Clear();
-            _malformedCount = 0;
+            ClearDictionaryState();
             _pathInput.Text = "";
             RenderEntries();
         }
@@ -506,6 +594,14 @@ namespace PatentOffice.Visio
         {
             _statusLabel.Text = title + "：" + exception.Message;
             MessageBox.Show(this, exception.Message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>Logs a binding failure once per changed detail so a 2-second poll cannot flood the log.</summary>
+        private void ReportBindingFailure(string details)
+        {
+            if (_hasReportedBindingFailure) return;
+            _hasReportedBindingFailure = true;
+            VisioDiagnostics.Write("binding.resolve", "FAIL", details);
         }
     }
 }

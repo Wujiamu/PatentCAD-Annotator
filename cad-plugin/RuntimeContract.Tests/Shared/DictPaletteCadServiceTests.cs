@@ -15,10 +15,13 @@ namespace PatentMarker.RuntimeContractTests
                 AddLeader(fixture, "old", "PAT_DIM", out patLeader, out patText);
                 Assert.True(patLeader.Annotation.IsNull);
 
-                int changed = Palette.DictPaletteCadService.RenameNumber(
-                    fixture.Document, "OLD", "new");
+                Palette.DictPaletteRenameResult result =
+                    Palette.DictPaletteCadService.RenameNumber(
+                        fixture.Document, "OLD", "new");
 
-                Assert.Equal(1, changed);
+                Assert.True(result.Complete, result.Error);
+                Assert.Equal(1, result.Matched);
+                Assert.Equal(1, result.Changed);
                 Assert.Equal("new", patText.Contents);
                 Assert.Contains("transaction.commit", fixture.Database.Trace);
                 Assert.DoesNotContain("transaction.rollback", fixture.Database.Trace);
@@ -67,7 +70,7 @@ namespace PatentMarker.RuntimeContractTests
                 }
 
                 Assert.Equal(1, Palette.DictPaletteCadService.RenameNumber(
-                    fixture.Document, "standalone", "renamed"));
+                    fixture.Document, "standalone", "renamed").Changed);
                 Assert.Equal("\\Lrenamed\\l", text.Contents);
 
                 Palette.DictPaletteDeleteResult result =
@@ -86,7 +89,7 @@ namespace PatentMarker.RuntimeContractTests
                 AddMLeader(fixture, "old", out mleader);
 
                 Assert.Equal(1, Palette.DictPaletteCadService.RenameNumber(
-                    fixture.Document, "OLD", "new"));
+                    fixture.Document, "OLD", "new").Changed);
                 Assert.Equal("new", mleader.MText.Contents);
 
                 Palette.DictPaletteDeleteResult result =

@@ -1,0 +1,112 @@
+snapshot=green|entry=production|dialog=modal
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+libpng warning: iCCP: known incorrect sRGB profile
+PASS|A1-buttons-FalseFalsekeep|parsed=False/False|keep=False|restore=False|later=True
+PASS|A1-action-FalseFalsekeep|success=False|allowed=False|error=Current dictionary cannot be parsed.
+PASS|A1-buttons-FalseFalserestore|parsed=False/False|keep=False|restore=False|later=True
+PASS|A1-action-FalseFalserestore|success=False|allowed=False|error=Backup dictionary cannot be parsed.
+PASS|A1-buttons-FalseFalselater|parsed=False/False|keep=False|restore=False|later=True
+PASS|A1-later-FalseFalselater|current_kept=True|backup_present=True
+PASS|A1-buttons-FalseTruekeep|parsed=False/True|keep=False|restore=True|later=True
+PASS|A1-action-FalseTruekeep|success=False|allowed=False|error=Current dictionary cannot be parsed.
+PASS|A1-buttons-FalseTruerestore|parsed=False/True|keep=False|restore=True|later=True
+PASS|A1-action-FalseTruerestore|success=True|allowed=True|error=<none>
+PASS|A1-buttons-FalseTruelater|parsed=False/True|keep=False|restore=True|later=True
+PASS|A1-later-FalseTruelater|current_kept=True|backup_present=True
+PASS|A1-buttons-TrueFalsekeep|parsed=True/False|keep=True|restore=False|later=True
+PASS|A1-action-TrueFalsekeep|success=True|allowed=True|error=<none>
+PASS|A1-buttons-TrueFalserestore|parsed=True/False|keep=True|restore=False|later=True
+PASS|A1-action-TrueFalserestore|success=False|allowed=False|error=Backup dictionary cannot be parsed.
+PASS|A1-buttons-TrueFalselater|parsed=True/False|keep=True|restore=False|later=True
+PASS|A1-later-TrueFalselater|current_kept=True|backup_present=True
+PASS|A1-buttons-TrueTruekeep|parsed=True/True|keep=True|restore=True|later=True
+PASS|A1-action-TrueTruekeep|success=True|allowed=True|error=<none>
+PASS|A1-buttons-TrueTruerestore|parsed=True/True|keep=True|restore=True|later=True
+PASS|A1-action-TrueTruerestore|success=True|allowed=True|error=<none>
+PASS|A1-buttons-TrueTruelater|parsed=True/True|keep=True|restore=True|later=True
+PASS|A1-later-TrueTruelater|current_kept=True|backup_present=True
+PASS|A2-current-change-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-change-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-change-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-change-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-delete-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-current-delete-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-delete-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-backup-delete-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-document-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-document-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-path-keep|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A2-path-restore|success=False|wrote=False|error=PATENTMARKER_CONTENT_CHANGED
+PASS|A4-other-backup-retained|success=True|older_present=True
+PASS|A3-open-none|opened=True
+PASS|A3-result-none|success=True|wrote=True|expected_wrote=True|last_wrote=True|last_error=<none>
+PASS|A3-disk-none|disk=201|expected=201
+PASS|A3-loader-none|loader=201|expected=201
+PASS|A3-panel-matches-disk-none|panel=201|disk=201
+PASS|A3-backup-retained-none|backup_present=False|expected=False|arbitrate_enabled=False
+PASS|A3-status-truthful-none|status=已恢复 CAD 版（CAD 标记已清除）。|expect_success=True
+PASS|A3-open-readonly|opened=True
+PASS|A3-result-readonly|success=False|wrote=False|expected_wrote=False|last_wrote=False|last_error=字典文件为只读: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\f7ff42a682224fe29da88c7694f4166b\t.dict.json
+PASS|A3-disk-readonly|disk=301|expected=301
+PASS|A3-loader-readonly|loader=301|expected=301
+PASS|A3-panel-matches-disk-readonly|panel=301|disk=301
+PASS|A3-backup-retained-readonly|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-readonly|status=裁决失败: 字典文件为只读: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\f7ff42a682224fe29da88c7694f4166b\t.dict.json|expect_success=False
+PASS|A3-open-baseline|opened=True
+PASS|A3-result-baseline|success=False|wrote=True|expected_wrote=True|last_wrote=True|last_error=PATENTMARKER_BASELINE_FAILED
+PASS|A3-disk-baseline|disk=201|expected=201
+PASS|A3-loader-baseline|loader=201|expected=201
+PASS|A3-panel-matches-disk-baseline|panel=201|disk=201
+PASS|A3-backup-retained-baseline|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-baseline|status=裁决失败: 字典已写入，但基线更新失败；恢复点已保留。|expect_success=False
+PASS|A3-status-tells-write-baseline|status=裁决失败: 字典已写入，但基线更新失败；恢复点已保留。
+PASS|A3-open-delete-backup|opened=True
+PASS|A3-result-delete-backup|success=False|wrote=True|expected_wrote=True|last_wrote=True|last_error=Dictionary was restored; backup retained: IOException: The process cannot access the file 'C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\53db4dd9d8ac4bb48e6f258169ee0e5d\t.dict.json.word-20261102-010101.bak' because it is being used by another process.
+PASS|A3-disk-delete-backup|disk=201|expected=201
+PASS|A3-loader-delete-backup|loader=201|expected=201
+PASS|A3-panel-matches-disk-delete-backup|panel=201|disk=201
+PASS|A3-backup-retained-delete-backup|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-delete-backup|status=裁决失败: Dictionary was restored; backup retained: IOException: The process cannot access the file 'C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\53db4dd9d8ac4bb48e6f258169ee0e5d\t.dict.json.word-20261102-010101.bak' because it is being used by another process.|expect_success=False
+PASS|A3-status-tells-write-delete-backup|status=裁决失败: Dictionary was restored; backup retained: IOException: The process cannot access the file 'C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\53db4dd9d8ac4bb48e6f258169ee0e5d\t.dict.json.word-20261102-010101.bak' because it is being used by another process.
+PASS|A3-open-readonly-repeat|opened=True
+PASS|A3-result-readonly-repeat|success=False|wrote=False|expected_wrote=False|last_wrote=False|last_error=字典文件为只读: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\566e534a80134b2281015ce183e6004a\t.dict.json
+PASS|A3-disk-readonly-repeat|disk=301|expected=301
+PASS|A3-loader-readonly-repeat|loader=301|expected=301
+PASS|A3-panel-matches-disk-readonly-repeat|panel=301|disk=301
+PASS|A3-backup-retained-readonly-repeat|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-readonly-repeat|status=裁决失败: 字典文件为只读: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\566e534a80134b2281015ce183e6004a\t.dict.json|expect_success=False
+PASS|A3-open-baseline-repeat|opened=True
+PASS|A3-result-baseline-repeat|success=False|wrote=True|expected_wrote=True|last_wrote=False|last_error=PATENTMARKER_CONTENT_CHANGED
+PASS|A3-disk-baseline-repeat|disk=201|expected=201
+PASS|A3-loader-baseline-repeat|loader=201|expected=201
+PASS|A3-panel-matches-disk-baseline-repeat|panel=201|disk=201
+PASS|A3-backup-retained-baseline-repeat|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-baseline-repeat|status=裁决失败: 字典已写入，但基线更新失败；恢复点已保留。|expect_success=False
+PASS|A3-status-tells-write-baseline-repeat|status=裁决失败: 字典已写入，但基线更新失败；恢复点已保留。
+PASS|A3-open-delete-backup-repeat|opened=True
+PASS|A3-result-delete-backup-repeat|success=False|wrote=True|expected_wrote=True|last_wrote=False|last_error=PATENTMARKER_CONTENT_CHANGED
+PASS|A3-disk-delete-backup-repeat|disk=201|expected=201
+PASS|A3-loader-delete-backup-repeat|loader=201|expected=201
+PASS|A3-panel-matches-disk-delete-backup-repeat|panel=201|disk=201
+PASS|A3-backup-retained-delete-backup-repeat|backup_present=True|expected=True|arbitrate_enabled=True
+PASS|A3-status-truthful-delete-backup-repeat|status=裁决失败: Dictionary was restored; backup retained: IOException: The process cannot access the file 'C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\ff60c6bf398949da967bab947295efb2\t.dict.json.word-20261102-010101.bak' because it is being used by another process.|expect_success=False
+PASS|A3-status-tells-write-delete-backup-repeat|status=裁决失败: Dictionary was restored; backup retained: IOException: The process cannot access the file 'C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G25\probe\bin\Release\net8.0-windows\g25-work\ff60c6bf398949da967bab947295efb2\t.dict.json.word-20261102-010101.bak' because it is being used by another process.
+PASS|A6-session-fact-present|present=True
+PASS|A6-session-reports-write-after-later|session_any_wrote=True|last_outcome_wrote=False
+PASS|A6-session-reports-no-full-success|any_succeeded=False|attempts=2|write_error=PATENTMARKER_BASELINE_FAILED
+PASS|A6-panel-matches-disk|panel=201|disk=201
+PASS|A5-drawing-a-written|a_disk=201
+PASS|A5-refresh-does-not-show-arbitrated-drawing-on-other|panel_at_close=301|panel_after_polls=501|a_restored=201
+PASS|A5-panel-is-unchanged-or-active-drawing|panel_at_close=301|allowed=301|501
+PASS|A5-status-not-success|status=裁决失败: 字典已写入，但基线更新失败；恢复点已保留。
+PASS|A5-active-drawing-shown-after-activation|panel=501
+PASS|A5-other-drawing-number-intact|b_disk=501
+SUMMARY: passed=100 failed=0 skipped=0

@@ -1,0 +1,32 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py route
+exit: 1
+FAIL R-001 h=1 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=90: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=270: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=90: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=270: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=1 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=3.5 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=100 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=75: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=105: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=255: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 h=10 d=10000 angle=285: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+FAIL R-001 crossing text: ArgumentException 引线拐点过于靠近文字，请调整拾取点。
+SUMMARY selector=route checks=89 failed=29

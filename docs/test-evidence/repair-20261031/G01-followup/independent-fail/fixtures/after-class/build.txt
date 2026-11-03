@@ -1,0 +1,8 @@
+command: dotnet build <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\after-class\Fixture.csproj -c Release --nologo -v quiet
+exit: 0
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.80

@@ -1,0 +1,90 @@
+{
+  "dependencies_count": 740,
+  "errors": [],
+  "versions": {
+    "2007": {
+      "sdk": {
+        "cad-plugin/2007/PatentMarker/lib/acdbmgd.dll": {
+          "sha256": "8371774f080aee33c4c80ef57f9aaa598228dedb94fb1d31c4c6315f81b8d677",
+          "matches_baseline": true
+        },
+        "cad-plugin/2007/PatentMarker/lib/acmgd.dll": {
+          "sha256": "3cf2cb4fb5fa27099c6aa1ab24b0314bcef9960c45cbd233d1064876e9ffda98",
+          "matches_baseline": true
+        }
+      },
+      "output_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G13\\cad-plugin\\2007\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "output_sha256": "9e258c81f5288b305232e24464843a63db036f487fe761c3265b396089de45ee"
+    },
+    "2010": {
+      "sdk": {
+        "cad-plugin/2010/PatentMarker/lib/acdbmgd.dll": {
+          "sha256": "41d312faa67742027487a0d6d05cb154ee7507042710111d3670bc1144ddc87b",
+          "matches_baseline": true
+        },
+        "cad-plugin/2010/PatentMarker/lib/acmgd.dll": {
+          "sha256": "a2b557e4c437b9b59dad63cbb4b4af7abb775e145ef6e6581a991da0e713810f",
+          "matches_baseline": true
+        }
+      },
+      "output_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G13\\cad-plugin\\2010\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "output_sha256": "019aacbd26c1b626fc6954879c60fd960daee82ece7da24c5d47d6c5c0b77be8"
+    },
+    "2013": {
+      "sdk": {
+        "cad-plugin/2013/PatentMarker/lib/accoremgd.dll": {
+          "sha256": "de881bea82b6b8386c163dff5e2e06a25bc013cbe75be0ebefccc837ea4ffa5d",
+          "matches_baseline": true
+        },
+        "cad-plugin/2013/PatentMarker/lib/acdbmgd.dll": {
+          "sha256": "eb4d11a113c11dec21db59f2aee95bef05638cc586c5b42324d01f1a876da284",
+          "matches_baseline": true
+        },
+        "cad-plugin/2013/PatentMarker/lib/acmgd.dll": {
+          "sha256": "4258b86dfdb29cf06c77e51474b72b64912b7ca0eae13dbc87d17e7be186c4aa",
+          "matches_baseline": true
+        }
+      },
+      "output_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G13\\cad-plugin\\2013\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "output_sha256": "6c1eda00cbb750db23edce036c81979ed07a132e4270a116c8051a332c905ce2"
+    },
+    "2015": {
+      "sdk": {
+        "cad-plugin/2015/PatentMarker/lib/accoremgd.dll": {
+          "sha256": "9ec078239b85fca1fa8572f6636f6fce5e361c58102003c18e02c3af17d10f26",
+          "matches_baseline": true
+        },
+        "cad-plugin/2015/PatentMarker/lib/acdbmgd.dll": {
+          "sha256": "fc1f03d80e0c3127a66506e121393fc9d9873fc0d67363fed8793e2e5b8fe64d",
+          "matches_baseline": true
+        },
+        "cad-plugin/2015/PatentMarker/lib/acmgd.dll": {
+          "sha256": "459fd576b3547faa300148e425bee94d41a182a53bc65a5b16b6655fd60c6056",
+          "matches_baseline": true
+        }
+      },
+      "output_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G13\\cad-plugin\\2015\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "output_sha256": "6c926c809838cc8287031837fb7fdfa59fa9e584e4c7dbda81276d2d82a97122"
+    },
+    "2025": {
+      "sdk": {
+        "cad-plugin/2025/PatentMarker/lib/accoremgd.dll": {
+          "sha256": "77eb421995e5dfbcc28e66cd4ee50718746c0c6ae26fad50bae174ad373201fe",
+          "matches_baseline": true
+        },
+        "cad-plugin/2025/PatentMarker/lib/acdbmgd.dll": {
+          "sha256": "c4c1133a1d35fbdb5deb9b98d0cf9df62684ca3c0621ae11f9d28352388ffc78",
+          "matches_baseline": true
+        },
+        "cad-plugin/2025/PatentMarker/lib/acmgd.dll": {
+          "sha256": "d34ef77113688cd15c287a7278975a0286e40660502e4b7b03e37f12e4c1a4d1",
+          "matches_baseline": true
+        }
+      },
+      "output_path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G13\\cad-plugin\\2025\\PatentMarker\\bin\\Release\\net8.0-windows\\PatentMarker.dll",
+      "output_sha256": "2fc310271a4cd04f1a223cf261c1c30990821379946c76e9d5f08e0357909a69"
+    }
+  },
+  "build_log_sha256": "fb3df8f9e57eebc497dfbf8edc72c73c0c985cb07b4d73c91f635c60cfdb156d",
+  "dependency_manifest_sha256": "22aa3577065e1c68aebe20e3dfad8d6276ea8d207fef5e761fcb5ea8abb8e64e"
+}

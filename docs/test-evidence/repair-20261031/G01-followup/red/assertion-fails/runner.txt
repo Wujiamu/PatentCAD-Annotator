@@ -1,0 +1,10 @@
+exit=1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+FAIL FixtureTests.Fails : EqualException: Assert.Equal() Failure: Values differ
+Expected: 2
+Actual:   1
+SUMMARY: passed=0 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Fails : EqualException: Assert.Equal() Failure: Values differ
+Expected: 2
+Actual:   1

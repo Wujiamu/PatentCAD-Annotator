@@ -1,0 +1,13 @@
+﻿已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-be0ed36b518d48b8ae4a76db430a8af2\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-be0ed36b518d48b8ae4a76db430a8af2\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-be0ed36b518d48b8ae4a76db430a8af2\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+PASS: G14 部分删除失败后从恢复副本还原完整文件集与注册项。
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+PASS: 首次安装故障回滚、重复安装、升级故障回滚、卸载以及非产品文件和注册项哨兵保护。

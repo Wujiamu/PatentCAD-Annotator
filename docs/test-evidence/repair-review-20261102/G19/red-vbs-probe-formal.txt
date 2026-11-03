@@ -1,0 +1,69 @@
+PASS|pattern-text|G02_NUM
+PASS|pattern-text|G02_WS
+PASS|pattern-text|G02_INLINE
+PASS|pattern-text|G02_NAME
+PASS|pattern-text|G02_NAMEFIRST
+PASS|pattern-text|G02_NAMEBARE
+PASS|pattern-text|G02_SEP
+PASS|pattern-text|G02_SEPN
+PASS|pattern-text|G02_CELLSTART
+PASS|pattern-text|G02_P1
+PASS|pattern-text|G02_PB
+PASS|pattern-text|G02_P2
+PASS|pattern-text|G02_PA
+PASS|pattern-text|G02_P3
+PASS|pattern-text|G02_HDR0
+PASS|pattern-text|G02_HDR1
+PASS|pattern-text|G02_HDR2
+PASS|pattern-text|G02_HDR3
+PASS|pattern-text|G02_HDR4
+PASS|pattern-text|G02_HDR5
+PASS|pattern-text|G02_SECTIONEND
+PASS|pattern-text|G02_TABLEA
+PASS|pattern-text|G02_TABLEB
+PASS|display|r016-number-first-s1|hits=1 raw=1
+PASS|display|r016-number-first-hyphen|hits=1 raw=1
+PASS|display|r016-number-first-paren-s1|hits=1 raw=1
+PASS|display|r016-number-first-suffix|hits=2 raw=2
+PASS|display|r016-suffix-digits|hits=1 raw=1
+PASS|display|r016-mid-cut-guard|hits=1 raw=1
+PASS|display|r016-too-long|hits=0 raw=0
+PASS|display|r016-mixed-forms|hits=4 raw=4
+PASS|display|r018-mixed-order|hits=2 raw=2
+PASS|display|r018-mixed-multi|hits=4 raw=4
+PASS|display|r018-paren-then-old|hits=2 raw=2
+PASS|display|r033-plain-then-number|hits=0 raw=0
+PASS|display|r033-plain-then-number-crlf|hits=0 raw=0
+PASS|display|r033-plain-then-number-cr|hits=0 raw=0
+PASS|display|r033-bare-one-line|hits=1 raw=1
+PASS|display|r033-bare-two-lines|hits=2 raw=2
+PASS|display|r033-bare-tab|hits=1 raw=1
+PASS|display|r033-bare-lead-space|hits=1 raw=1
+PASS|display|r032-z-name|hits=3 raw=3
+PASS|display|r032-z-lower|hits=3 raw=3
+PASS|display|r032-no-z|hits=2 raw=2
+PASS|display|r032-blank-para|hits=2 raw=2
+PASS|display|r032-z-crlf-blank|hits=3 raw=3
+PASS|display|r017-repeat|hits=2 raw=3
+PASS|display|r017-tie|hits=2 raw=2
+PASS|display|g15-name-first-six-digits|hits=0 raw=0
+PASS|display|g15-name-first-six-digits-space|hits=0 raw=0
+PASS|display|g15-name-first-six-digits-tab|hits=0 raw=0
+PASS|display|g15-name-first-five-digits|hits=1 raw=1
+PASS|display|g15-name-first-paren-six-digits|hits=0 raw=0
+PASS|display|g15-name-first-letter-prefix-six|hits=0 raw=0
+PASS|display|g15-name-with-digits|hits=1 raw=1
+PASS|display|g15-invalid-then-valid|hits=1 raw=1
+PASS|display|g19-repeat-after-chinese|hits=1 raw=1
+FAIL|display|g19-repeat-after-letter|count expected=1 actual=0 hits=[]
+FAIL|display|g19-repeat-after-digit|count expected=1 actual=0 hits=[]
+FAIL|display|g19-repeat-prefixed-number|count expected=1 actual=0 hits=[]
+PASS|display|g19-same-text-prefix|hits=1 raw=1
+FAIL|display|g19-paren-halfwidth|count expected=1 actual=0 hits=[]
+FAIL|display|g19-paren-fullwidth|count expected=1 actual=0 hits=[]
+PASS|display|g19-name-digits-not-repeated|hits=1 raw=1
+FAIL|display|g19-five-digits|count expected=1 actual=0 hits=[]
+PASS|display|g19-six-digits-rejected|hits=0 raw=0
+FAIL|display|g19-mixed-order|count expected=2 actual=1 hits=[1|底座]
+SUMMARY: passed=60 failed=7
+EXITCODE=1

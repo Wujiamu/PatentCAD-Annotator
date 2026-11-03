@@ -1,0 +1,204 @@
+{
+  "time_local": "2026-11-01T00:46:29.440727+08:00",
+  "reviewer": "/root/g01 independent (not G13 author)",
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "baseline_manifest_sha256": "7a8c5653d2d691d8c210b87776ad7251ef5a6f8ff84248f624da7ba000aa9034",
+  "source_hashes": {
+    "PatBraceGeometry_baseline": "8ca5e55434dc3c512d920899910841af277de315f0c892fb245ffbe07caa659d",
+    "PatBraceGeometry_candidate": "0062bda79c2697a523ea351e86a6baba80eaa216d39afae55a0e9ae8f768f033",
+    "PatBraceEntity_baseline": "b137f18c13a4e705f4c6268955317763cc0351a05ce98f1019f85118945bc010",
+    "PatBraceEntity_candidate": "fa837be499966e78a71509e48f9951d27e7958f79a07a8475f730570f5b20aba",
+    "PatBraceCommand_baseline_and_candidate": "87ec15a36ff2c0b641795b634b4f8078887944a37f412b74bb50e38507aa9abb"
+  },
+  "R025": {
+    "source_simulation": "PASS",
+    "candidate_four_simulations": {
+      "2007": "9/9 PASS",
+      "2010": "9/9 PASS",
+      "2013": "9/9 PASS",
+      "2015": "9/9 PASS"
+    },
+    "baseline_simulation": "2 PASS / 7 FAIL (exit 1)",
+    "independent_command_simulation": {
+      "baseline": "2 PASS / 3 FAIL (exit 1)",
+      "candidate": "5 PASS / 0 FAIL (exit 0)",
+      "filter": "FullyQualifiedName~G13IndependentCommandTests",
+      "scope": "production command source with temporary prompt/selection stubs, not actual CAD"
+    },
+    "five_version_build": "PASS (independent build, exit 0; 2025 reports 320 warnings, including MSB3277 WindowsBase conflict)",
+    "real_host": "SKIP/BLOCKED: actual CAD command and save/reopen not exercised"
+  },
+  "R028": {
+    "status": "SKIP/BLOCKED",
+    "reason": "real Xrecord group codes and save/reopen not examined; no migration or closure"
+  },
+  "github_external_old_host_acceptance": "SKIP/BLOCKED: 2007/2010/2013/2015 target environments not returned; no local probing",
+  "sdk_dependency_validation": {
+    "sdk_count": 13,
+    "sdk_all_match_baseline": true,
+    "build_dependency_count": 740,
+    "build_dependency_mismatches": 0
+  },
+  "simulation_runs": [
+    {
+      "snapshot": "baseline-run",
+      "version": "2007",
+      "command": [
+        "dotnet",
+        "test",
+        "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj",
+        "--configuration",
+        "Release",
+        "--nologo",
+        "--filter",
+        "FullyQualifiedName~G13BracePlanarityTests",
+        "--logger",
+        "console;verbosity=normal"
+      ],
+      "exit_code": 1,
+      "log": "baseline-run-2007.log",
+      "time_local": "2026-11-01T00:42:27.628753+08:00"
+    },
+    {
+      "snapshot": "candidate",
+      "version": "2007",
+      "command": [
+        "dotnet",
+        "test",
+        "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2007.Tests.csproj",
+        "--configuration",
+        "Release",
+        "--nologo",
+        "--filter",
+        "FullyQualifiedName~G13BracePlanarityTests",
+        "--logger",
+        "console;verbosity=normal"
+      ],
+      "exit_code": 0,
+      "log": "candidate-2007.log",
+      "time_local": "2026-11-01T00:42:31.160065+08:00"
+    },
+    {
+      "snapshot": "candidate",
+      "version": "2010",
+      "command": [
+        "dotnet",
+        "test",
+        "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2010.Tests.csproj",
+        "--configuration",
+        "Release",
+        "--nologo",
+        "--filter",
+        "FullyQualifiedName~G13BracePlanarityTests",
+        "--logger",
+        "console;verbosity=normal"
+      ],
+      "exit_code": 0,
+      "log": "candidate-2010.log",
+      "time_local": "2026-11-01T00:42:34.609691+08:00"
+    },
+    {
+      "snapshot": "candidate",
+      "version": "2013",
+      "command": [
+        "dotnet",
+        "test",
+        "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2013.Tests.csproj",
+        "--configuration",
+        "Release",
+        "--nologo",
+        "--filter",
+        "FullyQualifiedName~G13BracePlanarityTests",
+        "--logger",
+        "console;verbosity=normal"
+      ],
+      "exit_code": 0,
+      "log": "candidate-2013.log",
+      "time_local": "2026-11-01T00:42:38.060382+08:00"
+    },
+    {
+      "snapshot": "candidate",
+      "version": "2015",
+      "command": [
+        "dotnet",
+        "test",
+        "cad-plugin/RuntimeContract.Tests/PatentMarker.RuntimeContract.2015.Tests.csproj",
+        "--configuration",
+        "Release",
+        "--nologo",
+        "--filter",
+        "FullyQualifiedName~G13BracePlanarityTests",
+        "--logger",
+        "console;verbosity=normal"
+      ],
+      "exit_code": 0,
+      "log": "candidate-2015.log",
+      "time_local": "2026-11-01T00:42:41.462810+08:00"
+    }
+  ],
+  "build_command": [
+    "powershell",
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    ".\\build.ps1",
+    "-Version",
+    "all"
+  ],
+  "build_exit": 0,
+  "inputs_sha256": {
+    "G13IndependentCommandTests.cs": "1368161c027e6013e6f617299c6d266616d659fa9a859373616814bfe543cafc",
+    "IndependentPromptStubs.cs": "b68f54d52b3360999144773901a6b814bd1144501911723c8056511fdb52f04b",
+    "prepare-command-harness.py": "074521165fe72e7aa33019e737d64b3c82fb4421db7e0991f362e5ffe6a36c9a",
+    "run-simulations.py": "25acfee3b5b09f6fd58beb38b0e5e4aabee9fd2ec423d3497f4b95061e6924bb",
+    "command-baseline-hashes.json": "17543faffe277ff6437a09c6fc55cf77a5b03eddc66d5a2bde30853e3b460fb6",
+    "command-candidate-hashes.json": "a832df2c4a6de0eb67e482c9f23f29d24d8f9a7a3e9297dea7b7a14844b6d73f",
+    "candidate-source-snapshot.json": "53d4d267cc6f0963e9f54cc7b557c6c4b739ca7e873ebebe2b2b51a8e67664a6",
+    "sdk-hashes.json": "a287e93c7fae7fe516b1eba326de8e84e466554902b73fc7af2aef664eb80be4",
+    "build-outputs.json": "40bd8de44949c78bf94964cbe3b34e306acd6a65cc4d4b2ed923431667cf4097",
+    "author-build-verification.json": "f0f9a66f37efd1f8291a9e167c4569777dc759eee1a824172dad4a800e879402",
+    "simulation-runs.json": "a93eada5f47853fe192155b882634e943565accc3352a07799c5196b6595f0b0"
+  },
+  "simulation_dll_sha256": {
+    "baseline-run-2007": "6aa23245f7ae2cabb1024bd148c6620d71ae3b3eb8a21a686bb9ebf4676572b6",
+    "candidate-2007": "9295fdf948d124b961e1917ea2805d0febde476796b56b80bef78fd2fa1eed52",
+    "candidate-2010": "b4544290501a76f1b21456c0f160cdf1293e5e8a2f9e37084cfdc548ef48ade4",
+    "candidate-2013": "cd37e67c8cd21524fc17aff859a077c7870fc64d37293797750f32daa02a4ddd",
+    "candidate-2015": "4aeb2373f14b84d7aa07a797768139d235e42bfdd83b9dc85126ae181d3eeb6e",
+    "command-baseline-2007": "1a42d2857502defe23d830f6ca7116112177a38966217a6b55c07cb2b158fcd8",
+    "command-candidate-2007": "15f7f15beb29481a8c75c8488cf511daab979352052abbbf86bbb2e0992d1d30"
+  },
+  "build_outputs": {
+    "2007": {
+      "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2007\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "sha256": "f0c8d488df133d947a33308b53ab95ebb0c74bfda20c7a56ff390f4723cd9e28"
+    },
+    "2010": {
+      "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2010\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "sha256": "8a17a460ad48792ccec672470f7c83e02ced54eeb890ca1dc00d087e71838437"
+    },
+    "2013": {
+      "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2013\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "sha256": "3cf72f2ea2686b510780e8df2484b46c156a0f06433283c0643cd40b94f630dc"
+    },
+    "2015": {
+      "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2015\\PatentMarker\\bin\\Release\\PatentMarker.dll",
+      "sha256": "bcae2abc15a9a6a68bebc5b971264d4e9f77b071b1d78939ea3cd89943b1382c"
+    },
+    "2025": {
+      "dll": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G13-8lwixp_6\\candidate\\cad-plugin\\2025\\PatentMarker\\bin\\Release\\net8.0-windows\\PatentMarker.dll",
+      "sha256": "5fddb1f1b27f8ded72cd5d4a6a99e91ea863f2ded6750e3c909a40c8e10f5cd6"
+    }
+  },
+  "tools": {
+    "dotnet": {
+      "path": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "sha256": "6d12b93599139e67b8dd951a06a9cda10bc0261e732432db483ea5e7e5c1b479"
+    },
+    "msbuild": {
+      "path": "C:\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe",
+      "sha256": "0f7daba445ba37b652ae4180270ab3eff27acbbe5d411d3b05dad51aab16404c"
+    }
+  }
+}

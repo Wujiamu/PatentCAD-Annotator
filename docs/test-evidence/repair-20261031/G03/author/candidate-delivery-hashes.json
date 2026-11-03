@@ -1,0 +1,14 @@
+{
+  "sources": {
+    "cad-plugin/Shared/Commands/PatTextPathRouting.cs": "eb9796d1e69584576decfd5740ebbb1fa18c4c1b096f52af2e70a7e5092ec3d9",
+    "cad-plugin/Shared/Commands/PatLeaderTextAttachment.cs": "be9180d03bfc9b8617735246923dc08db5aa8c2f1a904a138f42d5c892dd1be8",
+    "cad-plugin/Shared/Commands/PatAlignCommand.cs": "19f644fe454afccca777f2c14e49e0e61e83b310d4aa7b2563b1ad27607cdd3c",
+    "cad-plugin/2010/PatentMarker/Commands/PatAlignCommand.cs": "30336a562eecc3538e62978e2106517651150a0057d06fa17d80d34565779f5b"
+  },
+  "tools": {
+    "tools/G03Regression/Program.cs": "828daddfa6bce634c0d7b59d2483e82626239fc34e8a09974b0831050438428b",
+    "tools/G03Regression/run.py": "4760a23ba7802a7aa5c075cb115595dd8c022e6688b41833e067bc706e15086c",
+    "tools/G03Regression/G03Regression.csproj": "766491f827c5836ac9fa945bb3ca9dd5155a3260bb8feca9f7b8842d5256f708",
+    "cad-plugin/RuntimeContract.Tests/Shared/G03RoutingTests.cs": "0a065f80071ffbffa3877c3ffc0e640ff85c715cf8a4a2dc9f478b92379815cb"
+  }
+}

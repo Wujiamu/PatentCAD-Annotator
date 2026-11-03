@@ -1,0 +1,24 @@
+﻿# 封存探针 palette-probe/Review.cs 在修复后的重放（有界运行）
+# 目的：说明该探针为什么不能直接充当 G20 修复后的绿灯。
+# 命令: dotnet <palette-probe>/bin/Release/net8.0-windows/Review.dll （25s 超时）
+#
+# RESULT: 25s 超时后被终止 —— 停在 valid-current-keep-action-not-rejected-by-bad-backup 之后的模态对话框上
+# 原因：该探针只反射调用 BtnArbitrate_Click 并立即读 _lblStatus，没有消息泵；
+#       修复前坏备份那一格根本不打开对话框（事件提前 return），所以它「跑得完」；
+#       修复后事件会正常打开模态对话框，探针自身没有驱动 UI，于是阻塞。
+#       这不是产品失败，也不能当作修复后 PASS；G20 探针用 Application.OpenForms 泵
+#       驱动真实模态对话框，断言同一批业务判定。
+#
+# ---- 阻塞前已输出的行 ----
+PASS|unrelated-success-json-written|written=True
+FAIL|unrelated-success-preserves-first-pending|expected=301>302|actual=none
+PASS|unrelated-no-match-json-written|written=True
+FAIL|unrelated-no-match-preserves-first-pending|expected=301>302|actual=none
+PASS|unrelated-failure-json-written|written=True
+FAIL|unrelated-failure-preserves-first-pending|expected=301>302|actual=401>402
+PASS|related-followup-blocked|written=False|pending=301>302
+PASS|same-operation-success-clears|pending=none
+PASS|first-sync-drift-no-cad-call|calls=0
+FAIL|first-sync-drift-retains-owed-operation|expected=301>302|actual=none
+PASS|valid-current-invalid-backup-fixture|current=True|backup=False
+

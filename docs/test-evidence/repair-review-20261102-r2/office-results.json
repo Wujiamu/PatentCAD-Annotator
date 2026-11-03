@@ -1,0 +1,14 @@
+[
+  {
+    "file": "results-5f85af80c5c847b398ca0544bc8063b4.trx",
+    "total": 34,
+    "executed": 34,
+    "passed": 34
+  },
+  {
+    "file": "results-fb2c28ffb01f49a3a134ce70e0cd79e8.trx",
+    "total": 48,
+    "executed": 48,
+    "passed": 48
+  }
+]

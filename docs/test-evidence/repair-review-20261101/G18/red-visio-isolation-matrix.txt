@@ -1,0 +1,45 @@
+﻿G18 red: Visio isolation matrix against the PRE-FIX rollback order
+time=2026-11-02 01:14:15 +08:00
+host=DESKTOP-3VJ2A3B  user=wjm  powershell=5.1.19041.7802
+red_source=docs/test-evidence/repair-review-20261101/G18/red-prefix-source (archived pre-fix catch bodies; see its README.txt)
+assembled_run_dir=C:\Users\wjm\AppData\Local\Temp\g18-redrepro-048d598fd70949e98f13a14545687620
+command=powershell.exe -NoProfile -ExecutionPolicy Bypass -File <run>\verify-visio-installer.ps1 -SourceDirectory <run>\dist\Visio
+isolation=TestRegistryRoot Software\PatentMarkerTests\Visio-<guid>; install dir under %TEMP%; no real registry key or Visio path used
+assertions=identical to the green run (same verify-visio-installer.ps1); only the catch bodies differ
+exit=1
+---- red source ----
+prefix_src|install-office-addin.ps1|64CF9FC3154931834FC3ADE0A8901E909AE8464BEAC9F996A3BD6BCF49075809
+prefix_src|install-visio-addin.ps1|7AEA53C141603145A695BAFF61119A08683365721E9360DFBD174BAC69A8787D
+prefix_src|uninstall-office-addin.ps1|C5B9DCF1BE0F012DEBF665D73D0A43FB32A44DB68490DFDE6F61B7EB4F5270DF
+prefix_src|uninstall-visio-addin.ps1|C852C3B037E286186B5FDB2A208DAA3D1656A4043DF830B850DC1FAA1BC79A99
+---- output ----
+PASS: G14 Visio 部分删除失败后从恢复副本还原完整文件集与注册项。
+FAIL: G18 Visio uninstall_file_restore_failed_registration_disabled — 仍存在产品注册项：Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\CLSID\{D1D78625-AF57-462D-A1AB-5C47587AB30C}|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\PatentOffice.VisioAddIn|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Microsoft\Visio\Addins\PatentOffice.VisioAddIn
+FAIL: G18 Visio uninstall_file_restore_failed_material_kept — 恢复失败却没有保留恢复副本
+FAIL: G18 Visio uninstall_registry_restore_failed_disabled — 注册项未全部保持移除：Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\CLSID\{D1D78625-AF57-462D-A1AB-5C47587AB30C}|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\PatentOffice.VisioAddIn|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Microsoft\Visio\Addins\PatentOffice.VisioAddIn
+FAIL: G18 Visio uninstall_registry_restore_failed_material_kept — 残留回滚材料：
+PASS: G18 Visio uninstall_cleanup_failed_files_complete — 清理失败时 Visio 产品文件仍为完整集合
+PASS: G18 Visio uninstall_cleanup_failed_registration_restored — 清理失败时原 Visio 注册项已恢复
+FAIL: G18 Visio uninstall_cleanup_failed_material_kept — 残留回滚材料：
+PASS: G18 Visio upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整 Visio 目录与哈希已还原
+PASS: G18 Visio upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原 Visio 注册项已恢复
+PASS: G18 Visio upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+FAIL: G18 Visio upgrade_registry_restore_failed_disabled — 仍存在产品注册项：Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\CLSID\{D1D78625-AF57-462D-A1AB-5C47587AB30C}|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\PatentOffice.VisioAddIn|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Microsoft\Visio\Addins\PatentOffice.VisioAddIn
+PASS: G18 Visio upgrade_registry_restore_failed_old_files_intact — Visio 注册恢复失败时旧版文件仍完整
+FAIL: G18 Visio upgrade_registry_restore_failed_material_kept — 残留回滚材料：
+FAIL: G18 Visio upgrade_residue_removal_blocked_registration_disabled — 仍存在指向残片的产品注册项：Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\CLSID\{D1D78625-AF57-462D-A1AB-5C47587AB30C}|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Classes\PatentOffice.VisioAddIn|Software\PatentMarkerTests\Visio-8d2c8f1dae5a429ca6e7e0df8ee2a42d\Microsoft\Visio\Addins\PatentOffice.VisioAddIn
+FAIL: G18 Visio upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：
+G18: 9 条 Visio 断言失败：uninstall_file_restore_failed_registration_disabled, uninstall_file_restore_failed_material_kept, u
+ninstall_registry_restore_failed_disabled, uninstall_registry_restore_failed_material_kept, uninstall_cleanup_failed_ma
+terial_kept, upgrade_registry_restore_failed_disabled, upgrade_registry_restore_failed_material_kept, upgrade_residue_r
+emoval_blocked_registration_disabled, upgrade_residue_removal_blocked_material_kept
+At C:\Users\wjm\AppData\Local\Temp\g18-redrepro-048d598fd70949e98f13a14545687620\verify-visio-installer.ps1:343 char:9
++         throw ("G18: {0} 条 Visio 断言失败：{1}" -f $g18Failed.Count, ($g18 ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G18: 9 条 Visio ...d_material_kept:String) [], RuntimeException
+    + FullyQualifiedErrorId : G18: 9 条 Visio 断言失败：uninstall_file_restore_failed_registration_disabled, uninstall_file_ 
+   restore_failed_material_kept, uninstall_registry_restore_failed_disabled, uninstall_registry_restore_failed_materi  
+  al_kept, uninstall_cleanup_failed_material_kept, upgrade_registry_restore_failed_disabled, upgrade_registry_restor   
+ e_failed_material_kept, upgrade_residue_removal_blocked_registration_disabled, upgrade_residue_removal_blocked_mat    
+erial_kept
+ 

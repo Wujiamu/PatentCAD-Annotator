@@ -1,0 +1,4 @@
+# G25 langgate (real C# 2.0 compiler, .NET Framework v2.0.50727 csc 8.00.50727.9149)
+
+exit=0
+exit=0

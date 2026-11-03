@@ -1,0 +1,7 @@
+﻿# G24 language gate: real C# 2005 compiler (.NET 2.0)
+# csc.exe: 8.0.50727.9149 (WinRelRS6.050727-9100)
+# rsp: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261102-r2\G24\langgate\dotnet20\csc.rsp
+# gated files: DictConflict.cs, DictPaletteWorkflow.cs, DictPaletteSession.cs, EditEntryDialog.cs
+# stdout/stderr (0 line(s)):
+#   <empty: 0 error, 0 warning>
+exit=0

@@ -150,16 +150,25 @@ namespace PatentMarker.IO
             if (s == null) s = "";
             StringBuilder sb = new StringBuilder();
             sb.Append('"');
-            foreach (char ch in s)
+            for (int i = 0; i < s.Length; i++)
             {
+                char ch = s[i];
                 switch (ch)
                 {
                     case '\\': sb.Append("\\\\"); break;
                     case '"': sb.Append("\\\""); break;
-                    case '\r': sb.Append("\\n"); break;
+                    case '\r':
+                        sb.Append("\\n");
+                        if (i + 1 < s.Length && s[i + 1] == '\n') i++;
+                        break;
                     case '\n': sb.Append("\\n"); break;
                     case '\t': sb.Append("\\t"); break;
-                    default: sb.Append(ch); break;
+                    case '\b': sb.Append("\\b"); break;
+                    case '\f': sb.Append("\\f"); break;
+                    default:
+                        if (ch < 0x20) sb.Append("\\u").Append(((int)ch).ToString("x4"));
+                        else sb.Append(ch);
+                        break;
                 }
             }
             sb.Append('"');
@@ -345,48 +354,48 @@ namespace PatentMarker.IO
         /// </summary>
         public static bool Write(string path, DictModel model, out string error)
         {
+            error = DictFileVisibility.ChangedError;
+            return false;
+        }
+
+        public static bool Write(string path, DictModel model, string expectedIdentity, out string error)
+        {
             error = "";
+            if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(expectedIdentity))
+            {
+                error = DictFileVisibility.ChangedError;
+                return false;
+            }
+            bool saved = false;
             try
             {
-                string json = Serialize(model);
-                string dir = Path.GetDirectoryName(path);
-                if (string.IsNullOrEmpty(dir))
+                using (FileStream held = DictFileVisibility.AcquireLock(path, out error))
                 {
-                    error = "路径无目录部分: " + path;
-                    return false;
+                    if (held == null) return false;
+                    if (!string.Equals(expectedIdentity, DictFileVisibility.ReadIdentity(path), StringComparison.Ordinal))
+                    {
+                        error = DictFileVisibility.ChangedError;
+                        return false;
+                    }
+                    if (DictConflict.IsPendingConflict(model, path))
+                    {
+                        error = DictFileVisibility.PendingError;
+                        return false;
+                    }
+                    string json = Serialize(model);
+                    string identity = DictFileVisibility.Identity(new UTF8Encoding(false).GetBytes(json));
+                    if (!DictFileVisibility.TryWriteAtomic(path, json, out error)) return false;
+                    saved = true;
+                    DictLoader.NotifySelfWrite(model, path, identity);
+                    return true;
                 }
-                if (!Directory.Exists(dir))
-                {
-                    error = "目录不存在: " + dir;
-                    return false;
-                }
-
-                string tmp = path + ".tmp";
-                // Keep the user's explicit visibility choice across atomic rewrites.
-                bool keepVisible = File.Exists(path) && DictFileVisibility.IsVisible(path);
-                // 不输出 BOM（与 VBA ADODB.Stream 输出一致）
-                File.WriteAllText(tmp, json, new UTF8Encoding(false));
-                // v5.2：清除目标文件的隐藏/系统属性，否则 File.Replace 覆盖隐藏文件失败
-                try { if (File.Exists(path)) File.SetAttributes(path, FileAttributes.Normal); }
-                catch { }
-                if (File.Exists(path))
-                    File.Replace(tmp, path, null);
-                else
-                    File.Move(tmp, path);
-                string visibilityError;
-                if (!DictFileVisibility.TrySetVisible(path, keepVisible, out visibilityError))
-                {
-                    error = "字典可见性恢复失败: " + visibilityError;
-                    return false;
-                }
-                return true;
             }
             catch (Exception ex)
             {
-                error = ex.GetType().Name + ": " + ex.Message;
-                try { if (File.Exists(path + ".tmp")) File.Delete(path + ".tmp"); } catch { }
+                error = (saved ? "Dictionary was saved, but cache update failed: " : "") + ex.GetType().Name + ": " + ex.Message;
                 return false;
             }
         }
+
     }
 }

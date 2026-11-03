@@ -1,0 +1,15 @@
+﻿# G20 / R-034 (补修) — 真正的 C# 2.0 编译器门禁（比 Roslyn LangVersion=2 更强）
+#
+# 2007 版目标是 .NET Framework 2.0；四个旧版把同一批 Shared 文件链接进各自的
+# 非 SDK 工程。这里用机器上真实的 .NET 2.0 C# 编译器（Microsoft (R) Visual C# 2005,
+# 8.00.50727）编译本轮改动的 Shared 文件：它同时拒绝 C# 3+ 语法和任何 .NET 2.0
+# 之后才有的 BCL API。
+#
+# 编译器: C:\Windows\Microsoft.NET\Framework\v2.0.50727\csc.exe  (8.00.50727.9149)
+# 命令:   csc.exe @csc.rsp   （见同目录 csc.rsp）
+#
+# ---- 输出（空 = 0 error / 0 warning）----
+<no diagnostics>
+# ---- exit code: 0 ----
+# ---- 产物: G20LangGate20.dll (18944 bytes) ----
+

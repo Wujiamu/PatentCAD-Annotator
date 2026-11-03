@@ -1,0 +1,110 @@
+[
+  {
+    "snapshot": "candidate",
+    "year": "2007",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\FrameworkLegacyProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2007",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-2007\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-2007\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-2007\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-2007\\Release\\net40\\FrameworkLegacyProbe.exe",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-data-candidate-2007"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T11:07:24.717732+08:00"
+  },
+  {
+    "snapshot": "candidate",
+    "year": "2010",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\FrameworkLegacyProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2010",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-2010\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-2010\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-2010\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-2010\\Release\\net40\\FrameworkLegacyProbe.exe",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-data-candidate-2010"
+    ],
+    "exit": 1,
+    "time_local": "2026-11-01T11:07:27.005878+08:00"
+  },
+  {
+    "snapshot": "candidate-fixed",
+    "year": "2007",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\FrameworkLegacyProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2007",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-fixed-2007\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-fixed-2007\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-fixed-2007\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-fixed-2007\\Release\\net40\\FrameworkLegacyProbe.exe",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-data-candidate-fixed-2007"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T11:07:29.160333+08:00"
+  },
+  {
+    "snapshot": "candidate-fixed",
+    "year": "2010",
+    "build_command": [
+      "dotnet",
+      "build",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\FrameworkLegacyProbe.csproj",
+      "-c",
+      "Release",
+      "--nologo",
+      "-v",
+      "quiet",
+      "-p:CadYear=2010",
+      "-p:SourceRoot=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed",
+      "-p:ParserFile=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed\\cad-plugin\\Shared\\IO\\SimpleJson.cs",
+      "-p:BaseIntermediateOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-fixed-2010\\",
+      "-p:MSBuildProjectExtensionsPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\obj\\framework-legacy-candidate-fixed-2010\\",
+      "-p:BaseOutputPath=<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-fixed-2010\\"
+    ],
+    "build_exit": 0,
+    "command": [
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\bin\\framework-legacy-candidate-fixed-2010\\Release\\net40\\FrameworkLegacyProbe.exe",
+      "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-data-candidate-fixed-2010"
+    ],
+    "exit": 0,
+    "time_local": "2026-11-01T11:07:31.200283+08:00"
+  }
+]

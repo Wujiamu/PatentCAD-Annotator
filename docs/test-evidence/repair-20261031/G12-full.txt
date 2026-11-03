@@ -1,0 +1,18 @@
+command=dotnet test office-com-addin/tests/PatentOffice.Visio.CodeTests/PatentOffice.Visio.CodeTests.csproj --configuration Release --nologo -v minimal
+exit=0
+  Determining projects to restore...
+
+  All projects are up-to-date for restore.
+
+  PatentOffice.Visio -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\src\PatentOffice.Visio\bin\Release\net40\PatentOffice.Visio.dll
+
+  PatentOffice.Visio.CodeTests -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll
+
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G12\office-com-addin\tests\PatentOffice.Visio.CodeTests\bin\Release\net48\PatentOffice.Visio.CodeTests.dll (.NETFramework,Version=v4.8)
+
+A total of 1 test files matched the specified pattern.
+
+
+
+Passed!  - Failed:     0, Passed:    32, Skipped:     0, Total:    32, Duration: 728 ms - PatentOffice.Visio.CodeTests.dll (net48)
+

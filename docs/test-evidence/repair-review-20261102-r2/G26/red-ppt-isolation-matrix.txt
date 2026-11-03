@@ -1,0 +1,213 @@
+# G26 red/green evidence: real isolated HKCU test root + temporary install tree
+time=2026-11-02T16:19:20.0930255+08:00
+product=ppt
+mode=RED (pre-fix rollback replayed with the same scaffolding)
+powershell=5.1.19041.7802
+os=Microsoft Windows NT 10.0.19045.0
+user=DESKTOP-3VJ2A3B\wjm
+sandbox=C:\Users\wjm\AppData\Local\Temp\PatentMarkerG26Run-f0bfa3ef51e5477690624566c1a4031d
+
+sha256|install-office-addin.ps1|5CF1D1987D6F02AD53BC4F4938760960E9D09ADE8FCA8B81358D9C1A36C7416D
+sha256|verify-installer.ps1|F25AD4510FF121DFE5DBD24914EAADE8E6928AC8902821567DD1F56F05BA144C
+sha256|OfficeAddin.Common.psm1|1631A78B0AA4C5F557E927CE1CED394C4D346455DF0EB3DEFA393CEDC55ABA42
+sha256|VisioAddin.Common.psm1|6D45A5299F15424D5AB309111188409B8049D38AF698D3E866CDCFA61D366D36
+
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\Power
+Point
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\Power
+Point
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b3
+2\PowerPoint
+PASS: G14 部分删除失败后从恢复副本还原完整文件集与注册项。
+WARNING: 测试故障注入：从恢复副本还原产品文件失败。
+WARNING: 
+卸载失败且未能确认完整还原，加载项保持停用。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415
+b32\.PowerPoint.recovery-f6cbd0bb7dfb43a9abae5bf079e5af72；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddi
+nTest-26aaa2b6abc34344999383f184415b32\.PowerPoint.uninstall-dabcb7bc052447f38e8d42240bf69811
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\26aaa2b6abc34344999383f184415b32\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+卸载失败：产品文件已还原，但原注册项未能恢复（加载项保持停用）。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999
+383f184415b32\.PowerPoint.recovery-2ccf8cc2a82f4612b2782e249b1a824f；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarker
+OfficeAddinTest-26aaa2b6abc34344999383f184415b32\.PowerPoint.uninstall-3597272b503c48bb95dc5afa8a007c12
+WARNING: 
+测试故障注入：清理恢复材料失败。恢复副本保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\.P
+owerPoint.recovery-5eae5b891416469a85372e87cab71bfb；卸载暂存目录：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-
+26aaa2b6abc34344999383f184415b32\.PowerPoint.uninstall-bcabaf3a6c02458d9d02b9cf24fb97d2
+WARNING: 
+卸载未完成，已从恢复副本还原完整产品文件并恢复原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b3
+2\PowerPoint
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 
+安装未完成，已恢复旧版产品文件与原注册项：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\Power
+Point
+WARNING: 
+恢复原注册表项失败：Software\PatentMarkerOfficeAddinTests\26aaa2b6abc34344999383f184415b32\Classes\CLSID\{4E9B0E7A-4D92-47AF-A9D7
+-7E769CB367D8}：测试故障注入：注册表恢复单步失败。
+WARNING: 
+安装失败：旧版产品文件已还原，但原注册项未能恢复（加载项保持停用）。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344
+999383f184415b32\.PowerPoint.rollback-8b98f7a1ebad4b27af43152633891a81
+WARNING: 测试故障注入：新安装目录半删除。
+WARNING: 测试故障注入：新安装残片被占用，无法隔离或移除。
+WARNING: 
+清理阻挡旧目录还原的残片失败：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184415b32\PowerPoint
+WARNING: 
+还原的旧产品目录未通过完整性与哈希核对：目标目录缺少匹配的产品所有权清单，已拒绝覆盖或删除：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34
+344999383f184415b32\PowerPoint
+WARNING: 
+安装失败且未能确认旧版完整还原，加载项保持停用。旧目录备份保留于：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-26aaa2b6abc34344999383f184
+415b32\.PowerPoint.rollback-c77386bdb02547a6ab794acc7b675820；新目录残片：C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAd
+dinTest-26aaa2b6abc34344999383f184415b32\.PowerPoint.failed-8d0e13cf60b840709933eed8e8075c7e
+PASS: G18 uninstall_file_restore_failed_registration_disabled — 注册项全部移除，加载项保持停用
+PASS: G18 uninstall_file_restore_failed_material_kept — 保留的恢复副本完整
+PASS: G18 uninstall_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 uninstall_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-2ccf8cc2a82f4612b2782e249b1a824f, .PowerPoint.uninstall-3597272b503c48bb95dc5afa8a007c12
+PASS: G18 uninstall_cleanup_failed_files_complete — 清理失败时产品文件仍为完整集合
+PASS: G18 uninstall_cleanup_failed_registration_restored — 清理失败时原注册项已恢复
+PASS: G18 uninstall_cleanup_failed_material_kept — 残留回滚材料：.PowerPoint.recovery-5eae5b891416469a85372e87cab71bfb, .PowerPoint.uninstall-bcabaf3a6c02458d9d02b9cf24fb97d2
+PASS: G18 upgrade_new_dir_half_deleted_old_files_restored — 升级新目录半删除后旧完整目录与哈希已还原
+PASS: G18 upgrade_new_dir_half_deleted_registration_restored — 升级回滚后原注册项已恢复
+PASS: G18 upgrade_new_dir_half_deleted_material_cleaned — 残留回滚材料：
+PASS: G18 upgrade_registry_restore_failed_disabled — 注册恢复失败后加载项保持停用
+PASS: G18 upgrade_registry_restore_failed_old_files_intact — 注册恢复失败时旧版文件仍完整
+PASS: G18 upgrade_registry_restore_failed_material_kept — 残留回滚材料：.PowerPoint.failed-8ec50af497de4ba082792133b78f18a8
+PASS: G18 upgrade_residue_removal_blocked_registration_disabled — 残片无法隔离时加载项保持停用
+PASS: G18 upgrade_residue_removal_blocked_material_kept — 保留的回滚材料：.PowerPoint.rollback-c77386bdb02547a6ab794acc7b675820
+PASS: G22 first_install_stage_failed_installer_failed — 阶段创建失败后安装返回失败
+PASS: G22 first_install_stage_failed_failure_origin — 失败来自暂存目录创建
+PASS: G22 first_install_stage_failed_no_product_dir — 首次安装早期失败后未留下产品目录
+PASS: G22 first_install_stage_failed_registration — 首次安装早期失败后没有产品注册项
+PASS: G22 first_install_stage_failed_sentinel — 非项目哨兵保持不变
+PASS: G22 upgrade_stage_failed_failure_origin — 失败阶段匹配 'stage-'
+PASS: G22 upgrade_stage_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_stage_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_stage_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_staged_copy_failed_failure_origin — 失败阶段匹配 '复制校验失败'
+PASS: G22 upgrade_staged_copy_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_staged_copy_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_staged_copy_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_old_move_failed_failure_origin — 失败阶段匹配 'denied|being used|拒绝访问|另一进程'
+PASS: G22 upgrade_old_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_old_move_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_old_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_new_move_failed_failure_origin — 失败阶段匹配 '新安装目录无法移动|\.PowerPoint\.stage-'
+PASS: G22 upgrade_new_move_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_new_move_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_new_move_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G22 upgrade_after_files_failed_failure_origin — 失败阶段匹配 '文件部署后'
+PASS: G22 upgrade_after_files_failed_old_files — 旧文件字节、完整文件集与所有权清单保持不变
+PASS: G22 upgrade_after_files_failed_registration — 原注册值保持不变
+PASS: G22 upgrade_after_files_failed_sentinel — 非项目哨兵文件与注册值保持不变
+PASS: G26 stage_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 stage_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 stage_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 stage_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 stage_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 stage_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 stage_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 stage_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 stage_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 stage_restore_fails_target_integrity — 完整=True；预期=True
+FAIL: G26 stage_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 stage_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 stage_restore_fails_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 stage_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 stage_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 old_moved_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 old_moved_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 old_moved_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 old_moved_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 old_moved_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 old_moved_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 old_moved_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 old_moved_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 old_moved_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 old_moved_restore_fails_target_integrity — 完整=False；预期=False
+FAIL: G26 old_moved_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 old_moved_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 old_moved_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 old_moved_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 old_moved_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 new_files_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 new_files_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 new_files_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 new_files_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 new_files_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 new_files_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 new_files_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 new_files_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 new_files_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 new_files_restore_fails_target_integrity — 完整=False；预期=False
+FAIL: G26 new_files_restore_fails_registration_state — 启用=True；预期=False
+FAIL: G26 new_files_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 new_files_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 new_files_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 new_files_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=True
+PASS: G26 new_registry_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 new_registry_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 new_registry_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 new_registry_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+PASS: G26 new_registry_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 new_registry_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 new_registry_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 new_registry_restore_ok_log_matches_state — 日志=restored；预期=restored；注册实际=True
+PASS: G26 new_registry_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 new_registry_restore_fails_target_integrity — 完整=False；预期=False
+PASS: G26 new_registry_restore_fails_registration_state — 启用=False；预期=False
+PASS: G26 new_registry_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 new_registry_restore_fails_rollback_material — 保留旧目录备份=True；预期=True
+PASS: G26 new_registry_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 new_registry_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=False
+PASS: G26 first_new_files_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 first_new_files_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 first_new_files_restore_ok_registration_state — 启用=False；预期=False
+PASS: G26 first_new_files_restore_ok_registration_absent — 没有任何产品注册项
+PASS: G26 first_new_files_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 first_new_files_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+FAIL: G26 first_new_files_restore_ok_log_matches_state — 日志=restored；预期=nothing-installed；注册实际=False
+PASS: G26 first_new_files_restore_fails_failure_origin — 失败阶段匹配
+PASS: G26 first_new_files_restore_fails_target_integrity — 完整=False；预期=False
+PASS: G26 first_new_files_restore_fails_registration_state — 启用=False；预期=False
+PASS: G26 first_new_files_restore_fails_registration_absent — 没有任何产品注册项
+PASS: G26 first_new_files_restore_fails_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 first_new_files_restore_fails_sentinel — 非项目哨兵文件与注册项保持不变
+PASS: G26 first_new_files_restore_fails_log_matches_state — 日志=disabled；预期=disabled；注册实际=False
+PASS: G26 registration_diverged_restore_ok_failure_origin — 失败阶段匹配
+PASS: G26 registration_diverged_restore_ok_target_integrity — 完整=True；预期=True
+PASS: G26 registration_diverged_restore_ok_registration_state — 启用=True；预期=True
+PASS: G26 registration_diverged_restore_ok_registration_usable — 注册指向真实 CodeBase 且 LoadBehavior=3
+FAIL: G26 registration_diverged_restore_ok_registration_matches_baseline — 注册值等于安装前快照
+PASS: G26 registration_diverged_restore_ok_rollback_material — 保留旧目录备份=False；预期=False
+PASS: G26 registration_diverged_restore_ok_sentinel — 非项目哨兵文件与注册项保持不变
+FAIL: G26 registration_diverged_restore_ok_log_matches_state — 日志=disabled；预期=restored；注册实际=True
+G26: 9 条断言失败：stage_restore_fails_registration_state, stage_restore_fails_registration_absent, old_moved_restore_fails_r
+egistration_state, old_moved_restore_fails_registration_absent, new_files_restore_fails_registration_state, new_files_r
+estore_fails_registration_absent, first_new_files_restore_ok_log_matches_state, registration_diverged_restore_ok_regist
+ration_matches_baseline, registration_diverged_restore_ok_log_matches_state
+At C:\Users\wjm\AppData\Local\Temp\PatentMarkerG26Run-f0bfa3ef51e5477690624566c1a4031d\verify-installer.ps1:920 char:9
++         throw ("G26: {0} 条断言失败：{1}" -f $g26Failed.Count, ($g26Failed  ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G26: 9 条断言失败：st...g_matches_state:String) [], RuntimeException
+    + FullyQualifiedErrorId : G26: 9 条断言失败：stage_restore_fails_registration_state, stage_restore_fails_registration_ab 
+   sent, old_moved_restore_fails_registration_state, old_moved_restore_fails_registration_absent, new_files_restore_f  
+  ails_registration_state, new_files_restore_fails_registration_absent, first_new_files_restore_ok_log_matches_state   
+ , registration_diverged_restore_ok_registration_matches_baseline, registration_diverged_restore_ok_log_matches_sta    
+te
+ 
+
+exit=1
+summary|pass=114|fail=9|exit=1

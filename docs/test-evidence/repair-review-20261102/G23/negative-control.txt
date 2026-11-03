@@ -1,0 +1,14 @@
+﻿ASSEMBLY_SHA256=81b65e2e760f60800f1bfa1bacf90f9cd02dafedd45a2673b5d752516d10d308
+(injected) vstest exits 0 but writes no TRX
+VSTest exited 0 but produced no result for this run: C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repa
+ir-review-20261102\G23\shared-results\results-8b52cf0ad4e94462be490aebcf658e37.trx (stale results from earlier runs are
+ not this run's evidence)
+At C:\Users\wjm\AppData\Local\Temp\G23-negative-460e119292fa4ec79969d7704b40d029.ps1:49 char:9
++         throw ("VSTest exited 0 but produced no result for this run:  ...
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (VSTest exited 0...run's evidence):String) [], RuntimeException
+    + FullyQualifiedErrorId : VSTest exited 0 but produced no result for this run: C:\Users\wjm\WorkBuddy\2026-06-20-0 
+   0-50-28\docs\test-evidence\repair-review-20261102\G23\shared-results\results-8b52cf0ad4e94462be490aebcf658e37.trx   
+  (stale results from earlier runs are not this run's evidence)
+ 
+PASS|negative_control|wrapper refused stale results (exit 1)

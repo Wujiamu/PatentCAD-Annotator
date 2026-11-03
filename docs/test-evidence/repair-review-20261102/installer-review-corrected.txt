@@ -1,0 +1,13 @@
+PASS|ppt-before-old-move-files|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove
+FAIL|ppt-before-old-move-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove
+PASS|ppt-after-old-move-files|enabled=True,True,True|trace=registry.remove,registry.remove,registry.remove,files.verify,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|ppt-after-old-move-registration|enabled=True,True,True|trace=registry.remove,registry.remove,registry.remove,files.verify,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|ppt-first-install-files|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|ppt-first-install-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|visio-before-old-move-files|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove
+FAIL|visio-before-old-move-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove
+PASS|visio-after-old-move-files|enabled=True,True,True|trace=registry.remove,registry.remove,registry.remove,files.verify,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|visio-after-old-move-registration|enabled=True,True,True|trace=registry.remove,registry.remove,registry.remove,files.verify,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|visio-first-install-files|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+PASS|visio-first-install-registration|enabled=False,False,False|trace=registry.remove,registry.remove,registry.remove,registry.restore,registry.verify,registry.restore,registry.verify,registry.restore,registry.verify
+SUMMARY|total=12|failed=2

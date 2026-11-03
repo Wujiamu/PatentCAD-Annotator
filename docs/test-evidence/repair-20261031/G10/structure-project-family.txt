@@ -1,0 +1,5 @@
+﻿# phase=structure
+# command: powershell -NoProfile -ExecutionPolicy Bypass -Command "& './tools/verify-project-family.ps1' -RepositoryRoot (Get-Location).Path"
+# scope: read-only structural check of the 7 product projects + single NumberIdentity source
+PASS|PROJECT_FAMILY|7_PRODUCT_PROJECTS|ONE_NUMBER_IDENTITY_SOURCE
+EXITCODE=0

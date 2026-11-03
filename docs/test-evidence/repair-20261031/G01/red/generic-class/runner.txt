@@ -1,0 +1,6 @@
+exit=1
+PASS FixtureTests.Valid
+FAIL GenericTests`1.Unsupported : ArgumentException: Cannot create an instance of GenericTests`1[T] because Type.ContainsGenericParameters is true.
+SUMMARY: passed=1 failed=1 skipped=0
+FAILURES:
+ - GenericTests`1.Unsupported : ArgumentException: Cannot create an instance of GenericTests`1[T] because Type.ContainsGenericParameters is true.

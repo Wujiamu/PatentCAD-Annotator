@@ -1,0 +1,6 @@
+exit=1
+FactRunner subset: public, parameterless, synchronous void instance Fact; no xUnit fixtures or theories.
+FAIL FixtureTests.Valid : Exception: cleanup failed
+SUMMARY: passed=0 failed=1 skipped=0
+FAILURES:
+ - FixtureTests.Valid : Exception: cleanup failed

@@ -1,0 +1,11 @@
+﻿FAIL|r016|r016-number-first-s1|expected number=S1 actual=1
+FAIL|r016|r016-number-first-hyphen|expected number=10-1 actual=1
+FAIL|r016|r016-number-first-paren-s1|no match at all, expected number S1
+FAIL|r032|r032-z-name|section cut at 2Z and lost the later entries: [1<U+24213><U+24322><U+65292>22Z]
+PASS|r032|r032-z-lower|section kept the entries after 2z
+PASS|r032|r032-no-z|control section intact
+FAIL|r033|r033-plain-then-number-lf|cross-line match count=1 number=123 name=[<U+26222><U+36890><U+27573><U+33853>]
+FAIL|r033|r033-plain-then-number-crlf|cross-line match count=1 number=123 name=[<U+26222><U+36890><U+27573><U+33853>]
+PASS|r033|r033-bare-one-line|same-line list still matches
+PASS|r033|r033-bare-two-lines|two-line list still matches
+SUMMARY: passed=4 failed=6

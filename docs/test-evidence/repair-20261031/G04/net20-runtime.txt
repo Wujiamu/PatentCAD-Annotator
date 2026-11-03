@@ -1,0 +1,1 @@
+PASS net20 syntax and compatibility

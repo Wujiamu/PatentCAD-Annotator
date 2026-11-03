@@ -1,0 +1,17 @@
+﻿已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-1b3f0a9cf0804d028eb1cf27f7e1382d\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-1b3f0a9cf0804d028eb1cf27f7e1382d\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+已卸载 PatentOffice.PowerPointAddIn，并移除产品专属文件和 HKCU 注册项。
+已安装 PatentOffice.PowerPointAddIn（Office 64 位）至 C:\Users\wjm\AppData\Local\Temp\PatentMarkerOfficeAddinTest-1b3f0a9cf0804d028eb1cf27f7e1382d\PowerPoint
+下次正常启动 PowerPoint 会自动打开：专利标注字典工具 · PowerPoint。
+面板关闭或最小化后，从 Windows 任务栏或 Alt+Tab 恢复。入口与加载项检查见本包 README.md。
+G14: 文件未完整还原，却也没有保留恢复副本。
+At C:\Users\wjm\AppData\Local\Temp\g14r3-dc7da0878adb4b20b2296aec05a16c9f\verify-installer.ps1:220 char:13
++             throw 'G14: 文件未完整还原，却也没有保留恢复副本。'
++             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (G14: 文件未完整还原，却也没有保留恢复副本。:String) [], RuntimeException
+    + FullyQualifiedErrorId : G14: 文件未完整还原，却也没有保留恢复副本。
+ 

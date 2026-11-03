@@ -1,0 +1,67 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    G17 (R-004) red/green probe.
+
+    Same as G16: one scenario file (RenameProbe.cs), two adapters that drive the
+    same production entry before and after repair. The variable is whether the
+    palette guards secondary rename operations with a document-bound pending record
+    and blocks them in the "before second JSON writes" phase.
+  -->
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>12</LangVersion>
+    <AssemblyName>G17RenameProbe</AssemblyName>
+    <RootNamespace>G17Probe</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\</RepoRoot>
+    <SharedDir>$(RepoRoot)cad-plugin\Shared\</SharedDir>
+    <EditionDir>$(RepoRoot)cad-plugin\2025\PatentMarker\</EditionDir>
+    <RedDir>$(MSBuildThisFileDirectory)..\red-source\</RedDir>
+    <G17Snapshot Condition="'$(G17Snapshot)' == ''">green</G17Snapshot>
+    <IsRed Condition="'$(G17Snapshot)' == 'red'">true</IsRed>
+    <DefineConstants Condition="'$(IsRed)' == 'true'">$(DefineConstants);G17_RED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Unchanged production sources, identical in both snapshots. -->
+    <Compile Include="$(EditionDir)IO\DictEntry.cs" />
+    <Compile Include="$(EditionDir)IO\DictWriter.cs" />
+    <Compile Include="$(EditionDir)IO\ConfigLoader.cs" />
+    <Compile Include="$(EditionDir)IO\RuntimeHost.cs" />
+    <Compile Include="$(SharedDir)IO\PatSettings.cs" />
+    <Compile Include="$(SharedDir)IO\DictDiff.cs" />
+    <Compile Include="$(SharedDir)IO\DictConflict.cs" />
+    <Compile Include="$(SharedDir)IO\NumberIdentity.cs" />
+    <Compile Include="$(SharedDir)Commands\PatCheckResult.cs" />
+    <Compile Include="$(SharedDir)I18n\Strings.cs" />
+    <Compile Include="$(SharedDir)I18n\Language.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteViewRenderer.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteWorkflow.cs" />
+    <Compile Include="$(SharedDir)Palette\ArbitrateDialog.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The files under repair: pre-fix snapshot or live tree. -->
+    <Compile Include="$(RedDir)DictPaletteControl.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteControl.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteControl.cs" />
+    <Compile Include="$(RedDir)EditEntryDialog.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(SharedDir)Palette\EditEntryDialog.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\EditEntryDialog.cs" />
+    <Compile Include="$(RedDir)DictPaletteSession.cs" Condition="'$(IsRed)' == 'true'" Link="Palette\DictPaletteSession.cs" />
+    <Compile Include="$(SharedDir)Palette\DictPaletteSession.cs" Condition="'$(IsRed)' != 'true'" Link="Palette\DictPaletteSession.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Stubs.cs" />
+    <Compile Include="ProbeModel.cs" />
+    <Compile Include="AdapterRed.cs" Condition="'$(IsRed)' == 'true'" />
+    <Compile Include="AdapterGreen.cs" Condition="'$(IsRed)' != 'true'" />
+    <Compile Include="RenameProbe.cs" />
+  </ItemGroup>
+
+</Project>

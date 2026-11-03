@@ -27,6 +27,13 @@ DLL/
 *test*.vbs
 # 正式 Word L2 面板回归属于发布门，必须随仓库交付。
 !tools/test-vba-panel.vbs
+# 修复计划各包的跨引擎红绿探针同样是可复跑的放行证据，必须随仓库交付。
+!tools/test-g02-parser.vbs
+!tools/test-g02-legacy-engine.vbs
+!tools/test-g02-l2.vbs
+!tools/test-g05-word.vbs
+!tools/test-g05-digest.vbs
+!tools/test-g05-lock.vbs
 
 # ---- 发布包 / 压缩包 ----
 *.zip
@@ -84,6 +91,11 @@ PatentMarker-*-deploy/load-patent-marker.lsp
 
 # ---- 历史实验残留（MLeader 分支预研暂存区） ----
 .mleader-fork-staging/
+
+# ---- 本机实验与工具残留（不属于产品资产） ----
+_paneltest/
+.codex-remote-attachments/
+undefined/
 
 # ---- 临时文件 ----
 *.tmp

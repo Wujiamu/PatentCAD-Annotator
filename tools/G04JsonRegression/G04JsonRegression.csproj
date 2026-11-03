@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <CadYear Condition="'$(CadYear)' == ''">2007</CadYear>
+    <SourceRoot Condition="'$(SourceRoot)' == ''">../..</SourceRoot>
+    <ParserFile Condition="'$(ParserFile)' == ''">$(SourceRoot)/cad-plugin/Shared/IO/SimpleJson.cs</ParserFile>
+    <DefineConstants Condition="'$(CadYear)' == '2007' Or '$(CadYear)' == '2010'">$(DefineConstants);LEGACY</DefineConstants>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="HostStubs.cs" />
+    <Compile Include="$(SourceRoot)/cad-plugin/$(CadYear)/PatentMarker/IO/DictEntry.cs" />
+    <Compile Include="$(SourceRoot)/cad-plugin/$(CadYear)/PatentMarker/IO/DictWriter.cs" />
+    <Compile Include="$(ParserFile)" Condition="'$(CadYear)' != '2025'" />
+    <Compile Include="$(SourceRoot)/cad-plugin/$(CadYear)/PatentMarker/IO/ConfigLoader.cs" Condition="'$(CadYear)' == '2007' Or '$(CadYear)' == '2010'" />
+    <Compile Include="$(SourceRoot)/cad-plugin/Shared/I18n/Language.cs" Condition="'$(CadYear)' == '2007' Or '$(CadYear)' == '2010'" />
+    <Compile Include="$(SourceRoot)/cad-plugin/Shared/I18n/Strings.cs" Condition="'$(CadYear)' == '2007' Or '$(CadYear)' == '2010'" />
+    <Compile Include="$(SourceRoot)/cad-plugin/Shared/IO/DictConflict.cs" />
+    <Compile Include="$(SourceRoot)/cad-plugin/Shared/IO/NumberIdentity.cs" />
+    <Compile Include="$(SourceRoot)/cad-plugin/Shared/IO/PatSettings.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(CadYear)' == '2013' Or '$(CadYear)' == '2015'">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+</Project>

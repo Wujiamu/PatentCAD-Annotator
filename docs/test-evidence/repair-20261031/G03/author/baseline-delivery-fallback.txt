@@ -1,0 +1,15 @@
+command: G03_SOURCE_ROOT=<USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\baseline python tools/G03Regression/run.py fallback
+exit: 1
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+FAIL R-020 available height retained on width failure
+FAIL R-020 width estimated from actual text on read failure
+FAIL R-020 fallback diagnostic recorded
+SUMMARY selector=fallback checks=16 failed=12

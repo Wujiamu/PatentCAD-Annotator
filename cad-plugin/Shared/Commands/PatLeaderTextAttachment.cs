@@ -1,6 +1,7 @@
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PatentMarker.Commands
@@ -105,6 +106,16 @@ namespace PatentMarker.Commands
         /// </summary>
         public static void AppendTextEndpoint(Leader leader, Point3d textPoint, double textHeight)
         {
+            // In unlimited mode Enter makes the final pick the text anchor.
+            // Replace that coincident terminal rather than retaining a vertex
+            // on the text corner (zero gap).
+            if (leader.NumVertices > 1 && SamePoint(
+                leader.VertexAt(leader.NumVertices - 1), textPoint))
+            {
+                leader.SetVertexAt(leader.NumVertices - 1, Retract(
+                    leader.VertexAt(leader.NumVertices - 2), textPoint, textHeight));
+                return;
+            }
             Point3d retracted = textPoint;
             if (leader.NumVertices > 0)
                 retracted = Retract(leader.VertexAt(leader.NumVertices - 1), textPoint, textHeight);
@@ -129,6 +140,17 @@ namespace PatentMarker.Commands
                 : leader.VertexAt(leader.NumVertices - 2);
             leader.SetVertexAt(leader.NumVertices - 1,
                 Retract(previous, textPoint, textHeight));
+        }
+
+        public static void RouteTextPath(Leader leader,MText text)
+        {
+            List<Point3d> original=new List<Point3d>();
+            for(int i=0;i<leader.NumVertices;i++)original.Add(leader.VertexAt(i));
+            Extents3d box=text.GeometricExtents;
+            List<Point3d> route=PatTextPathRouting.Route(original,box.MinPoint,box.MaxPoint,text.TextHeight);
+            if(route.Count==original.Count)return;
+            for(int i=0;i<route.Count;i++)
+                if(i<leader.NumVertices)leader.SetVertexAt(i,route[i]);else leader.AppendVertex(route[i]);
         }
 
         /// <summary>
@@ -189,6 +211,96 @@ namespace PatentMarker.Commands
             }
 
             return ObjectId.Null;
+        }
+
+        /// <summary>Move linked text and keep the detached path outside it.</summary>
+        public static bool MoveText(Leader leader, MText text, Point3d newPosition)
+        {
+            if (leader.NumVertices < 2) return false;
+            Point3d previous = leader.VertexAt(leader.NumVertices - 2);
+            AttachmentPoint oldAttachment = text.Attachment;
+            Point3d oldLocation = text.Location;
+            List<Point3d> route = null;
+            try
+            {
+                text.Attachment = Get(previous, newPosition);
+                text.Location = newPosition;
+                if (leader.Annotation.IsNull)
+                {
+                    List<Point3d> path = new List<Point3d>();
+                    for (int i = 0; i < leader.NumVertices; i++)
+                        path.Add(leader.VertexAt(i));
+                    path[path.Count - 1] = Retract(previous, newPosition, text.TextHeight);
+                    Extents3d box = text.GeometricExtents;
+                    route = PatTextPathRouting.Route(path, box.MinPoint, box.MaxPoint,
+                        text.TextHeight);
+                    if (!SamePoint(route[route.Count - 2], previous))
+                        throw new ArgumentException("文字末端无法在保持间距时绕开文字。");
+                }
+                else
+                {
+                    Extents3d box = text.GeometricExtents;
+                    for (int i = 1; i < leader.NumVertices; i++)
+                        if (PatTextPathRouting.Intersects(leader.VertexAt(i - 1),
+                            leader.VertexAt(i), box.MinPoint, box.MaxPoint))
+                            throw new ArgumentException("关联引线穿过文字，请调整对齐位置。");
+                }
+            }
+            catch (Exception ex)
+            {
+                text.Attachment = oldAttachment;
+                text.Location = oldLocation;
+                PatentMarkerApp.RawLog("PATALIGN text move rejected: " + ex.Message);
+                return false;
+            }
+            if (route != null)
+            {
+                for (int i = 0; i < route.Count; i++)
+                    if (i < leader.NumVertices) leader.SetVertexAt(i, route[i]);
+                    else leader.AppendVertex(route[i]);
+            }
+            return true;
+        }
+
+        /// <summary>Read the linked text metrics once for alignment.</summary>
+        public static void ReadTextMetrics(Leader leader, Transaction tr,
+            out Point3d location, out double height, out double width)
+        {
+            location = leader.NumVertices > 0
+                ? leader.VertexAt(leader.NumVertices - 1) : new Point3d(0, 0, 0);
+            height = 3.5;
+            width = height * 2.0;
+            try
+            {
+                ObjectId id = GetAnnotationId(leader, tr);
+                if (id.IsNull)
+                {
+                    PatentMarkerApp.RawLog("PATALIGN text metrics: linked text unavailable; using estimate.");
+                    return;
+                }
+                MText text = (MText)tr.GetObject(id, OpenMode.ForRead);
+                location = text.Location;
+                if (text.TextHeight > 0) height = text.TextHeight;
+                else PatentMarkerApp.RawLog("PATALIGN text metrics: invalid height; using estimate.");
+                double actualWidth = 0;
+                try { actualWidth = text.ActualWidth; }
+                catch (Exception ex)
+                {
+                    PatentMarkerApp.RawLog("PATALIGN text width unavailable: " + ex.Message);
+                }
+                if (actualWidth > 0) width = actualWidth;
+                else
+                {
+                    width = (text.Contents ?? "").Length * 0.7 * height;
+                    if (width <= 0) width = height * 2.0;
+                    PatentMarkerApp.RawLog("PATALIGN text width: using estimate.");
+                }
+            }
+            catch (Exception ex)
+            {
+                width = height * 2.0;
+                PatentMarkerApp.RawLog("PATALIGN text metrics unavailable: " + ex.Message);
+            }
         }
 
         /// <summary>

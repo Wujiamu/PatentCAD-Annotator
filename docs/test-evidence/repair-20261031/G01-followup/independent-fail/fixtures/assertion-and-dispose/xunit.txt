@@ -1,0 +1,52 @@
+command: dotnet test <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.csproj -c Release --no-build --nologo -v normal
+exit: 1
+Build started 2026/11/1 0:47:35.
+Test run for <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\bin\Release\net8.0\Fixture.dll (.NETCoreApp,Version=v8.0)
+A total of 1 test files matched the specified pattern.
+[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.5.6+bf9b858c26 (64-bit .NET 8.0.28)
+[xUnit.net 00:00:00.08]   Discovering: Fixture
+[xUnit.net 00:00:00.12]   Discovered:  Fixture
+[xUnit.net 00:00:00.12]   Starting:    Fixture
+[xUnit.net 00:00:00.18]     FixtureTests.Fails [FAIL]
+[xUnit.net 00:00:00.18]       System.AggregateException : One or more errors occurred. (assertion failed) (cleanup failed)
+[xUnit.net 00:00:00.18]       ---- assertion failed
+[xUnit.net 00:00:00.18]       ---- System.InvalidOperationException : cleanup failed
+[xUnit.net 00:00:00.18]       Stack Trace:
+[xUnit.net 00:00:00.18]         
+[xUnit.net 00:00:00.18]         ----- Inner Stack Trace #1 (Xunit.Sdk.TrueException) -----
+[xUnit.net 00:00:00.18]         <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.cs(5,0): at FixtureTests.Fails()
+[xUnit.net 00:00:00.18]            at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+[xUnit.net 00:00:00.18]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.18]         ----- Inner Stack Trace #2 (System.InvalidOperationException) -----
+[xUnit.net 00:00:00.18]         <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.cs(5,0): at FixtureTests.Dispose()
+[xUnit.net 00:00:00.18]         /_/src/xunit.execution/Extensions/ReflectionAbstractionExtensions.cs(79,0): at ReflectionAbstractionExtensions.DisposeTestClass(ITest test, Object testClass, IMessageBus messageBus, ExecutionTimer timer, CancellationTokenSource cancellationTokenSource)
+[xUnit.net 00:00:00.19]   Finished:    Fixture
+  Failed FixtureTests.Fails [2 ms]
+  Error Message:
+   System.AggregateException : One or more errors occurred. (assertion failed) (cleanup failed)
+---- assertion failed
+---- System.InvalidOperationException : cleanup failed
+  Stack Trace:
+  
+----- Inner Stack Trace #1 (Xunit.Sdk.TrueException) -----
+   at FixtureTests.Fails() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.cs:line 5
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+----- Inner Stack Trace #2 (System.InvalidOperationException) -----
+   at FixtureTests.Dispose() in <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.cs:line 5
+   at ReflectionAbstractionExtensions.DisposeTestClass(ITest test, Object testClass, IMessageBus messageBus, ExecutionTimer timer, CancellationTokenSource cancellationTokenSource) in /_/src/xunit.execution/Extensions/ReflectionAbstractionExtensions.cs:line 79
+
+Test Run Failed.
+Total tests: 1
+     Failed: 1
+ Total time: 0.8530 Seconds
+     1>Project "<USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.csproj" on node 1 (VSTest target(s)).
+     1>_VSTestConsole:
+         MSB4181: The "VSTestTask" task returned false but did not log an error.
+     1>Done Building Project "<USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\assertion-and-dispose\Fixture.csproj" (VSTest target(s)) -- FAILED.
+
+Build FAILED.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.66

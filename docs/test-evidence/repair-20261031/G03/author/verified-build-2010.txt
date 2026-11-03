@@ -1,0 +1,10 @@
+command: powershell.exe -NoProfile -ExecutionPolicy Bypass -File build.ps1 -Version 2010
+exit: 0
+
+=== Building edition 2010 (.NET 3.5 / MLeader (Plan F)) ===
+
+  PatentMarker -> <USERPROFILE>\AppData\Local\Temp\PatentCAD-repair-w5hkb8c3\G03\cad-plugin\2010\PatentMarker\bin\Release\PatentMarker.dll
+  [OK]   Edition 2010 built successfully
+
+=== Done ===
+  [OK]   All requested editions processed successfully

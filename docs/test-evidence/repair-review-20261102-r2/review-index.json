@@ -1,0 +1,11 @@
+{
+  "review_id": "repair-review-20261102-r2",
+  "recorded_at": "2026-11-02T14:46:46.2689209+08:00",
+  "source_count": 37,
+  "tool_count": 23,
+  "evidence_count": 121,
+  "source_manifest_sha256": "3303cb8c8ead28b87c4978c72a93610fca22cdd5e45ee976fd5962e8a008fed1",
+  "tool_manifest_sha256": "f0cf67a66a62c024e1f1985edcfe4edfadccf46a57dd81ed26d09f4b2da3bbd1",
+  "evidence_manifest_sha256": "ca208464cd000c9ebffd31d2dcf7347234f5ca3d52495d00270d7174fa309751",
+  "findings_sha256": "cd1b4cd6713c84cb534beae2f84c0f8ad5fcd59de02fe585cb0a3c0d5c418748"
+}

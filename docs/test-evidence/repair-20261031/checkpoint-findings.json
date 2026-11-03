@@ -1,0 +1,116 @@
+{
+  "time": "2026-11-01T11:38:56+08:00",
+  "identity": "local-user-sha256:c683831d6b0066c74ee53f1234eb0c59406496f43c89a3697b6839921c14c6c8",
+  "head": "b945b1a68fec26ada268b5a4ee3ac066386e96ab",
+  "working_tree": "dirty; pre-existing user modifications preserved",
+  "source_sha256": {
+    "tools/FactRunner/Program.cs": "55c42ffcd7420643a67114dacd4ebb14f2108547f0d01a3d89e563b7d6d5e05a",
+    "tools/test-fact-runner.ps1": "404d156b473661848d9d8065ec08bd141de52d8c80e30608d7e4226a83ee4850",
+    "cad-plugin/Shared/Commands/PatTextPathRouting.cs": "eb9796d1e69584576decfd5740ebbb1fa18c4c1b096f52af2e70a7e5092ec3d9",
+    "cad-plugin/Shared/Commands/PatLeaderTextAttachment.cs": "be9180d03bfc9b8617735246923dc08db5aa8c2f1a904a138f42d5c892dd1be8",
+    "cad-plugin/2007/PatentMarker/IO/DictEntry.cs": "f169dc154b4e347a51182ac35c35dd7c94108a8c3766603ec2ae0a030199c2b6",
+    "cad-plugin/2025/PatentMarker/IO/DictEntry.cs": "fe10cc5eeb9a5b788102b7c0b9a01deb6c5b40abf6c96f56601d573bbf585f1a"
+  },
+  "checks": [
+    {
+      "scope": "G01 同步 Fact 修补",
+      "status": "PASS",
+      "detail": "协调者对同一 33 个程序集重跑全部通过；独立验收原工具 17 个有效判定通过、2 项 SKIP/BLOCKED。",
+      "evidence": [
+        "G01-followup/red/summary.txt",
+        "G01-followup/green/summary.txt",
+        "G01-followup/coordinator-retest/findings.json"
+      ]
+    },
+    {
+      "scope": "G01 补修后独立验收",
+      "status": "SKIP/BLOCKED",
+      "detail": "独立验收者尚未对补修后的候选重跑；R-030 保持未关闭。",
+      "evidence": [
+        "G01-followup/independent-fail/independent-review.md"
+      ]
+    },
+    {
+      "scope": "G03 源码与模拟",
+      "status": "PASS",
+      "detail": "非实现者协调者同场景重跑 133 FAIL → 0 FAIL；四组模拟各 17 PASS、五版 SDK 编译与 API 检查通过。",
+      "evidence": [
+        "G03/coordinator/G03-baseline-all.txt",
+        "G03/coordinator/G03-candidate-all.txt",
+        "G03/coordinator-manifest.json"
+      ]
+    },
+    {
+      "scope": "G04 编解码源码",
+      "status": "PASS",
+      "detail": "独立验收五版无效 UTF-8 备份保护红绿通过，2025 VSTest 142 PASS；未运行旧 CLR。",
+      "evidence": [
+        "G04-independent/independent-acceptance.md",
+        "G04-independent/independent-findings.json"
+      ]
+    },
+    {
+      "scope": "G05 跨端保护",
+      "status": "SKIP/BLOCKED",
+      "detail": "冻结候选和公共测试迁移已归档；隔离组合 160 PASS、Word L2 同场景 17 FAIL → 0；未合入，完整独立及安装后验收未完成。",
+      "evidence": [
+        "G05/candidate-archive-manifest.json",
+        "G05/coordinator/G05-integrated-tests-v3.txt",
+        "G05/coordinator/G05-review-word-red.txt",
+        "G05/coordinator/G05-review-word-green.txt"
+      ]
+    },
+    {
+      "scope": "G09 隔离安装矩阵",
+      "status": "PASS",
+      "detail": "隔离注册表与路径矩阵经独立验收；真实旧 CAD 安装不在本机执行。",
+      "evidence": [
+        "independent-G09-G12/independent-acceptance.md"
+      ]
+    },
+    {
+      "scope": "G12 Visio 配对源码",
+      "status": "PASS",
+      "detail": "同场景独立源码回归通过，真实 Visio 宿主未验。",
+      "evidence": [
+        "independent-G09-G12/independent-acceptance.md"
+      ]
+    },
+    {
+      "scope": "G13 平面几何及命令模拟",
+      "status": "PASS",
+      "detail": "独立同场景红绿与四版命令模拟通过；R-028 仍需核验。",
+      "evidence": [
+        "G13/evidence-sha256.json",
+        "G13/integrated-sim-2007.txt"
+      ]
+    },
+    {
+      "scope": "集成静态检查",
+      "status": "PASS",
+      "detail": "build.ps1 -Static 与 MLeader 同源检查通过。",
+      "evidence": [
+        "final-static.txt"
+      ]
+    },
+    {
+      "scope": "真实 2025 CAD / Visio",
+      "status": "SKIP/BLOCKED",
+      "detail": "用户路径、图形与保存重开尚未在真实宿主验收。",
+      "evidence": []
+    },
+    {
+      "scope": "GitHub 外部宿主验收",
+      "status": "SKIP/BLOCKED",
+      "detail": "2007/2010/2013/2015 四组目标环境尚未回传；不在本机安装或探测旧宿主。",
+      "evidence": []
+    },
+    {
+      "scope": "尚未开始的任务包",
+      "status": "SKIP/BLOCKED",
+      "detail": "G02、G06、G07、G08、G10、G11、G14 未开始；按用户要求不启动新任务包。",
+      "evidence": []
+    }
+  ],
+  "limitations": "测试未部署产品包；G05 候选及公共测试迁移只归档在隔离证据中，尚未合入。G04 现只接受 UTF-8 输入，旧 UTF-16 BOM 字典会被拒绝；G01 补修尚需独立重验。GitHub 外部宿主验收与本机结果分开。"
+}

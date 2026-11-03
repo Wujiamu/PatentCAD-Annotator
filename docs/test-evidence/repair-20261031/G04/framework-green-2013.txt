@@ -1,0 +1,17 @@
+PASS R002_Framework_SyntaxRoot[0]
+PASS R002_Framework_SyntaxRoot[1]
+PASS R002_Framework_SyntaxRoot[2]
+PASS R002_Framework_SyntaxRoot[3]
+PASS R002_Framework_SyntaxRoot[4]
+PASS R002_Framework_SyntaxRoot[5]
+PASS R002_Framework_SyntaxRoot[6]
+PASS R002_Framework_SyntaxRoot[7]
+PASS R002_Framework_SyntaxRoot[8]
+PASS R002_Framework_Compat[0]
+PASS R002_Framework_Compat[1]
+PASS R002_Framework_Compat[2]
+PASS R002_Framework_Compat[3]
+PASS R002_Framework_Compat[4]
+PASS R002_Framework_ValidatorAcceptsHugeNumber
+PASS R002_Framework_ExistingNewtonsoftHugeLimit
+SUMMARY failures=0

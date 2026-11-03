@@ -1,0 +1,11 @@
+﻿# G17 (R-004) G06 transaction regression (must not regress) — run 2026-11-02 03:17:24 +08:00
+# command: powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\run-fact-tests.ps1 -TestProject .\cad-plugin\RuntimeContract.Tests\PatentMarker.RuntimeContract.2015.Tests.csproj
+# exit=0 ; G06RenameResultTests PASS=6 (expect 6)
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_AllMatchesSucceed_ReportsComplete
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_NoMatch_IsDistinctFromFailure
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_PartialFailure_RollsBackAndReportsZeroChanged
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_PlainTextWithSameNumber_IsNotRenamed
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_RetryAfterRefusal_SucceedsOnTheSameDocument
+PASS PatentMarker.RuntimeContractTests.G06RenameResultTests.G06_TransactionCommitFailure_ReportsErrorAndNoChange
+SUMMARY: passed=96 failed=0 skipped=0
+

@@ -34,7 +34,6 @@ Private Sub chkAutoExport_Click()
         If AutoExport.EnableAutoExportForDocument() Then
             lblStatus.Caption = ChrW(&H4FDD) & ChrW(&H5B58) & " Word " & ChrW(&H65F6) & ChrW(&H81EA) & ChrW(&H52A8) & ChrW(&H5BFC) & ChrW(&H51FA) & ChrW(&H5DF2) & ChrW(&H5F00) & ChrW(&H542F)
         Else
-            AutoExport.IsAutoExportEnabled = False
             m_syncingAutoExport = True
             chkAutoExport.Value = 0
             m_syncingAutoExport = False
@@ -55,7 +54,7 @@ Private Sub chkJsonVisible_Click()
             lblStatus.Caption = "JSON 已隐藏。"
         End If
     Else
-        lblStatus.Caption = "JSON 可见性修改失败，请先导出字典。"
+        lblStatus.Caption = AutoExport.GetDiagnosticStatus()
     End If
     UpdateJsonVisibilityControl
 End Sub

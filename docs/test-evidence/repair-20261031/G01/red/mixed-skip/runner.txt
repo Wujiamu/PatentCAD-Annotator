@@ -1,0 +1,4 @@
+exit=0
+SKIP FixtureTests.Skipped : later
+PASS FixtureTests.Valid
+SUMMARY: passed=1 failed=0 skipped=1

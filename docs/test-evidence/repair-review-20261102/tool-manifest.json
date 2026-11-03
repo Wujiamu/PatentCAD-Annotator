@@ -1,0 +1,42 @@
+[
+  {
+    "path": "docs/test-evidence/repair-review-20261102/parser-review.ps1",
+    "sha256": "915e2fd988e515140552555422a39e3c2e0542f9c68b6a3f955b864d1e31d6e9"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/installer-review.ps1",
+    "sha256": "19592335e9cb2f2ed04145a3f798afdc87f14bc564ac9c56773a41887dc3c0e4"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/vstest-review.ps1",
+    "sha256": "000f0af441cda526290fb470c6d3864aa808d94a8782585c66e93da5fedd2a15"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/palette-probe/Review.cs",
+    "sha256": "7a7a7ad6fe0e0147dad4887a7b05bdabb248f12bb665a580117aecb5e2c2bd61"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/palette-probe/Review.csproj",
+    "sha256": "f26985d39dd7020b4c2b9b8e77d2ae15f864675560c8733db111449e4818bb5b"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/palette-probe/bin/Release/net8.0-windows/Review.dll",
+    "sha256": "019ad94a318ce63e8e3a2efc110005238ac389187e29e8b0b79e745440cbdb5b"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261101/G17/probe/AdapterGreen.cs",
+    "sha256": "6dbff5a876420c46933f0d5ef66788c972082bcbd6c9cc027f2ca5cdc16d6126"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261101/G17/probe/ProbeModel.cs",
+    "sha256": "64735e352ad5bec57f8dd4a0373d464c90039a58159f5c0bf0c20c836fca649a"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261101/G17/probe/Stubs.cs",
+    "sha256": "23b5c8049ee5936333021f4b1d9a97b083c2206b061f619ca25404a21dcc2002"
+  },
+  {
+    "path": "docs/test-evidence/repair-review-20261102/render-review.ps1",
+    "sha256": "81c428fd79cd003f767f7ad214e38a0189577df95a2fce4d41703b8d1bb94854"
+  }
+]

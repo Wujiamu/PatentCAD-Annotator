@@ -1,0 +1,18 @@
+﻿# G16 / R-034 - L0 language-level gate (C# 2.0 compatibility)
+# produced: 2026-11-02 02:05:36 +08:00
+# why: 2007/2010/2013/2015 link these Shared files into non-SDK projects
+#      whose compiler is older; a C# 3+ construct would break four editions.
+# files recompiled at LangVersion=2: Shared/IO/DictConflict.cs,
+#      Shared/Palette/ArbitrateDialog.cs, Shared/Palette/DictPaletteWorkflow.cs
+# command: dotnet build docs/test-evidence/repair-review-20261101/G16/langgate/G16LangGate.csproj -c Release
+# exit code: 0
+# scope: L0 only. Proves the changed files stay C# 2.0-legal; proves nothing about runtime.
+#
+  所有项目均是最新的，无法还原。
+  G16LangGate -> C:\Users\wjm\WorkBuddy\2026-06-20-00-50-28\docs\test-evidence\repair-review-20261101\G16\langgate\bin\Release\net8.0-windows\G16LangGate.dll
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:01.27

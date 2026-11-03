@@ -1,0 +1,15 @@
+{
+  "cad-plugin/2007/PatentMarker/lib/acdbmgd.dll": "8371774f080aee33c4c80ef57f9aaa598228dedb94fb1d31c4c6315f81b8d677",
+  "cad-plugin/2007/PatentMarker/lib/acmgd.dll": "3cf2cb4fb5fa27099c6aa1ab24b0314bcef9960c45cbd233d1064876e9ffda98",
+  "cad-plugin/2010/PatentMarker/lib/acdbmgd.dll": "41d312faa67742027487a0d6d05cb154ee7507042710111d3670bc1144ddc87b",
+  "cad-plugin/2010/PatentMarker/lib/acmgd.dll": "a2b557e4c437b9b59dad63cbb4b4af7abb775e145ef6e6581a991da0e713810f",
+  "cad-plugin/2013/PatentMarker/lib/accoremgd.dll": "de881bea82b6b8386c163dff5e2e06a25bc013cbe75be0ebefccc837ea4ffa5d",
+  "cad-plugin/2013/PatentMarker/lib/acdbmgd.dll": "eb4d11a113c11dec21db59f2aee95bef05638cc586c5b42324d01f1a876da284",
+  "cad-plugin/2013/PatentMarker/lib/acmgd.dll": "4258b86dfdb29cf06c77e51474b72b64912b7ca0eae13dbc87d17e7be186c4aa",
+  "cad-plugin/2015/PatentMarker/lib/accoremgd.dll": "9ec078239b85fca1fa8572f6636f6fce5e361c58102003c18e02c3af17d10f26",
+  "cad-plugin/2015/PatentMarker/lib/acdbmgd.dll": "fc1f03d80e0c3127a66506e121393fc9d9873fc0d67363fed8793e2e5b8fe64d",
+  "cad-plugin/2015/PatentMarker/lib/acmgd.dll": "459fd576b3547faa300148e425bee94d41a182a53bc65a5b16b6655fd60c6056",
+  "cad-plugin/2025/PatentMarker/lib/accoremgd.dll": "77eb421995e5dfbcc28e66cd4ee50718746c0c6ae26fad50bae174ad373201fe",
+  "cad-plugin/2025/PatentMarker/lib/acdbmgd.dll": "c4c1133a1d35fbdb5deb9b98d0cf9df62684ca3c0621ae11f9d28352388ffc78",
+  "cad-plugin/2025/PatentMarker/lib/acmgd.dll": "d34ef77113688cd15c287a7278975a0286e40660502e4b7b03e37f12e4c1a4d1"
+}

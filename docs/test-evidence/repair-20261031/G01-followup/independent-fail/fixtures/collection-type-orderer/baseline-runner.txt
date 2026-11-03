@@ -1,0 +1,5 @@
+command: dotnet exec <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\baseline\tools\FactRunner\bin\Release\net8.0-windows\PatentMarker.FactRunner.dll <USERPROFILE>\AppData\Local\Temp\PatentCAD-independent-G01-i0iw6avz\extra\collection-type-orderer\bin\Release\net8.0\Fixture.dll
+exit: 0
+PASS ATests.Setup
+PASS ZTests.RequiresSetup
+SUMMARY: passed=2 failed=0 skipped=0

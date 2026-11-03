@@ -1,0 +1,60 @@
+{
+  "tools": [
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a"
+    },
+    {
+      "path": "C:\\Program Files\\dotnet\\dotnet.exe",
+      "sha256": "6d12b93599139e67b8dd951a06a9cda10bc0261e732432db483ea5e7e5c1b479"
+    },
+    {
+      "path": "C:\\Program Files\\dotnet\\sdk\\8.0.422\\Roslyn\\bincore\\csc.dll",
+      "sha256": "6ecadd24a7f014dd6950e562fdec4d2d70226678901e715d3f1ce6226980029e"
+    },
+    {
+      "path": "<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net35\\Newtonsoft.Json.dll",
+      "sha256": "c69b18993d8236e5dfe3f0580a4392e7bc0b5f525911737318117c91d43b3ea5"
+    },
+    {
+      "path": "<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net40\\Newtonsoft.Json.dll",
+      "sha256": "e6d1371d1aa774d155e9a4a89da32b87fd4928650f4d76a1cf68c8c88283693c"
+    },
+    {
+      "path": "<USERPROFILE>\\.nuget\\packages\\newtonsoft.json\\13.0.3\\lib\\net45\\Newtonsoft.Json.dll",
+      "sha256": "e1e27af7b07eeedf5ce71a9255f0422816a6fc5849a483c6714e1b472044fa9d"
+    },
+    {
+      "path": "<USERPROFILE>\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net40\\1.0.3\\build\\.NETFramework\\v4.0\\mscorlib.dll",
+      "sha256": "f7a62c9392d6762f5b46c76149173e2f265d6ad05aae54290ff40573ab32190e"
+    },
+    {
+      "path": "<USERPROFILE>\\.nuget\\packages\\microsoft.netframework.referenceassemblies.net45\\1.0.3\\build\\.NETFramework\\v4.5\\mscorlib.dll",
+      "sha256": "1c627a1181fde179d9796ce2475dab52841ca8148224e92d60271da46cff0ccb"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\IndependentEdgeProbe-v2.cs",
+      "sha256": "3a4a29b214dd67c9d2aed3083ac99381eb9c5a4052b51817714bccba5f229659"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\run-independent-edges-v2.py",
+      "sha256": "9e6235143ac779cff66faf910d59341e98ed9355c4a7eaba0e923ba6e87dafb6"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\Program.cs",
+      "sha256": "82dcde5252ccc23e2dd7cc13f556e70cf317137090e73dd2020976b3d0bfc5aa"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-legacy-probe\\FrameworkLegacyProbe.csproj",
+      "sha256": "12341feb1262c37160655f026d8558169d4b0e8f1f9ab9a83ff7778fe05e076f"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\Program.cs",
+      "sha256": "97dc2a375c176644fbcc3990914bf769899d0a53c4e2ff2be2eaff65a176d3ed"
+    },
+    {
+      "path": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\framework-probe\\FrameworkProbe.csproj",
+      "sha256": "50d750916c79f75b4761531c649c322f5c8095e879232bccba4ba286b26a60f3"
+    }
+  ]
+}

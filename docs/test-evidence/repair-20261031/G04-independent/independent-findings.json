@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "reviewer": "independent agent /root/g01 (did not implement G04); all executions in isolated temporary copies",
+  "time_local": "2026-11-01T11:09:30.251040+08:00",
+  "overall": "PASS at isolated production-source/function and .NET Framework layer; actual host and deployment are SKIP/BLOCKED",
+  "snapshots": {
+    "old_original_candidate": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate",
+    "fixed_source_snapshot": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\independent-G04-3vpz1wcq\\candidate-fixed",
+    "integrated_candidate": "<USERPROFILE>\\AppData\\Local\\Temp\\PatentCAD-repair-w5hkb8c3\\G04-integrated",
+    "fixed_snapshot_matches_integrated": true,
+    "baseline_run_note": "Original baseline production IO for five versions injected into isolated candidate-derived tree; see source inventory and author-probes-runs.json."
+  },
+  "checks": [
+    {
+      "id": "R002_invalid_utf8_and_backup",
+      "before": "FAIL: five loaders accept byte FF as replacement character, recovery overwrites current and deletes backup",
+      "after": "PASS: five loaders reject, return error, preserve bytes and exact attributes",
+      "versions": [
+        "2007",
+        "2010",
+        "2013",
+        "2015",
+        "2025"
+      ],
+      "selector": "IndependentEdgeProbe-v2: InvalidUtf8AndBackupRecovery",
+      "red_exit": 1,
+      "green_exit": 0,
+      "logs": "edge-v2-candidate[-fixed]-<version>.log",
+      "current_sha256": "d3440e9b69609a924e429b959fbf1daffb975293fb050b0efca8817b4ec568b7",
+      "backup_sha256": "db6b201e5b9107e5689ae11bfcf715db775144f5acee2127118dbde2a84cecef",
+      "current_attributes": 32,
+      "backup_attributes": 38
+    },
+    {
+      "id": "R002_valid_utf8",
+      "result": "PASS",
+      "selector": "IndependentEdgeProbe-v2: LegalUtf8Controls",
+      "details": "UTF-8 BOM and no BOM, exact English Chinese emoji values, five versions"
+    },
+    {
+      "id": "R002_adjacent_json",
+      "result": "PASS",
+      "selector": "IndependentEdgeProbe-v2: AdditionalGrammar",
+      "details": "12 extra invalid grammar cases rejected; nested unknown field accepted in all five"
+    },
+    {
+      "id": "R002_R019_author_source_harness",
+      "result": "PASS",
+      "selector": "all G04JsonRegression selectors; R002_Syntax, R002_Root, R002_Compat, R002_Restore, R002_Utf8, R002_Cache, R019_Parse, R019_Write, R019_CRLF; R002_Config additionally on 2007/2010",
+      "details": "five versions built actual production files with host stubs; 2007/2010 parser is Shared/IO/SimpleJson.cs"
+    },
+    {
+      "id": "malformed_utf8_author_probe",
+      "result": "PASS",
+      "selector": "R002_Utf8",
+      "details": "FF, incomplete C3 and overlong C0 80, each with and without UTF-8 BOM; rejected and current/backup byte and attribute preservation independently rerun in five versions"
+    },
+    {
+      "id": "framework_legacy",
+      "before": "FAIL",
+      "after": "PASS",
+      "selector": "framework-legacy-probe same UTF8, restore and grammar checks",
+      "details": "2007 and 2010 production sources compiled net40 and executed on .NET Framework 4.x; not actual .NET 2/3.5 CLR or CAD"
+    },
+    {
+      "id": "framework_newtonsoft",
+      "before": "FAIL",
+      "after": "PASS",
+      "selector": "R002_Framework_SyntaxRoot[0..8], R002_Framework_Compat[0..4], R002_Framework_ValidatorAcceptsHugeNumber, R002_Framework_ExistingNewtonsoftHugeLimit",
+      "details": "2013 target net40, 2015 net45; Newtonsoft on actual .NET Framework process"
+    },
+    {
+      "id": "vstest_2025",
+      "result": "PASS",
+      "total": 142,
+      "passed": 142,
+      "failed": 0,
+      "command": "dotnet test .\\cad-plugin\\2025\\PatentMarker.Tests\\PatentMarker.Tests.csproj --configuration Release --nologo --logger 'console;verbosity=normal'",
+      "exit": 0,
+      "log": "vstest-2025-fixed.log"
+    },
+    {
+      "id": "real_hosts",
+      "result": "SKIP/BLOCKED",
+      "details": "No CAD host, installation or deployment was launched; four old CAD versions require GitHub external host validation; 2025 real CAD not validated by these isolated tests."
+    },
+    {
+      "id": "huge_unknown_number",
+      "result": "SKIP/BLOCKED",
+      "details": "For 2013/2015 Newtonsoft on .NET Framework, an unknown numeric field such as 1e400 remains rejected by both baseline and fixed candidate; ordinary unknown fields pass."
+    }
+  ],
+  "G05_contract": "Invalid syntax, non-object root and tested malformed UTF-8 return null from DictLoader.Load; normal old optional and unknown fields load. ResolveRestoreCad rejects tested corrupt backups with an error and preserves current and backup bytes/attributes. Legacy writers serialize valid JSON with CRLF structure, UTF-8 no BOM and exact CAD marker; legacy string contents normalize lone CR and CRLF to LF, so they do not promise byte-for-byte string roundtrip. The 2013/2015 Framework Newtonsoft extreme-number limitation remains."
+}

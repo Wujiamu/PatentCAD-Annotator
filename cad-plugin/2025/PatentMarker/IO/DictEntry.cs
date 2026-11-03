@@ -74,6 +74,7 @@ namespace PatentMarker.IO
         private static DictModel? _previousModel;
         private static readonly Dictionary<string, DictModel> _modelsByPath = new(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, DateTime> _timesByPath = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, string> _identitiesByPath = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, DictModel> _previousByPath = new(StringComparer.OrdinalIgnoreCase);
         private static readonly Dictionary<string, string> _dictPathByDrawing = new(StringComparer.OrdinalIgnoreCase);
         private static string? _activeKey;
@@ -114,9 +115,7 @@ namespace PatentMarker.IO
 
         private static readonly JsonSerializerOptions JsonOpts = new()
         {
-            PropertyNameCaseInsensitive = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            AllowTrailingCommas = true
+            PropertyNameCaseInsensitive = true
         };
 
         public static bool HasCache => _cachedModel is not null;
@@ -128,6 +127,7 @@ namespace PatentMarker.IO
             {
                 _modelsByPath.Remove(_activeKey);
                 _timesByPath.Remove(_activeKey);
+                _identitiesByPath.Remove(_activeKey);
                 _previousByPath.Remove(_activeKey);
             }
             ClearActive();
@@ -151,7 +151,18 @@ namespace PatentMarker.IO
         /// 避免 2s 轮询把自身写入当作外部变更触发假 Diff 高亮；
         /// 同时清除对比基线（用户自己的修改不应被标成新增/变更）。
         /// </summary>
-        public static void NotifySelfWrite(DictModel model, string path)
+        public static string GetIdentity(DictModel model, string path)
+        {
+            if (model == null || string.IsNullOrEmpty(path)) return null;
+            string key = CacheKey(path);
+            DictModel cached;
+            string identity;
+            if (!_modelsByPath.TryGetValue(key, out cached) || !object.ReferenceEquals(cached, model) ||
+                !_identitiesByPath.TryGetValue(key, out identity)) return null;
+            return identity;
+        }
+
+        public static void NotifySelfWrite(DictModel model, string path, string identity)
         {
             string key = CacheKey(path);
             DateTime writeTime;
@@ -159,26 +170,19 @@ namespace PatentMarker.IO
             catch { writeTime = DateTime.Now; }
             _modelsByPath[key] = model;
             _timesByPath[key] = writeTime;
+            _identitiesByPath[key] = identity;
             _previousByPath.Remove(key);
             Activate(path);
         }
 
         public static bool IsFileChanged()
         {
-            string? path = ResolveDictPath();
-            if (path is null) return _cachedModel is not null;
-            if (!File.Exists(path)) return _cachedModel is not null;
-            string key = CacheKey(path);
-            if (!_timesByPath.TryGetValue(key, out DateTime cachedTime))
-                return true;
-            try
-            {
-                return File.GetLastWriteTime(path) != cachedTime;
-            }
-            catch
-            {
-                return true;
-            }
+            string path = ResolveDictPath();
+            if (path == null || !File.Exists(path)) return _cachedModel != null;
+            string identity;
+            if (!_identitiesByPath.TryGetValue(CacheKey(path), out identity)) return true;
+            try { return !string.Equals(identity, DictFileVisibility.ReadIdentity(path), StringComparison.Ordinal); }
+            catch { return true; }
         }
 
         public static DictModel? LoadForCurrentDrawing()
@@ -200,10 +204,14 @@ namespace PatentMarker.IO
             try
             {
                 string key = CacheKey(path);
+                byte[] bytes = File.ReadAllBytes(path);
+                string identity = DictFileVisibility.Identity(bytes);
                 DateTime wt = File.GetLastWriteTime(path);
-                if (_modelsByPath.TryGetValue(key, out DictModel? cached) &&
-                    _timesByPath.TryGetValue(key, out DateTime cachedTime) &&
-                    wt == cachedTime)
+                DictModel cached;
+                string cachedIdentity;
+                if (_modelsByPath.TryGetValue(key, out cached) &&
+                    _identitiesByPath.TryGetValue(key, out cachedIdentity) &&
+                    string.Equals(identity, cachedIdentity, StringComparison.Ordinal))
                 {
                     Activate(path);
                     RegisterDrawingPath(path);
@@ -211,7 +219,7 @@ namespace PatentMarker.IO
                 }
 
                 PatentMarkerApp.RawLog("Dict file changed, reloading: " + path);
-                DictModel? model = Load(path);
+                DictModel? model = LoadBytes(path, bytes);
                 if (model is not null)
                 {
                     if (_modelsByPath.TryGetValue(key, out DictModel? oldModel))
@@ -220,6 +228,7 @@ namespace PatentMarker.IO
                         _previousByPath.Remove(key);
                     _modelsByPath[key] = model;
                     _timesByPath[key] = wt;
+                    _identitiesByPath[key] = identity;
                     Activate(path);
                     RegisterDrawingPath(path);
                     return model;
@@ -238,10 +247,15 @@ namespace PatentMarker.IO
             }
             catch (Exception ex)
             {
-                PatentMarkerApp.RawLog("DictLoader timestamp check failed: " + ex.Message);
-                DictModel? fallback = Load(path);
-                RegisterDrawingPath(path);
-                return fallback;
+                PatentMarkerApp.RawLog("DictLoader content check failed: " + ex.Message);
+                DictModel cachedModel;
+                if (_modelsByPath.TryGetValue(CacheKey(path), out cachedModel))
+                {
+                    Activate(path);
+                    return cachedModel;
+                }
+                ClearActive();
+                return null;
             }
         }
 
@@ -264,6 +278,7 @@ namespace PatentMarker.IO
             {
                 _modelsByPath.Remove(dictKey);
                 _timesByPath.Remove(dictKey);
+                _identitiesByPath.Remove(dictKey);
                 _previousByPath.Remove(dictKey);
             }
             if (_activeKey == dictKey) ClearActive();
@@ -299,11 +314,16 @@ namespace PatentMarker.IO
 
         public static DictModel? Load(string path)
         {
+            return LoadBytes(path, null);
+        }
+
+        internal static DictModel? LoadBytes(string path, byte[] bytes)
+        {
             try
             {
-                string json = File.ReadAllText(path);
+                string json = DictFileVisibility.DecodeText(bytes ?? File.ReadAllBytes(path));
                 DictModel? dict = JsonSerializer.Deserialize<DictModel>(json, JsonOpts);
-                dict ??= new DictModel();
+                if (dict == null) throw new JsonException("JSON root must be an object.");
 
                 // JSON 允许显式 null；将可选/损坏的集合归一化，避免面板和写回路径在后续操作中空引用。
                 dict.Metadata ??= new DictMetadata();
