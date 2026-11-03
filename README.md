@@ -8,7 +8,7 @@ PatentMarker 专利附图标注工具系列：Word 提取编号字典，AutoCAD�
 
 **PatentMarker annotation suite** — One Word dictionary exporter, with AutoCAD, PowerPoint and Visio annotation clients maintained in this repository and packaged separately.
 
-**当前版本：v1.0.3** · [更新记录](CHANGELOG.md)
+**当前版本：v1.0.4** · [更新记录](CHANGELOG.md)
 
 ## 先打开标注面板
 
@@ -396,7 +396,7 @@ Word source lives in `vba/`; use `vba-sync.ps1` and `sync-word-addin.ps1` to upd
 
 ### Version
 
-**Current version: v1.0.3.** See [CHANGELOG.md](CHANGELOG.md) for change history.
+**Current version: v1.0.4.** See [CHANGELOG.md](CHANGELOG.md) for change history.
 
 ### License
 
